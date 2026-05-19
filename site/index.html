@@ -100,7 +100,47 @@
       z-index: -1;
     }
     .hero { padding: 72px 0 62px; position: relative; }
-    .hero-grid { display: grid; grid-template-columns: 1.02fr .98fr; gap: 42px; align-items: center; }
+    .hero-grid { display: grid; grid-template-columns: 1.02fr .98fr; gap: 42px; align-items: center; position: relative; z-index: 2; }
+    .map-plate {
+      position: absolute;
+      left: 50%;
+      top: 58%;
+      width: min(720px, 72vw);
+      height: 420px;
+      transform: translate(-50%, -50%) rotateX(62deg) rotateZ(-9deg);
+      transform-style: preserve-3d;
+      pointer-events: none;
+      opacity: .32;
+      z-index: 0;
+      filter: drop-shadow(0 38px 50px rgba(15,23,42,.18));
+    }
+    .map-plate::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 38px;
+      background:
+        linear-gradient(118deg, transparent 0 14%, rgba(21,128,61,.42) 14.1% 14.45%, transparent 14.7% 33%, rgba(15,23,42,.25) 33.1% 33.45%, transparent 33.7% 52%, rgba(21,128,61,.34) 52.1% 52.45%, transparent 52.7%),
+        linear-gradient(28deg, transparent 0 17%, rgba(15,23,42,.20) 17.1% 17.45%, transparent 17.7% 44%, rgba(21,128,61,.26) 44.1% 44.45%, transparent 44.7% 69%, rgba(15,23,42,.18) 69.1% 69.45%, transparent 69.7%),
+        radial-gradient(circle at 30% 35%, rgba(34,197,94,.16), transparent 16rem),
+        rgba(255,255,255,.38);
+      border: 1px solid rgba(21,128,61,.18);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 40px 90px rgba(15,23,42,.12);
+    }
+    .map-pin {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 999px 999px 999px 2px;
+      background: var(--emerald);
+      transform: rotate(-45deg) translateZ(38px);
+      box-shadow: 0 0 0 10px rgba(21,128,61,.16), 0 18px 32px rgba(21,128,61,.42), 0 0 34px rgba(34,197,94,.38);
+    }
+    .map-pin::after { content:""; position:absolute; inset:5px; border-radius:999px; background:#ecfdf5; }
+    .map-pin.one { left: 24%; top: 38%; }
+    .map-pin.two { left: 52%; top: 26%; }
+    .map-pin.three { left: 68%; top: 57%; }
+    .map-pin.four { left: 36%; top: 66%; opacity:.72; }
     .eyebrow { display: inline-flex; align-items: center; gap: 9px; padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,.72); border: 1px solid var(--line); color: var(--emerald); font-size: 13px; font-weight: 800; }
     .pulse { width: 8px; height: 8px; border-radius: 999px; background: var(--emerald); box-shadow: 0 0 0 7px rgba(21,128,61,.12); }
     h1 { margin: 22px 0 20px; font-family: "Playfair Display", serif; font-size: clamp(48px, 7vw, 82px); line-height: .95; letter-spacing: -.055em; max-width: 880px; }
@@ -207,6 +247,7 @@
     @media (max-width: 640px) {
       .container { width: min(100% - 28px, 1160px); }
       .hero { padding-top: 34px; }
+      .map-plate { width: 96vw; height: 300px; opacity: .22; top: 44%; }
       .trust-row, .cards, .process, .pricing, .routing, .kit-list, form, .pipeline { grid-template-columns: 1fr; }
       .pipe-step::after { display:none; }
       .lead-row { grid-template-columns: 1fr .7fr; }
@@ -229,6 +270,7 @@
 
   <main>
     <section class="hero">
+      <div class="map-plate" aria-hidden="true"><span class="map-pin one"></span><span class="map-pin two"></span><span class="map-pin three"></span><span class="map-pin four"></span></div>
       <div class="container hero-grid">
         <div>
           <div class="eyebrow"><span class="pulse"></span> Limited-seat property lead intelligence</div>
