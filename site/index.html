@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LeadCurate — Limited-seat property lead intelligence</title>
+  <meta name="description" content="LeadCurate turns messy public-record property data into cleaned, scored, limited-seat lead batches for serious real estate investors." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1e293b;
+      --muted: #64748b;
+      --cream: #faf7f2;
+      --stone: #f5f1eb;
+      --dark: #0f172a;
+      --dark-2: #111827;
+      --emerald: #15803d;
+      --emerald-2: #22c55e;
+      --emerald-soft: #dff4e8;
+      --line: rgba(30, 41, 59, .12);
+      --shadow: 0 24px 80px rgba(15, 23, 42, .12);
+      --radius: 28px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 16% 12%, rgba(21,128,61,.14), transparent 26rem),
+        radial-gradient(circle at 86% 4%, rgba(15,23,42,.08), transparent 24rem),
+        linear-gradient(rgba(30,41,59,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30,41,59,.035) 1px, transparent 1px);
+      background-size: auto, auto, 44px 44px, 44px 44px;
+      z-index: -2;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 0; position: relative; z-index: 5;
+    }
+    .logo { font-family: "Playfair Display", serif; font-size: 30px; font-weight: 700; letter-spacing: -.04em; }
+    .logo span { color: var(--emerald); }
+    .logo .dot { color: var(--emerald); }
+    .navlinks { display: flex; gap: 24px; color: var(--muted); font-size: 14px; font-weight: 600; }
+    .navlinks a:hover { color: var(--ink); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      border-radius: 999px; padding: 13px 18px; font-weight: 800; font-size: 14px;
+      border: 1px solid transparent; transition: .2s ease; cursor: pointer;
+    }
+    .btn.primary { background: var(--dark); color: white; box-shadow: 0 12px 36px rgba(15,23,42,.2); }
+    .btn.primary:hover { transform: translateY(-1px); background: #020617; }
+    .btn.secondary { background: rgba(255,255,255,.7); border-color: var(--line); color: var(--ink); }
+    .btn.secondary:hover { background: white; }
+    .hero { padding: 72px 0 62px; }
+    .hero-grid { display: grid; grid-template-columns: 1.02fr .98fr; gap: 42px; align-items: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,.72); border: 1px solid var(--line); color: var(--emerald); font-size: 13px; font-weight: 800; }
+    .pulse { width: 8px; height: 8px; border-radius: 999px; background: var(--emerald); box-shadow: 0 0 0 7px rgba(21,128,61,.12); }
+    h1 { margin: 22px 0 20px; font-family: "Playfair Display", serif; font-size: clamp(48px, 7vw, 82px); line-height: .95; letter-spacing: -.055em; max-width: 880px; }
+    .hero p { font-size: 19px; color: #475569; max-width: 620px; margin: 0 0 28px; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+    .trust-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 34px; max-width: 660px; }
+    .trust-card { background: rgba(255,255,255,.62); border: 1px solid var(--line); border-radius: 18px; padding: 16px; backdrop-filter: blur(14px); }
+    .trust-card strong { display: block; font-size: 22px; letter-spacing: -.03em; }
+    .trust-card span { display: block; color: var(--muted); font-size: 13px; margin-top: 3px; }
+    .visual-card {
+      position: relative; border-radius: 36px; background: linear-gradient(145deg, rgba(15,23,42,.97), rgba(30,41,59,.94)); color: white;
+      padding: 22px; min-height: 600px; box-shadow: var(--shadow); overflow: hidden;
+    }
+    .visual-card::before { content:""; position:absolute; inset:-35%; background: radial-gradient(circle at 40% 35%, rgba(34,197,94,.28), transparent 18rem), radial-gradient(circle at 72% 70%, rgba(250,247,242,.13), transparent 18rem); }
+    .map-grid { position:absolute; inset:0; opacity:.22; background-image: radial-gradient(rgba(255,255,255,.35) 1.2px, transparent 1.2px); background-size: 24px 24px; mask-image: linear-gradient(to bottom, black, transparent 78%); }
+    .dash { position: relative; z-index: 2; display:flex; flex-direction:column; gap:16px; }
+    .dash-top { display:flex; align-items:center; justify-content:space-between; padding: 8px 8px 12px; }
+    .dash-title small { color: #94a3b8; display:block; font-weight:700; text-transform:uppercase; letter-spacing:.12em; font-size:11px; }
+    .dash-title strong { font-size: 20px; letter-spacing:-.03em; }
+    .status { display:inline-flex; align-items:center; gap:7px; background: rgba(34,197,94,.14); border:1px solid rgba(34,197,94,.24); color:#bbf7d0; border-radius:999px; padding:8px 11px; font-size:12px; font-weight:800; }
+    .territory { background: rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.13); border-radius:24px; padding:18px; backdrop-filter: blur(12px); }
+    .territory-head { display:flex; justify-content:space-between; gap:10px; margin-bottom:14px; }
+    .territory h3 { margin:0; font-size:18px; letter-spacing:-.03em; }
+    .territory p { margin:3px 0 0; color:#94a3b8; font-size:13px; }
+    .score { width:64px; height:64px; border-radius:50%; display:grid; place-items:center; background: conic-gradient(var(--emerald-2) 84%, rgba(255,255,255,.15) 0); font-weight:900; color:#f8fafc; }
+    .lead-table { display:grid; gap:8px; margin-top:12px; }
+    .lead-row { display:grid; grid-template-columns: 1.1fr .85fr .65fr .5fr; align-items:center; gap:10px; background: rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.1); padding:12px; border-radius:16px; font-size:12px; }
+    .lead-row.header { color:#94a3b8; text-transform:uppercase; letter-spacing:.08em; font-weight:800; background:transparent; border:none; padding-bottom:0; }
+    .tag { display:inline-flex; width:max-content; border-radius:999px; padding:5px 8px; background: rgba(34,197,94,.13); color:#bbf7d0; font-weight:800; }
+    .blur { filter: blur(3px); opacity: .74; }
+    .routing { display:grid; grid-template-columns: repeat(3,1fr); gap:10px; }
+    .metric { background: rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); border-radius:18px; padding:14px; }
+    .metric span { color:#94a3b8; font-size:12px; font-weight:700; }
+    .metric strong { display:block; font-size:22px; margin-top:2px; }
+    section { padding: 74px 0; }
+    .section-head { max-width:760px; margin-bottom:32px; }
+    .kicker { color: var(--emerald); font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: .14em; }
+    h2 { font-family:"Playfair Display", serif; font-size: clamp(36px, 5vw, 58px); line-height:1; letter-spacing:-.05em; margin:10px 0 14px; }
+    .section-head p { color: var(--muted); font-size:18px; margin:0; }
+    .cards { display:grid; grid-template-columns: repeat(3,1fr); gap:18px; }
+    .card { background: rgba(255,255,255,.66); border:1px solid var(--line); border-radius: var(--radius); padding:26px; box-shadow: 0 14px 40px rgba(15,23,42,.05); }
+    .card h3 { margin:0 0 9px; font-size:20px; letter-spacing:-.03em; }
+    .card p { margin:0; color:var(--muted); }
+    .icon-dot { width:38px; height:38px; border-radius:14px; background:var(--emerald-soft); display:grid; place-items:center; color:var(--emerald); font-weight:900; margin-bottom:18px; }
+    .dark-section { background: var(--dark); color:white; position:relative; overflow:hidden; }
+    .dark-section::before { content:""; position:absolute; inset:0; background: radial-gradient(circle at 20% 20%, rgba(34,197,94,.2), transparent 25rem), radial-gradient(circle at 90% 80%, rgba(255,255,255,.09), transparent 25rem); }
+    .dark-section .container { position:relative; }
+    .dark-section .section-head p { color:#cbd5e1; }
+    .process { display:grid; grid-template-columns: repeat(4,1fr); gap:14px; }
+    .step { border:1px solid rgba(255,255,255,.13); background:rgba(255,255,255,.07); border-radius:24px; padding:22px; }
+    .num { color:#86efac; font-weight:900; margin-bottom:18px; }
+    .step h3 { margin:0 0 8px; }
+    .step p { margin:0; color:#cbd5e1; font-size:14px; }
+    .pricing { display:grid; grid-template-columns: repeat(4,1fr); gap:16px; align-items:stretch; }
+    .price-card { background:#fff; border:1px solid var(--line); border-radius:28px; padding:24px; display:flex; flex-direction:column; min-height:360px; position:relative; }
+    .price-card.featured { background: var(--dark); color:white; transform: translateY(-8px); box-shadow: var(--shadow); }
+    .price-card h3 { margin:0 0 8px; font-size:20px; }
+    .price { font-size:34px; letter-spacing:-.06em; font-weight:900; margin:8px 0 12px; }
+    .price small { font-size:13px; color:inherit; opacity:.7; letter-spacing:0; }
+    .price-card p { color:var(--muted); margin:0 0 18px; font-size:14px; }
+    .price-card.featured p, .price-card.featured li { color:#cbd5e1; }
+    .price-card ul { list-style:none; padding:0; margin:0 0 22px; display:grid; gap:10px; font-size:14px; }
+    .price-card li::before { content:"•"; color:var(--emerald); font-weight:900; margin-right:8px; }
+    .price-card .btn { margin-top:auto; }
+    .operator-kit { display:grid; grid-template-columns: .92fr 1.08fr; gap:28px; align-items:center; }
+    .kit-panel { background:#fff; border:1px solid var(--line); border-radius:32px; padding:26px; box-shadow:var(--shadow); }
+    .kit-list { display:grid; grid-template-columns: repeat(2,1fr); gap:10px; }
+    .kit-item { padding:14px; border-radius:16px; background:var(--stone); font-weight:700; color:#334155; font-size:14px; }
+    .form-wrap { background:#fff; border:1px solid var(--line); border-radius:34px; padding:30px; box-shadow: var(--shadow); }
+    form { display:grid; grid-template-columns: repeat(2,1fr); gap:14px; }
+    label { display:grid; gap:7px; font-weight:800; font-size:13px; color:#334155; }
+    input, select, textarea { width:100%; border:1px solid var(--line); background:#fbfaf8; border-radius:14px; padding:14px 13px; font:inherit; color:var(--ink); outline:none; }
+    input:focus, select:focus, textarea:focus { border-color: rgba(21,128,61,.45); box-shadow:0 0 0 4px rgba(21,128,61,.1); }
+    .full { grid-column:1 / -1; }
+    footer { padding:44px 0; border-top:1px solid var(--line); color:var(--muted); }
+    .footer-row { display:flex; justify-content:space-between; gap:20px; align-items:center; }
+    @media (max-width: 980px) {
+      .hero-grid, .operator-kit { grid-template-columns: 1fr; }
+      .cards, .process, .pricing { grid-template-columns: repeat(2,1fr); }
+      .visual-card { min-height: 520px; }
+      .navlinks { display:none; }
+    }
+    @media (max-width: 640px) {
+      .container { width: min(100% - 28px, 1160px); }
+      .hero { padding-top: 34px; }
+      .trust-row, .cards, .process, .pricing, .routing, .kit-list, form { grid-template-columns: 1fr; }
+      .lead-row { grid-template-columns: 1fr .7fr; }
+      .lead-row.header { display:none; }
+      .footer-row { flex-direction:column; align-items:flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <header class="container nav">
+    <a class="logo" href="#">Lead<span>Curate</span><span class="dot">.</span></a>
+    <nav class="navlinks">
+      <a href="#model">Model</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#kit">Operator Kit</a>
+      <a href="#county">Check County</a>
+    </nav>
+    <a class="btn secondary" href="#county">Check availability</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow"><span class="pulse"></span> Limited-seat property lead intelligence</div>
+          <h1>Stop buying the same distressed property leads everyone else is calling.</h1>
+          <p>LeadCurate turns messy public-record property data into cleaned, skip-trace enriched, DNC-status marked, scored lead batches for serious real estate investors.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#county">Check My County</a>
+            <a class="btn secondary" href="#pricing">View pricing</a>
+          </div>
+          <div class="trust-row">
+            <div class="trust-card"><strong>1–3</strong><span>seats per county, based on volume</span></div>
+            <div class="trust-card"><strong>0</strong><span>resold assigned leads in the window</span></div>
+            <div class="trust-card"><strong>$175</strong><span>county review deposit credited forward</span></div>
+          </div>
+        </div>
+
+        <div class="visual-card" aria-label="LeadCurate dashboard preview">
+          <div class="map-grid"></div>
+          <div class="dash">
+            <div class="dash-top">
+              <div class="dash-title"><small>Territory review</small><strong>Mecklenburg County, NC</strong></div>
+              <div class="status"><span class="pulse"></span> Active audit</div>
+            </div>
+            <div class="territory">
+              <div class="territory-head">
+                <div><h3>County Seat Capacity</h3><p>Projected after source + quality filters</p></div>
+                <div class="score">84</div>
+              </div>
+              <div class="routing">
+                <div class="metric"><span>Flow label</span><strong>Strong</strong></div>
+                <div class="metric"><span>Seats</span><strong>2</strong></div>
+                <div class="metric"><span>Lead lanes</span><strong>5</strong></div>
+              </div>
+            </div>
+            <div class="territory">
+              <div class="territory-head"><div><h3>Sample Batch</h3><p>Blurred preview. Actual exports include source date, score reason, and compliance fields.</p></div></div>
+              <div class="lead-table">
+                <div class="lead-row header"><div>Owner</div><div>Signal</div><div>DNC</div><div>Score</div></div>
+                <div class="lead-row"><div class="blur">M. Anderson</div><div><span class="tag">Tax + absentee</span></div><div>Marked</div><div>91</div></div>
+                <div class="lead-row"><div class="blur">Bright Oak LLC</div><div><span class="tag">Vacant</span></div><div>Marked</div><div>78</div></div>
+                <div class="lead-row"><div class="blur">Estate record</div><div><span class="tag">Probate</span></div><div>Mail-first</div><div>72</div></div>
+              </div>
+            </div>
+            <div class="territory">
+              <div class="territory-head"><div><h3>Routing rule</h3><p>Assigned owner-property records are suppressed from other buyers during the active assignment window.</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="model">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">The problem</div>
+          <h2>Most investors are not losing because they lack a script.</h2>
+          <p>They are saying that script to stale, recycled records that five other buyers already touched. LeadCurate gives customers the basic operating tools — then sells the harder part: better data.</p>
+        </div>
+        <div class="cards">
+          <div class="card"><div class="icon-dot">1</div><h3>Messy public records</h3><p>County data is fragmented across deed, tax, foreclosure, probate, vacancy, lien, and assessor sources.</p></div>
+          <div class="card"><div class="icon-dot">2</div><h3>Cleaned and routed</h3><p>Records are normalized, deduped, classified by owner/property type, scored, and routed into the right lead lane.</p></div>
+          <div class="card"><div class="icon-dot">3</div><h3>Limited-seat delivery</h3><p>Counties support one, two, or three seats based on real volume — not hype or fake scarcity.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dark-section">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">How it works</div>
+          <h2>Public records in. Buyer-ready lead batches out.</h2>
+          <p>Automation and AI-assisted workflows help clean, classify, and prioritize records. Human QA protects quality before delivery.</p>
+        </div>
+        <div class="process">
+          <div class="step"><div class="num">01</div><h3>Audit county</h3><p>We check source accessibility, refresh timing, raw volume, distress lanes, and seat capacity.</p></div>
+          <div class="step"><div class="num">02</div><h3>Clean records</h3><p>Normalize owners, addresses, parcel IDs, dates, distress signals, and duplicate owner-property records.</p></div>
+          <div class="step"><div class="num">03</div><h3>Enrich carefully</h3><p>Approved records are skip-trace enriched and DNC-status marked before delivery.</p></div>
+          <div class="step"><div class="num">04</div><h3>Deliver batch</h3><p>Customers receive CSV/XLSX files with score, reason, source date, confidence, and assignment fields.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">Simple pricing</div>
+          <h2>Limited county seats, priced by access and effort.</h2>
+          <p>No guaranteed deals. No fake lead counts. Every county is reviewed before activation and assigned an expected delivery range.</p>
+        </div>
+        <div class="pricing">
+          <div class="price-card">
+            <h3>County Review</h3>
+            <div class="price">$175 <small>one-time</small></div>
+            <p>Reserve your spot while we check source availability and seat capacity.</p>
+            <ul><li>14-day hold</li><li>County source review</li><li>Expected delivery range</li><li>Credited to first month</li></ul>
+            <a class="btn secondary" href="#county">Reserve review</a>
+          </div>
+          <div class="price-card featured">
+            <h3>County Seat</h3>
+            <div class="price">$497 <small>/mo</small></div>
+            <p>For solo investors who want cleaner, limited-seat county lead flow.</p>
+            <ul><li>1 approved county</li><li>Limited-seat access</li><li>Scored monthly delivery</li><li>Replacement review</li></ul>
+            <a class="btn primary" href="#county">Check county</a>
+          </div>
+          <div class="price-card">
+            <h3>Operator Seat</h3>
+            <div class="price">$897 <small>/mo</small></div>
+            <p>For active wholesalers or small teams that need more flow and priority.</p>
+            <ul><li>High-volume county or bundle</li><li>Biweekly target where available</li><li>Priority routing</li><li>Operator workflow support</li></ul>
+            <a class="btn secondary" href="#county">Apply</a>
+          </div>
+          <div class="price-card">
+            <h3>Exclusive Territory</h3>
+            <div class="price">$1,497+ <small>/mo</small></div>
+            <p>For buyers who want to block competing seats in a defined county or zone.</p>
+            <ul><li>Custom territory audit</li><li>One-buyer lane options</li><li>Zip or county rules</li><li>Custom delivery schedule</li></ul>
+            <a class="btn secondary" href="#county">Request quote</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="kit">
+      <div class="container operator-kit">
+        <div class="section-head">
+          <div class="kicker">Operator Kit</div>
+          <h2>We give away the basics. We sell the better data.</h2>
+          <p>Customers should not have to pay thousands just to learn how to open a seller call, track follow-up, or calculate an offer. LeadCurate includes practical tools so buyers can work the data responsibly.</p>
+        </div>
+        <div class="kit-panel">
+          <div class="kit-list">
+            <div class="kit-item">Seller call prep sheet</div>
+            <div class="kit-item">Discovery questions</div>
+            <div class="kit-item">Follow-up cadence</div>
+            <div class="kit-item">MAO calculator</div>
+            <div class="kit-item">Lead batch tracker</div>
+            <div class="kit-item">Buyer outreach templates</div>
+            <div class="kit-item">Title handoff checklist</div>
+            <div class="kit-item">Compliance reminder checklist</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="county">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">Check availability</div>
+          <h2>Tell us your target county.</h2>
+          <p>This form is a front-end prototype. Next step is connecting it to Supabase, Stripe, and email once the accounts are ready.</p>
+        </div>
+        <div class="form-wrap">
+          <form>
+            <label>Name<input placeholder="Your name" /></label>
+            <label>Email<input type="email" placeholder="you@example.com" /></label>
+            <label>State<input placeholder="NC, SC, GA..." /></label>
+            <label>County<input placeholder="Mecklenburg, Greenville..." /></label>
+            <label>Investor type<select><option>Solo wholesaler</option><option>Active investor team</option><option>Landlord / buyer</option><option>Commercial buyer</option><option>Not sure yet</option></select></label>
+            <label>Interest<select><option>County Seat</option><option>Operator Seat</option><option>Exclusive Territory</option><option>Free Operator Kit</option></select></label>
+            <label class="full">Notes<textarea rows="4" placeholder="Tell us what market you want and what type of property leads you care about."></textarea></label>
+            <div class="full"><button class="btn primary" type="button">Request county review</button></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <a class="logo" href="#">Lead<span>Curate</span><span class="dot">.</span></a>
+      <div>Data and education only. Customers are responsible for outreach, transaction, and legal compliance.</div>
+    </div>
+  </footer>
+</body>
+</html>
