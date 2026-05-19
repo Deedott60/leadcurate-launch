@@ -4,7 +4,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LeadCurate — Limited-seat property lead intelligence</title>
-  <meta name="description" content="LeadCurate turns messy public-record property data into cleaned, scored, limited-seat lead batches for serious real estate investors." />
+  <meta name="description" content="LeadCurate turns messy public-record property data into cleaned, scored, limited-seat property-owner lead batches for serious real estate investors, wholesalers, and acquisition teams." />
+  <meta name="keywords" content="distressed property leads, tax delinquent leads, probate leads, absentee owner leads, real estate investor leads, wholesaling leads, county property records, skip traced real estate leads, DNC scrubbed leads, exclusive real estate leads" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="LeadCurate — Limited-seat property lead intelligence" />
+  <meta property="og:description" content="Cleaned, scored, DNC-status marked public-record property leads for serious investors." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "LeadCurate",
+    "description": "Limited-seat property lead intelligence from cleaned public-record real estate data.",
+    "areaServed": ["North Carolina", "South Carolina", "Georgia", "United States"],
+    "serviceType": ["Distressed property lead curation", "County property data cleaning", "Real estate investor lead intelligence"],
+    "audience": {"@type": "BusinessAudience", "audienceType": "Real estate investors, wholesalers, acquisition teams"}
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -33,6 +50,7 @@
       line-height: 1.5;
       overflow-x: hidden;
     }
+    body::after { content:""; position: fixed; inset: 0; pointer-events:none; z-index:-3; opacity:.26; background-image: linear-gradient(132deg, transparent 0 11%, rgba(21,128,61,.18) 11.1% 11.4%, transparent 11.5% 28%, rgba(30,41,59,.10) 28.1% 28.4%, transparent 28.5% 48%, rgba(21,128,61,.12) 48.1% 48.4%, transparent 48.5%), linear-gradient(36deg, transparent 0 17%, rgba(30,41,59,.08) 17.1% 17.4%, transparent 17.5% 39%, rgba(21,128,61,.10) 39.1% 39.4%, transparent 39.5%); }
     body::before {
       content: "";
       position: fixed;
@@ -82,6 +100,12 @@
       padding: 22px; min-height: 600px; box-shadow: var(--shadow); overflow: hidden;
     }
     .visual-card::before { content:""; position:absolute; inset:-35%; background: radial-gradient(circle at 40% 35%, rgba(34,197,94,.28), transparent 18rem), radial-gradient(circle at 72% 70%, rgba(250,247,242,.13), transparent 18rem); }
+    .parcel-lines { position:absolute; inset:18px; opacity:.18; pointer-events:none; background: linear-gradient(118deg, transparent 0 16%, #fff 16.2% 16.45%, transparent 16.7% 38%, #fff 38.2% 38.45%, transparent 38.7%), linear-gradient(24deg, transparent 0 22%, #fff 22.2% 22.45%, transparent 22.7% 61%, #fff 61.2% 61.45%, transparent 61.7%), linear-gradient(90deg, transparent 0 52%, #fff 52.2% 52.45%, transparent 52.7%); border-radius:28px; }
+    .node-map { position:absolute; inset:0; pointer-events:none; }
+    .node { position:absolute; width:9px; height:9px; border-radius:999px; background:#86efac; box-shadow:0 0 0 7px rgba(34,197,94,.12), 0 0 30px rgba(34,197,94,.65); }
+    .node.one { left:18%; top:24%; } .node.two { left:64%; top:18%; } .node.three { left:77%; top:62%; } .node.four { left:31%; top:72%; }
+    .node-line { position:absolute; height:1px; background:linear-gradient(90deg, transparent, rgba(134,239,172,.55), transparent); transform-origin:left center; }
+    .node-line.a { left:19%; top:25%; width:48%; transform:rotate(-8deg); } .node-line.b { left:32%; top:72%; width:48%; transform:rotate(-13deg); } .node-line.c { left:64%; top:20%; width:25%; transform:rotate(65deg); }
     .map-grid { position:absolute; inset:0; opacity:.22; background-image: radial-gradient(rgba(255,255,255,.35) 1.2px, transparent 1.2px); background-size: 24px 24px; mask-image: linear-gradient(to bottom, black, transparent 78%); }
     .dash { position: relative; z-index: 2; display:flex; flex-direction:column; gap:16px; }
     .dash-top { display:flex; align-items:center; justify-content:space-between; padding: 8px 8px 12px; }
@@ -144,16 +168,32 @@
     .full { grid-column:1 / -1; }
     footer { padding:44px 0; border-top:1px solid var(--line); color:var(--muted); }
     .footer-row { display:flex; justify-content:space-between; gap:20px; align-items:center; }
+
+    .mini-badges { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+    .mini-badge { border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.08); border-radius:999px; padding:7px 9px; color:#d1fae5; font-size:11px; font-weight:800; }
+    .pipeline-card { margin-top:20px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.13); border-radius:28px; padding:22px; }
+    .pipeline { display:grid; grid-template-columns: repeat(5, 1fr); gap:12px; align-items:stretch; }
+    .pipe-step { position:relative; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12); border-radius:20px; padding:16px; min-height:110px; }
+    .pipe-step:not(:last-child)::after { content:""; position:absolute; right:-13px; top:50%; width:14px; height:2px; background:linear-gradient(90deg, rgba(134,239,172,.9), transparent); }
+    .pipe-step strong { display:block; margin-bottom:8px; }
+    .pipe-step span { color:#cbd5e1; font-size:13px; }
+    .geo-grid { display:grid; grid-template-columns: 1fr 1fr; gap:18px; }
+    .geo-card { background:rgba(255,255,255,.72); border:1px solid var(--line); border-radius:28px; padding:26px; }
+    .geo-card ul { margin:16px 0 0; padding-left:18px; color:var(--muted); }
+    .geo-card li { margin:8px 0; }
+    .plan-label { display:inline-flex; width:max-content; margin-bottom:12px; border-radius:999px; padding:6px 9px; background:var(--emerald-soft); color:var(--emerald); font-size:11px; font-weight:900; text-transform:uppercase; letter-spacing:.08em; }
     @media (max-width: 980px) {
       .hero-grid, .operator-kit { grid-template-columns: 1fr; }
-      .cards, .process, .pricing { grid-template-columns: repeat(2,1fr); }
+      .cards, .process, .pricing, .pipeline { grid-template-columns: repeat(2,1fr); }
+      .geo-grid { grid-template-columns: 1fr; }
       .visual-card { min-height: 520px; }
       .navlinks { display:none; }
     }
     @media (max-width: 640px) {
       .container { width: min(100% - 28px, 1160px); }
       .hero { padding-top: 34px; }
-      .trust-row, .cards, .process, .pricing, .routing, .kit-list, form { grid-template-columns: 1fr; }
+      .trust-row, .cards, .process, .pricing, .routing, .kit-list, form, .pipeline { grid-template-columns: 1fr; }
+      .pipe-step::after { display:none; }
       .lead-row { grid-template-columns: 1fr .7fr; }
       .lead-row.header { display:none; }
       .footer-row { flex-direction:column; align-items:flex-start; }
@@ -192,9 +232,11 @@
 
         <div class="visual-card" aria-label="LeadCurate dashboard preview">
           <div class="map-grid"></div>
+          <div class="parcel-lines"></div>
+          <div class="node-map"><span class="node one"></span><span class="node two"></span><span class="node three"></span><span class="node four"></span><span class="node-line a"></span><span class="node-line b"></span><span class="node-line c"></span></div>
           <div class="dash">
             <div class="dash-top">
-              <div class="dash-title"><small>Territory review</small><strong>Mecklenburg County, NC</strong></div>
+              <div class="dash-title"><small>Sample territory review</small><strong>Example County, NC</strong></div>
               <div class="status"><span class="pulse"></span> Active audit</div>
             </div>
             <div class="territory">
@@ -207,6 +249,7 @@
                 <div class="metric"><span>Seats</span><strong>2</strong></div>
                 <div class="metric"><span>Lead lanes</span><strong>5</strong></div>
               </div>
+              <div class="mini-badges"><span class="mini-badge">Tax delinquent</span><span class="mini-badge">Absentee</span><span class="mini-badge">Probate</span><span class="mini-badge">Vacancy</span></div>
             </div>
             <div class="territory">
               <div class="territory-head"><div><h3>Sample Batch</h3><p>Blurred preview. Actual exports include source date, score reason, and compliance fields.</p></div></div>
@@ -253,6 +296,15 @@
           <div class="step"><div class="num">03</div><h3>Enrich carefully</h3><p>Approved records are skip-trace enriched and DNC-status marked before delivery.</p></div>
           <div class="step"><div class="num">04</div><h3>Deliver batch</h3><p>Customers receive CSV/XLSX files with score, reason, source date, confidence, and assignment fields.</p></div>
         </div>
+        <div class="pipeline-card" aria-label="Source to delivery pipeline">
+          <div class="pipeline">
+            <div class="pipe-step"><strong>County source</strong><span>Recorder, tax, assessor, foreclosure, probate, vacancy, lien, and GIS sources.</span></div>
+            <div class="pipe-step"><strong>Normalize</strong><span>Owner names, parcel/APN, mailing address, property type, event date.</span></div>
+            <div class="pipe-step"><strong>Score</strong><span>Urgency, source confidence, contactability, lead lane, and freshness.</span></div>
+            <div class="pipe-step"><strong>Suppress</strong><span>Duplicates, assigned records, risky records, stale records, DNC/status fields.</span></div>
+            <div class="pipe-step"><strong>Deliver</strong><span>Buyer-ready CSV/XLSX with score reasons, source dates, and assignment IDs.</span></div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -265,6 +317,7 @@
         </div>
         <div class="pricing">
           <div class="price-card">
+            <span class="plan-label">Start here</span>
             <h3>County Review</h3>
             <div class="price">$175 <small>one-time</small></div>
             <p>Reserve your spot while we check source availability and seat capacity.</p>
@@ -272,6 +325,7 @@
             <a class="btn secondary" href="#county">Reserve review</a>
           </div>
           <div class="price-card featured">
+            <span class="plan-label">Most common</span>
             <h3>County Seat</h3>
             <div class="price">$497 <small>/mo</small></div>
             <p>For solo investors who want cleaner, limited-seat county lead flow.</p>
@@ -279,6 +333,7 @@
             <a class="btn primary" href="#county">Check county</a>
           </div>
           <div class="price-card">
+            <span class="plan-label">For teams</span>
             <h3>Operator Seat</h3>
             <div class="price">$897 <small>/mo</small></div>
             <p>For active wholesalers or small teams that need more flow and priority.</p>
@@ -286,6 +341,7 @@
             <a class="btn secondary" href="#county">Apply</a>
           </div>
           <div class="price-card">
+            <span class="plan-label">Premium control</span>
             <h3>Exclusive Territory</h3>
             <div class="price">$1,497+ <small>/mo</small></div>
             <p>For buyers who want to block competing seats in a defined county or zone.</p>
@@ -313,6 +369,39 @@
             <div class="kit-item">Buyer outreach templates</div>
             <div class="kit-item">Title handoff checklist</div>
             <div class="kit-item">Compliance reminder checklist</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="geo">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">Built for county search</div>
+          <h2>Local pages for the markets investors actually buy.</h2>
+          <p>LeadCurate can expand into search-friendly county and lead-lane pages without turning the main site into a confusing menu of options.</p>
+        </div>
+        <div class="geo-grid">
+          <div class="geo-card">
+            <h3>Geographic SEO</h3>
+            <p>County pages can target real investor searches while keeping the core offer simple.</p>
+            <ul>
+              <li>Tax delinquent leads in [County]</li>
+              <li>Probate property leads in [County]</li>
+              <li>Absentee owner leads in [County]</li>
+              <li>Pre-foreclosure leads in [County]</li>
+            </ul>
+          </div>
+          <div class="geo-card">
+            <h3>Generative Engine Optimization</h3>
+            <p>Clear definitions, FAQs, source explanations, schema markup, and comparison language help AI search tools understand the brand.</p>
+            <ul>
+              <li>What LeadCurate provides and does not provide</li>
+              <li>How limited county seats work</li>
+              <li>Why DNC-status marking is not a legal-to-call guarantee</li>
+              <li>How public records become buyer-ready lead batches</li>
+            </ul>
           </div>
         </div>
       </div>
