@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0f172a; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #faf7f2; color: #1e293b; }
+      .clip { position: absolute; }
+      .scene { inset: 0; overflow: hidden; background: #faf7f2; }
+      .shot { position: absolute; width: 1920px; height: 1080px; object-fit: cover; transform-origin: center center; filter: saturate(1.02) contrast(1.01); }
+      .shade { position: absolute; inset: 0; pointer-events: none; }
+      .shade.light { background: radial-gradient(circle at 70% 45%, transparent 0 460px, rgba(250,247,242,.70) 900px), linear-gradient(90deg, rgba(250,247,242,.76), rgba(250,247,242,.06) 58%, rgba(15,23,42,.08)); }
+      .shade.dark { background: linear-gradient(90deg, rgba(15,23,42,.82), rgba(15,23,42,.25) 60%, rgba(15,23,42,.72)), radial-gradient(circle at 70% 35%, rgba(34,197,94,.18), transparent 420px); }
+      .shade.form { background: linear-gradient(90deg, rgba(250,247,242,.84), rgba(250,247,242,.18) 56%, rgba(15,23,42,.04)); }
+      .caption { position: absolute; left: 92px; top: 120px; width: 720px; z-index: 5; }
+      .kicker { display: inline-flex; align-items: center; gap: 9px; padding: 10px 14px; border-radius: 999px; background: rgba(255,255,255,.72); border: 1px solid rgba(30,41,59,.12); color: #15803d; font-size: 17px; font-weight: 900; text-transform: uppercase; letter-spacing: .12em; }
+      .kicker.dark-kicker { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.16); color: #bbf7d0; }
+      .dot { width: 8px; height: 8px; border-radius: 50%; background: #15803d; box-shadow: 0 0 0 7px rgba(21,128,61,.12); }
+      .dark-kicker .dot { background: #22c55e; box-shadow: 0 0 0 7px rgba(34,197,94,.14); }
+      h1, h2 { font-family: "Playfair Display", Georgia, serif; font-weight: 700; letter-spacing: -.06em; line-height: .96; }
+      .caption h2 { margin-top: 24px; font-size: 82px; max-width: 780px; }
+      .caption p { margin-top: 24px; color: #475569; font-size: 30px; line-height: 1.24; max-width: 690px; }
+      .caption.dark { color: white; }
+      .caption.dark p { color: #cbd5e1; }
+      .brand-mark { position: absolute; left: 92px; top: 66px; z-index: 6; font-family: "Playfair Display", Georgia, serif; font-size: 42px; font-weight: 700; letter-spacing: -.05em; }
+      .brand-mark span { color: #15803d; }
+      .focus-frame { position: absolute; border-radius: 34px; border: 2px solid rgba(34,197,94,.58); box-shadow: 0 0 0 12px rgba(34,197,94,.07), 0 30px 90px rgba(15,23,42,.20); z-index: 4; }
+      .scan { position: absolute; width: 180px; height: 1600px; top: -260px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.34), transparent); transform: rotate(24deg); z-index: 5; }
+      .end-card { inset: 0; display: grid; place-items: center; text-align: center; background: radial-gradient(circle at 50% 40%, rgba(34,197,94,.16), transparent 340px), #faf7f2; }
+      .end-logo { font-family: "Playfair Display", Georgia, serif; font-size: 132px; line-height: .9; font-weight: 700; letter-spacing: -.075em; color: #1e293b; }
+      .end-logo span { color: #15803d; }
+      .end-sub { margin-top: 26px; color: #475569; font-size: 34px; font-weight: 800; }
+      .process-caption { left: 1120px; top: 118px; width: 650px; }
+      .process-caption h2 { font-size: 54px; line-height: 1.02; }
+      .pricing-caption { top: 108px; }
+      .pricing-caption h2, .form-caption h2 { font-size: 68px; }
+      .end-cta { display: inline-flex; margin-top: 36px; padding: 18px 28px; border-radius: 999px; background: #0f172a; color: white; font-size: 22px; font-weight: 900; box-shadow: 0 18px 50px rgba(15,23,42,.18); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="8" data-width="1920" data-height="1080">
+      <div id="scene-hero" class="clip scene" data-start="0" data-duration="1.35" data-track-index="1">
+        <img class="shot hero-shot" src="assets/screenshots/scroll-000.png" />
+        <div class="shade light"></div>
+        <div class="brand-mark">Lead<span>Curate</span>.</div>
+        <div class="caption hero-caption"><div class="kicker"><span class="dot"></span> Limited-seat property leads</div><h2>Stop buying the same lists.</h2></div>
+      </div>
+
+      <div id="scene-dashboard" class="clip scene" data-start="1.35" data-duration="1.25" data-track-index="2">
+        <img class="shot dashboard-shot" src="assets/screenshots/scroll-000-dashboard.png" />
+        <div class="shade dark"></div>
+        <div class="focus-frame dashboard-frame"></div>
+        <div class="scan dashboard-scan"></div>
+        <div class="caption dark dashboard-caption"><div class="kicker dark-kicker"><span class="dot"></span> Product proof</div><h2>Cleaned. Scored. Reserved.</h2></div>
+      </div>
+
+      <div id="scene-problem" class="clip scene" data-start="2.6" data-duration="1.15" data-track-index="3">
+        <img class="shot problem-shot" src="assets/screenshots/scroll-021.png" />
+        <div class="shade light"></div>
+        <div class="caption problem-caption"><div class="kicker"><span class="dot"></span> The problem</div><h2>Most investors are calling stale records.</h2></div>
+      </div>
+
+      <div id="scene-process" class="clip scene" data-start="3.75" data-duration="1.4" data-track-index="4">
+        <img class="shot process-shot" src="assets/screenshots/scroll-042.png" />
+        <div class="shade dark"></div>
+        <div class="focus-frame process-frame"></div>
+        <div class="caption dark process-caption"><div class="kicker dark-kicker"><span class="dot"></span> How it works</div><h2>County records become actionable batches.</h2></div>
+      </div>
+
+      <div id="scene-pricing" class="clip scene" data-start="5.15" data-duration="1.15" data-track-index="5">
+        <img class="shot pricing-shot" src="assets/screenshots/scroll-063.png" />
+        <div class="shade light"></div>
+        <div class="focus-frame pricing-frame"></div>
+        <div class="caption pricing-caption"><div class="kicker"><span class="dot"></span> Limited access</div><h2>Reviewed counties. Limited seats.</h2></div>
+      </div>
+
+      <div id="scene-form" class="clip scene" data-start="6.3" data-duration="1.0" data-track-index="6">
+        <img class="shot form-shot" src="assets/screenshots/scroll-100.png" />
+        <div class="shade form"></div>
+        <div class="focus-frame form-frame"></div>
+        <div class="caption form-caption"><div class="kicker"><span class="dot"></span> Next step</div><h2>Tell us your target county.</h2></div>
+      </div>
+
+      <div id="scene-end" class="clip end-card" data-start="7.3" data-duration="0.7" data-track-index="7">
+        <div>
+          <div class="end-logo">Lead<span>Curate</span>.</div>
+          <div class="end-sub">Limited-seat property owner leads.</div>
+          <div class="end-cta">Check My County</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.from("#scene-hero", { opacity: 0, duration: .2 }, 0)
+        .from(".brand-mark", { opacity: 0, y: -18, duration: .35, ease: "power3.out" }, .08)
+        .from(".hero-caption .kicker", { opacity: 0, y: 18, duration: .35, ease: "power3.out" }, .18)
+        .from(".hero-caption h2", { opacity: 0, y: 44, duration: .55, ease: "power3.out" }, .32)
+        .fromTo(".hero-shot", { scale: 1.03, x: 0, y: 0 }, { scale: 1.085, x: -24, y: -8, duration: 1.35, ease: "sine.inOut" }, 0)
+
+        .from("#scene-dashboard", { opacity: 0, duration: .18 }, 1.35)
+        .fromTo(".dashboard-shot", { scale: 1.45, x: -390, y: -72 }, { scale: 1.56, x: -470, y: -92, duration: 1.25, ease: "sine.inOut" }, 1.35)
+        .set(".dashboard-frame", { left: 1010, top: 135, width: 690, height: 650 }, 1.35)
+        .from(".dashboard-frame", { opacity: 0, scale: .96, duration: .32, ease: "power2.out" }, 1.55)
+        .from(".dashboard-caption", { opacity: 0, x: -42, duration: .44, ease: "power3.out" }, 1.52)
+        .fromTo(".dashboard-scan", { left: 760, opacity: 0 }, { left: 1770, opacity: .65, duration: .78, ease: "power2.inOut" }, 1.72)
+
+        .from("#scene-problem", { opacity: 0, duration: .22 }, 2.6)
+        .fromTo(".problem-shot", { scale: 1.08, y: -16 }, { scale: 1.13, y: -56, duration: 1.15, ease: "sine.inOut" }, 2.6)
+        .from(".problem-caption", { opacity: 0, y: 38, duration: .45, ease: "power3.out" }, 2.78)
+
+        .from("#scene-process", { opacity: 0, duration: .22 }, 3.75)
+        .fromTo(".process-shot", { scale: 1.06, y: -10 }, { scale: 1.12, y: -56, duration: 1.4, ease: "sine.inOut" }, 3.75)
+        .set(".process-frame", { left: 78, top: 430, width: 1765, height: 330 }, 3.75)
+        .from(".process-frame", { opacity: 0, y: 24, duration: .36, ease: "power2.out" }, 4.18)
+        .from(".process-caption", { opacity: 0, x: -48, duration: .46, ease: "power3.out" }, 3.95)
+
+        .from("#scene-pricing", { opacity: 0, duration: .22 }, 5.15)
+        .fromTo(".pricing-shot", { scale: 1.04, y: -24 }, { scale: 1.10, y: -64, duration: 1.15, ease: "sine.inOut" }, 5.15)
+        .set(".pricing-frame", { left: 522, top: 315, width: 428, height: 472 }, 5.15)
+        .from(".pricing-frame", { opacity: 0, scale: .97, duration: .36, ease: "power2.out" }, 5.48)
+        .from(".pricing-caption", { opacity: 0, y: 42, duration: .42, ease: "power3.out" }, 5.32)
+
+        .from("#scene-form", { opacity: 0, duration: .22 }, 6.3)
+        .fromTo(".form-shot", { scale: 1.06, y: -18 }, { scale: 1.11, y: -48, duration: 1.0, ease: "sine.inOut" }, 6.3)
+        .set(".form-frame", { left: 126, top: 452, width: 720, height: 382 }, 6.3)
+        .from(".form-frame", { opacity: 0, scale: .98, duration: .34, ease: "power2.out" }, 6.52)
+        .from(".form-caption", { opacity: 0, y: 38, duration: .38, ease: "power3.out" }, 6.44)
+
+        .from("#scene-end", { opacity: 0, duration: .25, ease: "power2.out" }, 7.3)
+        .from(".end-logo", { opacity: 0, y: 32, scale: .96, duration: .34, ease: "power3.out" }, 7.38)
+        .from(".end-sub", { opacity: 0, y: 22, duration: .28, ease: "power3.out" }, 7.52)
+        .from(".end-cta", { opacity: 0, y: 18, duration: .28, ease: "power3.out" }, 7.62);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

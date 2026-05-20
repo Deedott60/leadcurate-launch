@@ -1,0 +1,149 @@
+[a] Lead
+[span] Curate
+[a] Why LeadCurate
+[a] Operator Kit
+[a] Check County
+[a] Check availability
+[div] Limited-seat property owner leads
+[h1] Stop buying the same distressed property leads everyone else is calling.
+[p] LeadCurate turns messy public records into cleaned, scored lead batches with owner details, contact data, and DNC status marked.
+[a] Check My County
+[a] View pricing
+[strong] 1–3
+[span] buyers per county, based on usable lead volume
+[span] assigned records resold during your access period
+[strong] $175
+[span] county review deposit credited toward your first month
+[small] Sample territory review
+[strong] Example County, NC
+[div] County review in progress
+[h3] Available Buyer Seats
+[p] Estimated after source review and record cleanup
+[span] Lead flow
+[strong] Strong
+[span] Seats
+[span] Lead types
+[span] Tax delinquent
+[span] Absentee
+[span] Probate
+[span] Vacancy
+[h3] Sample Batch
+[p] Blurred preview. Full files include source dates, score reasons, DNC notes, and assignment IDs.
+[div] Owner
+[div] Signal
+[div] Outreach
+[div] Score
+[div] M. Anderson
+[span] Tax + absentee
+[div] DNC noted
+[div] Bright Oak LLC
+[span] Vacant
+[div] DNC noted
+[div] Estate record
+[span] Probate
+[div] Mail-first
+[h3] Assignment protection
+[p] Records assigned to you are held back from other buyers during your access period.
+[div] The problem
+[h2] Most investors are calling the same old lists.
+[p] The problem is not always the pitch. A lot of buyers are working stale records that have already been passed around. LeadCurate helps clean up the list before it ever reaches your team.
+[h3] Find the right records
+[p] We review county and property records to find owners that may be worth a closer look.
+[h3] Clean up the list
+[p] We remove obvious duplicates, fix messy owner and property details, and group records by the type of opportunity.
+[h3] Limit who gets them
+[p] We do not sell the same county list to everyone. Each market is reviewed before we decide how many buyers it can support.
+[div] How it works
+[h2] From county records to a lead batch your team can act on.
+[p] We review available records, refine the batch, add practical context, and prepare it for delivery.
+[h3] Review the county
+[p] We review available county sources and estimate whether the market can support a quality monthly batch.
+[h3] Refine the records
+[p] We improve owner and property details, remove repeat records, and organize leads by opportunity type.
+[h3] Add decision context
+[p] Approved records can include contact details, DNC status, source dates, and clear indicators for prioritization.
+[h3] Deliver the batch
+[p] Your team receives a structured file ready for review, assignment, and outreach planning.
+[strong] Source
+[span] Review county and property sources for records worth evaluating.
+[strong] Refine
+[span] Improve key details and remove records that do not meet batch criteria.
+[strong] Prioritize
+[span] Organize stronger opportunities so your team can focus its first review.
+[strong] Reserve
+[span] Keep assigned records reserved during your active access period.
+[strong] Prepare
+[span] Provide a structured batch with notes, dates, scores, and assignment details.
+[div] Simple pricing
+[h2] Each county is reviewed before we sell seats.
+[p] No guaranteed deals. No inflated lead counts. The review shows customers what monthly range the county can actually support.
+[span] Start here
+[h3] County Review
+[div] $175
+[small] one-time
+[p] Start a county review while we check source availability and confirm how many buyers the market can support.
+[li] 14-day hold
+[li] County source review
+[li] Expected delivery range
+[li] Credited toward your first month
+[a] Reserve review
+[span] Most common
+[h3] County Seat
+[div] $497
+[small] /mo
+[p] For solo investors who want cleaner county leads with fewer buyers competing for the same records.
+[li] 1 approved county
+[li] Limited-seat access
+[li] Monthly scored lead batch
+[li] Bad-record review
+[a] Check county
+[span] For teams
+[h3] Operator Seat
+[div] $897
+[small] /mo
+[p] For active wholesalers or small teams that need larger batches and faster access when inventory is available.
+[li] High-volume county or bundle
+[li] Biweekly delivery target where available
+[li] Priority batch assignment
+[li] Operator workflow support
+[a] Apply
+[span] Premium control
+[h3] Exclusive Territory
+[div] $1,497+
+[small] /mo
+[p] For buyers who want exclusive access to a defined county, ZIP group, or lead category.
+[li] Custom territory audit
+[li] Single-buyer lead categories
+[li] ZIP or county rules
+[li] Custom delivery schedule
+[a] Request quote
+[div] Operator Kit
+[h2] Practical tools included. Premium records delivered.
+[p] LeadCurate includes practical tools for seller calls, follow-up, and offer analysis so buyers can work each batch responsibly.
+[div] Seller call prep sheet
+[div] Discovery questions
+[div] Follow-up cadence
+[div] MAO calculator
+[div] Lead batch tracker
+[div] Seller outreach templates
+[div] Title handoff checklist
+[div] Outreach compliance reminders
+[div] Check availability
+[h2] Tell us your target county.
+[p] Send us your target market. We’ll review available sources, estimate monthly lead volume, and confirm whether the county can support one, two, or three buyers.
+[label] Email
+[label] Target county
+[label] Buyer profile
+[option] Solo investor or wholesaler
+[option] Acquisition team
+[option] Buy-and-hold investor
+[option] Commercial or specialty buyer
+[option] Still evaluating
+[label] Preferred access option
+[option] County availability review
+[option] County Seat access
+[option] Operator Seat access
+[option] Exclusive territory review
+[option] Operator Kit information
+[button] Check county availability
+[div] LeadCurate provides data and educational tools only. Customers are responsible for outreach practices, transaction decisions, and legal compliance. · Terms · Privacy · Compliance
