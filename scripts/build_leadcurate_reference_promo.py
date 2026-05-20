@@ -1,0 +1,64 @@
+from pathlib import Path
+import subprocess, textwrap, os, shutil
+
+root = Path('/root/leadcurate-launch')
+proj = root / 'video' / 'leadcurate-commercial-style-promo'
+cap = root / 'video' / 'leadcurate-page-capture' / 'screenshots'
+if proj.exists():
+    shutil.rmtree(proj)
+subprocess.run(['hyperframes','init',str(proj),'--example','blank','--resolution','landscape','--non-interactive','--skip-skills'], check=True)
+assets = proj / 'assets'
+shots = assets / 'screenshots'
+shots.mkdir(parents=True, exist_ok=True)
+for f in cap.glob('scroll-*.png'):
+    shutil.copy2(f, shots / f.name)
+# simple premium audio bed, no voiceover yet; realistic voice requires ElevenLabs/OpenAI/FAL config.
+subprocess.run('''ffmpeg -y \
+  -f lavfi -i "sine=frequency=46:duration=24:sample_rate=44100" \
+  -f lavfi -i "sine=frequency=92:duration=24:sample_rate=44100" \
+  -f lavfi -i "sine=frequency=184:duration=24:sample_rate=44100" \
+  -f lavfi -i "anoisesrc=color=pink:duration=24:sample_rate=44100" \
+  -filter_complex "[0:a]volume=0.11[a0];[1:a]volume=0.052[a1];[2:a]volume=0.020[a2];[3:a]volume=0.010,lowpass=f=900[a3];[a0][a1][a2][a3]amix=inputs=4,afade=t=in:st=0:d=1.2,afade=t=out:st=22.4:d=1.4,lowpass=f=1600,highpass=f=35[m]" \
+  -map "[m]" assets/music.wav''', cwd=proj, shell=True, check=True)
+
+index = r'''<!doctype html>
+<html lang="en" data-resolution="landscape">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1920, height=1080" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0} html,body{width:1920px;height:1080px;overflow:hidden;background:#0f172a;font-family:Inter,system-ui,sans-serif;color:#1e293b} #root{position:relative;width:1920px;height:1080px;overflow:hidden;background:#faf7f2}.clip{position:absolute}.scene{inset:0;overflow:hidden}.shot{position:absolute;width:1920px;height:1080px;object-fit:cover}.cream{background:#faf7f2}.dark{background:#0f172a;color:#fff}.brand{font-family:"Playfair Display",Georgia,serif;font-size:52px;font-weight:700;letter-spacing:-.055em}.brand span{color:#15803d}.label{display:inline-flex;gap:10px;align-items:center;padding:11px 15px;border-radius:999px;border:1px solid rgba(30,41,59,.12);background:rgba(255,255,255,.72);color:#15803d;font-weight:900;text-transform:uppercase;letter-spacing:.11em;font-size:17px}.dot{width:8px;height:8px;border-radius:50%;background:#15803d;box-shadow:0 0 0 7px rgba(21,128,61,.12)}.label.darklabel{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);color:#bbf7d0}.label.darklabel .dot{background:#22c55e;box-shadow:0 0 0 7px rgba(34,197,94,.14)}h1,h2{font-family:"Playfair Display",Georgia,serif;font-weight:700;letter-spacing:-.06em;line-height:.96}.big{font-size:82px}.mid{font-size:62px}.copy{font-size:30px;line-height:1.28;color:#475569;margin-top:22px}.dark .copy{color:#cbd5e1}.panel{position:absolute;left:92px;top:92px;width:740px;z-index:5}.rightpanel{left:1040px;top:120px;width:720px}.card{border-radius:32px;background:rgba(255,255,255,.74);border:1px solid rgba(30,41,59,.12);box-shadow:0 24px 80px rgba(15,23,42,.12);padding:28px}.darkcard{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);color:white}.table{display:grid;gap:10px;margin-top:18px}.row{display:grid;grid-template-columns:1.2fr .8fr .5fr;gap:12px;align-items:center;padding:13px 16px;border-radius:16px;background:#fff;border:1px solid rgba(30,41,59,.10);font-size:19px}.row.head{font-size:13px;text-transform:uppercase;font-weight:900;color:#64748b;background:transparent;border:0}.tag{display:inline-flex;width:max-content;padding:7px 10px;border-radius:999px;background:#dcfce7;color:#166534;font-weight:900;font-size:15px}.score{font-weight:900;color:#15803d}.female-scene{position:absolute;right:95px;bottom:0;width:700px;height:930px}.person{position:absolute;right:110px;bottom:0;width:390px;height:690px}.head{position:absolute;left:122px;top:34px;width:126px;height:142px;background:linear-gradient(#9b6a50,#774834);border-radius:48% 48% 45% 45%;box-shadow:0 18px 50px rgba(15,23,42,.20)}.hair{position:absolute;left:84px;top:0;width:205px;height:205px;background:#1f2937;border-radius:54% 54% 48% 48%;z-index:-1}.body{position:absolute;left:42px;top:176px;width:310px;height:430px;background:linear-gradient(145deg,#0f172a,#1e293b);border-radius:110px 110px 34px 34px;box-shadow:0 36px 90px rgba(15,23,42,.30)}.blazer{position:absolute;left:54px;top:188px;width:286px;height:420px;border-radius:100px 100px 28px 28px;background:linear-gradient(120deg,#0f172a,#111827)}.tablet{position:absolute;left:-30px;top:372px;width:430px;height:275px;background:#0f172a;border:14px solid #1e293b;border-radius:28px;box-shadow:0 28px 90px rgba(15,23,42,.38);transform:rotate(-4deg)}.tablet:before{content:"LeadCurate Batch";position:absolute;left:18px;top:16px;color:#bbf7d0;font-size:19px;font-weight:900}.tablet .line{height:18px;border-radius:999px;background:#e2e8f0;margin:54px 18px 0}.tablet .line:nth-child(2){width:70%;background:#dcfce7}.tablet .line:nth-child(3){width:88%;margin-top:14px}.tablet .line:nth-child(4){width:58%;margin-top:14px;background:#bbf7d0}.shade{position:absolute;inset:0}.shade.light{background:linear-gradient(90deg,rgba(250,247,242,.86),rgba(250,247,242,.18) 58%,rgba(15,23,42,.08))}.shade.darkshade{background:linear-gradient(90deg,rgba(15,23,42,.88),rgba(15,23,42,.30) 60%,rgba(15,23,42,.70)),radial-gradient(circle at 72% 40%,rgba(34,197,94,.20),transparent 430px)}.focus{position:absolute;border:2px solid rgba(34,197,94,.58);border-radius:30px;box-shadow:0 0 0 12px rgba(34,197,94,.08),0 28px 80px rgba(15,23,42,.22);z-index:4}.end{inset:0;display:grid;place-items:center;text-align:center;background:radial-gradient(circle at 50% 40%,rgba(34,197,94,.17),transparent 360px),#faf7f2}.end .brand{font-size:128px}.cta{display:inline-flex;margin-top:34px;padding:18px 30px;border-radius:999px;background:#0f172a;color:white;font-size:24px;font-weight:900}
+  </style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="24" data-width="1920" data-height="1080">
+  <div id="s1" class="clip scene cream" data-start="0" data-duration="4" data-track-index="1"><div class="panel"><div class="brand">Lead<span>Curate</span>.</div><br><br><div class="label"><span class="dot"></span>The problem</div><h1 class="big" style="margin-top:24px">Most buyers are calling the same old lists.</h1><p class="copy">The pitch is not always the problem. The records are.</p></div><div class="female-scene"><div class="person"><div class="hair"></div><div class="head"></div><div class="body"></div><div class="blazer"></div><div class="tablet"><div class="line"></div><div class="line"></div><div class="line"></div></div></div></div></div>
+  <div id="s2" class="clip scene cream" data-start="4" data-duration="4" data-track-index="2"><img class="shot hero" src="assets/screenshots/scroll-000.png"><div class="shade light"></div><div class="panel"><div class="label"><span class="dot"></span>LeadCurate</div><h2 class="big" style="margin-top:24px">Find the records worth working.</h2><p class="copy">County records, cleaned and organized before they reach your team.</p></div></div>
+  <div id="s3" class="clip scene dark" data-start="8" data-duration="5" data-track-index="3"><img class="shot dash" src="assets/screenshots/scroll-000.png"><div class="shade darkshade"></div><div class="focus dashfocus"></div><div class="panel dark"><div class="label darklabel"><span class="dot"></span>Product proof</div><h2 class="mid" style="margin-top:24px">Cleaned. Scored. Reserved.</h2><p class="copy">A batch your acquisition team can review, assign, and act on.</p></div></div>
+  <div id="s4" class="clip scene dark" data-start="13" data-duration="4.5" data-track-index="4"><img class="shot process" src="assets/screenshots/scroll-042.png"><div class="shade darkshade"></div><div class="rightpanel dark"><div class="label darklabel"><span class="dot"></span>How it works</div><h2 class="mid" style="margin-top:24px">Source. Refine. Prioritize. Reserve.</h2><p class="copy">The process stays controlled so the final file feels intentional, not recycled.</p></div></div>
+  <div id="s5" class="clip scene cream" data-start="17.5" data-duration="3.7" data-track-index="5"><div class="panel"><div class="label"><span class="dot"></span>Example batch</div><h2 class="mid" style="margin-top:24px">What lands in the file.</h2><p class="copy">Owner details, source date, DNC status, lead category, score, and decision context.</p></div><div class="card" style="position:absolute;right:110px;top:145px;width:820px"><div class="brand" style="font-size:34px">Lead<span>Curate</span> Batch</div><div class="table"><div class="row head"><div>Owner</div><div>Signal</div><div>Score</div></div><div class="row"><div>M. Anderson</div><div><span class="tag">Tax + absentee</span></div><div class="score">91</div></div><div class="row"><div>Bright Oak LLC</div><div><span class="tag">Vacant</span></div><div class="score">82</div></div><div class="row"><div>Estate record</div><div><span class="tag">Probate</span></div><div class="score">76</div></div></div></div></div>
+  <div id="s6" class="clip scene cream" data-start="21.2" data-duration="2.0" data-track-index="6"><img class="shot form" src="assets/screenshots/scroll-100.png"><div class="shade light"></div><div class="panel"><div class="label"><span class="dot"></span>Next step</div><h2 class="mid" style="margin-top:24px">Tell us your target county.</h2></div></div>
+  <div id="s7" class="clip end" data-start="23.2" data-duration=".8" data-track-index="7"><div><div class="brand">Lead<span>Curate</span>.</div><p class="copy" style="font-size:34px;font-weight:800">Limited-seat property owner leads.</p><div class="cta">Check My County</div></div></div>
+</div>
+<script>
+window.__timelines=window.__timelines||{};const tl=gsap.timeline({paused:true});
+tl.from('#s1 .panel',{opacity:0,y:34,duration:.7,ease:'power3.out'},0).from('.person',{opacity:0,x:120,duration:.9,ease:'power3.out'},.35).to('.person',{y:-10,duration:3.2,ease:'sine.inOut'},.7)
+.from('#s2',{opacity:0,duration:.35},4).fromTo('.hero',{scale:1.04,y:0},{scale:1.11,y:-26,duration:4,ease:'sine.inOut'},4).from('#s2 .panel',{opacity:0,y:34,duration:.7,ease:'power3.out'},4.25)
+.from('#s3',{opacity:0,duration:.35},8).fromTo('.dash',{scale:1.38,x:-350,y:-80},{scale:1.52,x:-465,y:-105,duration:5,ease:'sine.inOut'},8).set('.dashfocus',{left:1015,top:140,width:685,height:650},8).from('.dashfocus',{opacity:0,scale:.96,duration:.5},8.6).from('#s3 .panel',{opacity:0,x:-45,duration:.65,ease:'power3.out'},8.45)
+.from('#s4',{opacity:0,duration:.35},13).fromTo('.process',{scale:1.05,y:-8},{scale:1.11,y:-62,duration:4.5,ease:'sine.inOut'},13).from('#s4 .rightpanel',{opacity:0,x:55,duration:.7,ease:'power3.out'},13.45)
+.from('#s5',{opacity:0,duration:.35},17.5).from('#s5 .panel',{opacity:0,y:34,duration:.65,ease:'power3.out'},17.75).from('#s5 .card',{opacity:0,y:45,scale:.97,duration:.75,ease:'power3.out'},18.05).from('#s5 .row:not(.head)',{opacity:0,x:45,stagger:.18,duration:.5},18.55)
+.from('#s6',{opacity:0,duration:.35},21.2).fromTo('.form',{scale:1.05,y:-15},{scale:1.09,y:-50,duration:2,ease:'sine.inOut'},21.2).from('#s6 .panel',{opacity:0,y:35,duration:.55},21.45)
+.from('#s7',{opacity:0,duration:.3},23.2).from('#s7 .brand',{opacity:0,y:26,scale:.97,duration:.35},23.32).from('#s7 .copy',{opacity:0,y:20,duration:.3},23.45).from('#s7 .cta',{opacity:0,y:18,duration:.25},23.58);
+window.__timelines['main']=tl;
+</script>
+</body></html>'''
+(proj / 'index.html').write_text(index)
+(proj / '.gitignore').write_text('node_modules/\nrenders/frames/\nrenders/*-silent.mp4\n')
+subprocess.run(['npm','run','check'], cwd=proj, check=True)
+subprocess.run(['npx','hyperframes','render','.', '-o','renders/leadcurate-commercial-style-promo-silent.mp4','--fps','30','--quality','draft','--workers','1'], cwd=proj, check=True)
+subprocess.run('''ffmpeg -y -i renders/leadcurate-commercial-style-promo-silent.mp4 -i assets/music.wav -filter_complex "[1:a]volume=0.30,alimiter=limit=0.88[a]" -map 0:v -map "[a]" -c:v copy -c:a aac -b:a 192k -shortest renders/leadcurate-commercial-style-promo.mp4''', cwd=proj, shell=True, check=True)
+subprocess.run(['git','add','video/leadcurate-commercial-style-promo'], cwd=root, check=True)
+subprocess.run(['git','commit','-m','Add commercial-style LeadCurate promo draft'], cwd=root, check=False)
+subprocess.run(['git','push'], cwd=root, check=False)
+print('DONE', proj / 'renders' / 'leadcurate-commercial-style-promo.mp4')
