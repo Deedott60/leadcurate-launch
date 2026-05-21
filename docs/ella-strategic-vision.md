@@ -12,13 +12,13 @@ The goal is not just to sell a spreadsheet.
 
 The goal is to build a trusted data brand for serious real estate investors by combining:
 
-- county-specific source review
+- source review by county
 - cleaned and deduped public/source records
-- lead scoring and decision context
-- limited-seat county access
+- scoring and decision context
+- limited-seat access by county
 - contact data where available
 - DNC-aware fields where applicable
-- buyer education that helps investors understand why raw lists are not enough
+- buyer education that shows why raw lists are not enough
 
 Derrick wants LeadCurate to feel more like a professional intelligence service than a lead vendor.
 
@@ -64,7 +64,7 @@ LeadCurate should compete by being more transparent, more operational, and more 
 
 The positioning should say, directly or indirectly:
 
-> We are not selling hype. We are giving investors cleaner county intelligence, source context, and a better starting point for their own outreach and deal analysis.
+> We are not selling hype. We are giving investors cleaner property data, source context, and a better starting point for their own outreach and deal analysis.
 
 ## Anti-scam / trust philosophy
 
@@ -81,20 +81,20 @@ Do not say:
 
 Do say:
 
-- source-reviewed county records
+- source-reviewed property records
 - cleaned and deduped batches
 - scored or prioritized records
 - source/review dates included
 - contact data where available
 - DNC-aware fields where applicable
-- limited buyer seats based on county/source volume
+- limited buyer seats based on county and source volume
 - customers handle outreach, compliance, verification, and closing
 
 Trust is built through precision.
 
 ## Product promise
 
-LeadCurate helps investors stop wasting time on generic stale lists by giving them a more reviewed, more structured, and more decision-ready county lead batch.
+LeadCurate helps investors stop wasting time on generic stale lists by giving them a more reviewed, more structured, and more decision-ready property batch.
 
 The product promise is:
 
@@ -108,7 +108,7 @@ Not:
 
 A serious buyer should leave the page understanding:
 
-1. LeadCurate reviews county source availability before selling access.
+1. LeadCurate reviews source availability before selling access.
 2. Not every county can support the same number of buyers.
 3. Records are cleaned, deduped, and reviewed before delivery.
 4. The batch includes useful decision context, not just names.
@@ -190,7 +190,7 @@ Commercial story:
 
 ## Final strategic summary
 
-LeadCurate should win by being the lead/data company that tells the truth:
+LeadCurate should win by being the data company that tells the truth:
 
 - public/source records are messy,
 - generic lists are overused,
