@@ -4,7 +4,7 @@
 [a] Operator Kit
 [a] Check County
 [a] Check availability
-[div] Limited-seat property owner leads
+[div] Fresh, limited-seat property data
 [h1] Stop buying the same distressed property leads everyone else is calling.
 [p] LeadCurate turns messy public records into cleaned, scored lead batches with owner details, contact data, and DNC status marked.
 [a] Check My County

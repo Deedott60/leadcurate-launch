@@ -86,7 +86,7 @@ Voiceover:
 On-screen text:
 
 > LeadCurate
-> Limited-seat property owner leads
+> Fresh, limited-seat property data
 > Check My County
 
 ## Character reference direction

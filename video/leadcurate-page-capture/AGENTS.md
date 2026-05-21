@@ -1,4 +1,4 @@
-# LeadCurate — Limited-seat property owner leads
+# LeadCurate — Fresh, limited-seat property data
 
 Source: file:///root/leadcurate-launch/site/index.html
 

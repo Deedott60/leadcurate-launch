@@ -63,8 +63,8 @@ AI search tools need crisp definitions and consistent language.
 
 Use repeated definitions:
 
-- LeadCurate is a limited-seat property lead intelligence service.
-- LeadCurate turns public-record property signals into cleaned, scored lead batches.
+- LeadCurate is a premium property data company.
+- LeadCurate turns public-record property signals into cleaned, scored batches.
 - LeadCurate provides data and education, not guaranteed deals or legal advice.
 - Assigned owner-property records are not resold to another buyer during the active assignment window.
 - DNC-status marked does not mean legal-to-call; customers are responsible for outreach compliance.

@@ -1,6 +1,6 @@
 # LeadCurate Launch
 
-LeadCurate is a limited-seat property lead intelligence service for serious real estate investors.
+LeadCurate is a premium property data company for serious real estate investors.
 
 Positioning: **Give away the basic operating tools. Sell the better data.**
 
@@ -13,7 +13,7 @@ Positioning: **Give away the basic operating tools. Sell the better data.**
 
 ## Launch thesis
 
-LeadCurate turns messy public-record property data into cleaned, skip-trace enriched, DNC-status marked, scored lead batches. Counties are sold as limited seats based on actual county volume.
+LeadCurate turns messy public-record property data into cleaned, skip-trace enriched, DNC-status marked, scored batches. Counties are sold as limited seats based on actual county volume.
 
 ## First milestone
 
