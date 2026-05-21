@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LeadCurate — Fresh, limited-seat property data</title>
+  <title>LeadCurate — Limited-seat county property data</title>
   <meta name="description" content="LeadCurate turns messy public-record property data into cleaned, scored, limited-seat property-owner lead batches for serious real estate investors, wholesalers, and acquisition teams." />
   <meta name="keywords" content="property data, tax delinquent records, probate records, absentee owner records, real estate investor data, wholesaling data, county property records, skip-traced property records, DNC-aware property data, exclusive property data" />
   <meta name="robots" content="index, follow" />
-  <meta property="og:title" content="LeadCurate — Fresh, limited-seat property data" />
-  <meta property="og:description" content="Cleaned, scored batches with owner details, contact data, and DNC status marked." />
+  <meta property="og:title" content="LeadCurate — Limited-seat county property data" />
+  <meta property="og:description" content="County property records reviewed, cleaned, scored, and delivered with source context, contact data where available, and DNC-aware fields where applicable." />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <script type="application/ld+json">
@@ -237,9 +237,13 @@
     .geo-card ul { margin:16px 0 0; padding-left:18px; color:var(--muted); }
     .geo-card li { margin:8px 0; }
     .plan-label { display:inline-flex; width:max-content; margin-bottom:12px; border-radius:999px; padding:6px 9px; background:var(--emerald-soft); color:var(--emerald); font-size:11px; font-weight:900; text-transform:uppercase; letter-spacing:.08em; }
+    .faq-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; }
+    .faq-grid .card { background:rgba(255,255,255,.92); color: var(--ink); }
+    .faq-grid .card h3 { color: var(--ink); }
+    .faq-grid .card p { color: var(--muted); }
     @media (max-width: 980px) {
       .hero-grid, .operator-kit { grid-template-columns: 1fr; }
-      .cards, .process, .pricing, .pipeline { grid-template-columns: repeat(2,1fr); }
+      .cards, .process, .pricing, .pipeline, .faq-grid { grid-template-columns: repeat(2,1fr); }
       .geo-grid { grid-template-columns: 1fr; }
       .visual-card { min-height: 520px; }
       .navlinks { display:none; }
@@ -248,7 +252,7 @@
       .container { width: min(100% - 28px, 1160px); }
       .hero { padding-top: 34px; }
       .map-plate { width: 96vw; height: 300px; opacity: .22; top: 44%; }
-      .trust-row, .cards, .process, .pricing, .routing, .kit-list, form, .pipeline { grid-template-columns: 1fr; }
+      .trust-row, .cards, .process, .pricing, .routing, .kit-list, form, .pipeline, .faq-grid { grid-template-columns: 1fr; }
       .pipe-step::after { display:none; }
       .lead-row { grid-template-columns: 1fr .7fr; }
       .lead-row.header { display:none; }
@@ -273,11 +277,11 @@
       <div class="map-plate" aria-hidden="true"><span class="map-pin one"></span><span class="map-pin two"></span><span class="map-pin three"></span><span class="map-pin four"></span></div>
       <div class="container hero-grid">
         <div>
-          <div class="eyebrow"><span class="pulse"></span> Fresh, limited-seat property data</div>
-          <h1>Get the right property data first, not the same stale lists everyone else is buying.</h1>
-          <p>LeadCurate reviews source records first, then cleans, scores, and delivers fresh batches with decision context and compliance-aware fields where available.</p>
+          <div class="eyebrow"><span class="pulse"></span> Limited-seat county property data</div>
+          <h1>Stop buying the same stale property lists everyone else is working.</h1>
+          <p>LeadCurate reviews county source records first, then cleans, dedupes, scores, and delivers limited-seat batches with source dates, score reasons, contact data where available, and DNC-aware fields where applicable.</p>
           <div class="hero-actions">
-            <a class="btn primary" href="#county">Check My County</a>
+            <a class="btn primary" href="#county">Check county availability</a>
             <a class="btn secondary" href="#pricing">View pricing</a>
           </div>
           <div class="trust-row">
@@ -329,13 +333,28 @@
       <div class="container">
         <div class="section-head">
           <div class="kicker">Why people trust us</div>
-          <h2>We review first, then deliver data buyers can actually use.</h2>
-          <p>A lot of buyers are stuck with stale records that have already been passed around. LeadCurate fixes that by reviewing source records first and only sending out the batches that meet the standard.</p>
+          <h2>We show the work because serious buyers are tired of mystery lists.</h2>
+          <p>Most lead sellers hide the process and sell the promise. LeadCurate earns trust by reviewing the county, showing the decision context, and only delivering records that pass the batch standard.</p>
         </div>
         <div class="cards">
-          <div class="card"><div class="icon-dot">1</div><h3>Review the source</h3><p>We check county and property records before anything gets sold.</p></div>
-          <div class="card"><div class="icon-dot">2</div><h3>Clean the data</h3><p>We remove obvious duplicates, fix messy owner and property details, and sort the records into the right opportunity type.</p></div>
-          <div class="card"><div class="icon-dot">3</div><h3>Limit the seats</h3><p>We only sell what the county can support so the same records are not pushed to thousands of people.</p></div>
+          <div class="card"><div class="icon-dot">1</div><h3>Review the source</h3><p>We check source availability, usable record volume, and buyer-seat capacity before anything gets sold.</p></div>
+          <div class="card"><div class="icon-dot">2</div><h3>Refine the records</h3><p>We clean owner and property details, remove duplicates, flag weak records, and organize stronger opportunities for review.</p></div>
+          <div class="card"><div class="icon-dot">3</div><h3>Limit the seats</h3><p>We match buyer access to usable county volume so assigned records are not broadly resold during an active access period.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <div class="container geo-grid">
+        <div class="geo-card">
+          <span class="plan-label">Why we teach the process</span>
+          <h3>Part of the “free game” is intentional.</h3>
+          <p style="color: var(--muted); margin: 0;">A serious investor should understand why a record is worth reviewing, not just receive another name and phone number. LeadCurate gives enough context to help buyers think through priority, outreach, and offer math without pretending the data closes deals by itself.</p>
+        </div>
+        <div class="geo-card">
+          <span class="plan-label">Built against stale-list culture</span>
+          <h3>Cleaner data. Fewer blind guesses.</h3>
+          <p style="color: var(--muted); margin: 0;">The market is full of recycled lists and big promises. Our edge is source review, dedupe, scoring, limited-seat delivery, and clear compliance boundaries — so the buyer knows what they are paying for.</p>
         </div>
       </div>
     </section>
@@ -344,14 +363,14 @@
       <div class="container">
         <div class="section-head">
           <div class="kicker">How it works</div>
-          <h2>From source records to a batch your team can work.</h2>
-          <p>We review the county, refine the batch, add context, and deliver the data with a clear reason for why it made the cut.</p>
+          <h2>From raw county records to a batch your team can actually work.</h2>
+          <p>The value is not just the list. It is the review, cleanup, scoring, assignment protection, and practical context that helps your team decide what deserves attention first.</p>
         </div>
         <div class="process">
-          <div class="step"><div class="num">01</div><h3>Review the county</h3><p>We check source availability and estimate whether the market can support a quality batch.</p></div>
-          <div class="step"><div class="num">02</div><h3>Clean the records</h3><p>We improve owner and property details, remove repeats, and organize the records by opportunity type.</p></div>
+          <div class="step"><div class="num">01</div><h3>Review the county</h3><p>We check source availability, record volume, and whether the county can support one, two, or three buyers.</p></div>
+          <div class="step"><div class="num">02</div><h3>Refine the records</h3><p>We improve owner/property details, remove repeats, exclude weak records, and preserve source context.</p></div>
           <div class="step"><div class="num">03</div><h3>Add decision context</h3><p>Approved records can include source dates, score reasons, contact data where available, and DNC-aware fields where applicable.</p></div>
-          <div class="step"><div class="num">04</div><h3>Deliver the batch</h3><p>Your team gets a structured file ready for review, assignment, and outreach planning.</p></div>
+          <div class="step"><div class="num">04</div><h3>Deliver the batch</h3><p>Your team gets a structured CSV/XLSX file ready for review, assignment, and outreach planning.</p></div>
         </div>
         <div class="pipeline-card" aria-label="Source to delivery pipeline">
           <div class="pipeline">
@@ -413,19 +432,19 @@
       <div class="container operator-kit">
         <div class="section-head">
           <div class="kicker">What you receive</div>
-          <h2>Practical tools included. Fresh records delivered.</h2>
-          <p>LeadCurate includes the basics so buyers can work each batch with a real process, not just a file dump.</p>
+          <h2>Clean files, useful context, and enough game to work the batch correctly.</h2>
+          <p>We give buyers more than names. Each delivery is designed to help an investor understand what they are looking at, why it made the batch, and how to start reviewing it without pretending deals are guaranteed.</p>
         </div>
         <div class="kit-panel">
           <div class="kit-list">
-            <div class="kit-item">Seller call prep sheet</div>
-            <div class="kit-item">Discovery questions</div>
-            <div class="kit-item">Follow-up cadence</div>
-            <div class="kit-item">MAO calculator</div>
-            <div class="kit-item">Lead batch tracker</div>
-            <div class="kit-item">Seller outreach templates</div>
-            <div class="kit-item">Title handoff checklist</div>
-            <div class="kit-item">Compliance reminders</div>
+            <div class="kit-item">Cleaned county CSV/XLSX</div>
+            <div class="kit-item">Source / review date</div>
+            <div class="kit-item">Score or priority reason</div>
+            <div class="kit-item">Assignment ID</div>
+            <div class="kit-item">Contact data where available</div>
+            <div class="kit-item">DNC-aware fields where applicable</div>
+            <div class="kit-item">MAO / offer review worksheet</div>
+            <div class="kit-item">Call prep + compliance reminders</div>
           </div>
         </div>
       </div>
@@ -436,8 +455,8 @@
       <div class="container">
         <div class="section-head">
           <div class="kicker">Check availability</div>
-          <h2>Tell us your target county.</h2>
-          <p>We review source availability, estimate monthly volume, and confirm whether the county can support one, two, or three buyers.</p>
+          <h2>Start with a real county review.</h2>
+          <p>Tell us the market you want. We review source availability, usable record volume, and seat count before recommending access.</p>
         </div>
         <div class="form-wrap">
           <form>
@@ -456,13 +475,15 @@
     <div class="container">
       <div class="section-head" style="margin-bottom: 18px; max-width: 860px;">
         <div class="kicker">FAQ</div>
-        <h2>Quick answers before you book a county review.</h2>
+        <h2>Quick answers before you check a county.</h2>
       </div>
-      <div class="cards" style="grid-template-columns: repeat(2, 1fr);">
+      <div class="faq-grid">
         <div class="card"><h3>Why are seats limited?</h3><p>Because some counties only support a small number of buyers once source volume and usable records are counted.</p></div>
-        <div class="card"><h3>What do I get?</h3><p>A reviewed county batch with source context, score reasons, and delivery details where available.</p></div>
+        <div class="card"><h3>What do I get?</h3><p>A cleaned CSV/XLSX batch with source context, score reasons, assignment details, contact data where available, and DNC-aware fields where applicable.</p></div>
         <div class="card"><h3>Is this exclusive?</h3><p>Not always. Some counties support one buyer, some support more. The review tells you what is actually possible.</p></div>
         <div class="card"><h3>Do you sell the same records to everyone?</h3><p>No. Records assigned during an active access period are protected from broad resale.</p></div>
+        <div class="card"><h3>Do you guarantee deals?</h3><p>No. LeadCurate provides data and educational tools. Buyers handle outreach, compliance, verification, negotiation, and closing.</p></div>
+        <div class="card"><h3>Is contact data always included?</h3><p>No. Contact data is included where available, and DNC-aware fields are marked where applicable.</p></div>
       </div>
     </div>
   </section>
