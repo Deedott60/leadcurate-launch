@@ -1,0 +1,9 @@
+{
+  "scene": 6,
+  "image": "06-final-desk-cta.png",
+  "job": {
+    "id": "CyJgNRgxUdjUE8XnacSR",
+    "polling_url": "https://openrouter.ai/api/v1/videos/CyJgNRgxUdjUE8XnacSR",
+    "status": "pending"
+  }
+}

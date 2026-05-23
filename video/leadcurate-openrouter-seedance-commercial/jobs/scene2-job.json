@@ -1,0 +1,9 @@
+{
+  "scene": 2,
+  "image": "02-sorting-records.png",
+  "job": {
+    "id": "zSk6jQHVgb1fYAOysNUY",
+    "polling_url": "https://openrouter.ai/api/v1/videos/zSk6jQHVgb1fYAOysNUY",
+    "status": "pending"
+  }
+}

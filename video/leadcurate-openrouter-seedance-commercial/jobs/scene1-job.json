@@ -1,0 +1,9 @@
+{
+  "scene": 1,
+  "image": "01-over-shoulder-records.png",
+  "job": {
+    "id": "GcRVPIq3xz3OUpdzzgfH",
+    "polling_url": "https://openrouter.ai/api/v1/videos/GcRVPIq3xz3OUpdzzgfH",
+    "status": "pending"
+  }
+}

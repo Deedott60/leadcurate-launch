@@ -1,0 +1,9 @@
+{
+  "scene": 4,
+  "image": "04-phone-followup.png",
+  "job": {
+    "id": "Ma4fG5OOfv2zxmhhRN5a",
+    "polling_url": "https://openrouter.ai/api/v1/videos/Ma4fG5OOfv2zxmhhRN5a",
+    "status": "pending"
+  }
+}

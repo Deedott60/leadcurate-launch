@@ -1,0 +1,9 @@
+{
+  "scene": 3,
+  "image": "03-tablet-batch.png",
+  "job": {
+    "id": "qJxx5CuJauGz0BwZvy6i",
+    "polling_url": "https://openrouter.ai/api/v1/videos/qJxx5CuJauGz0BwZvy6i",
+    "status": "pending"
+  }
+}
