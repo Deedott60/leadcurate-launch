@@ -1,0 +1,10 @@
+{
+  "scene": 5,
+  "image": "scene5.png",
+  "job": {
+    "id": "TRoc6eXTgLaYFeLmfC09",
+    "polling_url": "https://openrouter.ai/api/v1/videos/TRoc6eXTgLaYFeLmfC09",
+    "status": "pending"
+  },
+  "prompt": "Premium cinematic female-led product-insert shot. The same Black professional woman gently scrolls a tablet with a sparse curated property list. Warm ambient light, shallow depth of field, clean restrained UI, quiet professional ad style, calm hand movement. No readable private data, no logos, no morphing UI."
+}

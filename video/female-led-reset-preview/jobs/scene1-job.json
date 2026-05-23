@@ -1,0 +1,10 @@
+{
+  "scene": 1,
+  "image": "scene1.png",
+  "job": {
+    "id": "yVqpaOIREdwHE1lKtMoL",
+    "polling_url": "https://openrouter.ai/api/v1/videos/yVqpaOIREdwHE1lKtMoL",
+    "status": "pending"
+  },
+  "prompt": "Premium cinematic female-led insurance-style commercial shot. Slow push-in on a Black professional woman in her 30s at an acquisitions desk reviewing county property records. Warm late-afternoon light, serious but calm expression, elegant realism, shallow depth of field, restrained commercial tone. No hype, no logos, no readable private data, no distortion."
+}

@@ -1,0 +1,10 @@
+{
+  "scene": 6,
+  "image": "scene6.png",
+  "job": {
+    "id": "10UrFWzulXLDCuLhCGZR",
+    "polling_url": "https://openrouter.ai/api/v1/videos/10UrFWzulXLDCuLhCGZR",
+    "status": "pending"
+  },
+  "prompt": "Premium final female-led commercial brand shot. The same Black professional woman stands beside a clean desk with county map, organized file stack, and warm window light. Very slow push-in, subtle confident expression, elegant negative space for later CTA, refined insurance-commercial mood. No logos, no readable data, no distortion."
+}

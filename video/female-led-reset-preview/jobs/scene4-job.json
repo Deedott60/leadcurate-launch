@@ -1,0 +1,10 @@
+{
+  "scene": 4,
+  "image": "scene4.png",
+  "job": {
+    "id": "RnYdbXWvLI0DJG2yuZhT",
+    "polling_url": "https://openrouter.ai/api/v1/videos/RnYdbXWvLI0DJG2yuZhT",
+    "status": "pending"
+  },
+  "prompt": "Premium editorial female-led commercial shot, top-down view of the same woman placing elegant process cards across a dark walnut desk. Warm natural light, deliberate slow motion, calm insurance-ad pacing, polished but real. No logos, no clutter, no gimmicky animation."
+}

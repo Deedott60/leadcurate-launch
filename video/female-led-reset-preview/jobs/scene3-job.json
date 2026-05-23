@@ -1,0 +1,10 @@
+{
+  "scene": 3,
+  "image": "scene3.png",
+  "job": {
+    "id": "PfdZoavZWroCdl0zEMZg",
+    "polling_url": "https://openrouter.ai/api/v1/videos/PfdZoavZWroCdl0zEMZg",
+    "status": "pending"
+  },
+  "prompt": "Premium female-led over-the-shoulder commercial shot of the same Black professional woman working at a laptop with a clean dark-mode property workflow interface. Warm dim room glow, subtle hand motion on trackpad, restrained ad look, shallow depth of field, professional confidence. No logos, no readable private data, no fake busy UI."
+}

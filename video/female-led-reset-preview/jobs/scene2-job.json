@@ -1,0 +1,10 @@
+{
+  "scene": 2,
+  "image": "scene2.png",
+  "job": {
+    "id": "rwZwCC4FzjdEhbYBx38w",
+    "polling_url": "https://openrouter.ai/api/v1/videos/rwZwCC4FzjdEhbYBx38w",
+    "status": "pending"
+  },
+  "prompt": "Premium trust-building female-led commercial shot. Close-up of the same Black professional woman turning a pen thoughtfully at the desk. Warm natural side light, quiet reflective mood, slight natural movement in shoulders and hands, cinematic realism, calm premium pacing. No logos, no readable data, no extra fingers."
+}
