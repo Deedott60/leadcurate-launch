@@ -21,6 +21,8 @@ This file records the high-value operating disciplines loaded to reduce drift, o
 
 - `skill:business/service-intent-monitoring-system`
 
+- `skill:software-development/tmux-session-operations`
+
 ## What this stack is meant to fix
 - claiming access or proof too early
 - mixing multiple businesses together

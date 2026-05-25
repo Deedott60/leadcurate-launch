@@ -6,6 +6,7 @@ Pulled from `docs/future-businesses/README.md`
 - Brand DNA Commercial System
 
 ## Saved skills created in this workstream
+- skill:software-development/tmux-session-operations
 - skill:business/service-intent-monitoring-system
 - skill:business/proactive-business-execution
 - skill:research/trend-opportunity-scanner
