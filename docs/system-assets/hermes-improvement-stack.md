@@ -19,6 +19,8 @@ This file records the high-value operating disciplines loaded to reduce drift, o
 - `skill:research/trend-opportunity-scanner`
 - `skill:business/portal-product-workflow-planner`
 
+- `skill:business/service-intent-monitoring-system`
+
 ## What this stack is meant to fix
 - claiming access or proof too early
 - mixing multiple businesses together
