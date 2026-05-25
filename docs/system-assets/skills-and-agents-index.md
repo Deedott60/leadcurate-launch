@@ -6,6 +6,9 @@ Pulled from `docs/future-businesses/README.md`
 - Brand DNA Commercial System
 
 ## Saved skills created in this workstream
+- skill:business/proactive-business-execution
+- skill:research/trend-opportunity-scanner
+- skill:business/portal-product-workflow-planner
 - skill:software-development/memory-triage
 - skill:software-development/project-boundary-bootstrap
 - skill:software-development/safe-mutation-loop

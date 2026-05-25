@@ -15,6 +15,10 @@ This file records the high-value operating disciplines loaded to reduce drift, o
 - `skill:creative/commercial-direction-stack`
 - `agent:autonomous-ai-agents/reverse-engineering-agent`
 
+- `skill:business/proactive-business-execution`
+- `skill:research/trend-opportunity-scanner`
+- `skill:business/portal-product-workflow-planner`
+
 ## What this stack is meant to fix
 - claiming access or proof too early
 - mixing multiple businesses together
