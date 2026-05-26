@@ -6,6 +6,8 @@ Pulled from `docs/future-businesses/README.md`
 - Brand DNA Commercial System
 
 ## Saved skills created in this workstream
+- skill:software-development/site-navigation-automation-stack
+- skill:creative/high-fidelity-reverse-engineering
 - skill:software-development/tmux-session-operations
 - skill:business/service-intent-monitoring-system
 - skill:business/proactive-business-execution

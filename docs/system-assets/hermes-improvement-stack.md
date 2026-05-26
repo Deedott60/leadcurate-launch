@@ -23,6 +23,9 @@ This file records the high-value operating disciplines loaded to reduce drift, o
 
 - `skill:software-development/tmux-session-operations`
 
+- `skill:software-development/site-navigation-automation-stack`
+- `skill:creative/high-fidelity-reverse-engineering`
+
 ## What this stack is meant to fix
 - claiming access or proof too early
 - mixing multiple businesses together
