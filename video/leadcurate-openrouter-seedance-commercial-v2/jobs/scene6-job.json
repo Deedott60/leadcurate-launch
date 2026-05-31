@@ -1,0 +1,10 @@
+{
+  "scene": 6,
+  "image": "06-brand-endcard-desk.png",
+  "job": {
+    "id": "w9rqooy86SAkQjveSO0r",
+    "polling_url": "https://openrouter.ai/api/v1/videos/w9rqooy86SAkQjveSO0r",
+    "status": "pending"
+  },
+  "prompt": "Premium final commercial brand shot. Clean desk with warm window light, county map folded neatly, organized file stack, dark laptop softly blurred in background, emerald accent folder, elegant negative space reserved for later CTA text. Very slow pull-back, refined insurance-commercial mood. No faces, no logos, no readable data, no distortion."
+}

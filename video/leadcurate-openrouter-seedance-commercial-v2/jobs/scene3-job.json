@@ -1,0 +1,10 @@
+{
+  "scene": 3,
+  "image": "03-laptop-solution.png",
+  "job": {
+    "id": "nPtLGpNfaFoXRUlOncqM",
+    "polling_url": "https://openrouter.ai/api/v1/videos/nPtLGpNfaFoXRUlOncqM",
+    "status": "pending"
+  },
+  "prompt": "Premium cinematic over-the-shoulder low angle of a laptop on a tasteful desk showing a clean minimal dark-mode property workflow interface with sparse rows and subtle green status markers. Hand on trackpad moving gently. Warm dim room glow, shallow depth of field, restrained ad look. No face visible, no fake busy UI, no readable private data, no logos."
+}

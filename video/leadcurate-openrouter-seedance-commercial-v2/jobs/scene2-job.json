@@ -1,0 +1,10 @@
+{
+  "scene": 2,
+  "image": "02-thoughtful-hands.png",
+  "job": {
+    "id": "CY6VCYjaPniMqB8tpRRv",
+    "polling_url": "https://openrouter.ai/api/v1/videos/CY6VCYjaPniMqB8tpRRv",
+    "status": "pending"
+  },
+  "prompt": "Premium trust-building commercial shot. Close-up of two thoughtful hands at a desk, one turning a pen slowly, blurred monitor glow in the background, warm natural side light, quiet and reflective, shallow depth of field, realistic skin texture, cinematic stillness. No face visible. No logos, no readable data, no extra fingers."
+}

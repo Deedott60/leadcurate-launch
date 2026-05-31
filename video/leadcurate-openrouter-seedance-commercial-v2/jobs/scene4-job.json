@@ -1,0 +1,10 @@
+{
+  "scene": 4,
+  "image": "04-process-cards.png",
+  "job": {
+    "id": "1uwNzEDu48j9cXH4XHi1",
+    "polling_url": "https://openrouter.ai/api/v1/videos/1uwNzEDu48j9cXH4XHi1",
+    "status": "pending"
+  },
+  "prompt": "Premium editorial commercial shot, top-down flat lay on dark walnut desk. Four physical process cards arranged cleanly across the desk with understated motion, representing source, refine, prioritize, reserve. Warm natural light, minimalist composition, cinematic overhead shot, calm insurance-ad pacing. No hands, no screens, no logos, no clutter."
+}

@@ -1,0 +1,10 @@
+{
+  "scene": 5,
+  "image": "05-tablet-product.png",
+  "job": {
+    "id": "NPYgUrsB2HQpsVaRK5UJ",
+    "polling_url": "https://openrouter.ai/api/v1/videos/NPYgUrsB2HQpsVaRK5UJ",
+    "status": "pending"
+  },
+  "prompt": "Premium cinematic product-insert shot. Slow dolly across a tablet lying flat on a desk showing a sparse curated property list with subtle green status indicators. Hand enters frame gently to scroll once. Warm ambient light, shallow depth of field, clean restrained UI, quiet professional ad style. No readable private data, no logos, no morphing UI."
+}

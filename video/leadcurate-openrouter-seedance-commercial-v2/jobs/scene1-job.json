@@ -1,0 +1,10 @@
+{
+  "scene": 1,
+  "image": "01-desk-fatigue.png",
+  "job": {
+    "id": "5RAupLsfFtv0oWbTHZzO",
+    "polling_url": "https://openrouter.ai/api/v1/videos/5RAupLsfFtv0oWbTHZzO",
+    "status": "pending"
+  },
+  "prompt": "Premium cinematic insurance-style commercial shot. Slow push-in over the shoulder of a professional acquisitions desk in warm late-afternoon light. One hand rests on printed spreadsheets and parcel records, pen nearby, half-empty coffee cup, tasteful dark wood desk, subtle fatigue and realism, shallow depth of field, restrained color grade. No face visible. No readable private data, no logos, no distortion."
+}
