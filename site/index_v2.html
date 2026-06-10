@@ -246,7 +246,7 @@
     .toggle-switch.annual { background: var(--emerald-soft); border-color: rgba(21,128,61,0.22); }
     .discount-pill { background: var(--gold-soft); color: var(--gold); border: 1px solid rgba(217,119,6,0.18); font-size: 11px; font-weight: 900; padding: 4px 8px; border-radius: 99px; margin-left: 4px; }
     
-    .pricing { display:grid; grid-template-columns: repeat(5,1fr); gap:12px; align-items:stretch; }
+    .pricing { display:grid; grid-template-columns: repeat(4,1fr); gap:16px; align-items:stretch; }
     .price-card { background:#fff; border:1px solid var(--line); border-radius:28px; padding:24px; display:flex; flex-direction:column; min-height:360px; position:relative; transition: all 0.3s ease; }
     .price-card.featured {
       background: var(--dark); color:white; transform: translateY(-8px); box-shadow: var(--shadow);
@@ -312,13 +312,9 @@
     .geo-card li { margin:8px 0; }
     .plan-label { display:inline-flex; width:max-content; margin-bottom:12px; border-radius:999px; padding:6px 9px; background:var(--emerald-soft); color:var(--emerald); font-size:11px; font-weight:900; text-transform:uppercase; letter-spacing:.08em; }
     
-    @media (max-width: 1100px) {
-      .pricing { grid-template-columns: repeat(3, 1fr) !important; }
-    }
     @media (max-width: 980px) {
       .hero-grid, .operator-kit { grid-template-columns: 1fr; }
       .cards, .process, .pricing, .pipeline { grid-template-columns: repeat(2,1fr); }
-      .pricing { grid-template-columns: repeat(2, 1fr) !important; }
       .geo-grid { grid-template-columns: 1fr; }
       .visual-card { min-height: 520px; }
       .navlinks { display:none; }
@@ -488,46 +484,47 @@
           <span class="toggle-label" id="label-annual" onclick="setBilling('annual')">Annual Billing <span class="discount-pill">Save 15%</span></span>
         </div>
         
-        <div class="pricing">
-          <div class="price-card">
-            <span class="plan-label">Start here</span>
-            <h3>County Review</h3>
-            <div class="price">$175 <small>one-time</small></div>
-            <p>We check source availability and see whether the market can support a paid seat.</p>
-            <ul><li>14-day hold</li><li>County source review</li><li>Expected delivery range</li><li>Credited toward first month</li></ul>
-            <a class="btn secondary" href="#county">Check county availability</a>
+        <!-- Deposit Explanation Notice -->
+        <div style="background: rgba(255, 255, 255, 0.7); border: 1px solid var(--line); border-radius: 20px; padding: 20px 24px; margin-bottom: 32px; display: flex; align-items: center; gap: 16px; max-width: 860px; margin-left: auto; margin-right: auto;">
+          <div style="width: 42px; height: 42px; border-radius: 50%; background: var(--emerald-soft); display: flex; align-items: center; justify-content: center; color: var(--emerald); font-weight: 900; font-size: 18px; flex-shrink: 0;">$</div>
+          <div style="font-size: 14px; color: var(--muted); line-height: 1.4;">
+            <strong style="color: var(--ink); display: block; margin-bottom: 2px;">Onboarding Step: Standard County Review Deposit ($175)</strong>
+            All monthly and trial orders begin with a 100% refundable manual county source review to confirm record volume and completeness. Once approved, your $175 deposit is **credited directly toward your firstMonth's invoice**.
           </div>
+        </div>
+
+        <div class="pricing">
           <div class="price-card">
             <span class="plan-label" style="background: var(--emerald-soft); color: var(--emerald);">One-Time Trial</span>
             <h3>Single Batch</h3>
             <div class="price">$299 <small>one-time</small></div>
-            <p>Perfect for testing data hygiene in a single county before locking in a monthly seat.</p>
-            <ul><li>1 clean county file</li><li>DNC-aware flags</li><li>MAO/Offer worksheets</li><li>Ready in 48-72 hours</li></ul>
-            <a class="btn secondary" href="#county">Check county availability</a>
+            <p>Test the hygiene. Purchase a single historical county file with no recurring fees. *Subject to active seat availability.</p>
+            <ul><li>1 current county snapshot</li><li>Source dates & data signals</li><li>DNC-aware registry flags</li><li>No recurring subscription</li></ul>
+            <a class="btn secondary" href="#county">Check trial availability</a>
           </div>
           <div class="price-card featured">
             <span class="plan-label" style="background: var(--gold-soft); color: var(--gold);">Most popular</span>
             <h3>County Seat</h3>
             <div class="price" id="price-county-seat">$497 <small>/mo</small></div>
-            <p>For solo investors who want fresh county data with fewer buyers competing for the same records.</p>
-            <ul><li>1 approved county</li><li>Limited-seat access</li><li>Monthly scored batch</li><li>Data review for quality issues</li></ul>
-            <a class="btn primary" href="#county">Check county availability</a>
+            <p>For active solo investors. Secure ongoing limited-seat access with fresh records delivered every single month.</p>
+            <ul><li>1 approved target county</li><li>Monthly fresh record updates</li><li>Protected territory suppression</li><li>MAO worksheets & call prep</li></ul>
+            <a class="btn primary" href="#county">Check seat availability</a>
           </div>
           <div class="price-card">
-            <span class="plan-label">For active teams</span>
+            <span class="plan-label">Active Teams</span>
             <h3>Operator Seat</h3>
             <div class="price" id="price-operator-seat">$897 <small>/mo</small></div>
-            <p>For active operators who need larger batches and faster access when inventory supports it.</p>
-            <ul><li>High-volume county or bundle</li><li>Biweekly delivery target where available</li><li>Priority batch assignment</li><li>Operator workflow support</li></ul>
-            <a class="btn secondary" href="#county">Check county availability</a>
+            <p>For high-volume acquisition teams who need biweekly delivery speeds to keep cold callers busy.</p>
+            <ul><li>Double volume / 2 counties</li><li>Biweekly delivery targets</li><li>Priority queue assignment</li><li>Dedicated operator support</li></ul>
+            <a class="btn secondary" href="#county">Check seat availability</a>
           </div>
           <div class="price-card">
-            <span class="plan-label">Premium control</span>
+            <span class="plan-label">Complete control</span>
             <h3>Exclusive Territory</h3>
             <div class="price" id="price-exclusive">$1,497+ <small>/mo</small></div>
-            <p>For buyers who want a defined county, ZIP group, or lead category with exclusive access rules.</p>
-            <ul><li>Custom territory audit</li><li>Single-buyer lead categories</li><li>ZIP or county rules</li><li>Custom delivery schedule</li></ul>
-            <a class="btn secondary" href="#county">Check county availability</a>
+            <p>Buy out the market. Lock down a complete county or custom ZIP group with zero other seats sold.</p>
+            <ul><li>100% exclusive county buyout</li><li>0 other competitor seats sold</li><li>Customized scoring parameters</li><li>Custom delivery scheduling</li></ul>
+            <a class="btn secondary" href="#county">Apply for exclusivity</a>
           </div>
         </div>
       </div>
