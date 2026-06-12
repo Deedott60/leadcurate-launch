@@ -1,0 +1,31 @@
+[
+  {
+    "id": "cdbaded4-0175-4314-bee5-83644d8678fb",
+    "status": "completed",
+    "display_name": "Seedance 1.5 Pro",
+    "job_set_type": "seedance1_5",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3F37vZN18soTQr022Umm4EH7Be1/hf_20260612_202730_cdbaded4-0175-4314-bee5-83644d8678fb.mp4",
+    "created_at": 1781296050.696082,
+    "params": {
+      "width": 1280,
+      "height": 720,
+      "prompt": "Realistic LinkedIn-style trust commercial shot. Use the provided still as the exact first frame and preserve the woman identity, navy blouse, office, tablet and papers. Slow subtle camera push-in with natural breathing and tiny hand movement while she reviews county property records. Calm serious professional mood, soft daylight, shallow depth of field, 50mm lens, premium insurance-commercial pacing. No gimmicks, no flashy transitions, no generated subtitles, no logos, no new readable text, no extra people, no distorted hands, no exaggerated facial expressions.",
+      "medias": [
+        {
+          "data": {
+            "id": "d81eb6e9-7372-43f6-afe1-1fb9fb677756",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3F37vZN18soTQr022Umm4EH7Be1/d81eb6e9-7372-43f6-afe1-1fb9fb677756.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        }
+      ],
+      "duration": 4,
+      "fixed_lens": false,
+      "resolution": "720p",
+      "aspect_ratio": "16:9",
+      "seed": 37371,
+      "generate_audio": true
+    }
+  }
+]

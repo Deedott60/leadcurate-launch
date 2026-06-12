@@ -1,0 +1,2 @@
+file '/root/leadcurate-launch/video/higgsfield-sarah-commercial/shot_captioned.mp4'
+file '/root/leadcurate-launch/video/higgsfield-sarah-commercial/endcard.mp4'

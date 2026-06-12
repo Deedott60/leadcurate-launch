@@ -1,0 +1,28 @@
+[
+  {
+    "id": "da2f781c-1d98-45f5-a86f-23ee9b9abf49",
+    "status": "completed",
+    "display_name": "Nano Banana Pro",
+    "job_set_type": "nano_banana_2",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3F37vZN18soTQr022Umm4EH7Be1/hf_20260612_202519_da2f781c-1d98-45f5-a86f-23ee9b9abf49.png",
+    "created_at": 1781295919.876881,
+    "params": {
+      "width": 1376,
+      "height": 768,
+      "aspect_ratio": "16:9",
+      "resolution": "1k",
+      "batch_size": 1,
+      "input_images": [
+        {
+          "id": "d0bab088-0891-4955-94a1-298835b6d58e",
+          "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3F37vZN18soTQr022Umm4EH7Be1/d0bab088-0891-4955-94a1-298835b6d58e.png",
+          "type": "media_input"
+        }
+      ],
+      "input_image": null,
+      "application": null,
+      "surface": null,
+      "prompt": "Ultra-realistic premium trust-commercial hero still. Use the provided character reference board for Sarah Thompson: warm Caucasian woman around 40, shoulder-length wavy light-brown/blonde highlighted hair, navy blouse, approachable but serious professional presence. Scene: modern calm office with soft daylight, Sarah seated at a clean desk reviewing printed county property records and a tablet with abstract non-readable dashboard shapes, not legible text. Tone: LinkedIn insurance-style commercial, trustworthy, grounded, human-first, restrained. Camera: medium-close 50mm lens, shallow depth of field, natural skin texture, soft window light, muted cream/dark navy/emerald brand palette. No gimmicks, no exaggerated expressions, no fake smiles, no readable text, no logos, no subtitles, no extra people, no distorted hands."
+    }
+  }
+]
