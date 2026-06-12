@@ -1,0 +1,31 @@
+[
+  {
+    "id": "3f71ad00-30aa-41ca-8c64-57ab21e66b1c",
+    "status": "completed",
+    "display_name": "Seedance 1.5 Pro",
+    "job_set_type": "seedance1_5",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3F37vZN18soTQr022Umm4EH7Be1/hf_20260612_205219_3f71ad00-30aa-41ca-8c64-57ab21e66b1c.mp4",
+    "created_at": 1781297539.495673,
+    "params": {
+      "width": 1280,
+      "height": 720,
+      "prompt": "Premium realistic LeadCurate commercial shot. Preserve Sarah-like professional woman in navy blouse on calm business call at office desk. Slow subtle push-in, measured confident tone, soft daylight, 50mm lens, shallow depth of field. Trustworthy LinkedIn insurance-ad pacing, no gimmicks, no generated captions, no logos, no readable text, no extra people, realistic hands and face.",
+      "medias": [
+        {
+          "data": {
+            "id": "7d5aec68-5f66-49c1-a869-73ed4aa97b02",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3F37vZN18soTQr022Umm4EH7Be1/7d5aec68-5f66-49c1-a869-73ed4aa97b02.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        }
+      ],
+      "duration": 4,
+      "fixed_lens": false,
+      "resolution": "720p",
+      "aspect_ratio": "16:9",
+      "seed": 588573,
+      "generate_audio": true
+    }
+  }
+]

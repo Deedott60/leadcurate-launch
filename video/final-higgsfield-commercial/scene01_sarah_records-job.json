@@ -1,0 +1,31 @@
+[
+  {
+    "id": "67afbc5e-bb08-4f84-b280-d9a483a1834b",
+    "status": "completed",
+    "display_name": "Seedance 1.5 Pro",
+    "job_set_type": "seedance1_5",
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3F37vZN18soTQr022Umm4EH7Be1/hf_20260612_204856_67afbc5e-bb08-4f84-b280-d9a483a1834b.mp4",
+    "created_at": 1781297336.917342,
+    "params": {
+      "width": 1280,
+      "height": 720,
+      "prompt": "Premium realistic LeadCurate trust commercial shot. Preserve the provided Sarah-like professional woman, navy blouse, calm serious expression, soft daylight office. Slow subtle push-in as she reviews county property records at her desk. Insurance-style LinkedIn ad pacing, 50mm lens, shallow depth of field, grounded and human. No gimmicks, no flashy transitions, no generated captions, no logos, no readable text, no new people, realistic face and hands.",
+      "medias": [
+        {
+          "data": {
+            "id": "fd95a787-c920-4020-81df-ccee648116c7",
+            "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3F37vZN18soTQr022Umm4EH7Be1/fd95a787-c920-4020-81df-ccee648116c7.png",
+            "type": "media_input"
+          },
+          "role": "start_image"
+        }
+      ],
+      "duration": 4,
+      "fixed_lens": false,
+      "resolution": "720p",
+      "aspect_ratio": "16:9",
+      "seed": 741862,
+      "generate_audio": true
+    }
+  }
+]
