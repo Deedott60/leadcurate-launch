@@ -7,6 +7,7 @@
   <meta name="description" content="LeadCurate turns messy public-record property data into cleaned, scored, limited-seat property-owner lead batches for serious real estate investors, wholesalers, and acquisition teams." />
   <meta name="keywords" content="property data, tax delinquent records, probate records, absentee owner records, real estate investor data, wholesaling data, county property records, skip-traced property records, DNC-aware property data, exclusive property data" />
   <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://leadcurate.com/" />
   <meta property="og:title" content="LeadCurate — Limited-seat county property data" />
   <meta property="og:description" content="County property records reviewed, cleaned, scored, and delivered with source context, contact data where available, and DNC-aware fields where applicable." />
   <meta property="og:type" content="website" />
@@ -103,14 +104,13 @@
     }
     .hero { padding: 72px 0 62px; position: relative; }
     .hero-grid { display: grid; grid-template-columns: 1.02fr .98fr; gap: 42px; align-items: center; position: relative; z-index: 2; }
-    
-    /* CSS Pulse Animation */
+
     @keyframes pulse-glow {
       0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(21,128,61,0.5); }
       70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(21,128,61,0); }
       100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(21,128,61,0); }
     }
-    
+
     .map-plate {
       position: absolute;
       left: 50%;
@@ -161,8 +161,7 @@
     .trust-card:hover { transform: translateY(-2px); }
     .trust-card strong { display: block; font-size: 22px; letter-spacing: -.03em; }
     .trust-card span { display: block; color: var(--muted); font-size: 13px; margin-top: 3px; }
-    
-    /* Interactive Dashboard Visual Card */
+
     .visual-card {
       position: relative; border-radius: 36px; background: linear-gradient(145deg, rgba(15,23,42,.97), rgba(30,41,59,.94)); color: white;
       padding: 22px; min-height: 600px; box-shadow: var(--shadow); overflow: hidden;
@@ -180,16 +179,15 @@
     .dash-top { display:flex; align-items:center; justify-content:space-between; padding: 4px 8px 8px; }
     .dash-title small { color: #94a3b8; display:block; font-weight:700; text-transform:uppercase; letter-spacing:.12em; font-size:11px; }
     .dash-title strong { font-size: 20px; letter-spacing:-.03em; }
-    
-    /* Interactive County Tabs */
-    .county-tabs { display: flex; gap: 8px; padding: 4px 8px; margin-bottom: 2px; }
+
+    .county-tabs { display: flex; gap: 8px; padding: 4px 8px; margin-bottom: 2px; flex-wrap: wrap; }
     .county-tab {
       background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
       padding: 6px 12px; border-radius: 99px; font-size: 11px; font-weight: 700;
       color: #94a3b8; cursor: pointer; transition: all .2s ease;
     }
     .county-tab:hover, .county-tab.active { background: var(--emerald); color: white; border-color: transparent; }
-    
+
     .status { display:inline-flex; align-items:center; gap:7px; background: rgba(34,197,94,.14); border:1px solid rgba(34,197,94,.24); color:#bbf7d0; border-radius:999px; padding:8px 11px; font-size:12px; font-weight:800; }
     .territory { background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:24px; padding:16px; backdrop-filter: blur(12px); transition: all 0.3s ease; }
     .territory-head { display:flex; justify-content:space-between; gap:10px; margin-bottom:12px; }
@@ -211,8 +209,7 @@
     .kicker { color: var(--emerald); font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: .14em; }
     h2 { font-family:"Playfair Display", serif; font-size: clamp(36px, 5vw, 58px); line-height:1; letter-spacing:-.05em; margin:10px 0 14px; }
     .section-head p { color: var(--muted); font-size:18px; margin:0; }
-    
-    /* Grid Layout Elements */
+
     .cards { display:grid; grid-template-columns: repeat(3,1fr); gap:18px; }
     .card { background: rgba(255,255,255,.66); border:1px solid var(--line); border-radius: var(--radius); padding:26px; box-shadow: 0 14px 40px rgba(15,23,42,.05); transition: all 0.3s ease; }
     .card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(15,23,42,.08); border-color: rgba(21,128,61,0.22); }
@@ -229,9 +226,8 @@
     .num { color:#86efac; font-weight:900; margin-bottom:18px; }
     .step h3 { margin:0 0 8px; }
     .step p { margin:0; color:#cbd5e1; font-size:14px; }
-    
-    /* Interactive Toggle Elements */
-    .toggle-wrap { display: flex; justify-content: center; align-items: center; gap: 14px; margin-bottom: 38px; }
+
+    .toggle-wrap { display: flex; justify-content: center; align-items: center; gap: 14px; margin-bottom: 18px; }
     .toggle-label { font-size: 14px; font-weight: 700; color: var(--muted); cursor: pointer; }
     .toggle-label.active { color: var(--ink); }
     .toggle-switch {
@@ -245,7 +241,8 @@
     .toggle-switch.annual::after { left: 34px; background: var(--emerald); }
     .toggle-switch.annual { background: var(--emerald-soft); border-color: rgba(21,128,61,0.22); }
     .discount-pill { background: var(--gold-soft); color: var(--gold); border: 1px solid rgba(217,119,6,0.18); font-size: 11px; font-weight: 900; padding: 4px 8px; border-radius: 99px; margin-left: 4px; }
-    
+    .billing-note { text-align: center; color: var(--muted); font-size: 12px; margin-bottom: 28px; min-height: 16px; font-weight: 600; }
+
     .pricing { display:grid; grid-template-columns: repeat(4,1fr); gap:16px; align-items:stretch; }
     .price-card { background:#fff; border:1px solid var(--line); border-radius:28px; padding:24px; display:flex; flex-direction:column; min-height:360px; position:relative; transition: all 0.3s ease; }
     .price-card.featured {
@@ -255,8 +252,10 @@
     .price-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
     .price-card.featured:hover { transform: translateY(-12px); }
     .price-card h3 { margin:0 0 8px; font-size:20px; }
-    .price { font-size:34px; letter-spacing:-.06em; font-weight:900; margin:8px 0 12px; display: flex; align-items: baseline; }
-    .price small { font-size:13px; color:inherit; opacity:.7; letter-spacing:0; margin-left: 4px; }
+    .price { font-size:34px; letter-spacing:-.06em; font-weight:900; margin:8px 0 4px; display: flex; align-items: baseline; flex-wrap: wrap; }
+    .price small { font-size:13px; color:inherit; opacity:.7; letter-spacing:0; margin-left: 4px; font-weight: 700; }
+    .billed-as { font-size: 11px; color: var(--muted); margin: 0 0 10px; font-weight: 700; min-height: 14px; }
+    .price-card.featured .billed-as { color: #94a3b8; }
     .price-card p { color:var(--muted); margin:0 0 18px; font-size:14px; }
     .price-card.featured p, .price-card.featured li { color:#cbd5e1; }
     .price-card ul { list-style:none; padding:0; margin:0 0 22px; display:grid; gap:10px; font-size:14px; }
@@ -272,10 +271,19 @@
     input, select, textarea { width:100%; border:1px solid var(--line); background:#fbfaf8; border-radius:14px; padding:14px 13px; font:inherit; color:var(--ink); outline:none; }
     input:focus, select:focus, textarea:focus { border-color: rgba(21,128,61,.45); box-shadow:0 0 0 4px rgba(21,128,61,.1); }
     .full { grid-column:1 / -1; }
+    .consent-row { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--muted); font-weight: 500; }
+    .consent-row input[type=checkbox] { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--emerald); flex-shrink: 0; }
+    .consent-row a { color: var(--emerald); text-decoration: underline; font-weight: 700; }
+    .form-status { margin-top: 12px; padding: 12px 14px; border-radius: 12px; font-size: 14px; font-weight: 700; display: none; }
+    .form-status.success { display: block; background: var(--emerald-soft); color: var(--emerald); border: 1px solid rgba(21,128,61,.2); }
+    .form-status.error { display: block; background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
     footer { padding:44px 0; border-top:1px solid var(--line); color:var(--muted); }
-    .footer-row { display:flex; justify-content:space-between; gap:20px; align-items:center; }
-    
-    /* Interactive FAQ Accordion */
+    .footer-row { display:flex; justify-content:space-between; gap:20px; align-items:center; flex-wrap: wrap; }
+    .footer-links { display: flex; gap: 18px; font-size: 13px; font-weight: 600; }
+    .footer-links a:hover { color: var(--ink); text-decoration: underline; }
+    .footer-disclaimer { font-size: 13px; max-width: 560px; }
+
     .faq-container { display: flex; flex-direction: column; gap: 12px; max-width: 860px; margin: 0 auto; }
     .faq-item { background: rgba(255,255,255,.92); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; transition: all 0.3s ease; }
     .faq-trigger {
@@ -296,7 +304,7 @@
     }
     .faq-item.active { border-color: rgba(21,128,61,0.22); box-shadow: 0 10px 30px rgba(15,23,42,0.04); }
     .faq-item.active .faq-icon { transform: rotate(45deg); background: var(--emerald-soft); color: var(--emerald); }
-    .faq-item.active .faq-content { max-height: 180px; padding: 18px 26px 22px; border-color: var(--line); }
+    .faq-item.active .faq-content { max-height: 240px; padding: 18px 26px 22px; border-color: var(--line); }
 
     .mini-badges { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
     .mini-badge { border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.08); border-radius:999px; padding:7px 9px; color:#d1fae5; font-size:11px; font-weight:800; }
@@ -311,7 +319,21 @@
     .geo-card ul { margin:16px 0 0; padding-left:18px; color:var(--muted); }
     .geo-card li { margin:8px 0; }
     .plan-label { display:inline-flex; width:max-content; margin-bottom:12px; border-radius:999px; padding:6px 9px; background:var(--emerald-soft); color:var(--emerald); font-size:11px; font-weight:900; text-transform:uppercase; letter-spacing:.08em; }
-    
+
+    .deposit-notice {
+      background: rgba(255, 255, 255, 0.7); border: 1px solid var(--line);
+      border-radius: 20px; padding: 20px 24px; margin-bottom: 32px;
+      display: flex; align-items: center; gap: 16px;
+      max-width: 860px; margin-left: auto; margin-right: auto;
+    }
+    .deposit-icon {
+      width: 42px; height: 42px; border-radius: 50%; background: var(--emerald-soft);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--emerald); font-weight: 900; font-size: 18px; flex-shrink: 0;
+    }
+    .deposit-text { font-size: 14px; color: var(--muted); line-height: 1.5; }
+    .deposit-text strong { color: var(--ink); display: block; margin-bottom: 4px; font-size: 14px; }
+
     @media (max-width: 980px) {
       .hero-grid, .operator-kit { grid-template-columns: 1fr; }
       .cards, .process, .pricing, .pipeline { grid-template-columns: repeat(2,1fr); }
@@ -322,12 +344,13 @@
     @media (max-width: 640px) {
       .container { width: min(100% - 28px, 1160px); }
       .hero { padding-top: 34px; }
-      .map-plate { width: 96vw; height: 300px; opacity: .22; top: 44%; }
+      .map-plate { width: 84vw; height: 300px; opacity: .22; top: 44%; }
       .trust-row, .cards, .process, .pricing, .routing, .kit-list, form, .pipeline { grid-template-columns: 1fr; }
       .pipe-step::after { display:none; }
       .lead-row { grid-template-columns: 1fr .7fr; }
       .lead-row.header { display:none; }
       .footer-row { flex-direction:column; align-items:flex-start; }
+      .deposit-notice { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
@@ -356,13 +379,12 @@
             <a class="btn secondary" href="#pricing">View pricing</a>
           </div>
           <div class="trust-row">
-            <div class="trust-card"><strong>1–3</strong><span>buyers per county, based on usable lead volume</span></div>
+            <div class="trust-card"><strong>1&ndash;3</strong><span>buyers per county, based on usable lead volume</span></div>
             <div class="trust-card"><strong>0</strong><span>assigned records resold during your access period</span></div>
             <div class="trust-card"><strong>$175</strong><span>county review deposit credited toward your first month</span></div>
           </div>
         </div>
 
-        <!-- Dashboard with Interactive Tabs -->
         <div class="visual-card" aria-label="LeadCurate dashboard preview">
           <div class="map-grid"></div>
           <div class="parcel-lines"></div>
@@ -372,14 +394,13 @@
               <div class="dash-title"><small>Territory Selector</small><strong id="current-county-title">Mecklenburg County, NC</strong></div>
               <div class="status" id="current-county-status"><span class="pulse"></span> 1 of 2 seats filled</div>
             </div>
-            
-            <!-- Interactive County Tabs -->
+
             <div class="county-tabs">
-              <div class="county-tab active" onclick="switchCounty('Mecklenburg')">Mecklenburg, NC</div>
-              <div class="county-tab" onclick="switchCounty('Wake')">Wake, NC</div>
-              <div class="county-tab" onclick="switchCounty('Charleston')">Charleston, SC</div>
+              <div class="county-tab active" data-county="Mecklenburg">Mecklenburg, NC</div>
+              <div class="county-tab" data-county="Wake">Wake, NC</div>
+              <div class="county-tab" data-county="Charleston">Charleston, SC</div>
             </div>
-            
+
             <div class="territory">
               <div class="territory-head">
                 <div><h3>Available Buyer Seats</h3><p>Estimated after source review and record cleanup</p></div>
@@ -398,7 +419,7 @@
               </div>
             </div>
             <div class="territory">
-              <div class="territory-head"><div><h3>Sample Batch</h3><p>Blurred preview. Full files include source dates, score reasons, DNC notes, and assignment IDs.</p></div></div>
+              <div class="territory-head"><div><h3>Sample Batch</h3><p>Illustrative preview. Full files include source dates, score reasons, DNC notes, and assignment IDs.</p></div></div>
               <div class="lead-table" id="lead-table-body">
                 <div class="lead-row header"><div>Owner</div><div>Signal</div><div>Outreach</div><div>Score</div></div>
                 <div class="lead-row"><div class="blur">M. Anderson</div><div><span class="tag">Tax + absentee</span></div><div>DNC check</div><div>91</div></div>
@@ -434,12 +455,12 @@
         <div class="geo-card">
           <span class="plan-label">Why we teach the process</span>
           <h3>We include the practical training most sellers leave out.</h3>
-          <p style="color: var(--muted); margin: 0;">A serious investor should understand why a record is worth reviewing, not just receive another name and phone number. LeadCurate includes the worksheets, call prep, follow-up structure, and offer-review guidance buyers often pay separate courses for — without pretending the data closes deals by itself.</p>
+          <p style="color: var(--muted); margin: 0;">A serious investor should understand why a record is worth reviewing, not just receive another name and phone number. LeadCurate includes the worksheets, call prep, follow-up structure, and offer-review guidance buyers often pay separate courses for &mdash; without pretending the data closes deals by itself.</p>
         </div>
         <div class="geo-card">
           <span class="plan-label">Built against stale-list culture</span>
           <h3>Cleaner data. Fewer blind guesses.</h3>
-          <p style="color: var(--muted); margin: 0;">The market is full of recycled lists and big promises. Our edge is source review, dedupe, scoring, limited-seat delivery, and clear compliance boundaries — so the buyer knows what they are paying for.</p>
+          <p style="color: var(--muted); margin: 0;">The market is full of recycled lists and big promises. Our edge is source review, dedupe, scoring, limited-seat delivery, and clear compliance boundaries &mdash; so the buyer knows what they are paying for.</p>
         </div>
       </div>
     </section>
@@ -476,20 +497,19 @@
           <h2>Each county is reviewed before we sell access.</h2>
           <p style="margin-top: 10px;">No hype. No fake guarantees. The review shows what the county can actually support.</p>
         </div>
-        
-        <!-- Interactive Monthly/Annual Toggle -->
+
         <div class="toggle-wrap">
-          <span class="toggle-label active" id="label-monthly" onclick="setBilling('monthly')">Monthly Billing</span>
-          <div class="toggle-switch" id="billing-toggle" onclick="toggleBilling()"></div>
-          <span class="toggle-label" id="label-annual" onclick="setBilling('annual')">Annual Billing <span class="discount-pill">Save 15%</span></span>
+          <span class="toggle-label active" id="label-monthly">Monthly Billing</span>
+          <div class="toggle-switch" id="billing-toggle" role="switch" aria-checked="false" tabindex="0"></div>
+          <span class="toggle-label" id="label-annual">Annual Billing <span class="discount-pill">Save 15%</span></span>
         </div>
-        
-        <!-- Deposit Explanation Notice -->
-        <div style="background: rgba(255, 255, 255, 0.7); border: 1px solid var(--line); border-radius: 20px; padding: 20px 24px; margin-bottom: 32px; display: flex; align-items: center; gap: 16px; max-width: 860px; margin-left: auto; margin-right: auto;">
-          <div style="width: 42px; height: 42px; border-radius: 50%; background: var(--emerald-soft); display: flex; align-items: center; justify-content: center; color: var(--emerald); font-weight: 900; font-size: 18px; flex-shrink: 0;">$</div>
-          <div style="font-size: 14px; color: var(--muted); line-height: 1.4;">
-            <strong style="color: var(--ink); display: block; margin-bottom: 2px;">Onboarding Step: Standard County Review Deposit ($175)</strong>
-            All monthly and trial orders begin with a 100% refundable manual county source review to confirm record volume and completeness. Once approved, your $175 deposit is **credited directly toward your firstMonth's invoice**.
+        <div class="billing-note" id="billing-note">Switch to annual billing to save 15%</div>
+
+        <div class="deposit-notice">
+          <div class="deposit-icon">$</div>
+          <div class="deposit-text">
+            <strong>Onboarding Step: Standard County Review Deposit ($175)</strong>
+            All monthly and trial orders begin with a 100% refundable manual county source review to confirm record volume and completeness. Once approved, your $175 deposit is credited directly toward your first month&rsquo;s invoice.
           </div>
         </div>
 
@@ -498,22 +518,25 @@
             <span class="plan-label" style="background: var(--emerald-soft); color: var(--emerald);">One-Time Trial</span>
             <h3>Single Batch</h3>
             <div class="price">$299 <small>one-time</small></div>
+            <p class="billed-as">No subscription</p>
             <p>Test the hygiene. Purchase a single historical county file with no recurring fees. *Subject to active seat availability.</p>
-            <ul><li>1 current county snapshot</li><li>Source dates & data signals</li><li>DNC-aware registry flags</li><li>No recurring subscription</li></ul>
+            <ul><li>1 current county snapshot</li><li>Source dates &amp; data signals</li><li>DNC-aware registry flags</li><li>No recurring subscription</li></ul>
             <a class="btn secondary" href="#county">Check trial availability</a>
           </div>
           <div class="price-card featured">
             <span class="plan-label" style="background: var(--gold-soft); color: var(--gold);">Most popular</span>
             <h3>County Seat</h3>
             <div class="price" id="price-county-seat">$497 <small>/mo</small></div>
+            <p class="billed-as" id="billed-county-seat">Billed monthly</p>
             <p>For active solo investors. Secure ongoing limited-seat access with fresh records delivered every single month.</p>
-            <ul><li>1 approved target county</li><li>Monthly fresh record updates</li><li>Protected territory suppression</li><li>MAO worksheets & call prep</li></ul>
+            <ul><li>1 approved target county</li><li>Monthly fresh record updates</li><li>Protected territory suppression</li><li>MAO worksheets &amp; call prep</li></ul>
             <a class="btn primary" href="#county">Check seat availability</a>
           </div>
           <div class="price-card">
             <span class="plan-label">Active Teams</span>
             <h3>Operator Seat</h3>
             <div class="price" id="price-operator-seat">$897 <small>/mo</small></div>
+            <p class="billed-as" id="billed-operator-seat">Billed monthly</p>
             <p>For high-volume acquisition teams who need biweekly delivery speeds to keep cold callers busy.</p>
             <ul><li>Double volume / 2 counties</li><li>Biweekly delivery targets</li><li>Priority queue assignment</li><li>Dedicated operator support</li></ul>
             <a class="btn secondary" href="#county">Check seat availability</a>
@@ -522,6 +545,7 @@
             <span class="plan-label">Complete control</span>
             <h3>Exclusive Territory</h3>
             <div class="price" id="price-exclusive">$1,497+ <small>/mo</small></div>
+            <p class="billed-as" id="billed-exclusive">Billed monthly</p>
             <p>Buy out the market. Lock down a complete county or custom ZIP group with zero other seats sold.</p>
             <ul><li>100% exclusive county buyout</li><li>0 other competitor seats sold</li><li>Customized scoring parameters</li><li>Custom delivery scheduling</li></ul>
             <a class="btn secondary" href="#county">Apply for exclusivity</a>
@@ -552,7 +576,6 @@
       </div>
     </section>
 
-
     <section id="county">
       <div class="container">
         <div class="section-head">
@@ -561,14 +584,19 @@
           <p>Tell us the market you want. We review source availability, usable record volume, and seat count before recommending access.</p>
         </div>
         <div class="form-wrap">
-          <form id="county-form">
-            <label>Email<input type="email" id="email" required placeholder="you@example.com" /></label>
-            <label>Target county<input id="target-county" required placeholder="Mecklenburg County, NC" /></label>
-            <label>Buyer profile<select id="profile"><option>Solo investor or wholesaler</option><option>Acquisition team</option><option>Buy-and-hold investor</option><option>Commercial or specialty buyer</option><option>Still evaluating</option></select></label>
-            <label>Preferred access option<select id="option"><option>County availability review</option><option>County Seat access</option><option>Operator Seat access</option><option>Exclusive territory review</option><option>Operator Kit information</option></select></label>
+          <form id="county-form" novalidate>
+            <label>Email<input type="email" id="email" name="email" required placeholder="you@example.com" autocomplete="email" /></label>
+            <label>Target county<input id="target-county" name="target_county" required placeholder="Mecklenburg County, NC" /></label>
+            <label>Buyer profile<select id="profile" name="profile"><option>Solo investor or wholesaler</option><option>Acquisition team</option><option>Buy-and-hold investor</option><option>Commercial or specialty buyer</option><option>Still evaluating</option></select></label>
+            <label>Preferred access option<select id="option" name="access_option"><option>County availability review</option><option>County Seat access</option><option>Operator Seat access</option><option>Exclusive territory review</option><option>Operator Kit information</option></select></label>
+            <div class="full consent-row">
+              <input type="checkbox" id="consent" name="consent" required />
+              <label for="consent" style="font-weight: 500; color: var(--muted); display:inline;">I agree to LeadCurate&rsquo;s <a href="/terms.html">Terms of Service</a> and <a href="/privacy.html">Privacy Policy</a>, and consent to receive email about my county review request. I understand LeadCurate provides data and educational tools only and does not guarantee deals.</label>
+            </div>
             <div class="full" style="text-align: center; margin-top: 14px;">
               <button class="btn primary" type="submit" style="width: min(280px, 100%);">Check county availability</button>
             </div>
+            <div class="full form-status" id="form-status"></div>
           </form>
         </div>
       </div>
@@ -581,11 +609,10 @@
         <div class="kicker">FAQ</div>
         <h2>Quick answers before you check a county.</h2>
       </div>
-      
-      <!-- Interactive FAQ Accordion Structure -->
+
       <div class="faq-container">
         <div class="faq-item">
-          <button class="faq-trigger" onclick="toggleFaq(this)">
+          <button type="button" class="faq-trigger" aria-expanded="false">
             <h3>Why are seats limited?</h3>
             <span class="faq-icon">+</span>
           </button>
@@ -593,19 +620,19 @@
             <p>Because some counties only support a small number of buyers once source volume and usable records are counted. This protects the data from getting completely oversold and fatigued.</p>
           </div>
         </div>
-        
+
         <div class="faq-item">
-          <button class="faq-trigger" onclick="toggleFaq(this)">
+          <button type="button" class="faq-trigger" aria-expanded="false">
             <h3>What do I get in my batch?</h3>
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-content">
-            <p>A cleaned CSV/XLSX batch with source context, score reasons, assignment details, verified contact data where available, and DNC-aware fields marked where applicable.</p>
+            <p>A cleaned CSV/XLSX batch with source context, score reasons, assignment details, contact data where available, and DNC-aware fields marked where applicable.</p>
           </div>
         </div>
-        
+
         <div class="faq-item">
-          <button class="faq-trigger" onclick="toggleFaq(this)">
+          <button type="button" class="faq-trigger" aria-expanded="false">
             <h3>Is my county access exclusive?</h3>
             <span class="faq-icon">+</span>
           </button>
@@ -613,34 +640,44 @@
             <p>Not automatically. Some smaller counties support only one buyer, while larger metropolitan areas might support up to three. Our manual county review report will explicitly lay out the seat limits and availability before you pay.</p>
           </div>
         </div>
-        
+
         <div class="faq-item">
-          <button class="faq-trigger" onclick="toggleFaq(this)">
+          <button type="button" class="faq-trigger" aria-expanded="false">
             <h3>Do you sell the same records to everyone?</h3>
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-content">
-            <p>No. Records actively assigned to you during your county seat billing cycle are completely suppressed from our outbox for any other buyers in that territory during your access period.</p>
+            <p>No. Records actively assigned to you during your county seat billing cycle are suppressed from delivery to any other buyers in that territory during your access period.</p>
           </div>
         </div>
-        
+
         <div class="faq-item">
-          <button class="faq-trigger" onclick="toggleFaq(this)">
+          <button type="button" class="faq-trigger" aria-expanded="false">
             <h3>Do you guarantee deals?</h3>
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-content">
-            <p>Absolutely not. LeadCurate provides elite county data hygiene and workflow materials. No data closed a deal by itself. Buyers handle their own compliant outreach, follow-ups, negotiations, and transactions.</p>
+            <p>No. LeadCurate provides county data hygiene and workflow materials. Data alone does not close deals. Buyers are responsible for their own compliant outreach, follow-ups, negotiations, and transactions.</p>
           </div>
         </div>
-        
+
         <div class="faq-item">
-          <button class="faq-trigger" onclick="toggleFaq(this)">
+          <button type="button" class="faq-trigger" aria-expanded="false">
             <h3>Is contact data always guaranteed?</h3>
             <span class="faq-icon">+</span>
           </button>
           <div class="faq-content">
-            <p>No. We provide phone numbers and contact details where publicly available or matched via our skip-trace filters. Numbers listed on state or federal Do-Not-Call (DNC) registries are clearly flagged where applicable.</p>
+            <p>No. We provide phone numbers and contact details where publicly available or matched via our skip-trace filters. Numbers listed on state or federal Do-Not-Call (DNC) registries are clearly flagged where applicable. Buyers are responsible for their own TCPA, DNC, and state-level outreach compliance.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-trigger" aria-expanded="false">
+            <h3>What is your refund policy?</h3>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-content">
+            <p>The $175 county review deposit is 100% refundable if we determine the county cannot support a viable seat. See our <a href="/refund-policy.html" style="color: var(--emerald); text-decoration: underline;">full refund policy</a> for subscription, single-batch, and exclusive territory terms.</p>
           </div>
         </div>
       </div>
@@ -650,179 +687,240 @@
   <footer>
     <div class="container footer-row">
       <a class="logo" href="#">Lead<span>Curate</span><span class="dot">.</span></a>
-      <div>LeadCurate provides data and educational tools only. Customers handle outreach, compliance, verification, and closing. · Terms · Privacy · Compliance</div>
+      <div class="footer-disclaimer">LeadCurate provides data and educational tools only. Customers handle outreach, compliance, verification, and closing.</div>
+      <div class="footer-links">
+        <a href="/terms.html">Terms</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/refund-policy.html">Refunds</a>
+        <a href="/compliance.html">Compliance</a>
+      </div>
     </div>
   </footer>
 
-  <!-- High-End Interactive UI Logic -->
   <script>
-    // 1. Billing Toggle Logic
-    let currentBilling = 'monthly';
-    const prices = {
+    // ============ BILLING TOGGLE ============
+    var currentBilling = 'monthly';
+    var prices = {
       monthly: {
-        seat: "$497 <small>/mo</small>",
-        operator: "$897 <small>/mo</small>",
-        exclusive: "$1,497+ <small>/mo</small>"
+        seat:      { display: "$497 <small>/mo</small>",    note: "Billed monthly" },
+        operator:  { display: "$897 <small>/mo</small>",    note: "Billed monthly" },
+        exclusive: { display: "$1,497+ <small>/mo</small>", note: "Starting price, billed monthly" }
       },
       annual: {
-        seat: "$422 <small>/mo</small>",
-        operator: "$762 <small>/mo</small>",
-        exclusive: "$1,272+ <small>/mo</small>"
+        seat:      { display: "$422 <small>/mo</small>",    note: "$5,064/yr, billed annually" },
+        operator:  { display: "$762 <small>/mo</small>",    note: "$9,144/yr, billed annually" },
+        exclusive: { display: "$1,272+ <small>/mo</small>", note: "From $15,264/yr, billed annually" }
       }
     };
 
-    function toggleBilling() {
-      setBilling(currentBilling === 'monthly' ? 'annual' : 'monthly');
-    }
-
     function setBilling(plan) {
       currentBilling = plan;
-      const toggle = document.getElementById('billing-toggle');
-      const labelMonthly = document.getElementById('label-monthly');
-      const labelAnnual = document.getElementById('label-annual');
-      
-      const priceSeat = document.getElementById('price-county-seat');
-      const priceOperator = document.getElementById('price-operator-seat');
-      const priceExclusive = document.getElementById('price-exclusive');
+      var toggle = document.getElementById('billing-toggle');
+      var labelMonthly = document.getElementById('label-monthly');
+      var labelAnnual = document.getElementById('label-annual');
+      var note = document.getElementById('billing-note');
+
+      var data = prices[plan];
+
+      document.getElementById('price-county-seat').innerHTML  = data.seat.display;
+      document.getElementById('price-operator-seat').innerHTML = data.operator.display;
+      document.getElementById('price-exclusive').innerHTML     = data.exclusive.display;
+
+      document.getElementById('billed-county-seat').textContent  = data.seat.note;
+      document.getElementById('billed-operator-seat').textContent = data.operator.note;
+      document.getElementById('billed-exclusive').textContent     = data.exclusive.note;
 
       if (plan === 'annual') {
         toggle.classList.add('annual');
+        toggle.setAttribute('aria-checked', 'true');
         labelMonthly.classList.remove('active');
         labelAnnual.classList.add('active');
-        
-        priceSeat.innerHTML = prices.annual.seat;
-        priceOperator.innerHTML = prices.annual.operator;
-        priceExclusive.innerHTML = prices.annual.exclusive;
+        note.textContent = 'Saving 15% with annual billing. Single Batch ($299 one-time) is unaffected.';
       } else {
         toggle.classList.remove('annual');
+        toggle.setAttribute('aria-checked', 'false');
         labelMonthly.classList.add('active');
         labelAnnual.classList.remove('active');
-        
-        priceSeat.innerHTML = prices.monthly.seat;
-        priceOperator.innerHTML = prices.monthly.operator;
-        priceExclusive.innerHTML = prices.monthly.exclusive;
+        note.textContent = 'Switch to annual billing to save 15%';
       }
     }
 
-    // 2. Interactive FAQ Accordion Logic
-    function toggleFaq(button) {
-      const item = button.parentElement;
-      const isActive = item.classList.contains('active');
-      
-      // Close all open FAQ items first
-      document.querySelectorAll('.faq-item').forEach(el => {
-        el.classList.remove('active');
-        el.querySelector('.faq-content').style.maxHeight = null;
+    document.getElementById('billing-toggle').addEventListener('click', function () {
+      setBilling(currentBilling === 'monthly' ? 'annual' : 'monthly');
+    });
+    document.getElementById('label-monthly').addEventListener('click', function () { setBilling('monthly'); });
+    document.getElementById('label-annual').addEventListener('click',  function () { setBilling('annual'); });
+    document.getElementById('billing-toggle').addEventListener('keydown', function (e) {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        setBilling(currentBilling === 'monthly' ? 'annual' : 'monthly');
+      }
+    });
+
+    // ============ FAQ ACCORDION ============
+    document.querySelectorAll('.faq-trigger').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var item = btn.parentElement;
+        var isActive = item.classList.contains('active');
+
+        document.querySelectorAll('.faq-item').forEach(function (el) {
+          el.classList.remove('active');
+          el.querySelector('.faq-trigger').setAttribute('aria-expanded', 'false');
+        });
+
+        if (!isActive) {
+          item.classList.add('active');
+          btn.setAttribute('aria-expanded', 'true');
+        }
       });
+    });
 
-      // Toggle clicked item
-      if (!isActive) {
-        item.classList.add('active');
-        const content = item.querySelector('.faq-content');
-        content.style.maxHeight = content.scrollHeight + "px";
-      }
-    }
-
-    // 3. Interactive Dashboard Territory Switcher
-    const countyData = {
+    // ============ COUNTY DASHBOARD SWITCHER ============
+    var countyData = {
       Mecklenburg: {
         title: "Mecklenburg County, NC",
-        status: "<span class='pulse'></span> 1 of 2 seats filled",
-        score: "84",
-        flow: "Strong",
-        seats: "2",
-        types: "5",
+        status: '<span class="pulse"></span> 1 of 2 seats filled',
+        score: "84", flow: "Strong", seats: "2", types: "5",
         badges: ["Tax delinquent", "Absentee", "Probate", "Vacancy"],
         leads: [
-          { owner: "M. Anderson", signal: "Tax + absentee", outreach: "DNC check", score: 91 },
-          { owner: "Bright Oak LLC", signal: "Vacant", outreach: "No DNC", score: 78 },
-          { owner: "Estate record", signal: "Probate", outreach: "Mail-first", score: 72 }
+          { owner: "M. Anderson",   signal: "Tax + absentee", outreach: "DNC check",  score: 91 },
+          { owner: "Bright Oak LLC", signal: "Vacant",        outreach: "No DNC",     score: 78 },
+          { owner: "Estate record",  signal: "Probate",       outreach: "Mail-first", score: 72 }
         ]
       },
       Wake: {
         title: "Wake County, NC",
-        status: "<span class='pulse'></span> 0 of 2 seats filled",
-        score: "91",
-        flow: "High-Volume",
-        seats: "2",
-        types: "6",
+        status: '<span class="pulse"></span> 0 of 2 seats filled',
+        score: "91", flow: "High-Volume", seats: "2", types: "6",
         badges: ["Tax delinquent", "Foreclosure", "Absentee", "Probate"],
         leads: [
-          { owner: "T. Henderson", signal: "Foreclosure", outreach: "DNC check", score: 95 },
-          { owner: "Apex Prop LLC", signal: "Tax + absentee", outreach: "No DNC", score: 86 },
-          { owner: "V. Sterling", signal: "Absentee", outreach: "Mail-first", score: 81 }
+          { owner: "T. Henderson",  signal: "Foreclosure",    outreach: "DNC check",  score: 95 },
+          { owner: "Apex Prop LLC", signal: "Tax + absentee", outreach: "No DNC",     score: 86 },
+          { owner: "V. Sterling",   signal: "Absentee",       outreach: "Mail-first", score: 81 }
         ]
       },
       Charleston: {
         title: "Charleston County, SC",
-        status: "<span class='pulse'></span> 1 of 1 seat filled",
-        score: "79",
-        flow: "Moderate",
-        seats: "1",
-        types: "4",
+        status: '<span class="pulse"></span> 1 of 1 seat filled',
+        score: "79", flow: "Moderate", seats: "1", types: "4",
         badges: ["Probate", "Tax delinquent", "Vacancy"],
         leads: [
-          { owner: "L. Jenkins", signal: "Probate + vacant", outreach: "DNC check", score: 88 },
-          { owner: "Palmetto Co.", signal: "Tax delinquent", outreach: "No DNC", score: 76 },
-          { owner: "J. Calhoun", signal: "Vacancy", outreach: "Mail-first", score: 71 }
+          { owner: "L. Jenkins",   signal: "Probate + vacant", outreach: "DNC check",  score: 88 },
+          { owner: "Palmetto Co.", signal: "Tax delinquent",   outreach: "No DNC",     score: 76 },
+          { owner: "J. Calhoun",   signal: "Vacancy",          outreach: "Mail-first", score: 71 }
         ]
       }
     };
 
-    function switchCounty(countyKey) {
-      // 1. Update Tabs Active State
-      document.querySelectorAll('.county-tab').forEach(tab => {
-        tab.classList.remove('active');
-        if (tab.innerText.toLowerCase().includes(countyKey.toLowerCase())) {
-          tab.classList.add('active');
-        }
+    function switchCounty(key) {
+      document.querySelectorAll('.county-tab').forEach(function (tab) {
+        tab.classList.toggle('active', tab.dataset.county === key);
       });
 
-      // 2. Fetch Data
-      const data = countyData[countyKey];
+      var data = countyData[key];
       if (!data) return;
 
-      // 3. Update Text Content
-      document.getElementById('current-county-title').innerText = data.title;
+      document.getElementById('current-county-title').textContent = data.title;
       document.getElementById('current-county-status').innerHTML = data.status;
-      document.getElementById('county-score').innerText = data.score;
-      document.getElementById('county-flow').innerText = data.flow;
-      document.getElementById('county-seats').innerText = data.seats;
-      document.getElementById('county-types').innerText = data.types;
+      document.getElementById('county-score').textContent = data.score;
+      document.getElementById('county-flow').textContent = data.flow;
+      document.getElementById('county-seats').textContent = data.seats;
+      document.getElementById('county-types').textContent = data.types;
 
-      // 4. Update Badges
-      const badgesContainer = document.getElementById('county-badges');
-      badgesContainer.innerHTML = '';
-      data.badges.forEach(b => {
-        const span = document.createElement('span');
-        span.className = 'mini-badge';
-        span.innerText = b;
-        badgesContainer.appendChild(span);
+      var badges = document.getElementById('county-badges');
+      badges.innerHTML = '';
+      data.badges.forEach(function (b) {
+        var s = document.createElement('span');
+        s.className = 'mini-badge';
+        s.textContent = b;
+        badges.appendChild(s);
       });
 
-      // 5. Update Table Rows
-      const tableBody = document.getElementById('lead-table-body');
-      tableBody.innerHTML = '<div class="lead-row header"><div>Owner</div><div>Signal</div><div>Outreach</div><div>Score</div></div>';
-      
-      data.leads.forEach(l => {
-        const row = document.createElement('div');
+      var table = document.getElementById('lead-table-body');
+      table.innerHTML = '<div class="lead-row header"><div>Owner</div><div>Signal</div><div>Outreach</div><div>Score</div></div>';
+      data.leads.forEach(function (l) {
+        var row = document.createElement('div');
         row.className = 'lead-row';
-        row.innerHTML = `
-          <div class="blur">${l.owner}</div>
-          <div><span class="tag">${l.signal}</span></div>
-          <div>${l.outreach}</div>
-          <div>${l.score}</div>
-        `;
-        tableBody.appendChild(row);
+        row.innerHTML =
+          '<div class="blur"></div>' +
+          '<div><span class="tag"></span></div>' +
+          '<div></div><div></div>';
+        row.children[0].textContent = l.owner;
+        row.children[1].firstChild.textContent = l.signal;
+        row.children[2].textContent = l.outreach;
+        row.children[3].textContent = l.score;
+        table.appendChild(row);
       });
 
-      // Update Dashboard Score Conic Gradient
-      const scoreElement = document.getElementById('county-score');
-      scoreElement.style.background = `conic-gradient(var(--emerald-2) ${data.score}%, rgba(255,255,255,.15) 0)`;
+      var scoreEl = document.getElementById('county-score');
+      scoreEl.style.background = 'conic-gradient(var(--emerald-2) ' + data.score + '%, rgba(255,255,255,.15) 0)';
     }
 
-    // Initialize first county
+    document.querySelectorAll('.county-tab').forEach(function (tab) {
+      tab.addEventListener('click', function () { switchCounty(tab.dataset.county); });
+    });
+
     switchCounty('Mecklenburg');
+
+    // ============ FORM HANDLER ============
+    // Configure ONE of these:
+    //  - Formspree:  set FORM_ENDPOINT to your Formspree URL (e.g. "https://formspree.io/f/xxxxxx")
+    //  - Web3Forms:  set FORM_ENDPOINT to "https://api.web3forms.com/submit" and add an access_key field
+    //  - Your API:   set FORM_ENDPOINT to your own backend
+    // If FORM_ENDPOINT is empty, the form will show an error.
+    var FORM_ENDPOINT = ""; // <-- PASTE YOUR FORM ENDPOINT URL HERE
+
+    document.getElementById('county-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var statusEl = document.getElementById('form-status');
+      statusEl.className = 'full form-status';
+
+      var form = e.target;
+      if (!form.checkValidity()) {
+        statusEl.classList.add('error');
+        statusEl.textContent = 'Please fill in all required fields and accept the terms.';
+        return;
+      }
+
+      if (!FORM_ENDPOINT) {
+        statusEl.classList.add('error');
+        statusEl.textContent = 'Form is not yet connected. Configure FORM_ENDPOINT in the page script.';
+        return;
+      }
+
+      var payload = {
+        email: document.getElementById('email').value,
+        target_county: document.getElementById('target-county').value,
+        profile: document.getElementById('profile').value,
+        access_option: document.getElementById('option').value,
+        consent: document.getElementById('consent').checked,
+        submitted_at: new Date().toISOString()
+      };
+
+      var btn = form.querySelector('button[type=submit]');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+        .then(function (r) {
+          if (!r.ok) throw new Error('Request failed');
+          statusEl.classList.add('success');
+          statusEl.textContent = "Got it. We'll review your county and reply by email within 1 business day.";
+          form.reset();
+        })
+        .catch(function () {
+          statusEl.classList.add('error');
+          statusEl.textContent = 'Something went wrong. Please email us directly at hello@leadcurate.com.';
+        })
+        .finally(function () {
+          btn.disabled = false;
+          btn.textContent = 'Check county availability';
+        });
+    });
   </script>
 </body>
 </html>
