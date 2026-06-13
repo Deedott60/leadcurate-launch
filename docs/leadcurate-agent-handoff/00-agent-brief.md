@@ -30,6 +30,8 @@ Important files:
 - Sample batch automation: `docs/sample-batch-automation.md`
 - Sample script: `scripts/build_sample_batch.py`
 - Starter schema: `supabase/schema.sql`
+- Root project map: `README.md`
+- Current task list: `docs/next-actions.md`
 
 ## Important unresolved setup
 
@@ -38,6 +40,11 @@ Important files:
 - Skip-trace and DNC providers are not selected.
 - Legal page placeholders need real business details and attorney review.
 - First pilot county and first source are not selected.
+- Operator-kit materials are outlined but not fully written.
+
+## Latest alignment update
+
+The root `README.md` and `docs/next-actions.md` should stay aligned with this handoff folder. If future agents add new docs, scripts, legal pages, or workflow files, update those two files plus this handoff folder so the project remains easy to audit.
 
 ## Key instruction for future agents
 
