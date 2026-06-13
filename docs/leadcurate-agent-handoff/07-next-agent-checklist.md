@@ -5,6 +5,7 @@ Use this checklist when another agent audits or continues the project.
 ## First orientation
 
 - Read this folder first.
+- Confirm `08-local-and-github-inventory.md` so you know which repo/folder is canonical.
 - Then read `docs/leadcurate-business-launch-plan.md`.
 - Then read `docs/leadcurate-v1-n8n-spec.md` if building automation.
 - Then inspect `site/index.html` if working on the landing page.
@@ -49,6 +50,12 @@ Do not delete without replacing:
 - `scripts/build_sample_batch.py`
 - `supabase/schema.sql`
 - `site/index.html`
+- `README.md`
+- `docs/next-actions.md`
+
+## Consolidation rule
+
+If a LeadCurate file is discovered outside `C:\Users\lenovo\Documents\Leadcurate\leadcurate-launch`, do not treat it as canonical automatically. Compare it, import only the useful parts, update `08-local-and-github-inventory.md`, then commit and push.
 
 ## Recommended next commit
 

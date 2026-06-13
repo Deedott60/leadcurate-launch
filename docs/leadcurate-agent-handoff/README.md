@@ -14,6 +14,7 @@ If you only have time to read one folder, read this folder.
 6. `05-automation-stack.md` - Supabase, n8n, scripts, email, Stripe
 7. `06-compliance-and-risk.md` - claims to avoid and source/DNC rules
 8. `07-next-agent-checklist.md` - concrete next build/audit tasks
+9. `08-local-and-github-inventory.md` - canonical repo, known local folders, and consolidation status
 
 ## Canonical repo files
 
@@ -29,5 +30,7 @@ The deeper source files are still kept in their original locations:
 - `scripts/build_sample_batch.py`
 - `supabase/schema.sql`
 - `site/index.html`
+- `docs/next-actions.md`
+- `README.md`
 
 This handoff folder summarizes and organizes them so another agent can start quickly without digging through every project note.

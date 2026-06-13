@@ -9,6 +9,7 @@ Positioning: **Give away the basic operating tools. Sell the better data.**
 - `site/index.html` - premium landing page prototype using the LeadCurate palette/logo direction.
 - `site/terms.html`, `site/privacy.html`, `site/refund-policy.html`, `site/compliance.html` - legal/compliance page templates that still need business details and attorney review.
 - `docs/leadcurate-agent-handoff/README.md` - start-here folder for another agent, auditor, or build tool.
+- `docs/leadcurate-agent-handoff/08-local-and-github-inventory.md` - canonical local/GitHub inventory to prevent mixed LeadCurate folders.
 - `docs/leadcurate-business-launch-plan.md` - business plan, offer ladder, go-live architecture, sample batch policy, and first 30-day plan.
 - `docs/sample-batch-automation.md` - no-spend sample batch workflow.
 - `scripts/build_sample_batch.py` - starter script for turning a lawful public-record CSV into a LeadCurate sample batch.
