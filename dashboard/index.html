@@ -159,7 +159,91 @@
       border: 1px solid transparent; transition: .2s ease; cursor: pointer;
     }
     .btn.secondary { background: rgba(255,255,255,.7); border-color: var(--line); color: var(--ink); }
-    .btn.secondary:hover { background: white; }
+    .btn.secondary:hover { background: white; } 
+
+    /* Analytics Page */
+    .date-range-picker {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .date-range-picker input {
+        border: 1px solid var(--line);
+        background: #fbfaf8;
+        border-radius: 8px;
+        padding: 8px 12px;
+        font: inherit;
+    }
+    .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 24px;
+        margin: 24px 0;
+    }
+    .kpi-card {
+        background: var(--stone);
+        border-radius: 16px;
+        padding: 24px;
+        text-align: center;
+    }
+    .kpi-card h4 {
+        margin: 0 0 8px;
+        color: var(--muted);
+        font-weight: 600;
+    }
+    .kpi-value {
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--dark);
+    }
+    .chart-container {
+        width: 100%;
+        height: 300px;
+        background: var(--stone);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--muted);
+    }
+
+    /* Settings Page */
+    .settings-section {
+        margin-bottom: 32px;
+        padding-bottom: 32px;
+        border-bottom: 1px solid var(--line);
+    }
+    .settings-section:last-child {
+        border-bottom: none;
+    }
+    .settings-section h2 {
+        font-family: "Playfair Display", serif;
+        margin: 0 0 24px;
+        font-size: 24px;
+    }
+    .form-group {
+        margin-bottom: 16px;
+    }
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+    .form-control {
+        width: 100%;
+        max-width: 400px;
+        border: 1px solid var(--line);
+        background: #fbfaf8;
+        border-radius: 14px;
+        padding: 14px 13px;
+        font: inherit;
+        color: var(--ink);
+        outline: none;
+    }
+    .settings-section .btn {
+      margin-top: 8px;
+    }
   </style>
 </head>
 <body>
@@ -277,16 +361,72 @@
             <div class="card">
                 <header class="header">
                     <h1>Analytics</h1>
+                    <div class="date-range-picker">
+                        <input type="date" id="start-date" name="start-date">
+                        <span>-</span>
+                        <input type="date" id="end-date" name="end-date">
+                    </div>
                 </header>
-                <p>Analytics coming soon.</p>
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <h4>Total Leads</h4>
+                        <span class="kpi-value">1,234</span>
+                    </div>
+                    <div class="kpi-card">
+                        <h4>Conversion Rate</h4>
+                        <span class="kpi-value">12.5%</span>
+                    </div>
+                    <div class="kpi-card">
+                        <h4>Response Rate</h4>
+                        <span class="kpi-value">45.2%</span>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <p>Leads Over Time (Chart Placeholder)</p>
+                </div>
             </div>
         </div>
         <div id="settings-page" class="page">
             <div class="card">
-                <header class="header">
+                 <header class="header">
                     <h1>Settings</h1>
                 </header>
-                <p>Settings coming soon.</p>
+
+                <div class="settings-section">
+                    <h2>Profile Settings</h2>
+                    <div class="form-group">
+                        <label for="full-name">Full Name</label>
+                        <input type="text" id="full-name" class="form-control" value="John Doe">
+                    </div>
+                     <div class="form-group">
+                        <label for="email-address">Email Address</label>
+                        <input type="email" id="email-address" class="form-control" value="john.doe@example.com">
+                    </div>
+                     <button class="btn secondary">Update Profile</button>
+                </div>
+
+                 <div class="settings-section">
+                    <h2>Notification Preferences</h2>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" checked> Email Notifications
+                        </label>
+                         <label>
+                            <input type="checkbox"> SMS Notifications
+                        </label>
+                         <label>
+                            <input type="checkbox"> Push Notifications
+                        </label>
+                    </div>
+                     <button class="btn secondary">Save Preferences</button>
+                </div>
+                
+                <div class="settings-section">
+                    <h2>API & Integrations</h2>
+                     <p>Manage your API keys and integrations.</p>
+                     <button class="btn secondary">Generate New API Key</button>
+                </div>
+
             </div>
         </div>
     </main>
