@@ -1,0 +1,13 @@
+{
+  "lane": "code_violations_open",
+  "product_name": "Louisville KY Open Code Violations",
+  "source_total_rows": 17756,
+  "filtered_universe": 13398,
+  "delivered_rows": 100,
+  "score_range": [
+    99.9,
+    99.93
+  ],
+  "source_url": "https://data.louisvilleky.gov/datasets/louisville-metro-ky-property-maintenance-inspection-violations",
+  "source_pulled_at": "2026-06-19"
+}

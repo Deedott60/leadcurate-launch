@@ -1,0 +1,18 @@
+{
+  "product_name": "Charlotte Vacant Land Specialty Snapshot",
+  "lane": "vacant_land",
+  "county": "Mecklenburg",
+  "state": "NC",
+  "source_url": "https://data.charlottenc.gov/datasets/vacant-land",
+  "source_pulled_at": "2026-06-19",
+  "delivered_rows": 100,
+  "compliance_note": "Property-record data only. Buyer is responsible for owner contact lookup, skip trace, DNC compliance, TCPA, and outreach decisions.",
+  "generated_at_utc": "2026-06-19T18:57:59.679502+00:00",
+  "source_total_rows": 23204,
+  "filtered_universe": 15273,
+  "absentee_in_top": 100,
+  "score_range": [
+    100,
+    100
+  ]
+}

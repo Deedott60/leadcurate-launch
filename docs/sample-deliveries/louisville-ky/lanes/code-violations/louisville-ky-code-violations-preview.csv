@@ -1,0 +1,26 @@
+rank,score,property_partial,violation_code,occupancy_status,inspection_date,lane
+1,99.93,2*** NORTHWESTERN PKY,02A,Vacant Lot,2026-06-17,code_violations_open
+2,99.93,2*** NORTHWESTERN PKY,X94,Vacant Lot,2026-06-17,code_violations_open
+3,99.93,2*** NORTHWESTERN PKY,I21,Vacant Lot,2026-06-17,code_violations_open
+4,99.93,6*** E ST CATHERINE ST,X69,Vacant Structure,2026-06-17,code_violations_open
+5,99.93,6*** E ST CATHERINE ST,X90,Vacant Structure,2026-06-17,code_violations_open
+6,99.93,6*** E ST CATHERINE ST,X40,Vacant Structure,2026-06-17,code_violations_open
+7,99.93,2*** W MAIN ST,X50,Vacant Structure,2026-06-17,code_violations_open
+8,99.93,2*** W MAIN ST,X69,Vacant Structure,2026-06-17,code_violations_open
+9,99.93,2*** W MAIN ST,X72,Vacant Structure,2026-06-17,code_violations_open
+10,99.93,2*** W MAIN ST,X40,Vacant Structure,2026-06-17,code_violations_open
+11,99.93,2*** W MAIN ST,X19,Vacant Structure,2026-06-17,code_violations_open
+12,99.93,6*** MATTHEWS RD,02A,Vacant Lot,2026-06-17,code_violations_open
+13,99.93,6*** MATTHEWS RD,X90,Vacant Lot,2026-06-17,code_violations_open
+14,99.93,6*** MATTHEWS RD,05A,Vacant Lot,2026-06-17,code_violations_open
+15,99.93,4*** W MARKET ST,02A,Vacant Structure,2026-06-17,code_violations_open
+16,99.93,2*** OSAGE AVE,02A,Vacant Structure,2026-06-17,code_violations_open
+17,99.93,4*** W MARKET ST,E05,Vacant Structure,2026-06-17,code_violations_open
+18,99.93,4*** W MARKET ST,X50,Vacant Structure,2026-06-17,code_violations_open
+19,99.93,4*** W MARKET ST,X69,Vacant Structure,2026-06-17,code_violations_open
+20,99.93,4*** W MARKET ST,X19,Vacant Structure,2026-06-17,code_violations_open
+21,99.93,6*** HILL PEAK CT,X47,Vacant Structure,2026-06-17,code_violations_open
+22,99.93,6*** HILL PEAK CT,X50,Vacant Structure,2026-06-17,code_violations_open
+23,99.93,6*** HILL PEAK CT,X78,Vacant Structure,2026-06-17,code_violations_open
+24,99.93,6*** HILL PEAK CT,X19,Vacant Structure,2026-06-17,code_violations_open
+25,99.93,3*** W KENTUCKY ST,X50,Vacant Structure,2026-06-17,code_violations_open

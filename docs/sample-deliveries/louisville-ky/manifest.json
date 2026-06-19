@@ -1,0 +1,70 @@
+{
+  "package_id": "louisville-ky-2026-06-19",
+  "customer_county": "Louisville (Jefferson County)",
+  "state": "KY",
+  "delivery_date": "2026-06-19",
+  "lane_count": 3,
+  "total_records": 300,
+  "lanes": [
+    {
+      "product_name": "Louisville KY Pre-Foreclosure",
+      "lane": "pre_foreclosure",
+      "county": "Jefferson",
+      "state": "KY",
+      "source_url": "https://data.louisvilleky.gov/datasets/louisville-metro-ky-property-foreclosures",
+      "source_pulled_at": "2026-06-18",
+      "source_total_rows": 3000,
+      "filtered_universe": 259,
+      "delivered_rows": 100,
+      "score_range": [
+        22.11,
+        109.5
+      ],
+      "upcoming_sale_count": 6,
+      "recent_past_sale_count": 50,
+      "filed_only_count": 44,
+      "top_neighborhoods": {
+        "Parkland": 20,
+        "Park Hill": 18,
+        "South Louisville": 17,
+        "Portland": 12,
+        "(unknown)": 9,
+        "Russell": 6,
+        "California": 4,
+        "Shawnee": 4,
+        "Park DuValle": 3,
+        "Shelby Park": 2
+      },
+      "compliance_note": "Public-record court filings. Property address + case data only. Buyer responsible for owner contact lookup, skip trace, DNC compliance, and outreach.",
+      "generated_at_utc": "2026-06-18T23:32:21.592200+00:00"
+    },
+    {
+      "lane": "code_violations_open",
+      "product_name": "Louisville KY Open Code Violations",
+      "source_total_rows": 17756,
+      "filtered_universe": 13398,
+      "delivered_rows": 100,
+      "score_range": [
+        99.9,
+        99.93
+      ],
+      "source_url": "https://data.louisvilleky.gov/datasets/louisville-metro-ky-property-maintenance-inspection-violations",
+      "source_pulled_at": "2026-06-19"
+    },
+    {
+      "lane": "lien_holder_final_orders",
+      "product_name": "Louisville KY Lien Holder Final Orders",
+      "source_total_rows": 516,
+      "filtered_universe": 411,
+      "delivered_rows": 100,
+      "score_range": [
+        16.0,
+        55.0
+      ],
+      "source_url": "https://data.louisvilleky.gov/datasets/louisville-metro-ky-lien-holder-final-orders",
+      "source_pulled_at": "2026-06-19"
+    }
+  ],
+  "compliance_note": "Property-record data only. Buyer responsible for owner contact lookup, skip trace, DNC compliance, TCPA, and outreach decisions.",
+  "generated_at_utc": "2026-06-19T19:13:58.217357+00:00"
+}

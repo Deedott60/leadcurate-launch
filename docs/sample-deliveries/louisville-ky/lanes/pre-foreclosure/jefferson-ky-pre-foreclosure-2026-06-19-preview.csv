@@ -1,0 +1,26 @@
+rank,score,neighborhood,zip,council_district,days_to_sale,days_since_filed,sale_date,case_status,lane,county
+1,109.5,Parkland,40211,1,8,225,2026-06-26,upcoming,pre_foreclosure,Jefferson
+2,107.17,Parkland,40211,4,8,267,2026-06-26,upcoming,pre_foreclosure,Jefferson
+3,90.78,Parkland,40211,4,29,184,2026-07-17,upcoming,pre_foreclosure,Jefferson
+4,64.11,Russell,40211,5,29,664,2026-07-17,upcoming,pre_foreclosure,Jefferson
+5,61.0,Parkland,40211,4,29,,2026-07-17,upcoming,pre_foreclosure,Jefferson
+6,61.0,,40291,20,29,1172,2026-07-17,upcoming,pre_foreclosure,Jefferson
+7,52.28,Parkland,40211,,-6,211,2026-06-12,recent_past,pre_foreclosure,Jefferson
+8,48.44,Parkland,40211,4,-6,280,2026-06-12,recent_past,pre_foreclosure,Jefferson
+9,43.78,California,40210,4,-6,364,2026-06-12,recent_past,pre_foreclosure,Jefferson
+10,36.78,Taylor Berry,40208,3,-20,238,2026-05-29,recent_past,pre_foreclosure,Jefferson
+11,35.11,Shawnee,40211,5,-20,268,2026-05-29,recent_past,pre_foreclosure,Jefferson
+12,29.94,Parkland,40211,1,,181,,filed_only,pre_foreclosure,Jefferson
+13,29.83,Parkland,40211,1,,183,,filed_only,pre_foreclosure,Jefferson
+14,29.78,Park Hill,40210,6,,184,,filed_only,pre_foreclosure,Jefferson
+15,29.56,Parkland,40211,4,,188,,filed_only,pre_foreclosure,Jefferson
+16,29.56,Park Hill,40210,6,,188,,filed_only,pre_foreclosure,Jefferson
+17,29.44,Portland,40212,5,,190,,filed_only,pre_foreclosure,Jefferson
+18,29.39,,40211,1,,191,,filed_only,pre_foreclosure,Jefferson
+19,29.33,Parkland,40211,5,,192,,filed_only,pre_foreclosure,Jefferson
+20,29.17,Portland,40203,5,,195,,filed_only,pre_foreclosure,Jefferson
+21,29.17,Parkland,40211,4,,195,,filed_only,pre_foreclosure,Jefferson
+22,29.17,Portland,40215,15,,195,,filed_only,pre_foreclosure,Jefferson
+23,28.61,Park Hill,40210,1,,205,,filed_only,pre_foreclosure,Jefferson
+24,28.61,Portland,40203,5,,205,,filed_only,pre_foreclosure,Jefferson
+25,28.56,Shelby Park,40203,6,,206,,filed_only,pre_foreclosure,Jefferson

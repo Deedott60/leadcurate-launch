@@ -1,0 +1,76 @@
+lane,rank_in_lane,score,headline
+Louisville KY Pre-Foreclosure,1,109.5,2616 HALE Ave | sale: 2026-06-26 | days_to_sale: 8
+Louisville KY Pre-Foreclosure,2,107.17,2620 W KENTUCKY St | sale: 2026-06-26 | days_to_sale: 8
+Louisville KY Pre-Foreclosure,3,90.78,2715 W Kentucky St | sale: 2026-07-17 | days_to_sale: 29
+Louisville KY Pre-Foreclosure,4,64.11,2303 W Chestnut St | sale: 2026-07-17 | days_to_sale: 29
+Louisville KY Pre-Foreclosure,5,61.0,2615 W Kentucky St | sale: 2026-07-17 | days_to_sale: 29
+Louisville KY Pre-Foreclosure,6,61.0,9911 MARY DELL Ln | sale: 2026-07-17 | days_to_sale: 29
+Louisville KY Pre-Foreclosure,7,52.28,2725 Greenwood Ave | sale: 2026-06-12 | days_to_sale: -6
+Louisville KY Pre-Foreclosure,8,48.44,1011 S 32ND St | sale: 2026-06-12 | days_to_sale: -6
+Louisville KY Pre-Foreclosure,9,43.78,1627 HALE Ave | sale: 2026-06-12 | days_to_sale: -6
+Louisville KY Pre-Foreclosure,10,36.78,2749 MONTANA Ave | sale: 2026-05-29 | days_to_sale: -20
+Louisville KY Pre-Foreclosure,11,35.11,662 S 35th St | sale: 2026-05-29 | days_to_sale: -20
+Louisville KY Pre-Foreclosure,12,29.94,1124 S 26th St | sale:  | days_to_sale: 
+Louisville KY Pre-Foreclosure,13,29.83,2705 HALE Ave | sale:  | days_to_sale: 
+Louisville KY Pre-Foreclosure,14,29.78,2212 DUMESNIL St | sale:  | days_to_sale: 
+Louisville KY Pre-Foreclosure,15,29.56,3217 W Kentucky St | sale:  | days_to_sale: 
+Louisville KY Pre-Foreclosure,16,29.56,1547 W ORMSBY Ave | sale:  | days_to_sale: 
+Louisville KY Pre-Foreclosure,17,29.44,2517 W MARKET St | sale:  | days_to_sale: 
+Louisville KY Pre-Foreclosure,18,29.39,1436 Hazel St | sale:  | days_to_sale: 
+Louisville KY Pre-Foreclosure,19,29.33,3221 GREENWOOD Ave | sale:  | days_to_sale: 
+Louisville KY Pre-Foreclosure,20,29.17,119 N 18TH St | sale:  | days_to_sale: 
+Louisville KY Pre-Foreclosure,21,29.17,317 N 18th St | sale:  | days_to_sale: 
+Louisville KY Pre-Foreclosure,22,29.17,1411 Berry Blvd | sale:  | days_to_sale: 
+Louisville KY Pre-Foreclosure,23,28.61,1354 S 26TH St | sale:  | days_to_sale: 
+Louisville KY Pre-Foreclosure,24,28.61,2017 BANK St | sale:  | days_to_sale: 
+Louisville KY Pre-Foreclosure,25,28.56,721 GWENDOLYN St | sale:  | days_to_sale: 
+Louisville KY Open Code Violations,1,99.93,"2827 NORTHWESTERN PKY, LOUISVILLE, KY 40212-0000 | 02A | Vacant Lot"
+Louisville KY Open Code Violations,2,99.93,"2827 NORTHWESTERN PKY, LOUISVILLE, KY 40212-0000 | X94 | Vacant Lot"
+Louisville KY Open Code Violations,3,99.93,"2827 NORTHWESTERN PKY, LOUISVILLE, KY 40212-0000 | I21 | Vacant Lot"
+Louisville KY Open Code Violations,4,99.93,"629 E ST CATHERINE ST, LOUISVILLE, KY 40203 | X69 | Vacant Structure"
+Louisville KY Open Code Violations,5,99.93,"629 E ST CATHERINE ST, LOUISVILLE, KY 40203 | X90 | Vacant Structure"
+Louisville KY Open Code Violations,6,99.93,"629 E ST CATHERINE ST, LOUISVILLE, KY 40203 | X40 | Vacant Structure"
+Louisville KY Open Code Violations,7,99.93,"2750 W MAIN ST, LOUISVILLE, KY 40212 | X50 | Vacant Structure"
+Louisville KY Open Code Violations,8,99.93,"2750 W MAIN ST, LOUISVILLE, KY 40212 | X69 | Vacant Structure"
+Louisville KY Open Code Violations,9,99.93,"2750 W MAIN ST, LOUISVILLE, KY 40212 | X72 | Vacant Structure"
+Louisville KY Open Code Violations,10,99.93,"2750 W MAIN ST, LOUISVILLE, KY 40212 | X40 | Vacant Structure"
+Louisville KY Open Code Violations,11,99.93,"2750 W MAIN ST, LOUISVILLE, KY 40212 | X19 | Vacant Structure"
+Louisville KY Open Code Violations,12,99.93,"6910 MATTHEWS RD, LOUISVILLE, KY 40258 | 02A | Vacant Lot"
+Louisville KY Open Code Violations,13,99.93,"6910 MATTHEWS RD, LOUISVILLE, KY 40258 | X90 | Vacant Lot"
+Louisville KY Open Code Violations,14,99.93,"6910 MATTHEWS RD, LOUISVILLE, KY 40258 | 05A | Vacant Lot"
+Louisville KY Open Code Violations,15,99.93,"4147 W MARKET ST, LOUISVILLE, KY 40212 | 02A | Vacant Structure"
+Louisville KY Open Code Violations,16,99.93,"2229 OSAGE AVE, LOUISVILLE, KY 40210 | 02A | Vacant Structure"
+Louisville KY Open Code Violations,17,99.93,"4147 W MARKET ST, LOUISVILLE, KY 40212 | E05 | Vacant Structure"
+Louisville KY Open Code Violations,18,99.93,"4147 W MARKET ST, LOUISVILLE, KY 40212 | X50 | Vacant Structure"
+Louisville KY Open Code Violations,19,99.93,"4147 W MARKET ST, LOUISVILLE, KY 40212 | X69 | Vacant Structure"
+Louisville KY Open Code Violations,20,99.93,"4147 W MARKET ST, LOUISVILLE, KY 40212 | X19 | Vacant Structure"
+Louisville KY Open Code Violations,21,99.93,"6800 HILL PEAK CT, LOUISVILLE, KY 40214 | X47 | Vacant Structure"
+Louisville KY Open Code Violations,22,99.93,"6800 HILL PEAK CT, LOUISVILLE, KY 40214 | X50 | Vacant Structure"
+Louisville KY Open Code Violations,23,99.93,"6800 HILL PEAK CT, LOUISVILLE, KY 40214 | X78 | Vacant Structure"
+Louisville KY Open Code Violations,24,99.93,"6800 HILL PEAK CT, LOUISVILLE, KY 40214 | X19 | Vacant Structure"
+Louisville KY Open Code Violations,25,99.93,"3312 W KENTUCKY ST, LOUISVILLE, KY 40211 | X50 | Vacant Structure"
+Louisville KY Lien Holder Final Orders,1,55.0,"CUNNINGHAM, PATRICIA BROWN MCNEAL | Final By Citation | $1500.0 | mail_state: DC"
+Louisville KY Lien Holder Final Orders,2,44.32,"ZIRACO, LLC | Final By Citation | $966.0 | mail_state: WY"
+Louisville KY Lien Holder Final Orders,3,43.0,"2023Q2, HIG INV SOLE LLC | Final By Hearing | $900.0 | mail_state: UT"
+Louisville KY Lien Holder Final Orders,4,43.0,"PIACENTINO, STEVEN N | Final By Citation | $900.0 | mail_state: NY"
+Louisville KY Lien Holder Final Orders,5,43.0,"GEP, LLC | Final By Citation | $900.0 | mail_state: CA"
+Louisville KY Lien Holder Final Orders,6,41.0,"DANIEL, DERWENT | Final By Citation | $800.0 | mail_state: TN"
+Louisville KY Lien Holder Final Orders,7,41.0,"LEDGEWOOD, MULTIFAMILY PARTNERS LLC | Final By Citation | $800.0 | mail_state: TN"
+Louisville KY Lien Holder Final Orders,8,41.0,"COCHRAN, LOUIS A & EULALEAN | Final By Citation | $800.0 | mail_state: NH"
+Louisville KY Lien Holder Final Orders,9,41.0,"NICHOLAS, NIGEL | Final By Citation | $800.0 | mail_state: IN"
+Louisville KY Lien Holder Final Orders,10,41.0,"NICHOLAS, NIGEL | Final By Citation | $800.0 | mail_state: IN"
+Louisville KY Lien Holder Final Orders,11,41.0,"NEXGEN, COASTAL INVESTMENTS LLC | Final By Citation | $800.0 | mail_state: FL"
+Louisville KY Lien Holder Final Orders,12,40.0,"CRAWFORD, JOHN C | Final By Citation | $2000.0 | mail_state: KY"
+Louisville KY Lien Holder Final Orders,13,40.0,"ETHERIDGE, JAMES J | Final By Citation | $2000.0 | mail_state: KY"
+Louisville KY Lien Holder Final Orders,14,40.0,"RED, DOOR LEGACY LLC | Final By Citation | $2000.0 | mail_state: KY"
+Louisville KY Lien Holder Final Orders,15,40.0,"RED, DOOR LEGACY LLC | Final By Citation | $2000.0 | mail_state: KY"
+Louisville KY Lien Holder Final Orders,16,40.0,"DURHAM, LARRY P & ROBIN L | Final By Citation | $2000.0 | mail_state: KY"
+Louisville KY Lien Holder Final Orders,17,39.0,"KY, PORTLAND LLC | Final By Hearing | $700.0 | mail_state: FL"
+Louisville KY Lien Holder Final Orders,18,39.0,"STENBERG, MARK DEVEN | Final By Hearing | $700.0 | mail_state: IL"
+Louisville KY Lien Holder Final Orders,19,39.0,"LEDGEWOOD, MULTIFAMILY PARTNERS LLC | Final By Citation | $700.0 | mail_state: TN"
+Louisville KY Lien Holder Final Orders,20,39.0,"LEDGEWOOD, MULTIFAMILY PARTNERS LLC | Final By Citation | $700.0 | mail_state: TN"
+Louisville KY Lien Holder Final Orders,21,39.0,"2023Q2, HIG INV SOLE LLC | Final By Citation | $700.0 | mail_state: UT"
+Louisville KY Lien Holder Final Orders,22,39.0,"SHANE, ADAMS REAL ESTATE INC | Final By Citation | $700.0 | mail_state: IN"
+Louisville KY Lien Holder Final Orders,23,37.0,"ST, ANTHONY GARDENS LLC | Final By Citation | $600.0 | mail_state: NY"
+Louisville KY Lien Holder Final Orders,24,37.0,"2023Q2, HIG INV SOLE LLC | Final By Hearing | $600.0 | mail_state: UT"
+Louisville KY Lien Holder Final Orders,25,37.0,"SHANE, JEWELL | Final By Citation | $600.0 | mail_state: OH"

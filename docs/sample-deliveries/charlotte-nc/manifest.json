@@ -1,0 +1,70 @@
+{
+  "package_id": "charlotte-nc-2026-06-19",
+  "customer_county": "Charlotte (Mecklenburg County)",
+  "state": "NC",
+  "delivery_date": "2026-06-19",
+  "lane_count": 3,
+  "total_records": 300,
+  "lanes": [
+    {
+      "product_name": "Charlotte NC Open City Liens",
+      "lane": "city_lien_active",
+      "county": "Mecklenburg",
+      "state": "NC",
+      "source_url": "https://data.charlottenc.gov/datasets/financial-management-system-lien-data",
+      "source_pulled_at": "2026-06-19",
+      "delivered_rows": 100,
+      "compliance_note": "Property-record data only. Buyer is responsible for owner contact lookup, skip trace, DNC compliance, TCPA, and outreach decisions.",
+      "generated_at_utc": "2026-06-19T18:57:59.329777+00:00",
+      "source_total_rows": 4025,
+      "open_lien_universe": 4025,
+      "lien_status_breakdown": {
+        "LF - LIEN FILED": 2849,
+        "WO - WRITE OFF": 1176
+      },
+      "score_range": [
+        122.1,
+        123.07
+      ],
+      "filtered_universe": 4025
+    },
+    {
+      "product_name": "Charlotte NC Vacant Land Specialty",
+      "lane": "vacant_land",
+      "county": "Mecklenburg",
+      "state": "NC",
+      "source_url": "https://data.charlottenc.gov/datasets/vacant-land",
+      "source_pulled_at": "2026-06-19",
+      "delivered_rows": 100,
+      "compliance_note": "Property-record data only. Buyer is responsible for owner contact lookup, skip trace, DNC compliance, TCPA, and outreach decisions.",
+      "generated_at_utc": "2026-06-19T18:57:59.679502+00:00",
+      "source_total_rows": 23204,
+      "filtered_universe": 15273,
+      "absentee_in_top": 100,
+      "score_range": [
+        100,
+        100
+      ]
+    },
+    {
+      "product_name": "Charlotte NC High-Value Absentee Single-Family",
+      "lane": "absentee_high_value",
+      "county": "Mecklenburg",
+      "state": "NC",
+      "source_url": "https://data.charlottenc.gov/datasets/parcel-look-up",
+      "source_pulled_at": "2026-06-19",
+      "delivered_rows": 100,
+      "compliance_note": "Property-record data only. Buyer is responsible for owner contact lookup, skip trace, DNC compliance, TCPA, and outreach decisions.",
+      "generated_at_utc": "2026-06-19T18:58:10.430910+00:00",
+      "source_total_rows": 446213,
+      "filtered_universe": 47151,
+      "out_of_state_in_top": 100,
+      "score_range": [
+        100,
+        100
+      ]
+    }
+  ],
+  "compliance_note": "Property-record data only. Buyer responsible for owner contact lookup, skip trace, DNC compliance, TCPA, and outreach decisions.",
+  "generated_at_utc": "2026-06-19T19:13:58.226792+00:00"
+}

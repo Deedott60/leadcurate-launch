@@ -1,0 +1,26 @@
+rank,score,owner_name_redacted,municipality,mail_state,total_acreage,land_value,is_absentee_owner,lane,county
+1,100,U** I** N**** C******* L**,CHARLOTTE,PA,9.494,7844300.0,yes,vacant_land,Mecklenburg
+2,100,S***** C**** O**** L**,CHARLOTTE,FL,22.588,278000.0,yes,vacant_land,Mecklenburg
+3,100,Y** T***** L**,CHARLOTTE,SC,6.963,474448.0,yes,vacant_land,Mecklenburg
+4,100,I**** L******* I********* P*** L**,CHARLOTTE,IL,8.043,499200.0,yes,vacant_land,Mecklenburg
+5,100,R****** A D****,UNINC,SC,16.281,478500.0,yes,vacant_land,Mecklenburg
+6,100,K** L** B** 5 L**,UNINC,AZ,22.577,2532600.0,yes,vacant_land,Mecklenburg
+7,100,K** L** B** 5 L**,UNINC,AZ,34.789,3159300.0,yes,vacant_land,Mecklenburg
+8,100,Y** T***** L**,UNINC,SC,6.024,437399.0,yes,vacant_land,Mecklenburg
+9,100,Y** T***** L**,UNINC,SC,7.588,425735.0,yes,vacant_land,Mecklenburg
+10,100,B****** C*** H********* A********** I**,UNINC,TX,10.859,221400.0,yes,vacant_land,Mecklenburg
+11,100,P************ R***** C******,UNINC,CT,12.376,846400.0,yes,vacant_land,Mecklenburg
+12,100,P************ R***** C******,UNINC,CT,47.935,2575100.0,yes,vacant_land,Mecklenburg
+13,100,A**** B*** H*****,UNINC,SC,5.936,411500.0,yes,vacant_land,Mecklenburg
+14,100,W*** 8 L**,CHARLOTTE,FL,35.764,2573300.0,yes,vacant_land,Mecklenburg
+15,100,V***** L**** I**,CHARLOTTE,AL,8.797,1332700.0,yes,vacant_land,Mecklenburg
+16,100,H***** F G********,PINEVILLE,MN,5.097,612300.0,yes,vacant_land,Mecklenburg
+17,100,L***** 1**** P******** L**,PINEVILLE,IL,15.001,1826800.0,yes,vacant_land,Mecklenburg
+18,100,F***** L** P********** J**** R*** M***** J**,CHARLOTTE,SC,7.775,1085400.0,yes,vacant_land,Mecklenburg
+19,100,F***** L** P********** J**** R*** M***** J**,PINEVILLE,SC,10.63,1395300.0,yes,vacant_land,Mecklenburg
+20,100,S****** M***** H**** L**,PINEVILLE,VA,19.827,2983100.0,yes,vacant_land,Mecklenburg
+21,100,J******** B******* P*** A********* O** N** L**,CHARLOTTE,VA,21.57,537600.0,yes,vacant_land,Mecklenburg
+22,100,N** S**** R***** C***,CHARLOTTE,MA,8.951,1011500.0,yes,vacant_land,Mecklenburg
+23,100,C******** L**,CHARLOTTE,TX,7.47,1040500.0,yes,vacant_land,Mecklenburg
+24,100,C************ C********** O**** L**,CHARLOTTE,TX,15.478,798400.0,yes,vacant_land,Mecklenburg
+25,100,J****** K********,UNINC,SC,5.704,203600.0,yes,vacant_land,Mecklenburg

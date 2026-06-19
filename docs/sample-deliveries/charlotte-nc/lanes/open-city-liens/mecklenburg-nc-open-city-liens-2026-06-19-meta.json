@@ -1,0 +1,21 @@
+{
+  "product_name": "Charlotte Open City Liens Snapshot",
+  "lane": "city_lien_active",
+  "county": "Mecklenburg",
+  "state": "NC",
+  "source_url": "https://data.charlottenc.gov/datasets/financial-management-system-lien-data",
+  "source_pulled_at": "2026-06-19",
+  "delivered_rows": 100,
+  "compliance_note": "Property-record data only. Buyer is responsible for owner contact lookup, skip trace, DNC compliance, TCPA, and outreach decisions.",
+  "generated_at_utc": "2026-06-19T18:57:59.329777+00:00",
+  "source_total_rows": 4025,
+  "open_lien_universe": 4025,
+  "lien_status_breakdown": {
+    "LF - LIEN FILED": 2849,
+    "WO - WRITE OFF": 1176
+  },
+  "score_range": [
+    122.1,
+    123.07
+  ]
+}

@@ -1,0 +1,26 @@
+rank,score,owner_name_redacted,property_address_partial,lien_status,invoice_date,lane,county
+1,123.07,T**** W**** T***** A****,8*** CHARTER OAK LN,LF - LIEN FILED,2023-06-07,city_lien_active,Mecklenburg
+2,123.07,M********* H********* A****,B*** LN,LF - LIEN FILED,2023-06-07,city_lien_active,Mecklenburg
+3,123.07,Y**** D********** C****** I**,1*** SUNNYWOOD LN,LF - LIEN FILED,2023-06-07,city_lien_active,Mecklenburg
+4,123.07,Y**** D********** C****** I**,9*** SARDIS RD NORTH,LF - LIEN FILED,2023-06-07,city_lien_active,Mecklenburg
+5,123.07,S********** V******** & S*******,2*** LYNBRIDGE DR,LF - LIEN FILED,2023-06-07,city_lien_active,Mecklenburg
+6,123.07,G***** E***,7*** PARK VISTA CR,LF - LIEN FILED,2023-06-07,city_lien_active,Mecklenburg
+7,123.0,O*** E***** & A**** D******,6*** DUNMURRY LN,LF - LIEN FILED,2023-06-05,city_lien_active,Mecklenburg
+8,123.0,R**** P********* O** N** I**,7*** PONDERS END LN,LF - LIEN FILED,2023-06-05,city_lien_active,Mecklenburg
+9,123.0,S** J*** P******* L**,1*** QUIET PINE CT,LF - LIEN FILED,2023-06-05,city_lien_active,Mecklenburg
+10,123.0,N*** C****** I********** L**,3*** FREEDOM DR,LF - LIEN FILED,2023-06-05,city_lien_active,Mecklenburg
+11,123.0,T** N******* C****** L*** T****,9*** HERRIN AV,LF - LIEN FILED,2023-06-05,city_lien_active,Mecklenburg
+12,123.0,W**** S B****,S*** DR,LF - LIEN FILED,2023-06-05,city_lien_active,Mecklenburg
+13,123.0,W******* G*** C******** H**** A**** I**,W*** FARM DR,LF - LIEN FILED,2023-06-05,city_lien_active,Mecklenburg
+14,123.0,B** A***** 4 L**,2*** DENVIEW LN,LF - LIEN FILED,2023-06-05,city_lien_active,Mecklenburg
+15,123.0,H*** S** B******* I** L**,5*** GRAHAM MEADOW DR,LF - LIEN FILED,2023-06-05,city_lien_active,Mecklenburg
+16,123.0,P*** K J*****,1*** LAUREL VIEW DR,LF - LIEN FILED,2023-06-05,city_lien_active,Mecklenburg
+17,123.0,U**** T***** R*** E***** I**,1*** LAKEWOOD AV,LF - LIEN FILED,2023-06-05,city_lien_active,Mecklenburg
+18,123.0,U**** T***** R*** E***** I**,1*** LAKEWOOD AV,LF - LIEN FILED,2023-06-05,city_lien_active,Mecklenburg
+19,123.0,L****** J**** M,5*** E W T HARRIS BV,LF - LIEN FILED,2023-06-05,city_lien_active,Mecklenburg
+20,122.87,D**** H*******,7*** BRIARDALE DR,LF - LIEN FILED,2023-06-01,city_lien_active,Mecklenburg
+21,122.87,P***** E***** P**,7*** OAK CANYON LN,LF - LIEN FILED,2023-06-01,city_lien_active,Mecklenburg
+22,122.87,D********** G L********,1*** S SMALLWOOD PL,LF - LIEN FILED,2023-06-01,city_lien_active,Mecklenburg
+23,122.87,R****** A***** G****,1*** ST JOHN ST,LF - LIEN FILED,2023-06-01,city_lien_active,Mecklenburg
+24,122.87,S***** J** P********* L**,5*** COULEE PL,LF - LIEN FILED,2023-06-01,city_lien_active,Mecklenburg
+25,122.87,M***** H*****,1*** LITTLE WHITEOAK RD,LF - LIEN FILED,2023-06-01,city_lien_active,Mecklenburg

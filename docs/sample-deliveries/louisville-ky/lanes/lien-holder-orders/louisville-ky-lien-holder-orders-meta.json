@@ -1,0 +1,13 @@
+{
+  "lane": "lien_holder_final_orders",
+  "product_name": "Louisville KY Lien Holder Final Orders",
+  "source_total_rows": 516,
+  "filtered_universe": 411,
+  "delivered_rows": 100,
+  "score_range": [
+    16.0,
+    55.0
+  ],
+  "source_url": "https://data.louisvilleky.gov/datasets/louisville-metro-ky-lien-holder-final-orders",
+  "source_pulled_at": "2026-06-19"
+}

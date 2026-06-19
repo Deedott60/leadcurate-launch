@@ -1,0 +1,26 @@
+rank,score,owner_name_redacted,mail_city,mail_state,property_use,year_built,total_value,is_out_of_state,lane,county
+1,100,R** S** P***** B L**,ATLANTA,GA,Single-Family,1985,678100.0,yes,absentee_high_value,Mecklenburg
+2,100,A*** C*** G***** W***,AUSTIN,TX,Single-Family,1956,602600.0,yes,absentee_high_value,Mecklenburg
+3,100,J**** W********,MINEOLA,NY,Single-Family,1989,835700.0,yes,absentee_high_value,Mecklenburg
+4,100,A*** K****,NEW YORK,NY,Single-Family,1987,671600.0,yes,absentee_high_value,Mecklenburg
+5,100,M****** A***** F********,CORAL GABLES,FL,Single-Family,1988,730900.0,yes,absentee_high_value,Mecklenburg
+6,100,N**** K******,CHARLOTTE,WI,Single-Family,1986,629900.0,yes,absentee_high_value,Mecklenburg
+7,100,K****** R W****,HOUSTON,TX,Single-Family,1982,779800.0,yes,absentee_high_value,Mecklenburg
+8,100,V**** Q**** E******** L**,APACHE JUNCTION,AZ,Single-Family,1978,762500.0,yes,absentee_high_value,Mecklenburg
+9,100,S**** W*****,REDWOOD CITY,CA,Single-Family,1979,905220.0,yes,absentee_high_value,Mecklenburg
+10,100,H****** B***** L**,WHITE SALMON,WA,Single-Family,1977,704200.0,yes,absentee_high_value,Mecklenburg
+11,100,J**** A**** M**********,BOCA RATON,FL,Single-Family,1977,757500.0,yes,absentee_high_value,Mecklenburg
+12,100,J**** E***** V******,ROSWELL,GA,Single-Family,1956,840300.0,yes,absentee_high_value,Mecklenburg
+13,100,D**** L*** C****** L**,SOUTH BOSTON,VA,Single-Family,1928,1911500.0,yes,absentee_high_value,Mecklenburg
+14,100,M*** L C*******,SUMMERVILLE,SC,Single-Family,1987,615100.0,yes,absentee_high_value,Mecklenburg
+15,100,J******* S******,MILLIS,MA,Single-Family,1981,720000.0,yes,absentee_high_value,Mecklenburg
+16,100,S***** A T******,CHARLOTTE,CA,Single-Family,1979,660400.0,yes,absentee_high_value,Mecklenburg
+17,100,A*** B*******,KEY BISCAYNE,FL,Single-Family,1979,711600.0,yes,absentee_high_value,Mecklenburg
+18,100,2***** I** B******* L**,CHANDLER,AZ,Single-Family,1977,616500.0,yes,absentee_high_value,Mecklenburg
+19,100,H****** B H******,BRANDENTON,FL,Single-Family,1971,854000.0,yes,absentee_high_value,Mecklenburg
+20,100,O******* P******* T**** I,TEMPE,AZ,Single-Family,1984,605800.0,yes,absentee_high_value,Mecklenburg
+21,100,M****** C***** G******,ROCK HILL,SC,Single-Family,1934,869400.0,yes,absentee_high_value,Mecklenburg
+22,100,M****** C***** G******,ROCK HILL,SC,Single-Family,1963,869400.0,yes,absentee_high_value,Mecklenburg
+23,100,M****** C***** G******,ROCK HILL,SC,Single-Family,1970,869400.0,yes,absentee_high_value,Mecklenburg
+24,100,P************ R***** C******,STAMFORD,CT,Single-Family,1985,3887600.0,yes,absentee_high_value,Mecklenburg
+25,100,R***** A J** B*******,STAMFORD,CT,Single-Family,1937,3943700.0,yes,absentee_high_value,Mecklenburg

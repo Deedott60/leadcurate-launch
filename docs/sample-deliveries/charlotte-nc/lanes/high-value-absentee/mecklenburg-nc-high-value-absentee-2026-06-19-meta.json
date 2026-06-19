@@ -1,0 +1,18 @@
+{
+  "product_name": "Charlotte High-Value Absentee Snapshot",
+  "lane": "absentee_high_value",
+  "county": "Mecklenburg",
+  "state": "NC",
+  "source_url": "https://data.charlottenc.gov/datasets/parcel-look-up",
+  "source_pulled_at": "2026-06-19",
+  "delivered_rows": 100,
+  "compliance_note": "Property-record data only. Buyer is responsible for owner contact lookup, skip trace, DNC compliance, TCPA, and outreach decisions.",
+  "generated_at_utc": "2026-06-19T18:58:10.430910+00:00",
+  "source_total_rows": 446213,
+  "filtered_universe": 47151,
+  "out_of_state_in_top": 100,
+  "score_range": [
+    100,
+    100
+  ]
+}

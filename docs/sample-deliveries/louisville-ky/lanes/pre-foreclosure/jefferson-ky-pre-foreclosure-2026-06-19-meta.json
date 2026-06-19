@@ -1,0 +1,32 @@
+{
+  "product_name": "Louisville KY (Jefferson County) Pre-Foreclosure Snapshot",
+  "lane": "pre_foreclosure",
+  "county": "Jefferson",
+  "state": "KY",
+  "source_url": "https://data.louisvilleky.gov/datasets/louisville-metro-ky-property-foreclosures",
+  "source_pulled_at": "2026-06-18",
+  "source_total_rows": 3000,
+  "filtered_universe": 259,
+  "delivered_rows": 100,
+  "score_range": [
+    22.11,
+    109.5
+  ],
+  "upcoming_sale_count": 6,
+  "recent_past_sale_count": 50,
+  "filed_only_count": 44,
+  "top_neighborhoods": {
+    "Parkland": 20,
+    "Park Hill": 18,
+    "South Louisville": 17,
+    "Portland": 12,
+    "(unknown)": 9,
+    "Russell": 6,
+    "California": 4,
+    "Shawnee": 4,
+    "Park DuValle": 3,
+    "Shelby Park": 2
+  },
+  "compliance_note": "Public-record court filings. Property address + case data only. Buyer responsible for owner contact lookup, skip trace, DNC compliance, and outreach.",
+  "generated_at_utc": "2026-06-18T23:32:21.592200+00:00"
+}
