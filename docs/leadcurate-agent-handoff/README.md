@@ -15,6 +15,7 @@ If you only have time to read one folder, read this folder.
 7. `06-compliance-and-risk.md` - claims to avoid and source/DNC rules
 8. `07-next-agent-checklist.md` - concrete next build/audit tasks
 9. `08-local-and-github-inventory.md` - canonical repo, known local folders, and consolidation status
+10. `09-data-pipeline-status.md` - **live data layer**: what's on the VPS, URL catalog for 20 markets pulled, 3 blockers still open, lessons learned (PowerShell quoting, date parsing, async ArcGIS), Discovery Snapshot processing pattern. Update whenever a blocker is cracked.
 
 ## Canonical repo files
 
