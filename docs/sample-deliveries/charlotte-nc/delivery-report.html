@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LeadCurate · Charlotte (Mecklenburg County) delivery · 2026-06-19</title>
+<meta name="description" content="LeadCurate County Seat delivery report — Charlotte (Mecklenburg County), 2026-06-19." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1e293b; --muted: #64748b; --cream: #faf7f2; --stone: #f5f1eb;
+  --dark: #0f172a; --emerald: #15803d; --emerald-2: #22c55e; --emerald-soft: #dff4e8;
+  --gold: #d97706; --gold-soft: #fef3c7;
+  --line: rgba(30,41,59,.12); --shadow: 0 24px 80px rgba(15,23,42,.12); --radius: 24px;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--cream); color: var(--ink); line-height: 1.55; }
+.container { width: min(1100px, calc(100% - 40px)); margin: 0 auto; }
+header.report-header { padding: 32px 0 24px; border-bottom: 1px solid var(--line);
+  background: rgba(255,255,255,0.5); }
+.header-row { display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 16px; }
+.logo { font-family: "Playfair Display", serif; font-size: 28px; font-weight: 700;
+  letter-spacing: -0.04em; color: var(--dark); }
+.logo span { color: var(--emerald); }
+.badge { display: inline-flex; align-items: center; gap: 8px;
+  background: var(--emerald-soft); color: var(--emerald);
+  padding: 8px 14px; border-radius: 999px;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; }
+.doc-meta { font-size: 13px; color: var(--muted); margin-top: 4px; }
+section.cover { padding: 56px 0 40px; }
+h1 { font-family: "Playfair Display", serif; font-size: clamp(40px, 6vw, 64px);
+  line-height: 1; letter-spacing: -0.04em; margin: 16px 0 18px; max-width: 880px; }
+.lead { font-size: 18px; color: var(--muted); max-width: 720px; line-height: 1.6; }
+section { padding: 40px 0; border-top: 1px solid var(--line); }
+section.no-divider { border-top: none; }
+h2 { font-family: "Playfair Display", serif; font-size: clamp(28px, 3.4vw, 38px);
+  line-height: 1.05; letter-spacing: -0.03em; margin: 0 0 8px; }
+h3 { font-size: 18px; font-weight: 700; margin: 22px 0 10px; }
+h4 { font-size: 14px; font-weight: 700; color: var(--emerald);
+  text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 6px; }
+p { margin: 8px 0 14px; color: #334155; }
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px; margin: 22px 0 8px; }
+.metric { background: white; border: 1px solid var(--line); border-radius: 18px; padding: 18px; }
+.metric .label { font-size: 12px; color: var(--muted); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em; }
+.metric .value { font-size: 30px; font-weight: 800; letter-spacing: -0.03em; margin-top: 4px; color: var(--dark); }
+.metric .note { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.lane-card { background: white; border: 1px solid var(--line); border-radius: 24px;
+  padding: 24px 28px; margin: 22px 0; border-left: 4px solid var(--emerald); }
+.lane-card.tier-a { border-left-color: var(--gold); }
+.lane-card h3 { margin-top: 0; }
+.lane-card .pill { display: inline-block; font-size: 11px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--emerald); padding: 4px 10px; background: var(--emerald-soft);
+  border-radius: 6px; margin-bottom: 12px; }
+.lane-card .stats { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0 14px; }
+.stat-pill { display: inline-flex; align-items: center; gap: 6px;
+  background: var(--stone); color: var(--ink);
+  padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+.source-pill { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px;
+  background: var(--stone); padding: 4px 8px; border-radius: 4px; color: var(--muted);
+  word-break: break-all; display: inline-block; }
+.table-wrap { overflow-x: auto; margin: 16px 0 8px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; background: white; border-radius: 12px; overflow: hidden; }
+thead th { text-align: left; padding: 10px 12px;
+  background: var(--stone); color: var(--ink); font-weight: 700;
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--line); }
+tbody td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover { background: var(--stone); }
+tbody td.rank { font-weight: 800; color: var(--emerald); }
+tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.pull-quote { background: var(--dark); color: white;
+  padding: 28px 30px; border-radius: 24px; margin: 22px 0;
+  font-family: "Playfair Display", serif; font-size: 20px; line-height: 1.4; font-style: italic; }
+.pull-quote .cite { display: block; margin-top: 12px;
+  font-family: Inter, sans-serif; font-size: 13px; font-style: normal;
+  color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+footer { padding: 40px 0 60px; color: var(--muted); border-top: 1px solid var(--line);
+  font-size: 13px; margin-top: 40px; }
+.callout { background: var(--emerald-soft); border-left: 4px solid var(--emerald);
+  padding: 14px 18px; border-radius: 6px; color: #064e3b; font-size: 14px; }
+@media print {
+  body { background: white; }
+  section, .lane-card, .metric-grid { page-break-inside: avoid; }
+  header.report-header { background: white; }
+  .pull-quote { background: white; color: var(--dark); border: 2px solid var(--dark); }
+}
+</style>
+</head>
+<body>
+
+<header class="report-header">
+  <div class="container header-row">
+    <div>
+      <div class="logo">Lead<span>Curate</span>.</div>
+      <div class="doc-meta">County Seat delivery report · charlotte-nc-2026-06-19</div>
+    </div>
+    <div class="badge"><span>●</span> Fresh — pulled 2026-06-19</div>
+  </div>
+</header>
+
+<section class="cover no-divider container">
+  <h4>For: County Seat customer</h4>
+  <h1>Your Charlotte (Mecklenburg County) batch.</h1>
+  <p class="lead">This is your monthly County Seat delivery. 3 distinct distress lanes, 300 ranked records pulled fresh from official county portals on 2026-06-19. Each lane is sold separately so the same record never crosses to another buyer.</p>
+</section>
+
+<section class="container">
+  <h4>At a glance</h4>
+  <h2>The package.</h2>
+  
+    <div class="metric-grid">
+      <div class="metric"><div class="label">Delivery county</div>
+        <div class="value" style="font-size:18px; font-family:'Playfair Display', serif;">Charlotte (Mecklenburg County)</div>
+        <div class="note">NC</div></div>
+      <div class="metric"><div class="label">Delivery date</div>
+        <div class="value" style="font-size:20px;">2026-06-19</div>
+        <div class="note">freshly pulled from source</div></div>
+      <div class="metric"><div class="label">Lanes</div>
+        <div class="value">3</div>
+        <div class="note">distinct distress signals</div></div>
+      <div class="metric"><div class="label">Records</div>
+        <div class="value">300</div>
+        <div class="note">100 per lane, scored & ranked</div></div>
+    </div>
+    
+  <div class="callout" style="margin-top:18px;">
+    <strong>How to work this report.</strong> Start with the lanes below — they're ranked, so rank 1 is the highest-priority record per lane. The full unranked file for each lane lives in this package as a CSV (in <code>lanes/{lane-slug}/</code>). Use this HTML report for quick triage; load the CSVs into your CRM or spreadsheet tool when you're ready to dial in.
+  </div>
+</section>
+
+<section class="container">
+  <h4>Your lanes this month</h4>
+  <h2>3 distress signals, scored and ranked.</h2>
+  
+        <div class="lane-card">
+          <span class="pill">Lane 1</span>
+          <h3>Charlotte Open City Liens Snapshot</h3>
+          <p>Active city liens on Charlotte property — filed and unpaid. Owner names include real institutional REI funds and individual absentee owners.</p>
+          <div class="stats"><span class='stat-pill'>4,025 qualified</span><span class='stat-pill'>100 ranked</span><span class='stat-pill'>score range 122.1–123.07</span><span class='stat-pill'>source pulled 2026-06-19</span></div>
+          <p style="font-size:13px; color:var(--muted); margin-top:0;">
+            <strong>Top 15 of 100 shown below.</strong> Full ranked CSV in <code>lanes/open-city-liens/</code>.
+          </p>
+          <div class="table-wrap"><table><thead><tr><th>#</th><th>Score</th><th>Owner</th><th>Property address</th><th>Status</th><th>Invoiced</th></tr></thead><tbody><tr><td class="rank">1</td><td class="num">123.07</td><td>TREVA WOODS TWNHSE ASSOC</td><td>8002 CHARTER OAK LN</td><td>LF - LIEN FILED</td><td>2023-06-07</td></tr><tr><td class="rank">2</td><td class="num">123.07</td><td>MAPLECREST HOMEOWNERS ASSOC</td><td>BLUESTEM LN</td><td>LF - LIEN FILED</td><td>2023-06-07</td></tr><tr><td class="rank">3</td><td class="num">123.07</td><td>YORUK DEVELOPMENT COMPANY INC</td><td>112 SUNNYWOOD LN</td><td>LF - LIEN FILED</td><td>2023-06-07</td></tr><tr><td class="rank">4</td><td class="num">123.07</td><td>YORUK DEVELOPMENT COMPANY INC</td><td>921 SARDIS RD NORTH</td><td>LF - LIEN FILED</td><td>2023-06-07</td></tr><tr><td class="rank">5</td><td class="num">123.07</td><td>SAMOCRAINI, VEACESLAV &amp; SVITLANA</td><td>2500 LYNBRIDGE DR</td><td>LF - LIEN FILED</td><td>2023-06-07</td></tr><tr><td class="rank">6</td><td class="num">123.07</td><td>GILER, ERIC</td><td>7313 PARK VISTA CR</td><td>LF - LIEN FILED</td><td>2023-06-07</td></tr><tr><td class="rank">7</td><td class="num">123.0</td><td>OTIS EUGENE &amp; ANNIE DOUGLAS</td><td>6818 DUNMURRY LN</td><td>LF - LIEN FILED</td><td>2023-06-05</td></tr><tr><td class="rank">8</td><td class="num">123.0</td><td>ROYAL PROPERTIES OF NC INC</td><td>7414 PONDERS END LN</td><td>LF - LIEN FILED</td><td>2023-06-05</td></tr><tr><td class="rank">9</td><td class="num">123.0</td><td>SFR JV-1 PROPERTY LLC</td><td>11515 QUIET PINE CT</td><td>LF - LIEN FILED</td><td>2023-06-05</td></tr><tr><td class="rank">10</td><td class="num">123.0</td><td>NOVA CAPITAL INVESTMENTS LLC</td><td>3949 FREEDOM DR</td><td>LF - LIEN FILED</td><td>2023-06-05</td></tr><tr><td class="rank">11</td><td class="num">123.0</td><td>THE NORFSIDE CHICAGO LAND TRUST</td><td>945 HERRIN AV</td><td>LF - LIEN FILED</td><td>2023-06-05</td></tr><tr><td class="rank">12</td><td class="num">123.0</td><td>WILLA S BROWN</td><td>SMITH DR</td><td>LF - LIEN FILED</td><td>2023-06-05</td></tr><tr><td class="rank">13</td><td class="num">123.0</td><td>WILLIAMS GATE CHARLOTTE HMOWN ASSOC INC</td><td>WILLIAMS FARM DR</td><td>LF - LIEN FILED</td><td>2023-06-05</td></tr><tr><td class="rank">14</td><td class="num">123.0</td><td>BAF ASSETS 4 LLC</td><td>2836 DENVIEW LN</td><td>LF - LIEN FILED</td><td>2023-06-05</td></tr><tr><td class="rank">15</td><td class="num">123.0</td><td>HOME SFR BORROWER IV LLC</td><td>522 GRAHAM MEADOW DR</td><td>LF - LIEN FILED</td><td>2023-06-05</td></tr></tbody></table></div>
+          <p style="font-size:11px; color:var(--muted); margin-top:12px;">
+            Source: <span class="source-pill">https://data.charlottenc.gov/datasets/financial-management-system-lien-data</span>
+          </p>
+        </div>
+        
+        <div class="lane-card">
+          <span class="pill">Lane 2</span>
+          <h3>Charlotte Vacant Land Specialty Snapshot</h3>
+          <p>Vacant land parcels with absentee owners. Filtered to ≥0.10 acres and identifiable owner, ranked by acreage × land value × out-of-state bonus.</p>
+          <div class="stats"><span class='stat-pill'>15,273 qualified</span><span class='stat-pill'>100 ranked</span><span class='stat-pill'>score range 100–100</span><span class='stat-pill'>source pulled 2026-06-19</span></div>
+          <p style="font-size:13px; color:var(--muted); margin-top:0;">
+            <strong>Top 15 of 100 shown below.</strong> Full ranked CSV in <code>lanes/vacant-land-specialty/</code>.
+          </p>
+          <div class="table-wrap"><table><thead><tr><th>#</th><th>Score</th><th>Owner</th><th>Property address</th><th>Mail city</th><th>State</th><th>Acres</th><th>Land value</th></tr></thead><tbody><tr><td class="rank">1</td><td class="num">100</td><td>ULM II NORTH CAROLINA LLC</td><td>5404 BALLANTYNE COMMONS PY</td><td>LIGONIER</td><td>PA</td><td class="num">9.49</td><td class="num">$7,844,300</td></tr><tr><td class="rank">2</td><td class="num">100</td><td>STEELE CREEK OWNER LLC</td><td>14522 S STEELE CREEK RD</td><td>COCONUT GROVE</td><td>FL</td><td class="num">22.59</td><td class="num">$278,000</td></tr><tr><td class="rank">3</td><td class="num">100</td><td>YFP TIMBER LLC</td><td>HAMILTON RD</td><td>FORT MILL</td><td>SC</td><td class="num">6.96</td><td class="num">$474,448</td></tr><tr><td class="rank">4</td><td class="num">100</td><td>IUSIF LAKEMONT INDUSTRIAL PARK LLC</td><td>CHOATE CR</td><td>CHICAGO</td><td>IL</td><td class="num">8.04</td><td class="num">$499,200</td></tr><tr><td class="rank">5</td><td class="num">100</td><td>RUSSELL A DAVEY</td><td>14731 PLEASANT HILL RD</td><td>BEAUFORT</td><td>SC</td><td class="num">16.28</td><td class="num">$478,500</td></tr><tr><td class="rank">6</td><td class="num">100</td><td>KL LB BUY 5 LLC</td><td>CROSSHAVEN DR</td><td>SCOTTSDALE</td><td>AZ</td><td class="num">22.58</td><td class="num">$2,532,600</td></tr><tr><td class="rank">7</td><td class="num">100</td><td>KL LB BUY 5 LLC</td><td>BANKHEAD RD</td><td>SCOTTSDALE</td><td>AZ</td><td class="num">34.79</td><td class="num">$3,159,300</td></tr><tr><td class="rank">8</td><td class="num">100</td><td>YFP TIMBER LLC</td><td>MCKEE RD</td><td>FORT MILL</td><td>SC</td><td class="num">6.02</td><td class="num">$437,399</td></tr><tr><td class="rank">9</td><td class="num">100</td><td>YFP TIMBER LLC</td><td>MCKEE RD</td><td>FORT MILL</td><td>SC</td><td class="num">7.59</td><td class="num">$425,735</td></tr><tr><td class="rank">10</td><td class="num">100</td><td>BECKETT COVE HOMEOWNERS ASSOCIATION INC</td><td>AUTUMN SAGE DR</td><td>HOUSTON</td><td>TX</td><td class="num">10.86</td><td class="num">$221,400</td></tr><tr><td class="rank">11</td><td class="num">100</td><td>PASS-A-GRILLE REALTY COMPANY</td><td>15495 YOUNGBLOOD RD</td><td>STAMFORD</td><td>CT</td><td class="num">12.38</td><td class="num">$846,400</td></tr><tr><td class="rank">12</td><td class="num">100</td><td>PASS-A-GRILLE REALTY COMPANY</td><td>YOUNGBLOOD RD</td><td>STAMFORD</td><td>CT</td><td class="num">47.94</td><td class="num">$2,575,100</td></tr><tr><td class="rank">13</td><td class="num">100</td><td>ANNIE BELL HARRIS</td><td>CAPPS RD</td><td>FORT MILL</td><td>SC</td><td class="num">5.94</td><td class="num">$411,500</td></tr><tr><td class="rank">14</td><td class="num">100</td><td>WC&amp;C 8 LLC</td><td>PINEVILLE-MATTHEWS RD</td><td>PALM BEACH GARDENS</td><td>FL</td><td class="num">35.76</td><td class="num">$2,573,300</td></tr><tr><td class="rank">15</td><td class="num">100</td><td>VULCAN LANDS INC</td><td>9539 NATIONS FORD RD</td><td>BIRMINGHAM</td><td>AL</td><td class="num">8.80</td><td class="num">$1,332,700</td></tr></tbody></table></div>
+          <p style="font-size:11px; color:var(--muted); margin-top:12px;">
+            Source: <span class="source-pill">https://data.charlottenc.gov/datasets/vacant-land</span>
+          </p>
+        </div>
+        
+        <div class="lane-card">
+          <span class="pill">Lane 3</span>
+          <h3>Charlotte High-Value Absentee Snapshot</h3>
+          <p>Single-family rentals owned by out-of-state entities, $200k+ assessed. Includes institutional SFR funds (BAF, SFR JV, HOME SFR) and individual investors.</p>
+          <div class="stats"><span class='stat-pill'>47,151 qualified</span><span class='stat-pill'>100 ranked</span><span class='stat-pill'>score range 100–100</span><span class='stat-pill'>source pulled 2026-06-19</span></div>
+          <p style="font-size:13px; color:var(--muted); margin-top:0;">
+            <strong>Top 15 of 100 shown below.</strong> Full ranked CSV in <code>lanes/high-value-absentee/</code>.
+          </p>
+          <div class="table-wrap"><table><thead><tr><th>#</th><th>Score</th><th>Owner</th><th>Mail city</th><th>State</th><th>Property location</th><th>Built</th><th>Assessed</th></tr></thead><tbody><tr><td class="rank">1</td><td class="num">100</td><td>RM1 SFR PROPCO B LP</td><td>ATLANTA</td><td>GA</td><td>901 AMANDA DR CHARLOTTE NC</td><td>1985</td><td class="num">$678,100</td></tr><tr><td class="rank">2</td><td class="num">100</td><td>ANNE CARR GILMAN WOOD</td><td>AUSTIN</td><td>TX</td><td>4300 KUYKENDALL RD CHARLOTTE NC</td><td>1956</td><td class="num">$602,600</td></tr><tr><td class="rank">3</td><td class="num">100</td><td>JASON WIESELMAN</td><td>MINEOLA</td><td>NY</td><td>5308 SUNNINGDALE DR CHARLOTTE NC</td><td>1989</td><td class="num">$835,700</td></tr><tr><td class="rank">4</td><td class="num">100</td><td>ALAN KROLL</td><td>NEW YORK</td><td>NY</td><td>11655 OLD SURRY LN CHARLOTTE NC</td><td>1987</td><td class="num">$671,600</td></tr><tr><td class="rank">5</td><td class="num">100</td><td>MICHAEL ANGELO FERNANDEZ</td><td>CORAL GABLES</td><td>FL</td><td>1200 SYDNEY DR CHARLOTTE NC</td><td>1988</td><td class="num">$730,900</td></tr><tr><td class="rank">6</td><td class="num">100</td><td>NIMIT KHIMIJI</td><td>CHARLOTTE</td><td>WI</td><td>1138 LAUREL PARK LN CHARLOTTE NC</td><td>1986</td><td class="num">$629,900</td></tr><tr><td class="rank">7</td><td class="num">100</td><td>KENNETH R WYNNE</td><td>HOUSTON</td><td>TX</td><td>2506 WINDING OAK DR CHARLOTTE NC</td><td>1982</td><td class="num">$779,800</td></tr><tr><td class="rank">8</td><td class="num">100</td><td>VALOR QUEST ENDEAVORS LLC</td><td>APACHE JUNCTION</td><td>AZ</td><td>3246 GRAY MOSS RD CHARLOTTE NC</td><td>1978</td><td class="num">$762,500</td></tr><tr><td class="rank">9</td><td class="num">100</td><td>SERAN WILSON</td><td>REDWOOD CITY</td><td>CA</td><td>2509 HOUSTON BRANCH RD CHARLOTTE NC</td><td>1979</td><td class="num">$905,220</td></tr><tr><td class="rank">10</td><td class="num">100</td><td>HOUSTON BRANCH LLC</td><td>WHITE SALMON</td><td>WA</td><td>2932 HOUSTON BRANCH RD CHARLOTTE NC</td><td>1977</td><td class="num">$704,200</td></tr><tr><td class="rank">11</td><td class="num">100</td><td>JAMES ALECK MACCUTCHEON</td><td>BOCA RATON</td><td>FL</td><td>2401 HIGH RIDGE RD CHARLOTTE NC</td><td>1977</td><td class="num">$757,500</td></tr><tr><td class="rank">12</td><td class="num">100</td><td>JERRY EUGENE VAUGHAN</td><td>ROSWELL</td><td>GA</td><td>9307 PROVIDENCE RD CHARLOTTE NC</td><td>1956</td><td class="num">$840,300</td></tr><tr><td class="rank">13</td><td class="num">100</td><td>DIXIE LAND COMPANY LLC</td><td>SOUTH BOSTON</td><td>VA</td><td>415 W JOHN ST MATTHEWS NC</td><td>1928</td><td class="num">$1,911,500</td></tr><tr><td class="rank">14</td><td class="num">100</td><td>MARK L CLENSHAW</td><td>SUMMERVILLE</td><td>SC</td><td>7518 BRITISH GARDENS LN CHARLOTTE NC</td><td>1987</td><td class="num">$615,100</td></tr><tr><td class="rank">15</td><td class="num">100</td><td>JONATHAN SUSSMAN</td><td>MILLIS</td><td>MA</td><td>10137 THOMAS PAYNE CR CHARLOTTE NC</td><td>1981</td><td class="num">$720,000</td></tr></tbody></table></div>
+          <p style="font-size:11px; color:var(--muted); margin-top:12px;">
+            Source: <span class="source-pill">https://data.charlottenc.gov/datasets/parcel-look-up</span>
+          </p>
+        </div>
+        
+</section>
+
+<section class="container">
+  <h4>Freshness</h4>
+  <h2>Why this is fresher than the alternatives.</h2>
+  <div class="pull-quote">
+    "A name that hits the Charlotte (Mecklenburg County) public record on the first of the month is in your batch within days. The same name does not appear in PropStream's data for another 30 to 90 days."
+    <span class="cite">LeadCurate freshness posture</span>
+  </div>
+  <p>LeadCurate pulls directly from official county portals. PropStream, BatchLeads, and DealMachine license property data from CoreLogic, ATTOM, and DataTree — those feeds refresh on a 30–90 day cycle. Every record in this delivery includes its source URL and source pull date so you can verify provenance yourself.</p>
+</section>
+
+<section class="container">
+  <h4>How to use the data</h4>
+  <h2>The workflow your batch is built for.</h2>
+  <ol style="font-size:15px; line-height:1.8; color:#334155; padding-left:20px;">
+    <li><strong>Triage from this report.</strong> The top 15 of each lane is shown above. The full 100-record file per lane is in <code>lanes/{lane-slug}/*.csv</code>.</li>
+    <li><strong>Work each lane in rank order.</strong> Rank 1 is the highest-priority record based on freshness + distress + value signals (see <code>meta.json</code> for the per-lane formula).</li>
+    <li><strong>Cross-reference mailing vs property address.</strong> Out-of-state mailing addresses are flagged in the data. Out-of-state = absentee = higher motivation in most lanes.</li>
+    <li><strong>Skip-trace through your existing tool.</strong> This package ships property-record data only — no phone numbers, no email addresses, no DNC scrub. Run skip trace through PropStream, BatchLeads, BatchData, Skip Genie, or whatever you already use. You stay free of TCPA / DNC compliance burden on our end.</li>
+    <li><strong>Mark and exclude records you've worked.</strong> We'll exclude them from your next batch automatically.</li>
+  </ol>
+</section>
+
+<section class="container">
+  <h4>Compliance</h4>
+  <h2>What's in the file. What's not.</h2>
+  <p><strong>Included:</strong> Property addresses, owner names, mailing addresses, parcel IDs, distress signals, scoring, freshness dates, and the source URL for every record.</p>
+  <p><strong>Not included:</strong> Skip-traced phone numbers, email addresses, DNC scrub status. You handle owner contact lookup, skip trace, DNC compliance, TCPA compliance, and outreach decisions on your side.</p>
+  <p>LeadCurate provides data and educational tools only. We do not guarantee deals, motivated sellers, or that any record is safe to contact. Your execution closes the deal.</p>
+</section>
+
+<footer>
+  <div class="container">
+    <p><strong>LeadCurate</strong> · County Seat delivery report · charlotte-nc-2026-06-19 · Delivered 2026-06-19</p>
+    <p>Source URLs and pull dates are stamped in each lane's <code>meta.json</code>. The matching machine-readable index is at <code>manifest.json</code>. Questions: reply to the email this report was attached to.</p>
+    <p>Better data. Cleaner workflow. No hype. Your execution closes the deal.</p>
+  </div>
+</footer>
+
+</body>
+</html>

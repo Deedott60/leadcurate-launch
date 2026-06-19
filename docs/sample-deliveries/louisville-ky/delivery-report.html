@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LeadCurate · Louisville (Jefferson County) delivery · 2026-06-19</title>
+<meta name="description" content="LeadCurate County Seat delivery report — Louisville (Jefferson County), 2026-06-19." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1e293b; --muted: #64748b; --cream: #faf7f2; --stone: #f5f1eb;
+  --dark: #0f172a; --emerald: #15803d; --emerald-2: #22c55e; --emerald-soft: #dff4e8;
+  --gold: #d97706; --gold-soft: #fef3c7;
+  --line: rgba(30,41,59,.12); --shadow: 0 24px 80px rgba(15,23,42,.12); --radius: 24px;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--cream); color: var(--ink); line-height: 1.55; }
+.container { width: min(1100px, calc(100% - 40px)); margin: 0 auto; }
+header.report-header { padding: 32px 0 24px; border-bottom: 1px solid var(--line);
+  background: rgba(255,255,255,0.5); }
+.header-row { display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 16px; }
+.logo { font-family: "Playfair Display", serif; font-size: 28px; font-weight: 700;
+  letter-spacing: -0.04em; color: var(--dark); }
+.logo span { color: var(--emerald); }
+.badge { display: inline-flex; align-items: center; gap: 8px;
+  background: var(--emerald-soft); color: var(--emerald);
+  padding: 8px 14px; border-radius: 999px;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; }
+.doc-meta { font-size: 13px; color: var(--muted); margin-top: 4px; }
+section.cover { padding: 56px 0 40px; }
+h1 { font-family: "Playfair Display", serif; font-size: clamp(40px, 6vw, 64px);
+  line-height: 1; letter-spacing: -0.04em; margin: 16px 0 18px; max-width: 880px; }
+.lead { font-size: 18px; color: var(--muted); max-width: 720px; line-height: 1.6; }
+section { padding: 40px 0; border-top: 1px solid var(--line); }
+section.no-divider { border-top: none; }
+h2 { font-family: "Playfair Display", serif; font-size: clamp(28px, 3.4vw, 38px);
+  line-height: 1.05; letter-spacing: -0.03em; margin: 0 0 8px; }
+h3 { font-size: 18px; font-weight: 700; margin: 22px 0 10px; }
+h4 { font-size: 14px; font-weight: 700; color: var(--emerald);
+  text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 6px; }
+p { margin: 8px 0 14px; color: #334155; }
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px; margin: 22px 0 8px; }
+.metric { background: white; border: 1px solid var(--line); border-radius: 18px; padding: 18px; }
+.metric .label { font-size: 12px; color: var(--muted); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em; }
+.metric .value { font-size: 30px; font-weight: 800; letter-spacing: -0.03em; margin-top: 4px; color: var(--dark); }
+.metric .note { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.lane-card { background: white; border: 1px solid var(--line); border-radius: 24px;
+  padding: 24px 28px; margin: 22px 0; border-left: 4px solid var(--emerald); }
+.lane-card.tier-a { border-left-color: var(--gold); }
+.lane-card h3 { margin-top: 0; }
+.lane-card .pill { display: inline-block; font-size: 11px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--emerald); padding: 4px 10px; background: var(--emerald-soft);
+  border-radius: 6px; margin-bottom: 12px; }
+.lane-card .stats { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0 14px; }
+.stat-pill { display: inline-flex; align-items: center; gap: 6px;
+  background: var(--stone); color: var(--ink);
+  padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+.source-pill { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px;
+  background: var(--stone); padding: 4px 8px; border-radius: 4px; color: var(--muted);
+  word-break: break-all; display: inline-block; }
+.table-wrap { overflow-x: auto; margin: 16px 0 8px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; background: white; border-radius: 12px; overflow: hidden; }
+thead th { text-align: left; padding: 10px 12px;
+  background: var(--stone); color: var(--ink); font-weight: 700;
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--line); }
+tbody td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tbody tr:hover { background: var(--stone); }
+tbody td.rank { font-weight: 800; color: var(--emerald); }
+tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.pull-quote { background: var(--dark); color: white;
+  padding: 28px 30px; border-radius: 24px; margin: 22px 0;
+  font-family: "Playfair Display", serif; font-size: 20px; line-height: 1.4; font-style: italic; }
+.pull-quote .cite { display: block; margin-top: 12px;
+  font-family: Inter, sans-serif; font-size: 13px; font-style: normal;
+  color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+footer { padding: 40px 0 60px; color: var(--muted); border-top: 1px solid var(--line);
+  font-size: 13px; margin-top: 40px; }
+.callout { background: var(--emerald-soft); border-left: 4px solid var(--emerald);
+  padding: 14px 18px; border-radius: 6px; color: #064e3b; font-size: 14px; }
+@media print {
+  body { background: white; }
+  section, .lane-card, .metric-grid { page-break-inside: avoid; }
+  header.report-header { background: white; }
+  .pull-quote { background: white; color: var(--dark); border: 2px solid var(--dark); }
+}
+</style>
+</head>
+<body>
+
+<header class="report-header">
+  <div class="container header-row">
+    <div>
+      <div class="logo">Lead<span>Curate</span>.</div>
+      <div class="doc-meta">County Seat delivery report · louisville-ky-2026-06-19</div>
+    </div>
+    <div class="badge"><span>●</span> Fresh — pulled 2026-06-19</div>
+  </div>
+</header>
+
+<section class="cover no-divider container">
+  <h4>For: County Seat customer</h4>
+  <h1>Your Louisville (Jefferson County) batch.</h1>
+  <p class="lead">This is your monthly County Seat delivery. 3 distinct distress lanes, 300 ranked records pulled fresh from official county portals on 2026-06-19. Each lane is sold separately so the same record never crosses to another buyer.</p>
+</section>
+
+<section class="container">
+  <h4>At a glance</h4>
+  <h2>The package.</h2>
+  
+    <div class="metric-grid">
+      <div class="metric"><div class="label">Delivery county</div>
+        <div class="value" style="font-size:18px; font-family:'Playfair Display', serif;">Louisville (Jefferson County)</div>
+        <div class="note">KY</div></div>
+      <div class="metric"><div class="label">Delivery date</div>
+        <div class="value" style="font-size:20px;">2026-06-19</div>
+        <div class="note">freshly pulled from source</div></div>
+      <div class="metric"><div class="label">Lanes</div>
+        <div class="value">3</div>
+        <div class="note">distinct distress signals</div></div>
+      <div class="metric"><div class="label">Records</div>
+        <div class="value">300</div>
+        <div class="note">100 per lane, scored & ranked</div></div>
+    </div>
+    
+  <div class="callout" style="margin-top:18px;">
+    <strong>How to work this report.</strong> Start with the lanes below — they're ranked, so rank 1 is the highest-priority record per lane. The full unranked file for each lane lives in this package as a CSV (in <code>lanes/{lane-slug}/</code>). Use this HTML report for quick triage; load the CSVs into your CRM or spreadsheet tool when you're ready to dial in.
+  </div>
+</section>
+
+<section class="container">
+  <h4>Your lanes this month</h4>
+  <h2>3 distress signals, scored and ranked.</h2>
+  
+        <div class="lane-card">
+          <span class="pill">Lane 1</span>
+          <h3>Louisville KY (Jefferson County) Pre-Foreclosure Snapshot</h3>
+          <p>Active court-filed foreclosure cases. Each record has the property address, case number, action-filed date, scheduled sale date, and a days-to-sale countdown. Closer to sale = more urgent.</p>
+          <div class="stats"><span class='stat-pill'>259 qualified</span><span class='stat-pill'>100 ranked</span><span class='stat-pill'>score range 22.11–109.5</span><span class='stat-pill'>source pulled 2026-06-18</span></div>
+          <p style="font-size:13px; color:var(--muted); margin-top:0;">
+            <strong>Top 15 of 100 shown below.</strong> Full ranked CSV in <code>lanes/pre-foreclosure/</code>.
+          </p>
+          <div class="table-wrap"><table><thead><tr><th>#</th><th>Score</th><th>Property address</th><th>Neighborhood</th><th>Sale date</th><th>Days to sale</th><th>Case #</th></tr></thead><tbody><tr><td class="rank">1</td><td class="num">109.5</td><td>2616 HALE Ave</td><td>Parkland</td><td>2026-06-26</td><td>8 days</td><td>25CI401179</td></tr><tr><td class="rank">2</td><td class="num">107.17</td><td>2620 W KENTUCKY St</td><td>Parkland</td><td>2026-06-26</td><td>8 days</td><td>25CI400967</td></tr><tr><td class="rank">3</td><td class="num">90.78</td><td>2715 W Kentucky St</td><td>Parkland</td><td>2026-07-17</td><td>29 days</td><td>25-CI-401322</td></tr><tr><td class="rank">4</td><td class="num">64.11</td><td>2303 W Chestnut St</td><td>Russell</td><td>2026-07-17</td><td>29 days</td><td>24CI400689</td></tr><tr><td class="rank">5</td><td class="num">61.0</td><td>2615 W Kentucky St</td><td>Parkland</td><td>2026-07-17</td><td>29 days</td><td>25-CI-401311</td></tr><tr><td class="rank">6</td><td class="num">61.0</td><td>9911 MARY DELL Ln</td><td></td><td>2026-07-17</td><td>29 days</td><td>23CI400387</td></tr><tr><td class="rank">7</td><td class="num">52.28</td><td>2725 Greenwood Ave</td><td>Parkland</td><td>2026-06-12</td><td>-6</td><td>25-CI-401223</td></tr><tr><td class="rank">8</td><td class="num">48.44</td><td>1011 S 32ND St</td><td>Parkland</td><td>2026-06-12</td><td>-6</td><td>25-CI-400921</td></tr><tr><td class="rank">9</td><td class="num">43.78</td><td>1627 HALE Ave</td><td>California</td><td>2026-06-12</td><td>-6</td><td>25CI400585</td></tr><tr><td class="rank">10</td><td class="num">36.78</td><td>2749 MONTANA Ave</td><td>Taylor Berry</td><td>2026-05-29</td><td>-20</td><td>25-CI-401117</td></tr><tr><td class="rank">11</td><td class="num">35.11</td><td>662 S 35th St</td><td>Shawnee</td><td>2026-05-29</td><td>-20</td><td>25-CI-400959</td></tr><tr><td class="rank">12</td><td class="num">29.94</td><td>1124 S 26th St</td><td>Parkland</td><td></td><td></td><td>25-CI-401342</td></tr><tr><td class="rank">13</td><td class="num">29.83</td><td>2705 HALE Ave</td><td>Parkland</td><td></td><td></td><td>25-CI-401327</td></tr><tr><td class="rank">14</td><td class="num">29.78</td><td>2212 DUMESNIL St</td><td>Park Hill</td><td></td><td></td><td>25-CI-401321</td></tr><tr><td class="rank">15</td><td class="num">29.56</td><td>3217 W Kentucky St</td><td>Parkland</td><td></td><td></td><td>25-CI-401312</td></tr></tbody></table></div>
+          <p style="font-size:11px; color:var(--muted); margin-top:12px;">
+            Source: <span class="source-pill">https://data.louisvilleky.gov/datasets/louisville-metro-ky-property-foreclosures</span>
+          </p>
+        </div>
+        
+        <div class="lane-card">
+          <span class="pill">Lane 2</span>
+          <h3>Louisville KY Open Code Violations</h3>
+          <p>Open building / property maintenance violations from the city inspector. Records flagged Vacant Lot, Vacant Structure, or Abandoned are highest-priority — owner is distressed or absent.</p>
+          <div class="stats"><span class='stat-pill'>13,398 qualified</span><span class='stat-pill'>100 ranked</span><span class='stat-pill'>score range 99.9–99.93</span><span class='stat-pill'>source pulled 2026-06-19</span></div>
+          <p style="font-size:13px; color:var(--muted); margin-top:0;">
+            <strong>Top 15 of 100 shown below.</strong> Full ranked CSV in <code>lanes/code-violations/</code>.
+          </p>
+          <div class="table-wrap"><table><thead><tr><th>#</th><th>Score</th><th>Property address</th><th>Violation</th><th>Occupancy</th><th>Inspected</th><th>Citation</th></tr></thead><tbody><tr><td class="rank">1</td><td class="num">99.93</td><td>2827 NORTHWESTERN PKY, LOUISVILLE, KY 40212-0000</td><td>02A</td><td>Vacant Lot</td><td>2026-06-17</td><td class="num">$700</td></tr><tr><td class="rank">2</td><td class="num">99.93</td><td>2827 NORTHWESTERN PKY, LOUISVILLE, KY 40212-0000</td><td>X94</td><td>Vacant Lot</td><td>2026-06-17</td><td class="num">$700</td></tr><tr><td class="rank">3</td><td class="num">99.93</td><td>2827 NORTHWESTERN PKY, LOUISVILLE, KY 40212-0000</td><td>I21</td><td>Vacant Lot</td><td>2026-06-17</td><td class="num">$700</td></tr><tr><td class="rank">4</td><td class="num">99.93</td><td>629 E ST CATHERINE ST, LOUISVILLE, KY 40203</td><td>X69</td><td>Vacant Structure</td><td>2026-06-17</td><td class="num">$800</td></tr><tr><td class="rank">5</td><td class="num">99.93</td><td>629 E ST CATHERINE ST, LOUISVILLE, KY 40203</td><td>X90</td><td>Vacant Structure</td><td>2026-06-17</td><td class="num">$800</td></tr><tr><td class="rank">6</td><td class="num">99.93</td><td>629 E ST CATHERINE ST, LOUISVILLE, KY 40203</td><td>X40</td><td>Vacant Structure</td><td>2026-06-17</td><td class="num">$800</td></tr><tr><td class="rank">7</td><td class="num">99.93</td><td>2750 W MAIN ST, LOUISVILLE, KY 40212</td><td>X50</td><td>Vacant Structure</td><td>2026-06-17</td><td class="num">$1,100</td></tr><tr><td class="rank">8</td><td class="num">99.93</td><td>2750 W MAIN ST, LOUISVILLE, KY 40212</td><td>X69</td><td>Vacant Structure</td><td>2026-06-17</td><td class="num">$1,100</td></tr><tr><td class="rank">9</td><td class="num">99.93</td><td>2750 W MAIN ST, LOUISVILLE, KY 40212</td><td>X72</td><td>Vacant Structure</td><td>2026-06-17</td><td class="num">$1,100</td></tr><tr><td class="rank">10</td><td class="num">99.93</td><td>2750 W MAIN ST, LOUISVILLE, KY 40212</td><td>X40</td><td>Vacant Structure</td><td>2026-06-17</td><td class="num">$1,100</td></tr><tr><td class="rank">11</td><td class="num">99.93</td><td>2750 W MAIN ST, LOUISVILLE, KY 40212</td><td>X19</td><td>Vacant Structure</td><td>2026-06-17</td><td class="num">$1,100</td></tr><tr><td class="rank">12</td><td class="num">99.93</td><td>6910 MATTHEWS RD, LOUISVILLE, KY 40258</td><td>02A</td><td>Vacant Lot</td><td>2026-06-17</td><td class="num">$800</td></tr><tr><td class="rank">13</td><td class="num">99.93</td><td>6910 MATTHEWS RD, LOUISVILLE, KY 40258</td><td>X90</td><td>Vacant Lot</td><td>2026-06-17</td><td class="num">$800</td></tr><tr><td class="rank">14</td><td class="num">99.93</td><td>6910 MATTHEWS RD, LOUISVILLE, KY 40258</td><td>05A</td><td>Vacant Lot</td><td>2026-06-17</td><td class="num">$800</td></tr><tr><td class="rank">15</td><td class="num">99.93</td><td>4147 W MARKET ST, LOUISVILLE, KY 40212</td><td>02A</td><td>Vacant Structure</td><td>2026-06-17</td><td class="num">$900</td></tr></tbody></table></div>
+          <p style="font-size:11px; color:var(--muted); margin-top:12px;">
+            Source: <span class="source-pill">https://data.louisvilleky.gov/datasets/louisville-metro-ky-property-maintenance-inspection-violations</span>
+          </p>
+        </div>
+        
+        <div class="lane-card">
+          <span class="pill">Lane 3</span>
+          <h3>Louisville KY Lien Holder Final Orders</h3>
+          <p>Lien-holder final orders issued by the city. Records include citation amount, hearing schedule, and the owner&#x27;s mailing state. Out-of-state owners with active final orders are top targets.</p>
+          <div class="stats"><span class='stat-pill'>411 qualified</span><span class='stat-pill'>100 ranked</span><span class='stat-pill'>score range 16.0–55.0</span><span class='stat-pill'>source pulled 2026-06-19</span></div>
+          <p style="font-size:13px; color:var(--muted); margin-top:0;">
+            <strong>Top 15 of 100 shown below.</strong> Full ranked CSV in <code>lanes/lien-holder-orders/</code>.
+          </p>
+          <div class="table-wrap"><table><thead><tr><th>#</th><th>Score</th><th>Owner</th><th>Mail city</th><th>State</th><th>Citation</th><th>Notified</th><th>Out of state</th></tr></thead><tbody><tr><td class="rank">1</td><td class="num">55.0</td><td>CUNNINGHAM, PATRICIA BROWN MCNEAL</td><td>WASHINGTON</td><td>DC</td><td class="num">$1,500</td><td>2026-05-21</td><td>✓ Yes</td></tr><tr><td class="rank">2</td><td class="num">44.32</td><td>ZIRACO, LLC</td><td>CHEYENNE</td><td>WY</td><td class="num">$966</td><td>2026-05-19</td><td>✓ Yes</td></tr><tr><td class="rank">3</td><td class="num">43.0</td><td>2023Q2, HIG INV SOLE LLC</td><td>PROVO</td><td>UT</td><td class="num">$900</td><td>2026-04-06</td><td>✓ Yes</td></tr><tr><td class="rank">4</td><td class="num">43.0</td><td>PIACENTINO, STEVEN N</td><td>UTICA</td><td>NY</td><td class="num">$900</td><td>2026-05-21</td><td>✓ Yes</td></tr><tr><td class="rank">5</td><td class="num">43.0</td><td>GEP, LLC</td><td>LOS ANGELES</td><td>CA</td><td class="num">$900</td><td>2026-05-20</td><td>✓ Yes</td></tr><tr><td class="rank">6</td><td class="num">41.0</td><td>DANIEL, DERWENT</td><td>FAIRVIEW</td><td>TN</td><td class="num">$800</td><td>2026-05-20</td><td>✓ Yes</td></tr><tr><td class="rank">7</td><td class="num">41.0</td><td>LEDGEWOOD, MULTIFAMILY PARTNERS LLC</td><td>NASHVILLE</td><td>TN</td><td class="num">$800</td><td>2026-05-21</td><td>✓ Yes</td></tr><tr><td class="rank">8</td><td class="num">41.0</td><td>COCHRAN, LOUIS A &amp; EULALEAN</td><td>PEMBROKE</td><td>NH</td><td class="num">$800</td><td>2026-05-27</td><td>✓ Yes</td></tr><tr><td class="rank">9</td><td class="num">41.0</td><td>NICHOLAS, NIGEL</td><td>CLARKSVILLE</td><td>IN</td><td class="num">$800</td><td>2026-05-27</td><td>✓ Yes</td></tr><tr><td class="rank">10</td><td class="num">41.0</td><td>NICHOLAS, NIGEL</td><td>CLARKSVILLE</td><td>IN</td><td class="num">$800</td><td>2026-05-19</td><td>✓ Yes</td></tr><tr><td class="rank">11</td><td class="num">41.0</td><td>NEXGEN, COASTAL INVESTMENTS LLC</td><td>ORLANDO</td><td>FL</td><td class="num">$800</td><td>2026-05-26</td><td>✓ Yes</td></tr><tr><td class="rank">12</td><td class="num">40.0</td><td>CRAWFORD, JOHN C</td><td>PROSPECT</td><td>KY</td><td class="num">$2,000</td><td>2026-05-18</td><td>no</td></tr><tr><td class="rank">13</td><td class="num">40.0</td><td>ETHERIDGE, JAMES J</td><td>LOUISVILLE</td><td>KY</td><td class="num">$2,000</td><td>2026-05-20</td><td>no</td></tr><tr><td class="rank">14</td><td class="num">40.0</td><td>RED, DOOR LEGACY LLC</td><td>FORT KNOX</td><td>KY</td><td class="num">$2,000</td><td>2026-05-19</td><td>no</td></tr><tr><td class="rank">15</td><td class="num">40.0</td><td>RED, DOOR LEGACY LLC</td><td>FORT KNOX</td><td>KY</td><td class="num">$2,000</td><td>2026-05-18</td><td>no</td></tr></tbody></table></div>
+          <p style="font-size:11px; color:var(--muted); margin-top:12px;">
+            Source: <span class="source-pill">https://data.louisvilleky.gov/datasets/louisville-metro-ky-lien-holder-final-orders</span>
+          </p>
+        </div>
+        
+</section>
+
+<section class="container">
+  <h4>Freshness</h4>
+  <h2>Why this is fresher than the alternatives.</h2>
+  <div class="pull-quote">
+    "A name that hits the Louisville (Jefferson County) public record on the first of the month is in your batch within days. The same name does not appear in PropStream's data for another 30 to 90 days."
+    <span class="cite">LeadCurate freshness posture</span>
+  </div>
+  <p>LeadCurate pulls directly from official county portals. PropStream, BatchLeads, and DealMachine license property data from CoreLogic, ATTOM, and DataTree — those feeds refresh on a 30–90 day cycle. Every record in this delivery includes its source URL and source pull date so you can verify provenance yourself.</p>
+</section>
+
+<section class="container">
+  <h4>How to use the data</h4>
+  <h2>The workflow your batch is built for.</h2>
+  <ol style="font-size:15px; line-height:1.8; color:#334155; padding-left:20px;">
+    <li><strong>Triage from this report.</strong> The top 15 of each lane is shown above. The full 100-record file per lane is in <code>lanes/{lane-slug}/*.csv</code>.</li>
+    <li><strong>Work each lane in rank order.</strong> Rank 1 is the highest-priority record based on freshness + distress + value signals (see <code>meta.json</code> for the per-lane formula).</li>
+    <li><strong>Cross-reference mailing vs property address.</strong> Out-of-state mailing addresses are flagged in the data. Out-of-state = absentee = higher motivation in most lanes.</li>
+    <li><strong>Skip-trace through your existing tool.</strong> This package ships property-record data only — no phone numbers, no email addresses, no DNC scrub. Run skip trace through PropStream, BatchLeads, BatchData, Skip Genie, or whatever you already use. You stay free of TCPA / DNC compliance burden on our end.</li>
+    <li><strong>Mark and exclude records you've worked.</strong> We'll exclude them from your next batch automatically.</li>
+  </ol>
+</section>
+
+<section class="container">
+  <h4>Compliance</h4>
+  <h2>What's in the file. What's not.</h2>
+  <p><strong>Included:</strong> Property addresses, owner names, mailing addresses, parcel IDs, distress signals, scoring, freshness dates, and the source URL for every record.</p>
+  <p><strong>Not included:</strong> Skip-traced phone numbers, email addresses, DNC scrub status. You handle owner contact lookup, skip trace, DNC compliance, TCPA compliance, and outreach decisions on your side.</p>
+  <p>LeadCurate provides data and educational tools only. We do not guarantee deals, motivated sellers, or that any record is safe to contact. Your execution closes the deal.</p>
+</section>
+
+<footer>
+  <div class="container">
+    <p><strong>LeadCurate</strong> · County Seat delivery report · louisville-ky-2026-06-19 · Delivered 2026-06-19</p>
+    <p>Source URLs and pull dates are stamped in each lane's <code>meta.json</code>. The matching machine-readable index is at <code>manifest.json</code>. Questions: reply to the email this report was attached to.</p>
+    <p>Better data. Cleaner workflow. No hype. Your execution closes the deal.</p>
+  </div>
+</footer>
+
+</body>
+</html>
