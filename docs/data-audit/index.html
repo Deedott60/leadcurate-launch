@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LeadCurate · Data Inventory Audit · 2026-06-19</title>
+<meta name="description" content="LeadCurate data inventory audit — 20 US markets, 4M CSV rows, 9 distress lanes, 6 shippable Discovery Snapshots." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1e293b;
+    --muted: #64748b;
+    --cream: #faf7f2;
+    --stone: #f5f1eb;
+    --dark: #0f172a;
+    --emerald: #15803d;
+    --emerald-2: #22c55e;
+    --emerald-soft: #dff4e8;
+    --gold: #d97706;
+    --gold-soft: #fef3c7;
+    --line: rgba(30, 41, 59, .12);
+    --shadow: 0 24px 80px rgba(15, 23, 42, .12);
+    --radius: 24px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .container { width: min(1100px, calc(100% - 40px)); margin: 0 auto; }
+
+  /* Header */
+  header.report-header {
+    padding: 32px 0 24px;
+    border-bottom: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.5);
+  }
+  .header-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .logo { font-family: "Playfair Display", serif; font-size: 28px; font-weight: 700; letter-spacing: -0.04em; color: var(--dark); }
+  .logo span { color: var(--emerald); }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--emerald-soft); color: var(--emerald);
+    padding: 8px 14px; border-radius: 999px;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase;
+  }
+  .doc-meta { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* Cover */
+  section.cover { padding: 56px 0 40px; }
+  h1 { font-family: "Playfair Display", serif; font-size: clamp(40px, 6vw, 64px); line-height: 1; letter-spacing: -0.04em; margin: 16px 0 18px; max-width: 880px; }
+  .lead { font-size: 18px; color: var(--muted); max-width: 720px; line-height: 1.6; }
+
+  /* Section */
+  section { padding: 40px 0; border-top: 1px solid var(--line); }
+  section.no-divider { border-top: none; }
+  h2 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(28px, 3.4vw, 38px);
+    line-height: 1.05; letter-spacing: -0.03em;
+    margin: 0 0 8px;
+  }
+  h3 { font-size: 18px; font-weight: 700; margin: 28px 0 10px; }
+  h4 { font-size: 14px; font-weight: 700; color: var(--emerald); text-transform: uppercase; letter-spacing: 0.1em; margin: 0 0 6px; }
+  p { margin: 8px 0 14px; color: #334155; }
+
+  /* Metric grid */
+  .metric-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px;
+    margin: 22px 0 8px;
+  }
+  .metric {
+    background: white; border: 1px solid var(--line); border-radius: 18px;
+    padding: 18px;
+  }
+  .metric .label { font-size: 12px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+  .metric .value { font-size: 30px; font-weight: 800; letter-spacing: -0.03em; margin-top: 4px; color: var(--dark); }
+  .metric .note { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  /* Tier callout */
+  .tier-row {
+    display: grid; grid-template-columns: 1fr; gap: 14px;
+    margin: 22px 0;
+  }
+  .tier {
+    background: white; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 22px 24px;
+    border-left: 4px solid var(--emerald);
+  }
+  .tier.tier-a { border-left-color: #facc15; }
+  .tier.tier-b { border-left-color: var(--muted); }
+  .tier .tier-label {
+    display: inline-block; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--emerald); padding: 4px 8px; background: var(--emerald-soft); border-radius: 6px;
+    margin-bottom: 8px;
+  }
+  .tier.tier-a .tier-label { color: var(--gold); background: var(--gold-soft); }
+  .tier.tier-b .tier-label { color: var(--muted); background: var(--stone); }
+
+  /* Tables */
+  .table-wrap { overflow-x: auto; margin: 16px 0 22px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; background: white; }
+  thead th {
+    text-align: left; padding: 10px 12px;
+    background: var(--stone); color: var(--ink);
+    font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--line);
+  }
+  tbody td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tbody tr:hover { background: var(--stone); }
+  tbody td strong { color: var(--dark); font-weight: 700; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* Case study */
+  .case-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 18px; }
+  .lane-card {
+    background: white; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 22px 24px;
+  }
+  .lane-card h3 { margin-top: 0; }
+  .lane-card .pill {
+    display: inline-block; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em;
+    background: var(--emerald); color: white; padding: 4px 10px; border-radius: 999px;
+    margin-bottom: 12px;
+  }
+  .lane-card .example {
+    background: var(--stone); border-left: 3px solid var(--emerald);
+    padding: 12px 16px; margin: 12px 0; font-size: 13px; line-height: 1.6;
+  }
+  .lane-card .example strong { color: var(--dark); }
+  .lane-card .stat {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--emerald-soft); color: var(--emerald);
+    padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 700;
+    margin: 4px 6px 4px 0;
+  }
+
+  /* Quote */
+  .pull-quote {
+    background: var(--dark); color: white;
+    padding: 28px 30px; border-radius: var(--radius);
+    margin: 22px 0;
+    font-family: "Playfair Display", serif;
+    font-size: 20px; line-height: 1.4;
+    font-style: italic;
+  }
+  .pull-quote .cite { display: block; margin-top: 12px; font-family: Inter, sans-serif; font-size: 13px; font-style: normal; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* Footer */
+  footer { padding: 40px 0 60px; color: var(--muted); border-top: 1px solid var(--line); font-size: 13px; margin-top: 40px; }
+
+  /* Print */
+  @media print {
+    body { background: white; }
+    section { page-break-inside: avoid; }
+    .metric-grid { page-break-inside: avoid; }
+    header.report-header { background: white; }
+    .pull-quote { background: white; color: var(--dark); border: 2px solid var(--dark); }
+  }
+</style>
+</head>
+<body>
+
+<header class="report-header">
+  <div class="container header-row">
+    <div>
+      <div class="logo">Lead<span>Curate</span>.</div>
+      <div class="doc-meta">Data Inventory Audit · v1 · 2026-06-19</div>
+    </div>
+    <div class="badge"><span>●</span> Live data assets</div>
+  </div>
+</header>
+
+<section class="cover no-divider container">
+  <h4>For partner review</h4>
+  <h1>What's actually on the ground.</h1>
+  <p class="lead">LeadCurate has live property and distress data for 20 US markets, sourced directly from official county portals rather than licensed reseller feeds. This audit catalogs every market covered, every distress lane available, current seat capacity, and six finished Discovery Snapshot products already on disk and ready to ship.</p>
+</section>
+
+<section class="container">
+  <h4>Executive summary</h4>
+  <h2>The numbers at a glance.</h2>
+  <div class="metric-grid">
+    <div class="metric">
+      <div class="label">Markets covered</div>
+      <div class="value">20</div>
+      <div class="note">of 24 targeted</div>
+    </div>
+    <div class="metric">
+      <div class="label">CSV rows on disk</div>
+      <div class="value">~4M</div>
+      <div class="note">structured property records</div>
+    </div>
+    <div class="metric">
+      <div class="label">Binary records</div>
+      <div class="value">~10M</div>
+      <div class="note">Tarrant, Dallas, Maricopa, NYC</div>
+    </div>
+    <div class="metric">
+      <div class="label">Distress lanes</div>
+      <div class="value">9</div>
+      <div class="note">distinct categorizations</div>
+    </div>
+    <div class="metric">
+      <div class="label">Shippable products</div>
+      <div class="value">6</div>
+      <div class="note">Discovery Snapshots built</div>
+    </div>
+    <div class="metric">
+      <div class="label">Refresh lead vs PropStream</div>
+      <div class="value">30–60d</div>
+      <div class="note">fresher on same names</div>
+    </div>
+  </div>
+  <p>LeadCurate sources directly from official county portals — not licensed reseller feeds. That gives two structural advantages over PropStream / BatchLeads / DealMachine: <strong>freshness</strong> (county data hits LeadCurate within hours of being published, vs 30–90 days for the licensors) and <strong>scarcity by design</strong> (limited seats per county per lane, a model competitors structurally cannot offer).</p>
+</section>
+
+<section class="container">
+  <h4>Markets covered</h4>
+  <h2>Three tiers, organized by demand × accessibility.</h2>
+
+  <div class="tier-row">
+    <div class="tier">
+      <span class="tier-label">Tier S — flagship</span>
+      <h3>Mecklenburg NC · Wake NC · Tarrant TX · Harris TX · Maricopa AZ · Marion IN</h3>
+      <p>High investor demand, large addressable data, and clean automation. Mecklenburg is the local pilot. Tarrant's weekly tax-roll zip (2 million records) is the best free data source in the country. Marion IN was ranked #1 wholesale market for 2026.</p>
+    </div>
+    <div class="tier tier-a">
+      <span class="tier-label">Tier A — strong secondary</span>
+      <h3>Cuyahoga OH · Jefferson KY · Fulton GA · DeKalb GA · Forsyth NC · NYC · Dallas TX · Shelby TN · Guilford NC</h3>
+      <p>Solid wholesale markets, downloadable raw data on disk. Shelby TN is the scarcity asset — the source CSV URL is published but most competitors don't know it exists.</p>
+    </div>
+    <div class="tier tier-b">
+      <span class="tier-label">Tier B — supplementary</span>
+      <h3>Allen IN · Erie NY · Charleston SC · Greenville SC · Fayette KY</h3>
+      <p>Smaller markets or PDF-format publications. Specialty buyers care about these even when bigger competitors ignore them.</p>
+    </div>
+  </div>
+
+  <h4 style="margin-top: 28px;">Per-market inventory</h4>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Market</th><th>Metro</th><th>Data on disk</th><th>Source class</th><th>Cadence</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Mecklenburg NC</strong></td><td>Charlotte</td><td>632k parcels + 24k liens + 23k vacant land</td><td>Socrata</td><td>Monthly</td></tr>
+        <tr><td><strong>Wake NC</strong></td><td>Raleigh</td><td>436k parcels + 237k property + daily delinquent</td><td>Direct</td><td><strong>Daily</strong></td></tr>
+        <tr><td><strong>Tarrant TX</strong></td><td>Fort Worth (DFW)</td><td>5.7 GB binary tax roll, full county</td><td>Weekly zip</td><td><strong>Weekly</strong></td></tr>
+        <tr><td><strong>Maricopa AZ</strong></td><td>Phoenix</td><td>4 master files (~1.4 GB uncompressed)</td><td>ArcGIS Online</td><td>Monthly</td></tr>
+        <tr><td><strong>Marion IN</strong></td><td>Indianapolis</td><td>347k + 408k owner + assessed</td><td>ArcGIS Hub</td><td>Monthly</td></tr>
+        <tr><td><strong>Cuyahoga OH</strong></td><td>Cleveland</td><td>527k tax parcels + 130k recent sales</td><td>ArcGIS Hub</td><td>Monthly</td></tr>
+        <tr><td><strong>Jefferson KY</strong></td><td>Louisville</td><td>293k parcels + 3k pre-foreclosure + 18k violations</td><td>ArcGIS Hub</td><td>Monthly</td></tr>
+        <tr><td><strong>Fulton GA</strong></td><td>Atlanta</td><td>171k tax parcels 2025</td><td>ArcGIS Hub</td><td>Monthly</td></tr>
+        <tr><td><strong>DeKalb GA</strong></td><td>Atlanta east</td><td>246k 2025 + 246k 2024</td><td>ArcGIS Hub</td><td>Monthly</td></tr>
+        <tr><td><strong>Forsyth NC</strong></td><td>Winston-Salem</td><td>167k parcels w/ owner + address</td><td>MapForsyth</td><td>Monthly</td></tr>
+        <tr><td><strong>NYC</strong></td><td>All 5 boroughs</td><td>264k tax lien notices</td><td>Socrata</td><td>Monthly</td></tr>
+        <tr><td><strong>Dallas TX</strong></td><td>Dallas</td><td>2.4 GB tax roll + 100 MB parcels</td><td>DCAD direct</td><td>Annual</td></tr>
+        <tr><td><strong>Shelby TN</strong></td><td>Memphis</td><td>2,192 upcoming tax-sale properties</td><td>Direct S3 CSV</td><td>Per sale</td></tr>
+        <tr><td><strong>Guilford NC</strong></td><td>Greensboro</td><td>10.5k tax-delinquent + 3k foreclosures w/ auction dates</td><td>ArcGIS Hub</td><td>Monthly</td></tr>
+        <tr><td><strong>Allen IN</strong></td><td>Fort Wayne</td><td>662 KB delinquent property xlsx</td><td>Direct</td><td>Annual</td></tr>
+        <tr><td><strong>Erie NY</strong></td><td>Buffalo</td><td>5 MB filed delinquent + 8 PDFs</td><td>Direct PDF</td><td>Annual</td></tr>
+        <tr><td><strong>Charleston SC</strong></td><td>Charleston</td><td>6 tax-sale listing PDFs</td><td>Direct PDF</td><td>Annual</td></tr>
+        <tr><td><strong>Greenville SC</strong></td><td>Greenville</td><td>Tax-sale info PDF + HTML app</td><td>Direct</td><td>Annual</td></tr>
+        <tr><td><strong>Fayette KY</strong></td><td>Lexington</td><td>DCAT catalog + 4 datasets identified</td><td>ArcGIS Hub</td><td>Monthly</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Distress lanes</h4>
+  <h2>Nine distinct categorizations, sold separately.</h2>
+  <p>A "lane" is a category of distress signal that defines who a record is worth selling to. The same county can support <strong>multiple lanes simultaneously</strong>, each lane sold to a different buyer profile without overlap.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>Lane</th><th>What it identifies</th><th>Primary buyer</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><strong>Tax-delinquent + absentee</strong></td><td>Out-of-state owner with overdue property tax</td><td>Wholesalers, fix-and-flippers</td></tr>
+        <tr><td>2</td><td><strong>Tax-delinquent in-state</strong></td><td>Local owner unable to pay</td><td>Local wholesalers</td></tr>
+        <tr><td>3</td><td><strong>Pre-foreclosure court filing</strong></td><td>Active case with filing date + sale date</td><td>Wholesalers, hard money lenders</td></tr>
+        <tr><td>4</td><td><strong>Tax-sale upcoming</strong></td><td>Going to auction in current sale cycle</td><td>Tax-lien investors, cash buyers</td></tr>
+        <tr><td>5</td><td><strong>Vacant land specialty</strong></td><td>Undeveloped lots with identifiable owner</td><td>Land developers, buy-and-hold</td></tr>
+        <tr><td>6</td><td><strong>High-value absentee</strong></td><td>Single-family rentals owned by out-of-state entities</td><td>Mid-market flippers, BRRRR investors</td></tr>
+        <tr><td>7</td><td><strong>City liens / code violations</strong></td><td>Active municipal liens</td><td>Wholesalers chasing distress</td></tr>
+        <tr><td>8</td><td><strong>Recent sales / cash buyers</strong></td><td>Comp data + buyer identification</td><td>Wholesalers building cash-buyer lists</td></tr>
+        <tr><td>9</td><td><strong>Lien-holder final orders</strong></td><td>Municipal lien holders w/ final status</td><td>Specialty buyers, tax-lien funds</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Case study</h4>
+  <h2>Charlotte alone — three sellable products, three different buyers.</h2>
+  <p>Mecklenburg County NC supports at least three distinct sellable products from data already on disk. Each goes to a different buyer profile. <strong>None overlap.</strong></p>
+
+  <div class="case-grid">
+    <div class="lane-card">
+      <span class="pill">Lane A</span>
+      <h3>Charlotte Open City Liens</h3>
+      <span class="stat">4,025 active</span>
+      <span class="stat">100 ranked</span>
+      <span class="stat">Mid tier · $59–79</span>
+      <p>Filtered from 24,417 city lien records. Active liens only (paid records excluded), scored on lien status weight and invoice recency.</p>
+      <div class="example">
+        <strong>Top record:</strong> TREVA WOODS TWNHSE ASSOC at 8002 CHARTER OAK LN.<br>
+        Lien status: LIEN FILED. Invoice date: 2023-06-07.
+      </div>
+    </div>
+
+    <div class="lane-card">
+      <span class="pill">Lane B</span>
+      <h3>Charlotte Vacant Land Specialty</h3>
+      <span class="stat">15,273 qualified</span>
+      <span class="stat">100 ranked</span>
+      <span class="stat">All 100 out-of-state</span>
+      <span class="stat">Premium · $99+</span>
+      <p>Filtered from 23,204 vacant parcels: at least 0.10 acres, identifiable owner, scored on acreage × land value × absentee bonus. <strong>Top 100 are 100% out-of-state owners.</strong></p>
+      <div class="example">
+        <strong>Top examples:</strong><br>
+        • ULM II NORTH CAROLINA LLC from Ligonier PA — 9.5 acres in Ballantyne, $7.8M assessed<br>
+        • STEELE CREEK OWNER LLC from Coconut Grove FL — 22.6 acres in Steele Creek<br>
+        • YFP TIMBER LLC from Fort Mill SC — 7 acres on Hamilton Rd, $474k assessed
+      </div>
+    </div>
+
+    <div class="lane-card">
+      <span class="pill">Lane C</span>
+      <h3>Charlotte High-Value Absentee Single-Family</h3>
+      <span class="stat">47,151 qualified</span>
+      <span class="stat">100 ranked</span>
+      <span class="stat">All 100 out-of-state</span>
+      <span class="stat">Premium · $99+</span>
+      <p>Scanned all 446k parcels. Filtered to residential + absentee + $200k+. Scored on property value × out-of-state bonus × older-home rehab bonus.</p>
+      <div class="example">
+        <strong>Top examples:</strong><br>
+        • RM1 SFR PROPCO B LP from Atlanta GA — 901 AMANDA DR Charlotte, $678,100 single-family 1985<br>
+        • ANNE CARR GILMAN WOOD from Austin TX — 4300 KUYKENDALL RD, $602,600 single-family 1956<br>
+        • JASON WIESELMAN from Mineola NY — 5308 SUNNINGDALE DR, $835,700 single-family 1989
+      </div>
+    </div>
+  </div>
+  <p style="margin-top: 22px;"><strong>Three products from one county. Three different buyers. Zero overlap.</strong> No competitor in the wholesale-data lane offers this lane-by-lane segmentation today.</p>
+</section>
+
+<section class="container">
+  <h4>Capacity</h4>
+  <h2>~470 seats supportable today across markets.</h2>
+  <p>A County Seat = 100–200 scored records per month per buyer. Math: we can support roughly 1 seat per ~1,000 qualified records and still keep batches fresh and non-overlapping. Aggregate addressable revenue at full capacity:</p>
+  <div class="metric-grid">
+    <div class="metric"><div class="label">Total seats supportable</div><div class="value">~470</div><div class="note">across 20 markets</div></div>
+    <div class="metric"><div class="label">Entry-tier price</div><div class="value">$497<span style="font-size:14px; color:var(--muted)">/mo</span></div><div class="note">County Seat</div></div>
+    <div class="metric"><div class="label">Max addressable</div><div class="value">$233k<span style="font-size:14px; color:var(--muted)">/mo</span></div><div class="note">all seats sold</div></div>
+    <div class="metric"><div class="label">$3k/mo founder target</div><div class="value">6</div><div class="note">customers needed</div></div>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Freshness</h4>
+  <h2>Why we beat PropStream on the same record.</h2>
+  <p>Competitors license from CoreLogic/ATTOM/DataTree, which refresh on 30–90 day cycles. LeadCurate goes to the source weekly or daily.</p>
+
+  <div class="pull-quote">
+    "A tax-delinquent record appears in Guilford County June 15. LeadCurate ships it to the buyer June 16. PropStream shows it August 15. We're 60 days ahead of the same name."
+    <span class="cite">The freshness pitch in one sentence</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Market</th><th>Source refresh</th><th>Our cadence</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Wake NC</strong></td><td>services.wake.gov direct files</td><td>Daily</td></tr>
+        <tr><td><strong>Tarrant TX</strong></td><td>tarrantcountytx.gov weekly zip</td><td>Weekly (Monday)</td></tr>
+        <tr><td><strong>Jefferson KY foreclosures</strong></td><td>data.louisvilleky.gov ArcGIS</td><td>Daily</td></tr>
+        <tr><td><strong>Most ArcGIS hubs</strong></td><td>Per-hub schedules</td><td>Weekly to monthly</td></tr>
+        <tr><td><strong>PropStream / BatchLeads</strong></td><td>ATTOM / CoreLogic</td><td>30–90 days</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Compliance posture</h4>
+  <h2>Built into every product.</h2>
+  <ul style="font-size:15px; line-height: 1.8; color: #334155; padding-left: 20px;">
+    <li><strong>No skip-trace contact data in entry/mid tiers</strong> — zero TCPA exposure, 100% margin on data delivery.</li>
+    <li><strong>Source URL + pull date stamped</strong> in metadata of every product. Buyer verifies our claims directly.</li>
+    <li><strong>Compliance note</strong> in every metadata file: <em>"Property-record data only. Buyer is responsible for owner contact lookup, skip trace, DNC compliance, TCPA, and outreach."</em></li>
+    <li><strong>No CAPTCHA bypass, no anti-bot evasion, no paywall scraping.</strong> Every source is an official portal, open-data hub, or legally required publication.</li>
+    <li><strong>Assignment lock</strong> — records assigned to one customer during their billing cycle are held back from other buyers' batches.</li>
+  </ul>
+</section>
+
+<section class="container">
+  <h4>Products ready to ship</h4>
+  <h2>Six Discovery Snapshots on disk today.</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Snapshot</th><th>Market</th><th>Lane</th><th>Rows</th><th>Tier</th></tr></thead>
+      <tbody>
+        <tr><td><strong>guilford-nc-absentee-tax-delinquent</strong></td><td>Greensboro NC</td><td>Tax-delinquent absentee</td><td>100</td><td>$79</td></tr>
+        <tr><td><strong>jefferson-ky-pre-foreclosure</strong></td><td>Louisville KY</td><td>Pre-foreclosure court cases</td><td>100</td><td>$99</td></tr>
+        <tr><td><strong>shelby-tn-tax-sale</strong></td><td>Memphis TN</td><td>Upcoming tax sale</td><td>200</td><td>$39</td></tr>
+        <tr><td><strong>mecklenburg-nc-open-city-liens</strong></td><td>Charlotte NC</td><td>Active city liens</td><td>100</td><td>$69</td></tr>
+        <tr><td><strong>mecklenburg-nc-vacant-land-specialty</strong></td><td>Charlotte NC</td><td>Specialty vacant land</td><td>100</td><td>$99</td></tr>
+        <tr><td><strong>mecklenburg-nc-high-value-absentee</strong></td><td>Charlotte NC</td><td>Institutional absentee SF</td><td>100</td><td>$99</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p><strong>LeadCurate</strong> · Data Inventory Audit v1 · Last updated 2026-06-19</p>
+    <p>Generated from live data on the LeadCurate VPS. This audit is maintained as the canonical source of truth for partner conversations. The accompanying markdown source lives at <code>docs/leadcurate-data-inventory-audit.md</code>. The pipeline status doc for cross-agent coordination is at <code>docs/leadcurate-agent-handoff/09-data-pipeline-status.md</code>.</p>
+    <p>Better data. Cleaner workflow. No hype. Your execution closes the deal.</p>
+  </div>
+</footer>
+
+</body>
+</html>
