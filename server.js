@@ -1,12 +1,103 @@
 
 const express = require('express');
+const path = require('path');
 const app = express();
 const port = 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello from the LeadCurate backend!');
+// Serve static files from the 'dashboard' directory
+app.use(express.static(path.join(__dirname, 'dashboard')));
+
+const csvData = `lane,rank_in_lane,score,headline
+Charlotte NC Open City Liens,1,123.07,TREVA WOODS TWNHSE ASSOC | 8002 CHARTER OAK LN | LF - LIEN FILED
+Charlotte NC Open City Liens,2,123.07,MAPLECREST HOMEOWNERS ASSOC | BLUESTEM LN | LF - LIEN FILED
+Charlotte NC Open City Liens,3,123.07,YORUK DEVELOPMENT COMPANY INC | 112 SUNNYWOOD LN | LF - LIEN FILED
+Charlotte NC Open City Liens,4,123.07,YORUK DEVELOPMENT COMPANY INC | 921 SARDIS RD NORTH | LF - LIEN FILED
+Charlotte NC Open City Liens,5,123.07,"SAMOCRAINI, VEACESLAV & SVITLANA | 2500 LYNBRIDGE DR | LF - LIEN FILED"
+Charlotte NC Open City Liens,6,123.07,"GILER, ERIC | 7313 PARK VISTA CR | LF - LIEN FILED"
+Charlotte NC Open City Liens,7,123.0,OTIS EUGENE & ANNIE DOUGLAS | 6818 DUNMURRY LN | LF - LIEN FILED
+Charlotte NC Open City Liens,8,123.0,ROYAL PROPERTIES OF NC INC | 7414 PONDERS END LN | LF - LIEN FILED
+Charlotte NC Open City Liens,9,123.0,SFR JV-1 PROPERTY LLC | 11515 QUIET PINE CT | LF - LIEN FILED
+Charlotte NC Open City Liens,10,123.0,NOVA CAPITAL INVESTMENTS LLC | 3949 FREEDOM DR | LF - LIEN FILED
+Charlotte NC Open City Liens,11,123.0,THE NORFSIDE CHICAGO LAND TRUST | 945 HERRIN AV | LF - LIEN FILED
+Charlotte NC Open City Liens,12,123.0,WILLA S BROWN | SMITH DR | LF - LIEN FILED
+Charlotte NC Open City Liens,13,123.0,WILLIAMS GATE CHARLOTTE HMOWN ASSOC INC | WILLIAMS FARM DR | LF - LIEN FILED
+Charlotte NC Open City Liens,14,123.0,BAF ASSETS 4 LLC | 2836 DENVIEW LN | LF - LIEN FILED
+Charlotte NC Open City Liens,15,123.0,HOME SFR BORROWER IV LLC | 522 GRAHAM MEADOW DR | LF - LIEN FILED
+Charlotte NC Open City Liens,16,123.0,PAUL K JOSEPH | 11519 LAUREL VIEW DR | LF - LIEN FILED
+Charlotte NC Open City Liens,17,123.0,URBAN TRENDS REAL ESTATE INC | 110 LAKEWOOD AV | LF - LIEN FILED
+Charlotte NC Open City Liens,18,123.0,URBAN TRENDS REAL ESTATE INC | 104 LAKEWOOD AV | LF - LIEN FILED
+Charlotte NC Open City Liens,19,123.0,"LAWING, JAMES M | 5120 E W T HARRIS BV | LF - LIEN FILED"
+Charlotte NC Open City Liens,20,122.87,DAVID HUTCHINS | 7610 BRIARDALE DR | LF - LIEN FILED
+Charlotte NC Open City Liens,21,122.87,PHILIP EDWARD POE | 7704 OAK CANYON LN | LF - LIEN FILED
+Charlotte NC Open City Liens,22,122.87,DIWANKANINA G LUZAYADIO | 100 S SMALLWOOD PL | LF - LIEN FILED
+Charlotte NC Open City Liens,23,122.87,REMBERT ARTHUR GADDY | 1912 ST JOHN ST | LF - LIEN FILED
+Charlotte NC Open City Liens,24,122.87,SAMSON JRH PROPERTIES LLC | 5661 COULEE PL | LF - LIEN FILED
+Charlotte NC Open City Liens,25,122.87,MARCUS HARRIS | 10306 LITTLE WHITEOAK RD | LF - LIEN FILED
+Charlotte NC Vacant Land Specialty,1,100,ULM II NORTH CAROLINA LLC | 5404 BALLANTYNE COMMONS PY | 9.494 ac | PA
+Charlotte NC Vacant Land Specialty,2,100,STEELE CREEK OWNER LLC | 14522 S STEELE CREEK RD | 22.5884 ac | FL
+Charlotte NC Vacant Land Specialty,3,100,YFP TIMBER LLC | HAMILTON RD | 6.9628 ac | SC
+Charlotte NC Vacant Land Specialty,4,100,IUSIF LAKEMONT INDUSTRIAL PARK LLC | CHOATE CR | 8.0433 ac | IL
+Charlotte NC Vacant Land Specialty,5,100,RUSSELL A DAVEY | 14731 PLEASANT HILL RD | 16.2807 ac | SC
+Charlotte NC Vacant Land Specialty,6,100,KL LB BUY 5 LLC | CROSSHAVEN DR | 22.5768 ac | AZ
+Charlotte NC Vacant Land Specialty,7,100,KL LB BUY 5 LLC | BANKHEAD RD | 34.7886 ac | AZ
+Charlotte NC Vacant Land Specialty,8,100,YFP TIMBER LLC | MCKEE RD | 6.0236 ac | SC
+Charlotte NC Vacant Land Specialty,9,100,YFP TIMBER LLC | MCKEE RD | 7.5883 ac | SC
+Charlotte NC Vacant Land Specialty,10,100,BECKETT COVE HOMEOWNERS ASSOCIATION INC | AUTUMN SAGE DR | 10.8591 ac | TX
+Charlotte NC Vacant Land Specialty,11,100,PASS-A-GRILLE REALTY COMPANY | 15495 YOUNGBLOOD RD | 12.3756 ac | CT
+Charlotte NC Vacant Land Specialty,12,100,PASS-A-GRILLE REALTY COMPANY | YOUNGBLOOD RD | 47.9354 ac | CT
+Charlotte NC Vacant Land Specialty,13,100,ANNIE BELL HARRIS | CAPPS RD | 5.9364 ac | SC
+Charlotte NC Vacant Land Specialty,14,100,WC&C 8 LLC | PINEVILLE-MATTHEWS RD | 35.7642 ac | FL
+Charlotte NC Vacant Land Specialty,15,100,VULCAN LANDS INC | 9539 NATIONS FORD RD | 8.7975 ac | AL
+Charlotte NC Vacant Land Specialty,16,100,HAROLD F GRIFFITHS | INDUSTRIAL DR | 5.0971 ac | MN
+Charlotte NC Vacant Land Specialty,17,100,LVPOSI 10203 PINEVILLE LLC | 10203 PINEVILLE DISTRIBUTION ST | 15.0006 ac | IL
+Charlotte NC Vacant Land Specialty,18,100,FAMILY LTD PARTNERSHIP JAMES ROSS MILLER JR | 12599 NATIONS FORD RD | 7.7746 ac | SC
+Charlotte NC Vacant Land Specialty,19,100,FAMILY LTD PARTNERSHIP JAMES ROSS MILLER JR | 13330 ROCK HILL-PINEVILLE RD | 10.6305 ac | SC
+Charlotte NC Vacant Land Specialty,20,100,STANLEY MARTIN HOMES LLC | 12800 DOWNS RD | 19.8272 ac | VA
+Charlotte NC Vacant Land Specialty,21,100,JEFFERSON BUSINESS PARK ASSOCIATES OF NC LLC | WESTINGHOUSE BV | 21.5702 ac | VA
+Charlotte NC Vacant Land Specialty,22,100,NBC SIXTH REALTY CORP | 14220 CAROWINDS BV | 8.9515 ac | MA
+Charlotte NC Vacant Land Specialty,23,100,CAROWINDS LLC | CAROWINDS BV | 7.4703 ac | TX
+Charlotte NC Vacant Land Specialty,24,100,CONSTELLATION CONTINENTAL OWNER LLC | CONTINENTAL BV | 15.4777 ac | TX
+Charlotte NC Vacant Land Specialty,25,100,JANELLE KARCHASKE | 2815 SHOPTON RD | 5.7038 ac | SC
+Charlotte NC High-Value Absentee Single-Family,1,100,"RM1 SFR PROPCO B LP | 901 AMANDA DR CHARLOTTE NC | $678,100 | GA"
+Charlotte NC High-Value Absentee Single-Family,2,100,"ANNE CARR GILMAN WOOD | 4300 KUYKENDALL RD CHARLOTTE NC | $602,600 | TX"
+Charlotte NC High-Value Absentee Single-Family,3,100,"JASON WIESELMAN | 5308 SUNNINGDALE DR CHARLOTTE NC | $835,700 | NY"
+Charlotte NC High-Value Absentee Single-Family,4,100,"ALAN KROLL | 11655 OLD SURRY LN CHARLOTTE NC | $671,600 | NY"
+Charlotte NC High-Value Absentee Single-Family,5,100,"MICHAEL ANGELO FERNANDEZ | 1200 SYDNEY DR CHARLOTTE NC | $730,900 | FL"
+Charlotte NC High-Value Absentee Single-Family,6,100,"NIMIT KHIMIJI | 1138 LAUREL PARK LN CHARLOTTE NC | $629,900 | WI"
+Charlotte NC High-Value Absentee Single-Family,7,100,"KENNETH R WYNNE | 2506 WINDING OAK DR CHARLOTTE NC | $779,800 | TX"
+Charlotte NC High-Value Absentee Single-Family,8,100,"VALOR QUEST ENDEAVORS LLC | 3246 GRAY MOSS RD CHARLOTTE NC | $762,500 | AZ"
+Charlotte NC High-Value Absentee Single-Family,9,100,"SERAN WILSON | 2509 HOUSTON BRANCH RD CHARLOTTE NC | $905,220 | CA"
+Charlotte NC High-Value Absentee Single-Family,10,100,"HOUSTON BRANCH LLC | 2932 HOUSTON BRANCH RD CHARLOTTE NC | $704,200 | WA"
+Charlotte NC High-Value Absentee Single-Family,11,100,"JAMES ALECK MACCUTCHEON | 2401 HIGH RIDGE RD CHARLOTTE NC | $757,500 | FL"
+Charlotte NC High-Value Absentee Single-Family,12,100,"JERRY EUGENE VAUGHAN | 9307 PROVIDENCE RD CHARLOTTE NC | $840,300 | GA"
+Charlotte NC High-Value Absentee Single-Family,13,100,"DIXIE LAND COMPANY LLC | 415 W JOHN ST MATTHEWS NC | $1,911,500 | VA"
+Charlotte NC High-Value Absentee Single-Family,14,100,"MARK L CLENSHAW | 7518 BRITISH GARDENS LN CHARLOTTE NC | $615,100 | SC"
+Charlotte NC High-Value Absentee Single-Family,15,100,"JONATHAN SUSSMAN | 10137 THOMAS PAYNE CR CHARLOTTE NC | $720,000 | MA"
+Charlotte NC High-Value Absentee Single-family,16,100,"STEVEN A TECHNIK | 10332 JAMES MADISON CT CHARLOTTE NC | $660,400 | CA"
+Charlotte NC High-Value Absentee Single-Family,17,100,"AXEL BARROCAS | 8133 STRAWBERRY LN CHARLOTTE NC | $711,600 | FL"
+Charlotte NC High-Value Absentee Single-Family,18,100,"2018-3 IH BORROWER LP | 4329 ROUNDING RUN RD CHARLOTTE NC | $616,500 | AZ"
+Charlotte NC High-Value Absentee Single-Family,19,100,"HERBERT B HAUETER | 8221 EAGLES POINT CT CHARLOTTE NC | $854,000 | FL"
+Charlotte NC High-Value Absentee Single-Family,20,100,"OPENDOOR PROPERTY TRUST I | 6219 BOYKIN SPANIEL RD CHARLOTTE NC | $605,800 | AZ"
+Charlotte NC High-Value Absentee Single-Family,21,100,"MICHAEL COLTON GILLIAM | 1010 BOATRIGHT RD PINEVILLE NC | $869,400 | SC"
+Charlotte NC High-Value Absentee Single-Family,22,100,"MICHAEL COLTON GILLIAM | 1010 BOATRIGHT RD PINEVILLE NC | $869,400 | SC"
+Charlotte NC High-Value Absentee Single-Family,23,100,"MICHAEL COLTON GILLIAM | 1010 BOATRIGHT RD PINEVILLE NC | $869,400 | SC"
+Charlotte NC High-Value Absentee Single-Family,24,100,"PASS-A-GRILLE REALTY COMPANY | 14817 YOUNGBLOOD RD UNINC NC | $3,887,600 | CT"
+Charlotte NC High-Value Absentee Single-Family,25,100,"ROBERT A JR BARTLETT | 13902 ZOAR RD UNINC NC | $3,943,700 | CT"
+`;
+
+// API endpoint to get property data
+app.get('/api/properties', (req, res) => {
+    const rawRows = csvData.trim().split('\n').slice(1);
+    const propertiesData = rawRows.map(row => {
+        const [lane, rank, score, ...headlineParts] = row.split(',');
+        const headline = headlineParts.join(',').replace(/"/g, '');
+        const [owner, address] = headline.split('|').map(s => s.trim());
+        return { owner, address, lane, score };
+    });
+  res.json(propertiesData);
 });
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });
+
