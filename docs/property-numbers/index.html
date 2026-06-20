@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>LeadCurate · Property Numbers Audit</title>
-<meta name="description" content="LeadCurate analytical breakdown — 14.2M records across 21 markets, $215B addressable value in Charlotte residential alone, 33,013 high-value absentee owners ready to target." />
+<meta name="description" content="LeadCurate analytical breakdown — 14.2M records across 21 markets, the value of the full inventory, and the overlooked markets that punch above their weight." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -81,17 +81,40 @@
   .bar-fill { background: var(--emerald); height: 100%; border-radius: 999px; }
   .bar-row .value { font-size: 13px; text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
 
-  .insight {
-    background: var(--emerald-soft);
+  .spotlight {
+    background: white;
+    border: 1px solid var(--line);
     border-left: 4px solid var(--emerald);
-    padding: 16px 20px;
-    border-radius: 12px;
+    border-radius: var(--radius);
+    padding: 24px 28px;
     margin: 18px 0;
-    color: #064e3b;
-    font-size: 14px;
-    line-height: 1.6;
   }
-  .insight strong { color: var(--emerald); }
+  .spotlight h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 22px;
+    margin: 0 0 6px;
+    color: var(--dark);
+    letter-spacing: -0.02em;
+  }
+  .spotlight .sub {
+    font-size: 13px;
+    color: var(--emerald);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+  .spotlight .takeaway {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    font-size: 14px;
+    color: #064e3b;
+    background: var(--emerald-soft);
+    padding: 12px 16px;
+    border-radius: 10px;
+  }
+  .spotlight .takeaway strong { color: var(--emerald); }
 
   footer { padding: 40px 0 60px; color: var(--muted); border-top: 1px solid var(--line); font-size: 13px; margin-top: 40px; }
   footer .tagline { font-style: italic; color: var(--dark); font-size: 14px; margin-top: 12px; }
@@ -105,10 +128,12 @@
     .bar-row .value { text-align: left; }
     .header-row { flex-direction: column; align-items: flex-start; }
     header.report-header { padding: 22px 0 18px; }
+    .spotlight { padding: 18px 20px; }
+    .spotlight h3 { font-size: 18px; }
   }
   @media print {
     body { background: white; }
-    section { page-break-inside: avoid; }
+    section, .spotlight { page-break-inside: avoid; }
     .headline-grid, .metric-grid { page-break-inside: avoid; }
     header.report-header { background: white; }
   }
@@ -120,21 +145,21 @@
   <div class="container header-row">
     <div>
       <div class="logo">Lead<span>Curate</span>.</div>
-      <div class="doc-meta">Property Numbers Audit · v1 · 2026-06-19</div>
+      <div class="doc-meta">Property Numbers Audit · v2 · 2026-06-19</div>
     </div>
     <div class="badge"><span>●</span> Analytical breakdown</div>
   </div>
 </header>
 
 <section class="cover no-divider container">
-  <h4>The numbers</h4>
-  <h1>What's actually in the data.</h1>
-  <p class="lead">Record volumes, addressable universes, owner concentration, value distribution, and the high-priority subsets that surface at the top of a ranked batch. No pricing, no projections — just what the property records actually contain.</p>
+  <h4>The full picture</h4>
+  <h1>What 14 million records buy you.</h1>
+  <p class="lead">An analytical breakdown of what's in the data across all 21 markets — record volumes, addressable distress, owner concentration, refresh velocity, and the less-obvious markets in the inventory that carry the most leverage.</p>
 </section>
 
 <section class="container">
   <h4>Headline</h4>
-  <h2>Four numbers to start.</h2>
+  <h2>Four numbers to anchor on.</h2>
   <div class="headline-grid">
     <div class="headline">
       <div class="label">Structured records</div>
@@ -142,19 +167,19 @@
       <div class="note">across 21 markets, 12 states</div>
     </div>
     <div class="headline">
-      <div class="label">Aggregate value (Mecklenburg residential)</div>
-      <div class="value">$215B</div>
-      <div class="note">one county's residential parcel base</div>
+      <div class="label">Active distress signals available</div>
+      <div class="value">10</div>
+      <div class="note">distinct lanes spanning the inventory</div>
     </div>
     <div class="headline">
-      <div class="label">Charlotte high-value absentee owners</div>
-      <div class="value">33,013</div>
-      <div class="note">addressable today, $200k+ assessed</div>
+      <div class="label">Absentee owners identified (so far)</div>
+      <div class="value">65K+</div>
+      <div class="note">two markets fully computed — actual is several × this</div>
     </div>
     <div class="headline">
-      <div class="label">NYC building code violations</div>
+      <div class="label">Largest single distress dataset</div>
       <div class="value">2.47M</div>
-      <div class="note">citywide, refreshing continuously</div>
+      <div class="note">NYC building code violations</div>
     </div>
   </div>
 </section>
@@ -180,150 +205,119 @@
 </section>
 
 <section class="container">
-  <h4>Mecklenburg deep-dive</h4>
-  <h2>The most-studied single county.</h2>
+  <h4>The value of the full inventory</h4>
+  <h2>Volume is the start. Distress and refresh are the leverage.</h2>
+  <p>A wholesaler subscribing to multiple markets gets independent distress signals on independent property bases, each refreshing on its own cadence.</p>
 
-  <div class="metric-grid">
-    <div class="metric"><div class="label">Total parcels</div><div class="value">446,213</div></div>
-    <div class="metric"><div class="label">Residential</div><div class="value">363,735</div><div class="note">single-family, townhouse, condo</div></div>
-    <div class="metric"><div class="label">Absentee residential</div><div class="value">35,494</div><div class="note">mailing address out of NC</div></div>
-    <div class="metric"><div class="label">High-value absentee ($200k+)</div><div class="value">33,013</div><div class="note">addressable target</div></div>
-  </div>
-
-  <h3>Residential value distribution</h3>
+  <h3>Distress signals available across the inventory</h3>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>Value tier</th><th class="num">Parcel count</th><th>Share</th></tr></thead>
+      <thead><tr><th>Signal</th><th>Carrying markets</th><th>Volume highlight</th></tr></thead>
       <tbody>
-        <tr><td>Under $100k</td><td class="num">1,591</td><td>0.4%</td></tr>
-        <tr><td>$100k–250k</td><td class="num">47,645</td><td>13.1%</td></tr>
-        <tr><td><strong>$250k–500k</strong></td><td class="num">211,875</td><td><strong>58.3%</strong></td></tr>
-        <tr><td>$500k–1M</td><td class="num">79,338</td><td>21.8%</td></tr>
-        <tr><td>Over $1M</td><td class="num">23,282</td><td>6.4%</td></tr>
+        <tr><td><strong>Tax-delinquent records</strong></td><td>Guilford, Wake, Allen, Erie + pending Mecklenburg, Harris, Cobb, Jefferson AL</td><td>$10.2M aggregate owed in Guilford alone</td></tr>
+        <tr><td><strong>Pre-foreclosure court cases</strong></td><td>Jefferson KY, Guilford, Erie</td><td>3,000 active KY cases refreshing daily</td></tr>
+        <tr><td><strong>Tax-sale upcoming</strong></td><td>Shelby, Charleston, Greenville, NYC</td><td>All five NYC boroughs covered, 264k lien notices</td></tr>
+        <tr><td><strong>Building / code violations</strong></td><td>NYC, Jefferson KY, Mecklenburg</td><td>NYC scale (2.47M) is unmatched in the inventory</td></tr>
+        <tr><td><strong>Vacant land / vacant property</strong></td><td>Mecklenburg, Fayette, Cuyahoga</td><td>23,203 vacant parcels in Mecklenburg alone</td></tr>
+        <tr><td><strong>Lien-holder final orders</strong></td><td>Jefferson KY</td><td>Niche signal, very low competition</td></tr>
+        <tr><td><strong>Recent sales (cash-buyer ID)</strong></td><td>Cuyahoga</td><td>130,093 recent sales — largest comp set</td></tr>
+        <tr><td><strong>Absentee owner detection</strong></td><td>Mecklenburg, Marion, Wake, Guilford, Fayette, Forsyth</td><td>Institutional flow visible across the board</td></tr>
       </tbody>
     </table>
   </div>
-  <p>Aggregate residential assessed value across all 363,735 parcels: <strong>$215,428,789,831</strong>.</p>
 
-  <h3>Where Charlotte absentee capital comes from</h3>
+  <h3>Refresh velocity beats the reseller standard</h3>
   <div class="table-wrap">
     <table>
-      <thead><tr><th class="rank">#</th><th>Mailing state</th><th class="num">Absentee parcels</th></tr></thead>
+      <thead><tr><th>Cadence</th><th>Markets / sources</th></tr></thead>
       <tbody>
-        <tr><td class="rank">1</td><td><strong>Arizona</strong></td><td class="num">9,947</td></tr>
-        <tr><td class="rank">2</td><td>California</td><td class="num">5,769</td></tr>
-        <tr><td class="rank">3</td><td>Texas</td><td class="num">3,221</td></tr>
-        <tr><td class="rank">4</td><td>Georgia</td><td class="num">3,094</td></tr>
-        <tr><td class="rank">5</td><td>South Carolina</td><td class="num">2,842</td></tr>
-        <tr><td class="rank">6</td><td>New York</td><td class="num">2,380</td></tr>
-        <tr><td class="rank">7</td><td>Florida</td><td class="num">1,828</td></tr>
-        <tr><td class="rank">8</td><td>Virginia</td><td class="num">930</td></tr>
-        <tr><td class="rank">9</td><td>New Jersey</td><td class="num">880</td></tr>
-        <tr><td class="rank">10</td><td>Maryland</td><td class="num">430</td></tr>
+        <tr><td><strong>Daily</strong></td><td>Wake NC (delinquent file), Louisville KY (foreclosure cases)</td></tr>
+        <tr><td><strong>Weekly</strong></td><td>Tarrant TX (full tax roll, every Monday)</td></tr>
+        <tr><td><strong>Continuous</strong></td><td>NYC code violations</td></tr>
+        <tr><td><strong>Monthly</strong></td><td>Mecklenburg, Marion, Cuyahoga, DeKalb, Fulton, Forsyth, Fayette, Jefferson KY</td></tr>
+        <tr><td><strong>Annual</strong></td><td>Allen IN, Erie NY, Charleston SC, Greenville SC</td></tr>
+        <tr><td style="color: var(--muted);">Reseller industry standard (PropStream, BatchLeads via CoreLogic/ATTOM)</td><td style="color: var(--muted);">30–90 days</td></tr>
       </tbody>
     </table>
   </div>
-  <div class="insight">
-    <strong>Insight:</strong> Arizona dominates Charlotte absentee ownership. That signal aligns with the institutional Single-Family Rental funds (HPA BORROWER, SFR JV-1, BAF ASSETS, RM1 SFR PROPCO) headquartered in Phoenix and Scottsdale concentrating Charlotte exposure heavily.
-  </div>
+  <p>Even our slowest sources beat the reseller refresh cycle. Daily sources are weeks ahead of where competitors will see the same record.</p>
 </section>
 
 <section class="container">
-  <h4>Marion County, IN counterpoint</h4>
-  <h2>Different absentee flow into Indianapolis.</h2>
-  <div class="metric-grid">
-    <div class="metric"><div class="label">Parcels</div><div class="value">347,143</div></div>
-    <div class="metric"><div class="label">Absentee residential</div><div class="value">29,490</div></div>
-  </div>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th class="rank">#</th><th>Mailing state</th><th class="num">Absentee parcels</th></tr></thead>
-      <tbody>
-        <tr><td class="rank">1</td><td><strong>California</strong></td><td class="num">5,683</td></tr>
-        <tr><td class="rank">2</td><td>Georgia</td><td class="num">2,785</td></tr>
-        <tr><td class="rank">3</td><td>Arizona</td><td class="num">2,543</td></tr>
-        <tr><td class="rank">4</td><td>Texas</td><td class="num">2,174</td></tr>
-        <tr><td class="rank">5</td><td>Ohio</td><td class="num">2,128</td></tr>
-        <tr><td class="rank">6</td><td>Florida</td><td class="num">1,864</td></tr>
-        <tr><td class="rank">7</td><td>Illinois</td><td class="num">1,835</td></tr>
-        <tr><td class="rank">8</td><td>New York</td><td class="num">1,819</td></tr>
-        <tr><td class="rank">9</td><td>Nevada</td><td class="num">1,020</td></tr>
-        <tr><td class="rank">10</td><td>Colorado</td><td class="num">568</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="insight">
-    California sends nearly <strong>twice as much</strong> absentee ownership to Indianapolis as Arizona does — different institutional flows than Charlotte sees. Useful for targeting outreach to the right out-of-state institutional sellers per metro.
-  </div>
-</section>
+  <h4>Three markets that punch above their weight</h4>
+  <h2>The less-obvious leverage in the inventory.</h2>
+  <p>The big names — Maricopa, NYC, the Texas metros — speak for themselves. These are the markets a casual reviewer would overlook that carry serious analytical advantage.</p>
 
-<section class="container">
-  <h4>Guilford County, NC — chronic delinquency</h4>
-  <h2>Tax-year distribution shows multi-year distress.</h2>
-  <div class="metric-grid">
-    <div class="metric"><div class="label">Tax delinquent records</div><div class="value">10,531</div></div>
-    <div class="metric"><div class="label">Aggregate owed</div><div class="value">$10.2M</div><div class="note">unpaid tax debt, one county</div></div>
-    <div class="metric"><div class="label">Out-of-state owners</div><div class="value">1,043</div></div>
+  <div class="spotlight">
+    <div class="sub">#1 wholesale market in America right now</div>
+    <h3>Marion County, IN — Indianapolis</h3>
+    <p>Ranked the <strong>#1 US wholesale market for 2026</strong> by multiple industry sources, yet it sits below Phoenix and DFW in casual visibility. The data: 347,143 parcels with owner detail and assessed values, <strong>29,490 identified absentee residential owners</strong>.</p>
+    <div class="metric-grid">
+      <div class="metric"><div class="label">Records</div><div class="value">755,047</div></div>
+      <div class="metric"><div class="label">Parcels w/ owner</div><div class="value">347,143</div></div>
+      <div class="metric"><div class="label">Absentee owners</div><div class="value">29,490</div></div>
+    </div>
+    <p>The inflow of absentee capital is structurally different from Charlotte's. Top mailing states feeding Indianapolis: <strong>California (5,683), Georgia (2,785), Arizona (2,543), Texas (2,174), Ohio (2,128)</strong>.</p>
+    <div class="takeaway">
+      <strong>Takeaway:</strong> California sends nearly twice as much absentee capital to Indianapolis as Arizona does — the opposite of Charlotte's pattern, where Arizona dominates. A wholesaler can use this directional intel to pick the right outreach state per metro.
+    </div>
   </div>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>Tax year</th><th class="num">Records still delinquent</th></tr></thead>
-      <tbody>
-        <tr><td>2025</td><td class="num">4,062</td></tr>
-        <tr><td>2024</td><td class="num">1,677</td></tr>
-        <tr><td>2023</td><td class="num">1,024</td></tr>
-        <tr><td>2022</td><td class="num">789</td></tr>
-        <tr><td>2021</td><td class="num">648</td></tr>
-        <tr><td>2020</td><td class="num">531</td></tr>
-        <tr><td>2019</td><td class="num">509</td></tr>
-        <tr><td>2018</td><td class="num">472</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="insight">
-    Records carrying delinquency from 2018–2022 (2,949 records) represent <strong>chronic distress</strong> — multi-year inability to clear the bill. These are the highest-priority records in the ranked output. Single-year delinquencies often resolve naturally; eight-year delinquencies almost never do.
-  </div>
-</section>
 
-<section class="container">
-  <h4>NYC scale</h4>
-  <h2>The largest single-metro distress dataset.</h2>
-  <div class="metric-grid">
-    <div class="metric"><div class="label">Tax lien notices (all 5 boroughs)</div><div class="value">264,142</div></div>
-    <div class="metric"><div class="label">DOB building code violations</div><div class="value">2,475,143</div><div class="note">citywide, continuously refreshing</div></div>
+  <div class="spotlight">
+    <div class="sub">The deepest comp data in the inventory</div>
+    <h3>Cuyahoga County, OH — Cleveland</h3>
+    <p>The largest sales-comp dataset we hold. <strong>130,093 recent parcel sales 2021 through present</strong> — four years of transaction history on 527,160 parcels. Deeper than what's available in most Sun Belt markets where transaction-level history is sparser in public-record form.</p>
+    <div class="metric-grid">
+      <div class="metric"><div class="label">Tax parcels</div><div class="value">527,160</div></div>
+      <div class="metric"><div class="label">Recent sales 2021+</div><div class="value">130,093</div></div>
+      <div class="metric"><div class="label">Window</div><div class="value">4 yrs</div></div>
+    </div>
+    <div class="takeaway">
+      <strong>Takeaway:</strong> Cleveland is a classic BRRRR market. The recent-sales file is exactly what a wholesaler needs to build a cash-buyer list — cross-reference recent buyers, identify repeat purchasers, target their portfolios for follow-on deal flow. This is what PropStream and BatchLeads sell as a premium add-on. We have it as base inclusion.
+    </div>
   </div>
-  <h3>Tax lien notices by borough</h3>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>Borough</th><th class="num">Lien notices</th><th>Share</th></tr></thead>
-      <tbody>
-        <tr><td><strong>Queens</strong></td><td class="num">108,013</td><td>40.9%</td></tr>
-        <tr><td>Brooklyn</td><td class="num">71,674</td><td>27.1%</td></tr>
-        <tr><td>Manhattan</td><td class="num">39,488</td><td>15.0%</td></tr>
-        <tr><td>Bronx</td><td class="num">24,219</td><td>9.2%</td></tr>
-        <tr><td>Staten Island</td><td class="num">20,748</td><td>7.9%</td></tr>
-      </tbody>
-    </table>
+
+  <div class="spotlight">
+    <div class="sub">The scarcity asset</div>
+    <h3>Shelby County, TN — Memphis</h3>
+    <p><strong>2,192 properties in the current tax sale cycle</strong>, pulled directly from a published S3 URL most competitors do not know exists. The URL is embedded in the Trustee's tax-sale-schedule page, not in any obvious download catalog.</p>
+    <div class="metric-grid">
+      <div class="metric"><div class="label">Properties (full extract)</div><div class="value">2,192</div></div>
+      <div class="metric"><div class="label">Current cycle TS2302</div><div class="value">1,522</div></div>
+      <div class="metric"><div class="label">Prior cycle TS2301</div><div class="value">670</div></div>
+    </div>
+    <div class="takeaway">
+      <strong>Takeaway:</strong> Every other Memphis data source for upcoming tax sale either requires a phone call to the Trustee, attending the Chancery Court auction, or paying for ZeusAuction.com extracts. We have the same 1,522-property current cycle list as a direct CSV. Memphis is consistently top-10 for wholesale REI activity and has lower data accessibility than peer markets — that combination makes this dataset disproportionately valuable.
+    </div>
   </div>
-  <p>Queens carries the highest tax-lien notice volume of any borough — useful targeting intel for wholesalers segmenting NYC sub-markets.</p>
+
+  <div class="spotlight">
+    <div class="sub">Bonus pick — Zillow's #1 hottest market for 2026</div>
+    <h3>Erie County, NY — Buffalo</h3>
+    <p>Zillow's #1 hottest US housing market for 2026 by projected home-value growth (4.6%). Buffalo gets routinely overlooked because the data is delivered as PDFs — filed in-rem foreclosure petitions, delinquent taxpayer lists. We have <strong>13 MB of filed documents</strong> ready to parse, including a 5 MB filed delinquent taxpayer list that names every owner the county is pursuing.</p>
+  </div>
 </section>
 
 <section class="container">
   <h4>Top-priority delivered subsets</h4>
-  <h2>What surfaces at the top when records are ranked.</h2>
+  <h2>What surfaces at the top across markets.</h2>
+  <p>When records are filtered and ranked, here's what currently sits at the top of each built batch.</p>
   <div class="table-wrap">
     <table>
       <thead><tr><th>Market</th><th>Lane</th><th class="num">Universe</th><th class="num">Top N</th><th>Top-N signal</th></tr></thead>
       <tbody>
         <tr><td>Guilford NC</td><td>Tax-delinquent absentee</td><td class="num">1,043</td><td class="num">100</td><td>$700,860 total due · 21 states represented</td></tr>
-        <tr><td>Louisville KY</td><td>Pre-foreclosure</td><td class="num">259</td><td class="num">100</td><td>6 sales upcoming · 50 recent past · top neighborhood Parkland (20)</td></tr>
-        <tr><td>Memphis TN</td><td>Tax sale current cycle</td><td class="num">2,186</td><td class="num">200</td><td>1,522 in current TS2302 cycle</td></tr>
-        <tr><td>Charlotte NC</td><td>Enriched city liens</td><td class="num">843</td><td class="num">100</td><td><strong>73 of 100 out-of-state · $73.9M aggregate property value</strong></td></tr>
-        <tr><td>Charlotte NC</td><td>Vacant land specialty</td><td class="num">15,273</td><td class="num">100</td><td>All 100 out-of-state · institutional LLCs at the top</td></tr>
-        <tr><td>Charlotte NC</td><td>High-value absentee SF</td><td class="num">47,151</td><td class="num">100</td><td>All 100 out-of-state · institutional SFR funds at the top</td></tr>
+        <tr><td>Louisville KY</td><td>Pre-foreclosure</td><td class="num">259</td><td class="num">100</td><td>6 sales upcoming · 50 recent past</td></tr>
+        <tr><td>Louisville KY</td><td>Open code violations</td><td class="num">13,398</td><td class="num">100</td><td>Vacant Lot / Vacant Structure flags at the top</td></tr>
+        <tr><td>Louisville KY</td><td>Lien-holder final orders</td><td class="num">411</td><td class="num">100</td><td>Out-of-state owner + citation amounts</td></tr>
+        <tr><td>Memphis TN</td><td>Tax sale current cycle</td><td class="num">2,186</td><td class="num">200</td><td>1,522 in current cycle, S3-direct sourcing</td></tr>
+        <tr><td>Charlotte NC</td><td>Enriched city liens</td><td class="num">843</td><td class="num">100</td><td>73 of 100 out-of-state · $73.9M aggregate</td></tr>
+        <tr><td>Charlotte NC</td><td>Vacant land specialty</td><td class="num">15,273</td><td class="num">100</td><td>All 100 out-of-state · institutional LLCs at top</td></tr>
+        <tr><td>Charlotte NC</td><td>High-value absentee SF</td><td class="num">47,151</td><td class="num">100</td><td>All 100 out-of-state · institutional SFR funds</td></tr>
       </tbody>
     </table>
   </div>
+  <p>Charlotte and Louisville each carry three lanes in production because their source data is unusually rich (Mecklenburg has city liens + vacant land + parcel-lookup; Jefferson KY publishes daily-refreshed court filings most counties don't expose). Other markets currently carry one — building additional lanes per market is a straightforward extension of the same processing pattern.</p>
 </section>
 
 <section class="container">
@@ -334,13 +328,13 @@
     <li><strong>Absentee</strong> = owner mailing-address state ≠ property state.</li>
     <li><strong>High-value</strong> = $200,000+ total assessed value. County-published assessed values typically run 10–30% below market.</li>
     <li>NYC, Marion, Mecklenburg, Wake, Cuyahoga, Jefferson KY, Forsyth, Fulton, DeKalb, Guilford, Fayette, and Shelby counts are exact from CSV files.</li>
-    <li>Maricopa, Tarrant, and Dallas counts are estimated from binary tax-roll files pending full ingestion — actuals likely to revise upward.</li>
+    <li>Maricopa, Tarrant, and Dallas counts are estimated from binary tax-roll files pending full ingestion. Actuals likely to revise upward.</li>
   </ul>
 </section>
 
 <footer>
   <div class="container">
-    <p><strong>LeadCurate</strong> · Property Numbers Audit · v1 · 2026-06-19</p>
+    <p><strong>LeadCurate</strong> · Property Numbers Audit · v2 · 2026-06-19</p>
     <p>This is one of two living audits. The Data Inventory document covers markets and lanes qualitatively; this document covers volume and value quantitatively.</p>
     <p class="tagline">The data is the data.</p>
   </div>
