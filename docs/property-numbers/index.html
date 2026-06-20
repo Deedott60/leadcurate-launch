@@ -116,6 +116,26 @@
   }
   .spotlight .takeaway strong { color: var(--emerald); }
 
+  /* Value distribution chart */
+  .vd-chart { background: white; border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 26px; margin: 18px 0; }
+  .vd-row { display: grid; grid-template-columns: 160px 1fr; gap: 14px; align-items: center; padding: 6px 0; }
+  .vd-row .market { font-size: 13px; font-weight: 700; color: var(--dark); }
+  .vd-row .stack { display: flex; height: 22px; border-radius: 6px; overflow: hidden; background: var(--stone); }
+  .vd-seg { display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; color: white; min-width: 0; overflow: hidden; }
+  .vd-seg.t1 { background: #166534; }      /* under $100k - darkest emerald */
+  .vd-seg.t2 { background: #15803d; }      /* $100k-250k */
+  .vd-seg.t3 { background: #22c55e; color: var(--dark); }  /* $250k-500k */
+  .vd-seg.t4 { background: #86efac; color: var(--dark); }  /* $500k-1M */
+  .vd-seg.t5 { background: #d97706; }      /* over $1M - gold */
+  .vd-legend { display: flex; gap: 18px; flex-wrap: wrap; margin: 14px 0 8px; font-size: 12px; }
+  .vd-legend span { display: flex; align-items: center; gap: 6px; }
+  .vd-swatch { width: 14px; height: 14px; border-radius: 3px; }
+  .vd-counts { font-size: 12px; color: var(--muted); margin-top: 12px; }
+  @media (max-width: 600px) {
+    .vd-row { grid-template-columns: 1fr; }
+    .vd-row .market { margin-bottom: 4px; }
+  }
+
   footer { padding: 40px 0 60px; color: var(--muted); border-top: 1px solid var(--line); font-size: 13px; margin-top: 40px; }
   footer .tagline { font-style: italic; color: var(--dark); font-size: 14px; margin-top: 12px; }
 
@@ -295,6 +315,108 @@
     <div class="sub">Bonus pick — Zillow's #1 hottest market for 2026</div>
     <h3>Erie County, NY — Buffalo</h3>
     <p>Zillow's #1 hottest US housing market for 2026 by projected home-value growth (4.6%). Buffalo gets routinely overlooked because the data is delivered as PDFs — filed in-rem foreclosure petitions, delinquent taxpayer lists. We have <strong>13 MB of filed documents</strong> ready to parse, including a 5 MB filed delinquent taxpayer list that names every owner the county is pursuing.</p>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Value distribution by market</h4>
+  <h2>What each market actually looks like by property value.</h2>
+  <p>Across five markets where we have a parcel file with assessed value, the property-value distribution tells dramatically different market stories. Same horizontal scale, percentages within each market.</p>
+
+  <div class="vd-chart">
+    <div class="vd-legend">
+      <span><span class="vd-swatch" style="background: #166534"></span>Under $100k</span>
+      <span><span class="vd-swatch" style="background: #15803d"></span>$100k–250k</span>
+      <span><span class="vd-swatch" style="background: #22c55e"></span>$250k–500k</span>
+      <span><span class="vd-swatch" style="background: #86efac"></span>$500k–1M</span>
+      <span><span class="vd-swatch" style="background: #d97706"></span>Over $1M</span>
+    </div>
+
+    <div class="vd-row">
+      <div class="market">Charlotte NC<br><span style="color: var(--muted); font-weight: 400; font-size: 11px;">363,731 parcels</span></div>
+      <div class="stack">
+        <div class="vd-seg t1" style="width: 0.4%"></div>
+        <div class="vd-seg t2" style="width: 13.1%">13%</div>
+        <div class="vd-seg t3" style="width: 58.3%">58%</div>
+        <div class="vd-seg t4" style="width: 21.8%">22%</div>
+        <div class="vd-seg t5" style="width: 6.4%">6%</div>
+      </div>
+    </div>
+
+    <div class="vd-row">
+      <div class="market">Raleigh NC<br><span style="color: var(--muted); font-weight: 400; font-size: 11px;">418,286 parcels</span></div>
+      <div class="stack">
+        <div class="vd-seg t1" style="width: 5.6%"></div>
+        <div class="vd-seg t2" style="width: 7.4%"></div>
+        <div class="vd-seg t3" style="width: 45.7%">46%</div>
+        <div class="vd-seg t4" style="width: 33.2%">33%</div>
+        <div class="vd-seg t5" style="width: 8.2%">8%</div>
+      </div>
+    </div>
+
+    <div class="vd-row">
+      <div class="market">Indianapolis IN<br><span style="color: var(--muted); font-weight: 400; font-size: 11px;">340,169 parcels</span></div>
+      <div class="stack">
+        <div class="vd-seg t1" style="width: 17.5%">17%</div>
+        <div class="vd-seg t2" style="width: 44.3%">44%</div>
+        <div class="vd-seg t3" style="width: 30.3%">30%</div>
+        <div class="vd-seg t4" style="width: 5.4%"></div>
+        <div class="vd-seg t5" style="width: 2.5%"></div>
+      </div>
+    </div>
+
+    <div class="vd-row">
+      <div class="market">Atlanta GA<br><span style="color: var(--muted); font-weight: 400; font-size: 11px;">156,172 parcels</span></div>
+      <div class="stack">
+        <div class="vd-seg t1" style="width: 7.6%"></div>
+        <div class="vd-seg t2" style="width: 30.1%">30%</div>
+        <div class="vd-seg t3" style="width: 31.6%">32%</div>
+        <div class="vd-seg t4" style="width: 17.6%">18%</div>
+        <div class="vd-seg t5" style="width: 13.1%">13%</div>
+      </div>
+    </div>
+
+    <div class="vd-row">
+      <div class="market">Cleveland OH<br><span style="color: var(--muted); font-weight: 400; font-size: 11px;">475,140 parcels</span></div>
+      <div class="stack">
+        <div class="vd-seg t1" style="width: 77.2%">77%</div>
+        <div class="vd-seg t2" style="width: 19.6%">20%</div>
+        <div class="vd-seg t3" style="width: 2.2%"></div>
+        <div class="vd-seg t4" style="width: 0.6%"></div>
+        <div class="vd-seg t5" style="width: 0.4%"></div>
+      </div>
+    </div>
+
+    <p class="vd-counts">Percentages within each market sum to 100%. Records with no assessed value (vacant or exempt parcels) excluded.</p>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric">
+      <div class="label">Cleveland properties under $100k</div>
+      <div class="value">366,952</div>
+      <div class="note">classic cash-buyer territory</div>
+    </div>
+    <div class="metric">
+      <div class="label">Indianapolis under $250k</div>
+      <div class="value">210,080</div>
+      <div class="note">62% of the parcel base — affordable wholesale</div>
+    </div>
+    <div class="metric">
+      <div class="label">Raleigh $500k+</div>
+      <div class="value">172,846</div>
+      <div class="note">41% of parcels — high-end concentration</div>
+    </div>
+    <div class="metric">
+      <div class="label">Atlanta over $1M</div>
+      <div class="value">20,406</div>
+      <div class="note">13% — bimodal market distribution</div>
+    </div>
+  </div>
+
+  <div class="spotlight" style="border-left-color: var(--gold); margin-top: 22px;">
+    <div class="sub" style="color: var(--gold);">What this tells a buyer</div>
+    <h3>Pick the market that matches the strategy.</h3>
+    <p style="margin-bottom: 0;">A wholesaler chasing high-volume cash-buyer flips picks <strong>Cleveland</strong> — 77% of its parcels sit under $100k, the deepest affordable-housing inventory in the audit. A buy-and-hold landlord builds in <strong>Indianapolis</strong> — 62% of parcels under $250k means rent-ratio math works at scale. A flipper targeting margin per deal picks <strong>Atlanta</strong>, where 13% of parcels are over $1M and 30% are in the affordable rehab zone. <strong>Charlotte</strong> and <strong>Raleigh</strong> are mid-market suburban — different flow, different buyer.</p>
   </div>
 </section>
 
