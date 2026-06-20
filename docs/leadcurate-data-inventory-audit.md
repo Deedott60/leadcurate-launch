@@ -1,6 +1,6 @@
 # LeadCurate · Data Inventory Audit
 
-**Version 1 · Last updated: 2026-06-19**
+**Version 2 · Last updated: 2026-06-19 (evening)**
 
 > A premium county property-data operation built for serious real estate investors. This document is the canonical inventory of LeadCurate's live data assets — markets covered, distress lanes available, seat capacity per county, freshness posture, and example products already in production.
 
@@ -8,16 +8,18 @@
 
 ## Executive summary
 
-| Metric | Value |
-|---|---|
-| US markets with live data | **20** of 24 targeted |
-| Total raw data on VPS | **~2.8 GB** |
-| CSV rows across markets | **~4 million** |
-| Binary-format records (Maricopa, Tarrant, Dallas, NYC etc.) | **~10 million** |
-| Distinct distress lanes available | **9** — tax delinquent, absentee, pre-foreclosure, foreclosure auction, vacant property, vacant land, city liens, code violations, lien-holder final orders |
-| Finished Discovery Snapshots ready to ship | **6** (Guilford NC, Louisville KY, Memphis TN, plus Charlotte NC × 3 lanes) |
-| Pull cadence | Daily (Wake NC), weekly (Tarrant TX), monthly (most ArcGIS hubs) |
-| Refresh-vs-PropStream advantage | **30–60 days fresher** on the same names |
+| Metric | Value | Change from v1 |
+|---|---|---|
+| US markets with live data | **21** of 24 targeted | +1 (Fayette KY added) |
+| Total raw data on VPS | **~4.1 GB** | +1.3 GB |
+| CSV rows across markets | **~6.5 million** | +2.5M (NYC DOB violations) |
+| Binary-format records | **~10 million** | (Tarrant, Dallas, Maricopa unchanged) |
+| Distinct distress lanes available | **10** — tax delinquent, absentee, pre-foreclosure, foreclosure auction, vacant property, vacant land, city liens, **code violations (now NYC-wide)**, lien-holder final orders, recent sales / cash buyer ID | +1 (NYC DOB code violations as standalone lane) |
+| Finished Discovery Snapshots ready to ship | **6** + **2 customer-delivery packages** | Charlotte + Louisville packages bundled |
+| Pull cadence | Daily (Wake NC, Jefferson KY foreclosures), weekly (Tarrant TX), monthly (most ArcGIS hubs) | Same |
+| Refresh-vs-PropStream advantage | **30–60 days fresher** on the same names | Same |
+| **NEW: Charlotte enriched liens** | 843 enriched · top 100 ranked · **73 out-of-state · $73.9M aggregate property value** | new this round |
+| **NEW: NYC DOB code violations** | **2,475,144 records (711 MB)** across all 5 boroughs | new this round |
 
 LeadCurate sources directly from official county portals — not licensed reseller feeds. That gives the business two structural advantages over PropStream / BatchLeads / DealMachine: (a) **freshness** — county data hits LeadCurate within hours of being published, vs. 30–90 days for the licensors; (b) **scarcity by design** — limited seats per county per lane create artificial scarcity competitors cannot offer because their business models require unlimited seats.
 
@@ -227,6 +229,7 @@ This audit file is the **source of truth** for partner conversations, internal p
 ### Update log
 
 - **2026-06-19** — v1 created. 20 markets, 6 Discovery Snapshots in production. Mecklenburg multi-lane showcase added.
+- **2026-06-19 (evening)** — **v2**. Fayette KY added (4 datasets pulled). NYC DOB Violations 2.4M records pulled (711 MB). Charlotte city liens cross-referenced with parcel-lookup to enrich with property value, year built, mailing state, absentee flag — 843 enriched, top 100 ranked, 73 out-of-state, $73.9M aggregate property value. Additional parcel datasets pulled for Guilford, Charlotte, Marion IN, Fulton GA. Total VPS grew 2.8 GB → 4.1 GB. Customer-delivery XLSX + HTML packages built for Louisville KY and Charlotte NC.
 
 ---
 
