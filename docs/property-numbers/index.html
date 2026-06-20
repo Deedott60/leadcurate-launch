@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LeadCurate · Property Numbers Audit</title>
+<meta name="description" content="LeadCurate analytical breakdown — 14.2M records across 21 markets, $215B addressable value in Charlotte residential alone, 33,013 high-value absentee owners ready to target." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1e293b;
+    --muted: #64748b;
+    --cream: #faf7f2;
+    --stone: #f5f1eb;
+    --dark: #0f172a;
+    --emerald: #15803d;
+    --emerald-2: #22c55e;
+    --emerald-soft: #dff4e8;
+    --gold: #d97706;
+    --gold-soft: #fef3c7;
+    --line: rgba(30, 41, 59, .12);
+    --radius: 24px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  .container { width: min(1080px, calc(100% - 40px)); margin: 0 auto; }
+
+  header.report-header { padding: 32px 0 24px; border-bottom: 1px solid var(--line); background: rgba(255, 255, 255, 0.5); }
+  .header-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .logo { font-family: "Playfair Display", serif; font-size: 28px; font-weight: 700; letter-spacing: -0.04em; color: var(--dark); }
+  .logo span { color: var(--emerald); }
+  .badge { display: inline-flex; align-items: center; gap: 8px; background: var(--emerald-soft); color: var(--emerald); padding: 8px 14px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; }
+  .doc-meta { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  section.cover { padding: 56px 0 40px; }
+  h1 { font-family: "Playfair Display", serif; font-size: clamp(36px, 5.5vw, 56px); line-height: 1.05; letter-spacing: -0.035em; margin: 16px 0 18px; max-width: 880px; }
+  .lead { font-size: 18px; color: #334155; max-width: 760px; line-height: 1.6; }
+  section { padding: 40px 0; border-top: 1px solid var(--line); }
+  section.no-divider { border-top: none; }
+  h2 { font-family: "Playfair Display", serif; font-size: clamp(26px, 3.2vw, 34px); line-height: 1.1; letter-spacing: -0.025em; margin: 0 0 12px; }
+  h3 { font-size: 17px; font-weight: 700; margin: 24px 0 10px; }
+  h4 { font-size: 13px; font-weight: 700; color: var(--emerald); text-transform: uppercase; letter-spacing: 0.12em; margin: 0 0 6px; }
+  p { margin: 8px 0 16px; color: #334155; }
+
+  .headline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 22px 0 8px; }
+  .headline {
+    background: var(--dark); color: white;
+    border-radius: var(--radius);
+    padding: 22px 24px;
+  }
+  .headline .label { font-size: 11px; color: var(--emerald-2); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
+  .headline .value { font-size: 32px; font-weight: 800; letter-spacing: -0.03em; margin-top: 8px; line-height: 1; font-family: "Playfair Display", serif; }
+  .headline .note { font-size: 12px; color: #94a3b8; margin-top: 6px; }
+
+  .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 16px 0; }
+  .metric { background: white; border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+  .metric .label { font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+  .metric .value { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin-top: 4px; color: var(--dark); }
+  .metric .note { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0 22px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; background: white; }
+  thead th { text-align: left; padding: 11px 14px; background: var(--stone); color: var(--ink); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--line); }
+  tbody td { padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tbody td.num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+  tbody td.rank { text-align: center; color: var(--emerald); font-weight: 800; }
+  tbody tr:hover { background: var(--stone); }
+
+  .bar-row { display: grid; grid-template-columns: 130px 1fr 90px; align-items: center; gap: 12px; padding: 8px 0; }
+  .bar-row .name { font-size: 13px; font-weight: 600; }
+  .bar-track { background: var(--stone); border-radius: 999px; height: 12px; overflow: hidden; }
+  .bar-fill { background: var(--emerald); height: 100%; border-radius: 999px; }
+  .bar-row .value { font-size: 13px; text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+
+  .insight {
+    background: var(--emerald-soft);
+    border-left: 4px solid var(--emerald);
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin: 18px 0;
+    color: #064e3b;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .insight strong { color: var(--emerald); }
+
+  footer { padding: 40px 0 60px; color: var(--muted); border-top: 1px solid var(--line); font-size: 13px; margin-top: 40px; }
+  footer .tagline { font-style: italic; color: var(--dark); font-size: 14px; margin-top: 12px; }
+
+  @media (max-width: 600px) {
+    section.cover { padding: 32px 0 24px; }
+    section { padding: 28px 0; }
+    .headline { padding: 18px 20px; }
+    .headline .value { font-size: 26px; }
+    .bar-row { grid-template-columns: 1fr; gap: 4px; }
+    .bar-row .value { text-align: left; }
+    .header-row { flex-direction: column; align-items: flex-start; }
+    header.report-header { padding: 22px 0 18px; }
+  }
+  @media print {
+    body { background: white; }
+    section { page-break-inside: avoid; }
+    .headline-grid, .metric-grid { page-break-inside: avoid; }
+    header.report-header { background: white; }
+  }
+</style>
+</head>
+<body>
+
+<header class="report-header">
+  <div class="container header-row">
+    <div>
+      <div class="logo">Lead<span>Curate</span>.</div>
+      <div class="doc-meta">Property Numbers Audit · v1 · 2026-06-19</div>
+    </div>
+    <div class="badge"><span>●</span> Analytical breakdown</div>
+  </div>
+</header>
+
+<section class="cover no-divider container">
+  <h4>The numbers</h4>
+  <h1>What's actually in the data.</h1>
+  <p class="lead">Record volumes, addressable universes, owner concentration, value distribution, and the high-priority subsets that surface at the top of a ranked batch. No pricing, no projections — just what the property records actually contain.</p>
+</section>
+
+<section class="container">
+  <h4>Headline</h4>
+  <h2>Four numbers to start.</h2>
+  <div class="headline-grid">
+    <div class="headline">
+      <div class="label">Structured records</div>
+      <div class="value">14.2M</div>
+      <div class="note">across 21 markets, 12 states</div>
+    </div>
+    <div class="headline">
+      <div class="label">Aggregate value (Mecklenburg residential)</div>
+      <div class="value">$215B</div>
+      <div class="note">one county's residential parcel base</div>
+    </div>
+    <div class="headline">
+      <div class="label">Charlotte high-value absentee owners</div>
+      <div class="value">33,013</div>
+      <div class="note">addressable today, $200k+ assessed</div>
+    </div>
+    <div class="headline">
+      <div class="label">NYC building code violations</div>
+      <div class="value">2.47M</div>
+      <div class="note">citywide, refreshing continuously</div>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Volume by market</h4>
+  <h2>Top 12 by structured record count.</h2>
+  <p>Maricopa, Tarrant, and Dallas are estimates from binary tax-roll files pending full ingestion. The rest are exact from CSV.</p>
+  <div style="margin-top: 18px;">
+    <div class="bar-row"><div class="name">Maricopa AZ</div><div class="bar-track"><div class="bar-fill" style="width: 100%"></div></div><div class="value">3,500,000</div></div>
+    <div class="bar-row"><div class="name">NYC</div><div class="bar-track"><div class="bar-fill" style="width: 78%"></div></div><div class="value">2,739,285</div></div>
+    <div class="bar-row"><div class="name">Tarrant TX</div><div class="bar-track"><div class="bar-fill" style="width: 57%"></div></div><div class="value">2,000,000</div></div>
+    <div class="bar-row"><div class="name">Dallas TX</div><div class="bar-track"><div class="bar-fill" style="width: 43%"></div></div><div class="value">1,500,000</div></div>
+    <div class="bar-row"><div class="name">Marion IN</div><div class="bar-track"><div class="bar-fill" style="width: 22%"></div></div><div class="value">755,047</div></div>
+    <div class="bar-row"><div class="name">Wake NC</div><div class="bar-track"><div class="bar-fill" style="width: 19%"></div></div><div class="value">674,028</div></div>
+    <div class="bar-row"><div class="name">Cuyahoga OH</div><div class="bar-track"><div class="bar-fill" style="width: 15%"></div></div><div class="value">527,160</div></div>
+    <div class="bar-row"><div class="name">Mecklenburg NC</div><div class="bar-track"><div class="bar-fill" style="width: 14%"></div></div><div class="value">493,832</div></div>
+    <div class="bar-row"><div class="name">Jefferson KY</div><div class="bar-track"><div class="bar-fill" style="width: 9%"></div></div><div class="value">314,407</div></div>
+    <div class="bar-row"><div class="name">Forsyth NC</div><div class="bar-track"><div class="bar-fill" style="width: 4.8%"></div></div><div class="value">167,187</div></div>
+    <div class="bar-row"><div class="name">Fayette KY</div><div class="bar-track"><div class="bar-fill" style="width: 3.4%"></div></div><div class="value">118,859</div></div>
+    <div class="bar-row"><div class="name">Guilford NC</div><div class="bar-track"><div class="bar-fill" style="width: 0.4%"></div></div><div class="value">13,498</div></div>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Mecklenburg deep-dive</h4>
+  <h2>The most-studied single county.</h2>
+
+  <div class="metric-grid">
+    <div class="metric"><div class="label">Total parcels</div><div class="value">446,213</div></div>
+    <div class="metric"><div class="label">Residential</div><div class="value">363,735</div><div class="note">single-family, townhouse, condo</div></div>
+    <div class="metric"><div class="label">Absentee residential</div><div class="value">35,494</div><div class="note">mailing address out of NC</div></div>
+    <div class="metric"><div class="label">High-value absentee ($200k+)</div><div class="value">33,013</div><div class="note">addressable target</div></div>
+  </div>
+
+  <h3>Residential value distribution</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Value tier</th><th class="num">Parcel count</th><th>Share</th></tr></thead>
+      <tbody>
+        <tr><td>Under $100k</td><td class="num">1,591</td><td>0.4%</td></tr>
+        <tr><td>$100k–250k</td><td class="num">47,645</td><td>13.1%</td></tr>
+        <tr><td><strong>$250k–500k</strong></td><td class="num">211,875</td><td><strong>58.3%</strong></td></tr>
+        <tr><td>$500k–1M</td><td class="num">79,338</td><td>21.8%</td></tr>
+        <tr><td>Over $1M</td><td class="num">23,282</td><td>6.4%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Aggregate residential assessed value across all 363,735 parcels: <strong>$215,428,789,831</strong>.</p>
+
+  <h3>Where Charlotte absentee capital comes from</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th class="rank">#</th><th>Mailing state</th><th class="num">Absentee parcels</th></tr></thead>
+      <tbody>
+        <tr><td class="rank">1</td><td><strong>Arizona</strong></td><td class="num">9,947</td></tr>
+        <tr><td class="rank">2</td><td>California</td><td class="num">5,769</td></tr>
+        <tr><td class="rank">3</td><td>Texas</td><td class="num">3,221</td></tr>
+        <tr><td class="rank">4</td><td>Georgia</td><td class="num">3,094</td></tr>
+        <tr><td class="rank">5</td><td>South Carolina</td><td class="num">2,842</td></tr>
+        <tr><td class="rank">6</td><td>New York</td><td class="num">2,380</td></tr>
+        <tr><td class="rank">7</td><td>Florida</td><td class="num">1,828</td></tr>
+        <tr><td class="rank">8</td><td>Virginia</td><td class="num">930</td></tr>
+        <tr><td class="rank">9</td><td>New Jersey</td><td class="num">880</td></tr>
+        <tr><td class="rank">10</td><td>Maryland</td><td class="num">430</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="insight">
+    <strong>Insight:</strong> Arizona dominates Charlotte absentee ownership. That signal aligns with the institutional Single-Family Rental funds (HPA BORROWER, SFR JV-1, BAF ASSETS, RM1 SFR PROPCO) headquartered in Phoenix and Scottsdale concentrating Charlotte exposure heavily.
+  </div>
+</section>
+
+<section class="container">
+  <h4>Marion County, IN counterpoint</h4>
+  <h2>Different absentee flow into Indianapolis.</h2>
+  <div class="metric-grid">
+    <div class="metric"><div class="label">Parcels</div><div class="value">347,143</div></div>
+    <div class="metric"><div class="label">Absentee residential</div><div class="value">29,490</div></div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th class="rank">#</th><th>Mailing state</th><th class="num">Absentee parcels</th></tr></thead>
+      <tbody>
+        <tr><td class="rank">1</td><td><strong>California</strong></td><td class="num">5,683</td></tr>
+        <tr><td class="rank">2</td><td>Georgia</td><td class="num">2,785</td></tr>
+        <tr><td class="rank">3</td><td>Arizona</td><td class="num">2,543</td></tr>
+        <tr><td class="rank">4</td><td>Texas</td><td class="num">2,174</td></tr>
+        <tr><td class="rank">5</td><td>Ohio</td><td class="num">2,128</td></tr>
+        <tr><td class="rank">6</td><td>Florida</td><td class="num">1,864</td></tr>
+        <tr><td class="rank">7</td><td>Illinois</td><td class="num">1,835</td></tr>
+        <tr><td class="rank">8</td><td>New York</td><td class="num">1,819</td></tr>
+        <tr><td class="rank">9</td><td>Nevada</td><td class="num">1,020</td></tr>
+        <tr><td class="rank">10</td><td>Colorado</td><td class="num">568</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="insight">
+    California sends nearly <strong>twice as much</strong> absentee ownership to Indianapolis as Arizona does — different institutional flows than Charlotte sees. Useful for targeting outreach to the right out-of-state institutional sellers per metro.
+  </div>
+</section>
+
+<section class="container">
+  <h4>Guilford County, NC — chronic delinquency</h4>
+  <h2>Tax-year distribution shows multi-year distress.</h2>
+  <div class="metric-grid">
+    <div class="metric"><div class="label">Tax delinquent records</div><div class="value">10,531</div></div>
+    <div class="metric"><div class="label">Aggregate owed</div><div class="value">$10.2M</div><div class="note">unpaid tax debt, one county</div></div>
+    <div class="metric"><div class="label">Out-of-state owners</div><div class="value">1,043</div></div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Tax year</th><th class="num">Records still delinquent</th></tr></thead>
+      <tbody>
+        <tr><td>2025</td><td class="num">4,062</td></tr>
+        <tr><td>2024</td><td class="num">1,677</td></tr>
+        <tr><td>2023</td><td class="num">1,024</td></tr>
+        <tr><td>2022</td><td class="num">789</td></tr>
+        <tr><td>2021</td><td class="num">648</td></tr>
+        <tr><td>2020</td><td class="num">531</td></tr>
+        <tr><td>2019</td><td class="num">509</td></tr>
+        <tr><td>2018</td><td class="num">472</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="insight">
+    Records carrying delinquency from 2018–2022 (2,949 records) represent <strong>chronic distress</strong> — multi-year inability to clear the bill. These are the highest-priority records in the ranked output. Single-year delinquencies often resolve naturally; eight-year delinquencies almost never do.
+  </div>
+</section>
+
+<section class="container">
+  <h4>NYC scale</h4>
+  <h2>The largest single-metro distress dataset.</h2>
+  <div class="metric-grid">
+    <div class="metric"><div class="label">Tax lien notices (all 5 boroughs)</div><div class="value">264,142</div></div>
+    <div class="metric"><div class="label">DOB building code violations</div><div class="value">2,475,143</div><div class="note">citywide, continuously refreshing</div></div>
+  </div>
+  <h3>Tax lien notices by borough</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Borough</th><th class="num">Lien notices</th><th>Share</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Queens</strong></td><td class="num">108,013</td><td>40.9%</td></tr>
+        <tr><td>Brooklyn</td><td class="num">71,674</td><td>27.1%</td></tr>
+        <tr><td>Manhattan</td><td class="num">39,488</td><td>15.0%</td></tr>
+        <tr><td>Bronx</td><td class="num">24,219</td><td>9.2%</td></tr>
+        <tr><td>Staten Island</td><td class="num">20,748</td><td>7.9%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Queens carries the highest tax-lien notice volume of any borough — useful targeting intel for wholesalers segmenting NYC sub-markets.</p>
+</section>
+
+<section class="container">
+  <h4>Top-priority delivered subsets</h4>
+  <h2>What surfaces at the top when records are ranked.</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Market</th><th>Lane</th><th class="num">Universe</th><th class="num">Top N</th><th>Top-N signal</th></tr></thead>
+      <tbody>
+        <tr><td>Guilford NC</td><td>Tax-delinquent absentee</td><td class="num">1,043</td><td class="num">100</td><td>$700,860 total due · 21 states represented</td></tr>
+        <tr><td>Louisville KY</td><td>Pre-foreclosure</td><td class="num">259</td><td class="num">100</td><td>6 sales upcoming · 50 recent past · top neighborhood Parkland (20)</td></tr>
+        <tr><td>Memphis TN</td><td>Tax sale current cycle</td><td class="num">2,186</td><td class="num">200</td><td>1,522 in current TS2302 cycle</td></tr>
+        <tr><td>Charlotte NC</td><td>Enriched city liens</td><td class="num">843</td><td class="num">100</td><td><strong>73 of 100 out-of-state · $73.9M aggregate property value</strong></td></tr>
+        <tr><td>Charlotte NC</td><td>Vacant land specialty</td><td class="num">15,273</td><td class="num">100</td><td>All 100 out-of-state · institutional LLCs at the top</td></tr>
+        <tr><td>Charlotte NC</td><td>High-value absentee SF</td><td class="num">47,151</td><td class="num">100</td><td>All 100 out-of-state · institutional SFR funds at the top</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Method</h4>
+  <h2>How these numbers were derived.</h2>
+  <ul style="font-size: 14px; line-height: 1.8;">
+    <li><strong>Residential</strong> = parcel records where Property_Use contains "single-family," "townhouse," or "condo."</li>
+    <li><strong>Absentee</strong> = owner mailing-address state ≠ property state.</li>
+    <li><strong>High-value</strong> = $200,000+ total assessed value. County-published assessed values typically run 10–30% below market.</li>
+    <li>NYC, Marion, Mecklenburg, Wake, Cuyahoga, Jefferson KY, Forsyth, Fulton, DeKalb, Guilford, Fayette, and Shelby counts are exact from CSV files.</li>
+    <li>Maricopa, Tarrant, and Dallas counts are estimated from binary tax-roll files pending full ingestion — actuals likely to revise upward.</li>
+  </ul>
+</section>
+
+<footer>
+  <div class="container">
+    <p><strong>LeadCurate</strong> · Property Numbers Audit · v1 · 2026-06-19</p>
+    <p>This is one of two living audits. The Data Inventory document covers markets and lanes qualitatively; this document covers volume and value quantitatively.</p>
+    <p class="tagline">The data is the data.</p>
+  </div>
+</footer>
+
+</body>
+</html>
