@@ -287,6 +287,23 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
     </div>
     <div class="nav-divider"></div>
+    <div class="nav-label">Growth</div>
+    <div class="nav-section">
+      <div class="nav-item" data-page="marketing">
+        <span class="icon">📣</span> Marketing
+      </div>
+      <div class="nav-item" data-page="seo">
+        <span class="icon">🔎</span> SEO / GEO
+      </div>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-label">Help</div>
+    <div class="nav-section">
+      <div class="nav-item" data-page="help">
+        <span class="icon">❓</span> How it works
+      </div>
+    </div>
+    <div class="nav-divider"></div>
 
     <div class="agent-strip">
       <div class="nav-label" style="margin-top:0;">Agents</div>
@@ -542,6 +559,133 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div id="templates-list"></div>
     </div>
 
+    <!-- ── MARKETING (placeholder for Phase 2) ─────────── -->
+    <div id="page-marketing" class="page">
+      <div class="page-header">
+        <div class="page-title">Marketing & Growth</div>
+        <div class="page-sub">Campaign tracking, email blasts, ad performance, social outreach metrics.</div>
+      </div>
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">Phase 2 — coming online when you turn it on</span></div>
+        <p style="color:var(--sl);font-size:14px;line-height:1.6;">This panel will host campaign metrics + automation slots. Each card below is a placeholder for an integration you can flip on when revenue justifies it.</p>
+      </div>
+      <div class="agent-grid">
+        <div class="agent-card"><div class="a-dot off"></div><div><div class="a-name">Email campaigns</div><div class="a-desc">Resend or Mailchimp for broadcast emails to your prospect + customer list. Templated, tracked open/click.</div></div></div>
+        <div class="agent-card"><div class="a-dot off"></div><div><div class="a-name">Mass SMS</div><div class="a-desc">Twilio for bulk SMS to opted-in contacts. Per-message cost (~$0.0075). Requires opt-in tracking.</div></div></div>
+        <div class="agent-card"><div class="a-dot off"></div><div><div class="a-name">Meta Ads</div><div class="a-desc">Facebook + Instagram ad performance, ROAS, audience overlap. Plug in Meta Business API.</div></div></div>
+        <div class="agent-card"><div class="a-dot off"></div><div><div class="a-name">Google Ads</div><div class="a-desc">Search + Display ad spend, CPC, conversion tracking via Google Ads API.</div></div></div>
+        <div class="agent-card"><div class="a-dot off"></div><div><div class="a-name">Social outreach log</div><div class="a-desc">Manually log FB groups joined, IG DMs sent, Reddit threads engaged. Track which channel converts.</div></div></div>
+        <div class="agent-card"><div class="a-dot off"></div><div><div class="a-name">Affiliate / referral</div><div class="a-desc">Track who referred which paying customer + credit them. Custom referral codes via Stripe metadata.</div></div></div>
+      </div>
+    </div>
+
+    <!-- ── SEO / GEO ───────────────────────── -->
+    <div id="page-seo" class="page">
+      <div class="page-header">
+        <div class="page-title">SEO / GEO</div>
+        <div class="page-sub">Search engine + Generative Engine Optimization. How you show up in Google AND in ChatGPT, Claude, Perplexity.</div>
+      </div>
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">Phase 2 — track when traffic justifies it</span></div>
+        <p style="color:var(--sl);font-size:14px;line-height:1.6;">SEO targets traditional search (Google, Bing). GEO targets AI search (ChatGPT browse, Claude search, Perplexity, Google AI Overview). Both matter as buyers increasingly start their research with AI.</p>
+      </div>
+      <div class="agent-grid">
+        <div class="agent-card"><div class="a-dot off"></div><div><div class="a-name">Keyword tracking</div><div class="a-desc">Rank tracking for "real estate lead lists", "tax delinquent records [city]", etc. Tools: Ahrefs, SEMrush, free Search Console.</div></div></div>
+        <div class="agent-card"><div class="a-dot off"></div><div><div class="a-name">GEO visibility</div><div class="a-desc">Track when ChatGPT/Claude/Perplexity recommend LeadCurate in answers. Manual checks weekly + tools like Profound or SE Ranking AI.</div></div></div>
+        <div class="agent-card"><div class="a-dot off"></div><div><div class="a-name">Schema.org markup</div><div class="a-desc">Landing page already has ProfessionalService JSON-LD. Add Review, FAQ, Offer schemas as you add testimonials + pricing pages.</div></div></div>
+        <div class="agent-card"><div class="a-dot off"></div><div><div class="a-name">Content / blog</div><div class="a-desc">"How to find tax delinquent properties in [city]" type posts. Long-tail SEO + AI training data feed. Codex can scaffold.</div></div></div>
+        <div class="agent-card"><div class="a-dot off"></div><div><div class="a-name">Backlinks</div><div class="a-desc">Guest posts on REI blogs, BiggerPockets, REIA newsletters. Track via Ahrefs free or LinkChecker.</div></div></div>
+        <div class="agent-card"><div class="a-dot off"></div><div><div class="a-name">Google Business</div><div class="a-desc">Free GBP listing → local 3-pack. Reviews, hours, service area. Worth doing even before paid SEO.</div></div></div>
+      </div>
+    </div>
+
+    <!-- ── HELP / HOW IT WORKS ────────────────── -->
+    <div id="page-help" class="page">
+      <div class="page-header">
+        <div class="page-title">How LeadCurate OS works</div>
+        <div class="page-sub">Your operator manual. Bookmark this page or hit ⌘K → "Help" anytime.</div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">The big picture</span></div>
+        <p style="font-size:14px;line-height:1.7;color:var(--dark);">This is your business OS — think Salesforce, but built for you, free, and designed to expand as you add automations. Three things happen in here:</p>
+        <ol style="padding-left:24px;font-size:14px;line-height:1.8;color:var(--dark);">
+          <li><strong>Find prospects</strong> → add them manually to the Pipeline, OR send them the intake link and let them fill the form (lands in Inbox)</li>
+          <li><strong>Work them through the pipeline</strong> → use templates to reach out, send previews, quotes, payment instructions, delivery emails</li>
+          <li><strong>Watch the system run</strong> → as you wire up Codex, Hermes, Twilio, Stripe, they each push events here so you can monitor without micromanaging</li>
+        </ol>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">Each page, what it's for</span></div>
+        <div style="font-size:14px;line-height:1.7;color:var(--dark);">
+          <p><strong>⚡ HQ</strong> — your morning glance. Stats up top, recent inbound, activity feed. If you only open one page, open this.</p>
+          <p style="margin-top:14px;"><strong>📥 Inbox</strong> — every intake form submission lands here in real time. Click "→ Pipeline" on any row to push them into outreach.</p>
+          <p style="margin-top:14px;"><strong>📊 Pipeline</strong> — your kanban board. Two ways prospects get here:
+            <br>&nbsp;&nbsp;• <em>Manually:</em> use the "Add prospect" form at the top (people YOU found on FB, IG, etc.)
+            <br>&nbsp;&nbsp;• <em>From Inbox:</em> click "→ Pipeline" on an intake submission
+            <br>Move them through 7 stages: Queued → Reached out → Replied → Preview sent → Quote out → Paid → Delivered.</p>
+          <p style="margin-top:14px;"><strong>💬 Messages</strong> — manually log every SMS / DM / email you send or receive. In Phase 2 this fills automatically via Twilio webhooks.</p>
+          <p style="margin-top:14px;"><strong>🔁 Workflow</strong> — agent + integration status. Green dot = connected, grey = waiting. This is where Codex, Hermes, Twilio, n8n, Stripe will plug in.</p>
+          <p style="margin-top:14px;"><strong>📋 Templates</strong> — 15+ copy-paste messages organized by symbol: <strong>★ pipeline</strong> (preview, payment received, delivery), <strong>☞ replies</strong> (how much, sample only, DNC question), <strong>$ payment</strong> (Cash App, Zelle, Stripe), <strong>⤴ post-delivery</strong> (check-in, recurring upsell, referral ask). Tap to copy.</p>
+          <p style="margin-top:14px;"><strong>📣 Marketing</strong> — Phase 2 placeholders for email campaigns, mass SMS, Meta + Google Ads, social outreach log, affiliate tracking.</p>
+          <p style="margin-top:14px;"><strong>🔎 SEO / GEO</strong> — Phase 2 placeholders for traditional search rank tracking + GEO (how often ChatGPT/Claude/Perplexity recommend you).</p>
+        </div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">The status dot in the top bar</span></div>
+        <p style="font-size:14px;line-height:1.7;color:var(--dark);">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;margin-right:6px;"></span>
+          <strong>● synced</strong> = Supabase database is connected and live. Your data is syncing across devices.<br><br>
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#fca5a5;margin-right:6px;"></span>
+          <strong>○ offline</strong> = Supabase unreachable. Dashboard still works locally via your browser storage; data will sync when connection returns.
+        </p>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">Pipeline stages explained</span></div>
+        <div style="font-size:13px;line-height:1.7;color:var(--dark);">
+          <p><span class="badge b-queued">Queued</span> — you added them, haven't reached out yet</p>
+          <p><span class="badge b-sent">Reached out</span> — you sent them the intake link or initial message</p>
+          <p><span class="badge b-replied">Replied</span> — they responded (filled intake OR replied to message)</p>
+          <p><span class="badge b-preview">Preview sent</span> — you sent them a redacted sample of their requested list</p>
+          <p><span class="badge b-quoted">Quote out</span> — you gave them a price + payment instructions</p>
+          <p><span class="badge b-paying">Paid</span> — money received</p>
+          <p><span class="badge b-delivered">Delivered</span> — full file shipped to them</p>
+          <p><span class="badge b-dead">Dead</span> — went cold, mark and move on (can revive later)</p>
+        </div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">Keyboard shortcuts + tips</span></div>
+        <div style="font-size:14px;line-height:1.7;color:var(--dark);">
+          <p><kbd style="background:var(--cream-2);padding:2px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:12px;">⌘K</kbd> or <kbd style="background:var(--cream-2);padding:2px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:12px;">Ctrl+K</kbd> — open command palette (go to any page, log an event, add prospect, export)</p>
+          <p><strong>🔗 Copy intake link</strong> button in top bar — grab the URL to paste in any DM/SMS/email instantly</p>
+          <p><strong>Click any prospect card</strong> → opens detail drawer with stage selector + delete + copy-message button</p>
+          <p><strong>Tap any template</strong> in Templates → auto-copies to clipboard</p>
+          <p><strong>Activity feed entries</strong> are searchable — add events from the HQ or Workflow pages so the timeline reflects what you've been doing</p>
+        </div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">When something new gets added</span></div>
+        <p style="font-size:14px;line-height:1.7;color:var(--dark);">All of this is editable. New markets, new list types, new templates, new pipeline stages — they live in the HTML and can be updated any time. As you learn what real customers actually ask for, the OS tightens around that.</p>
+        <p style="font-size:14px;line-height:1.7;color:var(--dark);margin-top:10px;">If you want a new page, new automation, new integration — just say what it should do. The pattern is established now; adding to it is fast.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-h"><span class="card-title">Reference docs in the repo</span></div>
+        <div style="font-size:14px;line-height:1.7;color:var(--dark);">
+          <p><a href="https://github.com/Deedott60/leadcurate-launch/blob/main/docs/THE-PLAN.md" target="_blank" style="color:var(--em);font-weight:600;">THE-PLAN.md</a> — the locked 3-phase sequence</p>
+          <p><a href="https://github.com/Deedott60/leadcurate-launch/blob/main/docs/OUTREACH-PLAYBOOK.md" target="_blank" style="color:var(--em);font-weight:600;">OUTREACH-PLAYBOOK.md</a> — where to find prospects, message ladder, decisions to lock</p>
+          <p><a href="https://github.com/Deedott60/leadcurate-launch/blob/main/docs/PLUMBING-CHECK.md" target="_blank" style="color:var(--em);font-weight:600;">PLUMBING-CHECK.md</a> — what's wired, what's manual, what's deferred</p>
+          <p><a href="https://github.com/Deedott60/leadcurate-launch/blob/main/docs/leadcurate-agent-handoff/11-codex-role-and-current-state.md" target="_blank" style="color:var(--em);font-weight:600;">11-codex-role-and-current-state.md</a> — for when Codex comes back online</p>
+        </div>
+      </div>
+
+    </div>
+
   </main>
 </div>
 
@@ -612,7 +756,7 @@ function lsLoad(){
 function lsSave(){ localStorage.setItem(LS_KEY, JSON.stringify(PROSPECTS)); }
 
 // ─── NAV ──────────────────────────────────────────────────────
-const pages = ['hq','inbox','pipeline','messages','workflow','templates'];
+const pages = ['hq','inbox','pipeline','messages','workflow','templates','marketing','seo','help'];
 window.nav = function(id){
   pages.forEach(p=>{
     document.getElementById('page-'+p).classList.toggle('active',p===id);
@@ -1081,6 +1225,10 @@ const CMD_ITEMS = [
   {icon:'💬',label:'Go to Messages',      action:()=>nav('messages')},
   {icon:'🔁',label:'Go to Workflow',      action:()=>nav('workflow')},
   {icon:'📋',label:'Go to Templates',     action:()=>nav('templates')},
+  {icon:'📣',label:'Go to Marketing',     action:()=>nav('marketing')},
+  {icon:'🔎',label:'Go to SEO / GEO',     action:()=>nav('seo')},
+  {icon:'❓',label:'Help / How it works', action:()=>nav('help')},
+  {icon:'🔗',label:'Copy intake link',    action:()=>window.copyIntakeLink()},
   {icon:'➕',label:'Add prospect',         action:()=>{nav('pipeline');document.getElementById('p-name').focus();}},
   {icon:'📝',label:'Log event',           action:()=>{nav('hq');document.getElementById('hq-log-form').style.display='block';document.getElementById('ev-title').focus();}},
   {icon:'💬',label:'Log message',         action:()=>{nav('messages');document.getElementById('msg-body').focus();}},
