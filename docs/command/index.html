@@ -12,24 +12,25 @@
   --emerald:#15803d;--emerald-dark:#14532d;--emerald-light:#22c55e;
   --cream:#faf7f2;--cream-2:#f3eddf;--dark:#0f172a;
   --slate:#475569;--slate-light:#94a3b8;--line:#e2dccf;--white:#fff;
-  --gold:#b45309;--crimson:#991b1b;--blue:#1e40af;
+  --gold:#b45309;--crimson:#991b1b;--blue:#1e40af;--purple:#6d28d9;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(--dark);-webkit-font-smoothing:antialiased;line-height:1.5;}
 
-.app{max-width:1100px;margin:0 auto;padding:20px 16px 80px;}
+.app{max-width:1140px;margin:0 auto;padding:20px 16px 80px;}
 .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px;flex-wrap:wrap;}
 .brand{display:flex;align-items:center;gap:10px;}
 .brand-mark{width:36px;height:36px;border-radius:8px;background:var(--emerald);color:var(--cream);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:20px;}
 .brand-name{font-family:'Playfair Display',serif;font-weight:700;font-size:18px;}
 .brand-name small{font-family:'JetBrains Mono',monospace;color:var(--slate-light);font-weight:500;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;margin-left:6px;}
-.url-note{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--slate-light);}
+.sync-pill{font-family:'JetBrains Mono',monospace;font-size:11px;padding:4px 12px;border-radius:999px;background:var(--cream-2);color:var(--slate);}
 
-.tabs{display:flex;gap:4px;background:var(--white);border:1px solid var(--line);border-radius:999px;padding:4px;margin-bottom:16px;width:fit-content;}
-.tab-btn{background:transparent;border:none;padding:8px 18px;font-family:inherit;font-size:14px;font-weight:600;color:var(--slate);border-radius:999px;cursor:pointer;transition:all 0.15s;}
+.tabs{display:flex;gap:3px;background:var(--white);border:1px solid var(--line);border-radius:999px;padding:4px;margin-bottom:16px;width:fit-content;flex-wrap:wrap;}
+.tab-btn{background:transparent;border:none;padding:8px 16px;font-family:inherit;font-size:13px;font-weight:600;color:var(--slate);border-radius:999px;cursor:pointer;transition:all 0.15s;white-space:nowrap;}
 .tab-btn.active{background:var(--emerald);color:var(--cream);}
-.tab-btn .count{display:inline-block;margin-left:6px;background:rgba(255,255,255,0.25);padding:1px 8px;border-radius:999px;font-size:11px;}
+.tab-btn .count{display:inline-block;margin-left:5px;background:rgba(255,255,255,0.25);padding:1px 7px;border-radius:999px;font-size:10px;}
 .tab-btn:not(.active) .count{background:var(--cream-2);color:var(--slate);}
+.tab-btn .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#ef4444;margin-left:5px;vertical-align:middle;}
 
 .panel{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:16px;}
 .panel-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:8px;flex-wrap:wrap;}
@@ -40,8 +41,10 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 .input:focus,.select:focus,.textarea:focus{outline:none;border-color:var(--emerald);box-shadow:0 0 0 3px rgba(21,128,61,0.12);}
 .textarea{min-height:60px;resize:vertical;}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
-@media (max-width:560px){.field-row{grid-template-columns:1fr;}}
+.field-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px;}
+@media (max-width:620px){.field-row,.field-row-3{grid-template-columns:1fr;}}
 label{display:block;font-size:11px;font-weight:600;color:var(--slate);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em;}
+
 .btn{display:inline-flex;align-items:center;gap:6px;background:var(--emerald);color:var(--cream);border:none;padding:10px 18px;border-radius:999px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:background 0.15s;}
 .btn:hover{background:var(--emerald-dark);}
 .btn:disabled{opacity:0.5;cursor:not-allowed;}
@@ -56,47 +59,73 @@ label{display:block;font-size:11px;font-weight:600;color:var(--slate);margin-bot
 .row-main{min-width:0;}
 .row-name{font-weight:600;font-size:15px;color:var(--dark);margin-bottom:2px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .row-sub{font-size:13px;color:var(--slate);font-family:'JetBrains Mono',monospace;}
-.row-notes{font-size:13px;color:var(--slate);margin-top:6px;line-height:1.4;}
+.row-notes{font-size:13px;color:var(--slate);margin-top:5px;line-height:1.4;}
 .row-meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--slate-light);margin-top:4px;}
-.row-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
+.row-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;align-items:center;}
 
 .badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;}
-.b-queued{background:#eff6ff;color:var(--blue);}
-.b-sent{background:#fef3c7;color:var(--gold);}
-.b-replied{background:#dcfce7;color:var(--emerald-dark);}
-.b-quoted{background:#e0e7ff;color:#3730a3;}
+.b-new,.b-queued{background:#eff6ff;color:var(--blue);}
+.b-sent,.b-contacted{background:#fef3c7;color:var(--gold);}
+.b-replied,.b-quoted{background:#e0e7ff;color:#3730a3;}
 .b-paying{background:var(--emerald);color:var(--cream);}
 .b-dead{background:#f3f4f6;color:var(--slate-light);}
+.b-inbound{background:#fce7f3;color:#9d174d;}
+.b-outbound{background:#ecfdf5;color:var(--emerald-dark);}
 
 .empty{text-align:center;padding:32px 16px;color:var(--slate-light);font-size:14px;}
 
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--dark);color:var(--cream);padding:12px 20px;border-radius:999px;font-size:13px;font-weight:500;box-shadow:0 10px 30px rgba(0,0,0,0.25);opacity:0;transition:opacity 0.2s;z-index:100;pointer-events:none;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--dark);color:var(--cream);padding:12px 20px;border-radius:999px;font-size:13px;font-weight:500;box-shadow:0 10px 30px rgba(0,0,0,0.25);opacity:0;transition:opacity 0.2s;z-index:9999;pointer-events:none;}
 .toast.show{opacity:1;}
 
-.stat-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px;}
+.stat-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px;}
 .stat-pill{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:14px;}
-.stat-pill .v{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--dark);line-height:1;}
+.stat-pill .v{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--dark);line-height:1;}
 .stat-pill .l{font-size:11px;color:var(--slate-light);text-transform:uppercase;letter-spacing:0.08em;font-weight:600;margin-top:4px;}
+.stat-pill.highlight{border-color:var(--emerald);background:#f0fdf4;}
+.stat-pill.highlight .v{color:var(--emerald);}
 
-.status-select{padding:4px 8px;border:1px solid var(--line);border-radius:6px;font-family:inherit;font-size:12px;background:var(--white);color:var(--dark);}
-
-.helper-card{background:linear-gradient(135deg,var(--emerald) 0%,var(--emerald-dark) 100%);color:var(--cream);border-radius:12px;padding:16px;font-size:13px;line-height:1.5;}
-.helper-card a{color:var(--cream);font-weight:600;text-decoration:underline;}
-.helper-card strong{color:var(--cream);}
+.status-select{padding:5px 8px;border:1px solid var(--line);border-radius:6px;font-family:inherit;font-size:12px;background:var(--white);color:var(--dark);}
 
 .tpl-card{border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px;cursor:pointer;background:var(--cream);transition:border-color 0.15s,transform 0.05s;}
 .tpl-card:hover{border-color:var(--emerald);}
 .tpl-card:active{transform:scale(0.998);}
 .tpl-label{font-size:11px;font-weight:600;color:var(--emerald);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
-.tpl-body{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--dark);white-space:pre-wrap;}
+.tpl-body{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--dark);white-space:pre-wrap;line-height:1.5;}
 
-.hide{display:none !important;}
+.msg-bubble{padding:12px 16px;border-radius:12px;max-width:80%;font-size:14px;line-height:1.5;margin-bottom:8px;}
+.msg-out{background:var(--emerald);color:var(--cream);margin-left:auto;border-bottom-right-radius:4px;}
+.msg-in{background:var(--cream-2);color:var(--dark);border-bottom-left-radius:4px;}
+.msg-meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--slate-light);margin-top:2px;}
+.msg-row{display:flex;flex-direction:column;margin-bottom:4px;}
+.msg-row.out{align-items:flex-end;}
+.msg-row.in{align-items:flex-start;}
+
+.agent-card{border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;align-items:center;gap:14px;}
+.agent-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.agent-dot.online{background:#22c55e;}
+.agent-dot.offline{background:#94a3b8;}
+.agent-dot.warning{background:#f59e0b;}
+.agent-info .name{font-weight:600;font-size:14px;color:var(--dark);}
+.agent-info .desc{font-size:12px;color:var(--slate);font-family:'JetBrains Mono',monospace;}
+.agent-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin-bottom:16px;}
+
+.feed-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);}
+.feed-item:last-child{border-bottom:none;}
+.feed-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;margin-top:2px;}
+.feed-icon.intake{background:#eff6ff;}
+.feed-icon.prospect{background:#ecfdf5;}
+.feed-icon.message{background:#fef3c7;}
+.feed-icon.system{background:#f3f4f6;}
+.feed-icon.agent{background:#f5f3ff;}
+.feed-body .title{font-weight:600;font-size:14px;color:var(--dark);}
+.feed-body .detail{font-size:13px;color:var(--slate);margin-top:2px;}
+.feed-body .when{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--slate-light);margin-top:4px;}
 
 .export-row{display:flex;gap:8px;justify-content:flex-end;margin-top:8px;}
+.hide{display:none !important;}
 </style>
 </head>
 <body>
-
 <div class="app">
 
   <div class="topbar">
@@ -104,24 +133,51 @@ label{display:block;font-size:11px;font-weight:600;color:var(--slate);margin-bot
       <div class="brand-mark">L</div>
       <div class="brand-name">LeadCurate <small>command</small></div>
     </div>
-    <span class="url-note" id="sync-status">syncing…</span>
+    <span class="sync-pill" id="sync-status">connecting…</span>
   </div>
 
+  <!-- STATS -->
   <div class="stat-strip">
-    <div class="stat-pill"><div class="v" id="stat-queued">0</div><div class="l">In queue</div></div>
+    <div class="stat-pill highlight"><div class="v" id="stat-inbound">0</div><div class="l">New inbound</div></div>
+    <div class="stat-pill"><div class="v" id="stat-queued">0</div><div class="l">Outreach queue</div></div>
     <div class="stat-pill"><div class="v" id="stat-sent">0</div><div class="l">Sent — awaiting</div></div>
     <div class="stat-pill"><div class="v" id="stat-replied">0</div><div class="l">In play</div></div>
     <div class="stat-pill"><div class="v" id="stat-paying">0</div><div class="l">Paying</div></div>
+    <div class="stat-pill"><div class="v" id="stat-messages">0</div><div class="l">Messages today</div></div>
   </div>
 
+  <!-- TABS -->
   <div class="tabs">
-    <button class="tab-btn active" data-tab="outreach">Outreach <span class="count" id="tab-count-outreach">0</span></button>
+    <button class="tab-btn active" data-tab="inbound">Inbound <span class="count" id="tab-count-inbound">0</span></button>
+    <button class="tab-btn" data-tab="outreach">Outreach <span class="count" id="tab-count-outreach">0</span></button>
+    <button class="tab-btn" data-tab="messages">Messages <span class="count" id="tab-count-messages">0</span></button>
+    <button class="tab-btn" data-tab="workflow">Workflow</button>
     <button class="tab-btn" data-tab="templates">Templates</button>
-    <button class="tab-btn" data-tab="inbound">Inbound</button>
+  </div>
+
+  <!-- ===== INBOUND ===== -->
+  <div id="tab-inbound" class="tab-content">
+    <div class="panel">
+      <div class="panel-h">
+        <h2>Inbound requests</h2>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <select class="status-select" id="inbound-filter">
+            <option value="">All</option>
+            <option value="new">New</option>
+            <option value="contacted">Contacted</option>
+            <option value="quoted">Quoted</option>
+            <option value="paying">Paying</option>
+            <option value="dead">Dead</option>
+          </select>
+          <span class="meta" id="inbound-meta">loading…</span>
+        </div>
+      </div>
+      <div id="inbound-list"><div class="empty">Loading…</div></div>
+    </div>
   </div>
 
   <!-- ===== OUTREACH ===== -->
-  <div id="tab-outreach" class="tab-content">
+  <div id="tab-outreach" class="tab-content hide">
 
     <div class="panel">
       <div class="panel-h">
@@ -178,8 +234,152 @@ label{display:block;font-size:11px;font-weight:600;color:var(--slate);margin-bot
       <div class="export-row">
         <button class="btn btn-sm btn-ghost" id="export-btn">Export CSV</button>
         <button class="btn btn-sm btn-ghost" id="import-btn">Import backup</button>
-        <input type="file" id="import-file" accept=".json,.csv" style="display:none" />
+        <input type="file" id="import-file" accept=".json" style="display:none" />
       </div>
+    </div>
+
+  </div>
+
+  <!-- ===== MESSAGES ===== -->
+  <div id="tab-messages" class="tab-content hide">
+
+    <div class="panel">
+      <div class="panel-h">
+        <h2>Log a message</h2>
+        <span class="meta">SMS · DM · email · call</span>
+      </div>
+      <div class="field-row-3">
+        <div>
+          <label>Direction</label>
+          <select class="select" id="msg-direction">
+            <option value="outbound">Outbound (you sent)</option>
+            <option value="inbound">Inbound (they replied)</option>
+          </select>
+        </div>
+        <div>
+          <label>Channel</label>
+          <select class="select" id="msg-channel">
+            <option value="sms">SMS</option>
+            <option value="dm">DM</option>
+            <option value="email">Email</option>
+            <option value="call">Call</option>
+          </select>
+        </div>
+        <div>
+          <label>From / To address</label>
+          <input class="input" id="msg-address" placeholder="704-555-0123 or @handle" />
+        </div>
+      </div>
+      <div style="margin-bottom:10px;">
+        <label>Message body</label>
+        <textarea class="textarea" id="msg-body" placeholder="Paste or type the message…"></textarea>
+      </div>
+      <button class="btn" id="log-msg-btn">Log message</button>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h">
+        <h2>Message log</h2>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <select class="status-select" id="msg-filter">
+            <option value="">All</option>
+            <option value="inbound">Inbound only</option>
+            <option value="outbound">Outbound only</option>
+          </select>
+          <span class="meta" id="messages-meta"></span>
+        </div>
+      </div>
+      <div id="messages-list"><div class="empty">No messages logged yet.</div></div>
+    </div>
+
+  </div>
+
+  <!-- ===== WORKFLOW ===== -->
+  <div id="tab-workflow" class="tab-content hide">
+
+    <div class="panel">
+      <div class="panel-h"><h2>Agent connections</h2><span class="meta" id="agent-meta">live status</span></div>
+      <div class="agent-grid">
+        <div class="agent-card">
+          <div class="agent-dot offline" id="dot-supabase"></div>
+          <div class="agent-info">
+            <div class="name">Supabase</div>
+            <div class="desc" id="desc-supabase">connecting…</div>
+          </div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-dot offline" id="dot-codex"></div>
+          <div class="agent-info">
+            <div class="name">Codex</div>
+            <div class="desc">Not connected · webhook ready</div>
+          </div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-dot offline" id="dot-hermes"></div>
+          <div class="agent-info">
+            <div class="name">Hermes</div>
+            <div class="desc">Not connected · webhook ready</div>
+          </div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-dot offline" id="dot-twilio"></div>
+          <div class="agent-info">
+            <div class="name">Twilio / SMS</div>
+            <div class="desc">Not connected · configure webhook</div>
+          </div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-dot offline" id="dot-n8n"></div>
+          <div class="agent-info">
+            <div class="name">n8n</div>
+            <div class="desc">Not connected · workflow automation</div>
+          </div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-dot offline" id="dot-stripe"></div>
+          <div class="agent-info">
+            <div class="name">Stripe</div>
+            <div class="desc">Not connected · payments</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h">
+        <h2>Activity feed</h2>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button class="btn btn-sm btn-ghost" id="log-event-btn">+ Log event</button>
+          <span class="meta" id="feed-meta"></span>
+        </div>
+      </div>
+      <div id="log-event-form" class="hide" style="margin-bottom:14px;border:1px solid var(--line);border-radius:10px;padding:14px;">
+        <div class="field-row">
+          <div>
+            <label>Event type</label>
+            <select class="select" id="ev-type">
+              <option value="intake">Intake</option>
+              <option value="prospect">Prospect</option>
+              <option value="message">Message</option>
+              <option value="system">System</option>
+              <option value="agent">Agent</option>
+            </select>
+          </div>
+          <div>
+            <label>Title</label>
+            <input class="input" id="ev-title" placeholder="e.g. Ran sample batch for Mecklenburg NC" />
+          </div>
+        </div>
+        <div style="margin-bottom:10px;">
+          <label>Detail (optional)</label>
+          <input class="input" id="ev-body" placeholder="Any extra notes" />
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-sm" id="ev-save-btn">Save event</button>
+          <button class="btn btn-sm btn-ghost" id="ev-cancel-btn">Cancel</button>
+        </div>
+      </div>
+      <div id="feed-list"><div class="empty">No activity yet.</div></div>
     </div>
 
   </div>
@@ -193,17 +393,6 @@ label{display:block;font-size:11px;font-weight:600;color:var(--slate);margin-bot
     </div>
   </div>
 
-  <!-- ===== INBOUND ===== -->
-  <div id="tab-inbound" class="tab-content hide">
-    <div class="panel">
-      <div class="panel-h">
-        <h2>Inbound leads</h2>
-        <span class="meta" id="inbound-meta">loading…</span>
-      </div>
-      <div id="lead-list"><div class="empty">Loading…</div></div>
-    </div>
-  </div>
-
 </div>
 
 <div class="toast" id="toast"></div>
@@ -211,47 +400,130 @@ label{display:block;font-size:11px;font-weight:600;color:var(--slate);margin-bot
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-const INTAKE_URL = 'https://deedott60.github.io/leadcurate-launch/intake/';
-const DELIVERIES_URL = 'https://deedott60.github.io/leadcurate-launch/sample-deliveries/';
-const STORAGE_KEY = 'leadcurate.prospects.v1';
-const SUPABASE_URL = 'https://jdmlsraqioigbukspduo.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4';
-const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+const INTAKE_URL  = 'https://deedott60.github.io/leadcurate-launch/intake/';
+const SAMPLES_URL = 'https://deedott60.github.io/leadcurate-launch/sample-deliveries/';
+const STORAGE_KEY = 'leadcurate.prospects.v2';
+const SB_URL  = 'https://jdmlsraqioigbukspduo.supabase.co';
+const SB_KEY  = 'sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4';
+const sb = createClient(SB_URL, SB_KEY);
 
 let SYNC_OK = false;
-let LEADS = [];
-
-const toastEl = document.getElementById('toast');
-const syncEl = document.getElementById('sync-status');
-function toast(msg, ms=2200){ toastEl.textContent=msg; toastEl.classList.add('show'); setTimeout(()=>toastEl.classList.remove('show'),ms); }
-function setSync(state){
-  if(state==='ok'){ syncEl.textContent='● synced to supabase'; syncEl.style.color='#15803d'; SYNC_OK=true; }
-  else if(state==='local'){ syncEl.textContent='○ local only (supabase unreachable)'; syncEl.style.color='#b45309'; SYNC_OK=false; }
-  else if(state==='syncing'){ syncEl.textContent='syncing…'; syncEl.style.color='#94a3b8'; }
-}
-
-// ============ LOCAL STORAGE (always backup) ============
-function loadFromStorage(){
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e){ return []; }
-}
-function saveToStorage(items){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-}
 let PROSPECTS = loadFromStorage();
+let INBOUND = [];
+let MESSAGES = [];
+let FEED = [];
 
+// ─── UTILS ───────────────────────────────────────────────────
+const toastEl = document.getElementById('toast');
+function toast(msg, ms=2500){ toastEl.textContent=msg; toastEl.classList.add('show'); setTimeout(()=>toastEl.classList.remove('show'),ms); }
 function uuid(){ return 'p-'+Date.now()+'-'+Math.random().toString(36).slice(2,10); }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function fmtDate(d){ return new Date(d).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}); }
 
-// ============ TABS ============
+// ─── STORAGE ─────────────────────────────────────────────────
+function loadFromStorage(){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'); }catch(e){ return []; } }
+function saveToStorage(items){ localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); }
+
+// ─── SYNC STATUS ─────────────────────────────────────────────
+const syncEl = document.getElementById('sync-status');
+function setSync(state){
+  if(state==='ok'){   syncEl.textContent='● synced'; syncEl.style.background='#dcfce7'; syncEl.style.color='#14532d'; SYNC_OK=true; }
+  if(state==='local'){syncEl.textContent='○ local only'; syncEl.style.background='#fef3c7'; syncEl.style.color='#92400e'; SYNC_OK=false; }
+  if(state==='wait'){ syncEl.textContent='connecting…'; syncEl.style.background='var(--cream-2)'; syncEl.style.color='var(--slate)'; }
+  document.getElementById('dot-supabase').className = 'agent-dot '+(state==='ok'?'online':'offline');
+  document.getElementById('desc-supabase').textContent = state==='ok'?'Connected · '+SB_URL:'Unreachable';
+}
+
+// ─── TABS ─────────────────────────────────────────────────────
 document.querySelectorAll('.tab-btn').forEach(btn=>{
   btn.onclick = () => {
     document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     document.querySelectorAll('.tab-content').forEach(c=>c.classList.add('hide'));
     document.getElementById('tab-'+btn.dataset.tab).classList.remove('hide');
+    if(btn.dataset.tab==='workflow') loadFeed();
+    if(btn.dataset.tab==='messages') renderMessages();
   };
 });
 
-// ============ ADD PROSPECT ============
+// ─── INBOUND ─────────────────────────────────────────────────
+document.getElementById('inbound-filter').onchange = renderInbound;
+
+async function loadInbound(){
+  if(!SYNC_OK){
+    document.getElementById('inbound-list').innerHTML = '<div class="empty">Supabase unreachable — check connection.</div>';
+    document.getElementById('inbound-meta').textContent='';
+    return;
+  }
+  const { data, error } = await sb.from('intake_requests').select('*').order('created_at',{ascending:false});
+  if(error){ document.getElementById('inbound-list').innerHTML=`<div class="empty">Error: ${esc(error.message)}</div>`; return; }
+  INBOUND = data || [];
+  renderInbound();
+  updateStats();
+}
+
+function renderInbound(){
+  const filter = document.getElementById('inbound-filter').value;
+  const items = filter ? INBOUND.filter(r=>r.status===filter) : INBOUND;
+  const newCount = INBOUND.filter(r=>r.status==='new').length;
+  document.getElementById('inbound-meta').textContent = `${INBOUND.length} total · ${newCount} new`;
+  document.getElementById('tab-count-inbound').textContent = INBOUND.length;
+  const list = document.getElementById('inbound-list');
+  if(!items.length){ list.innerHTML='<div class="empty">'+(filter?'No records with that status.':'No inbound requests yet.')+'</div>'; return; }
+  list.innerHTML = items.map(r => {
+    const markets = Array.isArray(r.markets)?r.markets.join(', '):(r.markets||'');
+    const types = Array.isArray(r.list_type)?r.list_type.join(', '):(r.list_type||'');
+    const s = r.status||'new';
+    return `<div class="row" data-id="${r.id}">
+      <div class="row-main">
+        <div class="row-name">${esc(r.name||'(no name)')} <span class="badge b-${s==='new'?'new':s==='paying'?'paying':'replied'}">${s}</span></div>
+        <div class="row-sub">${esc(r.email||'')}${r.phone?' · '+esc(r.phone):''}</div>
+        ${markets?`<div class="row-notes"><strong>Markets:</strong> ${esc(markets)}</div>`:''}
+        ${types?`<div class="row-notes"><strong>List type:</strong> ${esc(types)}</div>`:''}
+        ${r.urgency?`<div class="row-notes"><strong>Urgency:</strong> ${esc(r.urgency)}${r.volume?' &nbsp;·&nbsp; <strong>Volume:</strong> '+esc(r.volume):''}</div>`:''}
+        ${r.current_provider?`<div class="row-notes"><strong>Current source:</strong> ${esc(r.current_provider)}</div>`:''}
+        ${r.notes?`<div class="row-notes"><strong>Notes:</strong> ${esc(r.notes)}</div>`:''}
+        <div class="row-meta">${fmtDate(r.created_at)}</div>
+      </div>
+      <div class="row-actions">
+        <button class="btn btn-sm btn-ghost" onclick="window.inboundToOutreach('${r.id}')">→ Outreach</button>
+        <select class="status-select" onchange="window.updateInboundStatus('${r.id}',this.value)">
+          <option value="new" ${s==='new'?'selected':''}>New</option>
+          <option value="contacted" ${s==='contacted'?'selected':''}>Contacted</option>
+          <option value="quoted" ${s==='quoted'?'selected':''}>Quoted</option>
+          <option value="paying" ${s==='paying'?'selected':''}>Paying</option>
+          <option value="dead" ${s==='dead'?'selected':''}>Dead</option>
+        </select>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+window.updateInboundStatus = async (id, status) => {
+  if(!SYNC_OK) return toast('Not synced');
+  const { error } = await sb.from('intake_requests').update({status}).eq('id',id);
+  if(error) return toast('Error: '+error.message);
+  const item = INBOUND.find(r=>r.id===id);
+  if(item) item.status = status;
+  renderInbound(); updateStats(); toast('Updated');
+};
+
+window.inboundToOutreach = (id) => {
+  const r = INBOUND.find(x=>x.id===id);
+  if(!r) return;
+  document.getElementById('p-name').value = r.name||'';
+  document.getElementById('p-contact').value = r.email||r.phone||'';
+  document.getElementById('p-channel').value = r.phone ? 'sms' : 'email';
+  const markets = Array.isArray(r.markets)?r.markets.join(', '):(r.markets||'');
+  document.getElementById('p-notes').value = markets ? 'Intake request · Markets: '+markets : 'Intake request';
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector('[data-tab="outreach"]').classList.add('active');
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.add('hide'));
+  document.getElementById('tab-outreach').classList.remove('hide');
+  toast('Copied to outreach form');
+};
+
+// ─── OUTREACH / PROSPECTS ────────────────────────────────────
 document.getElementById('add-prospect-btn').onclick = async () => {
   const local = {
     id: uuid(),
@@ -267,22 +539,15 @@ document.getElementById('add-prospect-btn').onclick = async () => {
   if(!local.name && !local.contact){ toast('Need a name or contact'); return; }
   PROSPECTS.unshift(local);
   saveToStorage(PROSPECTS);
-  ['p-name','p-contact','p-source','p-notes'].forEach(id=>document.getElementById(id).value='');
-  renderProspects(); renderStats();
-  toast('Added to queue');
+  ['p-name','p-contact','p-source','p-notes'].forEach(id=>{ document.getElementById(id).value=''; });
+  renderProspects(); updateStats(); toast('Added to queue');
 
-  // mirror to supabase
   if(SYNC_OK){
     const { data, error } = await sb.from('prospects').insert([{
-      name: local.name, contact: local.contact, channel: local.channel,
-      source: local.source, notes: local.notes, status: 'queued'
+      name:local.name, contact:local.contact, channel:local.channel,
+      source:local.source, notes:local.notes, status:'queued'
     }]).select();
-    if(!error && data && data[0]){
-      local.supabase_id = data[0].id;
-      saveToStorage(PROSPECTS);
-    } else if(error){
-      console.warn('supabase insert err', error);
-    }
+    if(!error && data?.[0]){ local.supabase_id = data[0].id; saveToStorage(PROSPECTS); }
   }
 };
 
@@ -291,29 +556,20 @@ document.getElementById('filter-status').onchange = renderProspects;
 function renderProspects(){
   const filter = document.getElementById('filter-status').value;
   const list = document.getElementById('prospect-list');
-  let items = PROSPECTS;
-  if(filter) items = items.filter(p => p.status === filter);
-  if(!items.length){
-    list.innerHTML = '<div class="empty">'+(filter?'No prospects with that status.':'No prospects yet — add your first one above.')+'</div>';
-    return;
-  }
-  list.innerHTML = items.map(p => renderProspectRow(p)).join('');
-}
-
-function renderProspectRow(p){
-  const channelLabels = {sms:'SMS', dm:'DM', email:'Email', call:'Call', 'in-person':'In person'};
-  const when = new Date(p.created_at).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
-  const safeNotes = (p.notes||'').replace(/</g,'&lt;');
-  return `
+  let items = filter ? PROSPECTS.filter(p=>p.status===filter) : PROSPECTS;
+  document.getElementById('tab-count-outreach').textContent = PROSPECTS.length;
+  if(!items.length){ list.innerHTML='<div class="empty">'+(filter?'No prospects with that status.':'No prospects yet.')+'</div>'; return; }
+  const ch = {sms:'SMS',dm:'DM',email:'Email',call:'Call','in-person':'In-person'};
+  list.innerHTML = items.map(p=>`
     <div class="row" data-id="${p.id}">
       <div class="row-main">
-        <div class="row-name">${(p.name||'(no name)').replace(/</g,'&lt;')} <span class="badge b-${p.status}">${p.status}</span></div>
-        <div class="row-sub">${(p.contact||'').replace(/</g,'&lt;')} · ${channelLabels[p.channel]||p.channel}${p.source?' · '+p.source.replace(/</g,'&lt;'):''}</div>
-        ${safeNotes?`<div class="row-notes">${safeNotes}</div>`:''}
-        <div class="row-meta">${when}</div>
+        <div class="row-name">${esc(p.name||'(no name)')} <span class="badge b-${p.status}">${p.status}</span></div>
+        <div class="row-sub">${esc(p.contact||'')} · ${ch[p.channel]||p.channel}${p.source?' · '+esc(p.source):''}</div>
+        ${p.notes?`<div class="row-notes">${esc(p.notes)}</div>`:''}
+        <div class="row-meta">${fmtDate(p.created_at)}</div>
       </div>
       <div class="row-actions">
-        <button class="btn btn-sm btn-ghost" onclick="window.copyTemplate('${p.id}','${p.channel}','${(p.name||'').split(' ')[0].replace(/'/g,'')}')">Copy msg</button>
+        <button class="btn btn-sm btn-ghost" onclick="window.copyTemplate('${p.id}','${p.channel}','${esc(p.name||'').split(' ')[0]}')">Copy msg</button>
         <select class="status-select" onchange="window.updateStatus('${p.id}',this.value)">
           <option value="queued" ${p.status==='queued'?'selected':''}>Queued</option>
           <option value="sent" ${p.status==='sent'?'selected':''}>Sent</option>
@@ -324,20 +580,18 @@ function renderProspectRow(p){
         </select>
         <button class="btn btn-sm btn-danger" onclick="window.deleteProspect('${p.id}')">×</button>
       </div>
-    </div>`;
+    </div>`).join('');
 }
 
 window.updateStatus = async (id, status) => {
-  const p = PROSPECTS.find(x => x.id === id);
-  if(!p) return;
+  const p = PROSPECTS.find(x=>x.id===id); if(!p) return;
   p.status = status;
   if(status==='sent' && !p.sent_at) p.sent_at = Date.now();
   if(status==='replied' && !p.replied_at) p.replied_at = Date.now();
-  saveToStorage(PROSPECTS);
-  toast('Updated to '+status);
-  renderProspects(); renderStats();
+  saveToStorage(PROSPECTS); toast('Updated to '+status);
+  renderProspects(); updateStats();
   if(SYNC_OK && p.supabase_id){
-    const patch = { status };
+    const patch = {status};
     if(status==='sent') patch.sent_at = new Date().toISOString();
     if(status==='replied') patch.replied_at = new Date().toISOString();
     await sb.from('prospects').update(patch).eq('id', p.supabase_id);
@@ -346,206 +600,227 @@ window.updateStatus = async (id, status) => {
 
 window.deleteProspect = async (id) => {
   if(!confirm('Delete this prospect?')) return;
-  const p = PROSPECTS.find(x => x.id === id);
-  PROSPECTS = PROSPECTS.filter(x => x.id !== id);
-  saveToStorage(PROSPECTS);
-  renderProspects(); renderStats();
-  if(SYNC_OK && p && p.supabase_id){
-    await sb.from('prospects').delete().eq('id', p.supabase_id);
-  }
+  const p = PROSPECTS.find(x=>x.id===id);
+  PROSPECTS = PROSPECTS.filter(x=>x.id!==id);
+  saveToStorage(PROSPECTS); renderProspects(); updateStats();
+  if(SYNC_OK && p?.supabase_id) await sb.from('prospects').delete().eq('id', p.supabase_id);
 };
 
 window.copyTemplate = (id, channel, firstName) => {
-  const name = firstName || '[Name]';
+  const name = firstName||'[Name]';
   let msg = '';
-  if(channel==='sms' || channel==='dm'){
+  if(channel==='sms'||channel==='dm'){
     msg = `Hey ${name} — I run LeadCurate. We curate fresh distressed-owner lists straight from county records. Drop your market here, get a quote in 24h: ${INTAKE_URL}`;
   } else if(channel==='email'){
-    msg = `${name},\n\nQuick one — I run LeadCurate. We curate fresh county-sourced lead lists for real estate investors — direct from county records (tax delinquent, pre-foreclosure, permits, probate, absentee).\n\nIf you want a quote, fill this out and I'll get back within 24h:\n${INTAKE_URL}\n\nSample deliveries (Houston, Atlanta, Charlotte, Louisville, Birmingham):\n${DELIVERIES_URL}\n\n— Daniel\nLeadCurate`;
+    msg = `${name},\n\nQuick one — I run LeadCurate. We curate fresh county-sourced lead lists for real estate investors — direct from county records (tax delinquent, pre-foreclosure, permits, probate, absentee).\n\nIf you want a quote, fill this out and I'll get back within 24h:\n${INTAKE_URL}\n\nSample deliveries (Houston, Atlanta, Charlotte, Louisville, Birmingham):\n${SAMPLES_URL}\n\n— Daniel\nLeadCurate`;
   } else {
     msg = `Hey ${name} — LeadCurate curates distressed-owner lists direct from county records. Tell me your market: ${INTAKE_URL}`;
   }
   navigator.clipboard.writeText(msg).then(()=>{
-    toast('Copied! Paste in '+channel);
-    const p = PROSPECTS.find(x => x.id === id);
-    if(p && p.status === 'queued'){
-      p.status = 'sent'; p.sent_at = Date.now();
-      saveToStorage(PROSPECTS);
-      renderProspects(); renderStats();
-    }
+    toast('Copied — paste in '+channel);
+    const p = PROSPECTS.find(x=>x.id===id);
+    if(p && p.status==='queued'){ p.status='sent'; p.sent_at=Date.now(); saveToStorage(PROSPECTS); renderProspects(); updateStats(); }
   });
 };
 
-// ============ STATS ============
-function renderStats(){
-  const queued = PROSPECTS.filter(p=>p.status==='queued').length;
-  const sent = PROSPECTS.filter(p=>p.status==='sent').length;
-  const replied = PROSPECTS.filter(p=>p.status==='replied'||p.status==='quoted').length;
-  const paying = PROSPECTS.filter(p=>p.status==='paying').length;
-  document.getElementById('stat-queued').textContent=queued;
-  document.getElementById('stat-sent').textContent=sent;
-  document.getElementById('stat-replied').textContent=replied;
-  document.getElementById('stat-paying').textContent=paying;
-  document.getElementById('tab-count-outreach').textContent=PROSPECTS.length;
-}
-
-// ============ EXPORT / IMPORT ============
+// ─── EXPORT / IMPORT ─────────────────────────────────────────
 document.getElementById('export-btn').onclick = () => {
   const headers = ['name','contact','channel','source','status','notes','created_at','sent_at','replied_at'];
-  const lines = [headers.join(',')];
-  PROSPECTS.forEach(p => {
-    const row = headers.map(h => {
-      let v = p[h] || '';
-      if(typeof v === 'number' && h.endsWith('_at')) v = new Date(v).toISOString();
-      return '"' + String(v).replace(/"/g,'""') + '"';
-    });
-    lines.push(row.join(','));
-  });
-  const blob = new Blob([lines.join('\n')], {type:'text/csv'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'leadcurate-prospects-' + new Date().toISOString().slice(0,10) + '.csv';
-  a.click();
-  URL.revokeObjectURL(url);
-  toast('Exported '+PROSPECTS.length+' prospects');
+  const lines = [headers.join(','), ...PROSPECTS.map(p=>headers.map(h=>{
+    let v=p[h]||''; if(typeof v==='number'&&h.endsWith('_at')) v=new Date(v).toISOString();
+    return '"'+String(v).replace(/"/g,'""')+'"';
+  }).join(','))];
+  const a = Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/csv'})),download:'leadcurate-prospects-'+new Date().toISOString().slice(0,10)+'.csv'});
+  a.click(); toast('Exported '+PROSPECTS.length+' prospects');
 };
-
-document.getElementById('import-btn').onclick = () => document.getElementById('import-file').click();
-document.getElementById('import-file').onchange = (e) => {
-  const file = e.target.files[0]; if(!file) return;
-  const reader = new FileReader();
-  reader.onload = (ev) => {
-    try {
-      const data = JSON.parse(ev.target.result);
-      if(Array.isArray(data)){
-        PROSPECTS = data.concat(PROSPECTS);
-        saveToStorage(PROSPECTS);
-        renderProspects(); renderStats();
-        toast('Imported '+data.length+' prospects');
-      }
-    } catch(err){ toast('Import failed: '+err.message); }
+document.getElementById('import-btn').onclick=()=>document.getElementById('import-file').click();
+document.getElementById('import-file').onchange=(e)=>{
+  const file=e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=(ev)=>{
+    try{
+      const data=JSON.parse(ev.target.result);
+      if(Array.isArray(data)){ PROSPECTS=data.concat(PROSPECTS); saveToStorage(PROSPECTS); renderProspects(); updateStats(); toast('Imported '+data.length+' prospects'); }
+    }catch(err){ toast('Import failed: '+err.message); }
   };
   reader.readAsText(file);
 };
 
-// ============ TEMPLATES ============
+// ─── MESSAGES ────────────────────────────────────────────────
+document.getElementById('log-msg-btn').onclick = async () => {
+  const body = document.getElementById('msg-body').value.trim();
+  if(!body){ toast('Enter a message body'); return; }
+  const direction = document.getElementById('msg-direction').value;
+  const channel   = document.getElementById('msg-channel').value;
+  const address   = document.getElementById('msg-address').value.trim();
+  const msg = { direction, channel, body,
+    from_address: direction==='inbound'?address:'LeadCurate',
+    to_address:   direction==='outbound'?address:'LeadCurate',
+    sent_at: new Date().toISOString() };
+  if(SYNC_OK){
+    const { error } = await sb.from('messages').insert([msg]);
+    if(error){ toast('Error: '+error.message); return; }
+  }
+  MESSAGES.unshift({...msg, id:'m-'+Date.now(), created_at: new Date().toISOString()});
+  document.getElementById('msg-body').value='';
+  document.getElementById('msg-address').value='';
+  renderMessages(); updateStats(); toast('Logged');
+};
+
+document.getElementById('msg-filter').onchange = renderMessages;
+
+async function loadMessages(){
+  if(!SYNC_OK) return;
+  const { data } = await sb.from('messages').select('*').order('sent_at',{ascending:false}).limit(200);
+  if(data){ MESSAGES = data; renderMessages(); updateStats(); }
+}
+
+function renderMessages(){
+  const filter = document.getElementById('msg-filter').value;
+  const items = filter ? MESSAGES.filter(m=>m.direction===filter) : MESSAGES;
+  const todayCount = MESSAGES.filter(m=> new Date(m.sent_at||m.created_at).toDateString()===new Date().toDateString()).length;
+  document.getElementById('tab-count-messages').textContent = MESSAGES.length;
+  document.getElementById('messages-meta').textContent = todayCount+' today';
+  const list = document.getElementById('messages-list');
+  if(!items.length){ list.innerHTML='<div class="empty">No messages logged yet.</div>'; return; }
+  const ch = {sms:'SMS',dm:'DM',email:'Email',call:'Call'};
+  list.innerHTML = items.map(m=>{
+    const isOut = m.direction==='outbound';
+    const addr = isOut ? (m.to_address||'') : (m.from_address||'');
+    return `<div class="msg-row ${isOut?'out':'in'}">
+      <div class="msg-bubble ${isOut?'msg-out':'msg-in'}">${esc(m.body)}</div>
+      <div class="msg-meta">${isOut?'↑ Outbound':'↓ Inbound'} · ${ch[m.channel]||m.channel}${addr?' · '+esc(addr):''} · ${fmtDate(m.sent_at||m.created_at)}</div>
+    </div>`;
+  }).join('');
+}
+
+// ─── WORKFLOW / FEED ─────────────────────────────────────────
+document.getElementById('log-event-btn').onclick = () => {
+  document.getElementById('log-event-form').classList.toggle('hide');
+};
+document.getElementById('ev-cancel-btn').onclick = () => {
+  document.getElementById('log-event-form').classList.add('hide');
+};
+document.getElementById('ev-save-btn').onclick = async () => {
+  const title = document.getElementById('ev-title').value.trim();
+  if(!title){ toast('Enter a title'); return; }
+  const ev = {
+    event_type: document.getElementById('ev-type').value,
+    title, body: document.getElementById('ev-body').value.trim()||null,
+    source: 'command-dashboard'
+  };
+  if(SYNC_OK){
+    const { error } = await sb.from('activity_feed').insert([ev]);
+    if(error){ toast('Error: '+error.message); return; }
+  }
+  FEED.unshift({...ev, id:'ev-'+Date.now(), created_at: new Date().toISOString()});
+  document.getElementById('ev-title').value='';
+  document.getElementById('ev-body').value='';
+  document.getElementById('log-event-form').classList.add('hide');
+  renderFeed(); toast('Event logged');
+};
+
+async function loadFeed(){
+  if(!SYNC_OK){ document.getElementById('feed-meta').textContent='offline'; return; }
+  const { data } = await sb.from('activity_feed').select('*').order('created_at',{ascending:false}).limit(100);
+  if(data){ FEED = data; renderFeed(); }
+}
+
+function renderFeed(){
+  const list = document.getElementById('feed-list');
+  document.getElementById('feed-meta').textContent = FEED.length+' events';
+  if(!FEED.length){ list.innerHTML='<div class="empty">No activity logged yet.</div>'; return; }
+  const icons = {intake:'📥',prospect:'👤',message:'💬',system:'⚙️',agent:'🤖'};
+  list.innerHTML = FEED.map(ev=>`
+    <div class="feed-item">
+      <div class="feed-icon ${ev.event_type||'system'}">${icons[ev.event_type]||'📌'}</div>
+      <div class="feed-body">
+        <div class="title">${esc(ev.title)}</div>
+        ${ev.body?`<div class="detail">${esc(ev.body)}</div>`:''}
+        ${ev.source?`<div class="when">${esc(ev.source)} · ${fmtDate(ev.created_at)}</div>`:`<div class="when">${fmtDate(ev.created_at)}</div>`}
+      </div>
+    </div>`).join('');
+}
+
+// ─── TEMPLATES ───────────────────────────────────────────────
 function renderTemplates(){
   const tpls = [
     {label:'SMS — cold intro', body:`Hey [Name] — I run LeadCurate. We curate fresh distressed-owner lists direct from county records. Drop your target market here, quote in 24h: ${INTAKE_URL}`},
     {label:'DM — Instagram / Facebook', body:`[Name], quick one — I run LeadCurate. We curate distressed-owner lists direct from county records (tax delinquent, pre-foreclosure, permits, probate). Tell me what market + list type you need, I'll quote within 24h: ${INTAKE_URL}`},
-    {label:'Email — first contact', body:`Hi [Name],\n\nQuick one — I run LeadCurate. We curate fresh real-estate lead lists directly from county records — tax delinquent, pre-foreclosure, probate, permit, and lien data.\n\nIf you want a custom quote for your market, fill this out and I'll reply within 24h:\n${INTAKE_URL}\n\nSample deliveries (Houston, Atlanta NW, Charlotte, Louisville, Birmingham):\n${DELIVERIES_URL}\n\n— Daniel\nLeadCurate`},
+    {label:'Email — first contact', body:`Hi [Name],\n\nQuick one — I run LeadCurate. We curate fresh real-estate lead lists directly from county records — tax delinquent, pre-foreclosure, probate, permit, and lien data.\n\nIf you want a custom quote for your market, fill this out and I'll reply within 24h:\n${INTAKE_URL}\n\nSample deliveries (Houston, Atlanta NW, Charlotte, Louisville, Birmingham):\n${SAMPLES_URL}\n\n— Daniel\nLeadCurate`},
     {label:'Follow-up — 3 days later', body:`Hey [Name], following up on the LeadCurate intake. Still hunting for [list type]? Happy to send a sample of what we have in [market] — just reply and I'll send a redacted preview.`},
-    {label:'Reply to "what makes you different"', body:`Three things: (1) we pull from county records directly, so data is fresh and not recycled, (2) we score + segment per lane (entity vs individual, absentee, permit distress, etc.) so you're not paying for junk, (3) you get HTML + Excel + CSV, ready for your dialer or mail merge. Sample: ${DELIVERIES_URL}`},
+    {label:'Reply to "what makes you different"', body:`Three things: (1) we pull from county records directly, so data is fresh and not recycled, (2) we score + segment per lane (entity vs individual, absentee, permit distress, etc.) so you're not paying for junk, (3) you get HTML + Excel + CSV, ready for your dialer or mail merge. Sample: ${SAMPLES_URL}`},
+    {label:'Quote follow-up — no reply', body:`Hey [Name], sent over a quote a few days ago for [market]. Just want to make sure it didn't get buried. Let me know if you have questions — happy to send a quick preview too.`},
   ];
   const cont = document.getElementById('templates-container');
   cont.innerHTML = tpls.map((t,i)=>`
     <div class="tpl-card" onclick="window.copyText(${i})">
       <div class="tpl-label">${t.label}</div>
-      <div class="tpl-body">${t.body.replace(/</g,'&lt;')}</div>
+      <div class="tpl-body">${esc(t.body)}</div>
     </div>`).join('');
   window._tpls = tpls;
 }
-window.copyText = (i) => {
-  navigator.clipboard.writeText(window._tpls[i].body).then(()=>toast('Copied to clipboard'));
-};
+window.copyText=(i)=>{ navigator.clipboard.writeText(window._tpls[i].body).then(()=>toast('Copied')); };
 
-// ============ INBOUND LEADS ============
-async function loadInboundLeads(){
-  if(!SYNC_OK){
-    document.getElementById('lead-list').innerHTML = '<div class="empty">Supabase unreachable. Check inbound leads in your email (dmcdonald5649@gmail.com) or at <a href="https://supabase.com/dashboard/project/jdmlsraqioigbukspduo/editor" target="_blank" style="color:var(--emerald);font-weight:600;">supabase.com → leads</a>.</div>';
-    document.getElementById('inbound-meta').textContent = '';
-    return;
-  }
-  const { data, error } = await sb.from('leads').select('*').order('created_at', {ascending:false});
-  const list = document.getElementById('lead-list');
-  const meta = document.getElementById('inbound-meta');
-  if(error){
-    list.innerHTML = `<div class="empty">Couldn't load leads: ${error.message}<br>Check inbound via your email or supabase.com.</div>`;
-    meta.textContent = '';
-    return;
-  }
-  LEADS = data || [];
-  meta.textContent = LEADS.length + ' total';
-  if(!LEADS.length){
-    list.innerHTML = '<div class="empty">No inbound leads yet — share your intake link.</div>';
-    return;
-  }
-  list.innerHTML = LEADS.map(renderLeadRow).join('');
+// ─── STATS ───────────────────────────────────────────────────
+function updateStats(){
+  document.getElementById('stat-inbound').textContent  = INBOUND.filter(r=>r.status==='new').length;
+  document.getElementById('stat-queued').textContent   = PROSPECTS.filter(p=>p.status==='queued').length;
+  document.getElementById('stat-sent').textContent     = PROSPECTS.filter(p=>p.status==='sent').length;
+  document.getElementById('stat-replied').textContent  = PROSPECTS.filter(p=>p.status==='replied'||p.status==='quoted').length;
+  document.getElementById('stat-paying').textContent   = PROSPECTS.filter(p=>p.status==='paying').length;
+  const today = new Date().toDateString();
+  document.getElementById('stat-messages').textContent = MESSAGES.filter(m=>new Date(m.sent_at||m.created_at).toDateString()===today).length;
+  document.getElementById('tab-count-outreach').textContent = PROSPECTS.length;
+  document.getElementById('tab-count-inbound').textContent  = INBOUND.length;
+  document.getElementById('tab-count-messages').textContent = MESSAGES.length;
 }
 
-function renderLeadRow(l){
-  const when = new Date(l.created_at).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
-  const markets = Array.isArray(l.markets) ? l.markets.join(', ') : (l.markets||'');
-  const listTypes = Array.isArray(l.list_type) ? l.list_type.join(', ') : (l.list_type||'');
-  const status = l.status || 'new';
-  return `
-    <div class="row" data-id="${l.id}">
-      <div class="row-main">
-        <div class="row-name">${(l.name||'').replace(/</g,'&lt;')} <span class="badge b-${status==='new'?'queued':status==='paying'?'paying':'replied'}">${status}</span></div>
-        <div class="row-sub">${(l.email||'').replace(/</g,'&lt;')}${l.phone?' · '+l.phone.replace(/</g,'&lt;'):''}</div>
-        ${markets?`<div class="row-notes"><strong>Markets:</strong> ${markets.replace(/</g,'&lt;')}</div>`:''}
-        ${listTypes?`<div class="row-notes"><strong>Wants:</strong> ${listTypes.replace(/</g,'&lt;')}</div>`:''}
-        ${l.urgency?`<div class="row-notes"><strong>Urgency:</strong> ${l.urgency} · <strong>Volume:</strong> ${l.volume||'-'}</div>`:''}
-        ${l.current_provider?`<div class="row-notes"><strong>Currently:</strong> ${l.current_provider.replace(/</g,'&lt;')}</div>`:''}
-        ${l.notes?`<div class="row-notes"><strong>Notes:</strong> ${l.notes.replace(/</g,'&lt;')}</div>`:''}
-        <div class="row-meta">${when}</div>
-      </div>
-      <div class="row-actions">
-        <select class="status-select" onchange="window.updateLeadStatus('${l.id}',this.value)">
-          <option value="new" ${status==='new'?'selected':''}>New</option>
-          <option value="contacted" ${status==='contacted'?'selected':''}>Contacted</option>
-          <option value="quoted" ${status==='quoted'?'selected':''}>Quoted</option>
-          <option value="paying" ${status==='paying'?'selected':''}>Paying</option>
-          <option value="dead" ${status==='dead'?'selected':''}>Dead</option>
-        </select>
-      </div>
-    </div>`;
+// ─── REALTIME ────────────────────────────────────────────────
+function subscribeRealtime(){
+  sb.channel('command-live')
+    .on('postgres_changes',{event:'INSERT',schema:'public',table:'intake_requests'},(payload)=>{
+      INBOUND.unshift(payload.new);
+      renderInbound(); updateStats();
+      toast('New inbound request from '+(payload.new.name||'unknown'));
+    })
+    .on('postgres_changes',{event:'INSERT',schema:'public',table:'activity_feed'},(payload)=>{
+      if(!FEED.find(f=>f.id===payload.new.id)){ FEED.unshift(payload.new); renderFeed(); }
+    })
+    .on('postgres_changes',{event:'INSERT',schema:'public',table:'messages'},(payload)=>{
+      if(!MESSAGES.find(m=>m.id===payload.new.id)){ MESSAGES.unshift(payload.new); renderMessages(); updateStats(); }
+    })
+    .subscribe();
 }
 
-window.updateLeadStatus = async (id, status) => {
-  if(!SYNC_OK) return;
-  const { error } = await sb.from('leads').update({status}).eq('id', id);
-  if(error) toast('Couldn\'t update: '+error.message);
-  else toast('Updated');
-};
-
-// ============ START ============
+// ─── INIT ─────────────────────────────────────────────────────
 async function init(){
-  renderProspects();
-  renderStats();
-  renderTemplates();
-  setSync('syncing');
-  // ping supabase to detect if reads work
-  const { error } = await sb.from('prospects').select('id').limit(1);
-  if(error){
-    console.warn('supabase read err', error);
-    setSync('local');
-  } else {
-    setSync('ok');
-    // pull any prospects from supabase that aren't in local storage
-    const { data } = await sb.from('prospects').select('*').order('created_at',{ascending:false});
-    if(data){
-      const localSbIds = new Set(PROSPECTS.map(p=>p.supabase_id).filter(Boolean));
-      const newOnes = data.filter(d => !localSbIds.has(d.id)).map(d => ({
-        id: 'p-sb-'+d.id, supabase_id: d.id,
-        created_at: new Date(d.created_at).getTime(),
-        name: d.name||'', contact: d.contact||'', channel: d.channel||'sms',
-        source: d.source||'', notes: d.notes||'', status: d.status||'queued',
-        sent_at: d.sent_at?new Date(d.sent_at).getTime():null,
-        replied_at: d.replied_at?new Date(d.replied_at).getTime():null,
-      }));
-      if(newOnes.length){
-        PROSPECTS = [...newOnes, ...PROSPECTS];
-        saveToStorage(PROSPECTS);
-        renderProspects(); renderStats();
-      }
-    }
+  renderProspects(); updateStats(); renderTemplates();
+  setSync('wait');
+
+  const { error } = await sb.from('intake_requests').select('id').limit(1);
+  if(error){ setSync('local'); return; }
+  setSync('ok');
+  subscribeRealtime();
+
+  const { data: sbProspects } = await sb.from('prospects').select('*').order('created_at',{ascending:false});
+  if(sbProspects){
+    const localIds = new Set(PROSPECTS.map(p=>p.supabase_id).filter(Boolean));
+    const newOnes = sbProspects.filter(d=>!localIds.has(d.id)).map(d=>({
+      id:'p-sb-'+d.id, supabase_id:d.id, created_at:new Date(d.created_at).getTime(),
+      name:d.name||'', contact:d.contact||'', channel:d.channel||'sms',
+      source:d.source||'', notes:d.notes||'', status:d.status||'queued',
+      sent_at:d.sent_at?new Date(d.sent_at).getTime():null,
+      replied_at:d.replied_at?new Date(d.replied_at).getTime():null,
+    }));
+    if(newOnes.length){ PROSPECTS=[...newOnes,...PROSPECTS]; saveToStorage(PROSPECTS); renderProspects(); }
   }
-  loadInboundLeads();
+
+  await loadInbound();
+  await loadMessages();
 }
+
 init();
 </script>
-
 </body>
 </html>
