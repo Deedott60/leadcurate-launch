@@ -1,0 +1,19 @@
+{
+  "market": "Harris County, TX (Houston metro)",
+  "lane": "Permit Burnout",
+  "pulled": "2026-06-20",
+  "processed": "2026-06-21",
+  "source": "HCAD bulk download (real_acct + owners + permits)",
+  "universe_size": 1623292,
+  "candidates_with_permits": 185153,
+  "qualified_residential": 132367,
+  "delivered_top_n": 1500,
+  "absentee_count": 1386,
+  "entity_count": 1244,
+  "fire_loss_count": 103,
+  "demolition_count": 174,
+  "repair_damage_count": 780,
+  "avg_market_value": 325094,
+  "min_score": 85,
+  "max_score": 110
+}

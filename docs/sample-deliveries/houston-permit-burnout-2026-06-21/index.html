@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>LeadCurate — Houston Permit Burnout · Discovery Snapshot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --emerald:#15803d; --emerald-dark:#14532d;
+  --cream:#faf7f2; --cream-2:#f3eddf;
+  --dark:#0f172a; --slate:#475569; --slate-light:#94a3b8;
+  --line:#e2dccf; --white:#ffffff;
+  --gold:#b45309; --crimson:#991b1b;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(--dark);line-height:1.55;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:1100px;margin:0 auto;padding:48px 24px 80px;}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:40px;}
+.brand-mark{width:42px;height:42px;border-radius:8px;background:var(--emerald);color:var(--cream);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:24px;}
+.brand-name{font-family:'Playfair Display',serif;font-weight:700;font-size:22px;}
+.eyebrow{display:inline-block;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--emerald);font-weight:600;margin-bottom:14px;}
+h1{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(36px,5vw,52px);line-height:1.05;letter-spacing:-0.02em;margin-bottom:14px;}
+.subtitle{font-size:18px;color:var(--slate);max-width:760px;margin-bottom:8px;}
+.meta-line{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--slate-light);margin-top:18px;letter-spacing:0.02em;}
+.hr{height:1px;background:var(--line);margin:40px 0;}
+
+/* Stats grid */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin:0 0 32px;}
+.stat{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:22px;}
+.stat-label{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--slate-light);font-weight:600;margin-bottom:8px;}
+.stat-value{font-family:'Playfair Display',serif;font-size:34px;font-weight:700;color:var(--dark);line-height:1;}
+.stat-detail{font-size:13px;color:var(--slate);margin-top:6px;}
+.stat-highlight .stat-value{color:var(--emerald);}
+.stat-warn .stat-value{color:var(--gold);}
+.stat-fire .stat-value{color:var(--crimson);}
+
+/* Distress badges */
+.distress-row{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0;}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace;letter-spacing:0.04em;}
+.badge-fire{background:#fef2f2;color:var(--crimson);border:1px solid #fecaca;}
+.badge-demo{background:#fff7ed;color:var(--gold);border:1px solid #fed7aa;}
+.badge-repair{background:#fefce8;color:#854d0e;border:1px solid #fef08a;}
+.badge-flood{background:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;}
+.badge-entity{background:#f0fdf4;color:var(--emerald-dark);border:1px solid #bbf7d0;}
+.badge-absentee{background:var(--cream-2);color:var(--dark);border:1px solid var(--line);}
+
+/* Section heads */
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:30px;margin-bottom:14px;letter-spacing:-0.01em;}
+.section-lede{color:var(--slate);font-size:16px;max-width:720px;margin-bottom:24px;}
+
+/* Preview table */
+.preview-wrap{background:var(--white);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:24px;}
+.preview-head{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:var(--cream-2);}
+.preview-title{font-weight:600;font-size:15px;color:var(--dark);}
+.preview-note{font-size:12px;color:var(--slate-light);font-family:'JetBrains Mono',monospace;}
+.scroll{overflow-x:auto;max-width:100%;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th{text-align:left;padding:10px 14px;background:var(--cream-2);color:var(--slate);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid var(--line);white-space:nowrap;}
+td{padding:10px 14px;border-bottom:1px solid var(--line);font-family:'JetBrains Mono',monospace;color:var(--dark);vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:#fafafa;}
+.t-mono{font-family:'JetBrains Mono',monospace;}
+.t-name{font-family:'Inter',sans-serif;font-weight:500;}
+
+/* Tag column cells */
+.tag{display:inline-block;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;margin-right:4px;}
+.tag-ent{background:#f0fdf4;color:var(--emerald-dark);}
+.tag-ind{background:#fefce8;color:#854d0e;}
+.tag-abs{background:var(--cream-2);color:var(--dark);}
+
+/* Delivery box */
+.delivery{background:linear-gradient(135deg,var(--emerald) 0%,var(--emerald-dark) 100%);color:var(--cream);border-radius:16px;padding:36px;margin-top:32px;}
+.delivery h3{font-family:'Playfair Display',serif;font-size:24px;margin-bottom:16px;color:var(--cream);}
+.delivery-list{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:18px;}
+.delivery-list li{display:flex;gap:10px;align-items:flex-start;font-size:14px;}
+.checkmark{flex-shrink:0;width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;margin-top:2px;}
+.checkmark::before{content:"";display:block;width:8px;height:4px;border-left:2px solid var(--cream);border-bottom:2px solid var(--cream);transform:rotate(-45deg);margin-top:-2px;}
+
+footer{text-align:center;margin-top:64px;font-size:13px;color:var(--slate-light);}
+footer a{color:var(--slate);text-decoration:none;font-weight:600;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand">
+    <div class="brand-mark">L</div>
+    <div class="brand-name">LeadCurate</div>
+  </div>
+
+  <span class="eyebrow">Discovery Snapshot · Houston metro</span>
+  <h1>Harris County, TX<br>Permit Burnout Lane</h1>
+  <p class="subtitle">
+    Single-family residential parcels in the Houston metro carrying active or recent <strong>distress permits</strong> — fire loss, demolition, emergency repair, storm damage. Cross-referenced with absentee mailing addresses, entity ownership, and value range.
+  </p>
+  <div class="meta-line">
+    Source: HCAD bulk extract (2026-06-20) &nbsp;·&nbsp; Pipeline: real_acct ⨯ owners ⨯ permits &nbsp;·&nbsp; Processed: 2026-06-21
+  </div>
+
+  <div class="hr"></div>
+
+  <!-- Funnel -->
+  <h2>The funnel</h2>
+  <p class="section-lede">
+    Houston is the largest single market in the LeadCurate inventory. We start with every parcel in HCAD and shrink it to the 1,500 highest-distress investor-grade targets.
+  </p>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-label">Total HCAD universe</div>
+      <div class="stat-value">1,623,292</div>
+      <div class="stat-detail">parcels in Harris County</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">With distress signals</div>
+      <div class="stat-value">185,153</div>
+      <div class="stat-detail">active or recent permits</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Residential-qualified</div>
+      <div class="stat-value">132,367</div>
+      <div class="stat-detail">SFR / townhouse / duplex</div>
+    </div>
+    <div class="stat stat-highlight">
+      <div class="stat-label">Delivered top-N</div>
+      <div class="stat-value">1,500</div>
+      <div class="stat-detail">ranked by distress score</div>
+    </div>
+  </div>
+
+  <div class="hr"></div>
+
+  <!-- Distress breakdown -->
+  <h2>What makes this list different</h2>
+  <p class="section-lede">
+    Every record carries at least one verified distress signal. The mix below is what you actually get inside the top 1,500.
+  </p>
+  <div class="stats">
+    <div class="stat stat-fire">
+      <div class="stat-label">Fire loss</div>
+      <div class="stat-value">103</div>
+      <div class="stat-detail">verified FIRELOSS permits</div>
+    </div>
+    <div class="stat stat-warn">
+      <div class="stat-label">Demolition</div>
+      <div class="stat-value">174</div>
+      <div class="stat-detail">DEMO permits filed</div>
+    </div>
+    <div class="stat stat-warn">
+      <div class="stat-label">Repair / damage</div>
+      <div class="stat-value">780</div>
+      <div class="stat-detail">storm, flood, structural</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Absentee owners</div>
+      <div class="stat-value">1,386</div>
+      <div class="stat-detail">mailing ≠ situs</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Entity-owned</div>
+      <div class="stat-value">1,244</div>
+      <div class="stat-detail">LLC / Trust / Corp / REIT</div>
+    </div>
+    <div class="stat stat-highlight">
+      <div class="stat-label">Avg market value</div>
+      <div class="stat-value">$325,094</div>
+      <div class="stat-detail">sweet-spot SFR range</div>
+    </div>
+  </div>
+
+  <div class="distress-row">
+    <span class="badge badge-fire">FIRELOSS</span>
+    <span class="badge badge-demo">DEMOLITION</span>
+    <span class="badge badge-repair">REPAIR</span>
+    <span class="badge badge-flood">FLOOD</span>
+    <span class="badge badge-repair">STORM</span>
+    <span class="badge badge-fire">EMERGENCY</span>
+    <span class="badge badge-entity">ENTITY-OWNED</span>
+    <span class="badge badge-absentee">OUT-OF-STATE</span>
+  </div>
+
+  <div class="hr"></div>
+
+  <!-- Preview Table -->
+  <h2>Sample preview (25 of 1,500)</h2>
+  <p class="section-lede">
+    Owner names &amp; street numbers redacted in this preview — full unredacted file ships with purchase. Sorted by distress score.
+  </p>
+
+  <div class="preview-wrap">
+    <div class="preview-head">
+      <span class="preview-title">harris-tx-permit-burnout · top 25</span>
+      <span class="preview-note">redacted · 1,500 total rows in full delivery</span>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Owner (redacted)</th>
+            <th>Type</th>
+            <th>Site address</th>
+            <th>Built</th>
+            <th>Mkt value</th>
+            <th>Mailing</th>
+            <th>Distress signal</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="t-name">H*** D*** P*** L***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### VALLEY VIEW LN<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77074</span></td>
+            <td>1956</td>
+            <td>$120,151</td>
+            <td><span style="color:var(--slate);">AUSTIN, TX 787**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">FLOOD · REPAIR · STORM</td>
+            <td><strong>110</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">J*** P*** D*** T***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### RIO VILLA DR<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77049</span></td>
+            <td>1963</td>
+            <td>$88,050</td>
+            <td><span style="color:var(--slate);">LA PORTE, TX 775**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">FLOOD</td>
+            <td><strong>110</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">D*** W*** & A*** L***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### TILGHAM ST, 6<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77029</span></td>
+            <td>1960</td>
+            <td>$199,540</td>
+            <td><span style="color:var(--slate);">PRAIRIE VIEW, TX 774**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">DEMO · DEMOLITION · EMERGENCY</td>
+            <td><strong>105</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">A*** R*** E*** L***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### CORINTH ST<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77051</span></td>
+            <td>1950</td>
+            <td>$153,850</td>
+            <td><span style="color:var(--slate);">ROSHARON, TX 775**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">DEMOLITION · REPAIR</td>
+            <td><strong>105</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">L*** & J*** I*** G*** L***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### HOLMAN ST, 4<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77004</span></td>
+            <td>1938</td>
+            <td>$228,568</td>
+            <td><span style="color:var(--slate);">FRIENDSWOOD, TX 775**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">EMERGENCY · REPAIR</td>
+            <td><strong>105</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">L*** O*** C*** L***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### HOLLOCK ST, 4<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77075</span></td>
+            <td>1965</td>
+            <td>$219,569</td>
+            <td><span style="color:var(--slate);">GREENVILLE, SC 296**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">EMERGENCY · STORM</td>
+            <td><strong>105</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">G*** L*** F*** I T***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### MOUNT PLEASANT ST<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77021</span></td>
+            <td>1955</td>
+            <td>$236,995</td>
+            <td><span style="color:var(--slate);">CHICAGO, IL 606**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">EMERGENCY</td>
+            <td><strong>105</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">S*** 4*** L***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### PAULA ST<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77033</span></td>
+            <td>1970</td>
+            <td>$202,224</td>
+            <td><span style="color:var(--slate);">WATERTOWN, MA 024**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">REPAIR</td>
+            <td><strong>105</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">A*** I*** L***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### BELMARK ST<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77033</span></td>
+            <td>1952</td>
+            <td>$161,918</td>
+            <td><span style="color:var(--slate);">SUGAR LAND, TX 774**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">REPAIR</td>
+            <td><strong>105</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">2*** C*** L*** L***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### BARRINGER LN, 4<br><span style="color:var(--slate-light);font-size:11px;">WEBSTER 77598</span></td>
+            <td>1983</td>
+            <td>$211,403</td>
+            <td><span style="color:var(--slate);">CHICAGO, IL 606**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">EMERGENCY · FIRE DAMAGE · REPAIR</td>
+            <td><strong>103</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">3*** B*** L***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### BREWSTER ST, 24<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77026</span></td>
+            <td>1950</td>
+            <td>$1,488,684</td>
+            <td><span style="color:var(--slate);">MONSEY, NY 109**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">EMERGENCY · FIRE DAMAGE · FLOOD · STORM</td>
+            <td><strong>100</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">C*** S*** L***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### N WAYSIDE DR, 20<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77020</span></td>
+            <td>1960</td>
+            <td>$1,786,596</td>
+            <td><span style="color:var(--slate);">CANOGA PARK, CA 913**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">EMERGENCY · FLOOD · REPAIR</td>
+            <td><strong>100</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">H*** R*** A*** L*** & E***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### HARRIET, 24<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77023</span></td>
+            <td>1960</td>
+            <td>$995,350</td>
+            <td><span style="color:var(--slate);">ROSHARON, TX 775**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">FIRELOSS · REPAIR · VACANT</td>
+            <td><strong>100</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">S*** I*** L***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### S IOWA ST<br><span style="color:var(--slate-light);font-size:11px;">LA PORTE 77571</span></td>
+            <td>1950</td>
+            <td>$231,250</td>
+            <td><span style="color:var(--slate);">PASADENA, TX 775**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">DEMO</td>
+            <td><strong>100</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">O*** P*** P*** L***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### PARK PLACE BLVD, 29<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77017</span></td>
+            <td>1964</td>
+            <td>$1,769,692</td>
+            <td><span style="color:var(--slate);">TOMBALL, TX 773**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">EMERGENCY · REPAIR</td>
+            <td><strong>100</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">G*** E*** P*** I***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### PARK PLACE BLVD, 50<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77017</span></td>
+            <td>1965</td>
+            <td>$1,884,702</td>
+            <td><span style="color:var(--slate);">SHERIDAN, WY 828**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">EMERGENCY</td>
+            <td><strong>100</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">L*** M*** I*** P*** M*** G*** L***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### STEVENS ST, 4<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77026</span></td>
+            <td>1935</td>
+            <td>$610,581</td>
+            <td><span style="color:var(--slate);">FRIENDSWOOD, TX 775**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">EMERGENCY · REPAIR</td>
+            <td><strong>100</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">4*** M*** S*** L***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### MARSHALL ST, 27<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77006</span></td>
+            <td>1965</td>
+            <td>$1,816,863</td>
+            <td><span style="color:var(--slate);">LA JOLLA, CA 920**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">EMERGENCY · REPAIR</td>
+            <td><strong>100</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">A*** A*** I L***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### JESSAMINE ST, 22<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77081</span></td>
+            <td>1960</td>
+            <td>$1,373,657</td>
+            <td><span style="color:var(--slate);">SPRING, TX 773**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">DEMO · EMERGENCY · REPAIR</td>
+            <td><strong>100</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">F*** T*** H*** L***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### AMOS ST<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77021</span></td>
+            <td>1956</td>
+            <td>$145,104</td>
+            <td><span style="color:var(--slate);">KATY, TX 774**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">FIRE DAMAGE · REPAIR</td>
+            <td><strong>100</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">T*** A*** L***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### KINGSWAY DR, 40<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77087</span></td>
+            <td>1964</td>
+            <td>$1,590,035</td>
+            <td><span style="color:var(--slate);">ONTARIO, CA 917**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">EMERGENCY · REPAIR</td>
+            <td><strong>100</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">B*** A*** P*** L***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### N MACGREGOR WAY, 24<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77004</span></td>
+            <td>1960</td>
+            <td>$1,528,422</td>
+            <td><span style="color:var(--slate);">BEAUMONT, TX 777**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">EMERGENCY · FLOOD · REPAIR · STORM</td>
+            <td><strong>100</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">V*** L***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### THONIG RD, 14<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77055</span></td>
+            <td>1965</td>
+            <td>$1,014,664</td>
+            <td><span style="color:var(--slate);">LAS VEGAS, NV 891**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">EMERGENCY · REPAIR</td>
+            <td><strong>100</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">U*** A*** M*** L***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### BONNIE BRAE ST, 15<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77006</span></td>
+            <td>1950</td>
+            <td>$1,341,360</td>
+            <td><span style="color:var(--slate);">CARLSBAD, CA 920**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">EMERGENCY · REPAIR</td>
+            <td><strong>100</strong></td>
+          </tr>
+          <tr>
+            <td class="t-name">J*** A*** L***</td>
+            <td><span class="tag tag-ent">ENT</span> <span class="tag tag-abs">ABS</span></td>
+            <td>### SCHROEDER RD, 20<br><span style="color:var(--slate-light);font-size:11px;">HOUSTON 77021</span></td>
+            <td>1965</td>
+            <td>$1,246,765</td>
+            <td><span style="color:var(--slate);">RICHMOND, TX 774**</span></td>
+            <td style="white-space:nowrap;color:var(--crimson);font-weight:500;">EMERGENCY · FIRELOSS</td>
+            <td><strong>100</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="hr"></div>
+
+  <!-- Delivery -->
+  <h2>What you actually get</h2>
+  <p class="section-lede">Full delivery, ready for skip-tracing, mail-merge, or pulling into your dialer.</p>
+
+  <div class="delivery">
+    <h3>Houston Permit Burnout — full delivery</h3>
+    <p style="opacity:0.92;font-size:15px;">1,500 top-scored residential parcels with active or recent distress permits, ranked &amp; segmented.</p>
+    <ul class="delivery-list">
+      <li><span class="checkmark"></span><span><strong>CSV file</strong> — all 1,500 rows, all fields, ready to import</span></li>
+      <li><span class="checkmark"></span><span><strong>Excel workbook</strong> — color-coded by distress type, frozen header</span></li>
+      <li><span class="checkmark"></span><span><strong>Owner name</strong> + entity classification</span></li>
+      <li><span class="checkmark"></span><span><strong>Full mailing address</strong> + out-of-state flag</span></li>
+      <li><span class="checkmark"></span><span><strong>Site address</strong> with unit, city, ZIP</span></li>
+      <li><span class="checkmark"></span><span><strong>Distress signal kinds</strong> (FIRELOSS, FLOOD, DEMO, REPAIR&hellip;)</span></li>
+      <li><span class="checkmark"></span><span><strong>Latest permit year + description</strong></span></li>
+      <li><span class="checkmark"></span><span><strong>Market &amp; building value</strong> from HCAD</span></li>
+      <li><span class="checkmark"></span><span><strong>Year built + square footage</strong></span></li>
+      <li><span class="checkmark"></span><span><strong>Distress score</strong> 0&ndash;110 ranking</span></li>
+    </ul>
+  </div>
+
+  <footer>
+    LeadCurate &middot; Curated county property data, no scraping resellers in the loop<br>
+    Quote: <a href="mailto:dmcdonald5649@gmail.com">dmcdonald5649@gmail.com</a> &middot; Intake form: <a href="../../intake/">leadcurate intake</a>
+  </footer>
+
+</div>
+</body>
+</html>
