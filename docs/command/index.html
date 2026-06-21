@@ -104,7 +104,7 @@ label{display:block;font-size:11px;font-weight:600;color:var(--slate);margin-bot
       <div class="brand-mark">L</div>
       <div class="brand-name">LeadCurate <small>command</small></div>
     </div>
-    <span class="url-note">private url · saves to this browser</span>
+    <span class="url-note" id="sync-status">syncing…</span>
   </div>
 
   <div class="stat-strip">
@@ -196,16 +196,11 @@ label{display:block;font-size:11px;font-weight:600;color:var(--slate);margin-bot
   <!-- ===== INBOUND ===== -->
   <div id="tab-inbound" class="tab-content hide">
     <div class="panel">
-      <div class="panel-h"><h2>Inbound leads</h2></div>
-      <div class="helper-card">
-        Every intake form submission lands in <strong>two places</strong>:
-        <br><br>
-        <strong>1. Your inbox</strong> — FormSubmit emails you the moment someone fills out the form. Check <strong>dmcdonald5649@gmail.com</strong>.
-        <br><br>
-        <strong>2. Your Supabase database</strong> — view at <a href="https://supabase.com/dashboard/project/jdmlsraqioigbukspduo/editor" target="_blank">supabase.com → leads table</a>.
-        <br><br>
-        Bookmark both. This page tracks your <strong>outreach</strong> — who you're going after. Inbound = who comes to you.
+      <div class="panel-h">
+        <h2>Inbound leads</h2>
+        <span class="meta" id="inbound-meta">loading…</span>
       </div>
+      <div id="lead-list"><div class="empty">Loading…</div></div>
     </div>
   </div>
 
@@ -213,18 +208,31 @@ label{display:block;font-size:11px;font-weight:600;color:var(--slate);margin-bot
 
 <div class="toast" id="toast"></div>
 
-<script>
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
 const INTAKE_URL = 'https://deedott60.github.io/leadcurate-launch/intake/';
 const DELIVERIES_URL = 'https://deedott60.github.io/leadcurate-launch/sample-deliveries/';
 const STORAGE_KEY = 'leadcurate.prospects.v1';
+const SUPABASE_URL = 'https://jdmlsraqioigbukspduo.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4';
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let SYNC_OK = false;
+let LEADS = [];
 
 const toastEl = document.getElementById('toast');
-function toast(msg, ms=2000){ toastEl.textContent=msg; toastEl.classList.add('show'); setTimeout(()=>toastEl.classList.remove('show'),ms); }
+const syncEl = document.getElementById('sync-status');
+function toast(msg, ms=2200){ toastEl.textContent=msg; toastEl.classList.add('show'); setTimeout(()=>toastEl.classList.remove('show'),ms); }
+function setSync(state){
+  if(state==='ok'){ syncEl.textContent='● synced to supabase'; syncEl.style.color='#15803d'; SYNC_OK=true; }
+  else if(state==='local'){ syncEl.textContent='○ local only (supabase unreachable)'; syncEl.style.color='#b45309'; SYNC_OK=false; }
+  else if(state==='syncing'){ syncEl.textContent='syncing…'; syncEl.style.color='#94a3b8'; }
+}
 
-// ============ LOCAL STORAGE ============
+// ============ LOCAL STORAGE (always backup) ============
 function loadFromStorage(){
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
-  catch(e){ return []; }
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e){ return []; }
 }
 function saveToStorage(items){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
@@ -244,8 +252,8 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
 });
 
 // ============ ADD PROSPECT ============
-document.getElementById('add-prospect-btn').onclick = () => {
-  const data = {
+document.getElementById('add-prospect-btn').onclick = async () => {
+  const local = {
     id: uuid(),
     created_at: Date.now(),
     name: document.getElementById('p-name').value.trim(),
@@ -256,12 +264,26 @@ document.getElementById('add-prospect-btn').onclick = () => {
     status: 'queued',
     sent_at: null, replied_at: null,
   };
-  if(!data.name && !data.contact){ toast('Need a name or contact'); return; }
-  PROSPECTS.unshift(data);
+  if(!local.name && !local.contact){ toast('Need a name or contact'); return; }
+  PROSPECTS.unshift(local);
   saveToStorage(PROSPECTS);
   ['p-name','p-contact','p-source','p-notes'].forEach(id=>document.getElementById(id).value='');
-  toast('Added to queue');
   renderProspects(); renderStats();
+  toast('Added to queue');
+
+  // mirror to supabase
+  if(SYNC_OK){
+    const { data, error } = await sb.from('prospects').insert([{
+      name: local.name, contact: local.contact, channel: local.channel,
+      source: local.source, notes: local.notes, status: 'queued'
+    }]).select();
+    if(!error && data && data[0]){
+      local.supabase_id = data[0].id;
+      saveToStorage(PROSPECTS);
+    } else if(error){
+      console.warn('supabase insert err', error);
+    }
+  }
 };
 
 document.getElementById('filter-status').onchange = renderProspects;
@@ -305,7 +327,7 @@ function renderProspectRow(p){
     </div>`;
 }
 
-window.updateStatus = (id, status) => {
+window.updateStatus = async (id, status) => {
   const p = PROSPECTS.find(x => x.id === id);
   if(!p) return;
   p.status = status;
@@ -314,13 +336,23 @@ window.updateStatus = (id, status) => {
   saveToStorage(PROSPECTS);
   toast('Updated to '+status);
   renderProspects(); renderStats();
+  if(SYNC_OK && p.supabase_id){
+    const patch = { status };
+    if(status==='sent') patch.sent_at = new Date().toISOString();
+    if(status==='replied') patch.replied_at = new Date().toISOString();
+    await sb.from('prospects').update(patch).eq('id', p.supabase_id);
+  }
 };
 
-window.deleteProspect = (id) => {
+window.deleteProspect = async (id) => {
   if(!confirm('Delete this prospect?')) return;
-  PROSPECTS = PROSPECTS.filter(p => p.id !== id);
+  const p = PROSPECTS.find(x => x.id === id);
+  PROSPECTS = PROSPECTS.filter(x => x.id !== id);
   saveToStorage(PROSPECTS);
   renderProspects(); renderStats();
+  if(SYNC_OK && p && p.supabase_id){
+    await sb.from('prospects').delete().eq('id', p.supabase_id);
+  }
 };
 
 window.copyTemplate = (id, channel, firstName) => {
@@ -418,10 +450,101 @@ window.copyText = (i) => {
   navigator.clipboard.writeText(window._tpls[i].body).then(()=>toast('Copied to clipboard'));
 };
 
+// ============ INBOUND LEADS ============
+async function loadInboundLeads(){
+  if(!SYNC_OK){
+    document.getElementById('lead-list').innerHTML = '<div class="empty">Supabase unreachable. Check inbound leads in your email (dmcdonald5649@gmail.com) or at <a href="https://supabase.com/dashboard/project/jdmlsraqioigbukspduo/editor" target="_blank" style="color:var(--emerald);font-weight:600;">supabase.com → leads</a>.</div>';
+    document.getElementById('inbound-meta').textContent = '';
+    return;
+  }
+  const { data, error } = await sb.from('leads').select('*').order('created_at', {ascending:false});
+  const list = document.getElementById('lead-list');
+  const meta = document.getElementById('inbound-meta');
+  if(error){
+    list.innerHTML = `<div class="empty">Couldn't load leads: ${error.message}<br>Check inbound via your email or supabase.com.</div>`;
+    meta.textContent = '';
+    return;
+  }
+  LEADS = data || [];
+  meta.textContent = LEADS.length + ' total';
+  if(!LEADS.length){
+    list.innerHTML = '<div class="empty">No inbound leads yet — share your intake link.</div>';
+    return;
+  }
+  list.innerHTML = LEADS.map(renderLeadRow).join('');
+}
+
+function renderLeadRow(l){
+  const when = new Date(l.created_at).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+  const markets = Array.isArray(l.markets) ? l.markets.join(', ') : (l.markets||'');
+  const listTypes = Array.isArray(l.list_type) ? l.list_type.join(', ') : (l.list_type||'');
+  const status = l.status || 'new';
+  return `
+    <div class="row" data-id="${l.id}">
+      <div class="row-main">
+        <div class="row-name">${(l.name||'').replace(/</g,'&lt;')} <span class="badge b-${status==='new'?'queued':status==='paying'?'paying':'replied'}">${status}</span></div>
+        <div class="row-sub">${(l.email||'').replace(/</g,'&lt;')}${l.phone?' · '+l.phone.replace(/</g,'&lt;'):''}</div>
+        ${markets?`<div class="row-notes"><strong>Markets:</strong> ${markets.replace(/</g,'&lt;')}</div>`:''}
+        ${listTypes?`<div class="row-notes"><strong>Wants:</strong> ${listTypes.replace(/</g,'&lt;')}</div>`:''}
+        ${l.urgency?`<div class="row-notes"><strong>Urgency:</strong> ${l.urgency} · <strong>Volume:</strong> ${l.volume||'-'}</div>`:''}
+        ${l.current_provider?`<div class="row-notes"><strong>Currently:</strong> ${l.current_provider.replace(/</g,'&lt;')}</div>`:''}
+        ${l.notes?`<div class="row-notes"><strong>Notes:</strong> ${l.notes.replace(/</g,'&lt;')}</div>`:''}
+        <div class="row-meta">${when}</div>
+      </div>
+      <div class="row-actions">
+        <select class="status-select" onchange="window.updateLeadStatus('${l.id}',this.value)">
+          <option value="new" ${status==='new'?'selected':''}>New</option>
+          <option value="contacted" ${status==='contacted'?'selected':''}>Contacted</option>
+          <option value="quoted" ${status==='quoted'?'selected':''}>Quoted</option>
+          <option value="paying" ${status==='paying'?'selected':''}>Paying</option>
+          <option value="dead" ${status==='dead'?'selected':''}>Dead</option>
+        </select>
+      </div>
+    </div>`;
+}
+
+window.updateLeadStatus = async (id, status) => {
+  if(!SYNC_OK) return;
+  const { error } = await sb.from('leads').update({status}).eq('id', id);
+  if(error) toast('Couldn\'t update: '+error.message);
+  else toast('Updated');
+};
+
 // ============ START ============
-renderProspects();
-renderStats();
-renderTemplates();
+async function init(){
+  renderProspects();
+  renderStats();
+  renderTemplates();
+  setSync('syncing');
+  // ping supabase to detect if reads work
+  const { error } = await sb.from('prospects').select('id').limit(1);
+  if(error){
+    console.warn('supabase read err', error);
+    setSync('local');
+  } else {
+    setSync('ok');
+    // pull any prospects from supabase that aren't in local storage
+    const { data } = await sb.from('prospects').select('*').order('created_at',{ascending:false});
+    if(data){
+      const localSbIds = new Set(PROSPECTS.map(p=>p.supabase_id).filter(Boolean));
+      const newOnes = data.filter(d => !localSbIds.has(d.id)).map(d => ({
+        id: 'p-sb-'+d.id, supabase_id: d.id,
+        created_at: new Date(d.created_at).getTime(),
+        name: d.name||'', contact: d.contact||'', channel: d.channel||'sms',
+        source: d.source||'', notes: d.notes||'', status: d.status||'queued',
+        sent_at: d.sent_at?new Date(d.sent_at).getTime():null,
+        replied_at: d.replied_at?new Date(d.replied_at).getTime():null,
+      }));
+      if(newOnes.length){
+        PROSPECTS = [...newOnes, ...PROSPECTS];
+        saveToStorage(PROSPECTS);
+        renderProspects(); renderStats();
+      }
+    }
+  }
+  loadInboundLeads();
+}
+init();
 </script>
 
 </body>
