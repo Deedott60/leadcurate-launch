@@ -566,6 +566,7 @@ const SB_KEY = 'sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4';
 const sb = createClient(SB_URL, SB_KEY);
 
 const LS_KEY = 'lc.prospects.v3';
+const LS_OLD_KEYS = ['leadcurate.prospects.v1','leadcurate.prospects.v2'];
 
 // ─── STATE ────────────────────────────────────────────────────
 let SYNC = false;
@@ -582,7 +583,26 @@ const fmt = d => new Date(d).toLocaleString('en-US',{month:'short',day:'numeric'
 const fmtS= d => new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric'});
 const toastEl = document.getElementById('toast');
 function toast(m,ms=2500){ toastEl.textContent=m; toastEl.classList.add('show'); setTimeout(()=>toastEl.classList.remove('show'),ms); }
-function lsLoad(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)||'[]'); }catch{ return []; } }
+function lsLoad(){
+  try{
+    const current = JSON.parse(localStorage.getItem(LS_KEY)||'[]');
+    // migrate from old keys
+    for(const old of LS_OLD_KEYS){
+      const oldData = localStorage.getItem(old);
+      if(oldData){
+        const parsed = JSON.parse(oldData);
+        if(Array.isArray(parsed)&&parsed.length){
+          const merged = [...parsed.filter(p=>!current.find(c=>c.contact===p.contact&&c.name===p.name)), ...current];
+          localStorage.setItem(LS_KEY, JSON.stringify(merged));
+          localStorage.removeItem(old);
+          return merged;
+        }
+        localStorage.removeItem(old);
+      }
+    }
+    return current;
+  }catch{ return []; }
+}
 function lsSave(){ localStorage.setItem(LS_KEY, JSON.stringify(PROSPECTS)); }
 
 // ─── NAV ──────────────────────────────────────────────────────
