@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex,nofollow" />
+<title>LeadCurate · Command</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --emerald:#15803d;--emerald-dark:#14532d;--emerald-light:#22c55e;
+  --cream:#faf7f2;--cream-2:#f3eddf;--dark:#0f172a;
+  --slate:#475569;--slate-light:#94a3b8;--line:#e2dccf;--white:#fff;
+  --gold:#b45309;--crimson:#991b1b;--blue:#1e40af;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(--dark);-webkit-font-smoothing:antialiased;line-height:1.5;}
+
+/* App shell */
+.app{max-width:1100px;margin:0 auto;padding:20px 16px 80px;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand-mark{width:36px;height:36px;border-radius:8px;background:var(--emerald);color:var(--cream);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:20px;}
+.brand-name{font-family:'Playfair Display',serif;font-weight:700;font-size:18px;}
+.brand-name small{font-family:'JetBrains Mono',monospace;color:var(--slate-light);font-weight:500;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;margin-left:6px;}
+.signout-btn{background:transparent;border:1px solid var(--line);color:var(--slate);font-size:12px;padding:6px 12px;border-radius:999px;cursor:pointer;}
+
+/* Tabs */
+.tabs{display:flex;gap:4px;background:var(--white);border:1px solid var(--line);border-radius:999px;padding:4px;margin-bottom:20px;width:fit-content;}
+.tab-btn{background:transparent;border:none;padding:8px 18px;font-family:inherit;font-size:14px;font-weight:600;color:var(--slate);border-radius:999px;cursor:pointer;transition:all 0.15s;}
+.tab-btn.active{background:var(--emerald);color:var(--cream);}
+.tab-btn .count{display:inline-block;margin-left:6px;background:rgba(255,255,255,0.25);padding:1px 8px;border-radius:999px;font-size:11px;}
+.tab-btn:not(.active) .count{background:var(--cream-2);color:var(--slate);}
+
+/* Panel */
+.panel{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:16px;}
+.panel-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:8px;flex-wrap:wrap;}
+.panel-h h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;}
+.panel-h .meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--slate-light);}
+
+/* Forms */
+.input,.select,.textarea{width:100%;padding:10px 14px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:14px;color:var(--dark);background:var(--white);}
+.input:focus,.select:focus,.textarea:focus{outline:none;border-color:var(--emerald);box-shadow:0 0 0 3px rgba(21,128,61,0.12);}
+.textarea{min-height:60px;resize:vertical;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+@media (max-width:560px){.field-row{grid-template-columns:1fr;}}
+label{display:block;font-size:11px;font-weight:600;color:var(--slate);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em;}
+.btn{display:inline-flex;align-items:center;gap:6px;background:var(--emerald);color:var(--cream);border:none;padding:10px 18px;border-radius:999px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:background 0.15s;}
+.btn:hover{background:var(--emerald-dark);}
+.btn:disabled{opacity:0.5;cursor:not-allowed;}
+.btn-sm{padding:6px 12px;font-size:12px;}
+.btn-ghost{background:transparent;color:var(--slate);border:1px solid var(--line);}
+.btn-ghost:hover{background:var(--cream-2);color:var(--dark);}
+
+/* Lists */
+.row{display:grid;grid-template-columns:1fr auto;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);align-items:flex-start;}
+.row:last-child{border-bottom:none;}
+.row-main{min-width:0;}
+.row-name{font-weight:600;font-size:15px;color:var(--dark);margin-bottom:2px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.row-sub{font-size:13px;color:var(--slate);font-family:'JetBrains Mono',monospace;}
+.row-notes{font-size:13px;color:var(--slate);margin-top:6px;line-height:1.4;}
+.row-meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--slate-light);margin-top:4px;}
+.row-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
+
+/* Status badges */
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;}
+.b-queued{background:#eff6ff;color:var(--blue);}
+.b-sent{background:#fef3c7;color:var(--gold);}
+.b-replied{background:#dcfce7;color:var(--emerald-dark);}
+.b-quoted{background:#e0e7ff;color:#3730a3;}
+.b-paying{background:var(--emerald);color:var(--cream);}
+.b-dead{background:#f3f4f6;color:var(--slate-light);}
+.b-new{background:#fef3c7;color:var(--gold);}
+.b-contacted{background:#dcfce7;color:var(--emerald-dark);}
+
+/* Empty state */
+.empty{text-align:center;padding:40px 20px;color:var(--slate-light);font-size:14px;}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--dark);color:var(--cream);padding:12px 20px;border-radius:999px;font-size:13px;font-weight:500;box-shadow:0 10px 30px rgba(0,0,0,0.25);opacity:0;transition:opacity 0.2s;z-index:100;pointer-events:none;}
+.toast.show{opacity:1;}
+
+/* Login screen */
+.login{max-width:380px;margin:80px auto 0;padding:0 20px;text-align:center;}
+.login .brand-mark{width:56px;height:56px;font-size:28px;margin:0 auto 24px;}
+.login h1{font-family:'Playfair Display',serif;font-size:30px;margin-bottom:8px;}
+.login p{color:var(--slate);font-size:15px;margin-bottom:24px;}
+.login-card{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:28px;text-align:left;}
+.login-status{font-size:13px;color:var(--slate);margin-top:16px;text-align:center;line-height:1.5;}
+.login-status.ok{color:var(--emerald-dark);}
+.login-status.err{color:var(--crimson);}
+
+/* Stat strip */
+.stat-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px;}
+.stat-pill{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:14px;}
+.stat-pill .v{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--dark);line-height:1;}
+.stat-pill .l{font-size:11px;color:var(--slate-light);text-transform:uppercase;letter-spacing:0.08em;font-weight:600;margin-top:4px;}
+
+/* Status select inline */
+.status-select{padding:4px 8px;border:1px solid var(--line);border-radius:6px;font-family:inherit;font-size:12px;background:var(--white);color:var(--dark);}
+
+.hide{display:none !important;}
+</style>
+</head>
+<body>
+
+<!-- ===================== LOGIN ===================== -->
+<div id="login-view" class="login">
+  <div class="brand-mark">L</div>
+  <h1>Command</h1>
+  <p>Private dashboard. Email login required.</p>
+  <div class="login-card">
+    <label for="email-input">Your email</label>
+    <input class="input" type="email" id="email-input" placeholder="dmcdonald5649@gmail.com" autocomplete="email" />
+    <button class="btn" id="send-link-btn" style="width:100%;justify-content:center;margin-top:12px;">Email me a login link</button>
+    <div class="login-status" id="login-status"></div>
+  </div>
+</div>
+
+<!-- ===================== APP ===================== -->
+<div id="app-view" class="app hide">
+
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">L</div>
+      <div class="brand-name">LeadCurate <small>command</small></div>
+    </div>
+    <button class="signout-btn" id="signout-btn">Sign out</button>
+  </div>
+
+  <!-- Quick stat strip -->
+  <div class="stat-strip" id="stat-strip">
+    <div class="stat-pill"><div class="v" id="stat-new">—</div><div class="l">New inbound</div></div>
+    <div class="stat-pill"><div class="v" id="stat-sent">—</div><div class="l">Awaiting reply</div></div>
+    <div class="stat-pill"><div class="v" id="stat-replied">—</div><div class="l">In play</div></div>
+    <div class="stat-pill"><div class="v" id="stat-paying">—</div><div class="l">Paying</div></div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs" role="tablist">
+    <button class="tab-btn active" data-tab="outreach">Outreach <span class="count" id="tab-count-outreach">0</span></button>
+    <button class="tab-btn" data-tab="inbound">Inbound <span class="count" id="tab-count-inbound">0</span></button>
+    <button class="tab-btn" data-tab="templates">Templates</button>
+  </div>
+
+  <!-- ===== OUTREACH TAB ===== -->
+  <div id="tab-outreach" class="tab-content">
+
+    <!-- Add prospect -->
+    <div class="panel">
+      <div class="panel-h">
+        <h2>Add a prospect</h2>
+        <span class="meta">drops into your queue</span>
+      </div>
+      <div class="field-row">
+        <div>
+          <label>Name (or handle)</label>
+          <input class="input" id="p-name" placeholder="John from FB group, @flipper_chris, etc." />
+        </div>
+        <div>
+          <label>Contact (phone, email, or DM)</label>
+          <input class="input" id="p-contact" placeholder="704-555-0123 or @username" />
+        </div>
+      </div>
+      <div class="field-row">
+        <div>
+          <label>Channel</label>
+          <select class="select" id="p-channel">
+            <option value="sms">SMS</option>
+            <option value="dm">DM (IG/FB/Twitter)</option>
+            <option value="email">Email</option>
+            <option value="call">Phone call</option>
+            <option value="in-person">In person</option>
+          </select>
+        </div>
+        <div>
+          <label>Where you found them</label>
+          <input class="input" id="p-source" placeholder="REI Facebook group, BiggerPockets, REIA meetup" />
+        </div>
+      </div>
+      <div style="margin-bottom:10px;">
+        <label>Notes (what list might they want?)</label>
+        <textarea class="textarea" id="p-notes" placeholder="Mentioned wanting Charlotte pre-foreclosure, has been wholesaling 6 months"></textarea>
+      </div>
+      <button class="btn" id="add-prospect-btn">Add to queue</button>
+    </div>
+
+    <!-- Prospect list -->
+    <div class="panel">
+      <div class="panel-h">
+        <h2>Your queue</h2>
+        <select class="status-select" id="filter-status">
+          <option value="">All status</option>
+          <option value="queued">Queued</option>
+          <option value="sent">Sent — awaiting</option>
+          <option value="replied">Replied</option>
+          <option value="quoted">Quoted</option>
+          <option value="paying">Paying</option>
+          <option value="dead">Dead</option>
+        </select>
+      </div>
+      <div id="prospect-list"><div class="empty">Loading…</div></div>
+    </div>
+
+  </div>
+
+  <!-- ===== INBOUND TAB ===== -->
+  <div id="tab-inbound" class="tab-content hide">
+    <div class="panel">
+      <div class="panel-h">
+        <h2>Inbound from intake form</h2>
+        <span class="meta">refresh page for latest</span>
+      </div>
+      <div id="lead-list"><div class="empty">Loading…</div></div>
+    </div>
+  </div>
+
+  <!-- ===== TEMPLATES TAB ===== -->
+  <div id="tab-templates" class="tab-content hide">
+    <div class="panel">
+      <div class="panel-h"><h2>Copy + paste templates</h2></div>
+      <p style="font-size:13px;color:var(--slate);margin-bottom:14px;">Click any block to copy. Replace <code style="background:var(--cream-2);padding:2px 6px;border-radius:4px;">[Name]</code> with their first name.</p>
+
+      <div id="templates-container"></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+const SUPABASE_URL = 'https://jdmlsraqioigbukspduo.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4';
+const INTAKE_URL = 'https://deedott60.github.io/leadcurate-launch/intake/';
+const DELIVERIES_URL = 'https://deedott60.github.io/leadcurate-launch/sample-deliveries/';
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const loginView = document.getElementById('login-view');
+const appView = document.getElementById('app-view');
+const toastEl = document.getElementById('toast');
+
+function toast(msg, ms=2000){ toastEl.textContent=msg; toastEl.classList.add('show'); setTimeout(()=>toastEl.classList.remove('show'),ms); }
+
+// =================== AUTH ===================
+async function checkSession(){
+  const { data: { session } } = await supabase.auth.getSession();
+  if(session){ enterApp(); } else { showLogin(); }
+}
+function showLogin(){ loginView.classList.remove('hide'); appView.classList.add('hide'); }
+function enterApp(){ loginView.classList.add('hide'); appView.classList.remove('hide'); loadAll(); }
+
+document.getElementById('send-link-btn').onclick = async () => {
+  const email = document.getElementById('email-input').value.trim();
+  const status = document.getElementById('login-status');
+  status.className='login-status'; status.textContent='Sending…';
+  if(!email){ status.className='login-status err'; status.textContent='Email please.'; return; }
+  const { error } = await supabase.auth.signInWithOtp({
+    email,
+    options: { emailRedirectTo: window.location.href.split('#')[0] }
+  });
+  if(error){ status.className='login-status err'; status.textContent=error.message; }
+  else { status.className='login-status ok'; status.innerHTML='Check your inbox.<br>Click the link in the email — it brings you right back here.'; }
+};
+
+document.getElementById('signout-btn').onclick = async () => {
+  await supabase.auth.signOut();
+  location.reload();
+};
+
+// auto handle the magic link callback (hash fragment)
+supabase.auth.onAuthStateChange((event)=>{
+  if(event==='SIGNED_IN' || event==='TOKEN_REFRESHED'){ enterApp(); }
+  if(event==='SIGNED_OUT'){ showLogin(); }
+});
+
+// =================== TABS ===================
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.onclick = () => {
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.tab-content').forEach(c=>c.classList.add('hide'));
+    document.getElementById('tab-'+btn.dataset.tab).classList.remove('hide');
+  };
+});
+
+// =================== LOAD DATA ===================
+async function loadAll(){
+  await Promise.all([loadProspects(), loadLeads(), renderTemplates()]);
+  await loadStats();
+}
+
+async function loadStats(){
+  const { data: leads } = await supabase.from('leads').select('status');
+  const { data: prospects } = await supabase.from('prospects').select('status');
+  const newCount = (leads||[]).filter(l=>l.status==='new'||!l.status).length;
+  const sentCount = (prospects||[]).filter(p=>p.status==='sent').length;
+  const repliedCount = (prospects||[]).filter(p=>p.status==='replied'||p.status==='quoted').length;
+  const payingCount = (prospects||[]).filter(p=>p.status==='paying').length;
+  document.getElementById('stat-new').textContent=newCount;
+  document.getElementById('stat-sent').textContent=sentCount;
+  document.getElementById('stat-replied').textContent=repliedCount;
+  document.getElementById('stat-paying').textContent=payingCount;
+  document.getElementById('tab-count-inbound').textContent=(leads||[]).length;
+  document.getElementById('tab-count-outreach').textContent=(prospects||[]).length;
+}
+
+// =================== PROSPECTS ===================
+document.getElementById('add-prospect-btn').onclick = async () => {
+  const btn = document.getElementById('add-prospect-btn');
+  const data = {
+    name: document.getElementById('p-name').value.trim(),
+    contact: document.getElementById('p-contact').value.trim(),
+    channel: document.getElementById('p-channel').value,
+    source: document.getElementById('p-source').value.trim(),
+    notes: document.getElementById('p-notes').value.trim(),
+    status: 'queued',
+  };
+  if(!data.name && !data.contact){ toast('Need a name or contact'); return; }
+  btn.disabled=true; btn.textContent='Adding…';
+  const { error } = await supabase.from('prospects').insert([data]);
+  btn.disabled=false; btn.textContent='Add to queue';
+  if(error){ toast('Error: '+error.message); return; }
+  ['p-name','p-contact','p-source','p-notes'].forEach(id=>document.getElementById(id).value='');
+  toast('Added to queue');
+  loadProspects(); loadStats();
+};
+
+document.getElementById('filter-status').onchange = loadProspects;
+
+async function loadProspects(){
+  const filter = document.getElementById('filter-status').value;
+  let q = supabase.from('prospects').select('*').order('created_at',{ascending:false});
+  if(filter) q = q.eq('status', filter);
+  const { data, error } = await q;
+  const list = document.getElementById('prospect-list');
+  if(error){ list.innerHTML=`<div class="empty">${error.message}</div>`; return; }
+  if(!data || !data.length){ list.innerHTML='<div class="empty">No prospects yet — add your first one above.</div>'; return; }
+  list.innerHTML = data.map(p => renderProspectRow(p)).join('');
+}
+
+function renderProspectRow(p){
+  const channelLabels = {sms:'SMS', dm:'DM', email:'Email', call:'Call', 'in-person':'In person'};
+  const when = new Date(p.created_at).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+  const safeNotes = (p.notes||'').replace(/</g,'&lt;');
+  return `
+    <div class="row" data-id="${p.id}">
+      <div class="row-main">
+        <div class="row-name">${(p.name||'(no name)').replace(/</g,'&lt;')} <span class="badge b-${p.status}">${p.status}</span></div>
+        <div class="row-sub">${(p.contact||'').replace(/</g,'&lt;')} · ${channelLabels[p.channel]||p.channel}${p.source?' · '+p.source.replace(/</g,'&lt;'):''}</div>
+        ${safeNotes?`<div class="row-notes">${safeNotes}</div>`:''}
+        <div class="row-meta">${when}</div>
+      </div>
+      <div class="row-actions">
+        <button class="btn btn-sm btn-ghost" onclick="window.copyTemplate('${p.id}','${p.channel}','${(p.name||'').split(' ')[0].replace(/'/g,'')}')">Copy msg</button>
+        <select class="status-select" onchange="window.updateProspectStatus('${p.id}',this.value)">
+          <option value="queued" ${p.status==='queued'?'selected':''}>Queued</option>
+          <option value="sent" ${p.status==='sent'?'selected':''}>Sent</option>
+          <option value="replied" ${p.status==='replied'?'selected':''}>Replied</option>
+          <option value="quoted" ${p.status==='quoted'?'selected':''}>Quoted</option>
+          <option value="paying" ${p.status==='paying'?'selected':''}>Paying</option>
+          <option value="dead" ${p.status==='dead'?'selected':''}>Dead</option>
+        </select>
+      </div>
+    </div>`;
+}
+
+window.updateProspectStatus = async (id, status) => {
+  const patch = { status };
+  if(status==='sent') patch.sent_at = new Date().toISOString();
+  if(status==='replied') patch.replied_at = new Date().toISOString();
+  const { error } = await supabase.from('prospects').update(patch).eq('id', id);
+  if(error) toast('Error: '+error.message);
+  else { toast('Updated'); loadStats(); }
+};
+
+window.copyTemplate = (id, channel, firstName) => {
+  const name = firstName || '[Name]';
+  let msg = '';
+  if(channel==='sms' || channel==='dm'){
+    msg = `Hey ${name} — I run LeadCurate. We curate fresh distressed-owner lists straight from county records. Drop your market here, get a quote in 24h: ${INTAKE_URL}`;
+  } else if(channel==='email'){
+    msg = `${name},\n\nQuick one — I run LeadCurate. We curate fresh county-sourced lead lists for real estate investors — direct from county records (tax delinquent, pre-foreclosure, permits, probate, absentee).\n\nIf you want a quote, fill this out and I'll get back within 24h:\n${INTAKE_URL}\n\nSample deliveries (Houston, Atlanta, Charlotte, Louisville, Birmingham):\n${DELIVERIES_URL}\n\n— Daniel\nLeadCurate`;
+  } else {
+    msg = `Hey ${name} — LeadCurate curates distressed-owner lists direct from county records. Tell me your market: ${INTAKE_URL}`;
+  }
+  navigator.clipboard.writeText(msg).then(()=>{
+    toast('Copied! Paste in '+channel);
+    if(status==='queued') window.updateProspectStatus(id,'sent');
+  });
+};
+
+// =================== LEADS ===================
+async function loadLeads(){
+  const { data, error } = await supabase.from('leads').select('*').order('created_at',{ascending:false});
+  const list = document.getElementById('lead-list');
+  if(error){ list.innerHTML=`<div class="empty">${error.message}</div>`; return; }
+  if(!data || !data.length){ list.innerHTML='<div class="empty">No inbound leads yet — share your intake link.</div>'; return; }
+  list.innerHTML = data.map(l => renderLeadRow(l)).join('');
+}
+
+function renderLeadRow(l){
+  const when = new Date(l.created_at).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+  const markets = Array.isArray(l.markets) ? l.markets.join(', ') : (l.markets||'');
+  const listTypes = Array.isArray(l.list_type) ? l.list_type.join(', ') : (l.list_type||'');
+  const status = l.status || 'new';
+  return `
+    <div class="row" data-id="${l.id}">
+      <div class="row-main">
+        <div class="row-name">${(l.name||'').replace(/</g,'&lt;')} <span class="badge b-${status==='new'?'new':'contacted'}">${status}</span></div>
+        <div class="row-sub">${(l.email||'').replace(/</g,'&lt;')}${l.phone?' · '+l.phone.replace(/</g,'&lt;'):''}</div>
+        ${markets?`<div class="row-notes"><strong>Markets:</strong> ${markets.replace(/</g,'&lt;')}</div>`:''}
+        ${listTypes?`<div class="row-notes"><strong>Wants:</strong> ${listTypes.replace(/</g,'&lt;')}</div>`:''}
+        ${l.urgency?`<div class="row-notes"><strong>Urgency:</strong> ${l.urgency} · <strong>Volume:</strong> ${l.volume||'-'}</div>`:''}
+        ${l.current_provider?`<div class="row-notes"><strong>Currently using:</strong> ${l.current_provider.replace(/</g,'&lt;')}</div>`:''}
+        ${l.notes?`<div class="row-notes"><strong>Notes:</strong> ${l.notes.replace(/</g,'&lt;')}</div>`:''}
+        <div class="row-meta">${when}</div>
+      </div>
+      <div class="row-actions">
+        <select class="status-select" onchange="window.updateLeadStatus('${l.id}',this.value)">
+          <option value="new" ${status==='new'?'selected':''}>New</option>
+          <option value="contacted" ${status==='contacted'?'selected':''}>Contacted</option>
+          <option value="quoted" ${status==='quoted'?'selected':''}>Quoted</option>
+          <option value="paying" ${status==='paying'?'selected':''}>Paying</option>
+          <option value="dead" ${status==='dead'?'selected':''}>Dead</option>
+        </select>
+      </div>
+    </div>`;
+}
+
+window.updateLeadStatus = async (id, status) => {
+  const { error } = await supabase.from('leads').update({status}).eq('id', id);
+  if(error) toast('Error: '+error.message);
+  else { toast('Updated'); loadStats(); }
+};
+
+// =================== TEMPLATES ===================
+function renderTemplates(){
+  const tpls = [
+    {label:'SMS — cold intro', body:`Hey [Name] — I run LeadCurate. We curate fresh distressed-owner lists direct from county records. Drop your target market here, quote in 24h: ${INTAKE_URL}`},
+    {label:'DM — Instagram / Facebook', body:`[Name], quick one — I run LeadCurate. We curate distressed-owner lists direct from county records (tax delinquent, pre-foreclosure, permits, probate). Tell me what market + list type you need, I'll quote within 24h: ${INTAKE_URL}`},
+    {label:'Email — first contact', body:`Hi [Name],\n\nQuick one — I run LeadCurate. We curate fresh real-estate lead lists directly from county records — tax delinquent, pre-foreclosure, probate, permit, and lien data.\n\nIf you want a custom quote for your market, fill this out and I'll reply within 24h:\n${INTAKE_URL}\n\nSample deliveries (Houston, Atlanta NW, Charlotte, Louisville, Birmingham):\n${DELIVERIES_URL}\n\n— Daniel\nLeadCurate`},
+    {label:'Follow-up — 3 days later', body:`Hey [Name], following up on the LeadCurate intake. Still hunting for [list type]? Happy to send a sample of what we have in [market] — just reply with the market and I'll send a redacted preview.`},
+    {label:'Reply to "what makes you different"', body:`Three things: (1) we pull from county records directly, so data is fresh and not recycled, (2) we score + segment per lane (entity vs individual, absentee, permit distress, etc.) so you're not paying for junk, (3) you get HTML + Excel + CSV, ready for your dialer or mail merge. Sample: ${DELIVERIES_URL}`},
+  ];
+  const cont = document.getElementById('templates-container');
+  cont.innerHTML = tpls.map((t,i)=>`
+    <div style="border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px;cursor:pointer;background:var(--cream);" onclick="window.copyText(${i})">
+      <div style="font-size:11px;font-weight:600;color:var(--emerald);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">${t.label}</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--dark);white-space:pre-wrap;">${t.body.replace(/</g,'&lt;')}</div>
+    </div>`).join('');
+  window._tpls = tpls;
+}
+
+window.copyText = (i) => {
+  navigator.clipboard.writeText(window._tpls[i].body).then(()=>toast('Copied to clipboard'));
+};
+
+// =================== START ===================
+checkSession();
+</script>
+
+</body>
+</html>
