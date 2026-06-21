@@ -105,28 +105,15 @@ label{display:block;font-size:11px;font-weight:600;color:var(--slate);margin-bot
 </head>
 <body>
 
-<!-- ===================== LOGIN ===================== -->
-<div id="login-view" class="login">
-  <div class="brand-mark">L</div>
-  <h1>Command</h1>
-  <p>Private dashboard. Email login required.</p>
-  <div class="login-card">
-    <label for="email-input">Your email</label>
-    <input class="input" type="email" id="email-input" placeholder="dmcdonald5649@gmail.com" autocomplete="email" />
-    <button class="btn" id="send-link-btn" style="width:100%;justify-content:center;margin-top:12px;">Email me a login link</button>
-    <div class="login-status" id="login-status"></div>
-  </div>
-</div>
-
-<!-- ===================== APP ===================== -->
-<div id="app-view" class="app hide">
+<!-- ===================== APP (no login wall — private URL only) ===================== -->
+<div id="app-view" class="app">
 
   <div class="topbar">
     <div class="brand">
       <div class="brand-mark">L</div>
       <div class="brand-name">LeadCurate <small>command</small></div>
     </div>
-    <button class="signout-btn" id="signout-btn">Sign out</button>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--slate-light);">private url · keep it to yourself</span>
   </div>
 
   <!-- Quick stat strip -->
@@ -240,43 +227,8 @@ const DELIVERIES_URL = 'https://deedott60.github.io/leadcurate-launch/sample-del
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const loginView = document.getElementById('login-view');
-const appView = document.getElementById('app-view');
 const toastEl = document.getElementById('toast');
-
 function toast(msg, ms=2000){ toastEl.textContent=msg; toastEl.classList.add('show'); setTimeout(()=>toastEl.classList.remove('show'),ms); }
-
-// =================== AUTH ===================
-async function checkSession(){
-  const { data: { session } } = await supabase.auth.getSession();
-  if(session){ enterApp(); } else { showLogin(); }
-}
-function showLogin(){ loginView.classList.remove('hide'); appView.classList.add('hide'); }
-function enterApp(){ loginView.classList.add('hide'); appView.classList.remove('hide'); loadAll(); }
-
-document.getElementById('send-link-btn').onclick = async () => {
-  const email = document.getElementById('email-input').value.trim();
-  const status = document.getElementById('login-status');
-  status.className='login-status'; status.textContent='Sending…';
-  if(!email){ status.className='login-status err'; status.textContent='Email please.'; return; }
-  const { error } = await supabase.auth.signInWithOtp({
-    email,
-    options: { emailRedirectTo: window.location.href.split('#')[0] }
-  });
-  if(error){ status.className='login-status err'; status.textContent=error.message; }
-  else { status.className='login-status ok'; status.innerHTML='Check your inbox.<br>Click the link in the email — it brings you right back here.'; }
-};
-
-document.getElementById('signout-btn').onclick = async () => {
-  await supabase.auth.signOut();
-  location.reload();
-};
-
-// auto handle the magic link callback (hash fragment)
-supabase.auth.onAuthStateChange((event)=>{
-  if(event==='SIGNED_IN' || event==='TOKEN_REFRESHED'){ enterApp(); }
-  if(event==='SIGNED_OUT'){ showLogin(); }
-});
 
 // =================== TABS ===================
 document.querySelectorAll('.tab-btn').forEach(btn=>{
@@ -461,7 +413,7 @@ window.copyText = (i) => {
 };
 
 // =================== START ===================
-checkSession();
+loadAll();
 </script>
 
 </body>
