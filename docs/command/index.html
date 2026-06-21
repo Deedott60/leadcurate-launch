@@ -37,14 +37,14 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 #topbar .sync-badge.err{background:rgba(239,68,68,0.2);color:#fca5a5;}
 #topbar .spacer{flex:1;}
 #topbar .date{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,0.4);}
-#cmd-btn{
+#cmd-btn,#copy-link-btn{
   display:flex;align-items:center;gap:8px;
   background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);
   color:rgba(255,255,255,0.6);padding:6px 14px;border-radius:8px;
   font-family:'JetBrains Mono',monospace;font-size:11px;cursor:pointer;
   transition:background 0.15s;
 }
-#cmd-btn:hover{background:rgba(255,255,255,0.14);}
+#cmd-btn:hover,#copy-link-btn:hover{background:rgba(255,255,255,0.14);color:rgba(255,255,255,0.9);}
 #cmd-btn kbd{background:rgba(255,255,255,0.12);padding:1px 5px;border-radius:3px;font-size:10px;}
 
 /* ── LAYOUT ─────────────────────────────── */
@@ -248,6 +248,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
   </div>
   <span id="sync-badge" class="sync-badge">connecting…</span>
   <div class="spacer"></div>
+  <button id="copy-link-btn" onclick="window.copyIntakeLink()">🔗 Copy intake link</button>
   <button id="cmd-btn" onclick="openCmd()">🔍 Search <kbd>⌘K</kbd></button>
   <span class="date" id="today-date"></span>
 </div>
@@ -1025,6 +1026,23 @@ function renderTemplates(){
     {label:'★ Quote follow-up — no reply', body:`Hey [Name], sent the [market] quote a few days ago. Making sure it didn't get buried — let me know if you have questions or want a smaller batch first.`},
     {label:'★ Payment received — confirmation', body:`[Name] — payment received, thank you. I'm pulling your [market] [list type] now. Full file in your inbox within 24 hours, usually sooner.`},
     {label:'★ Delivery email (after paid)', body:`[Name] — your [market] [list type] is ready.\n\nWhat's attached:\n• [N] ranked records (HTML preview + XLSX + CSV)\n• Owner names, addresses, parcel IDs, market values\n• Distress signals + score per record\n• Source date: [pull date]\n\nLet me know what you need next batch. If you want a recurring monthly pull for this market, I can set that up.\n\n— Daniel\nLeadCurate`},
+
+    // ─── REPLY TEMPLATES ───────────────────────────────────────────
+    {label:'☞ They asked "how much?" (no intake yet)', body:`Hey [Name] — pricing depends on the market + list type + volume. Quick form so I can quote you right: ${INTAKE_URL}\n\nGeneral range: small batches start at $[LOW], full county pulls run higher depending on size. Sample deliveries: ${SAMPLES_URL}`},
+    {label:'☞ They want sample only — no commitment', body:`No problem [Name] — here are redacted samples across markets we cover: ${SAMPLES_URL}\n\nIf one of them looks like what you'd want for [market], just say the word and I'll quote you a fresh pull.`},
+    {label:'☞ They asked "what makes you different"', body:`Three things: (1) we pull from county records directly — fresh, not recycled, (2) we score + segment per lane (entity vs individual, absentee, permit distress) so you're not paying for junk, (3) HTML + Excel + CSV ready for your dialer or mail merge. Sample: ${SAMPLES_URL}`},
+    {label:'☞ Market we don\'t cover yet', body:`Hey [Name] — we don\'t have [market] pulled yet, but we can. Most new markets take us 1–3 days. If you want it added, fill the intake so I have your details: ${INTAKE_URL} — I\'ll quote the pull + delivery in 24h.`},
+
+    // ─── PAYMENT INSTRUCTIONS ──────────────────────────────────────
+    {label:'$ Payment — Cash App', body:`[Name] — confirmed at $[PRICE] for [market] [list type] ([N] records).\n\nSend to Cash App: $[YourCashtag]\nReference: "[market] list" in the memo.\n\nOnce I see the payment, I\'ll send the full file within 24 hours (usually faster).`},
+    {label:'$ Payment — Zelle', body:`[Name] — confirmed at $[PRICE] for [market] [list type] ([N] records).\n\nZelle to: [your-email-or-phone]\nReference: "[market] list" in memo.\n\nFull file in your inbox within 24 hours of payment.`},
+    {label:'$ Payment — Stripe / card', body:`[Name] — confirmed at $[PRICE] for [market] [list type] ([N] records).\n\nPay by card here: [STRIPE_LINK]\n\nAuto-confirmation comes through and I deliver the file within 24 hours.`},
+
+    // ─── POST-DELIVERY / RECURRING ─────────────────────────────────
+    {label:'⤴ Day-after check-in', body:`[Name] — quick check: did the [market] list pull anything useful so far? Happy to slice it differently (by ZIP, score range, or owner type) if you want a tighter cut.`},
+    {label:'⤴ Recurring monthly suggestion', body:`[Name] — that [market] batch I sent? I can pull a fresh version every month for $[MONTHLY] — same lane, only new records added. Saves you from re-asking each time. Want me to set that up?`},
+    {label:'⤴ Referral ask (after good delivery)', body:`[Name] — appreciate the order. If you know anyone else hunting [market] or similar, send them my way: ${INTAKE_URL} — I'll knock $[REFERRAL_CREDIT] off your next pull for any of them that orders.`},
+    {label:'⤴ Reactivation — 30 days quiet', body:`Hey [Name], been a minute. Anything new on your [market] hunt? I've got [N] fresh records since the last pull — happy to send a sample if you want to peek.`},
   ];
   const list = document.getElementById('templates-list'); if(!list) return;
   list.innerHTML = tpls.map((t,i)=>`
@@ -1035,6 +1053,7 @@ function renderTemplates(){
   window._tpls = tpls;
 }
 window.copyTpl = (i) => { navigator.clipboard.writeText(window._tpls[i].body).then(()=>toast('Copied')); };
+window.copyIntakeLink = () => { navigator.clipboard.writeText(INTAKE_URL).then(()=>toast('Intake link copied — paste anywhere')); };
 
 // ─── REALTIME ────────────────────────────────────────────────
 function subscribeRealtime(){
