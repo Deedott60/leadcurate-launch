@@ -287,6 +287,14 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
     </div>
     <div class="nav-divider"></div>
+    <div class="nav-label">Agent comms</div>
+    <div class="nav-section">
+      <div class="nav-item" data-page="conference">
+        <span class="icon">🏛️</span> Conference room
+        <span class="badge" id="nb-conference">0</span>
+      </div>
+    </div>
+    <div class="nav-divider"></div>
     <div class="nav-label">Growth</div>
     <div class="nav-section">
       <div class="nav-item" data-page="marketing">
@@ -307,9 +315,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 
     <div class="agent-strip">
       <div class="nav-label" style="margin-top:0;">Agents</div>
-      <div class="agent-mini"><div class="dot" id="dot-sb"></div>Supabase</div>
+      <div class="agent-mini"><div class="dot on" id="dot-claude"></div>Claude (orchestrator)</div>
+      <div class="agent-mini"><div class="dot on" id="dot-claude-code"></div>Claude Code</div>
       <div class="agent-mini"><div class="dot" id="dot-codex"></div>Codex</div>
-      <div class="agent-mini"><div class="dot" id="dot-hermes"></div>Hermes</div>
+      <div class="agent-mini"><div class="dot" id="dot-hermes"></div>Hermes (Danny)</div>
+      <div class="agent-mini"><div class="dot" id="dot-sb"></div>Supabase</div>
       <div class="agent-mini"><div class="dot" id="dot-twilio"></div>Twilio / SMS</div>
       <div class="agent-mini"><div class="dot" id="dot-n8n"></div>n8n</div>
     </div>
@@ -559,6 +569,69 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div id="templates-list"></div>
     </div>
 
+    <!-- ── CONFERENCE ROOM ─────────────────── -->
+    <div id="page-conference" class="page">
+      <div class="page-header">
+        <div class="page-title">Conference room</div>
+        <div class="page-sub">Where agents report in. Every status update, hand-off, blocker, or completion shows up here. Catch communication gaps fast.</div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h">
+          <span class="card-title">Post a message (manual)</span>
+          <span class="card-meta">while automation isn't wired</span>
+        </div>
+        <div class="f-grid">
+          <div class="f-field">
+            <div class="f-label">From agent</div>
+            <select class="f-select" id="conf-agent">
+              <option value="claude">Claude (orchestrator)</option>
+              <option value="claude-code">Claude Code</option>
+              <option value="codex">Codex</option>
+              <option value="hermes">Hermes (Danny)</option>
+              <option value="daniel">Daniel (operator)</option>
+              <option value="system">System</option>
+            </select>
+          </div>
+          <div class="f-field">
+            <div class="f-label">Type</div>
+            <select class="f-select" id="conf-type">
+              <option value="status">📍 Status update</option>
+              <option value="handoff">🤝 Handoff</option>
+              <option value="blocker">🚧 Blocker</option>
+              <option value="done">✅ Done</option>
+              <option value="question">❓ Question</option>
+              <option value="role">🎭 Role / assignment</option>
+            </select>
+          </div>
+        </div>
+        <div class="f-field mb8">
+          <div class="f-label">Message</div>
+          <textarea class="f-textarea" id="conf-body" placeholder="e.g. 'Codex: please run RLS audit on Supabase tomorrow' or 'Hermes: standing by — API needed before I can cron the Wake pull'"></textarea>
+        </div>
+        <button class="btn" id="conf-post-btn">Post to conference</button>
+      </div>
+
+      <div class="card">
+        <div class="card-h">
+          <span class="card-title">Conference log</span>
+          <div class="flex-row">
+            <select class="mini-select" id="conf-filter">
+              <option value="">All agents</option>
+              <option value="claude">Claude</option>
+              <option value="claude-code">Claude Code</option>
+              <option value="codex">Codex</option>
+              <option value="hermes">Hermes</option>
+              <option value="daniel">Daniel</option>
+              <option value="system">System</option>
+            </select>
+            <span class="card-meta" id="conf-meta">—</span>
+          </div>
+        </div>
+        <div id="conf-list"><div class="empty">No messages yet. Post the first one above to seed the log.</div></div>
+      </div>
+    </div>
+
     <!-- ── MARKETING (placeholder for Phase 2) ─────────── -->
     <div id="page-marketing" class="page">
       <div class="page-header">
@@ -756,7 +829,7 @@ function lsLoad(){
 function lsSave(){ localStorage.setItem(LS_KEY, JSON.stringify(PROSPECTS)); }
 
 // ─── NAV ──────────────────────────────────────────────────────
-const pages = ['hq','inbox','pipeline','messages','workflow','templates','marketing','seo','help'];
+const pages = ['hq','inbox','pipeline','messages','workflow','templates','conference','marketing','seo','help'];
 window.nav = function(id){
   pages.forEach(p=>{
     document.getElementById('page-'+p).classList.toggle('active',p===id);
@@ -768,7 +841,59 @@ window.nav = function(id){
   if(id==='pipeline') renderKanban();
   if(id==='messages') renderMessages();
   if(id==='workflow'){ renderAgents(); renderFeed('wf-feed','wf-feed-count'); }
+  if(id==='conference') renderConference();
 };
+
+// ─── CONFERENCE ROOM ─────────────────────────────────────────
+const CONF_LABELS = {
+  claude:'Claude', 'claude-code':'Claude Code', codex:'Codex',
+  hermes:'Hermes', daniel:'Daniel', system:'System'
+};
+const CONF_TYPE_ICONS = {
+  status:'📍', handoff:'🤝', blocker:'🚧', done:'✅', question:'❓', role:'🎭'
+};
+async function renderConference(){
+  const filter = document.getElementById('conf-filter')?.value || '';
+  // Read from activity_feed where event_type starts with 'conf:'
+  const confMsgs = FEED.filter(f => (f.event_type||'').startsWith('conf:'));
+  const filtered = filter ? confMsgs.filter(m => (m.source||'')===filter) : confMsgs;
+  const list = document.getElementById('conf-list');
+  const meta = document.getElementById('conf-meta');
+  if(meta) meta.textContent = confMsgs.length + ' messages';
+  const nb = document.getElementById('nb-conference');
+  if(nb) nb.textContent = confMsgs.length;
+  if(!list) return;
+  if(!filtered.length){
+    list.innerHTML = '<div class="empty">'+(filter?'No messages from that agent yet.':'No messages yet. Post the first one above.')+'</div>';
+    return;
+  }
+  list.innerHTML = filtered.map(m => {
+    const type = (m.event_type||'conf:status').replace('conf:','');
+    const icon = CONF_TYPE_ICONS[type] || '📌';
+    const agent = CONF_LABELS[m.source] || m.source || 'Unknown';
+    return `<div class="row">
+      <div class="row-body">
+        <div class="row-name">${icon} ${esc(agent)} <span class="badge b-${type==='done'?'paying':type==='blocker'?'dead':'queued'}">${type}</span></div>
+        ${m.title?`<div class="row-detail" style="font-weight:600;color:var(--dark);margin-top:4px;">${esc(m.title)}</div>`:''}
+        ${m.body?`<div class="row-detail" style="white-space:pre-wrap;">${esc(m.body)}</div>`:''}
+        <div class="row-time">${fmt(m.created_at)}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+document.getElementById('conf-filter')?.addEventListener('change', renderConference);
+document.getElementById('conf-post-btn')?.addEventListener('click', async () => {
+  const agent = document.getElementById('conf-agent').value;
+  const type = document.getElementById('conf-type').value;
+  const body = document.getElementById('conf-body').value.trim();
+  if(!body){ toast('Message body required'); return; }
+  const ok = await saveEvent('conf:'+type, body.split('\n')[0].slice(0,80), body, agent);
+  if(ok){
+    document.getElementById('conf-body').value='';
+    toast('Posted to conference');
+    renderConference();
+  }
+});
 document.querySelectorAll('.nav-item[data-page]').forEach(el=>{
   el.onclick = () => nav(el.dataset.page);
 });
@@ -1137,12 +1262,14 @@ document.getElementById('wf-ev-save').onclick = async () => {
 
 // ─── AGENTS ──────────────────────────────────────────────────
 const AGENTS = [
-  {id:'sb',     name:'Supabase',    desc:'',                  action:'', actionLabel:''},
-  {id:'codex',  name:'Codex',       desc:'Webhook ready — connect your Codex instance to push events here.', action:'', actionLabel:'Configure'},
-  {id:'hermes', name:'Hermes',      desc:'Webhook ready — connect Hermes to push message events.', action:'', actionLabel:'Configure'},
-  {id:'twilio', name:'Twilio / SMS',desc:'Configure webhook → POST to Supabase Edge Function → messages table.', action:'', actionLabel:'Setup'},
-  {id:'n8n',    name:'n8n',         desc:'Workflow automation. Hook n8n to Supabase webhooks for batch triggers.', action:'', actionLabel:'Setup'},
-  {id:'stripe', name:'Stripe',      desc:'Payments. Map stripe webhooks to customer status updates.', action:'', actionLabel:'Setup'},
+  {id:'claude',      name:'Claude (orchestrator)', desc:'CEO/strategy agent. Posts updates to the Conference Room as work happens.', action:'', actionLabel:''},
+  {id:'claude-code', name:'Claude Code',           desc:'Dev workstation agent. Edits the dashboard, runs migrations, ships commits.', action:'', actionLabel:''},
+  {id:'codex',       name:'Codex',                 desc:'Security / debugging / IT agent. Awaiting API restore — see Workflow doc.', action:'', actionLabel:'Configure'},
+  {id:'hermes',      name:'Hermes (Danny)',        desc:'VPS-resident cron + recurring tasks. Awaiting cheaper-model fallback config.', action:'', actionLabel:'Configure'},
+  {id:'sb',          name:'Supabase',              desc:'',                  action:'', actionLabel:''},
+  {id:'twilio',      name:'Twilio / SMS',          desc:'Configure webhook → POST to Supabase Edge Function → messages table.', action:'', actionLabel:'Setup'},
+  {id:'n8n',         name:'n8n',                   desc:'Workflow automation. Hook n8n to Supabase webhooks for batch triggers.', action:'', actionLabel:'Setup'},
+  {id:'stripe',      name:'Stripe',                desc:'Payments. Map stripe webhooks to customer status updates.', action:'', actionLabel:'Setup'},
 ];
 
 function renderAgents(){
@@ -1227,6 +1354,7 @@ const CMD_ITEMS = [
   {icon:'📋',label:'Go to Templates',     action:()=>nav('templates')},
   {icon:'📣',label:'Go to Marketing',     action:()=>nav('marketing')},
   {icon:'🔎',label:'Go to SEO / GEO',     action:()=>nav('seo')},
+  {icon:'🏛️',label:'Conference room',     action:()=>nav('conference')},
   {icon:'❓',label:'Help / How it works', action:()=>nav('help')},
   {icon:'🔗',label:'Copy intake link',    action:()=>window.copyIntakeLink()},
   {icon:'➕',label:'Add prospect',         action:()=>{nav('pipeline');document.getElementById('p-name').focus();}},
