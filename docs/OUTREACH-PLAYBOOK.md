@@ -1,6 +1,15 @@
-# LeadCurate — Outreach Playbook
+# LeadCurate — Outreach Playbook (Phase 1: Weeks 1-2)
 
 **Goal:** Land your first 5–10 paying customers via direct outreach + the intake form. No paid ads, no landing page push yet. Phase 1 of [THE-PLAN.md](THE-PLAN.md).
+
+**Why a 1-2 week window:** this is also a data-gathering period. Every prospect interaction tells us:
+- Which markets people actually ask for (vs which we assumed)
+- Which list types they want most (tax delinquent vs probate vs absentee, etc.)
+- What price points they push back on
+- Which channels (FB / IG / forum / SMS) produce real replies vs ghost
+- What "non-DNC" / phone-data questions come up
+
+That intel reshapes the big-ticket launch (Phase 3 landing page + subscriptions). **Don't launch the subscription pricing tiers until 2 weeks of this real data is in.**
 
 ---
 
@@ -79,13 +88,30 @@ These are open and you need to commit (none of these are decided yet — see [TH
 |---|---|---|
 | **Single-batch price** | $99 / $149 / $199 / $299 / $399 | You can't quote without this |
 | **Payment method** | Cash App / Venmo / Zelle / Stripe | Templates have a `[PRICE]` and `[YourCashtag]` placeholder waiting |
-| **DNC stance** | "Address-only, no phones" / "We provide phones, you scrub DNC" / "We DNC-scrub before delivery" | Affects what you can claim |
+| **DNC stance** | **LOCKED: "Address-only, no phones — customer handles skip-trace + DNC."** | Honest, no false claims, no compliance liability |
 | **List size per tier** | e.g., 100 / 250 / 500 / 1000 records | Tied to price |
 
 **Recommendation for first sale:**
 - $149 for a single 200-record batch, address-only (no phones, no DNC liability)
 - Payment: Cash App (zero setup, instant)
 - This gets you cash + a testimonial fast. You can move pricing up after 3-5 customers.
+
+## What's actually in each delivery (be honest with buyers)
+
+For every market, our records carry:
+- **Owner name** + entity flag (Individual / LLC / Trust / Corp / REIT)
+- **Mailing address** (street, city, state, ZIP — flagged "absentee" if out-of-state)
+- **Situs address** (the actual property — street, unit, city, ZIP)
+- **Parcel ID** (county-issued, lets buyer pull their own deeper records)
+- **Market value, building value, land value** (county-assessed)
+- **Year built, building sq ft, land sq ft**
+- **Distress signals** where applicable: FIRELOSS, DEMOLITION, REPAIR, FLOOD, STORM, EMERGENCY, tax-delinquent amount, etc.
+- **0–100 distress score** (our ranking)
+- **Source date** (when we pulled it)
+
+**NOT included anywhere:** phone numbers, email addresses, DNC status. Lists are address-only. If a buyer wants phones, they skip-trace (BatchSkipTracing, REIPro, IDI) and own the DNC compliance.
+
+This is honest, defensible positioning. Don't overpromise.
 
 ---
 
