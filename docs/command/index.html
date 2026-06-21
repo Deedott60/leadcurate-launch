@@ -146,8 +146,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 .badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;}
 .b-new,.b-queued{background:var(--blue-bg);color:var(--blue);}
 .b-sent,.b-contacted{background:var(--gold-bg);color:var(--gold);}
-.b-replied,.b-quoted{background:var(--pur-bg);color:var(--pur);}
+.b-replied{background:var(--pur-bg);color:var(--pur);}
+.b-preview{background:#fae8ff;color:#7c3aed;}
+.b-quoted{background:#f3e8ff;color:#a855f7;}
 .b-paying{background:var(--em-bg);color:var(--em-d);}
+.b-delivered{background:var(--em);color:var(--cream);}
 .b-dead{background:#f1f5f9;color:var(--sl-l);}
 
 /* ── KANBAN ──────────────────────────────── */
@@ -368,8 +371,10 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
               <option value="">All status</option>
               <option value="new">New</option>
               <option value="contacted">Contacted</option>
+              <option value="preview">Preview sent</option>
               <option value="quoted">Quoted</option>
-              <option value="paying">Paying</option>
+              <option value="paying">Paid</option>
+              <option value="delivered">Delivered</option>
               <option value="dead">Dead</option>
             </select>
             <span class="card-meta" id="inbox-meta">—</span>
@@ -695,7 +700,7 @@ function renderInboundRow(r){
     <div class="row-actions">
       <button class="btn btn-ghost btn-sm" onclick="window.inboundToPipeline('${r.id}')">→ Pipeline</button>
       <select class="mini-select" onchange="window.setInboundStatus('${r.id}',this.value)">
-        ${['new','contacted','quoted','paying','dead'].map(v=>`<option value="${v}" ${s===v?'selected':''}>${v.charAt(0).toUpperCase()+v.slice(1)}</option>`).join('')}
+        ${['new','contacted','preview','quoted','paying','delivered','dead'].map(v=>`<option value="${v}" ${s===v?'selected':''}>${v.charAt(0).toUpperCase()+v.slice(1)}</option>`).join('')}
       </select>
     </div>
   </div>`;
@@ -741,11 +746,13 @@ window.inboundToPipeline = (id) => {
 
 // ─── PIPELINE / KANBAN ────────────────────────────────────────
 const STAGES = [
-  {id:'queued',  label:'Queued',   color:'var(--blue)'},
-  {id:'sent',    label:'Sent',     color:'var(--gold)'},
-  {id:'replied', label:'Replied',  color:'var(--pur)'},
-  {id:'quoted',  label:'Quoted',   color:'#7c3aed'},
-  {id:'paying',  label:'Paying',   color:'var(--em)'},
+  {id:'queued',    label:'Queued',     color:'var(--blue)'},
+  {id:'sent',      label:'Reached out',color:'var(--gold)'},
+  {id:'replied',   label:'Replied',    color:'var(--pur)'},
+  {id:'preview',   label:'Preview sent', color:'#7c3aed'},
+  {id:'quoted',    label:'Quote out',  color:'#a855f7'},
+  {id:'paying',    label:'Paid',       color:'var(--em)'},
+  {id:'delivered', label:'Delivered',  color:'var(--em-d)'},
 ];
 
 document.getElementById('add-prospect-btn').onclick = async () => {
@@ -1014,8 +1021,10 @@ function renderTemplates(){
     {label:'Email — first contact', body:`Hi [Name],\n\nI run LeadCurate — we curate fresh county-record lead lists for real estate investors. Tax delinquent, pre-foreclosure, probate, permit, absentee.\n\nQuote within 24h: ${INTAKE_URL}\n\nSample deliveries: ${SAMPLES_URL}\n\n— Daniel\nLeadCurate`},
     {label:'Follow-up — 3 days',   body:`Hey [Name], following up on the LeadCurate intake. Still hunting for [list type]? Happy to send a sample of what we have in [market] — just reply and I'll send a redacted preview.`},
     {label:'What makes you different?', body:`Three things: (1) we pull from county records directly — fresh, not recycled, (2) we score + segment per lane (entity vs individual, absentee, permit distress) so you're not paying for junk, (3) HTML + Excel + CSV ready for your dialer or mail merge. Sample: ${SAMPLES_URL}`},
-    {label:'Quote follow-up — no reply', body:`Hey [Name], sent a quote a few days ago for [market]. Making sure it didn't get buried — let me know if you have questions or want a quick preview.`},
-    {label:'They paid — delivery intro', body:`[Name] — data is ready. Attached is your [county] [list type] batch — [N] records, scored + segmented by lane. Owner names are included. Skip trace was run on [X]% of records. Let me know if you have questions. — Daniel`},
+    {label:'★ Preview + quote (after they reply)', body:`Hi [Name],\n\nThanks for filling out the intake. Based on what you sent, here's what we have for [market]:\n\n• Lane: [list type]\n• Total records available: [N]\n• Sample preview (redacted): ${SAMPLES_URL}\n\nPricing for this batch: $[PRICE] for [count] records, delivered as branded HTML + XLSX + CSV.\n\nIf you want to lock it in, send payment to [Cash App / Venmo / Zelle / Stripe link] and I'll have the full file in your inbox within 24 hours.\n\n— Daniel\nLeadCurate`},
+    {label:'★ Quote follow-up — no reply', body:`Hey [Name], sent the [market] quote a few days ago. Making sure it didn't get buried — let me know if you have questions or want a smaller batch first.`},
+    {label:'★ Payment received — confirmation', body:`[Name] — payment received, thank you. I'm pulling your [market] [list type] now. Full file in your inbox within 24 hours, usually sooner.`},
+    {label:'★ Delivery email (after paid)', body:`[Name] — your [market] [list type] is ready.\n\nWhat's attached:\n• [N] ranked records (HTML preview + XLSX + CSV)\n• Owner names, addresses, parcel IDs, market values\n• Distress signals + score per record\n• Source date: [pull date]\n\nLet me know what you need next batch. If you want a recurring monthly pull for this market, I can set that up.\n\n— Daniel\nLeadCurate`},
   ];
   const list = document.getElementById('templates-list'); if(!list) return;
   list.innerHTML = tpls.map((t,i)=>`
