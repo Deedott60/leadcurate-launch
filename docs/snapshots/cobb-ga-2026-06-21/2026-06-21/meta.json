@@ -1,0 +1,16 @@
+{
+  "market": "Cobb County, GA (Atlanta NW metro)",
+  "lane": "Tax Delinquent (active)",
+  "pulled": "2026-06-20",
+  "processed": "2026-06-21",
+  "source": "Cobb Tax Commissioner Delinquent Tax List PDF, June 1 2026 cycle",
+  "total_rows": 5678,
+  "entity_count": 1917,
+  "individual_count": 3761,
+  "multi_year_delinquent": 0,
+  "high_balance_5k_plus": 382,
+  "total_delinquent_value": 10660549,
+  "avg_delinquent_amount": 1877,
+  "min_score": 50,
+  "max_score": 83
+}
