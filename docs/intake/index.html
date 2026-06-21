@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>LeadCurate — Tell us what you need</title>
+<meta name="description" content="Premium county property data, curated to your exact target. Tell us what you need and get a quote within 24 hours." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --emerald:#15803d;
+  --emerald-dark:#14532d;
+  --emerald-light:#22c55e;
+  --cream:#faf7f2;
+  --cream-2:#f3eddf;
+  --dark:#0f172a;
+  --slate:#475569;
+  --slate-light:#94a3b8;
+  --line:#e2dccf;
+  --white:#ffffff;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:var(--cream);
+  color:var(--dark);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+
+/* Header */
+.brand{
+  display:flex;align-items:center;gap:12px;margin-bottom:48px;
+}
+.brand-mark{
+  width:40px;height:40px;border-radius:8px;
+  background:var(--emerald);color:var(--cream);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-weight:700;font-size:22px;
+}
+.brand-name{font-family:'Playfair Display',serif;font-weight:700;font-size:22px;color:var(--dark);}
+
+/* Hero */
+h1{
+  font-family:'Playfair Display',serif;
+  font-weight:700;font-size:clamp(32px,5vw,46px);
+  line-height:1.1;letter-spacing:-0.02em;margin-bottom:16px;color:var(--dark);
+}
+.lede{
+  font-size:18px;color:var(--slate);max-width:580px;margin-bottom:8px;
+}
+.lede strong{color:var(--dark);}
+.eyebrow{
+  display:inline-block;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--emerald);font-weight:600;margin-bottom:16px;
+}
+
+/* Card */
+.card{
+  background:var(--white);border:1px solid var(--line);border-radius:16px;
+  padding:40px;margin-top:40px;
+  box-shadow:0 1px 2px rgba(15,23,42,0.04),0 8px 24px rgba(15,23,42,0.04);
+}
+
+/* Form */
+fieldset{border:none;margin-bottom:32px;}
+legend{
+  font-family:'Playfair Display',serif;font-weight:600;font-size:20px;
+  color:var(--dark);margin-bottom:8px;padding:0;
+}
+.q-help{font-size:14px;color:var(--slate);margin-bottom:16px;}
+
+/* Pills (multi-select) */
+.pills{display:flex;flex-wrap:wrap;gap:8px;}
+.pill input{display:none;}
+.pill label{
+  display:inline-block;padding:10px 16px;border:1px solid var(--line);
+  border-radius:999px;font-size:14px;font-weight:500;color:var(--slate);
+  background:var(--cream);cursor:pointer;transition:all 0.15s ease;
+  user-select:none;
+}
+.pill input:checked + label{
+  background:var(--emerald);color:var(--cream);border-color:var(--emerald);
+}
+.pill label:hover{border-color:var(--emerald);color:var(--dark);}
+
+/* Inputs */
+.input,.textarea,.select{
+  width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:10px;
+  font-family:inherit;font-size:16px;color:var(--dark);background:var(--white);
+  transition:border-color 0.15s;
+}
+.input:focus,.textarea:focus,.select:focus{
+  outline:none;border-color:var(--emerald);
+  box-shadow:0 0 0 3px rgba(21,128,61,0.12);
+}
+.textarea{min-height:90px;resize:vertical;}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media (max-width:520px){.row{grid-template-columns:1fr;}}
+
+label.field-label{
+  display:block;font-size:13px;font-weight:600;color:var(--dark);
+  margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em;
+}
+
+/* Radios styled as pills */
+.radio-group{display:flex;flex-wrap:wrap;gap:8px;}
+.radio-group input{display:none;}
+.radio-group label{
+  display:inline-block;padding:10px 16px;border:1px solid var(--line);
+  border-radius:999px;font-size:14px;font-weight:500;color:var(--slate);
+  background:var(--cream);cursor:pointer;transition:all 0.15s ease;
+}
+.radio-group input:checked + label{
+  background:var(--emerald);color:var(--cream);border-color:var(--emerald);
+}
+.radio-group label:hover{border-color:var(--emerald);}
+
+/* Submit */
+.submit{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:16px 32px;background:var(--emerald);color:var(--cream);
+  border:none;border-radius:999px;font-family:inherit;font-size:16px;font-weight:600;
+  cursor:pointer;transition:background 0.15s,transform 0.05s;
+  margin-top:16px;
+}
+.submit:hover{background:var(--emerald-dark);}
+.submit:active{transform:translateY(1px);}
+.submit svg{width:16px;height:16px;}
+
+/* Trust footer */
+.trust{
+  margin-top:32px;padding-top:24px;border-top:1px solid var(--line);
+  font-size:13px;color:var(--slate-light);text-align:center;
+}
+.trust strong{color:var(--slate);}
+
+/* Foot */
+footer{
+  text-align:center;margin-top:64px;
+  font-size:13px;color:var(--slate-light);
+}
+footer a{color:var(--slate);text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand">
+    <div class="brand-mark">L</div>
+    <div class="brand-name">LeadCurate</div>
+  </div>
+
+  <span class="eyebrow">Custom list intake</span>
+  <h1>Tell us what you're hunting.</h1>
+  <p class="lede">
+    We pull, clean, and score real-estate lead lists straight from county sources across <strong>21 markets</strong>. No reselling. No scraped junk. Tell us your target and we'll quote you within 24 hours.
+  </p>
+
+  <div class="card">
+    <form
+      action="https://formsubmit.co/dmcdonald5649@gmail.com"
+      method="POST"
+      autocomplete="on"
+    >
+      <!-- FormSubmit hidden config -->
+      <input type="hidden" name="_subject" value="🎯 New LeadCurate intake" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_next" value="https://deedott60.github.io/leadcurate-launch/intake/thanks.html" />
+      <input type="text" name="_honey" style="display:none" />
+
+      <!-- 1. Markets -->
+      <fieldset>
+        <legend>1. Which markets?</legend>
+        <p class="q-help">Pick all that apply. Don't see yours? Tell us in the notes.</p>
+        <div class="pills">
+          <span class="pill"><input type="checkbox" id="m1" name="markets" value="Charlotte NC (Mecklenburg)"><label for="m1">Charlotte NC</label></span>
+          <span class="pill"><input type="checkbox" id="m2" name="markets" value="Greensboro NC (Guilford)"><label for="m2">Greensboro NC</label></span>
+          <span class="pill"><input type="checkbox" id="m3" name="markets" value="Raleigh NC (Wake)"><label for="m3">Raleigh NC</label></span>
+          <span class="pill"><input type="checkbox" id="m4" name="markets" value="Winston-Salem NC (Forsyth)"><label for="m4">Winston-Salem NC</label></span>
+          <span class="pill"><input type="checkbox" id="m5" name="markets" value="Louisville KY (Jefferson)"><label for="m5">Louisville KY</label></span>
+          <span class="pill"><input type="checkbox" id="m6" name="markets" value="Memphis TN (Shelby)"><label for="m6">Memphis TN</label></span>
+          <span class="pill"><input type="checkbox" id="m7" name="markets" value="Nashville TN (Davidson)"><label for="m7">Nashville TN</label></span>
+          <span class="pill"><input type="checkbox" id="m8" name="markets" value="Atlanta GA (Fulton)"><label for="m8">Atlanta GA — Fulton</label></span>
+          <span class="pill"><input type="checkbox" id="m9" name="markets" value="Atlanta GA (DeKalb)"><label for="m9">Atlanta GA — DeKalb</label></span>
+          <span class="pill"><input type="checkbox" id="m10" name="markets" value="Atlanta NW (Cobb)"><label for="m10">Atlanta NW (Cobb)</label></span>
+          <span class="pill"><input type="checkbox" id="m11" name="markets" value="Houston TX (Harris)"><label for="m11">Houston TX</label></span>
+          <span class="pill"><input type="checkbox" id="m12" name="markets" value="Fort Worth TX (Tarrant)"><label for="m12">Fort Worth TX</label></span>
+          <span class="pill"><input type="checkbox" id="m13" name="markets" value="Phoenix AZ (Maricopa)"><label for="m13">Phoenix AZ</label></span>
+          <span class="pill"><input type="checkbox" id="m14" name="markets" value="Indianapolis IN (Marion)"><label for="m14">Indianapolis IN</label></span>
+          <span class="pill"><input type="checkbox" id="m15" name="markets" value="Fort Wayne IN (Allen)"><label for="m15">Fort Wayne IN</label></span>
+          <span class="pill"><input type="checkbox" id="m16" name="markets" value="Cleveland OH (Cuyahoga)"><label for="m16">Cleveland OH</label></span>
+          <span class="pill"><input type="checkbox" id="m17" name="markets" value="Birmingham AL (Jefferson)"><label for="m17">Birmingham AL</label></span>
+          <span class="pill"><input type="checkbox" id="m18" name="markets" value="Jacksonville FL (Duval)"><label for="m18">Jacksonville FL</label></span>
+          <span class="pill"><input type="checkbox" id="m19" name="markets" value="NYC (Multi-borough)"><label for="m19">NYC</label></span>
+          <span class="pill"><input type="checkbox" id="m20" name="markets" value="Other"><label for="m20">Other (note below)</label></span>
+        </div>
+      </fieldset>
+
+      <!-- 2. List type -->
+      <fieldset>
+        <legend>2. What kind of list?</legend>
+        <p class="q-help">Pick all that apply.</p>
+        <div class="pills">
+          <span class="pill"><input type="checkbox" id="t1" name="list_type" value="Tax delinquent"><label for="t1">Tax delinquent</label></span>
+          <span class="pill"><input type="checkbox" id="t2" name="list_type" value="Pre-foreclosure"><label for="t2">Pre-foreclosure</label></span>
+          <span class="pill"><input type="checkbox" id="t3" name="list_type" value="Probate / inherited"><label for="t3">Probate / inherited</label></span>
+          <span class="pill"><input type="checkbox" id="t4" name="list_type" value="Liens (mechanic, judgment)"><label for="t4">Liens</label></span>
+          <span class="pill"><input type="checkbox" id="t5" name="list_type" value="Absentee owner (out-of-state)"><label for="t5">Absentee owner</label></span>
+          <span class="pill"><input type="checkbox" id="t6" name="list_type" value="Active building permits / damage"><label for="t6">Active permits / damage</label></span>
+          <span class="pill"><input type="checkbox" id="t7" name="list_type" value="High-equity / free-and-clear"><label for="t7">High-equity / free-and-clear</label></span>
+          <span class="pill"><input type="checkbox" id="t8" name="list_type" value="Individual owner (homeowner-occupied)"><label for="t8">Individual / homeowner</label></span>
+          <span class="pill"><input type="checkbox" id="t9" name="list_type" value="Entity-owned (LLC, REIT, investor)"><label for="t9">Entity / LLC-owned</label></span>
+          <span class="pill"><input type="checkbox" id="t10" name="list_type" value="Vacant land"><label for="t10">Vacant land</label></span>
+          <span class="pill"><input type="checkbox" id="t11" name="list_type" value="Not sure — recommend something"><label for="t11">Not sure — recommend</label></span>
+        </div>
+      </fieldset>
+
+      <!-- 3. Urgency + Volume -->
+      <fieldset>
+        <legend>3. How fast & how many?</legend>
+        <div class="row">
+          <div>
+            <label class="field-label" for="urgency">How urgent?</label>
+            <div class="radio-group">
+              <input type="radio" id="u1" name="urgency" value="Need it now (24-48h)" required>
+              <label for="u1">Now (24–48h)</label>
+              <input type="radio" id="u2" name="urgency" value="This week">
+              <label for="u2">This week</label>
+              <input type="radio" id="u3" name="urgency" value="This month">
+              <label for="u3">This month</label>
+              <input type="radio" id="u4" name="urgency" value="Exploring options">
+              <label for="u4">Exploring</label>
+            </div>
+          </div>
+          <div>
+            <label class="field-label" for="volume">How many leads?</label>
+            <div class="radio-group">
+              <input type="radio" id="v1" name="volume" value="50-100" required>
+              <label for="v1">50–100</label>
+              <input type="radio" id="v2" name="volume" value="100-500">
+              <label for="v2">100–500</label>
+              <input type="radio" id="v3" name="volume" value="500-1500">
+              <label for="v3">500–1.5k</label>
+              <input type="radio" id="v4" name="volume" value="1500+">
+              <label for="v4">1.5k+</label>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 4. Contact -->
+      <fieldset>
+        <legend>4. Where do we send it?</legend>
+        <div class="row">
+          <div>
+            <label class="field-label" for="name">Your name</label>
+            <input class="input" type="text" id="name" name="name" required autocomplete="name" />
+          </div>
+          <div>
+            <label class="field-label" for="phone">Phone (best for quick quote)</label>
+            <input class="input" type="tel" id="phone" name="phone" autocomplete="tel" />
+          </div>
+        </div>
+        <div style="margin-top:16px;">
+          <label class="field-label" for="email">Email</label>
+          <input class="input" type="email" id="email" name="email" required autocomplete="email" />
+        </div>
+      </fieldset>
+
+      <!-- 5. Pricing intel + notes -->
+      <fieldset>
+        <legend>5. One last thing</legend>
+        <p class="q-help">Helps us beat what you're already paying.</p>
+        <label class="field-label" for="current_provider">What are you currently using for lists? (optional)</label>
+        <input class="input" type="text" id="current_provider" name="current_provider" placeholder="PropStream, BatchLeads, county, etc." />
+        <div style="margin-top:16px;">
+          <label class="field-label" for="notes">Anything else we should know? (optional)</label>
+          <textarea class="textarea" id="notes" name="notes" placeholder="Specific neighborhoods, ZIP codes, price ranges, or what's worked/not worked for you before."></textarea>
+        </div>
+      </fieldset>
+
+      <button class="submit" type="submit">
+        Send it
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </button>
+
+      <p class="trust">
+        <strong>Reply within 24 hours.</strong> We don't sell your info. We don't add you to a newsletter. We send you a quote.
+      </p>
+    </form>
+  </div>
+
+  <footer>
+    LeadCurate &middot; Curated county property data &middot; <a href="mailto:dmcdonald5649@gmail.com">dmcdonald5649@gmail.com</a>
+  </footer>
+
+</div>
+</body>
+</html>
