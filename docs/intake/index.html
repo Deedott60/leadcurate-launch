@@ -164,11 +164,12 @@ footer a{color:var(--slate);text-decoration:none;}
 
   <div class="card">
     <form
+      id="intake-form"
       action="https://formsubmit.co/dmcdonald5649@gmail.com"
       method="POST"
       autocomplete="on"
     >
-      <!-- FormSubmit hidden config -->
+      <!-- FormSubmit hidden config (email fallback) -->
       <input type="hidden" name="_subject" value="🎯 New LeadCurate intake" />
       <input type="hidden" name="_template" value="table" />
       <input type="hidden" name="_captcha" value="false" />
@@ -302,5 +303,57 @@ footer a{color:var(--slate);text-decoration:none;}
   </footer>
 
 </div>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+const SUPABASE_URL = 'https://jdmlsraqioigbukspduo.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4';
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const form = document.getElementById('intake-form');
+const thanks = 'https://deedott60.github.io/leadcurate-launch/intake/thanks.html';
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = form.querySelector('button[type=submit]');
+  const originalLabel = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = 'Sending…';
+
+  const fd = new FormData(form);
+  const markets = fd.getAll('markets');
+  const listType = fd.getAll('list_type');
+
+  const lead = {
+    name: fd.get('name') || '',
+    email: fd.get('email') || '',
+    phone: fd.get('phone') || '',
+    markets,
+    list_type: listType,
+    urgency: fd.get('urgency') || '',
+    volume: fd.get('volume') || '',
+    current_provider: fd.get('current_provider') || '',
+    notes: fd.get('notes') || '',
+    source: 'intake-form-v1',
+  };
+
+  const dbPromise = supabase.from('leads').insert([lead]).select();
+  const emailPromise = fetch(form.action, { method: 'POST', body: fd, mode: 'no-cors' });
+
+  let dbOk = false, emailOk = false;
+  try { const { error } = await dbPromise; dbOk = !error; if (error) console.warn('supabase err', error); } catch (e) { console.warn(e); }
+  try { await emailPromise; emailOk = true; } catch (e) { console.warn(e); }
+
+  if (dbOk || emailOk) {
+    window.location.href = thanks;
+  } else {
+    btn.innerHTML = originalLabel;
+    btn.disabled = false;
+    alert('Something went wrong sending your request. Please email dmcdonald5649@gmail.com directly.');
+  }
+});
+</script>
+
 </body>
 </html>
