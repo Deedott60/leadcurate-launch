@@ -272,6 +272,10 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 /* ── TOAST ───────────────────────────────── */
 #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--dark);color:var(--cream);padding:11px 20px;border-radius:999px;font-size:13px;font-weight:500;box-shadow:0 10px 30px rgba(0,0,0,0.25);opacity:0;transition:opacity 0.2s;z-index:9999;pointer-events:none;white-space:nowrap;}
 #toast.show{opacity:1;}
+#ptr-indicator{position:fixed;top:calc(var(--topbar) + 8px);left:50%;transform:translateX(-50%);z-index:300;display:none;align-items:center;gap:8px;color:var(--em);font-size:12px;font-weight:600;pointer-events:none;}
+#ptr-indicator.show{display:flex;}
+#ptr-indicator .spinner{width:12px;height:12px;border:2px solid rgba(21,128,61,0.25);border-top-color:var(--em);border-radius:50%;animation:ptr-spin 0.7s linear infinite;}
+@keyframes ptr-spin{to{transform:rotate(360deg)}}
 
 /* ── SCROLLBAR ───────────────────────────── */
 ::-webkit-scrollbar{width:5px;}
@@ -883,7 +887,7 @@ function lsSave(){ localStorage.setItem(LS_KEY, JSON.stringify(PROSPECTS)); }
 
 // ─── NAV ──────────────────────────────────────────────────────
 const pages = ['hq','inbox','pipeline','messages','workflow','templates','conference','marketing','seo','help'];
-window.nav = function(id){
+window.nav = async function(id){
   pages.forEach(p=>{
     document.getElementById('page-'+p).classList.toggle('active',p===id);
   });
@@ -894,7 +898,10 @@ window.nav = function(id){
   if(id==='pipeline') renderKanban();
   if(id==='messages') renderMessages();
   if(id==='workflow'){ renderAgents(); renderFeed('wf-feed','wf-feed-count'); }
-  if(id==='conference') renderConference();
+  if(id==='conference'){
+    await markConferenceRead();
+    renderConference();
+  }
 };
 
 // ─── CONFERENCE ROOM ─────────────────────────────────────────
@@ -913,8 +920,7 @@ async function renderConference(){
   const list = document.getElementById('conf-list');
   const meta = document.getElementById('conf-meta');
   if(meta) meta.textContent = confMsgs.length + ' messages';
-  const nb = document.getElementById('nb-conference');
-  if(nb) nb.textContent = confMsgs.length;
+  updateConferenceBadge();
   if(!list) return;
   if(!filtered.length){
     list.innerHTML = '<div class="empty">'+(filter?'No messages from that agent yet.':'No messages yet. Post the first one above.')+'</div>';
@@ -1278,7 +1284,57 @@ function renderMessages(){
 async function loadFeed(){
   if(!SYNC) return;
   const { data } = await sb.from('activity_feed').select('*').order('created_at',{ascending:false}).limit(100);
-  if(data){ FEED=data; renderFeed('hq-feed','feed-count'); renderFeed('wf-feed','wf-feed-count'); }
+  if(data){ FEED=data; renderFeed('hq-feed','feed-count'); renderFeed('wf-feed','wf-feed-count'); updateConferenceBadge(); }
+}
+
+async function loadProspects(){
+  if(!SYNC) return;
+  const { data } = await sb.from('prospects').select('*').order('created_at',{ascending:false});
+  if(!data) return;
+  const localOnly = PROSPECTS.filter(p => !p.supabase_id);
+  const remote = data.map(d => ({
+    id:'sb-'+d.id, supabase_id:d.id, created_at:new Date(d.created_at).getTime(),
+    name:d.name||'', contact:d.contact||'', channel:d.channel||'sms',
+    source:d.source||'', notes:d.notes||'', status:d.status||'queued',
+    sent_at:d.sent_at?new Date(d.sent_at).getTime():null,
+    replied_at:d.replied_at?new Date(d.replied_at).getTime():null,
+  }));
+  PROSPECTS = [...remote, ...localOnly];
+  lsSave();
+  renderKanban();
+}
+
+function conferenceUnread(){
+  return FEED.filter(f =>
+    (f.event_type||'').startsWith('conf:') &&
+    !f.read &&
+    (f.target==='claude' || f.target==='all')
+  ).length;
+}
+
+function updateConferenceBadge(){
+  const nb = document.getElementById('nb-conference');
+  if(!nb) return;
+  const unread = conferenceUnread();
+  nb.textContent = unread;
+  nb.classList.toggle('hot', unread > 0);
+  nb.setAttribute('aria-label', unread + ' unread Conference Room messages');
+}
+
+async function markConferenceRead(){
+  const ids = FEED.filter(f =>
+    (f.event_type||'').startsWith('conf:') &&
+    !f.read &&
+    (f.target==='claude' || f.target==='all')
+  ).map(f => f.id).filter(Boolean);
+  if(!ids.length) return;
+  if(SYNC){
+    const { error } = await sb.from('activity_feed').update({read:true}).in('id', ids);
+    if(error){ toast('Could not clear Conference Room badge'); return; }
+  }
+  const seen = new Set(ids);
+  FEED.forEach(f => { if(seen.has(f.id)) f.read = true; });
+  updateConferenceBadge();
 }
 
 function renderFeed(elId, countId){
@@ -1300,9 +1356,15 @@ function renderFeed(elId, countId){
 
 async function saveEvent(type, title, body, source='command-dashboard', target=null){
   const ev = {event_type:type, title, body:body||null, source, target};
-  if(SYNC){ const {error}=await sb.from('activity_feed').insert([ev]); if(error){ toast('Error: '+error.message); return false; } }
-  FEED.unshift({...ev, id:'ev-'+Date.now(), created_at:new Date().toISOString()});
+  let saved = {...ev, id:'ev-'+Date.now(), created_at:new Date().toISOString()};
+  if(SYNC){
+    const {data,error}=await sb.from('activity_feed').insert([ev]).select().single();
+    if(error){ toast('Error: '+error.message); return false; }
+    saved = data;
+  }
+  if(!FEED.find(f=>f.id===saved.id)) FEED.unshift(saved);
   renderFeed('hq-feed','feed-count'); renderFeed('wf-feed','wf-feed-count');
+  updateConferenceBadge();
   return true;
 }
 
@@ -1405,7 +1467,7 @@ window.copyIntakeLink = () => { navigator.clipboard.writeText(INTAKE_URL).then((
 
 // ─── REALTIME ────────────────────────────────────────────────
 function subscribeRealtime(){
-  sb.channel('lc-live')
+  const channel = sb.channel('lc-live')
     .on('postgres_changes',{event:'INSERT',schema:'public',table:'intake_requests'}, payload=>{
       INBOUND.unshift(payload.new);
       renderInbox(); renderHQInbound(); updateStats();
@@ -1415,9 +1477,15 @@ function subscribeRealtime(){
       if(!MESSAGES.find(m=>m.id===payload.new.id)){ MESSAGES.unshift(payload.new); renderMessages(); updateStats(); }
     })
     .on('postgres_changes',{event:'INSERT',schema:'public',table:'activity_feed'}, payload=>{
-      if(!FEED.find(f=>f.id===payload.new.id)){ FEED.unshift(payload.new); renderFeed('hq-feed','feed-count'); renderFeed('wf-feed','wf-feed-count'); }
-    })
-    .subscribe();
+      if(!FEED.find(f=>f.id===payload.new.id)){
+        FEED.unshift(payload.new);
+        renderFeed('hq-feed','feed-count'); renderFeed('wf-feed','wf-feed-count');
+        updateConferenceBadge();
+      }
+    });
+  channel.subscribe(status => {
+    document.documentElement.dataset.realtimeStatus = status;
+  });
 }
 
 // ─── COMMAND PALETTE ─────────────────────────────────────────
@@ -1480,20 +1548,7 @@ async function init(){
     setSync('ok');
     subscribeRealtime();
 
-    // Sync prospects from Supabase
-    const { data: sbP } = await sb.from('prospects').select('*').order('created_at',{ascending:false});
-    if(sbP){
-      const localIds = new Set(PROSPECTS.map(p=>p.supabase_id).filter(Boolean));
-      const fresh = sbP.filter(d=>!localIds.has(d.id)).map(d=>({
-        id:'sb-'+d.id, supabase_id:d.id, created_at:new Date(d.created_at).getTime(),
-        name:d.name||'', contact:d.contact||'', channel:d.channel||'sms',
-        source:d.source||'', notes:d.notes||'', status:d.status||'queued',
-        sent_at:d.sent_at?new Date(d.sent_at).getTime():null,
-        replied_at:d.replied_at?new Date(d.replied_at).getTime():null,
-      }));
-      if(fresh.length){ PROSPECTS=[...fresh,...PROSPECTS]; lsSave(); renderKanban(); }
-    }
-
+    await loadProspects();
     await loadInbound();
     await loadMessages();
     await loadFeed();
@@ -1502,18 +1557,21 @@ async function init(){
 }
 
 init();
+setInterval(() => { if(SYNC && !document.hidden) loadFeed(); }, 15000);
+
+async function loadAll(){
+  if(!SYNC) throw new Error('Dashboard is offline');
+  await Promise.all([loadProspects(), loadInbound(), loadMessages(), loadFeed()]);
+  renderInbox(); renderHQInbound(); renderKanban(); renderMessages(); renderConference(); updateStats();
+}
 
 // ─── PULL TO REFRESH ─────────────────────────────────────────
 (function(){
   let startY = 0, pulling = false, refreshing = false;
   const indicator = document.createElement('div');
   indicator.id = 'ptr-indicator';
-  indicator.style.cssText = 'position:fixed;top:52px;left:50%;transform:translateX(-50%);z-index:300;display:none;align-items:center;gap:8px;background:var(--em);color:#fff;padding:6px 18px;border-radius:999px;font-size:12px;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,0.2);';
-  indicator.innerHTML = '<span style="display:inline-block;width:12px;height:12px;border:2px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;animation:ptr-spin 0.7s linear infinite;"></span> Refreshing…';
+  indicator.innerHTML = '<span class="spinner"></span> Refreshing...';
   document.body.appendChild(indicator);
-  const style = document.createElement('style');
-  style.textContent = '@keyframes ptr-spin{to{transform:rotate(360deg)}}';
-  document.head.appendChild(style);
 
   const main = document.getElementById('main');
   if(!main) return;
@@ -1525,17 +1583,24 @@ init();
   main.addEventListener('touchmove', e => {
     if(!pulling || refreshing) return;
     const dy = e.touches[0].clientY - startY;
-    if(dy > 60) { indicator.style.display = 'flex'; }
+    indicator.classList.toggle('show', dy > 60);
   }, {passive:true});
 
   main.addEventListener('touchend', async () => {
     if(!pulling) return;
     pulling = false;
-    if(indicator.style.display === 'flex' && !refreshing){
+    if(indicator.classList.contains('show') && !refreshing){
       refreshing = true;
-      try { await loadAll(); toast('Updated'); }
+      const shownAt = Date.now();
+      toast('Refreshing...', 1000);
+      try {
+        await loadAll();
+        const remaining = 1000 - (Date.now() - shownAt);
+        if(remaining > 0) await new Promise(resolve => setTimeout(resolve, remaining));
+        toast('Updated');
+      }
       catch(e){ toast('Refresh failed'); }
-      indicator.style.display = 'none';
+      indicator.classList.remove('show');
       refreshing = false;
     }
   });
