@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="LeadCurate Study" />
+<title>LeadCurate Study Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --em:#15803d; --em-d:#14532d; --cream:#faf7f2; --cream2:#f3eddf;
+  --dark:#0f172a; --sl:#475569; --line:#e2dccf;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--cream);
+  color: var(--dark);
+  line-height: 1.65;
+  font-size: 18px;
+  padding: 24px 18px 80px;
+  max-width: 720px;
+  margin: 0 auto;
+  -webkit-text-size-adjust: 100%;
+}
+.topbar {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 30px; padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.brand-mark {
+  width: 42px; height: 42px; border-radius: 9px;
+  background: var(--em); color: var(--cream);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-weight: 700; font-size: 24px;
+}
+.brand-name {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700; font-size: 22px;
+}
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 38px; line-height: 1.1; letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+.tagline {
+  color: var(--sl); font-size: 17px; margin-bottom: 36px;
+}
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px; line-height: 1.15;
+  color: var(--em-d);
+  margin-top: 44px; margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--em);
+}
+h3 {
+  font-size: 22px; font-weight: 700;
+  color: var(--dark);
+  margin-top: 28px; margin-bottom: 8px;
+}
+p { margin-bottom: 14px; font-size: 18px; }
+strong { color: var(--em-d); font-weight: 700; }
+.term {
+  background: white;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--em);
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+}
+.term-name {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700; font-size: 20px;
+  color: var(--em-d);
+  margin-bottom: 8px;
+}
+.term-def { font-size: 17px; line-height: 1.55; }
+.callout {
+  background: #fef3c7;
+  border-left: 4px solid #b45309;
+  padding: 14px 16px;
+  border-radius: 8px;
+  margin: 16px 0;
+  font-size: 16px;
+}
+.ours {
+  background: #f0fdf4;
+  border-left: 4px solid var(--em);
+  padding: 14px 16px;
+  border-radius: 8px;
+  margin: 16px 0;
+  font-size: 16px;
+}
+.ours::before {
+  content: "★ OUR TERM (not industry standard) — "; font-weight: 700; color: var(--em-d);
+}
+.callout::before {
+  content: "⚠️ "; font-weight: 700;
+}
+.toc {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 36px;
+}
+.toc h3 { margin-top: 0; font-size: 18px; color: var(--em-d); }
+.toc a {
+  display: block; padding: 8px 0;
+  color: var(--dark); text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  font-size: 17px;
+}
+.toc a:last-child { border-bottom: none; }
+.toc a:active { color: var(--em); }
+ul { padding-left: 22px; margin-bottom: 16px; }
+li { margin-bottom: 8px; font-size: 17px; line-height: 1.55; }
+a.btn-link {
+  display: inline-block; background: var(--em); color: var(--cream);
+  padding: 14px 24px; border-radius: 999px;
+  text-decoration: none; font-weight: 600;
+  margin-top: 14px;
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand-mark">L</div>
+  <div class="brand-name">LeadCurate</div>
+</div>
+
+<h1>Study Guide</h1>
+<p class="tagline">Plain English. No fluff. For Derrick.</p>
+
+<div class="toc">
+  <h3>Sections</h3>
+  <a href="#lists">1. List Types — what we sell</a>
+  <a href="#data">2. Data Terms — what's inside the list</a>
+  <a href="#industry">3. Industry Terms — REI world</a>
+  <a href="#tech">4. Tech Terms — our stack</a>
+  <a href="#agents">5. Agent Roles</a>
+  <a href="#our">6. Our Terms</a>
+</div>
+
+<h2 id="lists">1. List Types — what we sell</h2>
+
+<div class="term">
+  <div class="term-name">Tax Delinquent List</div>
+  <div class="term-def">Property owners who owe back taxes to the county. At least one year behind, sometimes more. Motivated sellers because they're facing tax sale or foreclosure. We get this from county tax commissioner records — public info.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Pre-Foreclosure List</div>
+  <div class="term-def">Properties where the bank or court started foreclosure but the sale hasn't happened yet. Owner is under pressure, often motivated. Window before the bank takes it. Source: county court filings.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Absentee Owner List</div>
+  <div class="term-def">Owner's mailing address ≠ property address. They don't live there — they're a landlord or investor. <strong>Out-of-state absentee</strong> = mailing is in a different state, even more motivated.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Probate List</div>
+  <div class="term-def">Properties tied to a deceased person's estate. Heirs need to settle and often want fast sale. Motivated sellers. Source: county probate court.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Lien List</div>
+  <div class="term-def">Properties with a legal claim — unpaid contractor bills, court judgments, HOA violations. Owner can't sell clean without paying them off. Some will negotiate.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Vacant Land</div>
+  <div class="term-def">Undeveloped lots. For builders, developers, buy-and-hold investors.</div>
+</div>
+
+<div class="ours">
+  <div class="term-name" style="color:var(--em-d);">Permit Burnout Lane</div>
+  <div class="term-def">Properties with open or recent damage permits — fire loss, demolition, storm, emergency. Owner overwhelmed with repairs. <strong>This is our term, not industry standard.</strong></div>
+</div>
+
+<div class="term">
+  <div class="term-name">Entity vs Individual Owner</div>
+  <div class="term-def"><strong>Entity-owned:</strong> LLC, corp, trust, REIT. Harder to reach, registered agent required.<br><br><strong>Individual-owned:</strong> Real person's name. Can be called directly.</div>
+</div>
+
+<h2 id="data">2. Data Terms — what's inside the list</h2>
+
+<div class="term">
+  <div class="term-name">Parcel ID / APN</div>
+  <div class="term-def">Unique county ID for that piece of land. Like a social security number for a property.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Situs Address</div>
+  <div class="term-def">The actual physical address of the property. Where the building sits. "Situs" = Latin for "location."</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Mailing Address</div>
+  <div class="term-def">Where the county sends tax bills. Where the OWNER gets their mail. Could be a different state.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Market Value / Assessed Value</div>
+  <div class="term-def"><strong>Market value</strong> = county's estimate of what it's worth.<br><strong>Assessed value</strong> = the value used to calculate taxes (usually a % of market).</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Distress Score (0–100)</div>
+  <div class="term-def">Our number for how motivated the owner likely is. Higher = better lead. Built from tax balance owed, out-of-state status, damage permits, delinquency length.</div>
+</div>
+
+<div class="ours">
+  <div class="term-name" style="color:var(--em-d);">Lane</div>
+  <div class="term-def">A specific category within a market. Charlotte has multiple lanes — tax delinquent, absentee, lien. Same county, different filter. <strong>Our internal word.</strong></div>
+</div>
+
+<div class="ours">
+  <div class="term-name" style="color:var(--em-d);">Snapshot / Discovery Snapshot</div>
+  <div class="term-def">Processed, ready-to-sell batch. We took raw data (200K rows), filtered, scored, cleaned, kept the top 500-2,000. That's the snapshot. <strong>Our internal word.</strong></div>
+</div>
+
+<h2 id="industry">3. Industry Terms — REI World</h2>
+
+<div class="term">
+  <div class="term-name">Wholesaling</div>
+  <div class="term-def">Buying a contract to purchase a property at a discount, then selling that contract to another investor before closing — without ever owning the property. Wholesalers are our biggest customer type.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">MAO — Maximum Allowable Offer</div>
+  <div class="term-def">The most a wholesaler/investor will pay and still make money.<br><strong>Formula:</strong> (ARV × 70%) − Repair Cost = MAO</div>
+</div>
+
+<div class="term">
+  <div class="term-name">ARV — After Repair Value</div>
+  <div class="term-def">What the property would sell for after it's fixed up. Used to back-calculate what to pay today.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Skip Tracing</div>
+  <div class="term-def">Finding a property owner's phone and email when not publicly listed. Services: BatchSkipTracing, REIPro, IDI. Our lists are address-only — customers skip-trace if they want phones.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">DNC — Do Not Call Registry</div>
+  <div class="term-def">Federal list. Calling someone on it without consent = fines. Our lists are address-only so DNC is the customer's responsibility, not ours.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">TCPA</div>
+  <div class="term-def">Telephone Consumer Protection Act. Federal law on cold calls and texts. Customer compliance, not ours.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Direct Mail</div>
+  <div class="term-def">Physical postcards or letters to the owner's mailing address. Works with our lists because we provide mailing addresses.</div>
+</div>
+
+<h2 id="tech">4. Tech Terms — Our Stack</h2>
+
+<div class="term">
+  <div class="term-name">VPS — Virtual Private Server</div>
+  <div class="term-def">A computer in a data center running 24/7. Ours is at Hostinger. Where Danny lives and all raw data is stored.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Supabase</div>
+  <div class="term-def">Our database in the cloud. The dashboard reads/writes here. Stores leads, prospects, messages, agent activity.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">GitHub / GitHub Pages</div>
+  <div class="term-def">GitHub stores our code. GitHub Pages is free hosting that turns code into live websites — that's how all your URLs work.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">CSV vs XLSX</div>
+  <div class="term-def"><strong>CSV:</strong> plain comma-separated text. Opens anywhere.<br><strong>XLSX:</strong> Excel format. Multi-tab, colors, fonts. Our branded delivery files.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">RLS — Row Level Security</div>
+  <div class="term-def">Database permissions that control who can read/write each row. We have this set up so random people can't read your customer list.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Cron Job</div>
+  <div class="term-def">A scheduled task that runs automatically at set times. Danny's Wake NC cron pulls fresh data every day at 6am.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Webhook</div>
+  <div class="term-def">When system A automatically notifies system B that something happened. Twilio → dashboard when a text comes in, for example.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">MCP — Model Context Protocol</div>
+  <div class="term-def">How Claude/Codex connect to external tools like Supabase. When you see "Supabase MCP connected" it means I can run database commands directly.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">n8n</div>
+  <div class="term-def">Visual workflow builder. Connect boxes: "when X happens, do Y." Free, runs on the VPS, automates between all our tools.</div>
+</div>
+
+<h2 id="agents">5. Agent Roles</h2>
+
+<div class="term">
+  <div class="term-name">Claude (me)</div>
+  <div class="term-def">Orchestrator. Strategy, writing, customer outreach templates, data processing, dashboard builds. Talk to me here in Claude Code.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Danny / Hermes</div>
+  <div class="term-def">Lives on the VPS. Runs cron jobs, pulls fresh data, processes snapshots. Always on, 24/7. Posts updates to Conference Room every 2 min.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Codex</div>
+  <div class="term-def">IT, security, debugging. Lives in his own desktop app. You open him when you need code work done.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Conference Room</div>
+  <div class="term-def">Shared log in the dashboard where all agents post updates. Read it like a team Slack — see who did what.</div>
+</div>
+
+<h2 id="our">6. LeadCurate-Specific Terms</h2>
+
+<div class="ours">
+  <div class="term-name" style="color:var(--em-d);">Seat</div>
+  <div class="term-def">"Limited seats" = we only sell access to a county to 1-3 buyers at a time, so the same records aren't burned out. Scarcity = value.</div>
+</div>
+
+<div class="ours">
+  <div class="term-name" style="color:var(--em-d);">Phase 1 / Phase 2 / Phase 3</div>
+  <div class="term-def">Our launch sequence:<br><br><strong>Phase 1:</strong> Sell one-off lists manually. Happening now.<br><strong>Phase 2:</strong> Add automation (SMS, voice, Twilio).<br><strong>Phase 3:</strong> Launch subscriptions + landing page.</div>
+</div>
+
+<div class="callout">
+  Keep this study guide updated. When a new term comes up, add it. If it's our made-up term, flag it. If it's industry standard, say so.
+</div>
+
+<a class="btn-link" href="https://deedott60.github.io/leadcurate-launch/command/">← Back to Command Dashboard</a>
+
+</body>
+</html>
