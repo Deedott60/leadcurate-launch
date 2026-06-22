@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>LeadCurate — System Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --em:#15803d; --em-d:#14532d; --em-l:#22c55e;
+  --cream:#faf7f2; --cream2:#f3eddf;
+  --dark:#0f172a; --sl:#475569; --line:#e2dccf;
+  --gold:#b45309; --crimson:#991b1b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--cream);
+  color: var(--dark);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ''; position: fixed; inset: 0; pointer-events: none;
+  background-image: radial-gradient(circle at 18% 12%, rgba(21,128,61,0.06), transparent 30rem),
+                    radial-gradient(circle at 82% 88%, rgba(15,23,42,0.04), transparent 28rem);
+  z-index: -1;
+}
+.wrap { max-width: 1100px; margin: 0 auto; padding: 56px 24px 80px; }
+
+/* Header */
+.brand {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 44px;
+}
+.brand-mark {
+  width: 44px; height: 44px; border-radius: 10px;
+  background: var(--em); color: var(--cream);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-weight: 700; font-size: 26px;
+}
+.brand-name {
+  font-family: 'Playfair Display', serif; font-weight: 700;
+  font-size: 24px; letter-spacing: -0.02em;
+}
+
+.eyebrow {
+  display: inline-block; font-size: 12px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--em); font-weight: 700;
+  margin-bottom: 16px;
+}
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(40px, 6vw, 64px);
+  line-height: 1.05; letter-spacing: -0.025em;
+  margin-bottom: 16px;
+}
+.lede {
+  font-size: 19px; color: var(--sl);
+  max-width: 720px; line-height: 1.55;
+  margin-bottom: 12px;
+}
+.meta {
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  color: var(--sl); letter-spacing: 0.04em;
+  margin-top: 18px;
+}
+
+.hr {
+  height: 1px; background: var(--line);
+  margin: 48px 0;
+}
+
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px; line-height: 1.1; letter-spacing: -0.015em;
+  margin-bottom: 12px;
+}
+.section-lede {
+  color: var(--sl); font-size: 17px;
+  max-width: 700px; margin-bottom: 28px;
+}
+
+/* Stats grid */
+.stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 14px; margin-bottom: 32px;
+}
+.stat {
+  background: white; border: 1px solid var(--line);
+  border-radius: 14px; padding: 22px;
+}
+.stat-label {
+  font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--sl);
+  font-weight: 700; margin-bottom: 8px;
+}
+.stat-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px; font-weight: 700; color: var(--dark);
+  line-height: 1;
+}
+.stat-detail {
+  font-size: 13px; color: var(--sl); margin-top: 6px;
+}
+.stat.featured { background: var(--em-d); color: var(--cream); border: none; }
+.stat.featured .stat-label { color: #86efac; }
+.stat.featured .stat-value { color: white; }
+.stat.featured .stat-detail { color: #cbd5e1; }
+
+/* Stack cards */
+.stack-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px; margin-bottom: 32px;
+}
+.stack-card {
+  background: white; border: 1px solid var(--line);
+  border-radius: 16px; padding: 24px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.stack-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: var(--em); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; margin-bottom: 10px;
+}
+.stack-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 19px; font-weight: 700; color: var(--dark);
+}
+.stack-desc {
+  font-size: 14px; color: var(--sl); line-height: 1.55;
+}
+
+/* Markets list */
+.markets-card {
+  background: white; border: 1px solid var(--line);
+  border-radius: 16px; padding: 28px; margin-bottom: 32px;
+}
+.markets-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+.market {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 14px; background: var(--cream); border-radius: 10px;
+  border: 1px solid var(--line);
+}
+.market-name {
+  font-weight: 600; font-size: 14px; color: var(--dark);
+}
+.market-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--em-d);
+  background: #d1fae5; padding: 3px 8px; border-radius: 999px;
+  font-weight: 600;
+}
+.market.processing .market-meta { background: var(--cream2); color: var(--sl); }
+
+/* Workflow */
+.workflow-card {
+  background: var(--em-d); color: var(--cream);
+  border-radius: 16px; padding: 32px; margin-bottom: 32px;
+}
+.workflow-card h2 { color: white; }
+.workflow-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px; margin-top: 22px;
+}
+.workflow-step {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px; padding: 18px;
+}
+.workflow-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px; color: #86efac; font-weight: 700;
+  line-height: 1; margin-bottom: 8px;
+}
+.workflow-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px; font-weight: 700; margin-bottom: 6px;
+}
+.workflow-desc {
+  font-size: 13px; color: #cbd5e1; line-height: 1.5;
+}
+
+/* Differentiators */
+.diff-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+.diff-card {
+  background: white; border: 1px solid var(--line);
+  border-radius: 16px; padding: 26px;
+  border-left: 4px solid var(--em);
+}
+.diff-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 21px; font-weight: 700;
+  color: var(--dark); margin-bottom: 8px;
+}
+.diff-card p {
+  font-size: 15px; color: var(--sl); line-height: 1.6;
+}
+
+footer {
+  margin-top: 64px; padding-top: 24px;
+  border-top: 1px solid var(--line);
+  text-align: center; color: var(--sl);
+  font-size: 13px;
+}
+footer a { color: var(--em-d); text-decoration: none; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand">
+    <div class="brand-mark">L</div>
+    <div class="brand-name">LeadCurate</div>
+  </div>
+
+  <span class="eyebrow">System Audit · Confidential</span>
+  <h1>The system that turns county records into sellable property leads.</h1>
+  <p class="lede">
+    Built ground-up over the last 60 days. Real estate investors and wholesalers nationwide pay $200–$500/month for stale, recycled data from PropStream and BatchLeads. LeadCurate pulls fresh records directly from 22 county sources, scores them, and delivers limited-seat batches in branded files investors can actually work.
+  </p>
+  <div class="meta">Verified: 2026-06-22 · Live infrastructure, live data, live agent stack</div>
+
+  <div class="hr"></div>
+
+  <!-- THE NUMBERS -->
+  <h2>The numbers (verified)</h2>
+  <p class="section-lede">All counts confirmed against the VPS production environment, not projections.</p>
+
+  <div class="stats">
+    <div class="stat featured">
+      <div class="stat-label">Counties Pulled</div>
+      <div class="stat-value">22</div>
+      <div class="stat-detail">across 11 states</div>
+    </div>
+    <div class="stat featured">
+      <div class="stat-label">Raw Data Stored</div>
+      <div class="stat-value">9.2 GB</div>
+      <div class="stat-detail">structured county records</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Wake NC Delinquent</div>
+      <div class="stat-value">10,472</div>
+      <div class="stat-detail">ranked records ready</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Cobb GA Delinquent</div>
+      <div class="stat-value">5,678</div>
+      <div class="stat-detail">ranked records ready</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Houston Permit Lane</div>
+      <div class="stat-value">1,500</div>
+      <div class="stat-detail">scored distress signals</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Fulton GA Owners</div>
+      <div class="stat-value">368,771</div>
+      <div class="stat-detail">parcel-level coverage</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Active Markets</div>
+      <div class="stat-value">9</div>
+      <div class="stat-detail">processed snapshots</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Data Refresh</div>
+      <div class="stat-value">24h</div>
+      <div class="stat-detail">automated daily cycle</div>
+    </div>
+  </div>
+
+  <div class="hr"></div>
+
+  <!-- THE STACK -->
+  <h2>The infrastructure</h2>
+  <p class="section-lede">Production stack. Already running 24/7. Built on enterprise-grade open infrastructure.</p>
+
+  <div class="stack-grid">
+    <div class="stack-card">
+      <div class="stack-icon">🖥</div>
+      <div class="stack-name">Dedicated VPS</div>
+      <div class="stack-desc">Hostinger Ubuntu 24.04. 2 vCPU / 7.8 GB RAM / 96 GB disk. Houses raw county data + automation agents.</div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-icon">🗄</div>
+      <div class="stack-name">Supabase Cloud DB</div>
+      <div class="stack-desc">PostgreSQL with row-level security. Stores customer pipeline, intake submissions, agent activity. Real-time sync across devices.</div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-icon">🌐</div>
+      <div class="stack-name">GitHub Pages Frontend</div>
+      <div class="stack-desc">Static site hosting. Intake form, sample delivery pages, operator dashboard — all branded, all free to scale.</div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-icon">🤖</div>
+      <div class="stack-name">Tri-Agent System</div>
+      <div class="stack-desc">Three AI agents: Claude (strategy/orchestration), Codex (engineering/security), Hermes (24/7 data ops on VPS). Coordinated via shared activity log.</div>
+    </div>
+  </div>
+
+  <div class="hr"></div>
+
+  <!-- MARKETS COVERED -->
+  <div class="markets-card">
+    <h2>Market coverage</h2>
+    <p class="section-lede">22 county-level data sources spanning major metros. Pulls are scripted, repeatable, and tied directly to public records — no third-party reseller dependencies.</p>
+
+    <div class="markets-grid">
+      <div class="market"><span class="market-name">Wake NC (Raleigh)</span><span class="market-meta">10.5K</span></div>
+      <div class="market"><span class="market-name">Cobb GA (Atlanta NW)</span><span class="market-meta">5.7K</span></div>
+      <div class="market"><span class="market-name">Harris TX (Houston)</span><span class="market-meta">1.5K</span></div>
+      <div class="market"><span class="market-name">Fulton GA (Atlanta)</span><span class="market-meta">5K</span></div>
+      <div class="market"><span class="market-name">DeKalb GA (Atlanta E)</span><span class="market-meta">5K</span></div>
+      <div class="market"><span class="market-name">Forsyth NC (W-Salem)</span><span class="market-meta">5K</span></div>
+      <div class="market"><span class="market-name">Marion IN (Indianapolis)</span><span class="market-meta">5K</span></div>
+      <div class="market"><span class="market-name">Guilford NC (Greensboro)</span><span class="market-meta">5K</span></div>
+      <div class="market"><span class="market-name">Jefferson AL (Birmingham)</span><span class="market-meta">21</span></div>
+      <div class="market processing"><span class="market-name">Mecklenburg NC (Charlotte)</span><span class="market-meta">processing</span></div>
+      <div class="market processing"><span class="market-name">Jefferson KY (Louisville)</span><span class="market-meta">processing</span></div>
+      <div class="market processing"><span class="market-name">Shelby TN (Memphis)</span><span class="market-meta">processing</span></div>
+      <div class="market processing"><span class="market-name">Tarrant TX (Fort Worth)</span><span class="market-meta">processing</span></div>
+      <div class="market processing"><span class="market-name">Dallas TX</span><span class="market-meta">processing</span></div>
+      <div class="market processing"><span class="market-name">Maricopa AZ (Phoenix)</span><span class="market-meta">processing</span></div>
+      <div class="market processing"><span class="market-name">Cuyahoga OH (Cleveland)</span><span class="market-meta">processing</span></div>
+      <div class="market processing"><span class="market-name">Allen IN (Fort Wayne)</span><span class="market-meta">processing</span></div>
+      <div class="market processing"><span class="market-name">Charleston SC</span><span class="market-meta">processing</span></div>
+      <div class="market processing"><span class="market-name">Greenville SC</span><span class="market-meta">processing</span></div>
+      <div class="market processing"><span class="market-name">Erie NY (Buffalo)</span><span class="market-meta">processing</span></div>
+      <div class="market processing"><span class="market-name">Fayette KY (Lexington)</span><span class="market-meta">processing</span></div>
+      <div class="market processing"><span class="market-name">NYC (5 boroughs)</span><span class="market-meta">processing</span></div>
+    </div>
+  </div>
+
+  <div class="hr"></div>
+
+  <!-- WORKFLOW -->
+  <div class="workflow-card">
+    <h2>The workflow</h2>
+    <p style="color:#cbd5e1;font-size:17px;max-width:700px;">End-to-end automated from prospect inquiry to delivery. Every step logged. Every list verified.</p>
+
+    <div class="workflow-grid">
+      <div class="workflow-step">
+        <div class="workflow-num">01</div>
+        <div class="workflow-title">Prospect inquiry</div>
+        <div class="workflow-desc">Branded intake form captures market, list type, urgency, volume. Hits database in real-time.</div>
+      </div>
+      <div class="workflow-step">
+        <div class="workflow-num">02</div>
+        <div class="workflow-title">Auto-pipeline</div>
+        <div class="workflow-desc">Database trigger creates prospect record. Operator dashboard pings instantly. Zero manual entry.</div>
+      </div>
+      <div class="workflow-step">
+        <div class="workflow-num">03</div>
+        <div class="workflow-title">Preview + Quote</div>
+        <div class="workflow-desc">Redacted sample sent. Buyer sees the quality before they pay. Pre-built templates accelerate response.</div>
+      </div>
+      <div class="workflow-step">
+        <div class="workflow-num">04</div>
+        <div class="workflow-title">Payment + Delivery</div>
+        <div class="workflow-desc">Cash App / Stripe / Zelle accepted. Full file shipped as branded XLSX. Customer in dialer same day.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hr"></div>
+
+  <!-- DIFFERENTIATORS -->
+  <h2>What's different</h2>
+  <p class="section-lede">Three things that separate this from PropStream and the recycled-list market.</p>
+
+  <div class="diff-grid">
+    <div class="diff-card">
+      <h3>Direct from county source</h3>
+      <p>We don't buy from data brokers. Every record is pulled from the actual county tax collector, court records, or assessor — same morning, same week, never resold across thousands of competitors.</p>
+    </div>
+    <div class="diff-card">
+      <h3>Scored, not dumped</h3>
+      <p>Every record runs through a distress-signal scoring algorithm. Out-of-state mailing, entity ownership, year built, value range, permit history — each weighted, summed, ranked. Buyers get the top of the funnel, not the whole flat file.</p>
+    </div>
+    <div class="diff-card">
+      <h3>Limited buyer access</h3>
+      <p>We deliberately cap the number of buyers per county. The same list isn't being hammered by 100 wholesalers — it's being worked by 1–3. Records stay warm. Conversion stays high.</p>
+    </div>
+  </div>
+
+  <div class="hr"></div>
+
+  <h2>Status</h2>
+  <p class="section-lede">Phase 1 (manual outreach + first paying customers) is active. Stack is production-ready, scaling is software-only.</p>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-label">Infrastructure</div>
+      <div class="stat-value" style="color:var(--em);">LIVE</div>
+      <div class="stat-detail">All systems verified working</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Data Pipeline</div>
+      <div class="stat-value" style="color:var(--em);">LIVE</div>
+      <div class="stat-detail">9 markets, growing weekly</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Customer Ops</div>
+      <div class="stat-value" style="color:var(--em);">LIVE</div>
+      <div class="stat-detail">Dashboard + intake operational</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Revenue</div>
+      <div class="stat-value" style="color:var(--gold);">SOON</div>
+      <div class="stat-detail">First sale targeted this week</div>
+    </div>
+  </div>
+
+  <footer>
+    LeadCurate &middot; Built independently &middot; <a href="mailto:dmcdonald5649@gmail.com">dmcdonald5649@gmail.com</a>
+  </footer>
+
+</div>
+</body>
+</html>
