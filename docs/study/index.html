@@ -13,6 +13,7 @@
 :root {
   --em:#15803d; --em-d:#14532d; --cream:#faf7f2; --cream2:#f3eddf;
   --dark:#0f172a; --sl:#475569; --line:#e2dccf;
+  --gold:#b45309; --gold-bg:#fef3c7;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -28,7 +29,7 @@ body {
 }
 .topbar {
   display: flex; align-items: center; gap: 10px;
-  margin-bottom: 30px; padding-bottom: 20px;
+  margin-bottom: 26px; padding-bottom: 18px;
   border-bottom: 1px solid var(--line);
 }
 .brand-mark {
@@ -44,23 +45,23 @@ body {
 h1 {
   font-family: 'Playfair Display', serif;
   font-size: 38px; line-height: 1.1; letter-spacing: -0.02em;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 .tagline {
-  color: var(--sl); font-size: 17px; margin-bottom: 36px;
+  color: var(--sl); font-size: 17px; margin-bottom: 28px;
 }
 h2 {
   font-family: 'Playfair Display', serif;
   font-size: 28px; line-height: 1.15;
   color: var(--em-d);
-  margin-top: 44px; margin-bottom: 16px;
+  margin-top: 44px; margin-bottom: 12px;
   padding-bottom: 8px;
   border-bottom: 2px solid var(--em);
 }
 h3 {
   font-size: 22px; font-weight: 700;
   color: var(--dark);
-  margin-top: 28px; margin-bottom: 8px;
+  margin-top: 26px; margin-bottom: 8px;
 }
 p { margin-bottom: 14px; font-size: 18px; }
 strong { color: var(--em-d); font-weight: 700; }
@@ -70,45 +71,42 @@ strong { color: var(--em-d); font-weight: 700; }
   border-left: 4px solid var(--em);
   border-radius: 10px;
   padding: 16px 18px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 .term-name {
   font-family: 'Playfair Display', serif;
   font-weight: 700; font-size: 20px;
   color: var(--em-d);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 .term-def { font-size: 17px; line-height: 1.55; }
-.callout {
-  background: #fef3c7;
-  border-left: 4px solid #b45309;
-  padding: 14px 16px;
-  border-radius: 8px;
-  margin: 16px 0;
-  font-size: 16px;
-}
 .ours {
-  background: #f0fdf4;
-  border-left: 4px solid var(--em);
+  background: #fffbeb;
+  border-left: 4px solid var(--gold);
   padding: 14px 16px;
   border-radius: 8px;
-  margin: 16px 0;
-  font-size: 16px;
+  margin-bottom: 14px;
 }
 .ours::before {
-  content: "★ OUR TERM (not industry standard) — "; font-weight: 700; color: var(--em-d);
+  content: "⚠ OUR TERM — do not use with industry people"; display:block; font-weight: 700; color: var(--gold); font-size:13px; margin-bottom:6px; letter-spacing:0.05em;
 }
-.callout::before {
-  content: "⚠️ "; font-weight: 700;
+.callout {
+  background: var(--gold-bg);
+  border-left: 4px solid var(--gold);
+  padding: 14px 16px;
+  border-radius: 8px;
+  margin: 16px 0;
+  font-size: 16px;
 }
+.callout::before { content: "⚠️ "; font-weight: 700; }
 .toc {
   background: white;
   border: 1px solid var(--line);
   border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 36px;
+  padding: 18px;
+  margin-bottom: 32px;
 }
-.toc h3 { margin-top: 0; font-size: 18px; color: var(--em-d); }
+.toc h3 { margin-top: 0; font-size: 17px; color: var(--em-d); }
 .toc a {
   display: block; padding: 8px 0;
   color: var(--dark); text-decoration: none;
@@ -116,14 +114,24 @@ strong { color: var(--em-d); font-weight: 700; }
   font-size: 17px;
 }
 .toc a:last-child { border-bottom: none; }
-.toc a:active { color: var(--em); }
-ul { padding-left: 22px; margin-bottom: 16px; }
-li { margin-bottom: 8px; font-size: 17px; line-height: 1.55; }
+.cheat {
+  background: var(--em-d); color: var(--cream);
+  border-radius: 10px; padding: 18px 20px;
+  margin: 20px 0;
+}
+.cheat strong { color: #86efac; }
+ul { padding-left: 22px; margin-bottom: 14px; }
+li { margin-bottom: 6px; font-size: 17px; line-height: 1.55; }
 a.btn-link {
   display: inline-block; background: var(--em); color: var(--cream);
   padding: 14px 24px; border-radius: 999px;
   text-decoration: none; font-weight: 600;
   margin-top: 14px;
+}
+.acronym {
+  background: var(--em-d); color: var(--cream);
+  padding: 2px 8px; border-radius: 6px;
+  font-family: monospace; font-weight: 700; font-size: 16px;
 }
 </style>
 </head>
@@ -135,122 +143,287 @@ a.btn-link {
 </div>
 
 <h1>Study Guide</h1>
-<p class="tagline">Plain English. No fluff. For Derrick.</p>
+<p class="tagline">For Derrick. Industry standard first. Our terms flagged.</p>
+
+<div class="cheat">
+  <strong>RULE:</strong> When talking to an investor, wholesaler, or anyone from PropStream / BatchLeads / REI academy world — use ONLY industry-standard terms (green boxes). Our internal product names (yellow boxes) are for marketing copy only. If you say "Permit Burnout Lane" to a wholesaler, they think you're amateur. Say "list of properties with active damage permits" instead.
+</div>
 
 <div class="toc">
   <h3>Sections</h3>
-  <a href="#lists">1. List Types — what we sell</a>
-  <a href="#data">2. Data Terms — what's inside the list</a>
-  <a href="#industry">3. Industry Terms — REI world</a>
-  <a href="#tech">4. Tech Terms — our stack</a>
-  <a href="#agents">5. Agent Roles</a>
-  <a href="#our">6. Our Terms</a>
+  <a href="#types">1. Investor Types — who buys</a>
+  <a href="#lists">2. List Types — industry standard</a>
+  <a href="#deals">3. Deal Terms — how investors talk</a>
+  <a href="#money">4. Money / Returns — the math</a>
+  <a href="#legal">5. Legal & Title</a>
+  <a href="#data">6. Data Terms — what's inside</a>
+  <a href="#tech">7. Tech Stack — our side</a>
+  <a href="#ours">8. ⚠ Our Internal Terms (don't say to clients)</a>
 </div>
 
-<h2 id="lists">1. List Types — what we sell</h2>
+<h2 id="types">1. Investor Types — who buys our lists</h2>
+
+<div class="term">
+  <div class="term-name">Wholesaler</div>
+  <div class="term-def">Buys a contract to purchase at a discount, then assigns that contract to another investor for a fee. Never owns the property. <strong>Our #1 customer type.</strong></div>
+</div>
+
+<div class="term">
+  <div class="term-name">Fix-and-Flip Investor</div>
+  <div class="term-def">Buys distressed properties, rehabs, sells retail. Needs ARV close to retail, repair estimate, and motivated sellers.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Buy-and-Hold Investor / Landlord</div>
+  <div class="term-def">Buys rental properties for monthly cash flow. Cares about cap rate, NOI, neighborhood class.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">BRRRR Investor</div>
+  <div class="term-def"><span class="acronym">BRRRR</span> = Buy, Rehab, Rent, Refinance, Repeat. Buys distressed, fixes it up, rents it out, refinances to pull cash back out, buys the next one.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Acquisitions Manager</div>
+  <div class="term-def">Person at a real estate company whose job is finding deals. Buys lists, runs cold calls, hires VAs. Decision-maker for buying our service.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Hedge Fund Buyer / Institutional</div>
+  <div class="term-def">Large company buying hundreds of homes (Invitation Homes, Tricon). Buys at scale, less price-sensitive. Different sales motion.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">iBuyer</div>
+  <div class="term-def">Opendoor, Offerpad. Companies that buy direct via algorithm. Compete with wholesalers for the same leads.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Bird Dog</div>
+  <div class="term-def">Someone who finds leads for a wholesaler in exchange for a small fee per deal. Beginner role.</div>
+</div>
+
+<h2 id="lists">2. List Types — Industry Standard</h2>
 
 <div class="term">
   <div class="term-name">Tax Delinquent List</div>
-  <div class="term-def">Property owners who owe back taxes to the county. At least one year behind, sometimes more. Motivated sellers because they're facing tax sale or foreclosure. We get this from county tax commissioner records — public info.</div>
+  <div class="term-def">Property owners behind on county property taxes. <strong>The classic motivated-seller list.</strong> Every wholesaler chases these.</div>
 </div>
 
 <div class="term">
   <div class="term-name">Pre-Foreclosure List</div>
-  <div class="term-def">Properties where the bank or court started foreclosure but the sale hasn't happened yet. Owner is under pressure, often motivated. Window before the bank takes it. Source: county court filings.</div>
+  <div class="term-def">Properties where foreclosure has been filed but not yet completed. Owner under pressure to sell.</div>
 </div>
 
 <div class="term">
-  <div class="term-name">Absentee Owner List</div>
-  <div class="term-def">Owner's mailing address ≠ property address. They don't live there — they're a landlord or investor. <strong>Out-of-state absentee</strong> = mailing is in a different state, even more motivated.</div>
+  <div class="term-name">Notice of Default (NOD) List</div>
+  <div class="term-def">First step in foreclosure — bank files NOD when owner is behind on mortgage. Public record. Early-stage motivated lead.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Notice of Trustee Sale (NTS) / Lis Pendens</div>
+  <div class="term-def">Auction scheduled. Owner has weeks left. Very motivated but very short window.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Tax Lien / Tax Deed Sale List</div>
+  <div class="term-def">Properties going to auction for unpaid taxes. Different states use lien vs deed sales — research yours.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Sheriff Sale / Trustee Sale</div>
+  <div class="term-def">Public auction of foreclosed property. List published before sale.</div>
 </div>
 
 <div class="term">
   <div class="term-name">Probate List</div>
-  <div class="term-def">Properties tied to a deceased person's estate. Heirs need to settle and often want fast sale. Motivated sellers. Source: county probate court.</div>
+  <div class="term-def">Deceased owners' properties. Heirs want to settle the estate fast. Standard wholesaling list.</div>
 </div>
 
 <div class="term">
-  <div class="term-name">Lien List</div>
-  <div class="term-def">Properties with a legal claim — unpaid contractor bills, court judgments, HOA violations. Owner can't sell clean without paying them off. Some will negotiate.</div>
+  <div class="term-name">Absentee Owner List</div>
+  <div class="term-def">Owner's mailing address ≠ property address. They're a landlord or out-of-area owner. <strong>Out-of-state absentee</strong> is the strongest filter.</div>
 </div>
 
 <div class="term">
-  <div class="term-name">Vacant Land</div>
-  <div class="term-def">Undeveloped lots. For builders, developers, buy-and-hold investors.</div>
-</div>
-
-<div class="ours">
-  <div class="term-name" style="color:var(--em-d);">Permit Burnout Lane</div>
-  <div class="term-def">Properties with open or recent damage permits — fire loss, demolition, storm, emergency. Owner overwhelmed with repairs. <strong>This is our term, not industry standard.</strong></div>
+  <div class="term-name">High Equity / Free-and-Clear List</div>
+  <div class="term-def">Owners with little or no mortgage. Can sell quickly without bank approval. Common request.</div>
 </div>
 
 <div class="term">
-  <div class="term-name">Entity vs Individual Owner</div>
-  <div class="term-def"><strong>Entity-owned:</strong> LLC, corp, trust, REIT. Harder to reach, registered agent required.<br><br><strong>Individual-owned:</strong> Real person's name. Can be called directly.</div>
-</div>
-
-<h2 id="data">2. Data Terms — what's inside the list</h2>
-
-<div class="term">
-  <div class="term-name">Parcel ID / APN</div>
-  <div class="term-def">Unique county ID for that piece of land. Like a social security number for a property.</div>
+  <div class="term-name">Vacant Property List</div>
+  <div class="term-def">USPS-flagged vacant homes. Owner may not even live nearby. Industry term: "vacant filter."</div>
 </div>
 
 <div class="term">
-  <div class="term-name">Situs Address</div>
-  <div class="term-def">The actual physical address of the property. Where the building sits. "Situs" = Latin for "location."</div>
+  <div class="term-name">Code Violation List</div>
+  <div class="term-def">Properties with city code violations — distressed signal. Owner often overwhelmed.</div>
 </div>
 
 <div class="term">
-  <div class="term-name">Mailing Address</div>
-  <div class="term-def">Where the county sends tax bills. Where the OWNER gets their mail. Could be a different state.</div>
+  <div class="term-name">Lien List (Mechanics / Judgment / HOA)</div>
+  <div class="term-def">Properties with legal claims attached. Can't sell clean without paying them off.</div>
 </div>
 
 <div class="term">
-  <div class="term-name">Market Value / Assessed Value</div>
-  <div class="term-def"><strong>Market value</strong> = county's estimate of what it's worth.<br><strong>Assessed value</strong> = the value used to calculate taxes (usually a % of market).</div>
+  <div class="term-name">Divorce List</div>
+  <div class="term-def">Properties tied to a divorce filing. Couple needs to split assets — often motivated to sell fast.</div>
 </div>
 
 <div class="term">
-  <div class="term-name">Distress Score (0–100)</div>
-  <div class="term-def">Our number for how motivated the owner likely is. Higher = better lead. Built from tax balance owed, out-of-state status, damage permits, delinquency length.</div>
+  <div class="term-name">Eviction / Tired Landlord List</div>
+  <div class="term-def">Landlords with recent eviction filings. Burned out, want out.</div>
 </div>
-
-<div class="ours">
-  <div class="term-name" style="color:var(--em-d);">Lane</div>
-  <div class="term-def">A specific category within a market. Charlotte has multiple lanes — tax delinquent, absentee, lien. Same county, different filter. <strong>Our internal word.</strong></div>
-</div>
-
-<div class="ours">
-  <div class="term-name" style="color:var(--em-d);">Snapshot / Discovery Snapshot</div>
-  <div class="term-def">Processed, ready-to-sell batch. We took raw data (200K rows), filtered, scored, cleaned, kept the top 500-2,000. That's the snapshot. <strong>Our internal word.</strong></div>
-</div>
-
-<h2 id="industry">3. Industry Terms — REI World</h2>
 
 <div class="term">
-  <div class="term-name">Wholesaling</div>
-  <div class="term-def">Buying a contract to purchase a property at a discount, then selling that contract to another investor before closing — without ever owning the property. Wholesalers are our biggest customer type.</div>
+  <div class="term-name">Stacked List</div>
+  <div class="term-def">A list filtered for MULTIPLE distress signals (e.g. absentee + tax delinquent + lien). Industry gold. Higher quality, smaller volume.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Cash Buyer List</div>
+  <div class="term-def">People who bought property with cash recently. Used to find OTHER investors to wholesale TO, not from.</div>
+</div>
+
+<h2 id="deals">3. Deal Terms — How Investors Talk</h2>
+
+<div class="term">
+  <div class="term-name">Off-Market</div>
+  <div class="term-def">Property not listed on MLS. Where wholesalers/investors find their best deals.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">MLS (Multiple Listing Service)</div>
+  <div class="term-def">The agent database. "On-market" = listed there. Investors generally avoid these — too competitive.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">FSBO (For Sale By Owner)</div>
+  <div class="term-def">Owner selling without an agent. Often open to creative offers.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Subject-To / Sub-To</div>
+  <div class="term-def">Buying a property by taking over the existing mortgage payments without formally assuming the loan. Creative finance technique.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Seller Finance / Owner Carry</div>
+  <div class="term-def">Seller acts as the bank. Buyer makes payments to them, not a lender.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Lease Option / Rent-to-Own</div>
+  <div class="term-def">Tenant rents with an option to buy at a set price later. Used when buyers can't qualify for a loan today.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Assignment Contract / Assignment Fee</div>
+  <div class="term-def">Wholesaler's contract that lets them assign their right to buy to another investor. Their profit = the assignment fee.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Wholetail</div>
+  <div class="term-def">Hybrid wholesale-retail. Wholesaler does light cleanup and lists on MLS to capture more profit than a pure assignment.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">REO (Real Estate Owned)</div>
+  <div class="term-def">Bank-owned property — they foreclosed and now own it. Different list, different sales process.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Short Sale</div>
+  <div class="term-def">Bank agrees to accept less than the mortgage balance. Owner under water but bank approval slow.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Distressed Property / Motivated Seller</div>
+  <div class="term-def">Generic terms. Distressed = property has issues. Motivated seller = owner has personal reasons to move fast. Often go together.</div>
+</div>
+
+<h2 id="money">4. Money / Returns — The Math</h2>
+
+<div class="term">
+  <div class="term-name">ARV — After Repair Value</div>
+  <div class="term-def"><span class="acronym">ARV</span> What the property would sell for after it's fixed up. Critical number.</div>
 </div>
 
 <div class="term">
   <div class="term-name">MAO — Maximum Allowable Offer</div>
-  <div class="term-def">The most a wholesaler/investor will pay and still make money.<br><strong>Formula:</strong> (ARV × 70%) − Repair Cost = MAO</div>
+  <div class="term-def"><span class="acronym">MAO</span> Most a wholesaler will pay and still make money.<br><br><strong>70% Rule:</strong> (ARV × 0.70) − Repairs = MAO</div>
 </div>
 
 <div class="term">
-  <div class="term-name">ARV — After Repair Value</div>
-  <div class="term-def">What the property would sell for after it's fixed up. Used to back-calculate what to pay today.</div>
+  <div class="term-name">Comps / Comparables</div>
+  <div class="term-def">Recently sold similar properties. Used to establish ARV.</div>
 </div>
 
 <div class="term">
-  <div class="term-name">Skip Tracing</div>
-  <div class="term-def">Finding a property owner's phone and email when not publicly listed. Services: BatchSkipTracing, REIPro, IDI. Our lists are address-only — customers skip-trace if they want phones.</div>
+  <div class="term-name">Cap Rate</div>
+  <div class="term-def">For rentals. Annual NOI ÷ Property price. Buy-and-hold investors care about this.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">NOI — Net Operating Income</div>
+  <div class="term-def">Annual rental income minus operating expenses (not mortgage).</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Cash on Cash Return</div>
+  <div class="term-def">Annual cash flow ÷ cash invested. Different math than cap rate, accounts for the mortgage.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Hard Money / Private Money</div>
+  <div class="term-def"><strong>Hard money:</strong> short-term loan from a company at high interest (10-15%). For flips.<br><strong>Private money:</strong> loan from an individual investor. Cheaper, relationship-based.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">DSCR Loan</div>
+  <div class="term-def">Debt Service Coverage Ratio loan. Qualifies based on property income, not personal income. Popular for landlords.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">1031 Exchange</div>
+  <div class="term-def">Sell a rental, buy another within 180 days, defer capital gains taxes. Buy-and-hold strategy.</div>
+</div>
+
+<h2 id="legal">5. Legal & Title</h2>
+
+<div class="term">
+  <div class="term-name">Title Search</div>
+  <div class="term-def">Public records search to verify ownership and find liens. Required before closing.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Clouded Title</div>
+  <div class="term-def">Title with unresolved issues — lien, missing heir, old mortgage. Property can't sell clean.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Quitclaim vs Warranty Deed</div>
+  <div class="term-def"><strong>Quitclaim:</strong> transfers whatever interest seller has — no guarantees. Used for fast transfers between known parties.<br><strong>Warranty:</strong> seller guarantees clean title.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Earnest Money</div>
+  <div class="term-def">Buyer's good-faith deposit when signing the contract. Usually $500-$5,000.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Escrow / Closing</div>
+  <div class="term-def">Neutral third party holds money + docs until both sides perform. Then closes the deal.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Lis Pendens</div>
+  <div class="term-def">Latin for "lawsuit pending." Public notice attached to a property. Foreclosure or other legal action filed.</div>
 </div>
 
 <div class="term">
   <div class="term-name">DNC — Do Not Call Registry</div>
-  <div class="term-def">Federal list. Calling someone on it without consent = fines. Our lists are address-only so DNC is the customer's responsibility, not ours.</div>
+  <div class="term-def">Federal list. Calling someone on it without consent = fines. Our lists are address-only so DNC is the customer's responsibility.</div>
 </div>
 
 <div class="term">
@@ -258,94 +431,101 @@ a.btn-link {
   <div class="term-def">Telephone Consumer Protection Act. Federal law on cold calls and texts. Customer compliance, not ours.</div>
 </div>
 
+<h2 id="data">6. Data Terms — What's Inside The List</h2>
+
 <div class="term">
-  <div class="term-name">Direct Mail</div>
-  <div class="term-def">Physical postcards or letters to the owner's mailing address. Works with our lists because we provide mailing addresses.</div>
+  <div class="term-name">Parcel ID / APN — Assessor's Parcel Number</div>
+  <div class="term-def">Unique county ID for the land. Used to look up everything in public records.</div>
 </div>
 
-<h2 id="tech">4. Tech Terms — Our Stack</h2>
+<div class="term">
+  <div class="term-name">Situs Address</div>
+  <div class="term-def">The actual property address. "Situs" = Latin for "location."</div>
+</div>
 
 <div class="term">
-  <div class="term-name">VPS — Virtual Private Server</div>
-  <div class="term-def">A computer in a data center running 24/7. Ours is at Hostinger. Where Danny lives and all raw data is stored.</div>
+  <div class="term-name">Mailing Address</div>
+  <div class="term-def">Where the owner receives mail. Could differ from situs (absentee owners).</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Market Value / Assessed Value</div>
+  <div class="term-def"><strong>Market value:</strong> what it's worth.<br><strong>Assessed value:</strong> what the county uses to calculate taxes (often a % of market).</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Entity vs Individual Owner</div>
+  <div class="term-def"><strong>Entity-owned:</strong> LLC, corp, trust, REIT. Harder to reach.<br><strong>Individual-owned:</strong> real person — can be called directly.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Skip Tracing</div>
+  <div class="term-def">Finding phone numbers and email from a name and address. Services: BatchSkipTracing, REIPro, IDI, Skipify. Required if our customer wants to cold call.</div>
+</div>
+
+<div class="term">
+  <div class="term-name">Cost Per Lead (CPL) / Cost Per Acquisition (CPA)</div>
+  <div class="term-def"><strong>CPL:</strong> what it costs to generate one lead (our list price ÷ records).<br><strong>CPA:</strong> what it costs to acquire one CLOSED deal. Wholesalers track this religiously.</div>
+</div>
+
+<h2 id="tech">7. Tech Stack — Our Side</h2>
+
+<div class="term">
+  <div class="term-name">VPS</div>
+  <div class="term-def">Virtual Private Server. A computer in a data center. Where our raw data lives and Danny runs 24/7.</div>
 </div>
 
 <div class="term">
   <div class="term-name">Supabase</div>
-  <div class="term-def">Our database in the cloud. The dashboard reads/writes here. Stores leads, prospects, messages, agent activity.</div>
+  <div class="term-def">Our cloud database. Stores intake leads, prospects, messages, agent activity.</div>
 </div>
 
 <div class="term">
-  <div class="term-name">GitHub / GitHub Pages</div>
-  <div class="term-def">GitHub stores our code. GitHub Pages is free hosting that turns code into live websites — that's how all your URLs work.</div>
-</div>
-
-<div class="term">
-  <div class="term-name">CSV vs XLSX</div>
-  <div class="term-def"><strong>CSV:</strong> plain comma-separated text. Opens anywhere.<br><strong>XLSX:</strong> Excel format. Multi-tab, colors, fonts. Our branded delivery files.</div>
-</div>
-
-<div class="term">
-  <div class="term-name">RLS — Row Level Security</div>
-  <div class="term-def">Database permissions that control who can read/write each row. We have this set up so random people can't read your customer list.</div>
+  <div class="term-name">CSV / XLSX</div>
+  <div class="term-def"><strong>CSV:</strong> comma-separated text. Opens anywhere. Industry standard.<br><strong>XLSX:</strong> Excel format with formatting/tabs. Premium delivery.</div>
 </div>
 
 <div class="term">
   <div class="term-name">Cron Job</div>
-  <div class="term-def">A scheduled task that runs automatically at set times. Danny's Wake NC cron pulls fresh data every day at 6am.</div>
+  <div class="term-def">Scheduled task that runs automatically. Our daily Wake NC data pull is a cron.</div>
 </div>
 
 <div class="term">
   <div class="term-name">Webhook</div>
-  <div class="term-def">When system A automatically notifies system B that something happened. Twilio → dashboard when a text comes in, for example.</div>
-</div>
-
-<div class="term">
-  <div class="term-name">MCP — Model Context Protocol</div>
-  <div class="term-def">How Claude/Codex connect to external tools like Supabase. When you see "Supabase MCP connected" it means I can run database commands directly.</div>
+  <div class="term-def">Auto-notification between systems. Stripe → dashboard when payment lands, etc.</div>
 </div>
 
 <div class="term">
   <div class="term-name">n8n</div>
-  <div class="term-def">Visual workflow builder. Connect boxes: "when X happens, do Y." Free, runs on the VPS, automates between all our tools.</div>
+  <div class="term-def">Visual workflow automation. Connects everything — Stripe, Twilio, Supabase, agents. Runs on our VPS.</div>
 </div>
 
-<h2 id="agents">5. Agent Roles</h2>
+<h2 id="ours">8. ⚠ Our Internal Terms — Do NOT Use With Clients</h2>
 
-<div class="term">
-  <div class="term-name">Claude (me)</div>
-  <div class="term-def">Orchestrator. Strategy, writing, customer outreach templates, data processing, dashboard builds. Talk to me here in Claude Code.</div>
-</div>
-
-<div class="term">
-  <div class="term-name">Danny / Hermes</div>
-  <div class="term-def">Lives on the VPS. Runs cron jobs, pulls fresh data, processes snapshots. Always on, 24/7. Posts updates to Conference Room every 2 min.</div>
-</div>
-
-<div class="term">
-  <div class="term-name">Codex</div>
-  <div class="term-def">IT, security, debugging. Lives in his own desktop app. You open him when you need code work done.</div>
-</div>
-
-<div class="term">
-  <div class="term-name">Conference Room</div>
-  <div class="term-def">Shared log in the dashboard where all agents post updates. Read it like a team Slack — see who did what.</div>
-</div>
-
-<h2 id="our">6. LeadCurate-Specific Terms</h2>
+<p style="margin-bottom:18px;font-size:17px;">These are LeadCurate-specific. If a wholesaler hears these, they won't know what you're talking about. Translate before speaking.</p>
 
 <div class="ours">
-  <div class="term-name" style="color:var(--em-d);">Seat</div>
-  <div class="term-def">"Limited seats" = we only sell access to a county to 1-3 buyers at a time, so the same records aren't burned out. Scarcity = value.</div>
+  <div class="term-name" style="color:var(--gold);">Permit Burnout Lane</div>
+  <div class="term-def"><strong>What WE call it:</strong> properties with open damage permits<br><strong>Say to clients:</strong> "list of properties with active fire/storm/damage permits — a code-violation adjacent list"</div>
 </div>
 
 <div class="ours">
-  <div class="term-name" style="color:var(--em-d);">Phase 1 / Phase 2 / Phase 3</div>
-  <div class="term-def">Our launch sequence:<br><br><strong>Phase 1:</strong> Sell one-off lists manually. Happening now.<br><strong>Phase 2:</strong> Add automation (SMS, voice, Twilio).<br><strong>Phase 3:</strong> Launch subscriptions + landing page.</div>
+  <div class="term-name" style="color:var(--gold);">Lane</div>
+  <div class="term-def"><strong>What WE call it:</strong> a specific filtered category within a market<br><strong>Say to clients:</strong> "list type" or "stacked filter" or "segment"</div>
+</div>
+
+<div class="ours">
+  <div class="term-name" style="color:var(--gold);">Snapshot / Discovery Snapshot</div>
+  <div class="term-def"><strong>What WE call it:</strong> a processed sellable batch<br><strong>Say to clients:</strong> "pulled list" or "batch" or "delivery"</div>
+</div>
+
+<div class="ours">
+  <div class="term-name" style="color:var(--gold);">Seat</div>
+  <div class="term-def"><strong>What WE call it:</strong> limited buyer access per county<br><strong>Say to clients:</strong> "limited license" or "exclusive territory" or "we only sell this list to 1-3 buyers per market"</div>
 </div>
 
 <div class="callout">
-  Keep this study guide updated. When a new term comes up, add it. If it's our made-up term, flag it. If it's industry standard, say so.
+When marketing, you can use our terms in our copy. But when talking 1-on-1 with a serious investor, use industry language. That's how you sound credible.
 </div>
 
 <a class="btn-link" href="https://deedott60.github.io/leadcurate-launch/command/">← Back to Command Dashboard</a>
