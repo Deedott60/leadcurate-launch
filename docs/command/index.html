@@ -357,8 +357,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
     </div>
     <div class="nav-divider"></div>
-    <div class="nav-label">Help</div>
+    <div class="nav-label">Learning</div>
     <div class="nav-section">
+      <div class="nav-item" data-page="learn">
+        <span class="icon">📚</span> Learning hub
+      </div>
       <div class="nav-item" data-page="help">
         <span class="icon">❓</span> How it works
       </div>
@@ -729,6 +732,57 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
     </div>
 
+    <!-- ── LEARNING HUB ─────────────────────── -->
+    <div id="page-learn" class="page">
+      <div class="page-header">
+        <div class="page-title">Learning hub</div>
+        <div class="page-sub">Quick links to all your study and reference materials. Tap to open.</div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">📖 LeadCurate Study Guide</span></div>
+        <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-bottom:14px;">
+          50+ real REI industry terms organized by category. Investor types, list types, deal terms, money math, legal. Our internal terms flagged separately so you know which ones to use with clients vs which ones are just for us.
+        </p>
+        <a href="../study/" target="_blank" class="btn" style="text-decoration:none;display:inline-block;">Open study guide →</a>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">📋 Intake Form (the link you send prospects)</span></div>
+        <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-bottom:8px;font-family:'JetBrains Mono',monospace;background:var(--cream2);padding:10px 12px;border-radius:8px;word-break:break-all;font-size:13px;">
+          https://deedott60.github.io/leadcurate-launch/intake/
+        </p>
+        <div class="flex-row" style="gap:8px;margin-top:10px;">
+          <button class="btn" onclick="window.copyIntakeLink()">🔗 Copy link</button>
+          <a href="../intake/" target="_blank" class="btn btn-ghost" style="text-decoration:none;">Open form →</a>
+        </div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">📊 Sample Deliveries (what we send buyers)</span></div>
+        <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-bottom:14px;">
+          Branded preview pages for Houston, Charlotte, Louisville, Atlanta NW (Cobb), and Birmingham. Show these to prospects before they pay.
+        </p>
+        <a href="../sample-deliveries/" target="_blank" class="btn" style="text-decoration:none;display:inline-block;">Browse samples →</a>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">📝 Outreach Playbook</span></div>
+        <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-bottom:14px;">
+          Where to find prospects (FB groups, REI forums, BiggerPockets, IG, REIA), message ladder, daily rhythm, decisions still to lock.
+        </p>
+        <a href="https://github.com/Deedott60/leadcurate-launch/blob/main/docs/OUTREACH-PLAYBOOK.md" target="_blank" class="btn" style="text-decoration:none;display:inline-block;">Open playbook →</a>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">🗺 The Plan (Phase 1 → 2 → 3)</span></div>
+        <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-bottom:14px;">
+          The locked 3-phase sequence. Reference this when anyone (including any agent) tries to jump ahead.
+        </p>
+        <a href="https://github.com/Deedott60/leadcurate-launch/blob/main/docs/THE-PLAN.md" target="_blank" class="btn" style="text-decoration:none;display:inline-block;">Open plan →</a>
+      </div>
+    </div>
+
     <!-- ── HELP / HOW IT WORKS ────────────────── -->
     <div id="page-help" class="page">
       <div class="page-header">
@@ -886,7 +940,7 @@ function lsLoad(){
 function lsSave(){ localStorage.setItem(LS_KEY, JSON.stringify(PROSPECTS)); }
 
 // ─── NAV ──────────────────────────────────────────────────────
-const pages = ['hq','inbox','pipeline','messages','workflow','templates','conference','marketing','seo','help'];
+const pages = ['hq','inbox','pipeline','messages','workflow','templates','conference','marketing','seo','learn','help'];
 window.nav = async function(id){
   pages.forEach(p=>{
     document.getElementById('page-'+p).classList.toggle('active',p===id);
@@ -1499,6 +1553,7 @@ const CMD_ITEMS = [
   {icon:'📣',label:'Go to Marketing',     action:()=>nav('marketing')},
   {icon:'🔎',label:'Go to SEO / GEO',     action:()=>nav('seo')},
   {icon:'🏛️',label:'Conference room',     action:()=>nav('conference')},
+  {icon:'📚',label:'Learning hub',         action:()=>nav('learn')},
   {icon:'❓',label:'Help / How it works', action:()=>nav('help')},
   {icon:'🔗',label:'Copy intake link',    action:()=>window.copyIntakeLink()},
   {icon:'➕',label:'Add prospect',         action:()=>{nav('pipeline');document.getElementById('p-name').focus();}},
