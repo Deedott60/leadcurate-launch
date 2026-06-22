@@ -1503,6 +1503,44 @@ async function init(){
 
 init();
 
+// ─── PULL TO REFRESH ─────────────────────────────────────────
+(function(){
+  let startY = 0, pulling = false, refreshing = false;
+  const indicator = document.createElement('div');
+  indicator.id = 'ptr-indicator';
+  indicator.style.cssText = 'position:fixed;top:52px;left:50%;transform:translateX(-50%);z-index:300;display:none;align-items:center;gap:8px;background:var(--em);color:#fff;padding:6px 18px;border-radius:999px;font-size:12px;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,0.2);';
+  indicator.innerHTML = '<span style="display:inline-block;width:12px;height:12px;border:2px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;animation:ptr-spin 0.7s linear infinite;"></span> Refreshing…';
+  document.body.appendChild(indicator);
+  const style = document.createElement('style');
+  style.textContent = '@keyframes ptr-spin{to{transform:rotate(360deg)}}';
+  document.head.appendChild(style);
+
+  const main = document.getElementById('main');
+  if(!main) return;
+
+  main.addEventListener('touchstart', e => {
+    if(main.scrollTop === 0) { startY = e.touches[0].clientY; pulling = true; }
+  }, {passive:true});
+
+  main.addEventListener('touchmove', e => {
+    if(!pulling || refreshing) return;
+    const dy = e.touches[0].clientY - startY;
+    if(dy > 60) { indicator.style.display = 'flex'; }
+  }, {passive:true});
+
+  main.addEventListener('touchend', async () => {
+    if(!pulling) return;
+    pulling = false;
+    if(indicator.style.display === 'flex' && !refreshing){
+      refreshing = true;
+      try { await loadAll(); toast('Updated'); }
+      catch(e){ toast('Refresh failed'); }
+      indicator.style.display = 'none';
+      refreshing = false;
+    }
+  });
+})();
+
 // ─── MOBILE SIDEBAR TOGGLE ────────────────────────────────────
 window.toggleSidebar = function(){
   const sb = document.getElementById('sidebar');
