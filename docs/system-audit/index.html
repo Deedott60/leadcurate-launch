@@ -374,6 +374,117 @@ footer a { color: var(--em-d); text-decoration: none; font-weight: 600; }
 
   <div class="hr"></div>
 
+  <!-- THE PROCESS -->
+  <h2>The process — raw record → sellable lead</h2>
+  <p class="section-lede">Every list a buyer pays for travels this 6-stage pipeline. Most competitors stop at stage 2. This is where the value lives.</p>
+
+  <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:32px;">
+    <div style="background:white;border:1px solid var(--line);border-left:4px solid var(--em);border-radius:12px;padding:20px 22px;">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--em);color:white;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:18px;flex-shrink:0;">1</div>
+        <div style="font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--dark);">Source identification</div>
+      </div>
+      <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-left:50px;">For each county, identify the exact public-record endpoint — tax collector portal, ArcGIS feed, PDF roll, court calendar, assessor parcel database. Document the access method, headers, pagination quirks, and refresh cadence. <strong>Every county is different. This is the moat.</strong></p>
+    </div>
+
+    <div style="background:white;border:1px solid var(--line);border-left:4px solid var(--em);border-radius:12px;padding:20px 22px;">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--em);color:white;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:18px;flex-shrink:0;">2</div>
+        <div style="font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--dark);">Automated pull</div>
+      </div>
+      <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-left:50px;">Scripted retrieval running on a dedicated VPS — direct CSV/JSON pull, Playwright headless browser for blocked portals, PDF parsing with pdfplumber. Cron-scheduled. Records refreshed within 24 hours of the county updating their roll. Buyer is working signal that's days old, not months.</p>
+    </div>
+
+    <div style="background:white;border:1px solid var(--line);border-left:4px solid var(--em);border-radius:12px;padding:20px 22px;">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--em);color:white;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:18px;flex-shrink:0;">3</div>
+        <div style="font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--dark);">Normalization + enrichment</div>
+      </div>
+      <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-left:50px;">Raw county fields mapped to a unified schema — parcel ID, situs address, mailing address, owner name, owner type (individual vs entity), market value, assessed value, tax balance, delinquency period, permit history. Cross-referenced against assessor data to fill gaps. Junk records dropped.</p>
+    </div>
+
+    <div style="background:white;border:1px solid var(--line);border-left:4px solid var(--em);border-radius:12px;padding:20px 22px;">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--em);color:white;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:18px;flex-shrink:0;">4</div>
+        <div style="font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--dark);">Distress scoring</div>
+      </div>
+      <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-left:50px;">Proprietary 0–100 score computed per record. Weighted signals: tax balance owed, delinquency length, out-of-state mailing flag, entity ownership, open damage permits, property value tier, year built, sale history. Higher score = more motivated owner = higher conversion for the buyer.</p>
+    </div>
+
+    <div style="background:white;border:1px solid var(--line);border-left:4px solid var(--em);border-radius:12px;padding:20px 22px;">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--em);color:white;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:18px;flex-shrink:0;">5</div>
+        <div style="font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--dark);">Filtering + segmentation</div>
+      </div>
+      <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-left:50px;">Source data is cut into stacked-filter products — Tax Delinquent, Absentee + Tax Delinquent, High-Equity Absentee, Probate, Pre-Foreclosure, Code Violation. Same raw pool, multiple sellable segments per market. <strong>Multiplies revenue per pull.</strong></p>
+    </div>
+
+    <div style="background:white;border:1px solid var(--line);border-left:4px solid var(--em);border-radius:12px;padding:20px 22px;">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--em);color:white;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:18px;flex-shrink:0;">6</div>
+        <div style="font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--dark);">Branded delivery</div>
+      </div>
+      <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-left:50px;">Final batch packaged as a multi-tab XLSX with cover sheet, source attribution, refresh date, and a redacted preview. Buyer receives a polished asset — not a CSV dump. Perceived quality lifts price tolerance. Repeat-buy rate climbs because the experience matches the price.</p>
+    </div>
+  </div>
+
+  <div class="hr"></div>
+
+  <!-- WHY IT'S VALUABLE -->
+  <h2>Why this is valuable</h2>
+  <p class="section-lede">The market math behind the system.</p>
+
+  <div class="stats" style="margin-bottom:32px;">
+    <div class="stat featured">
+      <div class="stat-label">REI Lead Market (US)</div>
+      <div class="stat-value">$2B+</div>
+      <div class="stat-detail">annual, ~12% YoY growth</div>
+    </div>
+    <div class="stat featured">
+      <div class="stat-label">Target Buyer Pool</div>
+      <div class="stat-value">280K+</div>
+      <div class="stat-detail">active wholesalers + flippers</div>
+    </div>
+    <div class="stat featured">
+      <div class="stat-label">Avg Monthly Spend</div>
+      <div class="stat-value">$300</div>
+      <div class="stat-detail">per buyer, on data alone</div>
+    </div>
+    <div class="stat featured">
+      <div class="stat-label">Marginal Cost / Sale</div>
+      <div class="stat-value">~$0</div>
+      <div class="stat-detail">infrastructure is fixed</div>
+    </div>
+  </div>
+
+  <div style="background:white;border:1px solid var(--line);border-radius:16px;padding:28px;margin-bottom:32px;">
+    <h3 style="font-family:'Playfair Display',serif;font-size:22px;color:var(--em-d);margin-bottom:18px;">Unit economics</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;">
+      <div>
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sl);font-weight:700;margin-bottom:6px;">Per-list price</div>
+        <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--dark);">$149–$497</div>
+        <div style="font-size:13px;color:var(--sl);margin-top:4px;">based on volume + filter depth</div>
+      </div>
+      <div>
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sl);font-weight:700;margin-bottom:6px;">Cost to produce</div>
+        <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--dark);">~$0.40</div>
+        <div style="font-size:13px;color:var(--sl);margin-top:4px;">VPS + bandwidth amortized</div>
+      </div>
+      <div>
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sl);font-weight:700;margin-bottom:6px;">Gross margin</div>
+        <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--em);">98%+</div>
+        <div style="font-size:13px;color:var(--sl);margin-top:4px;">software-business margins</div>
+      </div>
+      <div>
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sl);font-weight:700;margin-bottom:6px;">Resells per pull</div>
+        <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--dark);">5–8×</div>
+        <div style="font-size:13px;color:var(--sl);margin-top:4px;">same raw, segmented products</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hr"></div>
+
   <!-- DIFFERENTIATORS -->
   <h2>What's different</h2>
   <p class="section-lede">Three things that separate this from PropStream and the recycled-list market.</p>
