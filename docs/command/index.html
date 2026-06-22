@@ -626,38 +626,43 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 
       <div class="card mb16">
         <div class="card-h">
-          <span class="card-title">Post a message (manual)</span>
-          <span class="card-meta">while automation isn't wired</span>
+          <span class="card-title">Send a task or message</span>
         </div>
-        <div class="f-grid">
-          <div class="f-field">
-            <div class="f-label">From agent</div>
-            <select class="f-select" id="conf-agent">
-              <option value="claude">Claude (orchestrator)</option>
-              <option value="claude-code">Claude Code</option>
-              <option value="codex">Codex</option>
-              <option value="hermes">Hermes (Danny)</option>
-              <option value="derrick">Derrick (operator)</option>
-              <option value="system">System</option>
-            </select>
-          </div>
-          <div class="f-field">
-            <div class="f-label">Type</div>
-            <select class="f-select" id="conf-type">
-              <option value="status">📍 Status update</option>
-              <option value="handoff">🤝 Handoff</option>
-              <option value="blocker">🚧 Blocker</option>
-              <option value="done">✅ Done</option>
-              <option value="question">❓ Question</option>
-              <option value="role">🎭 Role / assignment</option>
-            </select>
-          </div>
-        </div>
+
+        <!-- TO — big and first -->
         <div class="f-field mb8">
-          <div class="f-label">Message</div>
-          <textarea class="f-textarea" id="conf-body" placeholder="e.g. 'Codex: please run RLS audit on Supabase tomorrow' or 'Hermes: standing by — API needed before I can cron the Wake pull'"></textarea>
+          <div class="f-label" style="font-size:12px;font-weight:700;color:var(--em);">TO — who needs to act on this?</div>
+          <select class="f-select" id="conf-target" style="font-size:15px;font-weight:600;border-color:var(--em);">
+            <option value="claude">🧠 Claude — strategy, writing, data, orchestration</option>
+            <option value="codex">🤖 Codex — code fixes, security, debugging</option>
+            <option value="hermes">⚙️ Hermes (Danny) — VPS tasks, data pulls, cron</option>
+            <option value="all">📢 Everyone — broadcast to all agents</option>
+          </select>
         </div>
-        <button class="btn" id="conf-post-btn">Post to conference</button>
+
+        <div class="f-field mb8">
+          <div class="f-label">Message — what do you need done?</div>
+          <textarea class="f-textarea" id="conf-body" placeholder="Tell them what to do. Claude will figure out if it needs to be split further." style="min-height:80px;"></textarea>
+        </div>
+
+        <!-- FROM — small, defaults to Derrick -->
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;">
+          <span style="font-size:11px;color:var(--sl);">From:</span>
+          <select class="mini-select" id="conf-agent">
+            <option value="derrick" selected>Derrick</option>
+            <option value="claude">Claude</option>
+            <option value="codex">Codex</option>
+            <option value="hermes">Hermes</option>
+            <option value="system">System</option>
+          </select>
+          <input type="hidden" id="conf-type" value="question" />
+        </div>
+
+        <div id="conf-ping-preview" style="font-size:12px;color:var(--sl);margin-bottom:10px;padding:8px 12px;background:var(--cream2);border-radius:8px;">
+          → Will ping: <strong id="ping-target-label">Claude via GitHub Issue</strong>
+        </div>
+
+        <button class="btn" id="conf-post-btn">Send →</button>
       </div>
 
       <div class="card">
@@ -902,9 +907,9 @@ const CONF_TYPE_ICONS = {
 };
 async function renderConference(){
   const filter = document.getElementById('conf-filter')?.value || '';
-  // Read from activity_feed where event_type starts with 'conf:'
+  // All conf: messages, show target in the log
   const confMsgs = FEED.filter(f => (f.event_type||'').startsWith('conf:'));
-  const filtered = filter ? confMsgs.filter(m => (m.source||'')===filter) : confMsgs;
+  const filtered = filter ? confMsgs.filter(m => (m.target||m.source||'')===filter) : confMsgs;
   const list = document.getElementById('conf-list');
   const meta = document.getElementById('conf-meta');
   if(meta) meta.textContent = confMsgs.length + ' messages';
@@ -918,27 +923,50 @@ async function renderConference(){
   list.innerHTML = filtered.map(m => {
     const type = (m.event_type||'conf:status').replace('conf:','');
     const icon = CONF_TYPE_ICONS[type] || '📌';
-    const agent = CONF_LABELS[m.source] || m.source || 'Unknown';
+    const from = CONF_LABELS[m.source] || m.source || 'Unknown';
+    const toLabel = m.target ? (CONF_LABELS[m.target]||m.target) : null;
+    const badge = type==='done'?'paying':type==='blocker'?'dead':type==='question'?'quoted':'queued';
     return `<div class="row">
       <div class="row-body">
-        <div class="row-name">${icon} ${esc(agent)} <span class="badge b-${type==='done'?'paying':type==='blocker'?'dead':'queued'}">${type}</span></div>
+        <div class="row-name">
+          ${icon} <strong>${esc(from)}</strong>
+          ${toLabel ? `<span style="color:var(--sl);font-weight:400;font-size:12px;"> → ${esc(toLabel)}</span>` : ''}
+          <span class="badge b-${badge}">${type}</span>
+        </div>
         ${m.title?`<div class="row-detail" style="font-weight:600;color:var(--dark);margin-top:4px;">${esc(m.title)}</div>`:''}
-        ${m.body?`<div class="row-detail" style="white-space:pre-wrap;">${esc(m.body)}</div>`:''}
+        ${m.body?`<div class="row-detail" style="white-space:pre-wrap;margin-top:4px;">${esc(m.body)}</div>`:''}
         <div class="row-time">${fmt(m.created_at)}</div>
       </div>
     </div>`;
   }).join('');
 }
 document.getElementById('conf-filter')?.addEventListener('change', renderConference);
+
+// Update ping preview when target changes
+const pingLabels = {
+  claude: 'Claude via GitHub Issue (seen next session)',
+  codex: 'Codex via GitHub Issue (immediate)',
+  hermes: 'Hermes (Danny) via VPS watcher (every 2 min)',
+  all: 'Everyone — GitHub Issue + VPS watcher'
+};
+document.getElementById('conf-target')?.addEventListener('change', function(){
+  const lbl = document.getElementById('ping-target-label');
+  if(lbl) lbl.textContent = pingLabels[this.value] || this.value;
+});
+
 document.getElementById('conf-post-btn')?.addEventListener('click', async () => {
-  const agent = document.getElementById('conf-agent').value;
-  const type = document.getElementById('conf-type').value;
-  const body = document.getElementById('conf-body').value.trim();
-  if(!body){ toast('Message body required'); return; }
-  const ok = await saveEvent('conf:'+type, body.split('\n')[0].slice(0,80), body, agent);
+  const target = document.getElementById('conf-target')?.value || 'claude';
+  const from   = document.getElementById('conf-agent')?.value || 'derrick';
+  const body   = document.getElementById('conf-body').value.trim();
+  if(!body){ toast('Write a message first'); return; }
+  const title  = body.split('\n')[0].slice(0, 80);
+  const btn    = document.getElementById('conf-post-btn');
+  btn.disabled = true; btn.textContent = 'Sending…';
+  const ok = await saveEvent('conf:question', title, body, from, target);
+  btn.disabled = false; btn.textContent = 'Send →';
   if(ok){
-    document.getElementById('conf-body').value='';
-    toast('Posted to conference');
+    document.getElementById('conf-body').value = '';
+    toast('Sent → ' + (pingLabels[target] || target));
     renderConference();
   }
 });
@@ -1270,8 +1298,8 @@ function renderFeed(elId, countId){
     </div>`).join('');
 }
 
-async function saveEvent(type, title, body, source='command-dashboard'){
-  const ev = {event_type:type, title, body:body||null, source};
+async function saveEvent(type, title, body, source='command-dashboard', target=null){
+  const ev = {event_type:type, title, body:body||null, source, target};
   if(SYNC){ const {error}=await sb.from('activity_feed').insert([ev]); if(error){ toast('Error: '+error.message); return false; } }
   FEED.unshift({...ev, id:'ev-'+Date.now(), created_at:new Date().toISOString()});
   renderFeed('hq-feed','feed-count'); renderFeed('wf-feed','wf-feed-count');
