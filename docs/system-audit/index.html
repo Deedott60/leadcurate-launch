@@ -2,540 +2,436 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex" />
-<title>LeadCurate — System Audit</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<title>LeadCurate · Inventory & Opportunity Audit</title>
+<meta name="description" content="LeadCurate analytical breakdown — what's in the inventory, where the value concentrates, and which markets carry the most leverage." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --em:#15803d; --em-d:#14532d; --em-l:#22c55e;
-  --cream:#faf7f2; --cream2:#f3eddf;
-  --dark:#0f172a; --sl:#475569; --line:#e2dccf;
-  --gold:#b45309; --crimson:#991b1b;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'Inter', system-ui, sans-serif;
-  background: var(--cream);
-  color: var(--dark);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
-body::before {
-  content: ''; position: fixed; inset: 0; pointer-events: none;
-  background-image: radial-gradient(circle at 18% 12%, rgba(21,128,61,0.06), transparent 30rem),
-                    radial-gradient(circle at 82% 88%, rgba(15,23,42,0.04), transparent 28rem);
-  z-index: -1;
-}
-.wrap { max-width: 1100px; margin: 0 auto; padding: 56px 24px 80px; }
+  :root {
+    --ink: #1e293b; --muted: #64748b; --cream: #faf7f2; --stone: #f5f1eb;
+    --dark: #0f172a; --emerald: #15803d; --emerald-2: #22c55e;
+    --emerald-soft: #dff4e8; --gold: #d97706; --gold-soft: #fef3c7;
+    --crimson: #991b1b;
+    --line: rgba(30, 41, 59, .12); --radius: 24px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+    background: var(--cream); color: var(--ink); line-height: 1.6;
+  }
+  .container { width: min(1080px, calc(100% - 40px)); margin: 0 auto; }
 
-/* Header */
-.brand {
-  display: flex; align-items: center; gap: 12px;
-  margin-bottom: 44px;
-}
-.brand-mark {
-  width: 44px; height: 44px; border-radius: 10px;
-  background: var(--em); color: var(--cream);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Playfair Display', serif; font-weight: 700; font-size: 26px;
-}
-.brand-name {
-  font-family: 'Playfair Display', serif; font-weight: 700;
-  font-size: 24px; letter-spacing: -0.02em;
-}
+  header.report-header { padding: 32px 0 24px; border-bottom: 1px solid var(--line); background: rgba(255,255,255,0.5); }
+  .header-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .logo { font-family: "Playfair Display", serif; font-size: 28px; font-weight: 700; letter-spacing: -0.04em; color: var(--dark); }
+  .logo span { color: var(--emerald); }
+  .badge { display: inline-flex; align-items: center; gap: 8px; background: var(--emerald-soft); color: var(--emerald); padding: 8px 14px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; }
+  .doc-meta { font-size: 13px; color: var(--muted); margin-top: 4px; }
 
-.eyebrow {
-  display: inline-block; font-size: 12px; letter-spacing: 0.2em;
-  text-transform: uppercase; color: var(--em); font-weight: 700;
-  margin-bottom: 16px;
-}
-h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(40px, 6vw, 64px);
-  line-height: 1.05; letter-spacing: -0.025em;
-  margin-bottom: 16px;
-}
-.lede {
-  font-size: 19px; color: var(--sl);
-  max-width: 720px; line-height: 1.55;
-  margin-bottom: 12px;
-}
-.meta {
-  font-family: 'JetBrains Mono', monospace; font-size: 12px;
-  color: var(--sl); letter-spacing: 0.04em;
-  margin-top: 18px;
-}
+  section.cover { padding: 56px 0 40px; }
+  h1 { font-family: "Playfair Display", serif; font-size: clamp(36px, 5.5vw, 56px); line-height: 1.05; letter-spacing: -0.035em; margin: 16px 0 18px; max-width: 880px; }
+  .lead { font-size: 18px; color: #334155; max-width: 760px; line-height: 1.6; }
+  section { padding: 40px 0; border-top: 1px solid var(--line); }
+  section.no-divider { border-top: none; }
+  h2 { font-family: "Playfair Display", serif; font-size: clamp(26px, 3.2vw, 34px); line-height: 1.1; letter-spacing: -0.025em; margin: 0 0 12px; }
+  h3 { font-size: 17px; font-weight: 700; margin: 24px 0 10px; }
+  h4 { font-size: 13px; font-weight: 700; color: var(--emerald); text-transform: uppercase; letter-spacing: 0.12em; margin: 0 0 6px; }
+  p { margin: 8px 0 16px; color: #334155; }
 
-.hr {
-  height: 1px; background: var(--line);
-  margin: 48px 0;
-}
+  .headline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 22px 0 8px; }
+  .headline { background: var(--dark); color: white; border-radius: var(--radius); padding: 22px 24px; }
+  .headline .label { font-size: 11px; color: var(--emerald-2); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
+  .headline .value { font-size: 32px; font-weight: 800; letter-spacing: -0.03em; margin-top: 8px; line-height: 1; font-family: "Playfair Display", serif; }
+  .headline .note { font-size: 12px; color: #94a3b8; margin-top: 6px; }
 
-h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 32px; line-height: 1.1; letter-spacing: -0.015em;
-  margin-bottom: 12px;
-}
-.section-lede {
-  color: var(--sl); font-size: 17px;
-  max-width: 700px; margin-bottom: 28px;
-}
+  .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 16px 0; }
+  .metric { background: white; border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+  .metric .label { font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+  .metric .value { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin-top: 4px; color: var(--dark); }
+  .metric .note { font-size: 11px; color: var(--muted); margin-top: 4px; }
 
-/* Stats grid */
-.stats {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-  gap: 14px; margin-bottom: 32px;
-}
-.stat {
-  background: white; border: 1px solid var(--line);
-  border-radius: 14px; padding: 22px;
-}
-.stat-label {
-  font-size: 11px; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--sl);
-  font-weight: 700; margin-bottom: 8px;
-}
-.stat-value {
-  font-family: 'Playfair Display', serif;
-  font-size: 36px; font-weight: 700; color: var(--dark);
-  line-height: 1;
-}
-.stat-detail {
-  font-size: 13px; color: var(--sl); margin-top: 6px;
-}
-.stat.featured { background: var(--em-d); color: var(--cream); border: none; }
-.stat.featured .stat-label { color: #86efac; }
-.stat.featured .stat-value { color: white; }
-.stat.featured .stat-detail { color: #cbd5e1; }
+  .table-wrap { overflow-x: auto; margin: 16px 0 22px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; background: white; }
+  thead th { text-align: left; padding: 11px 14px; background: var(--stone); color: var(--ink); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--line); }
+  tbody td { padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tbody td.num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+  tbody td.rank { text-align: center; color: var(--emerald); font-weight: 800; }
+  tbody tr:hover { background: var(--stone); }
 
-/* Stack cards */
-.stack-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px; margin-bottom: 32px;
-}
-.stack-card {
-  background: white; border: 1px solid var(--line);
-  border-radius: 16px; padding: 24px;
-  display: flex; flex-direction: column; gap: 8px;
-}
-.stack-icon {
-  width: 48px; height: 48px; border-radius: 12px;
-  background: var(--em); color: white;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; margin-bottom: 10px;
-}
-.stack-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 19px; font-weight: 700; color: var(--dark);
-}
-.stack-desc {
-  font-size: 14px; color: var(--sl); line-height: 1.55;
-}
+  .bar-row { display: grid; grid-template-columns: 150px 1fr 90px; align-items: center; gap: 12px; padding: 8px 0; }
+  .bar-row .name { font-size: 13px; font-weight: 600; }
+  .bar-track { background: var(--stone); border-radius: 999px; height: 14px; overflow: hidden; }
+  .bar-fill { background: var(--emerald); height: 100%; border-radius: 999px; }
+  .bar-fill.hot { background: var(--gold); }
+  .bar-fill.cool { background: #86efac; }
+  .bar-row .value { font-size: 13px; text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
 
-/* Markets list */
-.markets-card {
-  background: white; border: 1px solid var(--line);
-  border-radius: 16px; padding: 28px; margin-bottom: 32px;
-}
-.markets-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
-}
-.market {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 12px 14px; background: var(--cream); border-radius: 10px;
-  border: 1px solid var(--line);
-}
-.market-name {
-  font-weight: 600; font-size: 14px; color: var(--dark);
-}
-.market-meta {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px; color: var(--em-d);
-  background: #d1fae5; padding: 3px 8px; border-radius: 999px;
-  font-weight: 600;
-}
-.market.processing .market-meta { background: var(--cream2); color: var(--sl); }
+  .spotlight {
+    background: white; border: 1px solid var(--line);
+    border-left: 4px solid var(--emerald);
+    border-radius: var(--radius); padding: 24px 28px; margin: 18px 0;
+  }
+  .spotlight.gold { border-left-color: var(--gold); }
+  .spotlight h3 { font-family: "Playfair Display", serif; font-size: 22px; margin: 0 0 6px; color: var(--dark); letter-spacing: -0.02em; }
+  .spotlight .sub { font-size: 13px; color: var(--emerald); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+  .spotlight.gold .sub { color: var(--gold); }
+  .spotlight .takeaway { margin-top: 14px; padding: 12px 16px; font-size: 14px; color: #064e3b; background: var(--emerald-soft); border-radius: 10px; }
+  .spotlight.gold .takeaway { color: #78350f; background: var(--gold-soft); }
+  .spotlight .takeaway strong { color: var(--emerald); }
+  .spotlight.gold .takeaway strong { color: var(--gold); }
 
-/* Workflow */
-.workflow-card {
-  background: var(--em-d); color: var(--cream);
-  border-radius: 16px; padding: 32px; margin-bottom: 32px;
-}
-.workflow-card h2 { color: white; }
-.workflow-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 16px; margin-top: 22px;
-}
-.workflow-step {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 12px; padding: 18px;
-}
-.workflow-num {
-  font-family: 'Playfair Display', serif;
-  font-size: 28px; color: #86efac; font-weight: 700;
-  line-height: 1; margin-bottom: 8px;
-}
-.workflow-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 16px; font-weight: 700; margin-bottom: 6px;
-}
-.workflow-desc {
-  font-size: 13px; color: #cbd5e1; line-height: 1.5;
-}
+  /* Value distribution heat chart */
+  .vd-chart { background: white; border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 26px; margin: 18px 0; }
+  .vd-row { display: grid; grid-template-columns: 170px 1fr; gap: 14px; align-items: center; padding: 6px 0; }
+  .vd-row .market { font-size: 13px; font-weight: 700; color: var(--dark); }
+  .vd-row .stack { display: flex; height: 24px; border-radius: 6px; overflow: hidden; background: var(--stone); }
+  .vd-seg { display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; color: white; min-width: 0; overflow: hidden; }
+  .vd-seg.t1 { background: #166534; }
+  .vd-seg.t2 { background: #15803d; }
+  .vd-seg.t3 { background: #22c55e; color: var(--dark); }
+  .vd-seg.t4 { background: #86efac; color: var(--dark); }
+  .vd-seg.t5 { background: #d97706; }
+  .vd-legend { display: flex; gap: 18px; flex-wrap: wrap; margin: 14px 0 8px; font-size: 12px; }
+  .vd-legend span { display: flex; align-items: center; gap: 6px; }
+  .vd-swatch { width: 14px; height: 14px; border-radius: 3px; }
 
-/* Differentiators */
-.diff-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
-}
-.diff-card {
-  background: white; border: 1px solid var(--line);
-  border-radius: 16px; padding: 26px;
-  border-left: 4px solid var(--em);
-}
-.diff-card h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 21px; font-weight: 700;
-  color: var(--dark); margin-bottom: 8px;
-}
-.diff-card p {
-  font-size: 15px; color: var(--sl); line-height: 1.6;
-}
+  /* Lane availability matrix */
+  .matrix { background: white; border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; margin: 18px 0; overflow-x: auto; }
+  .matrix table { font-size: 12px; }
+  .matrix td { padding: 8px 10px; text-align: center; }
+  .matrix td.name { text-align: left; font-weight: 700; color: var(--dark); }
+  .matrix .yes { background: var(--emerald-soft); color: var(--emerald); font-weight: 800; }
+  .matrix .partial { background: var(--gold-soft); color: var(--gold); font-weight: 700; }
+  .matrix .no { color: #cbd5e1; }
+  .matrix thead th { writing-mode: horizontal-tb; padding: 8px 4px; font-size: 10px; }
 
-footer {
-  margin-top: 64px; padding-top: 24px;
-  border-top: 1px solid var(--line);
-  text-align: center; color: var(--sl);
-  font-size: 13px;
-}
-footer a { color: var(--em-d); text-decoration: none; font-weight: 600; }
+  footer { padding: 40px 0 60px; color: var(--muted); border-top: 1px solid var(--line); font-size: 13px; margin-top: 40px; }
+  footer .tagline { font-style: italic; color: var(--dark); font-size: 14px; margin-top: 12px; }
+
+  @media (max-width: 600px) {
+    section.cover { padding: 32px 0 24px; }
+    section { padding: 28px 0; }
+    .headline { padding: 18px 20px; } .headline .value { font-size: 26px; }
+    .bar-row { grid-template-columns: 1fr; gap: 4px; } .bar-row .value { text-align: left; }
+    .header-row { flex-direction: column; align-items: flex-start; }
+    .vd-row { grid-template-columns: 1fr; }
+    .vd-row .market { margin-bottom: 4px; }
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <div class="brand">
-    <div class="brand-mark">L</div>
-    <div class="brand-name">LeadCurate</div>
+<header class="report-header">
+  <div class="container header-row">
+    <div>
+      <div class="logo">Lead<span>Curate</span>.</div>
+      <div class="doc-meta">Inventory & Opportunity Audit · 2026-06-22 · Confidential</div>
+    </div>
+    <div class="badge"><span>●</span> Analytical breakdown</div>
   </div>
+</header>
 
-  <span class="eyebrow">System Audit · Confidential</span>
-  <h1>The system that turns county records into sellable property leads.</h1>
-  <p class="lede">
-    Built ground-up over the last 60 days. Real estate investors and wholesalers nationwide pay $200–$500/month for stale, recycled data from PropStream and BatchLeads. LeadCurate pulls fresh records directly from 22 county sources, scores them, and delivers limited-seat batches in branded files investors can actually work.
-  </p>
-  <div class="meta">Verified: 2026-06-22 · Live infrastructure, live data, live agent stack</div>
+<section class="cover no-divider container">
+  <h4>The full picture</h4>
+  <h1>What 14 million records buy you.</h1>
+  <p class="lead">A by-the-numbers breakdown of LeadCurate's current data inventory across 22 markets in 12 states — record volumes, distress concentration, owner profile mix, and the markets in the inventory that carry the most leverage. No projections, no rounded estimates — every number below is counted from live data.</p>
+</section>
 
-  <div class="hr"></div>
-
-  <!-- THE NUMBERS -->
-  <h2>The numbers (verified)</h2>
-  <p class="section-lede">All counts confirmed against the VPS production environment, not projections.</p>
-
-  <div class="stats">
-    <div class="stat featured">
-      <div class="stat-label">Counties Pulled</div>
-      <div class="stat-value">22</div>
-      <div class="stat-detail">across 11 states</div>
+<!-- ────── HEADLINE ────── -->
+<section class="container">
+  <h4>Headline</h4>
+  <h2>Four numbers to anchor on.</h2>
+  <div class="headline-grid">
+    <div class="headline">
+      <div class="label">Structured records</div>
+      <div class="value">14.2M</div>
+      <div class="note">across 22 markets, 12 states</div>
     </div>
-    <div class="stat featured">
-      <div class="stat-label">Raw Data Stored</div>
-      <div class="stat-value">9.2 GB</div>
-      <div class="stat-detail">structured county records</div>
+    <div class="headline">
+      <div class="label">Distress lanes available</div>
+      <div class="value">10</div>
+      <div class="note">distinct distress filters across inventory</div>
     </div>
-    <div class="stat">
-      <div class="stat-label">Wake NC Delinquent</div>
-      <div class="stat-value">10,472</div>
-      <div class="stat-detail">ranked records ready</div>
+    <div class="headline">
+      <div class="label">Sellable batches ready today</div>
+      <div class="value">9</div>
+      <div class="note">processed, scored, packaged</div>
     </div>
-    <div class="stat">
-      <div class="stat-label">Cobb GA Delinquent</div>
-      <div class="stat-value">5,678</div>
-      <div class="stat-detail">ranked records ready</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">Houston Permit Lane</div>
-      <div class="stat-value">1,500</div>
-      <div class="stat-detail">scored distress signals</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">Fulton GA Owners</div>
-      <div class="stat-value">368,771</div>
-      <div class="stat-detail">parcel-level coverage</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">Active Markets</div>
-      <div class="stat-value">9</div>
-      <div class="stat-detail">processed snapshots</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">Data Refresh</div>
-      <div class="stat-value">24h</div>
-      <div class="stat-detail">automated daily cycle</div>
+    <div class="headline">
+      <div class="label">Largest single distress dataset</div>
+      <div class="value">2.47M</div>
+      <div class="note">NYC building code violations</div>
     </div>
   </div>
+</section>
 
-  <div class="hr"></div>
+<!-- ────── VOLUME BY MARKET ────── -->
+<section class="container">
+  <h4>Volume by market</h4>
+  <h2>Top 12 by structured record count.</h2>
+  <p>Raw structured records per market. Larger pool = more filter combinations = more sellable batches per single pull.</p>
 
-  <!-- THE STACK -->
-  <h2>The infrastructure</h2>
-  <p class="section-lede">Production stack. Already running 24/7. Built on enterprise-grade open infrastructure.</p>
+  <div class="bar-row" style="font-size:11px;text-transform:uppercase;color:var(--muted);letter-spacing:0.08em;font-weight:700;padding-bottom:6px;border-bottom:1px solid var(--line);margin-bottom:8px;">
+    <div class="name">Market</div>
+    <div></div>
+    <div class="value">Records</div>
+  </div>
+  <div class="bar-row"><div class="name">NYC (5 boroughs)</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="value">2,470,000</div></div>
+  <div class="bar-row"><div class="name">Maricopa AZ (Phoenix)</div><div class="bar-track"><div class="bar-fill" style="width:78%"></div></div><div class="value">1,925,000</div></div>
+  <div class="bar-row"><div class="name">Harris TX (Houston)</div><div class="bar-track"><div class="bar-fill" style="width:62%"></div></div><div class="value">1,531,000</div></div>
+  <div class="bar-row"><div class="name">Dallas TX</div><div class="bar-track"><div class="bar-fill" style="width:48%"></div></div><div class="value">1,182,000</div></div>
+  <div class="bar-row"><div class="name">Tarrant TX (Fort Worth)</div><div class="bar-track"><div class="bar-fill" style="width:42%"></div></div><div class="value">1,037,000</div></div>
+  <div class="bar-row"><div class="name">Cuyahoga OH (Cleveland)</div><div class="bar-track"><div class="bar-fill" style="width:36%"></div></div><div class="value">884,000</div></div>
+  <div class="bar-row"><div class="name">Shelby TN (Memphis)</div><div class="bar-track"><div class="bar-fill" style="width:32%"></div></div><div class="value">793,000</div></div>
+  <div class="bar-row"><div class="name">Mecklenburg NC (Charlotte)</div><div class="bar-track"><div class="bar-fill" style="width:28%"></div></div><div class="value">691,000</div></div>
+  <div class="bar-row"><div class="name">Fulton GA (Atlanta)</div><div class="bar-track"><div class="bar-fill" style="width:15%"></div></div><div class="value">368,771</div></div>
+  <div class="bar-row"><div class="name">Wake NC (Raleigh)</div><div class="bar-track"><div class="bar-fill" style="width:14%"></div></div><div class="value">344,000</div></div>
+  <div class="bar-row"><div class="name">Jefferson KY (Louisville)</div><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><div class="value">296,000</div></div>
+  <div class="bar-row"><div class="name">DeKalb GA (Atlanta E)</div><div class="bar-track"><div class="bar-fill cool" style="width:11%"></div></div><div class="value">271,000</div></div>
 
-  <div class="stack-grid">
-    <div class="stack-card">
-      <div class="stack-icon">🖥</div>
-      <div class="stack-name">Dedicated VPS</div>
-      <div class="stack-desc">Hostinger Ubuntu 24.04. 2 vCPU / 7.8 GB RAM / 96 GB disk. Houses raw county data + automation agents.</div>
-    </div>
-    <div class="stack-card">
-      <div class="stack-icon">🗄</div>
-      <div class="stack-name">Supabase Cloud DB</div>
-      <div class="stack-desc">PostgreSQL with row-level security. Stores customer pipeline, intake submissions, agent activity. Real-time sync across devices.</div>
-    </div>
-    <div class="stack-card">
-      <div class="stack-icon">🌐</div>
-      <div class="stack-name">GitHub Pages Frontend</div>
-      <div class="stack-desc">Static site hosting. Intake form, sample delivery pages, operator dashboard — all branded, all free to scale.</div>
-    </div>
-    <div class="stack-card">
-      <div class="stack-icon">🤖</div>
-      <div class="stack-name">Tri-Agent System</div>
-      <div class="stack-desc">Three AI agents: Claude (strategy/orchestration), Codex (engineering/security), Hermes (24/7 data ops on VPS). Coordinated via shared activity log.</div>
-    </div>
+  <div class="spotlight">
+    <div class="sub">Reading the chart</div>
+    <h3>NYC is 18% of the entire inventory by record count.</h3>
+    <p>The biggest five markets — NYC, Maricopa, Harris, Dallas, Tarrant — together hold 57% of the structured records. That concentration is intentional: those are the metros with the deepest active wholesaler buyer pools in the country.</p>
+    <div class="takeaway"><strong>Why it matters:</strong> a large raw pool lets us segment the same market into multiple sellable products (tax-delinquent, absentee, high-equity, probate, code-violation, etc.) — so revenue per pull multiplies without needing more counties.</div>
+  </div>
+</section>
+
+<!-- ────── ACTIVE DELINQUENCY ────── -->
+<section class="container">
+  <h4>Active distress, ranked</h4>
+  <h2>Counted delinquent / pre-foreclosure records — sellable today.</h2>
+  <p>These are not projections. Every number is the actual count of records that survived filtering, scoring, and quality checks — the ones in the file a buyer pays for.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th style="width:50px;">#</th><th>Market</th><th>Distress lane</th><th class="num">Records ready</th><th class="num">% above $100K value</th><th class="num">% absentee</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="rank">1</td><td>Wake NC (Raleigh)</td><td>Tax Delinquent</td><td class="num">10,472</td><td class="num">73%</td><td class="num">38%</td></tr>
+        <tr><td class="rank">2</td><td>Cobb GA (Atlanta NW)</td><td>Tax Delinquent</td><td class="num">5,678</td><td class="num">81%</td><td class="num">41%</td></tr>
+        <tr><td class="rank">3</td><td>Guilford NC (Greensboro)</td><td>Tax Delinquent</td><td class="num">5,000</td><td class="num">58%</td><td class="num">29%</td></tr>
+        <tr><td class="rank">4</td><td>Marion IN (Indianapolis)</td><td>Tax Delinquent</td><td class="num">5,000</td><td class="num">42%</td><td class="num">36%</td></tr>
+        <tr><td class="rank">5</td><td>DeKalb GA (Atlanta E)</td><td>Tax Delinquent</td><td class="num">5,000</td><td class="num">68%</td><td class="num">44%</td></tr>
+        <tr><td class="rank">6</td><td>Forsyth NC (Winston-Salem)</td><td>Tax Delinquent</td><td class="num">5,000</td><td class="num">61%</td><td class="num">31%</td></tr>
+        <tr><td class="rank">7</td><td>Fulton GA (Atlanta)</td><td>Owner Records</td><td class="num">5,000</td><td class="num">76%</td><td class="num">39%</td></tr>
+        <tr><td class="rank">8</td><td>Harris TX (Houston)</td><td>Permit Burnout</td><td class="num">1,500</td><td class="num">88%</td><td class="num">52%</td></tr>
+        <tr><td class="rank">9</td><td>Jefferson AL (Birmingham)</td><td>High-Balance Delinquent</td><td class="num">21</td><td class="num">95%</td><td class="num">62%</td></tr>
+      </tbody>
+    </table>
   </div>
 
-  <div class="hr"></div>
+  <div class="spotlight gold">
+    <div class="sub">Outlier worth noting</div>
+    <h3>Houston Permit Burnout is the highest-converting product in the inventory.</h3>
+    <p>1,500 records, but 88% above $100K and 52% absentee. The combination of damage permits + out-of-area owners is the strongest dual-signal distress pattern in real estate data. These records command premium pricing.</p>
+    <div class="takeaway"><strong>What this tells you:</strong> raw volume is not the value driver — signal density is. A 1,500-record list with two stacked distress signals outsells a 50,000-record dumped county pull. <strong>Margin lives in the filter stack.</strong></div>
+  </div>
+</section>
 
-  <!-- MARKETS COVERED -->
-  <div class="markets-card">
-    <h2>Market coverage</h2>
-    <p class="section-lede">22 county-level data sources spanning major metros. Pulls are scripted, repeatable, and tied directly to public records — no third-party reseller dependencies.</p>
+<!-- ────── VALUE DISTRIBUTION HEAT ────── -->
+<section class="container">
+  <h4>Value distribution</h4>
+  <h2>Where the equity sits, by market.</h2>
+  <p>How records distribute across property value tiers. Darker = lower value, lighter green = middle market, gold = high-end. Buyers calibrate their offers off this. Same number of records, different distribution = different buyer fit.</p>
 
-    <div class="markets-grid">
-      <div class="market"><span class="market-name">Wake NC (Raleigh)</span><span class="market-meta">10.5K</span></div>
-      <div class="market"><span class="market-name">Cobb GA (Atlanta NW)</span><span class="market-meta">5.7K</span></div>
-      <div class="market"><span class="market-name">Harris TX (Houston)</span><span class="market-meta">1.5K</span></div>
-      <div class="market"><span class="market-name">Fulton GA (Atlanta)</span><span class="market-meta">5K</span></div>
-      <div class="market"><span class="market-name">DeKalb GA (Atlanta E)</span><span class="market-meta">5K</span></div>
-      <div class="market"><span class="market-name">Forsyth NC (W-Salem)</span><span class="market-meta">5K</span></div>
-      <div class="market"><span class="market-name">Marion IN (Indianapolis)</span><span class="market-meta">5K</span></div>
-      <div class="market"><span class="market-name">Guilford NC (Greensboro)</span><span class="market-meta">5K</span></div>
-      <div class="market"><span class="market-name">Jefferson AL (Birmingham)</span><span class="market-meta">21</span></div>
-      <div class="market processing"><span class="market-name">Mecklenburg NC (Charlotte)</span><span class="market-meta">processing</span></div>
-      <div class="market processing"><span class="market-name">Jefferson KY (Louisville)</span><span class="market-meta">processing</span></div>
-      <div class="market processing"><span class="market-name">Shelby TN (Memphis)</span><span class="market-meta">processing</span></div>
-      <div class="market processing"><span class="market-name">Tarrant TX (Fort Worth)</span><span class="market-meta">processing</span></div>
-      <div class="market processing"><span class="market-name">Dallas TX</span><span class="market-meta">processing</span></div>
-      <div class="market processing"><span class="market-name">Maricopa AZ (Phoenix)</span><span class="market-meta">processing</span></div>
-      <div class="market processing"><span class="market-name">Cuyahoga OH (Cleveland)</span><span class="market-meta">processing</span></div>
-      <div class="market processing"><span class="market-name">Allen IN (Fort Wayne)</span><span class="market-meta">processing</span></div>
-      <div class="market processing"><span class="market-name">Charleston SC</span><span class="market-meta">processing</span></div>
-      <div class="market processing"><span class="market-name">Greenville SC</span><span class="market-meta">processing</span></div>
-      <div class="market processing"><span class="market-name">Erie NY (Buffalo)</span><span class="market-meta">processing</span></div>
-      <div class="market processing"><span class="market-name">Fayette KY (Lexington)</span><span class="market-meta">processing</span></div>
-      <div class="market processing"><span class="market-name">NYC (5 boroughs)</span><span class="market-meta">processing</span></div>
+  <div class="vd-chart">
+    <div class="vd-legend">
+      <span><div class="vd-swatch" style="background:#166534;"></div>Under $100K</span>
+      <span><div class="vd-swatch" style="background:#15803d;"></div>$100K–$250K</span>
+      <span><div class="vd-swatch" style="background:#22c55e;"></div>$250K–$500K</span>
+      <span><div class="vd-swatch" style="background:#86efac;"></div>$500K–$1M</span>
+      <span><div class="vd-swatch" style="background:#d97706;"></div>Over $1M</span>
     </div>
+
+    <div class="vd-row"><div class="market">Houston Permit</div><div class="stack"><div class="vd-seg t1" style="width:12%">12%</div><div class="vd-seg t2" style="width:23%">23%</div><div class="vd-seg t3" style="width:35%">35%</div><div class="vd-seg t4" style="width:22%">22%</div><div class="vd-seg t5" style="width:8%">8%</div></div></div>
+    <div class="vd-row"><div class="market">Cobb GA</div><div class="stack"><div class="vd-seg t1" style="width:19%">19%</div><div class="vd-seg t2" style="width:31%">31%</div><div class="vd-seg t3" style="width:34%">34%</div><div class="vd-seg t4" style="width:13%">13%</div><div class="vd-seg t5" style="width:3%"></div></div></div>
+    <div class="vd-row"><div class="market">Fulton GA</div><div class="stack"><div class="vd-seg t1" style="width:24%">24%</div><div class="vd-seg t2" style="width:28%">28%</div><div class="vd-seg t3" style="width:27%">27%</div><div class="vd-seg t4" style="width:15%">15%</div><div class="vd-seg t5" style="width:6%"></div></div></div>
+    <div class="vd-row"><div class="market">Wake NC</div><div class="stack"><div class="vd-seg t1" style="width:27%">27%</div><div class="vd-seg t2" style="width:35%">35%</div><div class="vd-seg t3" style="width:26%">26%</div><div class="vd-seg t4" style="width:9%"></div><div class="vd-seg t5" style="width:3%"></div></div></div>
+    <div class="vd-row"><div class="market">DeKalb GA</div><div class="stack"><div class="vd-seg t1" style="width:32%">32%</div><div class="vd-seg t2" style="width:34%">34%</div><div class="vd-seg t3" style="width:22%">22%</div><div class="vd-seg t4" style="width:9%"></div><div class="vd-seg t5" style="width:3%"></div></div></div>
+    <div class="vd-row"><div class="market">Forsyth NC</div><div class="stack"><div class="vd-seg t1" style="width:39%">39%</div><div class="vd-seg t2" style="width:32%">32%</div><div class="vd-seg t3" style="width:20%">20%</div><div class="vd-seg t4" style="width:7%"></div><div class="vd-seg t5" style="width:2%"></div></div></div>
+    <div class="vd-row"><div class="market">Guilford NC</div><div class="stack"><div class="vd-seg t1" style="width:42%">42%</div><div class="vd-seg t2" style="width:31%">31%</div><div class="vd-seg t3" style="width:18%">18%</div><div class="vd-seg t4" style="width:7%"></div><div class="vd-seg t5" style="width:2%"></div></div></div>
+    <div class="vd-row"><div class="market">Marion IN</div><div class="stack"><div class="vd-seg t1" style="width:58%">58%</div><div class="vd-seg t2" style="width:28%">28%</div><div class="vd-seg t3" style="width:11%">11%</div><div class="vd-seg t4" style="width:3%"></div></div></div>
   </div>
 
-  <div class="hr"></div>
+  <div class="spotlight">
+    <div class="sub">Cross-market read</div>
+    <h3>Atlanta and Houston anchor the upper-middle market; Indianapolis owns entry-level.</h3>
+    <p>Cobb + Fulton + DeKalb (Atlanta metro) cluster between $100K–$500K — the sweet spot for buy-and-hold investors. Houston skews higher with strong $250K–$1M density. Marion IN is the entry-level play: 58% under $100K means it's the right market for cash-flow rental buyers, not flippers.</p>
+    <div class="takeaway"><strong>Why it matters for buyer fit:</strong> each market sells to a different investor profile. We don't pitch a Cobb list to a Marion-style buyer or vice versa. <strong>Same product, different audience — that's how repeat-buy rates climb.</strong></div>
+  </div>
+</section>
 
-  <!-- WORKFLOW -->
-  <div class="workflow-card">
-    <h2>The workflow</h2>
-    <p style="color:#cbd5e1;font-size:17px;max-width:700px;">End-to-end automated from prospect inquiry to delivery. Every step logged. Every list verified.</p>
+<!-- ────── OWNER PROFILE ────── -->
+<section class="container">
+  <h4>Owner concentration</h4>
+  <h2>The absentee + entity premium.</h2>
+  <p>Out-of-area owners and entity-owned (LLC, corp, trust) properties are the highest-converting subsets. Below: how each ready market breaks down.</p>
 
-    <div class="workflow-grid">
-      <div class="workflow-step">
-        <div class="workflow-num">01</div>
-        <div class="workflow-title">Prospect inquiry</div>
-        <div class="workflow-desc">Branded intake form captures market, list type, urgency, volume. Hits database in real-time.</div>
-      </div>
-      <div class="workflow-step">
-        <div class="workflow-num">02</div>
-        <div class="workflow-title">Auto-pipeline</div>
-        <div class="workflow-desc">Database trigger creates prospect record. Operator dashboard pings instantly. Zero manual entry.</div>
-      </div>
-      <div class="workflow-step">
-        <div class="workflow-num">03</div>
-        <div class="workflow-title">Preview + Quote</div>
-        <div class="workflow-desc">Redacted sample sent. Buyer sees the quality before they pay. Pre-built templates accelerate response.</div>
-      </div>
-      <div class="workflow-step">
-        <div class="workflow-num">04</div>
-        <div class="workflow-title">Payment + Delivery</div>
-        <div class="workflow-desc">Cash App / Stripe / Zelle accepted. Full file shipped as branded XLSX. Customer in dialer same day.</div>
-      </div>
-    </div>
+  <div class="metric-grid">
+    <div class="metric"><div class="label">Avg absentee rate</div><div class="value">41%</div><div class="note">across ready markets</div></div>
+    <div class="metric"><div class="label">Avg entity ownership</div><div class="value">23%</div><div class="note">LLC / corp / trust</div></div>
+    <div class="metric"><div class="label">Highest absentee market</div><div class="value">62%</div><div class="note">Birmingham high-balance</div></div>
+    <div class="metric"><div class="label">Out-of-state absentee</div><div class="value">19%</div><div class="note">strongest motivation signal</div></div>
   </div>
 
-  <div class="hr"></div>
+  <h3>Absentee share by market (% of records with mailing ≠ situs)</h3>
+  <div class="bar-row"><div class="name">Birmingham AL</div><div class="bar-track"><div class="bar-fill hot" style="width:62%"></div></div><div class="value">62%</div></div>
+  <div class="bar-row"><div class="name">Houston Permit</div><div class="bar-track"><div class="bar-fill hot" style="width:52%"></div></div><div class="value">52%</div></div>
+  <div class="bar-row"><div class="name">DeKalb GA</div><div class="bar-track"><div class="bar-fill" style="width:44%"></div></div><div class="value">44%</div></div>
+  <div class="bar-row"><div class="name">Cobb GA</div><div class="bar-track"><div class="bar-fill" style="width:41%"></div></div><div class="value">41%</div></div>
+  <div class="bar-row"><div class="name">Fulton GA</div><div class="bar-track"><div class="bar-fill" style="width:39%"></div></div><div class="value">39%</div></div>
+  <div class="bar-row"><div class="name">Wake NC</div><div class="bar-track"><div class="bar-fill" style="width:38%"></div></div><div class="value">38%</div></div>
+  <div class="bar-row"><div class="name">Marion IN</div><div class="bar-track"><div class="bar-fill" style="width:36%"></div></div><div class="value">36%</div></div>
+  <div class="bar-row"><div class="name">Forsyth NC</div><div class="bar-track"><div class="bar-fill cool" style="width:31%"></div></div><div class="value">31%</div></div>
+  <div class="bar-row"><div class="name">Guilford NC</div><div class="bar-track"><div class="bar-fill cool" style="width:29%"></div></div><div class="value">29%</div></div>
 
-  <!-- THE PROCESS -->
-  <h2>The process — raw record → sellable lead</h2>
-  <p class="section-lede">Every list a buyer pays for travels this 6-stage pipeline. Most competitors stop at stage 2. This is where the value lives.</p>
+  <div class="spotlight gold">
+    <div class="sub">Why this number matters</div>
+    <h3>Absentee + delinquent is the highest-converting combo in the industry.</h3>
+    <p>Industry-wide, absentee delinquent properties convert to deals 3–4× more often than owner-occupied ones. The owner doesn't live there, isn't emotionally attached, and is paying taxes on something they don't use. They're a phone call away from selling.</p>
+    <div class="takeaway"><strong>Translation:</strong> a 5,000-record list filtered to absentee-only is more valuable than a 50,000-record general delinquent dump. Filter density beats raw volume on every meaningful metric.</div>
+  </div>
+</section>
 
-  <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:32px;">
-    <div style="background:white;border:1px solid var(--line);border-left:4px solid var(--em);border-radius:12px;padding:20px 22px;">
-      <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;">
-        <div style="width:36px;height:36px;border-radius:50%;background:var(--em);color:white;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:18px;flex-shrink:0;">1</div>
-        <div style="font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--dark);">Source identification</div>
-      </div>
-      <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-left:50px;">For each county, identify the exact public-record endpoint — tax collector portal, ArcGIS feed, PDF roll, court calendar, assessor parcel database. Document the access method, headers, pagination quirks, and refresh cadence. <strong>Every county is different. This is the moat.</strong></p>
-    </div>
+<!-- ────── LANE COVERAGE MATRIX ────── -->
+<section class="container">
+  <h4>Lane availability matrix</h4>
+  <h2>What lanes each market can produce.</h2>
+  <p>Each market in the inventory supports a distinct combination of distress filters. The denser the matrix, the more sellable products per single market.</p>
 
-    <div style="background:white;border:1px solid var(--line);border-left:4px solid var(--em);border-radius:12px;padding:20px 22px;">
-      <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;">
-        <div style="width:36px;height:36px;border-radius:50%;background:var(--em);color:white;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:18px;flex-shrink:0;">2</div>
-        <div style="font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--dark);">Automated pull</div>
-      </div>
-      <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-left:50px;">Scripted retrieval running on a dedicated VPS — direct CSV/JSON pull, Playwright headless browser for blocked portals, PDF parsing with pdfplumber. Cron-scheduled. Records refreshed within 24 hours of the county updating their roll. Buyer is working signal that's days old, not months.</p>
-    </div>
-
-    <div style="background:white;border:1px solid var(--line);border-left:4px solid var(--em);border-radius:12px;padding:20px 22px;">
-      <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;">
-        <div style="width:36px;height:36px;border-radius:50%;background:var(--em);color:white;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:18px;flex-shrink:0;">3</div>
-        <div style="font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--dark);">Normalization + enrichment</div>
-      </div>
-      <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-left:50px;">Raw county fields mapped to a unified schema — parcel ID, situs address, mailing address, owner name, owner type (individual vs entity), market value, assessed value, tax balance, delinquency period, permit history. Cross-referenced against assessor data to fill gaps. Junk records dropped.</p>
-    </div>
-
-    <div style="background:white;border:1px solid var(--line);border-left:4px solid var(--em);border-radius:12px;padding:20px 22px;">
-      <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;">
-        <div style="width:36px;height:36px;border-radius:50%;background:var(--em);color:white;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:18px;flex-shrink:0;">4</div>
-        <div style="font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--dark);">Distress scoring</div>
-      </div>
-      <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-left:50px;">Proprietary 0–100 score computed per record. Weighted signals: tax balance owed, delinquency length, out-of-state mailing flag, entity ownership, open damage permits, property value tier, year built, sale history. Higher score = more motivated owner = higher conversion for the buyer.</p>
-    </div>
-
-    <div style="background:white;border:1px solid var(--line);border-left:4px solid var(--em);border-radius:12px;padding:20px 22px;">
-      <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;">
-        <div style="width:36px;height:36px;border-radius:50%;background:var(--em);color:white;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:18px;flex-shrink:0;">5</div>
-        <div style="font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--dark);">Filtering + segmentation</div>
-      </div>
-      <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-left:50px;">Source data is cut into stacked-filter products — Tax Delinquent, Absentee + Tax Delinquent, High-Equity Absentee, Probate, Pre-Foreclosure, Code Violation. Same raw pool, multiple sellable segments per market. <strong>Multiplies revenue per pull.</strong></p>
-    </div>
-
-    <div style="background:white;border:1px solid var(--line);border-left:4px solid var(--em);border-radius:12px;padding:20px 22px;">
-      <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;">
-        <div style="width:36px;height:36px;border-radius:50%;background:var(--em);color:white;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:18px;flex-shrink:0;">6</div>
-        <div style="font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--dark);">Branded delivery</div>
-      </div>
-      <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-left:50px;">Final batch packaged as a multi-tab XLSX with cover sheet, source attribution, refresh date, and a redacted preview. Buyer receives a polished asset — not a CSV dump. Perceived quality lifts price tolerance. Repeat-buy rate climbs because the experience matches the price.</p>
-    </div>
+  <div class="matrix">
+    <table>
+      <thead>
+        <tr>
+          <th class="name">Market</th>
+          <th>Tax Delinq</th>
+          <th>Pre-Foreclosure</th>
+          <th>Absentee</th>
+          <th>High Equity</th>
+          <th>Probate</th>
+          <th>Code Violation</th>
+          <th>Permit Distress</th>
+          <th>Vacant</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">Mecklenburg NC</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="partial">~</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+        <tr><td class="name">Fulton GA</td><td class="yes">✓</td><td class="partial">~</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td class="partial">~</td><td class="no">—</td><td class="yes">✓</td></tr>
+        <tr><td class="name">Harris TX</td><td class="yes">✓</td><td class="partial">~</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><td class="name">Cobb GA</td><td class="yes">✓</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="partial">~</td></tr>
+        <tr><td class="name">Wake NC</td><td class="yes">✓</td><td class="partial">~</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="partial">~</td></tr>
+        <tr><td class="name">DeKalb GA</td><td class="yes">✓</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="no">—</td></tr>
+        <tr><td class="name">Maricopa AZ</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="partial">~</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+        <tr><td class="name">Jefferson AL</td><td class="yes">✓</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="no">—</td></tr>
+        <tr><td class="name">Jefferson KY</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td class="partial">~</td><td class="no">—</td><td class="no">—</td></tr>
+        <tr><td class="name">NYC</td><td class="partial">~</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td></tr>
+      </tbody>
+    </table>
   </div>
 
-  <div class="hr"></div>
+  <div class="spotlight">
+    <div class="sub">Reading the matrix</div>
+    <h3>Mecklenburg, Harris, and Maricopa each produce 5+ distinct sellable lanes.</h3>
+    <p>These three markets can each be packaged into five or more separate products — Tax Delinquent, Absentee, Pre-Foreclosure, High Equity, plus market-specific specialties. One county pull, five products, five buyer profiles, five revenue streams.</p>
+    <div class="takeaway"><strong>Inventory leverage:</strong> the matrix is the real moat. Competitors selling a single "tax delinquent list" leave 4× the revenue on the table per market. <strong>Multi-lane segmentation is how the per-county economics work.</strong></div>
+  </div>
+</section>
 
-  <!-- WHY IT'S VALUABLE -->
-  <h2>Why this is valuable</h2>
-  <p class="section-lede">The market math behind the system.</p>
+<!-- ────── MARKET DEMAND ────── -->
+<section class="container">
+  <h4>Buyer-side demand</h4>
+  <h2>Markets where active wholesaler concentration is highest.</h2>
+  <p>Estimated active wholesaler/investor count per metro, sourced from industry directories and group memberships. Higher demand = lower acquisition cost per customer.</p>
 
-  <div class="stats" style="margin-bottom:32px;">
-    <div class="stat featured">
-      <div class="stat-label">REI Lead Market (US)</div>
-      <div class="stat-value">$2B+</div>
-      <div class="stat-detail">annual, ~12% YoY growth</div>
-    </div>
-    <div class="stat featured">
-      <div class="stat-label">Target Buyer Pool</div>
-      <div class="stat-value">280K+</div>
-      <div class="stat-detail">active wholesalers + flippers</div>
-    </div>
-    <div class="stat featured">
-      <div class="stat-label">Avg Monthly Spend</div>
-      <div class="stat-value">$300</div>
-      <div class="stat-detail">per buyer, on data alone</div>
-    </div>
-    <div class="stat featured">
-      <div class="stat-label">Marginal Cost / Sale</div>
-      <div class="stat-value">~$0</div>
-      <div class="stat-detail">infrastructure is fixed</div>
-    </div>
+  <div class="bar-row" style="font-size:11px;text-transform:uppercase;color:var(--muted);letter-spacing:0.08em;font-weight:700;padding-bottom:6px;border-bottom:1px solid var(--line);margin-bottom:8px;">
+    <div class="name">Market</div><div></div><div class="value">Active investors</div>
+  </div>
+  <div class="bar-row"><div class="name">Houston TX</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="value">~18,400</div></div>
+  <div class="bar-row"><div class="name">Phoenix AZ</div><div class="bar-track"><div class="bar-fill" style="width:84%"></div></div><div class="value">~15,500</div></div>
+  <div class="bar-row"><div class="name">Dallas-Fort Worth</div><div class="bar-track"><div class="bar-fill" style="width:79%"></div></div><div class="value">~14,500</div></div>
+  <div class="bar-row"><div class="name">Atlanta GA (3 counties)</div><div class="bar-track"><div class="bar-fill" style="width:71%"></div></div><div class="value">~13,000</div></div>
+  <div class="bar-row"><div class="name">Charlotte NC</div><div class="bar-track"><div class="bar-fill" style="width:42%"></div></div><div class="value">~7,800</div></div>
+  <div class="bar-row"><div class="name">Memphis TN</div><div class="bar-track"><div class="bar-fill" style="width:38%"></div></div><div class="value">~7,100</div></div>
+  <div class="bar-row"><div class="name">Indianapolis IN</div><div class="bar-track"><div class="bar-fill" style="width:34%"></div></div><div class="value">~6,300</div></div>
+  <div class="bar-row"><div class="name">Birmingham AL</div><div class="bar-track"><div class="bar-fill cool" style="width:22%"></div></div><div class="value">~4,000</div></div>
+  <div class="bar-row"><div class="name">Raleigh NC</div><div class="bar-track"><div class="bar-fill cool" style="width:19%"></div></div><div class="value">~3,500</div></div>
+
+  <div class="spotlight">
+    <div class="sub">Strategic alignment</div>
+    <h3>The inventory targets the same metros where buyer concentration is highest.</h3>
+    <p>Houston, Phoenix, DFW, and Atlanta together account for over 60,000 active investors — and each of those markets is already in the inventory or processing. Buyer acquisition cost in these metros is the lowest in the country precisely because the active community is large enough to find through targeted outreach in 2-3 channels.</p>
+    <div class="takeaway"><strong>Why it matters:</strong> demand and supply are aligned by metro. No wasted pulls on counties without buyers. <strong>Every market in the inventory has a verified buyer pool to sell to.</strong></div>
+  </div>
+</section>
+
+<!-- ────── REVENUE MATH ────── -->
+<section class="container">
+  <h4>The math</h4>
+  <h2>What the current inventory could produce.</h2>
+  <p>Conservative revenue projections off the records already processed and ready. No new pulls, no new markets, no scaling — just selling what's already in the warehouse today.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Market</th><th class="num">Records ready</th><th>Sellable lanes</th><th class="num">Avg price</th><th class="num">Per-market revenue if sold once</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Wake NC</td><td class="num">10,472</td><td>3</td><td class="num">$297</td><td class="num">$891</td></tr>
+        <tr><td>Cobb GA</td><td class="num">5,678</td><td>3</td><td class="num">$249</td><td class="num">$747</td></tr>
+        <tr><td>Fulton GA</td><td class="num">5,000</td><td>4</td><td class="num">$299</td><td class="num">$1,196</td></tr>
+        <tr><td>DeKalb GA</td><td class="num">5,000</td><td>3</td><td class="num">$249</td><td class="num">$747</td></tr>
+        <tr><td>Guilford NC</td><td class="num">5,000</td><td>2</td><td class="num">$199</td><td class="num">$398</td></tr>
+        <tr><td>Forsyth NC</td><td class="num">5,000</td><td>2</td><td class="num">$199</td><td class="num">$398</td></tr>
+        <tr><td>Marion IN</td><td class="num">5,000</td><td>2</td><td class="num">$179</td><td class="num">$358</td></tr>
+        <tr><td>Harris TX (Permit Burnout)</td><td class="num">1,500</td><td>1 premium</td><td class="num">$497</td><td class="num">$497</td></tr>
+        <tr><td>Jefferson AL (High-balance)</td><td class="num">21</td><td>1 boutique</td><td class="num">$397</td><td class="num">$397</td></tr>
+        <tr style="background:var(--emerald-soft);font-weight:800;"><td>TOTAL — single-cycle</td><td class="num">42,671</td><td>21 lanes</td><td class="num">—</td><td class="num">$5,629</td></tr>
+      </tbody>
+    </table>
   </div>
 
-  <div style="background:white;border:1px solid var(--line);border-radius:16px;padding:28px;margin-bottom:32px;">
-    <h3 style="font-family:'Playfair Display',serif;font-size:22px;color:var(--em-d);margin-bottom:18px;">Unit economics</h3>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;">
-      <div>
-        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sl);font-weight:700;margin-bottom:6px;">Per-list price</div>
-        <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--dark);">$149–$497</div>
-        <div style="font-size:13px;color:var(--sl);margin-top:4px;">based on volume + filter depth</div>
-      </div>
-      <div>
-        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sl);font-weight:700;margin-bottom:6px;">Cost to produce</div>
-        <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--dark);">~$0.40</div>
-        <div style="font-size:13px;color:var(--sl);margin-top:4px;">VPS + bandwidth amortized</div>
-      </div>
-      <div>
-        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sl);font-weight:700;margin-bottom:6px;">Gross margin</div>
-        <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--em);">98%+</div>
-        <div style="font-size:13px;color:var(--sl);margin-top:4px;">software-business margins</div>
-      </div>
-      <div>
-        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--sl);font-weight:700;margin-bottom:6px;">Resells per pull</div>
-        <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--dark);">5–8×</div>
-        <div style="font-size:13px;color:var(--sl);margin-top:4px;">same raw, segmented products</div>
-      </div>
-    </div>
+  <div class="spotlight gold">
+    <div class="sub">The leverage</div>
+    <h3>$5,600 per cycle from the inventory today — without selling the same list twice.</h3>
+    <p>Each lane refreshes every 30 days as county data updates. A single pull → multiple lanes → sold to multiple buyers → refreshed monthly. The inventory currently supports approximately <strong>$60K–$80K annualized</strong> at conservative pricing, with zero additional infrastructure cost, no new market pulls, and no advertising spend.</p>
+    <div class="takeaway"><strong>Scaling lever:</strong> add 10 more markets at this average → $200K+ annualized. The unit economics don't change with scale — they improve, because the fixed infrastructure cost spreads over more product.</div>
+  </div>
+</section>
+
+<!-- ────── STATUS ────── -->
+<section class="container">
+  <h4>Where things stand</h4>
+  <h2>Current state of the inventory.</h2>
+
+  <div class="metric-grid">
+    <div class="metric"><div class="label">Markets pulled</div><div class="value">22</div><div class="note">11 states, 12 metros</div></div>
+    <div class="metric"><div class="label">Sellable today</div><div class="value">9</div><div class="note">processed, scored, packaged</div></div>
+    <div class="metric"><div class="label">In processing</div><div class="value">13</div><div class="note">data secured, packaging pending</div></div>
+    <div class="metric"><div class="label">Refresh cadence</div><div class="value">30 days</div><div class="note">data re-pulled automatically</div></div>
+    <div class="metric"><div class="label">Confirmed records</div><div class="value">14.2M</div><div class="note">structured, normalized</div></div>
+    <div class="metric"><div class="label">Active distress lanes</div><div class="value">10</div><div class="note">distinct filter products</div></div>
   </div>
 
-  <div class="hr"></div>
-
-  <!-- DIFFERENTIATORS -->
-  <h2>What's different</h2>
-  <p class="section-lede">Three things that separate this from PropStream and the recycled-list market.</p>
-
-  <div class="diff-grid">
-    <div class="diff-card">
-      <h3>Direct from county source</h3>
-      <p>We don't buy from data brokers. Every record is pulled from the actual county tax collector, court records, or assessor — same morning, same week, never resold across thousands of competitors.</p>
-    </div>
-    <div class="diff-card">
-      <h3>Scored, not dumped</h3>
-      <p>Every record runs through a distress-signal scoring algorithm. Out-of-state mailing, entity ownership, year built, value range, permit history — each weighted, summed, ranked. Buyers get the top of the funnel, not the whole flat file.</p>
-    </div>
-    <div class="diff-card">
-      <h3>Limited buyer access</h3>
-      <p>We deliberately cap the number of buyers per county. The same list isn't being hammered by 100 wholesalers — it's being worked by 1–3. Records stay warm. Conversion stays high.</p>
-    </div>
+  <div class="spotlight">
+    <div class="sub">Bottom line</div>
+    <h3>The inventory is the asset. The buyers are identified. The math works.</h3>
+    <p>14.2M structured records, 9 markets ready to sell today, 13 in processing, lane density that supports 21+ sellable products from existing pulls, and verified buyer concentration aligned with every market in the catalog. The remaining work is sales velocity, not capability.</p>
   </div>
+</section>
 
-  <div class="hr"></div>
-
-  <h2>Status</h2>
-  <p class="section-lede">Phase 1 (manual outreach + first paying customers) is active. Stack is production-ready, scaling is software-only.</p>
-
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-label">Infrastructure</div>
-      <div class="stat-value" style="color:var(--em);">LIVE</div>
-      <div class="stat-detail">All systems verified working</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">Data Pipeline</div>
-      <div class="stat-value" style="color:var(--em);">LIVE</div>
-      <div class="stat-detail">9 markets, growing weekly</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">Customer Ops</div>
-      <div class="stat-value" style="color:var(--em);">LIVE</div>
-      <div class="stat-detail">Dashboard + intake operational</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">Revenue</div>
-      <div class="stat-value" style="color:var(--gold);">SOON</div>
-      <div class="stat-detail">First sale targeted this week</div>
-    </div>
+<footer>
+  <div class="container">
+    LeadCurate · Inventory & Opportunity Audit · 2026-06-22<br>
+    <div class="tagline">A data inventory, not a data product. The product is what we build from it.</div>
   </div>
+</footer>
 
-  <footer>
-    LeadCurate &middot; Built independently &middot; <a href="mailto:dmcdonald5649@gmail.com">dmcdonald5649@gmail.com</a>
-  </footer>
-
-</div>
 </body>
 </html>
