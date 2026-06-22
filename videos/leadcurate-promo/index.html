@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      /* System-font stack chosen to render offline-safe + visually close to Playfair / Inter / JetBrains */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0; width: 1920px; height: 1080px; overflow: hidden;
+        background: #faf7f2;
+        font-family: 'Inter', sans-serif;
+        font-feature-settings: "ss01", "cv11", "kern";
+      }
+      :root {
+        --em: #15803d;
+        --em-d: #14532d;
+        --em-soft: rgba(21, 128, 61, 0.10);
+        --cream: #faf7f2;
+        --cream-2: #f3eddf;
+        --dark: #0f172a;
+        --slate: #475569;
+        --slate-l: #94a3b8;
+        --line: #e2dccf;
+      }
+      .scene {
+        position: absolute; inset: 0;
+        display: flex; align-items: center; justify-content: center;
+        opacity: 0;
+        background: var(--cream);
+      }
+      .serif { font-family: 'Playfair Display', serif; font-weight: 600; color: var(--dark); letter-spacing: -0.02em; line-height: 1.05; }
+      .mono { font-family: 'JetBrains Mono', monospace; }
+      .ui { font-family: 'Inter', sans-serif; }
+
+      /* Subtle paper grain */
+      body::before {
+        content: ''; position: fixed; inset: 0; pointer-events: none;
+        background-image:
+          radial-gradient(circle at 50% 50%, rgba(15,23,42,0.025) 1px, transparent 1px);
+        background-size: 4px 4px;
+        opacity: 0.6; z-index: 1000;
+      }
+
+      /* SCENE 1 + 2: hook + twist */
+      .hook-text, .twist-text {
+        font-size: 96px; text-align: center; max-width: 1400px;
+      }
+      .twist-text .recycled { color: var(--em-d); }
+
+      /* SCENE 3: logo reveal */
+      .logo-block { display: flex; align-items: center; gap: 28px; }
+      .logo-tile {
+        width: 112px; height: 112px; border-radius: 18px;
+        background: var(--em); color: var(--cream);
+        display: flex; align-items: center; justify-content: center;
+        font-family: 'Playfair Display', serif; font-weight: 700; font-size: 76px;
+        box-shadow: 0 20px 60px rgba(21,128,61,0.18);
+      }
+      .logo-word {
+        font-family: 'Playfair Display', serif; font-weight: 600; font-size: 76px;
+        color: var(--dark); letter-spacing: -0.025em;
+      }
+
+      /* SCENE 4: county map promise */
+      .promise-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; width: 1640px; align-items: center; }
+      .map-canvas {
+        position: relative; aspect-ratio: 4/3; width: 100%;
+        background: var(--cream-2); border-radius: 22px;
+        border: 1px solid var(--line);
+        overflow: hidden;
+      }
+      .map-canvas::before {
+        content: ''; position: absolute; inset: 0;
+        background:
+          radial-gradient(circle at 22% 38%, rgba(21,128,61,0.06), transparent 30%),
+          radial-gradient(circle at 76% 64%, rgba(21,128,61,0.05), transparent 35%),
+          linear-gradient(115deg, transparent 49%, rgba(15,23,42,0.04) 49.5%, rgba(15,23,42,0.04) 50.5%, transparent 51%),
+          linear-gradient(25deg, transparent 49%, rgba(15,23,42,0.04) 49.5%, rgba(15,23,42,0.04) 50.5%, transparent 51%);
+      }
+      .pin {
+        position: absolute; width: 14px; height: 14px;
+        background: var(--em); border-radius: 50%;
+        box-shadow: 0 0 0 8px rgba(21,128,61,0.12), 0 0 30px rgba(21,128,61,0.4);
+      }
+      .pin-label {
+        position: absolute; transform: translate(20px, -8px);
+        font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--slate);
+        white-space: nowrap;
+        background: var(--cream); padding: 2px 7px; border-radius: 4px; border: 1px solid var(--line);
+      }
+      .promise-text .h { font-size: 64px; line-height: 1.05; margin-bottom: 24px; }
+      .promise-text .sub { font-size: 22px; color: var(--slate); line-height: 1.55; max-width: 540px; }
+
+      /* SCENE 5: intake mockup */
+      .intake-frame {
+        width: 1100px; background: white; border-radius: 22px; border: 1px solid var(--line);
+        padding: 56px 64px; box-shadow: 0 30px 80px rgba(15,23,42,0.06);
+      }
+      .intake-eyebrow { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--em); font-weight: 700; margin-bottom: 14px; }
+      .intake-h { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 40px; color: var(--dark); margin-bottom: 36px; letter-spacing: -0.02em; }
+      .pill-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+      .pill {
+        padding: 12px 22px; border-radius: 999px; border: 1px solid var(--line); background: var(--cream);
+        font-size: 16px; font-weight: 500; color: var(--slate);
+        transition: none;
+      }
+      .pill.on { background: var(--em); color: var(--cream); border-color: var(--em); font-weight: 600; }
+      .intake-cta {
+        margin-top: 32px; font-size: 14px; color: var(--slate); font-family: 'JetBrains Mono', monospace;
+      }
+      .intake-cta strong { color: var(--em-d); }
+
+      /* SCENE 6: delivery preview */
+      .delivery-wrap { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+      .delivery-big {
+        font-family: 'Playfair Display', serif; font-weight: 700; font-size: 280px;
+        color: var(--em); line-height: 1; letter-spacing: -0.04em;
+      }
+      .delivery-cap { font-size: 24px; color: var(--slate); font-family: 'Inter', sans-serif; }
+      .stat-row { display: flex; gap: 14px; margin-top: 22px; }
+      .stat-pill {
+        background: var(--cream-2); padding: 14px 24px; border-radius: 999px;
+        font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--dark);
+        border: 1px solid var(--line);
+      }
+      .stat-pill .em { color: var(--em-d); font-weight: 600; }
+      .redacted-strip { margin-top: 30px; display: flex; flex-direction: column; gap: 8px; align-items: center; }
+      .redacted-row { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--slate); letter-spacing: 0.06em; }
+      .redacted-row .dot { color: var(--em); }
+
+      /* SCENE 7: tagline */
+      .tagline-text {
+        font-size: 104px; text-align: center; color: var(--dark);
+        font-family: 'Playfair Display', serif; font-weight: 600; letter-spacing: -0.025em; line-height: 1.06;
+      }
+      .tagline-text .em { color: var(--em); }
+
+      /* SCENE 8: closing */
+      .closing-wrap { display: flex; flex-direction: column; align-items: center; gap: 30px; }
+      .closing-mark { display: flex; align-items: center; gap: 22px; }
+      .closing-tile {
+        width: 84px; height: 84px; border-radius: 14px; background: var(--em); color: var(--cream);
+        display: flex; align-items: center; justify-content: center;
+        font-family: 'Playfair Display', serif; font-weight: 700; font-size: 56px;
+      }
+      .closing-word { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 56px; color: var(--dark); letter-spacing: -0.025em; }
+      .closing-tag { font-family: 'Playfair Display', serif; font-style: italic; font-size: 28px; color: var(--slate); }
+      .closing-url { font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--em-d); letter-spacing: 0.04em; }
+
+      /* Per-word fade helper */
+      .word { display: inline-block; opacity: 0; margin-right: 0.32em; }
+      .word:last-child { margin-right: 0; }
+
+      /* Logo word reveal */
+      .logo-word .ch { display: inline-block; opacity: 0; transform: translateY(8px); }
+
+      /* Vignette for premium feel */
+      body::after {
+        content: ''; position: fixed; inset: 0; pointer-events: none;
+        background: radial-gradient(ellipse at center, transparent 60%, rgba(15,23,42,0.06) 100%);
+        z-index: 1001;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="45"
+      data-width="1920"
+      data-height="1080"
+    >
+
+      <!-- Background ambient piano (royalty-free Mixkit loop) — inside root so it's a clip not a sibling composition -->
+      <audio
+        id="bgm"
+        class="clip"
+        data-start="0"
+        data-duration="45"
+        data-track-index="20"
+        data-src="https://assets.mixkit.co/active_storage/sfx/2477/2477-preview.mp3"
+        data-volume="0.18"
+        preload="auto"
+      ></audio>
+
+      <!-- Scene 1: Hook (0-5s) -->
+      <div id="scene1" class="scene clip" data-start="0" data-duration="5.5" data-track-index="1">
+        <div class="hook-text serif">
+          <span class="word">Most</span>
+          <span class="word">lead</span>
+          <span class="word">lists</span>
+          <span class="word">are</span>
+          <span class="word">already</span>
+          <span class="word">burned</span>
+          <span class="word">out.</span>
+        </div>
+      </div>
+
+      <!-- Scene 2: Twist (5-10s) -->
+      <div id="scene2" class="scene clip" data-start="5" data-duration="5.5" data-track-index="2">
+        <div class="twist-text serif">
+          <span class="word recycled">Recycled.</span>
+          <span class="word">Rented.</span>
+          <span class="word">Sold</span>
+          <span class="word">five</span>
+          <span class="word">times</span>
+          <span class="word">before</span>
+          <span class="word">you</span>
+          <span class="word">call.</span>
+        </div>
+      </div>
+
+      <!-- Scene 3: Logo reveal (10-15s) -->
+      <div id="scene3" class="scene clip" data-start="10" data-duration="5.5" data-track-index="3">
+        <div class="logo-block">
+          <div class="logo-tile" id="s3-tile">L</div>
+          <div class="logo-word" id="s3-word"><span class="ch">L</span><span class="ch">e</span><span class="ch">a</span><span class="ch">d</span><span class="ch">C</span><span class="ch">u</span><span class="ch">r</span><span class="ch">a</span><span class="ch">t</span><span class="ch">e</span></div>
+        </div>
+      </div>
+
+      <!-- Scene 4: Promise (15-22s) -->
+      <div id="scene4" class="scene clip" data-start="15" data-duration="7.5" data-track-index="4">
+        <div class="promise-wrap">
+          <div class="map-canvas" id="s4-map">
+            <div class="pin" style="left:18%; top:38%"></div>
+            <div class="pin-label" style="left:18%; top:38%">Charlotte</div>
+            <div class="pin" style="left:42%; top:24%"></div>
+            <div class="pin-label" style="left:42%; top:24%">Indianapolis</div>
+            <div class="pin" style="left:30%; top:58%"></div>
+            <div class="pin-label" style="left:30%; top:58%">Atlanta</div>
+            <div class="pin" style="left:24%; top:78%"></div>
+            <div class="pin-label" style="left:24%; top:78%">Houston</div>
+            <div class="pin" style="left:60%; top:48%"></div>
+            <div class="pin-label" style="left:60%; top:48%">Birmingham</div>
+            <div class="pin" style="left:68%; top:30%"></div>
+            <div class="pin-label" style="left:68%; top:30%">Cleveland</div>
+            <div class="pin" style="left:78%; top:62%"></div>
+            <div class="pin-label" style="left:78%; top:62%">Memphis</div>
+          </div>
+          <div class="promise-text">
+            <div class="serif h" id="s4-h">Direct from county records.</div>
+            <div class="sub" id="s4-sub">21 markets. Fresh pulls every cycle. Scored, segmented, and ready to work.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 5: Intake (22-30s) -->
+      <div id="scene5" class="scene clip" data-start="22" data-duration="8.5" data-track-index="5">
+        <div class="intake-frame">
+          <div class="intake-eyebrow">Custom list intake</div>
+          <div class="intake-h">Tell us what you're hunting.</div>
+          <div class="pill-row" id="s5-row1">
+            <div class="pill" data-target>Houston TX</div>
+            <div class="pill">Charlotte NC</div>
+            <div class="pill">Atlanta NW</div>
+            <div class="pill">Birmingham AL</div>
+            <div class="pill">Louisville KY</div>
+          </div>
+          <div class="pill-row" id="s5-row2">
+            <div class="pill" data-target>Tax delinquent</div>
+            <div class="pill">Pre-foreclosure</div>
+            <div class="pill" data-target>Active permits</div>
+            <div class="pill">Probate</div>
+            <div class="pill" data-target>Out-of-state absentee</div>
+          </div>
+          <div class="intake-cta">→ <strong>Tell us what you need</strong> — 24 hour quote</div>
+        </div>
+      </div>
+
+      <!-- Scene 6: Delivery preview (30-38s) -->
+      <div id="scene6" class="scene clip" data-start="30" data-duration="8.5" data-track-index="6">
+        <div class="delivery-wrap">
+          <div class="delivery-big" id="s6-num">0</div>
+          <div class="delivery-cap">ranked Houston records</div>
+          <div class="stat-row">
+            <div class="stat-pill"><span class="em">103</span> fire-loss</div>
+            <div class="stat-pill"><span class="em">1,386</span> absentee</div>
+            <div class="stat-pill"><span class="em">$325K</span> avg value</div>
+          </div>
+          <div class="redacted-strip">
+            <div class="redacted-row">H*** D*** P*** L*** · ### VALLEY VIEW LN · HOUSTON · <span class="dot">●</span> entity</div>
+            <div class="redacted-row">J*** P*** D*** T*** · ### RIO VILLA DR · HOUSTON · <span class="dot">●</span> entity</div>
+            <div class="redacted-row">D*** W*** & A*** L*** · ### TILGHAM ST · HOUSTON · <span class="dot">●</span> entity</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 7: Tagline (38-43s) -->
+      <div id="scene7" class="scene clip" data-start="38" data-duration="5.5" data-track-index="7">
+        <div class="tagline-text">
+          <span class="word">Your</span>
+          <span class="word">list.</span>
+          <span class="word">Your</span>
+          <span class="word">dialer.</span>
+          <span class="word em">Your deal.</span>
+        </div>
+      </div>
+
+      <!-- Scene 8: Closing (43-45s) -->
+      <div id="scene8" class="scene clip" data-start="43" data-duration="2" data-track-index="8">
+        <div class="closing-wrap">
+          <div class="closing-mark">
+            <div class="closing-tile">L</div>
+            <div class="closing-word">LeadCurate</div>
+          </div>
+          <div class="closing-tag">Curated county property data.</div>
+          <div class="closing-url">leadcurate.com · intake form open</div>
+        </div>
+      </div>
+
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Helper for cross-fade between scenes
+      function fadeIn(sel, at, dur = 0.6) {
+        tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: dur, ease: 'sine.inOut' }, at);
+      }
+      function fadeOut(sel, at, dur = 0.6) {
+        tl.to(sel, { opacity: 0, duration: dur, ease: 'sine.inOut' }, at);
+      }
+
+      // SCENE 1: hook 0-5
+      fadeIn('#scene1', 0, 0.8);
+      tl.to('#scene1 .word', {
+        opacity: 1, duration: 0.6, stagger: 0.32, ease: 'sine.out'
+      }, 0.3);
+      fadeOut('#scene1', 4.7, 0.6);
+
+      // SCENE 2: twist 5-10
+      fadeIn('#scene2', 4.8, 0.6);
+      tl.to('#scene2 .word', {
+        opacity: 1, duration: 0.5, stagger: 0.28, ease: 'sine.out'
+      }, 5.1);
+      // Emphasize "Recycled"
+      tl.fromTo('#scene2 .recycled', { scale: 1 }, { scale: 1.04, duration: 0.5, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 5.3);
+      fadeOut('#scene2', 9.7, 0.6);
+
+      // SCENE 3: logo reveal 10-15
+      fadeIn('#scene3', 9.8, 0.6);
+      tl.fromTo('#s3-tile',
+        { scale: 0.85, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 1.0, ease: 'power3.out' }, 10.0);
+      tl.to('#s3-word .ch', {
+        opacity: 1, y: 0, duration: 0.32, stagger: 0.07, ease: 'sine.out'
+      }, 11.0);
+      fadeOut('#scene3', 14.7, 0.6);
+
+      // SCENE 4: promise 15-22
+      fadeIn('#scene4', 14.8, 0.7);
+      tl.fromTo('#s4-h', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out' }, 15.3);
+      tl.fromTo('#s4-sub', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out' }, 15.8);
+      // Pins pop in one at a time
+      tl.fromTo('#s4-map .pin',
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.5, stagger: 0.25, ease: 'back.out(1.4)' }, 15.5);
+      tl.fromTo('#s4-map .pin-label',
+        { opacity: 0, x: -6 },
+        { opacity: 1, x: 0, duration: 0.4, stagger: 0.25, ease: 'sine.out' }, 15.7);
+      fadeOut('#scene4', 21.6, 0.7);
+
+      // SCENE 5: intake 22-30
+      fadeIn('#scene5', 21.7, 0.7);
+      tl.fromTo('#scene5 .intake-eyebrow', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.6, ease: 'sine.out' }, 22.1);
+      tl.fromTo('#scene5 .intake-h', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 22.4);
+      // Pill row 1 fades in, then "Houston TX" highlights emerald
+      tl.fromTo('#s5-row1 .pill', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.07, ease: 'sine.out' }, 23.0);
+      tl.to('#s5-row1 .pill[data-target]', { background: '#15803d', color: '#faf7f2', borderColor: '#15803d', fontWeight: 600, duration: 0.4, ease: 'sine.out' }, 24.0);
+      // Pill row 2
+      tl.fromTo('#s5-row2 .pill', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.06, ease: 'sine.out' }, 24.7);
+      tl.to('#s5-row2 .pill[data-target]', { background: '#15803d', color: '#faf7f2', borderColor: '#15803d', fontWeight: 600, duration: 0.4, stagger: 0.3, ease: 'sine.out' }, 25.6);
+      tl.fromTo('#scene5 .intake-cta', { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.6, ease: 'sine.out' }, 27.2);
+      fadeOut('#scene5', 29.6, 0.7);
+
+      // SCENE 6: delivery 30-38
+      fadeIn('#scene6', 29.7, 0.7);
+      // Count up 0 -> 1500
+      const numEl = { v: 0 };
+      tl.to(numEl, {
+        v: 1500, duration: 2.2, ease: 'power2.out',
+        onUpdate: () => { const n = Math.round(numEl.v); document.getElementById('s6-num').textContent = n.toLocaleString(); }
+      }, 30.4);
+      tl.fromTo('#scene6 .delivery-cap', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.7, ease: 'sine.out' }, 31.0);
+      tl.fromTo('#scene6 .stat-pill', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.18, ease: 'sine.out' }, 32.6);
+      tl.fromTo('#scene6 .redacted-row', { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.4, stagger: 0.18, ease: 'sine.out' }, 34.4);
+      fadeOut('#scene6', 37.6, 0.7);
+
+      // SCENE 7: tagline 38-43
+      fadeIn('#scene7', 37.7, 0.7);
+      tl.to('#scene7 .word', { opacity: 1, duration: 0.6, stagger: 0.34, ease: 'sine.out' }, 38.2);
+      fadeOut('#scene7', 42.5, 0.6);
+
+      // SCENE 8: closing 43-45
+      fadeIn('#scene8', 42.6, 0.6);
+      tl.fromTo('#scene8 .closing-tile', { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: 'power2.out' }, 42.8);
+      tl.fromTo('#scene8 .closing-word', { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power2.out' }, 43.1);
+      tl.fromTo('#scene8 .closing-tag', { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.5, ease: 'sine.out' }, 43.5);
+      tl.fromTo('#scene8 .closing-url', { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.5, ease: 'sine.out' }, 43.9);
+
+      // BGM volume curve: fade in scene 1, hold, fade out scene 8
+      tl.fromTo('#bgm', { volume: 0 }, { volume: 0.22, duration: 3, ease: 'sine.in' }, 0);
+      tl.to('#bgm', { volume: 0.18, duration: 5, ease: 'none' }, 5);
+      tl.to('#bgm', { volume: 0, duration: 2.0, ease: 'sine.out' }, 43);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

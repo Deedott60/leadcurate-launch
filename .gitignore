@@ -1,1 +1,3 @@
 obsidian-vault-backup/
+.env
+videos/**/.env

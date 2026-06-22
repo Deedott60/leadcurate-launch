@@ -631,7 +631,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
               <option value="claude-code">Claude Code</option>
               <option value="codex">Codex</option>
               <option value="hermes">Hermes (Danny)</option>
-              <option value="daniel">Daniel (operator)</option>
+              <option value="derrick">Derrick (operator)</option>
               <option value="system">System</option>
             </select>
           </div>
@@ -664,7 +664,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
               <option value="claude-code">Claude Code</option>
               <option value="codex">Codex</option>
               <option value="hermes">Hermes</option>
-              <option value="daniel">Daniel</option>
+              <option value="derrick">Derrick</option>
               <option value="system">System</option>
             </select>
             <span class="card-meta" id="conf-meta">—</span>
@@ -889,7 +889,7 @@ window.nav = function(id){
 // ─── CONFERENCE ROOM ─────────────────────────────────────────
 const CONF_LABELS = {
   claude:'Claude', 'claude-code':'Claude Code', codex:'Codex',
-  hermes:'Hermes', daniel:'Daniel', system:'System'
+  hermes:'Hermes', derrick:'Derrick', system:'System'
 };
 const CONF_TYPE_ICONS = {
   status:'📍', handoff:'🤝', blocker:'🚧', done:'✅', question:'❓', role:'🎭'
@@ -1156,7 +1156,7 @@ window.copyMsg = (id) => {
   const p = PROSPECTS.find(x=>x.id===id); if(!p) return;
   const name = (p.name||'').split(' ')[0]||'[Name]';
   let msg = p.channel==='email'
-    ? `${name},\n\nI run LeadCurate — we curate fresh county-record lead lists for real estate investors. Quote in 24h:\n${INTAKE_URL}\n\nSample deliveries: ${SAMPLES_URL}\n\n— Daniel`
+    ? `${name},\n\nI run LeadCurate — we curate fresh county-record lead lists for real estate investors. Quote in 24h:\n${INTAKE_URL}\n\nSample deliveries: ${SAMPLES_URL}\n\n— Derrick`
     : `Hey ${name} — I run LeadCurate. Fresh distressed-owner lists from county records. Drop your market, quote in 24h: ${INTAKE_URL}`;
   navigator.clipboard.writeText(msg).then(()=>toast('Copied — paste in '+(p.channel||'channel')));
 };
@@ -1332,13 +1332,13 @@ function renderTemplates(){
   const tpls = [
     {label:'SMS — cold intro',     body:`Hey [Name] — I run LeadCurate. We curate fresh distressed-owner lists direct from county records. Drop your target market here, quote in 24h: ${INTAKE_URL}`},
     {label:'DM — IG/FB/Twitter',   body:`[Name], quick one — I run LeadCurate. We curate distressed-owner lists direct from county records (tax delinquent, pre-foreclosure, permits, probate). Tell me what market + list type you need, I'll quote within 24h: ${INTAKE_URL}`},
-    {label:'Email — first contact', body:`Hi [Name],\n\nI run LeadCurate — we curate fresh county-record lead lists for real estate investors. Tax delinquent, pre-foreclosure, probate, permit, absentee.\n\nQuote within 24h: ${INTAKE_URL}\n\nSample deliveries: ${SAMPLES_URL}\n\n— Daniel\nLeadCurate`},
+    {label:'Email — first contact', body:`Hi [Name],\n\nI run LeadCurate — we curate fresh county-record lead lists for real estate investors. Tax delinquent, pre-foreclosure, probate, permit, absentee.\n\nQuote within 24h: ${INTAKE_URL}\n\nSample deliveries: ${SAMPLES_URL}\n\n— Derrick\nLeadCurate`},
     {label:'Follow-up — 3 days',   body:`Hey [Name], following up on the LeadCurate intake. Still hunting for [list type]? Happy to send a sample of what we have in [market] — just reply and I'll send a redacted preview.`},
     {label:'What makes you different?', body:`Three things: (1) we pull from county records directly — fresh, not recycled, (2) we score + segment per lane (entity vs individual, absentee, permit distress) so you're not paying for junk, (3) HTML + Excel + CSV ready for your dialer or mail merge. Sample: ${SAMPLES_URL}`},
-    {label:'★ Preview + quote (after they reply)', body:`Hi [Name],\n\nThanks for filling out the intake. Based on what you sent, here's what we have for [market]:\n\n• Lane: [list type]\n• Total records available: [N]\n• Sample preview (redacted): ${SAMPLES_URL}\n\nEach record includes: owner name, mailing address, situs address, parcel ID, market value, year built, square footage, distress signals (where applicable), and a 0–100 distress score.\n\nNote: this is an address-only list — phone numbers are not included. If you want phones, you'd skip-trace yourself (BatchSkipTracing, REIPro, etc.) and stay DNC-compliant on your end.\n\nPricing: $[PRICE] for [count] records, delivered as branded HTML + XLSX + CSV within 24 hours of payment.\n\nReady to lock it in? Send payment to [Cash App / Zelle / Stripe link] and I'll get it pulled.\n\n— Daniel\nLeadCurate`},
+    {label:'★ Preview + quote (after they reply)', body:`Hi [Name],\n\nThanks for filling out the intake. Based on what you sent, here's what we have for [market]:\n\n• Lane: [list type]\n• Total records available: [N]\n• Sample preview (redacted): ${SAMPLES_URL}\n\nEach record includes: owner name, mailing address, situs address, parcel ID, market value, year built, square footage, distress signals (where applicable), and a 0–100 distress score.\n\nNote: this is an address-only list — phone numbers are not included. If you want phones, you'd skip-trace yourself (BatchSkipTracing, REIPro, etc.) and stay DNC-compliant on your end.\n\nPricing: $[PRICE] for [count] records, delivered as branded HTML + XLSX + CSV within 24 hours of payment.\n\nReady to lock it in? Send payment to [Cash App / Zelle / Stripe link] and I'll get it pulled.\n\n— Derrick\nLeadCurate`},
     {label:'★ Quote follow-up — no reply', body:`Hey [Name], sent the [market] quote a few days ago. Making sure it didn't get buried — let me know if you have questions or want a smaller batch first.`},
     {label:'★ Payment received — confirmation', body:`[Name] — payment received, thank you. I'm pulling your [market] [list type] now. Full file in your inbox within 24 hours, usually sooner.`},
-    {label:'★ Delivery email (after paid)', body:`[Name] — your [market] [list type] is ready.\n\nWhat's attached:\n• [N] ranked records (HTML preview + XLSX + CSV)\n• Owner name + entity flag (LLC / Trust / Corp / Individual)\n• Full mailing address + out-of-state absentee flag\n• Situs address (street, unit, city, ZIP)\n• Parcel ID, market value, year built, building & land sq ft\n• Distress signals (FIRELOSS, DEMO, REPAIR, FLOOD, etc. where applicable)\n• 0–100 distress score for ranking\n• Source date: [pull date]\n\nNot included: phone numbers. These are address-only lists pulled fresh from county records. If you skip-trace and call, you're responsible for DNC + TCPA compliance on your end.\n\nQuestions or want to slice this differently? Just reply. If you want a recurring monthly pull for [market], I can set that up.\n\n— Daniel\nLeadCurate`},
+    {label:'★ Delivery email (after paid)', body:`[Name] — your [market] [list type] is ready.\n\nWhat's attached:\n• [N] ranked records (HTML preview + XLSX + CSV)\n• Owner name + entity flag (LLC / Trust / Corp / Individual)\n• Full mailing address + out-of-state absentee flag\n• Situs address (street, unit, city, ZIP)\n• Parcel ID, market value, year built, building & land sq ft\n• Distress signals (FIRELOSS, DEMO, REPAIR, FLOOD, etc. where applicable)\n• 0–100 distress score for ranking\n• Source date: [pull date]\n\nNot included: phone numbers. These are address-only lists pulled fresh from county records. If you skip-trace and call, you're responsible for DNC + TCPA compliance on your end.\n\nQuestions or want to slice this differently? Just reply. If you want a recurring monthly pull for [market], I can set that up.\n\n— Derrick\nLeadCurate`},
 
     // ─── REPLY TEMPLATES ───────────────────────────────────────────
     {label:'☞ They asked "how much?" (no intake yet)', body:`Hey [Name] — pricing depends on the market + list type + volume. Quick form so I can quote you right: ${INTAKE_URL}\n\nGeneral range: small batches start at $[LOW], full county pulls run higher depending on size. Sample deliveries: ${SAMPLES_URL}`},

@@ -39,7 +39,7 @@ The user (Daniel) and I have agreed on a clean division of labor between agents.
 - Webhook receivers (Twilio, n8n, Stripe events → Supabase)
 - Cheap-model routine work (DeepSeek V3 recommended)
 
-### Daniel owns
+### Derrick owns
 
 - All sales calls, customer relationships
 - Final pricing decisions
@@ -55,7 +55,7 @@ The user (Daniel) and I have agreed on a clean division of labor between agents.
 
 | URL | What it is |
 |---|---|
-| https://deedott60.github.io/leadcurate-launch/intake/ | Lead intake form, writes to Supabase + emails Daniel |
+| https://deedott60.github.io/leadcurate-launch/intake/ | Lead intake form, writes to Supabase + emails Derrick |
 | https://deedott60.github.io/leadcurate-launch/command/ | Operator OS dashboard (HQ / Inbox / Pipeline / Messages / Workflow / Templates) |
 | https://deedott60.github.io/leadcurate-launch/sample-deliveries/ | Preview pages for Houston, Cobb GA, Birmingham AL, Charlotte, Louisville |
 | https://deedott60.github.io/leadcurate-launch/site/ | Landing page (PARKED — Phase 3, not yet promoted) |
@@ -78,11 +78,11 @@ The user (Daniel) and I have agreed on a clean division of labor between agents.
 - Hermes (Danny) running but **no working API** until Codex bill paid or new provider added
 - Codex setup intact in `/root/.codex/` and `/home/codex/`
 
-### Open Phase 1 blockers (Daniel decisions, not technical)
+### Open Phase 1 blockers (Derrick decisions, not technical)
 
 1. **Single-batch price** (suggested: $149 for 200 records)
 2. **Payment method handle** (suggested: Cash App, instant + free)
-3. **First outreach prospects** (Daniel hasn't started yet)
+3. **First outreach prospects** (Derrick hasn't started yet)
 
 ---
 
@@ -99,13 +99,13 @@ In order:
 
 ---
 
-## Things Codex should NOT do (per Daniel)
+## Things Codex should NOT do (per Derrick)
 
-- Do NOT touch landing page (`/site/`) without Daniel's explicit go — it's parked until Phase 3
+- Do NOT touch landing page (`/site/`) without Derrick's explicit go — it's parked until Phase 3
 - Do NOT lock pricing decisions — gather data, present options, Daniel decides
 - Do NOT add real customer auth yet — Phase 3 work, premature now
-- Do NOT push Twilio / WhatsApp integration — Phase 2 work, Daniel will decide cost/benefit later
-- Do NOT change the dashboard from anon-access to auth-required without Daniel's go — he wants simple ops, no login wall
+- Do NOT push Twilio / WhatsApp integration — Phase 2 work, Derrick will decide cost/benefit later
+- Do NOT change the dashboard from anon-access to auth-required without Derrick's go — he wants simple ops, no login wall
 
 ---
 
@@ -117,4 +117,4 @@ In order:
 - **Use `docs/PLUMBING-CHECK.md`** for current stack state.
 - **Update memory files** in `~/.claude/projects/.../memory/` when learning something durable.
 
-When in doubt: check `docs/THE-PLAN.md`, then ask Daniel.
+When in doubt: check `docs/THE-PLAN.md`, then ask Derrick.
