@@ -118,3 +118,12 @@ In order:
 - **Update memory files** in `~/.claude/projects/.../memory/` when learning something durable.
 
 When in doubt: check `docs/THE-PLAN.md`, then ask Derrick.
+
+
+## CRITICAL RULE — No test data in live tables
+
+NEVER insert test/demo/verification records into production Supabase tables (prospects, leads, intake_requests, messages, activity_feed).
+
+For testing: use a separate query that SELECTs only, or immediately DELETE what you inserted in the same transaction. The prospects pipeline is Derrick's live customer pipeline — fake records break his workflow.
+
+If you need to verify something saved, SELECT it and report the ID. Do not leave any record behind.
