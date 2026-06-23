@@ -357,10 +357,23 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
     </div>
     <div class="nav-divider"></div>
-    <div class="nav-label">Learning</div>
+    <div class="nav-label">Send to prospects</div>
+    <div class="nav-section">
+      <div class="nav-item" data-page="send-intake">
+        <span class="icon">📋</span> Send intake link
+      </div>
+      <div class="nav-item" data-page="send-quote">
+        <span class="icon">📄</span> Send a quote
+      </div>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-label">Learning (for you)</div>
     <div class="nav-section">
       <div class="nav-item" data-page="learn">
         <span class="icon">📚</span> Learning hub
+      </div>
+      <div class="nav-item" data-page="tiers-ref">
+        <span class="icon">🎯</span> 4-tier system
       </div>
       <div class="nav-item" data-page="help">
         <span class="icon">❓</span> How it works
@@ -732,6 +745,103 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
     </div>
 
+    <!-- ── SEND INTAKE LINK ─────────────────────── -->
+    <div id="page-send-intake" class="page">
+      <div class="page-header">
+        <div class="page-title">Send intake link</div>
+        <div class="page-sub">The link you paste into DMs, posts, and outreach. Prospects fill it out, you get notified.</div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">📋 Public Intake Form</span></div>
+        <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-bottom:10px;">
+          Send this link to anyone who shows interest. They fill in market, list type, urgency, volume, contact info. Submissions land in your inbox + auto-create a prospect in the Pipeline.
+        </p>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;background:var(--cream2);padding:12px 14px;border-radius:8px;margin:12px 0;word-break:break-all;">
+          https://deedott60.github.io/leadcurate-launch/intake/
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn" onclick="navigator.clipboard.writeText('https://deedott60.github.io/leadcurate-launch/intake/').then(()=>{this.textContent='✓ Copied';setTimeout(()=>this.textContent='🔗 Copy link',1800);})">🔗 Copy link</button>
+          <a href="../intake/" target="_blank" class="btn btn-ghost" style="text-decoration:none;">Open form →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SEND A QUOTE ─────────────────────── -->
+    <div id="page-send-quote" class="page">
+      <div class="page-header">
+        <div class="page-title">Send a quote</div>
+        <div class="page-sub">Build a personalized quote link for one specific prospect, then send it.</div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">📄 Quote Builder</span></div>
+        <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-bottom:14px;">
+          Fill in the prospect's info, pick which tier fits them, hit Build. You'll get a personalized quote link to paste into your message. They see ONE clean offer with a Confirm button — no decision tree, no A/B/C menu.
+        </p>
+
+        <div style="display:grid;gap:10px;margin-bottom:16px;">
+          <input id="qBuyer" placeholder="Prospect name (e.g. John Smith)" style="padding:12px 14px;border:1px solid var(--line);border-radius:8px;font-size:15px;font-family:inherit;" />
+          <input id="qMarket" placeholder="Market (e.g. Cobb GA — Atlanta NW)" style="padding:12px 14px;border:1px solid var(--line);border-radius:8px;font-size:15px;font-family:inherit;" />
+          <select id="qTier" style="padding:12px 14px;border:1px solid var(--line);border-radius:8px;font-size:15px;font-family:inherit;background:white;">
+            <option value="deepdistress">Curated Distress List — $149 (default, fits most)</option>
+            <option value="breakingpoint">Breaking Point — $249 (high-conversion subset)</option>
+            <option value="freshtrigger">Fresh Triggers — $297/wk (daily cold callers)</option>
+            <option value="hotsheet">Hot Sheet — $497/wk (urgent / auction imminent)</option>
+          </select>
+          <input id="qRecords" placeholder="Records (optional, e.g. 5,678)" style="padding:12px 14px;border:1px solid var(--line);border-radius:8px;font-size:15px;font-family:inherit;" />
+        </div>
+
+        <button class="btn" onclick="window.buildQuote()">Build quote link →</button>
+
+        <div id="quoteOut" style="display:none;margin-top:18px;padding:16px;background:var(--cream2);border-radius:10px;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--em-d);margin-bottom:8px;">Personalized quote link</div>
+          <div id="quoteLink" style="font-family:'JetBrains Mono',monospace;font-size:12px;word-break:break-all;background:white;padding:10px 12px;border-radius:6px;margin-bottom:10px;"></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn" onclick="window.copyQuoteLink()">🔗 Copy link</button>
+            <a id="quoteOpen" target="_blank" class="btn btn-ghost" style="text-decoration:none;">Preview →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 4-TIER REFERENCE ─────────────────────── -->
+    <div id="page-tiers-ref" class="page">
+      <div class="page-header">
+        <div class="page-title">4-Tier system</div>
+        <div class="page-sub">Internal reference. The four products we sell, who they fit, and the velocity pitch.</div>
+      </div>
+
+      <div class="card mb16" style="border-left:4px solid #991b1b;">
+        <div class="card-h"><span class="card-title">🔴 Tier 1 — Hot Sheet</span><span style="float:right;color:#991b1b;font-weight:700;">$497/wk</span></div>
+        <p style="font-size:14px;color:var(--sl);line-height:1.55;margin:8px 0 0;"><strong>Auction Imminent.</strong> Properties with a scheduled tax sale or foreclosure auction in the next 30 days. Owner in full panic. 10–100 records weekly. <em>Sell to wholesalers who can move fast.</em></p>
+      </div>
+
+      <div class="card mb16" style="border-left:4px solid #b45309;">
+        <div class="card-h"><span class="card-title">🟠 Tier 2 — Fresh Triggers</span><span style="float:right;color:#b45309;font-weight:700;">$297/wk</span></div>
+        <p style="font-size:14px;color:var(--sl);line-height:1.55;margin:8px 0 0;"><strong>Just-Filed.</strong> New court filings + code violations in the last 7 days. First-mover advantage before competitors pile on. 50–300 records weekly. <em>Sell to daily cold callers.</em></p>
+      </div>
+
+      <div class="card mb16" style="border-left:4px solid #15803d;">
+        <div class="card-h"><span class="card-title">🟢 Tier 3 — Breaking Point</span><span style="float:right;color:#15803d;font-weight:700;">$249</span></div>
+        <p style="font-size:14px;color:var(--sl);line-height:1.55;margin:8px 0 0;"><strong>At the Breaking Point.</strong> Debt > 5% of property value OR balance growing YoY. Mathematically the highest-converting subset. 500–2,000 records, monthly refresh. <em>Sell to buy-and-hold + flippers.</em></p>
+      </div>
+
+      <div class="card mb16" style="border-left:4px solid #1d4ed8;">
+        <div class="card-h"><span class="card-title">🔵 Tier 4 — Curated Distress List</span><span style="float:right;color:#1d4ed8;font-weight:700;">$149</span></div>
+        <p style="font-size:14px;color:var(--sl);line-height:1.55;margin:8px 0 0;"><strong>The baseline product.</strong> Full curated, scored, normalized motivated-seller list. 5K–10K records, monthly refresh. <em>Fits every wholesaler — the default starting point.</em></p>
+      </div>
+
+      <div class="card mb16" style="background:var(--em-d);color:var(--cream);">
+        <div class="card-h"><span class="card-title" style="color:white;">🎙 The 30-second pitch</span></div>
+        <p style="font-size:14px;line-height:1.6;margin:8px 0 0;color:#dcfce7;font-style:italic;">"We don't just look at how long a property has been on a list — we track its <strong style="color:white;">velocity</strong>. Someone owing $500 for three years isn't motivated. But our system flags the exact moment that debt hits a <strong style="color:white;">breaking point</strong>, or when the county officially schedules an auction date. You're not calling someone who's casually behind on taxes — you're calling someone who realizes they're about to lose their house next month. <strong style="color:white;">That's why our data closes deals while standard software lists just sit there.</strong>"</p>
+      </div>
+
+      <p style="font-size:13px;color:var(--sl);margin-top:14px;">
+        <a href="../tiers/" target="_blank" style="color:var(--em);font-weight:600;">Open full tier reference page →</a>
+      </p>
+    </div>
+
     <!-- ── LEARNING HUB ─────────────────────── -->
     <div id="page-learn" class="page">
       <div class="page-header">
@@ -956,7 +1066,7 @@ function lsLoad(){
 function lsSave(){ localStorage.setItem(LS_KEY, JSON.stringify(PROSPECTS)); }
 
 // ─── NAV ──────────────────────────────────────────────────────
-const pages = ['hq','inbox','pipeline','messages','workflow','templates','conference','marketing','seo','learn','help'];
+const pages = ['hq','inbox','pipeline','messages','workflow','templates','conference','marketing','seo','send-intake','send-quote','learn','tiers-ref','help'];
 window.nav = async function(id){
   pages.forEach(p=>{
     document.getElementById('page-'+p).classList.toggle('active',p===id);
@@ -1535,6 +1645,28 @@ function renderTemplates(){
 window.copyTpl = (i) => { navigator.clipboard.writeText(window._tpls[i].body).then(()=>toast('Copied')); };
 window.copyIntakeLink = () => { navigator.clipboard.writeText(INTAKE_URL).then(()=>toast('Intake link copied — paste anywhere')); };
 
+// ─── QUOTE BUILDER ────────────────────────────────────────────
+window.buildQuote = () => {
+  const buyer   = document.getElementById('qBuyer').value.trim();
+  const market  = document.getElementById('qMarket').value.trim();
+  const tier    = document.getElementById('qTier').value;
+  const records = document.getElementById('qRecords').value.trim();
+  if (!buyer || !market) { toast('Need a buyer name + market first'); return; }
+  const base = 'https://deedott60.github.io/leadcurate-launch/quote-template/';
+  const params = new URLSearchParams({ buyer, market, tier });
+  if (records) params.set('records', records);
+  const url = `${base}?${params.toString()}`;
+  document.getElementById('quoteLink').textContent = url;
+  document.getElementById('quoteOpen').href = url;
+  document.getElementById('quoteOut').style.display = 'block';
+  window._currentQuoteUrl = url;
+  toast('Quote link built — copy it next');
+};
+window.copyQuoteLink = () => {
+  if (!window._currentQuoteUrl) return;
+  navigator.clipboard.writeText(window._currentQuoteUrl).then(()=>toast('Quote link copied — paste in your message'));
+};
+
 // ─── REALTIME ────────────────────────────────────────────────
 function subscribeRealtime(){
   const channel = sb.channel('lc-live')
@@ -1569,6 +1701,9 @@ const CMD_ITEMS = [
   {icon:'📣',label:'Go to Marketing',     action:()=>nav('marketing')},
   {icon:'🔎',label:'Go to SEO / GEO',     action:()=>nav('seo')},
   {icon:'🏛️',label:'Conference room',     action:()=>nav('conference')},
+  {icon:'📋',label:'Send intake link',     action:()=>nav('send-intake')},
+  {icon:'📄',label:'Send a quote',         action:()=>nav('send-quote')},
+  {icon:'🎯',label:'4-tier system',        action:()=>nav('tiers-ref')},
   {icon:'📚',label:'Learning hub',         action:()=>nav('learn')},
   {icon:'❓',label:'Help / How it works', action:()=>nav('help')},
   {icon:'🔗',label:'Copy intake link',    action:()=>window.copyIntakeLink()},
