@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>LeadCurate · Quote · [BUYER]</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:#1e293b; --muted:#64748b; --cream:#faf7f2; --stone:#f5f1eb;
+    --dark:#0f172a; --emerald:#15803d; --emerald-2:#22c55e; --emerald-soft:#dff4e8;
+    --gold:#d97706; --crimson:#991b1b; --crimson-soft:#fee2e2;
+    --blue:#1d4ed8;
+    --line:rgba(30,41,59,.12); --radius:20px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;}
+  .container{width:min(820px,calc(100% - 40px));margin:0 auto;}
+  header{padding:40px 0 24px;}
+  .head-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  .logo{font-family:"Playfair Display",serif;font-size:32px;font-weight:700;color:var(--dark);letter-spacing:-0.03em;}
+  .logo span{color:var(--emerald);}
+  .quote-num{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px;color:var(--muted);letter-spacing:0.04em;text-align:right;}
+
+  .cover{padding:24px 0 32px;}
+  .eyebrow{font-size:11px;font-weight:700;color:var(--emerald);text-transform:uppercase;letter-spacing:0.16em;margin-bottom:10px;}
+  h1{font-family:"Playfair Display",serif;font-size:clamp(34px,5vw,48px);line-height:1.1;letter-spacing:-0.025em;margin:0 0 14px;}
+  .greeting{font-size:17px;color:#334155;max-width:600px;line-height:1.6;}
+
+  .summary{background:white;border:1px solid var(--line);border-radius:var(--radius);padding:24px 28px;margin:20px 0 8px;}
+  .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;}
+  .summary-item .lab{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;}
+  .summary-item .val{font-size:18px;font-weight:700;color:var(--dark);}
+
+  .line-items{margin:32px 0 24px;}
+  h2{font-family:"Playfair Display",serif;font-size:24px;letter-spacing:-0.02em;margin:0 0 16px;}
+  .line{background:white;border:1px solid var(--line);border-radius:14px;padding:22px 26px;margin:12px 0;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;}
+  .line.recommended{border:2px solid var(--emerald);background:linear-gradient(180deg,#f0fdf4,white);}
+  .line-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:3px 9px;border-radius:999px;margin-bottom:8px;}
+  .tag-t1{background:var(--crimson-soft);color:var(--crimson);}
+  .tag-t2{background:#fef3c7;color:var(--gold);}
+  .tag-t3{background:var(--emerald-soft);color:var(--emerald);}
+  .tag-t4{background:#dbeafe;color:var(--blue);}
+  .tag-rec{background:var(--emerald);color:white;}
+  .line h3{font-family:"Playfair Display",serif;font-size:21px;margin:0 0 4px;color:var(--dark);}
+  .line-desc{font-size:14px;color:#475569;margin:6px 0 0;line-height:1.5;}
+  .line-meta{font-size:12px;color:var(--muted);margin-top:6px;font-weight:600;}
+  .line-price{font-family:"Playfair Display",serif;font-size:30px;font-weight:700;color:var(--dark);text-align:right;line-height:1;}
+  .line-price .per{display:block;font-family:Inter,sans-serif;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:0.08em;margin-top:4px;text-transform:uppercase;}
+
+  .total{background:var(--dark);color:white;border-radius:var(--radius);padding:24px 28px;margin:24px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;}
+  .total .lab{font-size:12px;color:var(--emerald-2);font-weight:700;text-transform:uppercase;letter-spacing:0.12em;}
+  .total .amt{font-family:"Playfair Display",serif;font-size:42px;font-weight:700;letter-spacing:-0.02em;line-height:1;}
+  .total .note{font-size:13px;color:#cbd5e1;margin-top:4px;}
+
+  .cta{background:var(--emerald);color:white;border-radius:var(--radius);padding:28px 32px;text-align:center;margin:24px 0;}
+  .cta h3{font-family:"Playfair Display",serif;font-size:24px;margin:0 0 8px;}
+  .cta p{margin:6px 0 0;color:#dcfce7;font-size:15px;}
+  .cta-line{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:16px;font-weight:700;margin:14px 0 0;background:rgba(0,0,0,0.2);padding:12px 18px;border-radius:8px;display:inline-block;}
+
+  .terms{font-size:13px;color:var(--muted);background:var(--stone);padding:18px 22px;border-radius:14px;margin:20px 0;}
+  .terms h4{font-size:11px;font-weight:700;color:var(--ink);text-transform:uppercase;letter-spacing:0.1em;margin:0 0 8px;}
+  .terms ul{margin:0;padding-left:18px;}
+  .terms li{margin:4px 0;}
+
+  footer{padding:30px 0 50px;text-align:center;font-size:13px;color:var(--muted);border-top:1px solid var(--line);margin-top:24px;}
+  footer .signature{font-family:"Playfair Display",serif;font-style:italic;color:var(--dark);font-size:15px;margin-top:8px;}
+
+  @media(max-width:600px){
+    .line{grid-template-columns:1fr;}
+    .line-price{text-align:left;}
+    .total{flex-direction:column;align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+  <div class="head-row">
+    <div>
+      <div class="logo">Lead<span>Curate</span>.</div>
+    </div>
+    <div class="quote-num">
+      Quote #LC-2026-0001<br>
+      Prepared 2026-06-23<br>
+      Valid 7 days
+    </div>
+  </div>
+</header>
+
+<section class="cover">
+  <div class="eyebrow">Quote · prepared for</div>
+  <h1>[BUYER NAME]</h1>
+  <p class="greeting">Thanks for the inquiry. Based on what you shared in your intake — <strong>[market]</strong>, <strong>[list type]</strong>, with <strong>[urgency level]</strong> timing — here's what we'd recommend, with pricing locked in for the next 7 days.</p>
+</section>
+
+<div class="summary">
+  <div class="summary-grid">
+    <div class="summary-item"><div class="lab">Market</div><div class="val">[Cobb GA — Atlanta NW]</div></div>
+    <div class="summary-item"><div class="lab">Records available</div><div class="val">5,678</div></div>
+    <div class="summary-item"><div class="lab">Data refreshed</div><div class="val">2026-06-20</div></div>
+    <div class="summary-item"><div class="lab">Delivery format</div><div class="val">Branded XLSX</div></div>
+  </div>
+</div>
+
+<section class="line-items">
+<h2>Your recommended package</h2>
+
+<!-- Recommended primary product -->
+<div class="line recommended">
+  <div>
+    <span class="line-tag tag-rec">★ Recommended</span>
+    <h3>Cobb GA — Tax Delinquent (Deep Distress)</h3>
+    <p class="line-desc">Full delinquent registry, normalized and scored. Includes parcel ID, situs + mailing address, owner name, owner type (entity flag), assessed value, delinquent balance, and distress score 0–100.</p>
+    <div class="line-meta">5,678 records · refreshed monthly · branded XLSX delivery</div>
+  </div>
+  <div class="line-price">$249<span class="per">one-time</span></div>
+</div>
+
+<!-- Optional upsell -->
+<div class="line">
+  <div>
+    <span class="line-tag tag-t3">Breaking Point add-on</span>
+    <h3>High-Conversion Subset</h3>
+    <p class="line-desc">Top 500 records from the same list where debt is snowballing or now exceeds 5% of assessed value. These owners are mathematically at the breaking point — highest conversion subset in the file.</p>
+    <div class="line-meta">~500 records · pre-scored 80+ · ready for outreach</div>
+  </div>
+  <div class="line-price">+$149<span class="per">add-on</span></div>
+</div>
+
+<!-- Optional premium -->
+<div class="line">
+  <div>
+    <span class="line-tag tag-t1">Hot Sheet · premium</span>
+    <h3>Auction-Imminent Watch</h3>
+    <p class="line-desc">Weekly list of properties in your market with a scheduled tax sale or foreclosure auction inside the next 30 days. Owner is in maximum-motivation mode. Limited to 1-3 buyers per market.</p>
+    <div class="line-meta">10–80 records weekly · seats limited · cancel anytime</div>
+  </div>
+  <div class="line-price">+$497<span class="per">per week</span></div>
+</div>
+
+</section>
+
+<div class="total">
+  <div>
+    <div class="lab">Recommended package total (one-time)</div>
+    <div class="note">Base list + Breaking Point subset, no recurring add-ons</div>
+  </div>
+  <div class="amt">$398</div>
+</div>
+
+<div class="cta">
+  <h3>Ready to move?</h3>
+  <p>Reply YES to this quote and we'll send payment instructions + delivery within the same day.</p>
+  <div class="cta-line">Reply YES · 24-hour delivery</div>
+</div>
+
+<div class="terms">
+  <h4>Quick terms</h4>
+  <ul>
+    <li>Pricing locked for 7 days from quote date</li>
+    <li>Delivered as a branded XLSX within 24 hours of payment</li>
+    <li>Data sourced directly from county records — refresh date stamped on delivery</li>
+    <li>Limited buyer access per market (1–3 seats) to keep records warm</li>
+    <li>Payment via Cash App, Zelle, or Stripe — instructions sent after YES</li>
+  </ul>
+</div>
+
+<footer>
+  Questions? Reply to this quote.<br>
+  <div class="signature">— Derrick, LeadCurate</div>
+</footer>
+
+</div>
+
+</body>
+</html>

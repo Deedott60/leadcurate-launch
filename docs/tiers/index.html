@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>LeadCurate · 4-Tier Product System (Internal)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:#1e293b; --muted:#64748b; --cream:#faf7f2; --stone:#f5f1eb;
+    --dark:#0f172a; --emerald:#15803d; --emerald-2:#22c55e; --emerald-soft:#dff4e8;
+    --gold:#d97706; --gold-soft:#fef3c7;
+    --crimson:#991b1b; --crimson-soft:#fee2e2;
+    --blue:#1d4ed8; --blue-soft:#dbeafe;
+    --line:rgba(30,41,59,.12); --radius:20px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;}
+  .container{width:min(1080px,calc(100% - 40px));margin:0 auto;}
+  header{padding:32px 0 20px;border-bottom:1px solid var(--line);background:rgba(255,255,255,0.6);}
+  .head-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  .logo{font-family:"Playfair Display",serif;font-size:26px;font-weight:700;color:var(--dark);letter-spacing:-0.03em;}
+  .logo span{color:var(--emerald);}
+  .badge{display:inline-flex;align-items:center;gap:8px;background:var(--crimson-soft);color:var(--crimson);padding:7px 13px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;}
+  .meta{font-size:13px;color:var(--muted);margin-top:4px;}
+  section{padding:36px 0;border-top:1px solid var(--line);}
+  section.cover{padding:48px 0 32px;border:none;}
+  h1{font-family:"Playfair Display",serif;font-size:clamp(34px,5vw,52px);line-height:1.05;letter-spacing:-0.03em;margin:14px 0 16px;max-width:840px;}
+  h2{font-family:"Playfair Display",serif;font-size:clamp(24px,3vw,32px);line-height:1.1;letter-spacing:-0.02em;margin:0 0 12px;}
+  h3{font-size:18px;font-weight:700;margin:18px 0 8px;}
+  h4{font-size:12px;font-weight:700;color:var(--emerald);text-transform:uppercase;letter-spacing:0.12em;margin:0 0 6px;}
+  p{margin:8px 0 14px;color:#334155;}
+  .lead{font-size:17px;color:#334155;max-width:740px;}
+  .callout{background:var(--gold-soft);border-left:4px solid var(--gold);padding:14px 18px;border-radius:10px;margin:16px 0;font-size:14px;}
+  .callout strong{color:var(--gold);}
+
+  /* Tier cards */
+  .tier{background:white;border:1px solid var(--line);border-radius:var(--radius);padding:28px 30px;margin:16px 0;display:grid;grid-template-columns:90px 1fr;gap:24px;}
+  .tier-num{font-family:"Playfair Display",serif;font-size:78px;font-weight:700;line-height:0.9;letter-spacing:-0.05em;}
+  .tier-1 .tier-num{color:var(--crimson);}
+  .tier-2 .tier-num{color:var(--gold);}
+  .tier-3 .tier-num{color:var(--emerald);}
+  .tier-4 .tier-num{color:var(--blue);}
+  .tier-name{font-family:"Playfair Display",serif;font-size:30px;font-weight:700;letter-spacing:-0.02em;margin-bottom:2px;color:var(--dark);}
+  .tier-sub{font-size:13px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;}
+  .tier-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-bottom:10px;}
+  .tier-1 .tier-tag{background:var(--crimson-soft);color:var(--crimson);}
+  .tier-2 .tier-tag{background:var(--gold-soft);color:var(--gold);}
+  .tier-3 .tier-tag{background:var(--emerald-soft);color:var(--emerald);}
+  .tier-4 .tier-tag{background:var(--blue-soft);color:var(--blue);}
+  .tier-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:18px;padding-top:16px;border-top:1px dashed var(--line);}
+  .tier-stat{background:var(--stone);padding:12px 14px;border-radius:10px;}
+  .tier-stat .lab{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px;}
+  .tier-stat .val{font-size:16px;font-weight:800;color:var(--dark);}
+  .tier-rule{background:#0f172a;color:#cbd5e1;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px;padding:14px 16px;border-radius:8px;margin-top:14px;line-height:1.5;}
+  .tier-rule span.k{color:#86efac;}
+  .tier-rule span.v{color:#fde68a;}
+
+  /* Decision matrix */
+  .matrix{background:white;border:1px solid var(--line);border-radius:var(--radius);padding:6px;overflow-x:auto;margin:18px 0;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{text-align:left;padding:11px 12px;background:var(--stone);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink);}
+  td{padding:10px 12px;border-bottom:1px solid var(--line);}
+  td.tag{text-align:center;font-weight:700;font-size:11px;letter-spacing:0.06em;}
+  td.t1{background:var(--crimson-soft);color:var(--crimson);}
+  td.t2{background:var(--gold-soft);color:var(--gold);}
+  td.t3{background:var(--emerald-soft);color:var(--emerald);}
+  td.t4{background:var(--blue-soft);color:var(--blue);}
+
+  /* Pitch box */
+  .pitch{background:var(--dark);color:white;border-radius:var(--radius);padding:28px 32px;margin:18px 0;}
+  .pitch h3{color:var(--emerald-2);font-family:"Playfair Display",serif;font-size:20px;margin-top:0;}
+  .pitch p{color:#cbd5e1;font-style:italic;font-size:15px;line-height:1.6;}
+  .pitch p strong{color:white;font-style:normal;}
+
+  /* Internal note */
+  .internal{background:#fee2e2;border:1px solid var(--crimson);border-radius:14px;padding:18px 22px;margin:24px 0;}
+  .internal h4{color:var(--crimson);}
+  .internal p{margin:6px 0 0;font-size:14px;color:#7f1d1d;}
+
+  footer{padding:32px 0 60px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);margin-top:24px;}
+
+  @media(max-width:600px){
+    .tier{grid-template-columns:1fr;gap:8px;padding:22px;}
+    .tier-num{font-size:54px;}
+    .tier-name{font-size:24px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container head-row">
+    <div>
+      <div class="logo">Lead<span>Curate</span>.</div>
+      <div class="meta">4-Tier Product System · Internal Reference · 2026-06-23</div>
+    </div>
+    <div class="badge">● Internal — Do not share</div>
+  </div>
+</header>
+
+<section class="cover container">
+  <h4>The framework</h4>
+  <h1>Same data, four shelves.</h1>
+  <p class="lead">Every record in the inventory gets tagged into one or more of four urgency tiers, scored on time-to-event rather than just static distress. This is the difference between PropStream (static lists) and us (live trackers of human motivation).</p>
+
+  <div class="internal">
+    <h4>⚠ Internal only — customer doesn't see this yet</h4>
+    <p>The 4-tier system is the back-end scoring framework. For Phase 1 launch, customers still see source-based products (Tax Delinquent, Absentee, etc.). The tier tags are visible only on the dashboard and quote sheets, used to recommend bundles and price premium add-ons. Full tier visibility unlocks at Phase 3 launch.</p>
+  </div>
+</section>
+
+<!-- TIER 1 -->
+<section class="container">
+  <h4>The premium</h4>
+  <h2>The four tiers, ranked by urgency.</h2>
+
+  <div class="tier tier-1">
+    <div class="tier-num">1</div>
+    <div>
+      <span class="tier-tag">Auction Imminent</span>
+      <div class="tier-name">Hot Sheet</div>
+      <div class="tier-sub">Highest urgency · Premium pricing · Weekly cadence</div>
+      <p>Properties with a scheduled tax sale, sheriff sale, or foreclosure auction date in the next 30 days. The window is closing. Owner is in full panic mode or actively negotiating with anyone who calls. These records are gold for wholesalers who can move fast.</p>
+
+      <div class="tier-rule">
+<span class="k">trigger:</span> auction_date NOT NULL<br>
+<span class="k">if</span> days_to_auction &lt; 14 → <span class="v">score = 99</span> + tag "Hot Sheet"<br>
+<span class="k">else if</span> days_to_auction &lt; 30 → <span class="v">score = 95</span> + tag "Hot Sheet"<br>
+<span class="k">else if</span> days_to_auction &lt; 60 → <span class="v">score += 25</span>
+      </div>
+
+      <div class="tier-grid">
+        <div class="tier-stat"><div class="lab">Volume per pull</div><div class="val">10–100</div></div>
+        <div class="tier-stat"><div class="lab">Price</div><div class="val">$497/wk</div></div>
+        <div class="tier-stat"><div class="lab">Buyer profile</div><div class="val">Fast wholesalers</div></div>
+        <div class="tier-stat"><div class="lab">Refresh</div><div class="val">Weekly</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIER 2 -->
+  <div class="tier tier-2">
+    <div class="tier-num">2</div>
+    <div>
+      <span class="tier-tag">Just Triggered</span>
+      <div class="tier-name">Fresh Triggers</div>
+      <div class="tier-sub">High urgency · Time-decaying · Weekly cadence</div>
+      <p>Brand-new court filings (NOD, lis pendens), recent code violations, or newly-listed delinquencies pulled within the last 7 days. Owner just got the bad news. They haven't yet been pounded by other wholesalers. First-mover advantage.</p>
+
+      <div class="tier-rule">
+<span class="k">trigger:</span> record exists in current pull AND NOT in previous pull<br>
+<span class="k">if</span> first_seen &lt; 48 hours ago → <span class="v">score = 92</span> + tag "Fresh Trigger"<br>
+<span class="k">else if</span> first_seen &lt; 7 days → <span class="v">score += 20</span> + tag "Fresh Trigger"
+      </div>
+
+      <div class="tier-grid">
+        <div class="tier-stat"><div class="lab">Volume per pull</div><div class="val">50–300</div></div>
+        <div class="tier-stat"><div class="lab">Price</div><div class="val">$297/wk</div></div>
+        <div class="tier-stat"><div class="lab">Buyer profile</div><div class="val">Daily cold callers</div></div>
+        <div class="tier-stat"><div class="lab">Refresh</div><div class="val">Weekly</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIER 3 -->
+  <div class="tier tier-3">
+    <div class="tier-num">3</div>
+    <div>
+      <span class="tier-tag">About to Crack</span>
+      <div class="tier-name">Breaking Point</div>
+      <div class="tier-sub">Medium-high urgency · Quality signal · Monthly cadence</div>
+      <p>Properties where debt is snowballing — either growing year-over-year, or where total delinquent balance now exceeds 5% of the property's assessed value. Owner is no longer "casually behind" — the math says they're about to lose it. The breaking-point indicator beats raw debt amount as a motivation signal.</p>
+
+      <div class="tier-rule">
+<span class="k">trigger:</span> debt_balance / assessed_value &gt; 0.05<br>
+<span class="k">OR</span> current_balance &gt; prior_year_balance × 1.15<br>
+<span class="k">then</span> <span class="v">score += 20</span> + tag "Breaking Point"
+      </div>
+
+      <div class="tier-grid">
+        <div class="tier-stat"><div class="lab">Volume per pull</div><div class="val">500–2,000</div></div>
+        <div class="tier-stat"><div class="lab">Price</div><div class="val">$249/mo</div></div>
+        <div class="tier-stat"><div class="lab">Buyer profile</div><div class="val">Buy-and-hold + flippers</div></div>
+        <div class="tier-stat"><div class="lab">Refresh</div><div class="val">Monthly</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIER 4 -->
+  <div class="tier tier-4">
+    <div class="tier-num">4</div>
+    <div>
+      <span class="tier-tag">Steady-State</span>
+      <div class="tier-name">Deep Distress</div>
+      <div class="tier-sub">Standard urgency · Volume product · Monthly cadence</div>
+      <p>The classic motivated-seller list. Stacked filters across one or more source categories — Tax Delinquent, Absentee Owner, High Equity, Probate, Code Violation, Pre-Foreclosure. This is what every wholesaler currently buys from PropStream / BatchLeads. It's our baseline product.</p>
+
+      <div class="tier-rule">
+<span class="k">trigger:</span> meets source-category filter (Tax Delinquent, Absentee, etc.)<br>
+<span class="k">then</span> <span class="v">score = 50</span> + standard distress weighting
+      </div>
+
+      <div class="tier-grid">
+        <div class="tier-stat"><div class="lab">Volume per pull</div><div class="val">5K–10K</div></div>
+        <div class="tier-stat"><div class="lab">Price</div><div class="val">$149/mo</div></div>
+        <div class="tier-stat"><div class="lab">Buyer profile</div><div class="val">All wholesalers</div></div>
+        <div class="tier-stat"><div class="lab">Refresh</div><div class="val">Monthly</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DECISION MATRIX -->
+<section class="container">
+  <h4>How to recommend tiers</h4>
+  <h2>When a prospect fills the intake form…</h2>
+  <p>Use this matrix to recommend the right tier(s) based on what they said in the intake form.</p>
+
+  <div class="matrix">
+    <table>
+      <thead>
+        <tr>
+          <th>If their intake says...</th>
+          <th>Recommend</th>
+          <th>Bundle play</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>"Need leads urgently / closing this month"</td>
+          <td class="tag t1">Hot Sheet</td>
+          <td>Tier 1 + Tier 4 base list</td>
+        </tr>
+        <tr>
+          <td>"I cold call every day"</td>
+          <td class="tag t2">Fresh Triggers</td>
+          <td>Tier 2 weekly + Tier 4 base list</td>
+        </tr>
+        <tr>
+          <td>"Want highest-quality motivated sellers"</td>
+          <td class="tag t3">Breaking Point</td>
+          <td>Tier 3 + Tier 4 base list</td>
+        </tr>
+        <tr>
+          <td>"First time buying lists / exploring"</td>
+          <td class="tag t4">Deep Distress</td>
+          <td>Tier 4 only — upsell later</td>
+        </tr>
+        <tr>
+          <td>"Big budget / want everything"</td>
+          <td class="tag t1">All 4 tiers</td>
+          <td>Bundled discount $1,200/mo</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- SALES PITCH -->
+<section class="container">
+  <h4>The pitch</h4>
+  <h2>How to explain this to a wholesaler (use these words).</h2>
+
+  <div class="pitch">
+    <h3>The 30-second velocity pitch</h3>
+    <p><strong>"We don't just look at how long a property has been on a list — we track its velocity.</strong> Someone owing $500 for three years isn't motivated. But our system flags the exact moment that debt hits a breaking point — like when penalties stack into thousands, or when the county officially schedules an auction date. <strong>We catch the trigger event when the heat gets turned up.</strong> You aren't calling someone who is casually behind on taxes — you're calling someone who realizes they're about to lose their house to the county next month. <strong>That's why our data closes deals while standard software lists just sit there."</strong></p>
+  </div>
+
+  <div class="callout">
+    <strong>Internal note:</strong> Lead with this pitch in cold outreach DMs. The velocity framing differentiates us from every PropStream / BatchLeads competitor in the prospect's head, before they even ask about price.
+  </div>
+</section>
+
+<!-- IMPLEMENTATION STATUS -->
+<section class="container">
+  <h4>Where each tier stands</h4>
+  <h2>Implementation status (live).</h2>
+
+  <div class="matrix">
+    <table>
+      <thead>
+        <tr><th>Tier</th><th>Scoring</th><th>Data plumbing</th><th>Sellable</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="tag t1">Hot Sheet</td><td>Framework ready</td><td>Needs per-county auction-calendar scraping</td><td>5–6 markets first</td></tr>
+        <tr><td class="tag t2">Fresh Triggers</td><td>Framework ready</td><td>Needs prior-pull retention + diff logic</td><td>After first refresh cycle</td></tr>
+        <tr><td class="tag t3">Breaking Point</td><td>✓ Live</td><td>Works on existing data (debt + assessed value)</td><td>Today</td></tr>
+        <tr><td class="tag t4">Deep Distress</td><td>✓ Live</td><td>What we already sell</td><td>Today</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    LeadCurate · Internal Reference · 4-Tier Product System · Updated 2026-06-23
+  </div>
+</footer>
+
+</body>
+</html>
