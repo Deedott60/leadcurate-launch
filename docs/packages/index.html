@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>LeadCurate · Our 4 Packages</title>
+<meta name="description" content="LeadCurate's four motivated-seller data packages — choose the urgency level that fits your strategy." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1e293b; --muted:#64748b; --cream:#faf7f2; --stone:#f5f1eb;
+    --dark:#0f172a; --emerald:#15803d; --emerald-2:#22c55e; --emerald-soft:#dff4e8;
+    --gold:#b45309; --gold-soft:#fef3c7;
+    --crimson:#991b1b; --crimson-soft:#fee2e2;
+    --blue:#1d4ed8; --blue-soft:#dbeafe;
+    --line:rgba(30,41,59,.12); --radius:22px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Inter,system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  body::before{content:'';position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(circle at 18% 12%,rgba(21,128,61,0.05),transparent 30rem),radial-gradient(circle at 82% 88%,rgba(15,23,42,0.04),transparent 28rem);z-index:-1;}
+  .wrap{max-width:1080px;margin:0 auto;padding:48px 24px 80px;}
+
+  header{display:flex;align-items:center;gap:12px;margin-bottom:32px;}
+  .mark{width:44px;height:44px;border-radius:10px;background:var(--emerald);color:var(--cream);display:flex;align-items:center;justify-content:center;font-family:"Playfair Display",serif;font-weight:700;font-size:26px;}
+  .brand-name{font-family:"Playfair Display",serif;font-weight:700;font-size:22px;letter-spacing:-0.02em;}
+
+  .eyebrow{display:inline-block;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--emerald);font-weight:700;margin-bottom:12px;}
+  h1{font-family:"Playfair Display",serif;font-size:clamp(38px,5.5vw,58px);line-height:1.05;letter-spacing:-0.025em;margin-bottom:16px;}
+  .lede{font-size:18px;color:var(--muted);max-width:720px;line-height:1.6;margin-bottom:8px;}
+  .meta{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px;color:var(--muted);letter-spacing:0.04em;margin-top:18px;}
+
+  .hr{height:1px;background:var(--line);margin:48px 0;}
+
+  h2{font-family:"Playfair Display",serif;font-size:32px;line-height:1.1;letter-spacing:-0.015em;margin-bottom:12px;}
+  .section-lede{color:var(--muted);font-size:17px;max-width:700px;margin-bottom:28px;}
+
+  /* Tier card */
+  .tier{background:white;border:1px solid var(--line);border-radius:var(--radius);padding:32px 36px;margin-bottom:18px;display:grid;grid-template-columns:90px 1fr;gap:24px;border-left:5px solid var(--emerald);}
+  .tier-1{border-left-color:var(--crimson);}
+  .tier-2{border-left-color:var(--gold);}
+  .tier-3{border-left-color:var(--emerald);}
+  .tier-4{border-left-color:var(--blue);}
+  .tier-num{font-family:"Playfair Display",serif;font-size:84px;font-weight:700;line-height:0.9;letter-spacing:-0.05em;color:var(--ink);opacity:0.15;}
+  .tier-1 .tier-num{color:var(--crimson);}
+  .tier-2 .tier-num{color:var(--gold);}
+  .tier-3 .tier-num{color:var(--emerald);}
+  .tier-4 .tier-num{color:var(--blue);}
+  .tier-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin-bottom:10px;}
+  .tier-1 .tier-tag{background:var(--crimson-soft);color:var(--crimson);}
+  .tier-2 .tier-tag{background:var(--gold-soft);color:var(--gold);}
+  .tier-3 .tier-tag{background:var(--emerald-soft);color:var(--emerald);}
+  .tier-4 .tier-tag{background:var(--blue-soft);color:var(--blue);}
+  .tier-name{font-family:"Playfair Display",serif;font-size:32px;font-weight:700;letter-spacing:-0.02em;margin-bottom:4px;color:var(--dark);}
+  .tier-sub{font-size:14px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px;}
+  .tier-desc{font-size:16px;color:#334155;line-height:1.65;margin-bottom:18px;}
+  .tier-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;padding-top:16px;border-top:1px dashed var(--line);}
+  .tier-stat{background:var(--stone);padding:14px 16px;border-radius:10px;}
+  .tier-stat .lab{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:6px;}
+  .tier-stat .val{font-size:15px;font-weight:700;color:var(--dark);}
+  .tier-who{margin-top:14px;padding:12px 16px;background:var(--cream);border-radius:10px;font-size:14px;color:#334155;}
+  .tier-who strong{color:var(--ink);}
+
+  /* Pitch */
+  .pitch{background:var(--dark);color:white;border-radius:var(--radius);padding:32px 36px;margin:24px 0;}
+  .pitch .eyebrow{color:var(--emerald-2);}
+  .pitch h3{font-family:"Playfair Display",serif;font-size:24px;margin-bottom:14px;color:white;letter-spacing:-0.015em;}
+  .pitch p{color:#cbd5e1;font-style:italic;font-size:16px;line-height:1.65;}
+  .pitch p strong{color:white;font-style:normal;}
+
+  /* Next step CTA */
+  .cta{background:var(--emerald);color:white;border-radius:var(--radius);padding:32px 36px;text-align:center;margin:24px 0;}
+  .cta h3{font-family:"Playfair Display",serif;font-size:26px;margin-bottom:10px;letter-spacing:-0.015em;}
+  .cta p{color:#dcfce7;font-size:16px;margin-bottom:18px;}
+  .cta-button{display:inline-block;background:white;color:var(--emerald);padding:16px 32px;border-radius:999px;text-decoration:none;font-weight:700;font-size:16px;letter-spacing:0.02em;}
+
+  footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:13px;}
+
+  @media(max-width:600px){
+    .tier{grid-template-columns:1fr;gap:10px;padding:24px;}
+    .tier-num{font-size:54px;text-align:left;}
+    .tier-name{font-size:24px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="mark">L</div>
+  <div class="brand-name">LeadCurate</div>
+</header>
+
+<span class="eyebrow">Our 4 Packages</span>
+<h1>Pick the urgency that fits your strategy.</h1>
+<p class="lede">PropStream sells the same static list to thousands. We do it differently — every package below is filtered for <strong>when motivation peaks</strong>, not just whether distress exists. Buyer access is capped per market to keep records warm. Pick the tier that matches how you work, and we'll send you a custom quote within the hour.</p>
+<div class="meta">Updated 2026-06-23 · 22 markets across 11 states · Limited buyer access per county</div>
+
+<div class="hr"></div>
+
+<!-- TIER 1 -->
+<div class="tier tier-1">
+  <div class="tier-num">1</div>
+  <div>
+    <span class="tier-tag">Auction Imminent · highest urgency</span>
+    <div class="tier-name">Imminent Auction Hot Sheet</div>
+    <div class="tier-sub">Properties with verified auction date in next 30 days</div>
+    <p class="tier-desc">Owners in the final window before losing their property to the county. Distress score forced to 95-100. Calls land at peak motivation — when the math is "lose the house to the bank or take whatever offer comes in." These are the records that close deals this week, not next quarter.</p>
+    <div class="tier-grid">
+      <div class="tier-stat"><div class="lab">Volume per sheet</div><div class="val">Varies by market</div></div>
+      <div class="tier-stat"><div class="lab">Cadence</div><div class="val">Generated on demand</div></div>
+      <div class="tier-stat"><div class="lab">Buyer access</div><div class="val">1–3 per market</div></div>
+      <div class="tier-stat"><div class="lab">Delivery</div><div class="val">Branded XLSX · 24h</div></div>
+    </div>
+    <div class="tier-who"><strong>Built for:</strong> Wholesalers and acquisition teams who can move on a deal this week. Not for casual cold callers.</div>
+  </div>
+</div>
+
+<!-- TIER 2 -->
+<div class="tier tier-2">
+  <div class="tier-num">2</div>
+  <div>
+    <span class="tier-tag">Just-Filed · subscription feed</span>
+    <div class="tier-name">Fresh Triggers Feed</div>
+    <div class="tier-sub">New pre-foreclosure filings + code violations from the last 7 days</div>
+    <p class="tier-desc">Pulled directly from the court clerk. Brand-new distress events — the owner just got bad news, hasn't been buried under wholesaler calls yet. First-mover advantage. Distress score forced to 92. The only tier built as a recurring weekly subscription because the data refreshes that fast.</p>
+    <div class="tier-grid">
+      <div class="tier-stat"><div class="lab">Volume per week</div><div class="val">Varies by market</div></div>
+      <div class="tier-stat"><div class="lab">Cadence</div><div class="val">Weekly subscription</div></div>
+      <div class="tier-stat"><div class="lab">Buyer access</div><div class="val">Limited per market</div></div>
+      <div class="tier-stat"><div class="lab">Cancel</div><div class="val">Anytime</div></div>
+    </div>
+    <div class="tier-who"><strong>Built for:</strong> Daily cold callers and direct-mail teams who need a constant pipeline of fresh signal.</div>
+  </div>
+</div>
+
+<!-- TIER 3 -->
+<div class="tier tier-3">
+  <div class="tier-num">3</div>
+  <div>
+    <span class="tier-tag">At the Breaking Point</span>
+    <div class="tier-name">The Breaking Point</div>
+    <div class="tier-sub">Debt above 5% of property value, or growing year-over-year</div>
+    <p class="tier-desc">Multi-year tax or municipal debt (HOA, code, water) that has actively crossed local thresholds or is snowballing year-over-year. Indicates the owner is no longer "casually behind" — the math says they're about to lose it. Mathematically the highest-conversion subset in any market. Pre-scored, ranked top to bottom.</p>
+    <div class="tier-grid">
+      <div class="tier-stat"><div class="lab">Volume</div><div class="val">Varies by market</div></div>
+      <div class="tier-stat"><div class="lab">Cadence</div><div class="val">One-time · monthly refresh option</div></div>
+      <div class="tier-stat"><div class="lab">Buyer access</div><div class="val">Limited per market</div></div>
+      <div class="tier-stat"><div class="lab">Delivery</div><div class="val">Branded XLSX · 24h</div></div>
+    </div>
+    <div class="tier-who"><strong>Built for:</strong> Buy-and-hold investors, flippers, and any operator who wants the highest-conversion subset without the volume of a full list.</div>
+  </div>
+</div>
+
+<!-- TIER 4 -->
+<div class="tier tier-4">
+  <div class="tier-num">4</div>
+  <div>
+    <span class="tier-tag">Foundational baseline</span>
+    <div class="tier-name">Curated Distress List</div>
+    <div class="tier-sub">Standard source filters · the classic motivated-seller list, done right</div>
+    <p class="tier-desc">Foundational market distress baseline. Standard source filters (Tax Delinquent, Absentee, Probate, High Equity) pulled directly from county records, normalized, scored, and ranked. Every record includes parcel ID, situs + mailing address, owner name, owner type (entity flag), balance, and distress score 0-100. The baseline product — what every wholesaler needs as their default working list.</p>
+    <div class="tier-grid">
+      <div class="tier-stat"><div class="lab">Volume</div><div class="val">Varies by market</div></div>
+      <div class="tier-stat"><div class="lab">Cadence</div><div class="val">One-time · monthly refresh option</div></div>
+      <div class="tier-stat"><div class="lab">Buyer access</div><div class="val">Limited per market</div></div>
+      <div class="tier-stat"><div class="lab">Delivery</div><div class="val">Branded XLSX · 24h</div></div>
+    </div>
+    <div class="tier-who"><strong>Built for:</strong> Any wholesaler, new or experienced. The entry point. Start here, stack other tiers as you scale.</div>
+  </div>
+</div>
+
+<div class="hr"></div>
+
+<!-- PITCH -->
+<div class="pitch">
+  <div class="eyebrow">Why LeadCurate, not PropStream</div>
+  <h3>We track velocity, not just whether distress exists.</h3>
+  <p>"Someone owing $500 for three years isn't motivated. But our system flags the exact moment that debt hits a <strong>breaking point</strong> — or when the county officially schedules an auction date. You're not calling someone who's casually behind on taxes — you're calling someone who realizes they're about to lose their house next month. <strong>That's why our data closes deals while standard software lists just sit there.</strong>"</p>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+  <h3>Ready for a custom quote?</h3>
+  <p>Tell us your market and which tier (or combination) fits your strategy. We'll send pricing locked in for 7 days, with delivery in 24 hours of confirm.</p>
+  <a href="https://deedott60.github.io/leadcurate-launch/intake/" class="cta-button">Start with the intake form →</a>
+</div>
+
+<footer>
+  LeadCurate · 22 markets · 11 states · Limited buyer access per county
+</footer>
+
+</div>
+</body>
+</html>

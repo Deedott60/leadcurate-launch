@@ -120,23 +120,23 @@
   <div class="tier tier-1">
     <div class="tier-num">1</div>
     <div>
-      <span class="tier-tag">Auction Imminent</span>
-      <div class="tier-name">Hot Sheet</div>
-      <div class="tier-sub">Highest urgency · Premium pricing · Weekly cadence</div>
-      <p>Properties with a scheduled tax sale, sheriff sale, or foreclosure auction date in the next 30 days. The window is closing. Owner is in full panic mode or actively negotiating with anyone who calls. These records are gold for wholesalers who can move fast.</p>
+      <span class="tier-tag">Auction Imminent · highest urgency</span>
+      <div class="tier-name">Imminent Auction Hot Sheet</div>
+      <div class="tier-sub">One-time per sheet · generated on demand</div>
+      <p>Properties with a verified county court or tax sale auction date scheduled within the next 30 days. Owner is in the final window before losing the property to the county. Distress score forced to 95-100.</p>
 
       <div class="tier-rule">
-<span class="k">trigger:</span> auction_date NOT NULL<br>
-<span class="k">if</span> days_to_auction &lt; 14 → <span class="v">score = 99</span> + tag "Hot Sheet"<br>
-<span class="k">else if</span> days_to_auction &lt; 30 → <span class="v">score = 95</span> + tag "Hot Sheet"<br>
-<span class="k">else if</span> days_to_auction &lt; 60 → <span class="v">score += 25</span>
+<span class="k">trigger:</span> auction_date scheduled AND days_to_auction &lt;= 30<br>
+<span class="k">if</span> days_to_auction &lt; 14 → <span class="v">score = 99</span><br>
+<span class="k">else if</span> days_to_auction &lt; 30 → <span class="v">score = 95</span><br>
+<span class="k">tag:</span> "Hot Sheet"
       </div>
 
       <div class="tier-grid">
-        <div class="tier-stat"><div class="lab">Volume per pull</div><div class="val">10–100</div></div>
-        <div class="tier-stat"><div class="lab">Price</div><div class="val">$497/wk</div></div>
+        <div class="tier-stat"><div class="lab">Volume per sheet</div><div class="val">Varies by market</div></div>
+        <div class="tier-stat"><div class="lab">Launch price</div><div class="val">$397 one-time</div></div>
+        <div class="tier-stat"><div class="lab">Standard price</div><div class="val">$497 one-time</div></div>
         <div class="tier-stat"><div class="lab">Buyer profile</div><div class="val">Fast wholesalers</div></div>
-        <div class="tier-stat"><div class="lab">Refresh</div><div class="val">Weekly</div></div>
       </div>
     </div>
   </div>
@@ -145,22 +145,23 @@
   <div class="tier tier-2">
     <div class="tier-num">2</div>
     <div>
-      <span class="tier-tag">Just Triggered</span>
-      <div class="tier-name">Fresh Triggers</div>
-      <div class="tier-sub">High urgency · Time-decaying · Weekly cadence</div>
-      <p>Brand-new court filings (NOD, lis pendens), recent code violations, or newly-listed delinquencies pulled within the last 7 days. Owner just got the bad news. They haven't yet been pounded by other wholesalers. First-mover advantage.</p>
+      <span class="tier-tag">Just-Filed · subscription</span>
+      <div class="tier-name">Fresh Triggers Feed</div>
+      <div class="tier-sub">Weekly subscription · the only recurring tier</div>
+      <p>Brand new pre-foreclosure court filings or municipal/structural code violations pulled directly from the clerk within the last 7 days. Owner just got bad news, hasn't been hit by competitors yet. First-mover advantage. Distress score forced to 92.</p>
 
       <div class="tier-rule">
-<span class="k">trigger:</span> record exists in current pull AND NOT in previous pull<br>
-<span class="k">if</span> first_seen &lt; 48 hours ago → <span class="v">score = 92</span> + tag "Fresh Trigger"<br>
-<span class="k">else if</span> first_seen &lt; 7 days → <span class="v">score += 20</span> + tag "Fresh Trigger"
+<span class="k">trigger:</span> record in current pull AND NOT in prior pull<br>
+<span class="k">if</span> first_seen &lt; 48h → <span class="v">score = 92</span><br>
+<span class="k">else if</span> first_seen &lt; 7 days → <span class="v">score += 20</span><br>
+<span class="k">tag:</span> "Fresh Trigger"
       </div>
 
       <div class="tier-grid">
-        <div class="tier-stat"><div class="lab">Volume per pull</div><div class="val">50–300</div></div>
-        <div class="tier-stat"><div class="lab">Price</div><div class="val">$297/wk</div></div>
+        <div class="tier-stat"><div class="lab">Volume per week</div><div class="val">Varies by market</div></div>
+        <div class="tier-stat"><div class="lab">Launch price</div><div class="val">$197/week</div></div>
+        <div class="tier-stat"><div class="lab">Standard price</div><div class="val">$297/week</div></div>
         <div class="tier-stat"><div class="lab">Buyer profile</div><div class="val">Daily cold callers</div></div>
-        <div class="tier-stat"><div class="lab">Refresh</div><div class="val">Weekly</div></div>
       </div>
     </div>
   </div>
@@ -169,22 +170,23 @@
   <div class="tier tier-3">
     <div class="tier-num">3</div>
     <div>
-      <span class="tier-tag">About to Crack</span>
-      <div class="tier-name">Breaking Point</div>
-      <div class="tier-sub">Medium-high urgency · Quality signal · Monthly cadence</div>
-      <p>Properties where debt is snowballing — either growing year-over-year, or where total delinquent balance now exceeds 5% of the property's assessed value. Owner is no longer "casually behind" — the math says they're about to lose it. The breaking-point indicator beats raw debt amount as a motivation signal.</p>
+      <span class="tier-tag">At the Breaking Point</span>
+      <div class="tier-name">The Breaking Point</div>
+      <div class="tier-sub">One-time · monthly refresh option</div>
+      <p>Multi-year tax or municipal debt (HOA, water, code) that has actively crossed local thresholds (debt &gt; 5% of property value) OR shows continuous year-over-year growth. Indicates the debt has hit a breaking point — owner can no longer quietly catch up.</p>
 
       <div class="tier-rule">
 <span class="k">trigger:</span> debt_balance / assessed_value &gt; 0.05<br>
 <span class="k">OR</span> current_balance &gt; prior_year_balance × 1.15<br>
-<span class="k">then</span> <span class="v">score += 20</span> + tag "Breaking Point"
+<span class="k">then</span> <span class="v">score += 20</span><br>
+<span class="k">tag:</span> "Breaking Point"
       </div>
 
       <div class="tier-grid">
-        <div class="tier-stat"><div class="lab">Volume per pull</div><div class="val">500–2,000</div></div>
-        <div class="tier-stat"><div class="lab">Price</div><div class="val">$249/mo</div></div>
+        <div class="tier-stat"><div class="lab">Volume</div><div class="val">Varies by market</div></div>
+        <div class="tier-stat"><div class="lab">Price</div><div class="val">$249 one-time</div></div>
+        <div class="tier-stat"><div class="lab">Refresh option</div><div class="val">Monthly</div></div>
         <div class="tier-stat"><div class="lab">Buyer profile</div><div class="val">Buy-and-hold + flippers</div></div>
-        <div class="tier-stat"><div class="lab">Refresh</div><div class="val">Monthly</div></div>
       </div>
     </div>
   </div>
@@ -193,21 +195,21 @@
   <div class="tier tier-4">
     <div class="tier-num">4</div>
     <div>
-      <span class="tier-tag">Steady-State</span>
-      <div class="tier-name">Deep Distress</div>
-      <div class="tier-sub">Standard urgency · Volume product · Monthly cadence</div>
-      <p>The classic motivated-seller list. Stacked filters across one or more source categories — Tax Delinquent, Absentee Owner, High Equity, Probate, Code Violation, Pre-Foreclosure. This is what every wholesaler currently buys from PropStream / BatchLeads. It's our baseline product.</p>
+      <span class="tier-tag">Foundational baseline</span>
+      <div class="tier-name">Curated Distress List</div>
+      <div class="tier-sub">One-time · monthly refresh option · the entry point</div>
+      <p>Foundational market distress baseline using standard source filters (Tax Delinquent, Absentee, Probate, High Equity). Normalized, scored, ranked. The default working list every wholesaler needs.</p>
 
       <div class="tier-rule">
-<span class="k">trigger:</span> meets source-category filter (Tax Delinquent, Absentee, etc.)<br>
+<span class="k">trigger:</span> meets source-category filter<br>
 <span class="k">then</span> <span class="v">score = 50</span> + standard distress weighting
       </div>
 
       <div class="tier-grid">
-        <div class="tier-stat"><div class="lab">Volume per pull</div><div class="val">5K–10K</div></div>
-        <div class="tier-stat"><div class="lab">Price</div><div class="val">$149/mo</div></div>
+        <div class="tier-stat"><div class="lab">Volume</div><div class="val">Varies by market</div></div>
+        <div class="tier-stat"><div class="lab">Launch price</div><div class="val">$99 (first 5 buyers)</div></div>
+        <div class="tier-stat"><div class="lab">Standard price</div><div class="val">$149 one-time</div></div>
         <div class="tier-stat"><div class="lab">Buyer profile</div><div class="val">All wholesalers</div></div>
-        <div class="tier-stat"><div class="lab">Refresh</div><div class="val">Monthly</div></div>
       </div>
     </div>
   </div>
