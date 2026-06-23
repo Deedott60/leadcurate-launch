@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>LeadCurate Brief — Tap to Copy</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#faf7f2;color:#0f172a;line-height:1.5;padding:16px 14px 100px;-webkit-text-size-adjust:100%;}
+h1{font-size:22px;margin-bottom:6px;color:#15803d;}
+.sub{font-size:14px;color:#64748b;margin-bottom:18px;}
+.actions{position:sticky;top:0;background:#faf7f2;padding:10px 0 14px;z-index:10;display:flex;flex-direction:column;gap:8px;border-bottom:1px solid #e2dccf;}
+button{display:block;width:100%;padding:18px 20px;border-radius:14px;border:none;font-size:17px;font-weight:700;font-family:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.btn-primary{background:#15803d;color:white;}
+.btn-share{background:#1d4ed8;color:white;}
+.btn-primary:active,.btn-share:active{transform:scale(0.98);}
+.btn-primary.copied{background:#22c55e;}
+.brief{background:white;border:1px solid #e2dccf;border-radius:12px;padding:16px 18px;margin-top:14px;font-size:14px;white-space:pre-wrap;font-family:Menlo,Consolas,monospace;line-height:1.55;color:#1e293b;max-height:none;}
+.note{font-size:13px;color:#64748b;text-align:center;margin-top:14px;padding:12px;background:#fef3c7;border-radius:10px;}
+</style>
+</head>
+<body>
+
+<h1>LeadCurate Brief</h1>
+<p class="sub">Tap the green button. Open Gemini. Paste. Done.</p>
+
+<div class="actions">
+  <button class="btn-primary" id="copyBtn" onclick="copyBrief()">📋 Copy brief — tap once</button>
+  <button class="btn-share" id="shareBtn" onclick="shareBrief()" style="display:none;">📤 Or share to another app</button>
+</div>
+
+<p class="note">After copying, switch to Gemini app, long-press the chat input, tap "Paste"</p>
+
+<div class="brief" id="briefText">LEADCURATE — BUSINESS BRIEF
+
+WHAT IS LEADCURATE?
+A data service that pulls property records directly from county tax and court sources, scores them for owner motivation, and sells curated motivated-seller lists to wholesalers, fix-and-flip investors, and buy-and-hold landlords. Competitors: PropStream, BatchLeads, ListSource, DealMachine, PropertyRadar. Founder: Derrick McDonald. Solo operator, Phase 1 launch.
+
+CURRENT INVENTORY (verified)
+- 22 counties pulled across 11 states
+- 14.2M structured records in the warehouse
+- 9 markets processed and ready to sell
+- 13 markets in processing
+
+Active markets ready:
+Wake NC (Raleigh) — 10,472 Tax Delinquent
+Cobb GA (Atlanta NW) — 5,678 Tax Delinquent
+Guilford NC (Greensboro) — 5,000 Tax Delinquent
+Marion IN (Indianapolis) — 5,000 Tax Delinquent
+DeKalb GA (Atlanta E) — 5,000 Tax Delinquent
+Forsyth NC (Winston-Salem) — 5,000 Tax Delinquent
+Fulton GA (Atlanta) — 5,000 Owner Records
+Harris TX (Houston) — 1,500 Active Permit Burnout
+Jefferson AL (Birmingham) — 21 High-Balance Delinquent
+
+THE DIFFERENTIATOR VS PROPSTREAM
+PropStream sells static lists — recycled, sold to thousands, records burn out. LeadCurate tracks data velocity and trigger urgency — when distress is accelerating, when an auction date is scheduled, when a fresh filing hits the court. Same raw data, scored for WHEN motivation peaks. We also cap buyer access per county to 1-3 seats so records stay warm.
+
+THE 4-TIER PRODUCT SYSTEM
+
+TIER 1 — HOT SHEET ($497/week)
+Trigger: auction or tax sale in next 30 days
+Volume: 10-100 records weekly
+Rule: auction less than 14 days, score=99; less than 30 days, score=95
+Buyer: fast-moving wholesalers
+
+TIER 2 — FRESH TRIGGERS ($297/week)
+Trigger: new court filing or code violation in last 7 days
+Volume: 50-300 records weekly
+Rule: record in current pull AND NOT in prior pull, score=92
+Buyer: daily cold callers
+
+TIER 3 — BREAKING POINT ($249 one-time)
+Trigger: debt exceeds 5% of property value OR debt growing year-over-year
+Volume: 500-2,000 records, monthly refresh
+Rule: debt/value ratio over 0.05, score += 20
+Buyer: buy-and-hold + flippers
+
+TIER 4 — CURATED DISTRESS LIST ($149 one-time)
+Trigger: standard source filter (Tax Delinquent, Absentee, Probate)
+Volume: 5K-10K records, monthly refresh
+Rule: base score=50, weighted by debt + entity ownership
+Buyer: everyone — the baseline product
+
+WORKFLOW
+1. Prospect inquiry — branded intake form captures market, list type, urgency, volume, contact
+2. Auto-pipeline — database trigger creates prospect record automatically
+3. Personalized quote — dashboard builds per-buyer URL, prospect sees ONE clean offer with Confirm button
+4. Payment + delivery — Cash App / Zelle / Stripe, branded XLSX shipped within 24 hours
+
+Full automation (Twilio SMS, n8n, Stripe webhook) is Phase 2.
+
+PRICING POSITIONING
+PropStream: $99/mo unlimited static lists, shared with thousands
+BatchLeads: $99/mo, same model
+ListSource: $0.10-0.40/record bulk dumps
+DealMachine: $99/mo app + lists
+LeadCurate Tier 4: $149 one-time, curated, limited buyers per market
+LeadCurate Tier 3: $249 one-time, pre-filtered breaking-point subset
+LeadCurate Tier 2: $297/week, fresh triggers weekly
+LeadCurate Tier 1: $497/week, auction-imminent hot sheet weekly
+
+Justification for premium: time-sensitive data, limited buyer access (records stay warm), pre-scored saves the buyer hours, branded delivery, direct-from-county freshness.
+
+WHAT I WANT FEEDBACK ON
+1. Is the 4-tier framework defensible vs PropStream $99 unlimited model?
+2. Is the pricing right? Too high, too low, or right per tier?
+3. Is the quote flow (one offer per prospect, no menu, single Confirm button) right for wholesalers?
+4. Where would you tighten the message, product, or pitch?
+
+THE 30-SECOND SALES PITCH
+We don't just look at how long a property has been on a list — we track its velocity. Someone owing $500 for three years isn't motivated. But our system flags the exact moment that debt hits a breaking point, or when the county officially schedules an auction date. You're not calling someone who's casually behind on taxes — you're calling someone who realizes they're about to lose their house next month. That's why our data closes deals while standard software lists just sit there.
+
+END OF BRIEF
+Ask the AI: Review this entire business model and give me your honest critique.</div>
+
+<script>
+function copyBrief() {
+  const text = document.getElementById('briefText').innerText;
+  const btn = document.getElementById('copyBtn');
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ Copied — open Gemini and paste';
+      btn.classList.add('copied');
+      document.getElementById('shareBtn').style.display = 'block';
+      setTimeout(() => {
+        btn.textContent = '📋 Copy brief — tap once';
+        btn.classList.remove('copied');
+      }, 5000);
+    }).catch(() => fallback(text, btn));
+  } else {
+    fallback(text, btn);
+  }
+}
+
+function fallback(text, btn) {
+  const t = document.createElement('textarea');
+  t.value = text;
+  t.style.position = 'fixed';
+  t.style.left = '-9999px';
+  document.body.appendChild(t);
+  t.select();
+  try {
+    document.execCommand('copy');
+    btn.textContent = '✓ Copied — open Gemini and paste';
+    btn.classList.add('copied');
+  } catch (e) {
+    btn.textContent = '⚠ Long-press the text below + Copy';
+  }
+  document.body.removeChild(t);
+}
+
+function shareBrief() {
+  const text = document.getElementById('briefText').innerText;
+  if (navigator.share) {
+    navigator.share({
+      title: 'LeadCurate Brief',
+      text: text
+    }).catch(() => {});
+  } else {
+    alert('Share not supported — use the copy button instead');
+  }
+}
+</script>
+
+</body>
+</html>
