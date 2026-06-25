@@ -95,10 +95,43 @@ Every record gets classified into one of four tiers. Customer NEVER sees "Tier 1
 
 ## Visual brand kit
 
-- **Colors:** emerald #15803d (primary) · cream #faf7f2 (background) · dark #0f172a (text)
-- **Accent colors per tier:** crimson #991b1b (Tier 1) · gold #b45309 (Tier 2) · emerald (Tier 3) · blue #1d4ed8 (Tier 4)
-- **Fonts:** Inter (body) · Playfair Display (display/headings)
-- **Style references:** /docs/tiers/, /docs/packages/, /docs/quote-template/, /docs/system-audit/ — all use the same component system
+- **Colors:** emerald #15803d (primary) · emerald-dark #14532d · emerald-light #22c55e · cream #faf7f2 (background) · cream-2 #f3eddf · dark #0f172a (text) · slate #475569 (secondary text) · line #e2dccf (borders)
+- **Accent colors per tier:** crimson #991b1b (Tier 1 Hot Sheet) · gold #b45309 (Tier 2 Fresh Triggers) · emerald (Tier 3 Breaking Point) · blue #1d4ed8 (Tier 4 Curated)
+- **Fonts:** Inter 400/500/600/700 (body) · Playfair Display 600/700 (display/headings)
+- **Border-radius:** 16-22px for cards · 8-10px for inputs/buttons · 999px for pills
+- **Type sizing:** h1 `clamp(32px,5vw,46px)` · h2 `clamp(24px,3vw,32px)` · body 16-18px
+
+## Reference files (READ THESE before building any LeadCurate artifact)
+
+When asked to build/edit/style anything LeadCurate, fetch these files from the repo (https://github.com/Deedott60/leadcurate-launch/) and match the patterns exactly. Never invent a new visual system.
+
+| If you're building... | Read this file as reference |
+|---|---|
+| Intake form / sign-up form | `docs/intake/index.html` — fieldsets, pill multi-select, "why we ask" notes per section |
+| Quote / pricing page | `docs/quote-template/index.html` — single tier per page, URL params, single Confirm button |
+| Customer-facing packages overview | `docs/packages/index.html` — 4 tier cards, NO pricing, audit-style |
+| Internal tier reference | `docs/tiers/index.html` — has pricing, scoring rules, decision matrix |
+| Analytical audit / data report | `docs/system-audit/index.html`, `docs/property-numbers/index.html` — headline metrics, bar charts, heat-shaded distribution, ranked tables |
+| Branded delivery report | `docs/customer-deliveries/` folder — multi-tab structure |
+| Email template / outreach message | `docs/OUTREACH-PLAYBOOK.md` |
+| Dashboard / operator UI | `docs/command/index.html` — sidebar nav, card system |
+
+## Component patterns (always use these — never reinvent)
+
+- **Card:** white bg, `border:1px solid #e2dccf`, `border-radius:16-22px`, `padding:24-32px`, optional `border-left:4px solid <tier-color>`
+- **Tier tag pill:** font-size 11px, letter-spacing 0.12em, uppercase, padding 5px 12px, border-radius 999px, color matches tier
+- **Headline metric block:** dark bg #0f172a, emerald-2 #22c55e label, white value in Playfair, gray-400 #94a3b8 note
+- **Bar chart row:** 130-170px label / 1fr bar track / 90px value, bar fill emerald with hot/cool variants (gold/light-green)
+- **Pitch quote box:** dark bg, italic white text, key phrases in non-italic white strong
+- **CTA button (primary):** emerald bg, white text, padding 16px 32px, border-radius 999px, font-weight 700
+
+## Voice + tone patterns
+
+- **Lede paragraph:** confident, factual, premium. No exclamations.
+- **Section eyebrows:** 11-12px uppercase, letter-spacing 0.12-0.18em, emerald color
+- **Numbers:** always verified, never rounded ambiguously. "10,472" not "10K+". "Varies by market" never "small list."
+- **CTA copy:** action verb + outcome. "Get a custom quote →" not "Click here." "Confirm selection →" not "Submit."
+- **Trust line at footer:** what they get, what they don't get (no spam, no newsletter), no apology for price.
 
 ## Customer flow (current, 2026-06-25)
 
