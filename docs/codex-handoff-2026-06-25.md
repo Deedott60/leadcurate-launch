@@ -159,19 +159,22 @@ Deploy via `deploy_edge_function` MCP tool.
 
 ---
 
-## Task 5 — Install n8n on VPS
+## Task 5 — n8n: WAIT, DO NOT INSTALL
 
-Was sent to Danny earlier but never executed.
+**CHANGED 2026-06-25:** Derrick is doing the Hostinger one-click n8n install himself. **DO NOT run docker install for n8n.**
 
+If you already started the docker install:
 ```bash
-docker run -d --restart always --name n8n -p 5678:5678 -v n8n_data:/home/node/.n8n n8nio/n8n
-sleep 10
-curl -s http://localhost:5678/healthz
+docker stop n8n && docker rm n8n
 ```
 
-If curl returns OK, post conf:done to activity_feed.
+When Derrick confirms Hostinger n8n is up, your job becomes:
+1. Get the Hostinger n8n URL from Derrick
+2. Configure n8n to talk to Supabase (REST API connection)
+3. Build the first workflow: intake_requests → auto-reply email
+4. Test end-to-end
 
-**Important:** Do NOT expose port 5678 publicly yet. Local only. Caddy/nginx reverse proxy with auth comes later when we wire it to real workflows.
+Until Derrick confirms, **skip this task** and continue Tasks 1-4.
 
 ---
 
