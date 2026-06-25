@@ -355,6 +355,10 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div class="nav-item" data-page="seo">
         <span class="icon">🔎</span> SEO / GEO
       </div>
+      <div class="nav-item" data-page="scout">
+        <span class="icon">🛰️</span> Lead Scout
+        <span class="badge" id="nb-scout">0</span>
+      </div>
     </div>
     <div class="nav-divider"></div>
     <div class="nav-label">Send to prospects</div>
@@ -746,6 +750,38 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
     </div>
 
     <!-- ── SEND INTAKE LINK ─────────────────────── -->
+    <div id="page-scout" class="page">
+      <div class="page-header">
+        <div class="page-title">Lead Scout</div>
+        <div class="page-sub">Flagged posts from REI forums where investors ask for lists, motivated seller data, or market-specific lead help.</div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h">
+          <span class="card-title">🛰️ Scout prospects</span>
+          <span class="card-meta" id="scout-meta">—</span>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+          <select class="mini-select" id="scout-filter">
+            <option value="">All status</option>
+            <option value="new">New</option>
+            <option value="contacted">Contacted</option>
+            <option value="closed">Closed</option>
+            <option value="ignored">Ignored</option>
+          </select>
+          <button class="btn btn-ghost btn-sm" onclick="window.loadScout().then(()=>toast('Scout refreshed'))">Refresh</button>
+        </div>
+        <div id="scout-list"><div class="empty">No scout prospects yet. Reddit/BiggerPockets watchers will populate this when available.</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-h"><span class="card-title">What is wired</span></div>
+        <p style="color:var(--sl);font-size:14px;line-height:1.6;margin:0;">
+          VPS watchers write to <code>scout_prospects</code>. Reddit and BiggerPockets are installed; Facebook waits for Derrick’s channel/group and login decision. Each row includes source URL, matched market/keyword, suggested DM, and status.
+        </p>
+      </div>
+    </div>
+
     <div id="page-send-intake" class="page">
       <div class="page-header">
         <div class="page-title">Send intake link</div>
@@ -1045,6 +1081,7 @@ let INBOUND   = [];
 let PROSPECTS = lsLoad();
 let MESSAGES  = [];
 let FEED      = [];
+let SCOUT     = [];
 
 // ─── UTILS ───────────────────────────────────────────────────
 const $   = (s,p=document) => p.querySelector(s);
@@ -1077,7 +1114,7 @@ function lsLoad(){
 function lsSave(){ localStorage.setItem(LS_KEY, JSON.stringify(PROSPECTS)); }
 
 // ─── NAV ──────────────────────────────────────────────────────
-const pages = ['hq','inbox','pipeline','messages','workflow','templates','conference','marketing','seo','send-intake','send-quote','learn','tiers-ref','help'];
+const pages = ['hq','inbox','pipeline','messages','workflow','templates','conference','marketing','seo','scout','send-intake','send-quote','learn','tiers-ref','help'];
 window.nav = async function(id){
   pages.forEach(p=>{
     document.getElementById('page-'+p).classList.toggle('active',p===id);
@@ -1088,6 +1125,7 @@ window.nav = async function(id){
   if(id==='inbox')  renderInbox();
   if(id==='pipeline') renderKanban();
   if(id==='messages') renderMessages();
+  if(id==='scout'){ await loadScout(); renderScout(); }
   if(id==='workflow'){ renderAgents(); renderFeed('wf-feed','wf-feed-count'); }
   if(id==='conference'){
     await markConferenceRead();
@@ -1204,6 +1242,8 @@ function updateStats(){
   if(nbp) nbp.textContent = PROSPECTS.length;
   const nbm = document.getElementById('nb-messages');
   if(nbm) nbm.textContent = MESSAGES.length;
+  const nbs = document.getElementById('nb-scout');
+  if(nbs) nbs.textContent = SCOUT.filter(s=>s.status==='new').length;
 }
 
 // ─── INBOUND / INBOX ─────────────────────────────────────────
@@ -1495,6 +1535,62 @@ async function loadProspects(){
   renderKanban();
 }
 
+async function loadScout(){
+  if(!SYNC) return;
+  const { data, error } = await sb.from('scout_prospects').select('*').order('created_at',{ascending:false}).limit(200);
+  if(error){ console.warn('scout load', error); return; }
+  SCOUT = data || [];
+  renderScout();
+  updateStats();
+}
+window.loadScout = loadScout;
+
+function renderScout(){
+  const list = document.getElementById('scout-list'); if(!list) return;
+  const filter = document.getElementById('scout-filter')?.value || '';
+  const items = filter ? SCOUT.filter(s=>s.status===filter) : SCOUT;
+  const meta = document.getElementById('scout-meta');
+  const newCount = SCOUT.filter(s=>s.status==='new').length;
+  if(meta) meta.textContent = `${SCOUT.length} total · ${newCount} new`;
+  if(!items.length){ list.innerHTML='<div class="empty">No scout prospects match this filter.</div>'; return; }
+  list.innerHTML = items.map(s=>`
+    <div class="feed-item">
+      <div class="feed-icon prospect">🛰️</div>
+      <div class="feed-body">
+        <div class="f-title">${esc(s.title||'(untitled)')}</div>
+        <div class="f-detail">
+          <span class="badge b-${esc(s.status||'new')}">${esc(s.status||'new')}</span>
+          ${s.market?` · ${esc(s.market)}`:''}${s.keyword?` · ${esc(s.keyword)}`:''}${s.source?` · ${esc(s.source)}`:''}
+        </div>
+        ${s.preview?`<div class="f-detail">${esc(s.preview)}</div>`:''}
+        ${s.suggested_dm?`<div class="f-detail"><strong>Suggested DM:</strong> ${esc(s.suggested_dm)}</div>`:''}
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+          <a class="btn btn-ghost btn-sm" href="${esc(s.source_url||'#')}" target="_blank" style="text-decoration:none;">Open source →</a>
+          <button class="btn btn-ghost btn-sm" onclick="window.copyScoutDm('${s.id}')">Copy DM</button>
+          <button class="btn btn-ghost btn-sm" onclick="window.setScoutStatus('${s.id}','contacted')">Mark contacted</button>
+          <button class="btn btn-ghost btn-sm" onclick="window.setScoutStatus('${s.id}','ignored')">Ignore</button>
+        </div>
+        <div class="f-when">${esc(s.author||'')}${s.author?' · ':''}${fmt(s.posted_at||s.created_at)}</div>
+      </div>
+    </div>`).join('');
+}
+
+window.copyScoutDm = async (id) => {
+  const s = SCOUT.find(x=>x.id===id); if(!s) return;
+  await navigator.clipboard.writeText(s.suggested_dm || '');
+  toast('Scout DM copied');
+};
+
+window.setScoutStatus = async (id, status) => {
+  if(!SYNC) return toast('Not synced');
+  const { error } = await sb.from('scout_prospects').update({status}).eq('id', id);
+  if(error) return toast('Error: '+error.message);
+  const s = SCOUT.find(x=>x.id===id); if(s) s.status=status;
+  renderScout(); updateStats(); toast('Scout marked '+status);
+};
+
+document.getElementById('scout-filter')?.addEventListener('change', renderScout);
+
 function conferenceUnread(){
   return FEED.filter(f =>
     (f.event_type||'').startsWith('conf:') &&
@@ -1695,6 +1791,13 @@ function subscribeRealtime(){
         renderFeed('hq-feed','feed-count'); renderFeed('wf-feed','wf-feed-count');
         updateConferenceBadge();
       }
+    })
+    .on('postgres_changes',{event:'INSERT',schema:'public',table:'scout_prospects'}, payload=>{
+      if(!SCOUT.find(s=>s.id===payload.new.id)){
+        SCOUT.unshift(payload.new);
+        renderScout(); updateStats();
+        toast('🛰️ New scout prospect: '+(payload.new.market||payload.new.source||'lead'));
+      }
     });
   channel.subscribe(status => {
     document.documentElement.dataset.realtimeStatus = status;
@@ -1711,6 +1814,7 @@ const CMD_ITEMS = [
   {icon:'📋',label:'Go to Templates',     action:()=>nav('templates')},
   {icon:'📣',label:'Go to Marketing',     action:()=>nav('marketing')},
   {icon:'🔎',label:'Go to SEO / GEO',     action:()=>nav('seo')},
+  {icon:'🛰️',label:'Go to Lead Scout',     action:()=>nav('scout')},
   {icon:'🏛️',label:'Conference room',     action:()=>nav('conference')},
   {icon:'📋',label:'Send intake link',     action:()=>nav('send-intake')},
   {icon:'📄',label:'Send a quote',         action:()=>nav('send-quote')},
@@ -1769,6 +1873,7 @@ async function init(){
     await loadInbound();
     await loadMessages();
     await loadFeed();
+    await loadScout();
   }
   updateStats();
 }
@@ -1778,8 +1883,8 @@ setInterval(() => { if(SYNC && !document.hidden) loadFeed(); }, 15000);
 
 async function loadAll(){
   if(!SYNC) throw new Error('Dashboard is offline');
-  await Promise.all([loadProspects(), loadInbound(), loadMessages(), loadFeed()]);
-  renderInbox(); renderHQInbound(); renderKanban(); renderMessages(); renderConference(); updateStats();
+  await Promise.all([loadProspects(), loadInbound(), loadMessages(), loadFeed(), loadScout()]);
+  renderInbox(); renderHQInbound(); renderKanban(); renderMessages(); renderConference(); renderScout(); updateStats();
 }
 
 // ─── PULL TO REFRESH ─────────────────────────────────────────
