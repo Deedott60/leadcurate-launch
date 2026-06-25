@@ -1,7 +1,7 @@
 ---
 name: data-product-launch
 description: "Launch premium data products from messy sources: offer strategy, trust positioning, MVP stack, pricing, schema, and go-to-market."
-version: 1.0.0
+version: 1.1.0
 author: Hermes Agent
 license: MIT
 platforms: [linux, macos, windows]
@@ -9,6 +9,10 @@ metadata:
   hermes:
     tags: [data-products, launch, pricing, mvp, landing-page, compliance, lead-products]
 ---
+
+> ⚠ **For LeadCurate-specific work, read `/CLAUDE.md` at the repo root FIRST.** This skill is a generic data-product launch framework. LeadCurate's locked pricing (4-tier system), brand voice rules, customer flow, and current state are in CLAUDE.md.
+>
+> The "Pricing simplification pattern" section below (Review/Deposit, Standard Seat, Operator Seat, Exclusive/Custom) is **GENERIC and does NOT match LeadCurate's actual 4-tier system**. Use CLAUDE.md §3 for LeadCurate pricing.
 
 # Data Product Launch
 

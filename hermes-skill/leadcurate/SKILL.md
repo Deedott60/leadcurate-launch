@@ -1,189 +1,215 @@
 ---
 name: leadcurate
-description: Current state of the LeadCurate business. Read first whenever any task mentions LeadCurate, intake form, quotes, audits, tiers, county data, wholesaling, REI lead lists, or motivated seller data.
+description: LeadCurate source of truth — current state, 4-tier product system, brand voice rules, customer flow, agent roles. Read first whenever any task mentions LeadCurate, intake form, quotes, audits, tiers, county data, wholesaling, REI lead lists, or motivated seller data.
 metadata:
   type: project
-  version: 2026-06-25
+  version: 2026-06-25-v2
   owner: Derrick McDonald (dmcdonald5649@gmail.com)
+  source: synced from github.com/Deedott60/leadcurate-launch/CLAUDE.md
 ---
 
-# LeadCurate — Current State (2026-06-25)
+# LeadCurate — Source of Truth
 
-## What it is
+> **This file is the single source of truth for every LeadCurate task.**
+> Maintained by Claude (orchestrator) and synced from the canonical `/CLAUDE.md` at the repo root.
 
-LeadCurate sells curated motivated-seller property data to real-estate wholesalers, flippers, and buy-and-hold investors. The product is filtered/scored county records — not raw dumps like PropStream. Differentiator is **velocity scoring** (when motivation peaks) plus **capped buyer access per market** so records stay warm.
+---
 
-Founder/Operator: Derrick McDonald (NOT Daniel, NOT Derek). Solo. Phase 1 launch.
+## 1. What LeadCurate is
 
-## Current inventory (verified 2026-06-25)
+LeadCurate sells **curated motivated-seller property data** to real-estate wholesalers, fix-and-flip investors, and buy-and-hold landlords. The product is filtered, scored, source-attributed county records — not raw dumps.
 
-**~80 million raw records on VPS** across 22 counties in 12 states. Sellable today:
+**Differentiators:** velocity scoring (when motivation peaks, not just whether distress exists), capped buyer access per market (1–3 seats so records stay warm), branded delivery.
 
-| Market | Records ready | Lane |
-|---|---|---|
-| Wake NC (Raleigh) | 10,472 | Tax Delinquent |
-| Cobb GA (Atlanta NW) | 5,678 | Tax Delinquent |
-| Guilford NC (Greensboro) | 5,000 | Tax Delinquent |
-| Marion IN (Indianapolis) | 5,000 | Tax Delinquent |
-| DeKalb GA (Atlanta E) | 5,000 | Tax Delinquent |
-| Forsyth NC (Winston-Salem) | 5,000 | Tax Delinquent |
-| Fulton GA (Atlanta) | 5,000 | Owner Records |
-| Harris TX (Houston) | 1,500 | Active Permit Burnout |
-| Jefferson AL (Birmingham) | 21 | High-Balance Delinquent |
+**Direct competitors:** PropStream, BatchLeads, ListSource, DealMachine, PropertyRadar.
 
-13 more markets in raw form, processing pending.
+**Operator:** Derrick McDonald (NOT Daniel, NOT Derek, NOT Ella). Solo. LeadCurate LLC, registered in NC, Mecklenburg County.
 
-## The 4-Tier Product System (LOCKED 2026-06-23)
+---
 
-Every record gets classified into one of four tiers. Customer NEVER sees "Tier 1/2/3/4" labels — that's internal. They see the tier name and feel the urgency.
+## 2. Current state (as of 2026-06-25)
+
+### Inventory
+- **22 counties pulled** across 12 states
+- **~80 million raw records** on VPS (verified by direct count, NOT the older "14.2M" number)
+- **9.2 GB** total raw data
+- **9 markets sellable today** (processed, scored, packaged)
+- **13 markets in processing**
+
+### Sellable markets ready today
+Wake NC (10,472), Cobb GA (5,678), Guilford NC (5,000), Marion IN (5,000), DeKalb GA (5,000), Forsyth NC (5,000), Fulton GA (5,000), Harris TX Permit Burnout (1,500), Jefferson AL (21).
+
+### What's live
+- Intake form: `https://deedott60.github.io/leadcurate-launch/intake/`
+- Packages overview (customer-facing, NO pricing): `https://deedott60.github.io/leadcurate-launch/packages/`
+- Quote builder: `https://deedott60.github.io/leadcurate-launch/quote-template/?buyer=X&market=Y&tier=Z`
+- Tier reference (internal): `https://deedott60.github.io/leadcurate-launch/tiers/`
+- Operator dashboard: `https://deedott60.github.io/leadcurate-launch/command/`
+- Supabase project `jdmlsraqioigbukspduo` — 16 tables, RLS enabled
+- Hostinger one-click n8n install in progress (initiated 2026-06-25)
+
+### What's PARKED
+- `/site/` landing page — Phase 3 work, don't touch
+- Pricing changes — Derrick decides
+- Production tables — never insert test data
+
+---
+
+## 3. The 4-Tier Product System (LOCKED 2026-06-23)
+
+Customer NEVER sees "Tier 1/2/3/4" labels — internal only. They see one tier (the one we recommended based on their intake) with the brand tier name.
 
 ### Tier 1 — Imminent Auction Hot Sheet
 - **Price:** $397 launch (first 5 buyers) → $497 standard
 - **Cadence:** One-time per sheet (NOT subscription — auctions are episodic)
 - **Trigger:** verified auction date in next 30 days, score forced 95-100
-- **Buyer:** fast-moving wholesalers who can contract this week
+- **Buyer:** fast-moving wholesalers
 
 ### Tier 2 — Fresh Triggers Feed
 - **Price:** $197/week launch → $297/week standard
-- **Cadence:** Weekly subscription (the ONLY recurring tier)
+- **Cadence:** Weekly subscription (only recurring tier)
 - **Trigger:** new court filing or code violation in last 7 days, score forced 92
-- **Buyer:** daily cold callers, first-mover advantage
+- **Buyer:** daily cold callers
 
 ### Tier 3 — The Breaking Point
-- **Price:** $249 one-time
-- **Cadence:** one-time with monthly refresh option
-- **Trigger:** debt > 5% of property value OR debt growing YoY (tax OR municipal — HOA, water, code)
-- **Buyer:** buy-and-hold + flippers wanting highest-conversion subset
+- **Price:** $249 one-time, monthly refresh option
+- **Trigger:** debt > 5% of property value OR debt growing YoY (tax OR municipal)
+- **Buyer:** buy-and-hold + flippers
 
 ### Tier 4 — Curated Distress List
-- **Price:** $99 first 5 buyers → $149 standard
-- **Cadence:** one-time with monthly refresh option
+- **Price:** $99 first 5 buyers → $149 standard, monthly refresh option
 - **Trigger:** standard source filter (Tax Delinquent, Absentee, Probate, High Equity)
-- **Buyer:** everyone — the foundational entry product
+- **Buyer:** everyone — foundational entry product
 
-## Customer-facing pages
+---
 
-| Page | URL | What it is |
-|---|---|---|
-| Intake form | https://deedott60.github.io/leadcurate-launch/intake/ | Public, anyone can fill out |
-| Packages overview | https://deedott60.github.io/leadcurate-launch/packages/ | Send after intake, NO pricing visible |
-| Personalized quote | https://deedott60.github.io/leadcurate-launch/quote-template/?buyer=X&market=Y&tier=Z | Built per-prospect, single Confirm button |
-| Tier reference | https://deedott60.github.io/leadcurate-launch/tiers/ | INTERNAL ONLY — operator reference |
+## 4. Brand voice (LOCKED — never violate)
 
-## Brand voice rules (LOCKED — NEVER violate)
+**Position:** Premium. PropStream is the cheap recycled-list option. LeadCurate is curated, scored, limited-access.
 
-**Premium positioning.** PropStream is the cheap recycled-list option. LeadCurate is the curated, scored, limited-access alternative.
+### BANNED in customer-facing copy
+"cheap" / "cheaper" / "affordable" / "save" / "savings" / "save money" / "less you pay" / "won't pay for" / "starting at just $X" / "value pricing" / any "you'll spend less" angle.
 
-### BANNED in customer-facing copy:
-- "cheap" / "cheaper" / "affordable"
-- "save" / "savings" / "save money"
-- "less you pay" / "won't pay for"
-- "starting at just $X"
-- Any "value pricing" framing
-- Any "you'll spend less" angle
+### REQUIRED framing
+Fit, quality, accuracy, freshness, urgency, exclusivity. Match customers to the *right* tier — not the *cheapest*. Never apologize for price.
 
-### USE INSTEAD:
-- Frame around *fit, quality, accuracy, freshness, urgency, exclusivity*
-- Customer should feel matched to the *right* tier, not the *cheapest* option
-- Never apologize for price
+### Do/don't pairs
+- ❌ "less you pay for stuff you won't use" → ✅ "the sharper we can match you to the tier that fits"
+- ❌ "starting at just $149" → ✅ "entry tier: $149 — built for your first list"
+- ❌ "free game / enough game to work the batch" → ✅ "practical training most sellers leave out"
+- ❌ "guaranteed motivated sellers" → ✅ "scored for motivation density, you still handle outreach"
+- ❌ "Reply YES" → ✅ "Confirm selection →"
+- ❌ Quote with A/B/C menu → ✅ Single recommended tier, single Confirm button
 
-### Examples:
-- ❌ "the less you pay for stuff you won't use"
-- ✅ "the sharper we can match you to the tier that fits"
-- ❌ "starting at just $149"
-- ✅ "entry tier: $149 — built for your first list"
+---
 
-## Visual brand kit
+## 5. Customer flow (manual Phase 1)
 
-- **Colors:** emerald #15803d (primary) · emerald-dark #14532d · emerald-light #22c55e · cream #faf7f2 (background) · cream-2 #f3eddf · dark #0f172a (text) · slate #475569 (secondary text) · line #e2dccf (borders)
-- **Accent colors per tier:** crimson #991b1b (Tier 1 Hot Sheet) · gold #b45309 (Tier 2 Fresh Triggers) · emerald (Tier 3 Breaking Point) · blue #1d4ed8 (Tier 4 Curated)
-- **Fonts:** Inter 400/500/600/700 (body) · Playfair Display 600/700 (display/headings)
-- **Border-radius:** 16-22px for cards · 8-10px for inputs/buttons · 999px for pills
-- **Type sizing:** h1 `clamp(32px,5vw,46px)` · h2 `clamp(24px,3vw,32px)` · body 16-18px
+1. Prospect fills intake → `intake_requests` row → trigger creates `prospects` row → Derrick sees in dashboard
+2. Operator reads intake, decides tier from urgency + role + volume signals
+3. Operator uses dashboard "Send a quote" → fills name + market + tier → Build → personalized URL
+4. Operator sends URL → prospect sees ONE offer with Confirm button
+5. Prospect confirms with name + phone → email to Derrick
+6. Operator sends payment (Cash App / Zelle / Stripe)
+7. Branded XLSX delivered within 24h
 
-## Reference files (READ THESE before building any LeadCurate artifact)
-
-When asked to build/edit/style anything LeadCurate, fetch these files from the repo (https://github.com/Deedott60/leadcurate-launch/) and match the patterns exactly. Never invent a new visual system.
-
-| If you're building... | Read this file as reference |
+### Tier picker logic
+| Intake says... | Recommend |
 |---|---|
-| Intake form / sign-up form | `docs/intake/index.html` — fieldsets, pill multi-select, "why we ask" notes per section |
-| Quote / pricing page | `docs/quote-template/index.html` — single tier per page, URL params, single Confirm button |
-| Customer-facing packages overview | `docs/packages/index.html` — 4 tier cards, NO pricing, audit-style |
-| Internal tier reference | `docs/tiers/index.html` — has pricing, scoring rules, decision matrix |
-| Analytical audit / data report | `docs/system-audit/index.html`, `docs/property-numbers/index.html` — headline metrics, bar charts, heat-shaded distribution, ranked tables |
-| Branded delivery report | `docs/customer-deliveries/` folder — multi-tab structure |
-| Email template / outreach message | `docs/OUTREACH-PLAYBOOK.md` |
-| Dashboard / operator UI | `docs/command/index.html` — sidebar nav, card system |
+| Urgency "Need it now (24-48h)" or "This week" | Tier 1 Hot Sheet |
+| Role "Acquisitions team" + "Cold call every day" | Tier 2 Fresh Triggers |
+| Volume "500-1500" + high-quality preference | Tier 3 Breaking Point |
+| First time / exploring / general | Tier 4 Curated Distress List |
 
-## Component patterns (always use these — never reinvent)
+---
 
-- **Card:** white bg, `border:1px solid #e2dccf`, `border-radius:16-22px`, `padding:24-32px`, optional `border-left:4px solid <tier-color>`
-- **Tier tag pill:** font-size 11px, letter-spacing 0.12em, uppercase, padding 5px 12px, border-radius 999px, color matches tier
-- **Headline metric block:** dark bg #0f172a, emerald-2 #22c55e label, white value in Playfair, gray-400 #94a3b8 note
-- **Bar chart row:** 130-170px label / 1fr bar track / 90px value, bar fill emerald with hot/cool variants (gold/light-green)
-- **Pitch quote box:** dark bg, italic white text, key phrases in non-italic white strong
-- **CTA button (primary):** emerald bg, white text, padding 16px 32px, border-radius 999px, font-weight 700
+## 6. Visual brand kit
 
-## Voice + tone patterns
+- **Colors:** emerald #15803d · cream #faf7f2 · dark #0f172a · slate #475569 · line #e2dccf
+- **Per-tier accents:** crimson #991b1b (T1) · gold #b45309 (T2) · emerald (T3) · blue #1d4ed8 (T4)
+- **Fonts:** Inter (body) · Playfair Display (display)
+- **Component patterns:** see existing audit/packages/quote/tiers/intake pages — match them, never invent
 
-- **Lede paragraph:** confident, factual, premium. No exclamations.
-- **Section eyebrows:** 11-12px uppercase, letter-spacing 0.12-0.18em, emerald color
-- **Numbers:** always verified, never rounded ambiguously. "10,472" not "10K+". "Varies by market" never "small list."
-- **CTA copy:** action verb + outcome. "Get a custom quote →" not "Click here." "Confirm selection →" not "Submit."
-- **Trust line at footer:** what they get, what they don't get (no spam, no newsletter), no apology for price.
+### Reference files in the repo (READ before building any artifact)
+| Building... | Read this |
+|---|---|
+| Intake form | `docs/intake/index.html` |
+| Quote / pricing page | `docs/quote-template/index.html` |
+| Customer-facing packages overview | `docs/packages/index.html` |
+| Internal tier reference | `docs/tiers/index.html` |
+| Analytical audit / data report | `docs/system-audit/index.html`, `docs/property-numbers/index.html` |
+| Operator dashboard | `docs/command/index.html` |
+| Outreach message templates | `docs/OUTREACH-PLAYBOOK.md` |
 
-## Customer flow (current, 2026-06-25)
+---
 
-1. Prospect fills intake form → submission to dmcdonald5649@gmail.com (will be domain email soon) + Supabase auto-creates prospect record
-2. Derrick (or Hermes/Codex when fully wired) reviews intake, picks the right tier, builds a personalized quote URL
-3. Sends URL to prospect — they see ONE clean offer with Confirm button
-4. Prospect confirms with name + phone → email to Derrick
-5. Derrick sends payment instructions (Cash App / Zelle / Stripe)
-6. After payment → branded XLSX delivered within 24 hours
+## 7. Agent roles
 
-## Agents and roles
+| Agent | Role |
+|---|---|
+| **Claude (orchestrator)** | Strategy, code, brand, sync this file |
+| **Codex** | VPS infrastructure, security, scrapers — reads `docs/codex-handoff-*.md` |
+| **Hermes (Danny)** | 24/7 ops — runs scrapers, monitors Conference Room, executes activity_feed tasks |
+| **Derrick** | Business decisions, pricing, sales |
 
-- **Claude (orchestrator):** strategy, code edits, dashboard updates, brand decisions, quote logic. Working in C:\Users\lenovo\Documents\Leadcurate\leadcurate-launch on Derrick's machine
-- **Codex:** VPS infrastructure, Supabase security, scraping infrastructure, data pipeline plumbing. Codex receives tasks via /docs/codex-handoff-*.md files in the repo
-- **Hermes (Danny, on VPS):** 24/7 ops — runs scrapers, monitors Conference Room, executes tasks posted to activity_feed targeting hermes
-- **Derrick:** business decisions, pricing, sales, customer relationships
-
-## Conference Room protocol
-
-To talk to other agents, INSERT into `activity_feed`:
+### Conference Room protocol
 ```sql
 INSERT INTO activity_feed (event_type, source, title, body, target)
-VALUES ('conf:role', 'hermes', '<task title>', '<task body>', '<target agent>');
+VALUES ('conf:role', 'hermes', '<task>', '<body>', '<target>');
 ```
+Targets: claude | codex | hermes | derrick | all
+Event types: conf:role | conf:done | conf:status | conf:blocker | conf:urgent
 
-Targets: `claude`, `codex`, `hermes`, `derrick`, `all`
+---
 
-Event types: `conf:role` (task), `conf:done` (completion), `conf:status` (progress), `conf:blocker` (need help)
+## 8. Active Codex handoff
 
-## What Hermes specifically helps with for LeadCurate
+`docs/codex-handoff-2026-06-25.md`. Priority: (1) Supabase security fixes (2) Conference Room watcher fix (3) ~~n8n docker install~~ SKIPPED, Hostinger one-click handling (4) Intake auto-reply Edge Function (5) Tier plumbing (6) Domain swap (7) Lead Scout.
 
-When Derrick or another agent asks Hermes for help:
-1. Pulling fresh data from a county source — there's a working catalog in /opt/leadcurate/scripts/ and a leadcurate-county-data-pull skill
+---
+
+## 9. Campaigns (next phase)
+
+Pending: Facebook account credentials, X account credentials, domain email, audience pool definition. Don't post for campaigns without Derrick's explicit go.
+
+---
+
+## 10. What Hermes specifically helps with for LeadCurate
+
+1. Pulling fresh data from county sources — see `leadcurate-county-data-pull` skill
 2. Running snapshot processors — pattern: process raw → normalize → score → tier-classify → write CSV + meta.json
 3. Running the tier classifier on a market: `python3 /opt/leadcurate/scripts/tier_classifier.py <snapshot.csv>`
 4. Watching for new intake submissions and pinging Claude with priority info
 5. Building branded delivery XLSX packages for paid orders
 
-## Don't do these things
+---
 
-- Never insert test data into prospects, leads, intake_requests, messages tables
-- Never touch the landing page `/site/` without Derrick's approval
-- Never change pricing or make business decisions — that's Derrick's call
-- Never use "Daniel" or "Derek" — his name is Derrick (D-E-R-R-I-C-K)
+## 11. Don't do
+
+- Never insert test data into prospects, leads, intake_requests, messages
+- Never touch `/site/` landing page without Derrick's approval
+- Never change pricing or make business decisions
+- Never use "Daniel" or "Derek" — name is Derrick
 - Never apologize for price in customer copy
 - Never tell Derrick a system is "broken" without SSH-verifying current state first
 
-## Stale info to overwrite
+---
 
-If you have older context that says any of these — they are WRONG:
-- "Hermes brain offline" — VERIFIED WORKING with OpenAI + Gemini keys set, brain v0.15.1
-- "14.2M records total" — actual count is ~80M raw records as of 2026-06-25
-- "Tier prices are $297/$497/week subscriptions" — restructured 2026-06-23, see 4-tier section above
-- "Quote uses A/B/C menu" — replaced with one-tier-per-quote, single Confirm
-- "Customer chooses tier" — operator decides based on intake answers, customer sees one recommendation
+## 12. Stale info to overwrite
+
+| Old | Reality |
+|---|---|
+| "14.2M records" | ~80M raw |
+| "Hermes brain offline" | Working with OpenAI + Gemini keys |
+| "$175 deposit / $497mo seat" pricing | Dead — 4-tier system above |
+| "A/B/C quote menu" | Single tier per quote |
+| Operator "Daniel" | Derrick |
+| "Ella orchestrator" | Claude |
+| "Nginx preview at 76.13.25.117/leadcurate-preview/" | Live on GitHub Pages |
+| "Hermes installs n8n via Docker" | Hostinger one-click |
+
+---
+
+## Change log
+
+- **2026-06-25** — Synced to v2 from `/CLAUDE.md`. Added campaigns section, decisions log reference, Lead Scout status flag, lessons. Replaces 2026-06-25-v1.

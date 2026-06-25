@@ -1,7 +1,7 @@
 ---
 name: leadcurate-brand-landing-page
 description: Use when editing or reviewing LeadCurate landing-page copy, positioning, visuals, or offer structure. Preserves Derrick's trust-first county property data strategy and avoids re-learning the brand vision.
-version: 1.0.0
+version: 1.1.0
 author: Hermes Agent
 license: MIT
 metadata:
@@ -9,6 +9,22 @@ metadata:
     tags: [leadcurate, landing-page, copywriting, data-product, real-estate]
     related_skills: [lead-data-product-planning]
 ---
+
+> ⚠ **READ `/CLAUDE.md` AT THE REPO ROOT FIRST.** This skill is HISTORICAL (pre-2026-06-23). The current brand voice, 4-tier system, customer flow, visual brand kit, and reference files are in CLAUDE.md.
+>
+> **What's outdated below:**
+> - Landing page references at `/site/` — PARKED. Front door is intake form + packages page now.
+> - Pricing ladder (County Review Deposit / County Seat / Operator Seat / Exclusive Territory) — DEAD. Replaced by 4-tier system in CLAUDE.md §3.
+> - Nginx preview path `/var/www/leadcurate-preview` — STALE. Live pages on GitHub Pages.
+> - "Landing page structure 1-8" section — describes parked page. See `docs/packages/index.html` for current customer-facing tier overview.
+>
+> **What's still valid:**
+> - Brand palette (cream / dark slate / emerald / serif headlines) — still our colors.
+> - Tone rules (premium, grounded, transparent, no hype, no guaranteed-deal language) — still locked.
+> - "What makes it different" list — still our differentiation.
+> - Anti-scammy wording rules (no "free game", no "safe to call") — still locked.
+>
+> For ALL current LeadCurate work, CLAUDE.md is the source of truth.
 
 # LeadCurate Brand + Landing Page Workflow
 

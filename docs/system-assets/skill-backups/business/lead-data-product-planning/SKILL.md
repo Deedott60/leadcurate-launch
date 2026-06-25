@@ -1,7 +1,7 @@
 ---
 name: lead-data-product-planning
 description: Plan, critique, and launch premium lead/data products built from public records, enrichment, suppression, and buyer-ready delivery.
-version: 1.0.0
+version: 1.1.0
 author: Hermes Agent
 license: MIT
 platforms: [linux, macos, windows]
@@ -9,6 +9,12 @@ metadata:
   hermes:
     tags: [business-planning, lead-generation, data-products, compliance, pricing, go-to-market]
 ---
+
+> ⚠ **For LeadCurate-specific work, read `/CLAUDE.md` at the repo root FIRST.** This skill is a generic lead/data product planning framework. LeadCurate's actual current state, 4-tier pricing, customer flow, and brand voice are in CLAUDE.md.
+>
+> The "Offer/pricing simplification" section below (Reservation, Core Seat, Operator Seat, Exclusive/Custom Territory) is **GENERIC and does NOT match LeadCurate's actual 4-tier system**. Use CLAUDE.md §3 (Hot Sheet $397 / Fresh Triggers $197wk / Breaking Point $249 / Curated Distress $99-149) for LeadCurate pricing.
+>
+> Posture, compliance boundaries, backend quality-first build order, and replacement policy framing in this skill all remain valid for LeadCurate.
 
 # Lead Data Product Planning
 
