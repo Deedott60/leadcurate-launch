@@ -15,6 +15,58 @@
 If conflict between this handoff and CLAUDE.md, CLAUDE.md wins.
 If conflict between memory/older docs and direct verification, direct verification wins.
 
+---
+
+## MANDATORY update protocol — do this for EVERY task
+
+This is non-negotiable. It keeps Claude, Hermes, and Derrick in the loop.
+
+### Before starting a task
+Post a `conf:status` to Supabase activity_feed:
+```sql
+INSERT INTO activity_feed (event_type, source, title, body, target)
+VALUES ('conf:status', 'codex', 'Starting Task <N>: <title>', 'Beginning work now.', 'all');
+```
+
+### After completing a task
+1. **Commit + push** all changes:
+   ```bash
+   git add -A
+   git commit -m "<task description> (Codex)"
+   git push origin main
+   ```
+
+2. **Post `conf:done`** with the commit SHA and proof:
+   ```sql
+   INSERT INTO activity_feed (event_type, source, title, body, target)
+   VALUES ('conf:done', 'codex',
+           'Task <N> complete: <title>',
+           'Commit <SHA>. <One-line proof: e.g. "Ran get_advisors — 0 warnings remaining" or "Fixed file X at lines Y-Z">',
+           'derrick');
+   ```
+
+3. **Pause before next task** — wait 30 seconds to allow Derrick or Claude to flag anything urgent.
+
+### If blocked
+Post `conf:blocker`:
+```sql
+INSERT INTO activity_feed (event_type, source, title, body, target)
+VALUES ('conf:blocker', 'codex',
+        'Blocked on Task <N>: <title>',
+        'Need: <specific thing — credential, decision, file>',
+        'derrick');
+```
+Then stop and wait.
+
+### Why this protocol matters
+
+- Derrick can see all Codex activity in his dashboard Conference Room without checking GitHub
+- Claude (when next session opens) reads Conference Room first and instantly knows what Codex did
+- Hermes can react to Codex completions when relevant
+- No work is invisible — every task has a starting status, an ending commit + conf:done, or a clear blocker
+
+**If you cannot follow this protocol (because you don't have Supabase write access in your current run), STOP and tell Derrick.** Do not execute tasks silently.
+
 Execute these tasks in order. Each one is self-contained. Mark conf:done in activity_feed as you finish each one.
 
 ---
