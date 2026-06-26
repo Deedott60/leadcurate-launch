@@ -1,10 +1,13 @@
-# LeadCurate — Project-Specific Source of Truth
+# 🟢 LEADCURATE PROJECT — Master File 🟢
+# (Filename is CLAUDE.md because of Claude Code's auto-load convention. This file ONLY applies to the LeadCurate project.)
 
 > **Scope: LeadCurate ONLY.** For universal Claude operating rules that apply to every project, see `C:\Users\lenovo\.claude\CLAUDE.md` and `C:\Users\lenovo\.claude\rules\*.md` — including `verification-discipline.md`.
 >
 > This file is loaded automatically when working in this repo. It is the single source of truth for every agent (Claude, Codex, Hermes) working on LeadCurate.
 >
 > Owner: Derrick McDonald · Repo: github.com/Deedott60/leadcurate-launch · Maintained by Claude (orchestrator)
+>
+> **Need a quick reference of all files + how to use them? See `LEADCURATE-CHEAT-SHEET.md` in this same folder.**
 
 ---
 
