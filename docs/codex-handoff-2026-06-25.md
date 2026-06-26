@@ -7,6 +7,14 @@
 **VPS:** leadcurate-vps (76.13.25.117) — SSH alias configured
 **Supabase project ref:** jdmlsraqioigbukspduo
 
+## Required reading BEFORE you start
+
+1. **`/CLAUDE.md`** — LeadCurate state, 4-tier system, brand voice, customer flow, agent roles
+2. **`docs/AGENT-OPERATING-RULES.md`** — universal agent behaviors (verification discipline, communication, conference room protocol, no test data in prod tables, failure-mode awareness)
+
+If conflict between this handoff and CLAUDE.md, CLAUDE.md wins.
+If conflict between memory/older docs and direct verification, direct verification wins.
+
 Execute these tasks in order. Each one is self-contained. Mark conf:done in activity_feed as you finish each one.
 
 ---

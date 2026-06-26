@@ -1,7 +1,9 @@
-# LeadCurate — Source of Truth
+# LeadCurate — Project-Specific Source of Truth
 
-> **This file is the single source of truth for every agent working on LeadCurate.**
-> Read this first. Skill files and `docs/leadcurate-agent-handoff/` are deeper references — start here.
+> **Scope: LeadCurate ONLY.** For universal Claude operating rules that apply to every project, see `C:\Users\lenovo\.claude\CLAUDE.md` and `C:\Users\lenovo\.claude\rules\*.md` — including `verification-discipline.md`.
+>
+> This file is loaded automatically when working in this repo. It is the single source of truth for every agent (Claude, Codex, Hermes) working on LeadCurate.
+>
 > Owner: Derrick McDonald · Repo: github.com/Deedott60/leadcurate-launch · Maintained by Claude (orchestrator)
 
 ---
