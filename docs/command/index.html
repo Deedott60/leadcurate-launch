@@ -387,8 +387,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 
     <div class="agent-strip">
       <div class="nav-label" style="margin-top:0;">Agents</div>
-      <div class="agent-mini"><div class="dot on" id="dot-claude"></div>Claude (orchestrator)</div>
-      <div class="agent-mini"><div class="dot on" id="dot-claude-code"></div>Claude Code</div>
+      <div class="agent-mini"><div class="dot" id="dot-claude-code"></div>Claude Code</div>
       <div class="agent-mini"><div class="dot" id="dot-codex"></div>Codex</div>
       <div class="agent-mini"><div class="dot" id="dot-hermes"></div>Hermes (Danny)</div>
       <div class="agent-mini"><div class="dot" id="dot-sb"></div>Supabase</div>
@@ -695,7 +694,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
           <div class="flex-row">
             <select class="mini-select" id="conf-filter">
               <option value="">All agents</option>
-              <option value="claude">Claude</option>
               <option value="claude-code">Claude Code</option>
               <option value="codex">Codex</option>
               <option value="hermes">Hermes</option>
@@ -1135,7 +1133,7 @@ window.nav = async function(id){
 
 // ─── CONFERENCE ROOM ─────────────────────────────────────────
 const CONF_LABELS = {
-  claude:'Claude', 'claude-code':'Claude Code', codex:'Codex',
+  'claude-code':'Claude Code', codex:'Codex',
   hermes:'Hermes', derrick:'Derrick', system:'System'
 };
 const CONF_TYPE_ICONS = {
@@ -1215,9 +1213,27 @@ function setSync(state){
   if(state==='ok')   { syncBadge.textContent='● synced'; syncBadge.className='sync-badge ok'; SYNC=true; }
   if(state==='err')  { syncBadge.textContent='○ offline'; syncBadge.className='sync-badge err'; SYNC=false; }
   if(state==='wait') { syncBadge.textContent='connecting…'; syncBadge.className='sync-badge'; }
-  ['sb','codex','hermes','twilio','n8n'].forEach(id=>{
+  ['sb','codex','hermes','twilio','n8n','claude-code'].forEach(id=>{
     const el = document.getElementById('dot-'+id);
-    if(el) el.className='dot'+(id==='sb'&&state==='ok'?' on':'');
+    if(el && id==='sb') el.className='dot'+(state==='ok'?' on':'');
+  });
+  updateAgentDots();
+}
+
+// Heartbeat: agent dot is green only if that source posted to activity_feed
+// within the last 10 minutes. Otherwise gray. No phantom "always on" tiles.
+function updateAgentDots(){
+  const sources = ['claude-code','codex','hermes'];
+  const cutoff = Date.now() - 10*60*1000;
+  const lastSeen = {};
+  (FEED||[]).forEach(f=>{
+    const t = new Date(f.created_at).getTime();
+    if(!lastSeen[f.source] || t > lastSeen[f.source]) lastSeen[f.source] = t;
+  });
+  sources.forEach(id=>{
+    const el = document.getElementById('dot-'+id);
+    if(!el) return;
+    el.className = 'dot' + ((lastSeen[id] && lastSeen[id] >= cutoff) ? ' on' : '');
   });
 }
 
@@ -1515,7 +1531,7 @@ function renderMessages(){
 async function loadFeed(){
   if(!SYNC) return;
   const { data } = await sb.from('activity_feed').select('*').order('created_at',{ascending:false}).limit(100);
-  if(data){ FEED=data; renderFeed('hq-feed','feed-count'); renderFeed('wf-feed','wf-feed-count'); updateConferenceBadge(); }
+  if(data){ FEED=data; renderFeed('hq-feed','feed-count'); renderFeed('wf-feed','wf-feed-count'); updateConferenceBadge(); updateAgentDots(); }
 }
 
 async function loadProspects(){
@@ -1687,7 +1703,6 @@ document.getElementById('wf-ev-save').onclick = async () => {
 
 // ─── AGENTS ──────────────────────────────────────────────────
 const AGENTS = [
-  {id:'claude',      name:'Claude (orchestrator)', desc:'CEO/strategy agent. Posts updates to the Conference Room as work happens.', action:'', actionLabel:''},
   {id:'claude-code', name:'Claude Code',           desc:'Dev workstation agent. Edits the dashboard, runs migrations, ships commits.', action:'', actionLabel:''},
   {id:'codex',       name:'Codex',                 desc:'Security / debugging / IT agent. Awaiting API restore — see Workflow doc.', action:'', actionLabel:'Configure'},
   {id:'hermes',      name:'Hermes (Danny)',        desc:'VPS-resident cron + recurring tasks. Awaiting cheaper-model fallback config.', action:'', actionLabel:'Configure'},
@@ -1789,7 +1804,7 @@ function subscribeRealtime(){
       if(!FEED.find(f=>f.id===payload.new.id)){
         FEED.unshift(payload.new);
         renderFeed('hq-feed','feed-count'); renderFeed('wf-feed','wf-feed-count');
-        updateConferenceBadge();
+        updateConferenceBadge(); updateAgentDots();
       }
     })
     .on('postgres_changes',{event:'INSERT',schema:'public',table:'scout_prospects'}, payload=>{
@@ -1880,6 +1895,7 @@ async function init(){
 
 init();
 setInterval(() => { if(SYNC && !document.hidden) loadFeed(); }, 15000);
+setInterval(updateAgentDots, 30000);
 
 async function loadAll(){
   if(!SYNC) throw new Error('Dashboard is offline');
