@@ -166,8 +166,7 @@ Customer should feel matched to the *right* tier — not the *cheapest* option. 
 ## 6. Visual brand kit
 
 - **Colors:** emerald #15803d · emerald-dark #14532d · emerald-light #22c55e · cream #faf7f2 · cream-2 #f3eddf · dark #0f172a · slate #475569 · line #e2dccf
-- **Per-tier accent colors:** crimson #991b1b (Tier 1) · gold #b45309 (Tier 2) · emerald (Tier 3) · blue #1d4ed8 (Tier 4) — **INTERNAL `docs/tiers/` PAGE ONLY. Never use these in ADS.**
-- **AD/AUDIT DESIGN LOCKED (2026-06-27):** Ads + sample audits use **cream #faf7f2 + navy #0f172a + emerald #15803d/#22c55e ONLY**. NO red/gold/crimson/blue in ads (Derrick killed red explicitly). Match Hermes' approved format: Playfair wordmark+headlines, Inter body, one dark navy data card per ad, dark navy pill CTA, green-dot eyebrow pill. Sample audits: "SAMPLE" stamp, CSS-blurred real addresses (not fake XXXX boxes), show the 4 LANES (not "Tier 1-4"), equity as High/Med/Low (not 0-100 score), no owner-name/skip-trace columns. Approved closer line: "Stop dialing 18-month-old lists." Full recipe in user memory `feedback_leadcurate_ad_design.md`.
+- **Per-tier accent colors:** crimson #991b1b (Tier 1) · gold #b45309 (Tier 2) · emerald (Tier 3) · blue #1d4ed8 (Tier 4)
 - **Fonts:** Inter 400/500/600/700 (body) · Playfair Display 600/700 (display/headings)
 - **Border-radius:** 16-22px for cards · 8-10px for inputs/buttons · 999px for pills
 - **Style references in the repo:**
