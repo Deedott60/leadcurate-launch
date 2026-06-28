@@ -42,7 +42,7 @@ LeadCurate sells **curated motivated-seller property data** to real-estate whole
 
 ---
 
-## 2. Current state (as of 2026-06-25)
+## 2. Current state (as of 2026-06-27)
 
 ### Inventory
 - **22 counties pulled** across 12 states
@@ -72,7 +72,10 @@ LeadCurate sells **curated motivated-seller property data** to real-estate whole
 - Operator dashboard: `https://deedott60.github.io/leadcurate-launch/command/`
 - Supabase project `jdmlsraqioigbukspduo` — 16 tables, RLS enabled, auto-pipeline trigger on intake_requests → prospects
 - Hermes (Danny) running on VPS at 76.13.25.117, brain v0.15.1 with OpenAI + Gemini keys
-- Hostinger one-click n8n install in progress (initiated 2026-06-25 by Derrick)
+- **n8n LIVE** at `http://76.13.25.117:32768` (Hostinger one-click, Derrick owns the login). API key stored on VPS `/opt/leadcurate/.env`. API verified 200. No workflows built yet — wiring only. ⚠️ http + Docker-assigned port; needs TLS + pinned port before real customer data flows.
+- **VPS crontab (verified 2026-06-27):** `*/5` conference-watcher + `15 2 * * 0` auction scrapers. That's ALL. (See §13 — Lead Scout is NOT scheduled.)
+- **Customers table:** 0 (a leftover RLS-test row was removed 2026-06-27; no real customers yet)
+- **SSH from Derrick's Windows box:** restored 2026-06-27 (a UTF-8 BOM in `~/.ssh/config` had broken all ssh; stripped, backup saved)
 
 ### What's PARKED (do not touch without Derrick's go)
 - `/site/` landing page — Phase 3 work
@@ -163,7 +166,8 @@ Customer should feel matched to the *right* tier — not the *cheapest* option. 
 ## 6. Visual brand kit
 
 - **Colors:** emerald #15803d · emerald-dark #14532d · emerald-light #22c55e · cream #faf7f2 · cream-2 #f3eddf · dark #0f172a · slate #475569 · line #e2dccf
-- **Per-tier accent colors:** crimson #991b1b (Tier 1) · gold #b45309 (Tier 2) · emerald (Tier 3) · blue #1d4ed8 (Tier 4)
+- **Per-tier accent colors:** crimson #991b1b (Tier 1) · gold #b45309 (Tier 2) · emerald (Tier 3) · blue #1d4ed8 (Tier 4) — **INTERNAL `docs/tiers/` PAGE ONLY. Never use these in ADS.**
+- **AD/AUDIT DESIGN LOCKED (2026-06-27):** Ads + sample audits use **cream #faf7f2 + navy #0f172a + emerald #15803d/#22c55e ONLY**. NO red/gold/crimson/blue in ads (Derrick killed red explicitly). Match Hermes' approved format: Playfair wordmark+headlines, Inter body, one dark navy data card per ad, dark navy pill CTA, green-dot eyebrow pill. Sample audits: "SAMPLE" stamp, CSS-blurred real addresses (not fake XXXX boxes), show the 4 LANES (not "Tier 1-4"), equity as High/Med/Low (not 0-100 score), no owner-name/skip-trace columns. Approved closer line: "Stop dialing 18-month-old lists." Full recipe in user memory `feedback_leadcurate_ad_design.md`.
 - **Fonts:** Inter 400/500/600/700 (body) · Playfair Display 600/700 (display/headings)
 - **Border-radius:** 16-22px for cards · 8-10px for inputs/buttons · 999px for pills
 - **Style references in the repo:**
@@ -200,25 +204,25 @@ Event types: `conf:role` (task), `conf:done` (completion), `conf:status` (progre
 
 ## 8. Active Codex handoff
 
-The current task list for Codex is at **`docs/codex-handoff-2026-06-25.md`**. He's working through it now. Priority order:
-1. Fix 22 Supabase security warnings — in progress
-2. Fix Conference Room watcher (hermes send → execute) — unlocks auto-execution
-3. ~~Install n8n via docker~~ — **SKIPPED**, Derrick using Hostinger one-click
-4. Build intake auto-reply Edge Function — tier-recommendation logic
-5. Tier infrastructure plumbing — Fresh Triggers diff, assessor enrichment, auction scrapers
-6. Domain swap when Derrick provides the domain
-7. Lead Scout (Reddit + BiggerPockets + Facebook monitoring) — gated until 1-2 done
+The current task list for Codex is at **`docs/codex-handoff-2026-06-25.md`**. Status as of 2026-06-27:
+1. Fix Supabase security warnings — ✅ **DONE** (get_advisors returns 0 lints, verified 2026-06-27)
+2. Fix Conference Room watcher (hermes send → execute) — ✅ **DONE** (conf:done 2026-06-27 19:53, e2e-verified, dashboard→Hermes channel live)
+3. ~~Install n8n via docker~~ — **SKIPPED**, n8n now LIVE via Hostinger one-click + wired (URL/key in /opt/leadcurate/.env)
+4. Build intake auto-reply Edge Function — ✅ **DONE** (deployed earlier; blocked on RESEND_API_KEY for real sends)
+5. Tier infrastructure plumbing — ✅ **DONE** (snapshot history, enrichers, auction scrapers on weekly cron)
+6. Domain swap — pending Derrick providing the domain (procuring leadcurate.com + hello@leadcurate.com)
+7. Lead Scout — plumbing built but NOT scheduled and blocked on Reddit/BP credentials (see §13)
 
 ---
 
 ## 9. Campaigns + outreach (next phase)
 
 Derrick is moving into campaign mode. What's needed before launch:
-- **Facebook account** — Derrick will provide credentials
+- **Facebook account** — Derrick will provide credentials (use a burner/operator account for Lead Scout, separate from his personal account that owns the brand Page)
 - **X account** — Derrick will provide credentials
-- **Domain email** (LeadCurate.com or similar) — expected this week
-- **Brand voice locked** ✓ (section 4 above)
-- **Ad creative direction** — premium emerald tablet hero (see `docs/brand-asset-direction.md`)
+- **Domain email** — decided: **hello@leadcurate.com** (buying domain leadcurate.com + this mailbox via Hostinger)
+- **Brand voice locked** ✓ (section 4) · **Ad/audit design locked** ✓ (section 6)
+- **Ad creative BUILT (2026-06-27):** tier-explainer + "direction" ad sets + 4 sample county audits (Wake/Cobb/Fulton/Harris), Hermes cream/navy/emerald format. Channel priority per Derrick: **Facebook first**, then IG carousels + LinkedIn. Best-converting hooks: "Stop dialing 18-month-old lists" + the sample-audit proof piece → intake form.
 - **Audience pool** — REI wholesalers, flippers, landlords in target metros (Houston, Atlanta, Charlotte, Phoenix, DFW)
 - **Message templates** — see `docs/OUTREACH-PLAYBOOK.md`
 
@@ -270,9 +274,11 @@ Estimated time: 30 minutes.
 
 ## 13. Lead Scout status (unproven)
 
-The lead-monitoring scout (watching Reddit + BiggerPockets + Facebook for wholesalers asking for data) is a **hypothesis, not a promised revenue channel.** Codex Task 7 builds it. Once running, give it 1 week to prove signal volume. If it returns <5 qualified prospects/week, shut it down — no real money at risk, just Danny's idle time.
+The lead-monitoring scout (watching Reddit + BiggerPockets + Facebook for wholesalers asking for data) is a **hypothesis, not a promised revenue channel.** Codex Task 7 built the plumbing.
 
-Do NOT recommend it as guaranteed sales infrastructure.
+**Reality check 2026-06-27 (verified via SSH):** Lead Scout is **NOT on a cron and has no systemd timer.** Prior notes claiming "running every 6 hours" were WRONG — the June 26–27 runs in activity_feed were manual test runs. The `scout_prospects` table has 10 rows from those tests, last find 2026-06-26 20:09. It is dormant. To make it live it needs BOTH (1) a cron installed AND (2) Reddit/BiggerPockets credentials (Reddit returns 403, BP times out under Playwright without a logged-in session). No point installing the cron until creds exist.
+
+Once truly running, give it 1 week to prove signal volume. If it returns <5 qualified prospects/week, shut it down. Do NOT recommend it as guaranteed sales infrastructure.
 
 ---
 
@@ -290,8 +296,10 @@ If you find any older context (in handoff docs, skill files, or memory) that say
 | "Ella the orchestrator" | Claude is the orchestrator |
 | "Nginx preview at 76.13.25.117/leadcurate-preview/" | Live pages on GitHub Pages: `deedott60.github.io/leadcurate-launch/...` |
 | "20/24 markets, 2.8 GB" | 22 markets, 9.2 GB, ~80M records |
-| "Hermes installs n8n via Docker" | Hostinger one-click install (Derrick handling) |
+| "Hermes installs n8n via Docker" | n8n LIVE via Hostinger one-click at http://76.13.25.117:32768, key in /opt/leadcurate/.env |
 | "/site/ landing page is the front door" | PARKED. Front door is intake form + packages page |
+| "Lead Scout running every 6 hours" | NOT scheduled — no cron, no timer. Dormant + blocked on creds (see §13) |
+| "Conference Room watcher only notifies" | FIXED 2026-06-27 — watcher executes tasks, dashboard→Hermes channel live |
 
 ---
 
@@ -310,4 +318,5 @@ The orchestrator (Claude) keeps all three in sync. Derrick never touches the VPS
 
 ## Change log
 
+- **2026-06-27 (evening)** — n8n wired live + verified. Codex Tasks 1,2,4,5 confirmed DONE. SSH restored (BOM fix). Removed leftover RLS-test customer row (count now 0). Built + locked ad/audit design system (§6, cream/navy/emerald, no red). Corrected the stale "Lead Scout every 6h" claim — it's not scheduled (§13). Email decided: hello@leadcurate.com. Next: buy domain, add RESEND_API_KEY, then install scout cron once creds exist.
 - **2026-06-25** — Initial CLAUDE.md created. Replaces stale agent-handoff folder and outdated skill pricing. Locked 4-tier system + brand voice + customer flow as source of truth.
