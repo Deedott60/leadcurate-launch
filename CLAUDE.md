@@ -77,6 +77,11 @@ LeadCurate sells **curated motivated-seller property data** to real-estate whole
 - **Customers table:** 0 (a leftover RLS-test row was removed 2026-06-27; no real customers yet)
 - **SSH from Derrick's Windows box:** restored 2026-06-27 (a UTF-8 BOM in `~/.ssh/config` had broken all ssh; stripped, backup saved)
 
+### Domain + email (LIVE 2026-06-27)
+- **Domain:** `leadcurate.com` (Hostinger). **Business email:** `hello@leadcurate.com`.
+- Stored on VPS `/opt/leadcurate/.env` as `LEADCURATE_DOMAIN` + `LEADCURATE_FROM_EMAIL` (mailbox password is NOT stored anywhere — secret).
+- Unblocks: domain-swap procedure (§10) + autoresponder FROM address (still needs RESEND_API_KEY or SMTP creds to actually send).
+
 ### What's PARKED (do not touch without Derrick's go)
 - `/site/` landing page — Phase 3 work
 - Pricing changes — Derrick decides
