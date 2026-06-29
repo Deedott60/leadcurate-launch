@@ -31,6 +31,11 @@ function readString(payload: MailPayload, keys: string[]): string | null {
   return null;
 }
 
+function mailData(payload: MailPayload): MailPayload {
+  const data = payload.data;
+  return data && typeof data === "object" ? data as MailPayload : payload;
+}
+
 function extractFrom(payload: MailPayload): string | null {
   const direct = readString(payload, [
     "from",
@@ -61,6 +66,8 @@ function extractPreview(payload: MailPayload): string | null {
     "text",
     "bodyText",
     "body_text",
+    "plainBody",
+    "htmlBody",
     "message",
   ]);
   if (!preview) return null;
@@ -127,11 +134,12 @@ Deno.serve(async (req) => {
     return jsonResponse({ error: "Invalid JSON payload" }, 400);
   }
 
-  const fromAddr = extractFrom(payload);
+  const message = mailData(payload);
+  const fromAddr = extractFrom(message);
   if (!fromAddr) return jsonResponse({ error: "Missing sender address" }, 400);
 
-  const subject = readString(payload, ["subject", "title"]);
-  const preview = extractPreview(payload);
+  const subject = readString(message, ["subject", "title"]);
+  const preview = extractPreview(message);
 
   const { data: emailRow, error: emailError } = await supabase
     .from("inbound_emails")
