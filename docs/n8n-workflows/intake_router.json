@@ -1,0 +1,199 @@
+{
+  "id": "J4UINOlYYNPPlpGi",
+  "name": "LeadCurate - intake_router",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Every Minute",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://jdmlsraqioigbukspduo.supabase.co/rest/v1/intake_requests",
+        "authentication": "none",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "select",
+              "value": "*"
+            },
+            {
+              "name": "routed_at",
+              "value": "is.null"
+            },
+            {
+              "name": "order",
+              "value": "created_at.asc"
+            },
+            {
+              "name": "limit",
+              "value": "10"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "fetch-pending-intakes",
+      "name": "Fetch pending intakes",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        240,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\nfunction text(v) {\n  if (Array.isArray(v)) return v.join(' ').toLowerCase();\n  return String(v || '').toLowerCase();\n}\nfunction pickTier(row) {\n  const urgency = text(row.urgency);\n  const role = text(row.role);\n  const volume = text(row.volume);\n  const notes = text(row.notes);\n  if ((urgency.includes('24') || urgency.includes('48') || urgency.includes('this week') || urgency.includes('need it now')) && (role.includes('solo') || role.includes('team') || role.includes('acquisition'))) {\n    return ['Imminent Auction Hot Sheet', 'Urgency signal says they need records immediately, so route them to the fastest verified-auction offer. Operator should confirm market fit and send one focused quote.'];\n  }\n  if (role.includes('acquisition') || notes.includes('cold call') || notes.includes('daily') || volume.includes('daily')) {\n    return ['Fresh Triggers Feed', 'Acquisitions/calling cadence suggests they need fresh trigger flow, not a static bulk list. Operator should position freshness and first-mover timing.'];\n  }\n  if (volume.includes('500') || volume.includes('1500') || notes.includes('quality') || notes.includes('debt') || notes.includes('equity')) {\n    return ['The Breaking Point', 'Volume and quality signals point to a tighter high-conversion subset. Operator should frame this around motivation density and debt/pressure signals.'];\n  }\n  return ['Curated Distress List', 'General intake with no high-urgency/team signal. Operator should start with the foundational curated list and match the first market cleanly.'];\n}\nconst rows = Array.isArray($json) ? $json : ($json.data || ($json.id ? [$json] : []));\nreturn rows.map((row) => {\n  const [recommended_tier, recommendation_note] = pickTier(row);\n  return { json: { ...row, recommended_tier, recommendation_note } };\n});\n"
+      },
+      "id": "recommend-tier",
+      "name": "Recommend tier",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        500,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://jdmlsraqioigbukspduo.supabase.co/rest/v1/rpc/route_intake_recommendation",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "intake_id",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "recommended_tier",
+              "value": "={{ $json.recommended_tier }}"
+            },
+            {
+              "name": "recommendation_note",
+              "value": "={{ $json.recommendation_note }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "save-recommendation",
+      "name": "Save recommendation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        760,
+        0
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "01yEWqZrTH8M0QGt"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Every Minute": {
+      "main": [
+        [
+          {
+            "node": "Fetch pending intakes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch pending intakes": {
+      "main": [
+        [
+          {
+            "node": "Recommend tier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recommend tier": {
+      "main": [
+        [
+          {
+            "node": "Save recommendation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/New_York",
+    "saveDataSuccessExecution": "all",
+    "saveDataErrorExecution": "all"
+  }
+}
