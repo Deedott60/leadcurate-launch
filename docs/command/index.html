@@ -1648,19 +1648,24 @@ async function markConferenceRead(){
 
 function renderFeed(elId, countId){
   const el = document.getElementById(elId); if(!el) return;
+  // Main dashboard feed: hide agent chatter (conf:*) — that's backend noise that lives in Supabase for admin queries only.
+  // Customer/business events stay visible: intake:*, prospect:*, mail:*, quote:*, pay:*, etc.
+  const visible = FEED.filter(ev => !((ev.event_type||'').startsWith('conf:')));
   const countEl = document.getElementById(countId);
-  if(countEl) countEl.textContent = FEED.length+' events';
-  if(!FEED.length){ el.innerHTML='<div class="empty">No activity yet.</div>'; return; }
-  const icons = {intake:'📥',prospect:'👤',message:'💬',system:'⚙️',agent:'🤖'};
-  el.innerHTML = FEED.slice(0,50).map(ev=>`
+  if(countEl) countEl.textContent = visible.length+' events';
+  if(!visible.length){ el.innerHTML='<div class="empty">No customer activity yet. New intakes, emails, and payments will appear here.</div>'; return; }
+  const icons = {intake:'📥',prospect:'👤',message:'💬',system:'⚙️',agent:'🤖',mail:'📧',quote:'💵',pay:'💰'};
+  el.innerHTML = visible.slice(0,50).map(ev=>{
+    const family = (ev.event_type||'system').split(':')[0];
+    return `
     <div class="feed-item">
-      <div class="feed-icon ${ev.event_type||'system'}">${icons[ev.event_type]||'📌'}</div>
+      <div class="feed-icon ${family}">${icons[family]||'📌'}</div>
       <div class="feed-body">
         <div class="f-title">${esc(ev.title)}</div>
         ${ev.body?`<div class="f-detail">${esc(ev.body)}</div>`:''}
         <div class="f-when">${esc(ev.source||'')}${ev.source?' · ':''}${fmt(ev.created_at)}</div>
       </div>
-    </div>`).join('');
+    </div>`;}).join('');
 }
 
 async function saveEvent(type, title, body, source='command-dashboard', target=null){
