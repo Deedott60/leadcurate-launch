@@ -66,6 +66,22 @@ function extractPreview(payload: MailPayload): string | null {
   return preview.length > 500 ? `${preview.slice(0, 497)}...` : preview;
 }
 
+function readSupabaseAdminKey(): string | null {
+  const secretKeysJson = Deno.env.get("SUPABASE_SECRET_KEYS");
+  if (secretKeysJson) {
+    try {
+      const secretKeys = JSON.parse(secretKeysJson) as Record<string, string>;
+      if (typeof secretKeys.default === "string" && secretKeys.default.trim()) {
+        return secretKeys.default.trim();
+      }
+    } catch (_error) {
+      console.error("SUPABASE_SECRET_KEYS is not valid JSON");
+    }
+  }
+
+  return Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? null;
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   if (req.method !== "POST") return jsonResponse({ error: "Method not allowed" }, 405);
@@ -78,9 +94,9 @@ Deno.serve(async (req) => {
   if (auth !== expectedAuth) return unauthorized();
 
   const supabaseUrl = Deno.env.get("SUPABASE_URL");
-  const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  if (!supabaseUrl || !serviceRoleKey) {
-    return jsonResponse({ error: "Supabase service env vars not configured" }, 500);
+  const supabaseAdminKey = readSupabaseAdminKey();
+  if (!supabaseUrl || !supabaseAdminKey) {
+    return jsonResponse({ error: "Supabase admin env vars not configured" }, 500);
   }
 
   let payload: MailPayload;
@@ -96,7 +112,7 @@ Deno.serve(async (req) => {
   const subject = readString(payload, ["subject", "title"]);
   const preview = extractPreview(payload);
 
-  const supabase = createClient(supabaseUrl, serviceRoleKey, {
+  const supabase = createClient(supabaseUrl, supabaseAdminKey, {
     auth: { persistSession: false },
   });
 
