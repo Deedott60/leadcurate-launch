@@ -91,33 +91,90 @@ LeadCurate sells **curated motivated-seller property data** to real-estate whole
 
 ---
 
-## 3. The 4-Tier Product System (LOCKED 2026-06-23)
+## 3. The 5-Tier Product System (LOCKED 2026-06-29 — supersedes 2026-06-23 version)
 
-Customer NEVER sees "Tier 1/2/3/4" labels — that's internal. They see one tier (the one we recommended based on their intake) with the brand tier name.
+Customer NEVER sees "Tier 1/2/3/4/5" labels — that's internal. They see ONE tier (the one we recommended based on their intake) with a brand label that adapts to the lane they chose.
 
-### Tier 1 — Imminent Auction Hot Sheet
+**Why this got restructured (2026-06-29):** the prior version buried **Probate** in Tier 4 (foundational entry), but the market sells probate as a *premium* product (All The Leads $249–$1,099/mo, US Lead List $1.60/lead). The prior version also had no list sizes per tier, which let "5,000 records at $149" pricing slip in — that's bulk-aggregator math ($0.03/lead) wearing a premium tuxedo. Fixed both.
+
+**List size discipline:** every SKU has a target record count. Per-lead cost must land in the premium range ($0.30–$1.99/lead). NEVER ship 5,000 records at $149 again.
+
+### Tier 1 — Entry / Foundation List
+- **Customer-facing brand label** (adapts to their picked lane):
+  - "Curated Distress List" (default / multi-foundational)
+  - "Active Homeowner List" (Individual/homeowner lane)
+  - "Absentee Owner List" (Absentee lane)
+  - "High-Equity Owners List" (High-equity lane)
+  - "Liens Watchlist" (Liens lane)
+- **Price:** $149 launch (first 5 buyers) → $249 standard
+- **Records:** 500, hand-scored
+- **Per-lead:** $0.30 launch / $0.50 standard
+- **Cadence:** one-time with optional $99 monthly refresh add-on
+- **Lanes eligible:** ONLY foundational/mid-premium — Tax Delinquent, Absentee, High Equity, Individual/homeowner, Liens, Entity-owned, Vacant land
+- **Buyer:** foundational entry — anyone testing the product
+- **Phase 3 subscription price:** $150/month
+
+### Tier 2 — Targeted Premium (court-scrape specialty)
+- **Customer-facing brand label** (adapts to lane):
+  - "Probate Premium" (Probate / inherited lane)
+  - "Pre-Foreclosure Premium" (Pre-Foreclosure NOD lane, non-auction)
+  - "Code Violations List" (Code Violations lane)
+  - "Active Permits Distress" (Active permits / damage lane)
+  - "The Breaking Point" (computed debt-growing — debt > 5% property value OR debt growing YoY)
+- **Price:** $249 launch (first 5 buyers) → $397 standard
+- **Records:** 250–500, hand-scored
+- **Per-lead:** $0.50–$1.00 launch
+- **Cadence:** one-time with optional $99 monthly refresh add-on
+- **Lanes eligible:** ONLY court-scrape premium — Probate, Pre-Foreclosure, Code Violations, Active Permits, or computed debt-growing
+- **Buyer:** targeted operators who know the signal they want
+- **Phase 3 subscription price:** $250/month
+- **Why this tier exists:** the direct competitor segment (All The Leads, Foreclosures Daily, ProbateData) sells exactly this — single specialty lane, monthly drops. Our launch price ($249 one-time, 500 records) ≈ All The Leads entry month ($249).
+
+### Tier 3 — Imminent Auction Hot Sheet
+- **Customer-facing brand:** "Imminent Auction Hot Sheet"
 - **Price:** $397 launch (first 5 buyers) → $497 standard
-- **Cadence:** One-time per sheet (NOT subscription — auctions are episodic)
-- **Trigger:** verified auction date in next 30 days, score forced 95-100
+- **Records:** 250 (scarce by nature — verified auctions in next 30 days)
+- **Per-lead:** $1.59 launch / $1.99 standard
+- **Cadence:** one-time per sheet (NOT subscription — auctions are episodic)
+- **Trigger:** verified auction date in next 30 days, score forced 95–100
 - **Buyer:** fast-moving wholesalers who can contract this week
+- **Phase 3 subscription price:** $500/month for guaranteed monthly drop when auctions exist in their market
 
-### Tier 2 — Fresh Triggers Feed
-- **Price:** $197/week launch → $297/week standard
-- **Cadence:** Weekly subscription — the ONLY recurring tier
-- **Trigger:** new court filing or code violation in last 7 days, score forced 92
-- **Buyer:** daily cold callers, first-mover advantage
+### Tier 4 — Market Dominance (All-Lanes Bundle)
+- **Customer-facing brand:** "Market Dominance"
+- **Price:** $697 launch (first 5 buyers) → $797 standard
+- **Records:** 1,000 — top-scored across ALL 8 lanes, deduplicated
+- **Per-lead:** $0.70 launch / $0.80 standard
+- **Cadence:** one-time with optional $149/month refresh add-on
+- **Lanes:** ALL 8 (Tax Delinquent, Probate, Code Violations, Pre-Foreclosure, Active Permits, Owner Records, High Equity, Absentee) — scored together
+- **Buyer:** acquisitions teams wanting every distress signal in their market
+- **Phase 3 subscription price:** $700/month
 
-### Tier 3 — The Breaking Point
-- **Price:** $249 one-time
-- **Cadence:** one-time with monthly refresh option
-- **Trigger:** debt > 5% of property value OR debt growing YoY (tax OR municipal — HOA, water, code)
-- **Buyer:** buy-and-hold + flippers wanting highest-conversion subset
+### Tier 5 — Exclusive Territory
+- **Customer-facing brand:** "Exclusive Territory"
+- **Price:** $1,497 launch / $1,997 standard
+- **Records:** 1,000 across all 8 lanes — capped to 1 buyer per market (NO ONE else gets this market while subscription active)
+- **Per-lead:** $1.50 launch / $2.00 standard
+- **Cadence:** one-time, OR monthly with continuous exclusivity guarantee
+- **Buyer:** enterprise wholesalers / funds wanting to lock a metro
+- **Phase 3 subscription price:** $1,500/month (with auto-renewal lock on territory)
+- **3× multiplier** over Tier 4 reflects exclusivity premium (US Lead List sells the 3-buyer-per-county model — we're going to 1-buyer-per-market for top end).
 
-### Tier 4 — Curated Distress List
-- **Price:** $99 first 5 buyers → $149 standard
-- **Cadence:** one-time with monthly refresh option
-- **Trigger:** standard source filter (Tax Delinquent, Absentee, Probate, High Equity)
-- **Buyer:** everyone — foundational entry product
+### Tier picker logic — operator routes from intake
+| Intake says... | Recommend |
+|---|---|
+| Lane = Probate/Pre-Foreclosure/Code Violations/Active Permits + single market | Tier 2 (with matching brand label) |
+| Lane = Auction-imminent OR urgency "this week" + wholesaler | Tier 3 |
+| Lane = "Not sure" + multi-lane interest OR full-team operator | Tier 4 |
+| Lane = "all signals" + enterprise/fund volume + wants exclusivity | Tier 5 |
+| Lane = Tax Delinquent / Absentee / High-Equity / Individual / Liens + first-time | Tier 1 |
+| Anything else / unclear | Tier 1 default — never push higher on cold intake |
+
+### Banned in this tier system
+- **NEVER ship 5,000 records at entry pricing.** Per-lead math must land in $0.30–$1.99.
+- **NEVER bundle Probate into Tier 1.** Probate is Tier 2 minimum.
+- **NEVER quote two tiers.** Operator picks ONE; customer sees ONE Confirm button.
+- **NEVER name a tier without a list size visible** to the customer.
 
 ---
 
