@@ -86,13 +86,13 @@ function readSupabaseAdminKey(): string | null {
   return null;
 }
 
-async function loadHostingerMailToken(supabase: SupabaseClient): Promise<string | null> {
+async function loadHostingerWebhookSecret(supabase: SupabaseClient): Promise<string | null> {
   const { data, error } = await supabase.rpc("get_app_secret", {
-    secret_name: "HOSTINGER_MAIL_TOKEN",
+    secret_name: "HOSTINGER_WEBHOOK_SECRET",
   });
 
   if (error) {
-    console.error("Failed to load HOSTINGER_MAIL_TOKEN", error);
+    console.error("Failed to load HOSTINGER_WEBHOOK_SECRET", error);
     return null;
   }
 
@@ -113,11 +113,11 @@ Deno.serve(async (req) => {
     auth: { persistSession: false },
   });
 
-  const expectedToken = await loadHostingerMailToken(supabase);
-  if (!expectedToken) return jsonResponse({ error: "HOSTINGER_MAIL_TOKEN not configured" }, 500);
+  const expectedSecret = await loadHostingerWebhookSecret(supabase);
+  if (!expectedSecret) return jsonResponse({ error: "HOSTINGER_WEBHOOK_SECRET not configured" }, 500);
 
   const auth = req.headers.get("authorization") ?? "";
-  const expectedAuth = `Bearer ${expectedToken}`;
+  const expectedAuth = `Bearer ${expectedSecret}`;
   if (auth !== expectedAuth) return unauthorized();
 
   let payload: MailPayload;
