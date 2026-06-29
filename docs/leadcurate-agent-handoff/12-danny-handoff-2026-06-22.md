@@ -21,9 +21,9 @@ You haven't touched this project in about a week. Derrick has been working with 
 
 | URL | What it is |
 |---|---|
-| https://deedott60.github.io/leadcurate-launch/intake/ | Intake form — writes to Supabase `intake_requests` + emails Derrick |
-| https://deedott60.github.io/leadcurate-launch/command/ | Operator OS dashboard — full agent comms, pipeline, templates |
-| https://deedott60.github.io/leadcurate-launch/sample-deliveries/ | Sample deliveries (Houston, Cobb, Birmingham, Charlotte, Louisville) |
+| https://leadcurate.com/intake/ | Intake form — writes to Supabase `intake_requests` + emails Derrick |
+| https://leadcurate.com/command/ | Operator OS dashboard — full agent comms, pipeline, templates |
+| https://leadcurate.com/sample-deliveries/ | Sample deliveries (Houston, Cobb, Birmingham, Charlotte, Louisville) |
 | http://76.13.25.117/leadcurate-preview/ | Landing page on VPS nginx |
 
 ## VPS data state

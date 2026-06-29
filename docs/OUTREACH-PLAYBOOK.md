@@ -16,7 +16,7 @@ That intel reshapes the big-ticket launch (Phase 3 landing page + subscriptions)
 ## The intake link (this is the ONLY URL you need to share)
 
 ```
-https://deedott60.github.io/leadcurate-launch/intake/
+https://leadcurate.com/intake/
 ```
 
 Pin this in your notes. The dashboard has a 🔗 Copy intake link button in the top bar so you can grab it on any device.
@@ -119,11 +119,11 @@ This is honest, defensible positioning. Don't overpromise.
 
 Use one of your existing sample-delivery pages depending on the market:
 
-| If they want Houston | https://deedott60.github.io/leadcurate-launch/sample-deliveries/houston-permit-burnout-2026-06-21/ |
+| If they want Houston | https://leadcurate.com/sample-deliveries/houston-permit-burnout-2026-06-21/ |
 |---|---|
-| If they want Atlanta NW (Cobb) | https://deedott60.github.io/leadcurate-launch/sample-deliveries/cobb-ga-tax-delinquent-2026-06-21/ |
-| If they want Birmingham | https://deedott60.github.io/leadcurate-launch/sample-deliveries/jefferson-al-tax-delinquent-2026-06-21/ |
-| All markets index | https://deedott60.github.io/leadcurate-launch/sample-deliveries/ |
+| If they want Atlanta NW (Cobb) | https://leadcurate.com/sample-deliveries/cobb-ga-tax-delinquent-2026-06-21/ |
+| If they want Birmingham | https://leadcurate.com/sample-deliveries/jefferson-al-tax-delinquent-2026-06-21/ |
+| All markets index | https://leadcurate.com/sample-deliveries/ |
 
 These pages show owner names + addresses **redacted**, stats unredacted. Perfect for previews. Send the URL; the page does the selling.
 

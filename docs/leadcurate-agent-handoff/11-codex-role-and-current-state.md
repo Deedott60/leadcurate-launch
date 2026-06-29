@@ -55,10 +55,10 @@ The user (Daniel) and I have agreed on a clean division of labor between agents.
 
 | URL | What it is |
 |---|---|
-| https://deedott60.github.io/leadcurate-launch/intake/ | Lead intake form, writes to Supabase + emails Derrick |
-| https://deedott60.github.io/leadcurate-launch/command/ | Operator OS dashboard (HQ / Inbox / Pipeline / Messages / Workflow / Templates) |
-| https://deedott60.github.io/leadcurate-launch/sample-deliveries/ | Preview pages for Houston, Cobb GA, Birmingham AL, Charlotte, Louisville |
-| https://deedott60.github.io/leadcurate-launch/site/ | Landing page (PARKED — Phase 3, not yet promoted) |
+| https://leadcurate.com/intake/ | Lead intake form, writes to Supabase + emails Derrick |
+| https://leadcurate.com/command/ | Operator OS dashboard (HQ / Inbox / Pipeline / Messages / Workflow / Templates) |
+| https://leadcurate.com/sample-deliveries/ | Preview pages for Houston, Cobb GA, Birmingham AL, Charlotte, Louisville |
+| https://leadcurate.com/site/ | Landing page (PARKED — Phase 3, not yet promoted) |
 
 ### Supabase project (`jdmlsraqioigbukspduo`)
 

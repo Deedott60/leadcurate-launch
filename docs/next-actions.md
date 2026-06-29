@@ -33,9 +33,9 @@ Last updated: 2026-06-21
 
 ## Key URLs
 
-- Command OS: https://deedott60.github.io/leadcurate-launch/command/
-- Intake form (send to prospects): https://deedott60.github.io/leadcurate-launch/intake/
-- Landing page: https://deedott60.github.io/leadcurate-launch/
+- Command OS: https://leadcurate.com/command/
+- Intake form (send to prospects): https://leadcurate.com/intake/
+- Landing page: https://leadcurate.com/
 - Supabase dashboard: https://supabase.com/dashboard/project/jdmlsraqioigbukspduo
 - VPS: 76.13.25.117 (srv1564456 · Ubuntu 24.04 · Docker 29)
 

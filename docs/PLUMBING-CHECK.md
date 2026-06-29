@@ -8,12 +8,12 @@
 ## End-to-end flow walkthrough
 
 1. **Daniel finds a prospect** on FB group / BiggerPockets / IG / wherever
-2. Opens [the dashboard](https://deedott60.github.io/leadcurate-launch/command/) → clicks **🔗 Copy intake link** in topbar
+2. Opens [the dashboard](https://leadcurate.com/command/) → clicks **🔗 Copy intake link** in topbar
 3. Pastes link in DM/SMS with cold-intro template ("SMS — cold intro" or "DM — IG/FB/Twitter")
 4. Daniel adds prospect to **Pipeline** tab (name, contact, channel, source)
 5. Status: **Queued → Reached out** (auto-flips when he uses the "Copy msg" button on a prospect card)
 
-6. **Prospect clicks the link** → fills [intake form](https://deedott60.github.io/leadcurate-launch/intake/)
+6. **Prospect clicks the link** → fills [intake form](https://leadcurate.com/intake/)
    - Form asks: markets, list type, urgency, volume, name/phone/email, role, notes
 7. Submission writes to **TWO destinations simultaneously**:
    - Supabase `intake_requests` table (primary)

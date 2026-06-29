@@ -79,7 +79,7 @@ Every record gets classified into one of four tiers based on urgency, scored 0�
 
 ## Workflow (today)
 
-1. **Prospect inquiry** — branded intake form at deedott60.github.io/leadcurate-launch/intake/ captures market, list type, urgency, volume, contact
+1. **Prospect inquiry** — branded intake form at leadcurate.com/intake/ captures market, list type, urgency, volume, contact
 2. **Auto-pipeline** — database trigger auto-creates a prospect record from the intake row
 3. **Personalized quote** — operator dashboard has a "Send a quote" tool that builds a per-buyer URL like `/quote-template/?buyer=John&market=Cobb&tier=breakingpoint` — prospect sees one clean offer with a Confirm button
 4. **Payment + delivery** — Cash App / Zelle / Stripe → branded XLSX shipped within 24 hours

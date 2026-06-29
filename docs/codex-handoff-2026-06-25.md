@@ -241,7 +241,7 @@ Until Derrick confirms, **skip this task** and continue Tasks 1-4.
 ## Task 6 — Domain swap (when domain arrives)
 
 When Derrick provides the domain (expected this week):
-1. Find/replace all instances of `deedott60.github.io/leadcurate-launch` in `/docs/` with the new domain
+1. Find/replace all instances of `leadcurate.com` in `/docs/` with the new domain
 2. Find/replace `dmcdonald5649@gmail.com` with the new domain email (e.g. `derrick@leadcurate.com`)
 3. Push to GitHub
 4. Configure CNAME file in `/docs/` for GitHub Pages custom domain

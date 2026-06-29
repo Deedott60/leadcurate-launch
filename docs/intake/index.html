@@ -168,7 +168,7 @@ footer a{color:var(--slate);text-decoration:none;}
   <div class="card">
     <form
       id="intake-form"
-      action="https://formsubmit.co/dmcdonald5649@gmail.com"
+      action="https://formsubmit.co/hello@leadcurate.com"
       method="POST"
       autocomplete="on"
     >
@@ -176,7 +176,7 @@ footer a{color:var(--slate);text-decoration:none;}
       <input type="hidden" name="_subject" value="🎯 New LeadCurate intake" />
       <input type="hidden" name="_template" value="table" />
       <input type="hidden" name="_captcha" value="false" />
-      <input type="hidden" name="_next" value="https://deedott60.github.io/leadcurate-launch/intake/thanks.html" />
+      <input type="hidden" name="_next" value="https://leadcurate.com/intake/thanks.html" />
       <input type="text" name="_honey" style="display:none" />
 
       <!-- 1. Markets -->
@@ -314,7 +314,7 @@ footer a{color:var(--slate);text-decoration:none;}
   </div>
 
   <footer>
-    LeadCurate &middot; Curated county property data &middot; <a href="mailto:dmcdonald5649@gmail.com">dmcdonald5649@gmail.com</a>
+    LeadCurate &middot; Curated county property data &middot; <a href="mailto:hello@leadcurate.com">hello@leadcurate.com</a>
   </footer>
 
 </div>
@@ -327,7 +327,7 @@ const SUPABASE_KEY = 'sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4';
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const form = document.getElementById('intake-form');
-const thanks = 'https://deedott60.github.io/leadcurate-launch/intake/thanks.html';
+const thanks = 'https://leadcurate.com/intake/thanks.html';
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -365,7 +365,7 @@ form.addEventListener('submit', async (e) => {
   } else {
     btn.innerHTML = originalLabel;
     btn.disabled = false;
-    alert('Something went wrong sending your request. Please email dmcdonald5649@gmail.com directly.');
+    alert('Something went wrong sending your request. Please email hello@leadcurate.com directly.');
   }
 });
 </script>

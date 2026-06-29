@@ -11,7 +11,7 @@
 ### Phase 1 — Get paying customers FIRST (no subscriptions, no landing page polish)
 
 1. **Find prospects manually** — Facebook groups, REI groups, BiggerPockets, IG, REIA meetups, anywhere real-estate investors hang out.
-2. **Send them the intake link** — `https://deedott60.github.io/leadcurate-launch/intake/`. They fill out: market, list type, urgency, volume, contact.
+2. **Send them the intake link** — `https://leadcurate.com/intake/`. They fill out: market, list type, urgency, volume, contact.
 3. **Reply with a preview list** — small redacted sample showing what we have for their market.
 4. **They pay before full delivery** — payment method TBD (Cash App / Venmo / Zelle / Stripe). Lock this in before first sale.
 5. **Deliver the full list** — HTML preview + XLSX + CSV, like the existing sample deliveries.

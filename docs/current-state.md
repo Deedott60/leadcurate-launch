@@ -10,7 +10,7 @@
 
 ## Repo + infrastructure
 - Shared repo: `Deedott60/leadcurate-launch`
-- Live pages on GitHub Pages: `deedott60.github.io/leadcurate-launch/...`
+- Live pages on GitHub Pages: `leadcurate.com/...`
 - VPS: 76.13.25.117 (Hostinger), SSH alias `leadcurate-vps`
 - Supabase project: `jdmlsraqioigbukspduo`
 

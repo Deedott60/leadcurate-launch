@@ -792,10 +792,10 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
           Send this link to anyone who shows interest. They fill in market, list type, urgency, volume, contact info. Submissions land in your inbox + auto-create a prospect in the Pipeline.
         </p>
         <div style="font-family:'JetBrains Mono',monospace;font-size:13px;background:var(--cream2);padding:12px 14px;border-radius:8px;margin:12px 0;word-break:break-all;">
-          https://deedott60.github.io/leadcurate-launch/intake/
+          https://leadcurate.com/intake/
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <button class="btn" onclick="navigator.clipboard.writeText('https://deedott60.github.io/leadcurate-launch/intake/').then(()=>{this.textContent='✓ Copied';setTimeout(()=>this.textContent='🔗 Copy link',1800);})">🔗 Copy link</button>
+          <button class="btn" onclick="navigator.clipboard.writeText('https://leadcurate.com/intake/').then(()=>{this.textContent='✓ Copied';setTimeout(()=>this.textContent='🔗 Copy link',1800);})">🔗 Copy link</button>
           <a href="../intake/" target="_blank" class="btn btn-ghost" style="text-decoration:none;">Open form →</a>
         </div>
       </div>
@@ -897,7 +897,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
           The branded "Our 4 Packages" overview you send prospects after they fill the intake form. Explains all 4 tiers in plain English — <strong>no pricing visible</strong>. Prospect picks which tier they want, then you send the personalized quote.
         </p>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <button class="btn" onclick="navigator.clipboard.writeText('https://deedott60.github.io/leadcurate-launch/packages/').then(()=>{this.textContent='✓ Copied';setTimeout(()=>this.textContent='🔗 Copy link',1800);})">🔗 Copy link</button>
+          <button class="btn" onclick="navigator.clipboard.writeText('https://leadcurate.com/packages/').then(()=>{this.textContent='✓ Copied';setTimeout(()=>this.textContent='🔗 Copy link',1800);})">🔗 Copy link</button>
           <a href="../packages/" target="_blank" class="btn btn-ghost" style="text-decoration:none;">Open page →</a>
         </div>
       </div>
@@ -921,7 +921,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div class="card mb16">
         <div class="card-h"><span class="card-title">📋 Intake Form (the link you send prospects)</span></div>
         <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-bottom:8px;font-family:'JetBrains Mono',monospace;background:var(--cream2);padding:10px 12px;border-radius:8px;word-break:break-all;font-size:13px;">
-          https://deedott60.github.io/leadcurate-launch/intake/
+          https://leadcurate.com/intake/
         </p>
         <div class="flex-row" style="gap:8px;margin-top:10px;">
           <button class="btn" onclick="window.copyIntakeLink()">🔗 Copy link</button>
@@ -1064,8 +1064,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-const INTAKE_URL  = 'https://deedott60.github.io/leadcurate-launch/intake/';
-const SAMPLES_URL = 'https://deedott60.github.io/leadcurate-launch/sample-deliveries/';
+const INTAKE_URL  = 'https://leadcurate.com/intake/';
+const SAMPLES_URL = 'https://leadcurate.com/sample-deliveries/';
 const SB_URL = 'https://jdmlsraqioigbukspduo.supabase.co';
 const SB_KEY = 'sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4';
 const sb = createClient(SB_URL, SB_KEY);
@@ -1774,7 +1774,7 @@ window.buildQuote = () => {
   const tier    = document.getElementById('qTier').value;
   const records = document.getElementById('qRecords').value.trim();
   if (!buyer || !market) { toast('Need a buyer name + market first'); return; }
-  const base = 'https://deedott60.github.io/leadcurate-launch/quote-template/';
+  const base = 'https://leadcurate.com/quote-template/';
   const params = new URLSearchParams({ buyer, market, tier });
   if (records) params.set('records', records);
   const url = `${base}?${params.toString()}`;
