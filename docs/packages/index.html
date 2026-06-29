@@ -37,20 +37,23 @@
 
   /* Tier card */
   .tier{background:white;border:1px solid var(--line);border-radius:var(--radius);padding:32px 36px;margin-bottom:18px;display:grid;grid-template-columns:90px 1fr;gap:24px;border-left:5px solid var(--emerald);}
-  .tier-1{border-left-color:var(--crimson);}
+  .tier-1{border-left-color:var(--blue);}
   .tier-2{border-left-color:var(--gold);}
-  .tier-3{border-left-color:var(--emerald);}
-  .tier-4{border-left-color:var(--blue);}
+  .tier-3{border-left-color:var(--crimson);}
+  .tier-4{border-left-color:var(--emerald);}
+  .tier-5{border-left-color:#0f172a;background:linear-gradient(180deg,#faf7f2 0%,#f3eddf 100%);}
   .tier-num{font-family:"Playfair Display",serif;font-size:84px;font-weight:700;line-height:0.9;letter-spacing:-0.05em;color:var(--ink);opacity:0.15;}
-  .tier-1 .tier-num{color:var(--crimson);}
+  .tier-1 .tier-num{color:var(--blue);}
   .tier-2 .tier-num{color:var(--gold);}
-  .tier-3 .tier-num{color:var(--emerald);}
-  .tier-4 .tier-num{color:var(--blue);}
+  .tier-3 .tier-num{color:var(--crimson);}
+  .tier-4 .tier-num{color:var(--emerald);}
+  .tier-5 .tier-num{color:#0f172a;}
   .tier-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin-bottom:10px;}
-  .tier-1 .tier-tag{background:var(--crimson-soft);color:var(--crimson);}
+  .tier-1 .tier-tag{background:var(--blue-soft);color:var(--blue);}
   .tier-2 .tier-tag{background:var(--gold-soft);color:var(--gold);}
-  .tier-3 .tier-tag{background:var(--emerald-soft);color:var(--emerald);}
-  .tier-4 .tier-tag{background:var(--blue-soft);color:var(--blue);}
+  .tier-3 .tier-tag{background:var(--crimson-soft);color:var(--crimson);}
+  .tier-4 .tier-tag{background:var(--emerald-soft);color:var(--emerald);}
+  .tier-5 .tier-tag{background:#0f172a;color:#fbbf24;}
   .tier-name{font-family:"Playfair Display",serif;font-size:32px;font-weight:700;letter-spacing:-0.02em;margin-bottom:4px;color:var(--dark);}
   .tier-sub{font-size:14px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px;}
   .tier-desc{font-size:16px;color:#334155;line-height:1.65;margin-bottom:18px;}
@@ -94,20 +97,56 @@
 <span class="eyebrow">Our 4 Packages</span>
 <h1>Pick the urgency that fits your strategy.</h1>
 <p class="lede">PropStream sells the same static list to thousands. We do it differently — every package below is filtered for <strong>when motivation peaks</strong>, not just whether distress exists. Buyer access is capped per market to keep records warm. Pick the tier that matches how you work, and we'll send you a custom quote within the hour.</p>
-<div class="meta">Updated 2026-06-23 · 22 markets across 11 states · Limited buyer access per county</div>
+<div class="meta">Updated 2026-06-29 · 22 markets across 12 states · Limited buyer access per county</div>
 
 <div class="hr"></div>
 
-<!-- TIER 1 -->
+<!-- TIER 1 — Entry / Foundation -->
 <div class="tier tier-1">
   <div class="tier-num">1</div>
   <div>
+    <span class="tier-tag">Foundational baseline · entry product</span>
+    <div class="tier-name">Curated Distress List</div>
+    <div class="tier-sub">500 hand-scored records · one foundational lane in your market</div>
+    <p class="tier-desc">Foundational entry product. Pick the lane that fits how you work — Tax Delinquent, Absentee Owner, High-Equity (free and clear), Active Homeowner, or Liens — and we deliver the 500 highest-scored records in your market. Every record includes parcel ID, situs + mailing address, owner name, owner type (entity flag), balance, and distress score 0–100. The classic motivated-seller list, done right. Premium per-lead cost — never the bulk-aggregator $0.01/lead trap.</p>
+    <div class="tier-grid">
+      <div class="tier-stat"><div class="lab">Volume</div><div class="val">500 records</div></div>
+      <div class="tier-stat"><div class="lab">Cadence</div><div class="val">One-time · optional monthly refresh</div></div>
+      <div class="tier-stat"><div class="lab">Buyer access</div><div class="val">Limited per market</div></div>
+      <div class="tier-stat"><div class="lab">Delivery</div><div class="val">Branded XLSX · 24h</div></div>
+    </div>
+    <div class="tier-who"><strong>Built for:</strong> Any wholesaler, new or experienced. The entry point. Start here, stack other tiers as you scale.</div>
+  </div>
+</div>
+
+<!-- TIER 2 — Targeted Premium (court-scrape specialty) -->
+<div class="tier tier-2">
+  <div class="tier-num">2</div>
+  <div>
+    <span class="tier-tag">Court-scrape specialty · highest signal density</span>
+    <div class="tier-name">Targeted Premium</div>
+    <div class="tier-sub">250–500 hand-scored records · one premium court-scrape lane</div>
+    <p class="tier-desc">The premium specialty product. Pick one court-scrape lane — <strong>Probate / inherited</strong>, <strong>Pre-Foreclosure NOD</strong>, <strong>Code Violations</strong>, <strong>Active Permits / damage</strong>, or <strong>debt at the Breaking Point</strong> (5% threshold or growing year-over-year). Smaller, denser list pulled directly from court clerks. Every record has fresh distress signal within the last 30 days. This is what the All-The-Leads / Foreclosures-Daily / ProbateData tier of the market sells as a monthly subscription — we deliver it as a one-time drop you can stack with anything else.</p>
+    <div class="tier-grid">
+      <div class="tier-stat"><div class="lab">Volume</div><div class="val">250–500 records</div></div>
+      <div class="tier-stat"><div class="lab">Cadence</div><div class="val">One-time · optional monthly refresh</div></div>
+      <div class="tier-stat"><div class="lab">Buyer access</div><div class="val">Limited per market</div></div>
+      <div class="tier-stat"><div class="lab">Delivery</div><div class="val">Branded XLSX · 24h</div></div>
+    </div>
+    <div class="tier-who"><strong>Built for:</strong> Operators who already know the signal they want to work. Probate specialists, foreclosure flippers, code-violation rehabbers, and buy-and-hold investors chasing the math-driven debt subset.</div>
+  </div>
+</div>
+
+<!-- TIER 3 — Imminent Auction Hot Sheet -->
+<div class="tier tier-3">
+  <div class="tier-num">3</div>
+  <div>
     <span class="tier-tag">Auction Imminent · highest urgency</span>
     <div class="tier-name">Imminent Auction Hot Sheet</div>
-    <div class="tier-sub">Properties with verified auction date in next 30 days</div>
-    <p class="tier-desc">Owners in the final window before losing their property to the county. Distress score forced to 95-100. Calls land at peak motivation — when the math is "lose the house to the bank or take whatever offer comes in." These are the records that close deals this week, not next quarter.</p>
+    <div class="tier-sub">250 records · verified auction date scheduled within next 30 days</div>
+    <p class="tier-desc">Owners in the final window before losing their property to the county. Distress score forced to 95–100. Calls land at peak motivation — when the math is "lose the house to the bank or take whatever offer comes in." Scarce by nature — auctions are episodic, so the list is small and tight. These are the records that close deals this week, not next quarter.</p>
     <div class="tier-grid">
-      <div class="tier-stat"><div class="lab">Volume per sheet</div><div class="val">Varies by market</div></div>
+      <div class="tier-stat"><div class="lab">Volume per sheet</div><div class="val">250 records (scarcity premium)</div></div>
       <div class="tier-stat"><div class="lab">Cadence</div><div class="val">Generated on demand</div></div>
       <div class="tier-stat"><div class="lab">Buyer access</div><div class="val">1–3 per market</div></div>
       <div class="tier-stat"><div class="lab">Delivery</div><div class="val">Branded XLSX · 24h</div></div>
@@ -116,57 +155,39 @@
   </div>
 </div>
 
-<!-- TIER 2 -->
-<div class="tier tier-2">
-  <div class="tier-num">2</div>
-  <div>
-    <span class="tier-tag">Just-Filed · subscription feed</span>
-    <div class="tier-name">Fresh Triggers Feed</div>
-    <div class="tier-sub">New pre-foreclosure filings + code violations from the last 7 days</div>
-    <p class="tier-desc">Pulled directly from the court clerk. Brand-new distress events — the owner just got bad news, hasn't been buried under wholesaler calls yet. First-mover advantage. Distress score forced to 92. The only tier built as a recurring weekly subscription because the data refreshes that fast.</p>
-    <div class="tier-grid">
-      <div class="tier-stat"><div class="lab">Volume per week</div><div class="val">Varies by market</div></div>
-      <div class="tier-stat"><div class="lab">Cadence</div><div class="val">Weekly subscription</div></div>
-      <div class="tier-stat"><div class="lab">Buyer access</div><div class="val">Limited per market</div></div>
-      <div class="tier-stat"><div class="lab">Cancel</div><div class="val">Anytime</div></div>
-    </div>
-    <div class="tier-who"><strong>Built for:</strong> Daily cold callers and direct-mail teams who need a constant pipeline of fresh signal.</div>
-  </div>
-</div>
-
-<!-- TIER 3 -->
-<div class="tier tier-3">
-  <div class="tier-num">3</div>
-  <div>
-    <span class="tier-tag">At the Breaking Point</span>
-    <div class="tier-name">The Breaking Point</div>
-    <div class="tier-sub">Debt above 5% of property value, or growing year-over-year</div>
-    <p class="tier-desc">Multi-year tax or municipal debt (HOA, code, water) that has actively crossed local thresholds or is snowballing year-over-year. Indicates the owner is no longer "casually behind" — the math says they're about to lose it. Mathematically the highest-conversion subset in any market. Pre-scored, ranked top to bottom.</p>
-    <div class="tier-grid">
-      <div class="tier-stat"><div class="lab">Volume</div><div class="val">Varies by market</div></div>
-      <div class="tier-stat"><div class="lab">Cadence</div><div class="val">One-time · monthly refresh option</div></div>
-      <div class="tier-stat"><div class="lab">Buyer access</div><div class="val">Limited per market</div></div>
-      <div class="tier-stat"><div class="lab">Delivery</div><div class="val">Branded XLSX · 24h</div></div>
-    </div>
-    <div class="tier-who"><strong>Built for:</strong> Buy-and-hold investors, flippers, and any operator who wants the highest-conversion subset without the volume of a full list.</div>
-  </div>
-</div>
-
-<!-- TIER 4 -->
+<!-- TIER 4 — Market Dominance (All-Lanes Bundle) -->
 <div class="tier tier-4">
   <div class="tier-num">4</div>
   <div>
-    <span class="tier-tag">Foundational baseline</span>
-    <div class="tier-name">Curated Distress List</div>
-    <div class="tier-sub">Standard source filters · the classic motivated-seller list, done right</div>
-    <p class="tier-desc">Foundational market distress baseline. Standard source filters (Tax Delinquent, Absentee, Probate, High Equity) pulled directly from county records, normalized, scored, and ranked. Every record includes parcel ID, situs + mailing address, owner name, owner type (entity flag), balance, and distress score 0-100. The baseline product — what every wholesaler needs as their default working list.</p>
+    <span class="tier-tag">Every distress signal · all-lanes bundle</span>
+    <div class="tier-name">Market Dominance</div>
+    <div class="tier-sub">1,000 records · ALL 8 lanes scored together · one market</div>
+    <p class="tier-desc">The full distress picture for your target market. We pull every available lane — Tax Delinquent, Probate, Code Violations, Pre-Foreclosure, Active Permits, Owner Records, High Equity, Absentee — score them together, deduplicate cross-lane overlap, and deliver the 1,000 highest-scored records as one file. Best fit when you want every motivation signal in one place instead of stacking single-lane lists. Includes the velocity scoring across all 8 lanes, so the records ranked at the top show motivation density (multiple signals at once) — the highest-conversion records in your market.</p>
     <div class="tier-grid">
-      <div class="tier-stat"><div class="lab">Volume</div><div class="val">Varies by market</div></div>
-      <div class="tier-stat"><div class="lab">Cadence</div><div class="val">One-time · monthly refresh option</div></div>
+      <div class="tier-stat"><div class="lab">Volume</div><div class="val">1,000 records (top-scored across 8 lanes)</div></div>
+      <div class="tier-stat"><div class="lab">Cadence</div><div class="val">One-time · optional monthly refresh</div></div>
       <div class="tier-stat"><div class="lab">Buyer access</div><div class="val">Limited per market</div></div>
       <div class="tier-stat"><div class="lab">Delivery</div><div class="val">Branded XLSX · 24h</div></div>
     </div>
-    <div class="tier-who"><strong>Built for:</strong> Any wholesaler, new or experienced. The entry point. Start here, stack other tiers as you scale.</div>
+    <div class="tier-who"><strong>Built for:</strong> Acquisitions teams and serious wholesalers who want every distress signal in their market, scored together, with no overlap between lanes.</div>
+  </div>
+</div>
+
+<!-- TIER 5 — Exclusive Territory -->
+<div class="tier tier-5">
+  <div class="tier-num">5</div>
+  <div>
+    <span class="tier-tag">1-buyer lock · territory exclusivity</span>
+    <div class="tier-name">Exclusive Territory</div>
+    <div class="tier-sub">1,000 records · all 8 lanes · capped to a single buyer per market</div>
+    <p class="tier-desc">Same data set as Market Dominance, but capped to <strong>one buyer per market</strong> while your subscription is active. No other investor gets this market's data from us — period. Industry standard is 3 buyers per county; we go to 1. The premium reflects that exclusivity. For wholesalers and funds who treat data access as a competitive moat — when you don't want anyone else in your county dialing the same owners you are.</p>
+    <div class="tier-grid">
+      <div class="tier-stat"><div class="lab">Volume</div><div class="val">1,000 records (exclusive)</div></div>
+      <div class="tier-stat"><div class="lab">Cadence</div><div class="val">One-time · or monthly with continuous exclusivity</div></div>
+      <div class="tier-stat"><div class="lab">Buyer access</div><div class="val">1 buyer per market (locked)</div></div>
+      <div class="tier-stat"><div class="lab">Delivery</div><div class="val">Branded XLSX · 24h · priority support</div></div>
+    </div>
+    <div class="tier-who"><strong>Built for:</strong> Enterprise wholesalers, real-estate funds, and serious operators who want to lock a metro and keep competitors out of the same county data set.</div>
   </div>
 </div>
 

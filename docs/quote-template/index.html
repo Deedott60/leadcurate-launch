@@ -161,52 +161,98 @@
 </div>
 
 <script>
+  // 5-tier system (locked 2026-06-29 — see CLAUDE.md §3)
+  // Customer never sees "Tier 1/2/3/4/5" labels — operator passes ?tier=<slug> + optional ?lane=<lane>
+  // Adaptive brand labels are applied at render time based on the chosen lane.
   const TIERS = {
+    entry: {
+      tag: "Foundational Baseline",
+      title: "Curated Distress List",
+      subH: "500 hand-scored records, one foundational lane in your market",
+      desc: "Foundational entry product. Pick one lane (Tax Delinquent, Absentee, High Equity, Active Homeowner, Liens) and we deliver the 500 highest-scored records in your market. Every record includes parcel ID, addresses, owner name, owner type, balance, and distress score 0-100. Premium per-lead cost ($0.30 launch / $0.50 standard).",
+      records: "500 records",
+      refresh: "Optional $99/month refresh",
+      price: 149,
+      per: "one-time (launch)"
+    },
+    specialty: {
+      tag: "Court-Scrape Specialty",
+      title: "Targeted Premium",
+      subH: "250–500 hand-scored records from a single court-scrape lane",
+      desc: "The premium specialty product. Pick one court-scrape lane (Probate, Pre-Foreclosure NOD, Code Violations, Active Permits, or debt-growing 'Breaking Point'). Smaller, denser list — every record has fresh court signal within the last 30 days. Direct competitor to All The Leads / Foreclosures Daily / ProbateData, at a fraction of their monthly subscription.",
+      records: "250–500 records",
+      refresh: "Optional $99/month refresh",
+      price: 249,
+      per: "one-time (launch)"
+    },
     hotsheet: {
       tag: "Auction Imminent",
       title: "Imminent Auction Hot Sheet",
-      subH: "Verified auction date scheduled within the next 30 days",
-      desc: "Owners in the final window before losing their property to the county. Distress score 95-100. Calls land at peak motivation. Limited buyer access to keep records warm.",
-      records: "Varies by market",
-      refresh: "On-demand per sheet",
+      subH: "250 records · verified auction date within the next 30 days",
+      desc: "Owners in the final window before losing their property to the county. Distress score forced 95-100. Calls land at peak motivation. Scarce by nature — auctions are episodic, so the list is small and the price reflects exclusivity.",
+      records: "250 records (scarcity premium)",
+      refresh: "One-time per sheet",
       price: 397,
-      per: "one-time"
+      per: "one-time (launch)"
     },
-    freshtrigger: {
-      tag: "Just-Filed Triggers",
-      title: "Fresh Triggers Feed",
-      subH: "New pre-foreclosure filings + code violations from the last 7 days",
-      desc: "Pulled directly from the court clerk. Brand-new distress events — owner just got bad news, hasn't been worked by other wholesalers yet. Weekly subscription, cancel anytime. Distress score forced to 92.",
-      records: "Varies by market",
-      refresh: "Weekly subscription",
-      price: 197,
-      per: "per week"
+    bundle: {
+      tag: "Every Distress Signal",
+      title: "Market Dominance",
+      subH: "1,000 records · ALL 8 lanes scored together, one market",
+      desc: "The full distress picture for your target market. We pull all 8 lanes (Tax Delinquent, Probate, Code Violations, Pre-Foreclosure, Active Permits, Owner Records, High Equity, Absentee), score them together, deduplicate, and deliver the top 1,000. Best fit for acquisitions teams who want every motivation signal in one file.",
+      records: "1,000 records (top-scored across 8 lanes)",
+      refresh: "Optional $149/month refresh",
+      price: 697,
+      per: "one-time (launch)"
     },
-    breakingpoint: {
-      tag: "At the Breaking Point",
-      title: "The Breaking Point",
-      subH: "Debt above 5% of property value OR growing year-over-year",
-      desc: "Multi-year tax or municipal debt (HOA, water, code) that has crossed local thresholds or is snowballing year-over-year. Mathematically the highest-conversion subset. Pre-scored, ranked top to bottom.",
-      records: "Varies by market",
-      refresh: "Monthly refresh option",
-      price: 249,
-      per: "one-time"
+    exclusive: {
+      tag: "1-Buyer Lock",
+      title: "Exclusive Territory",
+      subH: "1,000 records · capped to 1 buyer per market — locks the metro",
+      desc: "Same data set as Market Dominance, but capped to a single buyer per market while your subscription is active. No other investor gets this market's data from us — period. The 3× premium reflects exclusivity (industry standard is 3 buyers per county; we go to 1). For wholesalers and funds who treat data access as competitive moat.",
+      records: "1,000 records (exclusive — no other buyer)",
+      refresh: "Continuous exclusivity on monthly auto-renewal",
+      price: 1497,
+      per: "one-time (launch) or monthly"
     },
-    deepdistress: {
-      tag: "Foundational Baseline",
-      title: "Curated Distress List",
-      subH: "Standard source filters · the entry product, done right",
-      desc: "Foundational market distress baseline using standard source filters (Tax Delinquent, Absentee, Probate, High Equity). Normalized, scored, ranked. Every record includes parcel ID, addresses, owner name, owner type, balance, and distress score 0-100.",
-      records: "Varies by market",
-      refresh: "Monthly refresh option",
-      price: 149,
-      per: "one-time"
-    }
+    // ---- DEPRECATED ALIASES (backward compat for any old quote URLs) ----
+    // freshtrigger -> specialty (Phase 3 subscription tier; for now operators use specialty for non-auction court-scrape)
+    // breakingpoint -> specialty (now one of the specialty lane labels)
+    // deepdistress -> entry
+    deepdistress: null,   // resolved below
+    breakingpoint: null,  // resolved below
+    freshtrigger: null    // resolved below
   };
+  TIERS.deepdistress  = { ...TIERS.entry };
+  TIERS.breakingpoint = { ...TIERS.specialty, title: "The Breaking Point", tag: "Debt at Breaking Point", subH: "500 records · debt above 5% of property value OR growing year-over-year" };
+  TIERS.freshtrigger  = { ...TIERS.specialty, title: "Fresh Triggers Feed", tag: "Just-Filed Triggers", subH: "Weekly drop · new court filings from the last 7 days (Phase 3 subscription preview)" };
 
   const params = new URLSearchParams(window.location.search);
-  const tier = params.get('tier') || 'deepdistress';
-  const t = TIERS[tier] || TIERS.deepdistress;
+  const tier = params.get('tier') || 'entry';
+  const t = TIERS[tier] || TIERS.entry;
+
+  // Optional ?lane= override of the brand label for Tier 1 and Tier 2 (adaptive labels per CLAUDE.md §3)
+  const lane = (params.get('lane') || '').toLowerCase();
+  const LANE_LABELS = {
+    entry: {
+      tax_delinquent:   { title: "Curated Distress List",   tag: "Tax Delinquent Owners" },
+      absentee:         { title: "Absentee Owner List",     tag: "Out-of-State Owners" },
+      high_equity:      { title: "High-Equity Owners List", tag: "Free-and-Clear Owners" },
+      homeowner:        { title: "Active Homeowner List",   tag: "Owner-Occupied" },
+      liens:            { title: "Liens Watchlist",         tag: "Mechanic + Judgment Liens" }
+    },
+    specialty: {
+      probate:          { title: "Probate Premium",            tag: "Inherited / Probate" },
+      pre_foreclosure:  { title: "Pre-Foreclosure Premium",    tag: "Just-Filed NOD" },
+      code_violations:  { title: "Code Violations List",       tag: "Open Code Cases" },
+      active_permits:   { title: "Active Permits Distress",    tag: "Stalled Renovations" },
+      debt_growing:     { title: "The Breaking Point",         tag: "Debt at Breaking Point" }
+    }
+  };
+  if (lane && LANE_LABELS[tier] && LANE_LABELS[tier][lane]) {
+    t.title = LANE_LABELS[tier][lane].title;
+    t.tag   = LANE_LABELS[tier][lane].tag;
+  }
 
   document.body.classList.add('tier-' + tier);
 

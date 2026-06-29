@@ -818,10 +818,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
           <input id="qBuyer" placeholder="Prospect name (e.g. John Smith)" style="padding:12px 14px;border:1px solid var(--line);border-radius:8px;font-size:15px;font-family:inherit;" />
           <input id="qMarket" placeholder="Market (e.g. Cobb GA — Atlanta NW)" style="padding:12px 14px;border:1px solid var(--line);border-radius:8px;font-size:15px;font-family:inherit;" />
           <select id="qTier" style="padding:12px 14px;border:1px solid var(--line);border-radius:8px;font-size:15px;font-family:inherit;background:white;">
-            <option value="deepdistress">Tier 4 · Curated Distress List — $149 (entry point, fits most)</option>
-            <option value="breakingpoint">Tier 3 · The Breaking Point — $249 (high-conversion subset)</option>
-            <option value="freshtrigger">Tier 2 · Fresh Triggers Feed — $197/wk launch (subscription)</option>
-            <option value="hotsheet">Tier 1 · Imminent Auction Hot Sheet — $397 per sheet (urgent)</option>
+            <option value="entry">Tier 1 · Entry / Foundation — $149 launch / $249 std (500 records, foundational lane)</option>
+            <option value="specialty">Tier 2 · Targeted Premium — $249 launch / $397 std (250–500 records, court-scrape specialty: probate / pre-foreclosure / code violations / active permits / debt-growing)</option>
+            <option value="hotsheet">Tier 3 · Imminent Auction Hot Sheet — $397 launch / $497 std (250 records, auction in 30 days)</option>
+            <option value="bundle">Tier 4 · Market Dominance — $697 launch / $797 std (1,000 records, ALL 8 lanes one market)</option>
+            <option value="exclusive">Tier 5 · Exclusive Territory — $1,497 launch / $1,997 std (1,000 records, capped 1 buyer per market)</option>
           </select>
           <input id="qRecords" placeholder="Records (optional, e.g. 5,678)" style="padding:12px 14px;border:1px solid var(--line);border-radius:8px;font-size:15px;font-family:inherit;" />
         </div>
@@ -839,31 +840,36 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
     </div>
 
-    <!-- ── 4-TIER REFERENCE ─────────────────────── -->
+    <!-- ── 5-TIER REFERENCE (locked 2026-06-29) ─── -->
     <div id="page-tiers-ref" class="page">
       <div class="page-header">
-        <div class="page-title">4-Tier system</div>
-        <div class="page-sub">Internal reference. The four products we sell, who they fit, and the velocity pitch.</div>
-      </div>
-
-      <div class="card mb16" style="border-left:4px solid #991b1b;">
-        <div class="card-h"><span class="card-title">🔴 Tier 1 — Imminent Auction Hot Sheet</span><span style="float:right;color:#991b1b;font-weight:700;">$397 launch · $497 std</span></div>
-        <p style="font-size:14px;color:var(--sl);line-height:1.55;margin:8px 0 0;"><strong>One-time per sheet.</strong> Verified auction date in next 30 days. Distress score 95-100. Volume varies by market. <em>Sell to wholesalers who can move this week.</em></p>
-      </div>
-
-      <div class="card mb16" style="border-left:4px solid #b45309;">
-        <div class="card-h"><span class="card-title">🟠 Tier 2 — Fresh Triggers Feed</span><span style="float:right;color:#b45309;font-weight:700;">$197/wk launch · $297/wk std</span></div>
-        <p style="font-size:14px;color:var(--sl);line-height:1.55;margin:8px 0 0;"><strong>Weekly subscription — the only recurring tier.</strong> New filings + code violations from last 7 days, pulled directly from the clerk. Score forced to 92. <em>Sell to daily cold callers.</em></p>
-      </div>
-
-      <div class="card mb16" style="border-left:4px solid #15803d;">
-        <div class="card-h"><span class="card-title">🟢 Tier 3 — The Breaking Point</span><span style="float:right;color:#15803d;font-weight:700;">$249 one-time</span></div>
-        <p style="font-size:14px;color:var(--sl);line-height:1.55;margin:8px 0 0;"><strong>Tax OR municipal debt</strong> (HOA, water, code) past threshold or growing YoY. Mathematically highest-converting subset. Pre-scored. <em>Sell to buy-and-hold + flippers.</em></p>
+        <div class="page-title">5-Tier system</div>
+        <div class="page-sub">Internal reference. The five SKUs we sell, who they fit, and the velocity pitch. Locked 2026-06-29 — supersedes prior 4-tier version. See CLAUDE.md §3.</div>
       </div>
 
       <div class="card mb16" style="border-left:4px solid #1d4ed8;">
-        <div class="card-h"><span class="card-title">🔵 Tier 4 — Curated Distress List</span><span style="float:right;color:#1d4ed8;font-weight:700;">$99 first 5 · $149 std</span></div>
-        <p style="font-size:14px;color:var(--sl);line-height:1.55;margin:8px 0 0;"><strong>Foundational baseline.</strong> Standard source filters (Tax Delinquent, Absentee, Probate). Entry product. Volume varies by market. <em>Fits every wholesaler — the default starting point.</em></p>
+        <div class="card-h"><span class="card-title">🔵 Tier 1 — Entry / Foundation</span><span style="float:right;color:#1d4ed8;font-weight:700;">$149 launch · $249 std</span></div>
+        <p style="font-size:14px;color:var(--sl);line-height:1.55;margin:8px 0 0;"><strong>500 records · one foundational lane.</strong> Pick one — Tax Delinquent, Absentee, High Equity, Active Homeowner, Liens, Entity-owned, Vacant land. Per-lead $0.30 launch / $0.50 std. Adaptive label per lane (Curated Distress List / Active Homeowner List / Absentee Owner List / etc.). <em>Foundational entry — anyone testing the product.</em></p>
+      </div>
+
+      <div class="card mb16" style="border-left:4px solid #b45309;">
+        <div class="card-h"><span class="card-title">🟠 Tier 2 — Targeted Premium</span><span style="float:right;color:#b45309;font-weight:700;">$249 launch · $397 std</span></div>
+        <p style="font-size:14px;color:var(--sl);line-height:1.55;margin:8px 0 0;"><strong>250–500 records · one court-scrape specialty lane.</strong> Probate / Pre-Foreclosure NOD / Code Violations / Active Permits / debt-growing (Breaking Point). Per-lead $0.50–$1.00 launch. Adaptive label (Probate Premium / Pre-Foreclosure Premium / Code Violations List / Active Permits Distress / The Breaking Point). <em>Direct competitor segment — All The Leads, Foreclosures Daily, ProbateData.</em></p>
+      </div>
+
+      <div class="card mb16" style="border-left:4px solid #991b1b;">
+        <div class="card-h"><span class="card-title">🔴 Tier 3 — Imminent Auction Hot Sheet</span><span style="float:right;color:#991b1b;font-weight:700;">$397 launch · $497 std</span></div>
+        <p style="font-size:14px;color:var(--sl);line-height:1.55;margin:8px 0 0;"><strong>250 records · auction in next 30 days.</strong> Verified auction date, distress score forced 95–100. Per-lead $1.59 launch / $1.99 std. Scarce by nature. <em>Sell to wholesalers who can contract this week.</em></p>
+      </div>
+
+      <div class="card mb16" style="border-left:4px solid #15803d;">
+        <div class="card-h"><span class="card-title">🟢 Tier 4 — Market Dominance (All-Lanes Bundle)</span><span style="float:right;color:#15803d;font-weight:700;">$697 launch · $797 std</span></div>
+        <p style="font-size:14px;color:var(--sl);line-height:1.55;margin:8px 0 0;"><strong>1,000 records · ALL 8 lanes, one market, scored together, deduplicated.</strong> Tax Delinquent + Probate + Code Violations + Pre-Foreclosure + Active Permits + Owner Records + High Equity + Absentee. Per-lead $0.70 launch / $0.80 std. <em>Sell to acquisitions teams who want every distress signal in their market.</em></p>
+      </div>
+
+      <div class="card mb16" style="border-left:4px solid #0f172a;background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);color:#faf7f2;">
+        <div class="card-h"><span class="card-title" style="color:#faf7f2;">⚫ Tier 5 — Exclusive Territory</span><span style="float:right;color:#fbbf24;font-weight:700;">$1,497 launch · $1,997 std</span></div>
+        <p style="font-size:14px;color:#dcfce7;line-height:1.55;margin:8px 0 0;"><strong>1,000 records · all 8 lanes · capped to 1 buyer per market.</strong> No other investor gets this market while subscription active. 3× premium over Tier 4 reflects exclusivity (US Lead List sells 3-buyer-per-county; we go to 1). Per-lead $1.50 launch / $2.00 std. <em>Enterprise wholesalers / funds locking a metro.</em></p>
       </div>
 
       <div class="card mb16" style="background:var(--em-d);color:var(--cream);">
@@ -884,7 +890,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
 
       <div class="card mb16" style="border:2px solid #15803d;background:linear-gradient(180deg,#f0fdf4,white);">
-        <div class="card-h"><span class="card-title">🎯 4-Tier Product System (Internal)</span></div>
+        <div class="card-h"><span class="card-title">🎯 5-Tier Product System (Internal)</span></div>
         <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-bottom:14px;">
           The scoring framework that separates us from PropStream. Hot Sheet (auction imminent), Fresh Triggers (just filed), Breaking Point (debt snowballing), Deep Distress (steady-state). Includes the 30-second velocity pitch, decision matrix for recommending tiers, and pricing per tier. <strong>Internal only — customers don't see this until full launch.</strong>
         </p>
@@ -894,7 +900,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div class="card mb16">
         <div class="card-h"><span class="card-title">📦 Customer-Facing Packages Page</span></div>
         <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-bottom:14px;">
-          The branded "Our 4 Packages" overview you send prospects after they fill the intake form. Explains all 4 tiers in plain English — <strong>no pricing visible</strong>. Prospect picks which tier they want, then you send the personalized quote.
+          The branded "Our 5 Packages" overview you send prospects after they fill the intake form. Explains all 5 tiers in plain English — <strong>no pricing visible</strong>. Prospect picks which tier they want, then you send the personalized quote.
         </p>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
           <button class="btn" onclick="navigator.clipboard.writeText('https://leadcurate.com/packages/').then(()=>{this.textContent='✓ Copied';setTimeout(()=>this.textContent='🔗 Copy link',1800);})">🔗 Copy link</button>
