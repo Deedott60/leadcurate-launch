@@ -1657,16 +1657,57 @@ function renderFeed(elId, countId){
   const icons = {intake:'📥',prospect:'👤',message:'💬',system:'⚙️',agent:'🤖',mail:'📧',quote:'💵',pay:'💰'};
   el.innerHTML = visible.slice(0,50).map(ev=>{
     const family = (ev.event_type||'system').split(':')[0];
+    // Action buttons on intake:new — Review (opens Send Quote prefilled), Reject (silently mark)
+    const actions = (ev.event_type==='intake:new') ? `
+      <div class="f-actions" style="display:flex;gap:8px;margin-top:10px;">
+        <button class="btn" onclick="window.reviewIntake('${esc(ev.id)}')">🔍 Review & Send Quote →</button>
+        <button class="btn btn-ghost" onclick="window.rejectIntake('${esc(ev.id)}')">Reject</button>
+      </div>` : '';
     return `
-    <div class="feed-item">
+    <div class="feed-item" data-event-id="${esc(ev.id)}">
       <div class="feed-icon ${family}">${icons[family]||'📌'}</div>
       <div class="feed-body">
         <div class="f-title">${esc(ev.title)}</div>
-        ${ev.body?`<div class="f-detail">${esc(ev.body)}</div>`:''}
+        ${ev.body?`<div class="f-detail" style="white-space:pre-wrap;">${esc(ev.body)}</div>`:''}
         <div class="f-when">${esc(ev.source||'')}${ev.source?' · ':''}${fmt(ev.created_at)}</div>
+        ${actions}
       </div>
     </div>`;}).join('');
 }
+
+// Parse an intake:new event body and pre-fill the Send Quote panel
+window.reviewIntake = async function(eventId){
+  const ev = FEED.find(f => String(f.id)===String(eventId));
+  if(!ev) return;
+  // pull the fields out of the body (format: "Email: x\nMarkets: y\n...")
+  const lines = (ev.body||'').split('\n');
+  const get = (k) => { const line = lines.find(l => l.toLowerCase().startsWith(k.toLowerCase()+':')); return line ? line.split(':').slice(1).join(':').trim() : ''; };
+  const name = (ev.title||'').replace(/^New intake:\s*/,'').split(' — ')[0].trim();
+  const market = get('Markets').split(',')[0].trim();
+  const recommended = get('Recommended');
+  // navigate to send-quote page and prefill
+  nav('send-quote');
+  setTimeout(() => {
+    const buyerEl = document.getElementById('qBuyer'); if(buyerEl) buyerEl.value = name;
+    const marketEl = document.getElementById('qMarket'); if(marketEl) marketEl.value = market;
+    const tierEl = document.getElementById('qTier');
+    if(tierEl && recommended){
+      const key = recommended.toLowerCase().includes('tier 1') || recommended.toLowerCase().includes('curated distress') ? 'entry'
+        : recommended.toLowerCase().includes('tier 2') || recommended.toLowerCase().includes('probate') || recommended.toLowerCase().includes('breaking') ? 'specialty'
+        : recommended.toLowerCase().includes('tier 3') || recommended.toLowerCase().includes('auction') ? 'hotsheet'
+        : recommended.toLowerCase().includes('tier 4') || recommended.toLowerCase().includes('dominance') ? 'bundle'
+        : recommended.toLowerCase().includes('tier 5') || recommended.toLowerCase().includes('exclusive') ? 'exclusive'
+        : 'entry';
+      tierEl.value = key;
+    }
+  }, 100);
+};
+
+window.rejectIntake = async function(eventId){
+  if(!confirm('Reject this intake? No email will be sent to the customer.')) return;
+  if(SYNC){ await sb.from('activity_feed').update({read:true, event_type:'intake:rejected'}).eq('id', eventId); }
+  await loadFeed();
+};
 
 async function saveEvent(type, title, body, source='command-dashboard', target=null){
   const ev = {event_type:type, title, body:body||null, source, target};
