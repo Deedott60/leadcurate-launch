@@ -818,16 +818,23 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
           <input id="qBuyer" placeholder="Prospect name (e.g. John Smith)" style="padding:12px 14px;border:1px solid var(--line);border-radius:8px;font-size:15px;font-family:inherit;" />
           <input id="qMarket" placeholder="Market (e.g. Cobb GA — Atlanta NW)" style="padding:12px 14px;border:1px solid var(--line);border-radius:8px;font-size:15px;font-family:inherit;" />
           <select id="qTier" style="padding:12px 14px;border:1px solid var(--line);border-radius:8px;font-size:15px;font-family:inherit;background:white;">
-            <option value="entry">Tier 1 · Entry / Foundation — $149 launch / $249 std (500 records, foundational lane)</option>
-            <option value="specialty">Tier 2 · Targeted Premium — $249 launch / $397 std (250–500 records, court-scrape specialty: probate / pre-foreclosure / code violations / active permits / debt-growing)</option>
-            <option value="hotsheet">Tier 3 · Imminent Auction Hot Sheet — $397 launch / $497 std (250 records, auction in 30 days)</option>
-            <option value="bundle">Tier 4 · Market Dominance — $697 launch / $797 std (1,000 records, ALL 8 lanes one market)</option>
-            <option value="exclusive">Tier 5 · Exclusive Territory — $1,497 launch / $1,997 std (1,000 records, capped 1 buyer per market)</option>
+            <option value="entry">Entry / Foundation — $149 launch / $249 std (500 records, foundational lane)</option>
+            <option value="specialty">Targeted Premium — $249 launch / $397 std (250–500 records, court-scrape specialty: probate / pre-foreclosure / code violations / active permits / debt-growing)</option>
+            <option value="hotsheet">Imminent Auction Hot Sheet — $397 launch / $497 std (250 records, auction in 30 days)</option>
+            <option value="bundle">Market Dominance — $697 launch / $797 std (1,000 records, ALL 8 lanes one market)</option>
+            <option value="exclusive">Exclusive Territory — $1,497 launch / $1,997 std (1,000 records, capped 1 buyer per market)</option>
           </select>
           <input id="qRecords" placeholder="Records (optional, e.g. 5,678)" style="padding:12px 14px;border:1px solid var(--line);border-radius:8px;font-size:15px;font-family:inherit;" />
+          <input type="hidden" id="qIntakeId" />
+          <input type="hidden" id="qEmail" />
         </div>
 
         <button class="btn" onclick="window.buildQuote()">Build quote link →</button>
+
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px;">
+          <button class="btn" id="sendQuoteEmailBtn" onclick="window.sendQuoteToCustomer()" disabled>Send to customer</button>
+          <span id="quoteSendStatus" style="font-size:13px;color:var(--sl);"></span>
+        </div>
 
         <div id="quoteOut" style="display:none;margin-top:18px;padding:16px;background:var(--cream2);border-radius:10px;">
           <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--em-d);margin-bottom:8px;">Personalized quote link</div>
@@ -848,28 +855,28 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
 
       <div class="card mb16" style="border-left:4px solid #1d4ed8;">
-        <div class="card-h"><span class="card-title">🔵 Tier 1 — Entry / Foundation</span><span style="float:right;color:#1d4ed8;font-weight:700;">$149 launch · $249 std</span></div>
+        <div class="card-h"><span class="card-title">🔵 Entry / Foundation</span><span style="float:right;color:#1d4ed8;font-weight:700;">$149 launch · $249 std</span></div>
         <p style="font-size:14px;color:var(--sl);line-height:1.55;margin:8px 0 0;"><strong>500 records · one foundational lane.</strong> Pick one — Tax Delinquent, Absentee, High Equity, Active Homeowner, Liens, Entity-owned, Vacant land. Per-lead $0.30 launch / $0.50 std. Adaptive label per lane (Curated Distress List / Active Homeowner List / Absentee Owner List / etc.). <em>Foundational entry — anyone testing the product.</em></p>
       </div>
 
       <div class="card mb16" style="border-left:4px solid #b45309;">
-        <div class="card-h"><span class="card-title">🟠 Tier 2 — Targeted Premium</span><span style="float:right;color:#b45309;font-weight:700;">$249 launch · $397 std</span></div>
+        <div class="card-h"><span class="card-title">🟠 Targeted Premium</span><span style="float:right;color:#b45309;font-weight:700;">$249 launch · $397 std</span></div>
         <p style="font-size:14px;color:var(--sl);line-height:1.55;margin:8px 0 0;"><strong>250–500 records · one court-scrape specialty lane.</strong> Probate / Pre-Foreclosure NOD / Code Violations / Active Permits / debt-growing (Breaking Point). Per-lead $0.50–$1.00 launch. Adaptive label (Probate Premium / Pre-Foreclosure Premium / Code Violations List / Active Permits Distress / The Breaking Point). <em>Direct competitor segment — All The Leads, Foreclosures Daily, ProbateData.</em></p>
       </div>
 
       <div class="card mb16" style="border-left:4px solid #991b1b;">
-        <div class="card-h"><span class="card-title">🔴 Tier 3 — Imminent Auction Hot Sheet</span><span style="float:right;color:#991b1b;font-weight:700;">$397 launch · $497 std</span></div>
+        <div class="card-h"><span class="card-title">🔴 Imminent Auction Hot Sheet</span><span style="float:right;color:#991b1b;font-weight:700;">$397 launch · $497 std</span></div>
         <p style="font-size:14px;color:var(--sl);line-height:1.55;margin:8px 0 0;"><strong>250 records · auction in next 30 days.</strong> Verified auction date, distress score forced 95–100. Per-lead $1.59 launch / $1.99 std. Scarce by nature. <em>Sell to wholesalers who can contract this week.</em></p>
       </div>
 
       <div class="card mb16" style="border-left:4px solid #15803d;">
-        <div class="card-h"><span class="card-title">🟢 Tier 4 — Market Dominance (All-Lanes Bundle)</span><span style="float:right;color:#15803d;font-weight:700;">$697 launch · $797 std</span></div>
+        <div class="card-h"><span class="card-title">🟢 Market Dominance (All-Lanes Bundle)</span><span style="float:right;color:#15803d;font-weight:700;">$697 launch · $797 std</span></div>
         <p style="font-size:14px;color:var(--sl);line-height:1.55;margin:8px 0 0;"><strong>1,000 records · ALL 8 lanes, one market, scored together, deduplicated.</strong> Tax Delinquent + Probate + Code Violations + Pre-Foreclosure + Active Permits + Owner Records + High Equity + Absentee. Per-lead $0.70 launch / $0.80 std. <em>Sell to acquisitions teams who want every distress signal in their market.</em></p>
       </div>
 
       <div class="card mb16" style="border-left:4px solid #0f172a;background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);color:#faf7f2;">
         <div class="card-h"><span class="card-title" style="color:#faf7f2;">⚫ Tier 5 — Exclusive Territory</span><span style="float:right;color:#fbbf24;font-weight:700;">$1,497 launch · $1,997 std</span></div>
-        <p style="font-size:14px;color:#dcfce7;line-height:1.55;margin:8px 0 0;"><strong>1,000 records · all 8 lanes · capped to 1 buyer per market.</strong> No other investor gets this market while subscription active. 3× premium over Tier 4 reflects exclusivity (US Lead List sells 3-buyer-per-county; we go to 1). Per-lead $1.50 launch / $2.00 std. <em>Enterprise wholesalers / funds locking a metro.</em></p>
+        <p style="font-size:14px;color:#dcfce7;line-height:1.55;margin:8px 0 0;"><strong>1,000 records · all 8 lanes · capped to 1 buyer per market.</strong> No other investor gets this market while subscription active. 3× premium over Market Dominance reflects exclusivity (US Lead List sells 3-buyer-per-county; we go to 1). Per-lead $1.50 launch / $2.00 std. <em>Enterprise wholesalers / funds locking a metro.</em></p>
       </div>
 
       <div class="card mb16" style="background:var(--em-d);color:var(--cream);">
@@ -1683,17 +1690,32 @@ window.reviewIntake = async function(eventId){
   const lines = (ev.body||'').split('\n');
   const get = (k) => { const line = lines.find(l => l.toLowerCase().startsWith(k.toLowerCase()+':')); return line ? line.split(':').slice(1).join(':').trim() : ''; };
   const name = (ev.title||'').replace(/^New intake:\s*/,'').split(' — ')[0].trim();
+  const intakeId = get('Intake ID');
+  let email = get('Email');
   const market = get('Markets').split(',')[0].trim();
-  const recommended = get('Recommended');
+  let recommended = get('Recommended');
+  if(intakeId && SYNC){
+    const { data } = await sb
+      .from('intake_requests')
+      .select('recommended_tier,email,markets,name')
+      .eq('id', intakeId)
+      .maybeSingle();
+    if(data?.recommended_tier) recommended = data.recommended_tier;
+    if(data?.email && !email) email = data.email;
+  }
   // navigate to send-quote page and prefill
   nav('send-quote');
   setTimeout(() => {
     const buyerEl = document.getElementById('qBuyer'); if(buyerEl) buyerEl.value = name;
     const marketEl = document.getElementById('qMarket'); if(marketEl) marketEl.value = market;
+    const intakeEl = document.getElementById('qIntakeId'); if(intakeEl) intakeEl.value = intakeId;
+    const emailEl = document.getElementById('qEmail'); if(emailEl) emailEl.value = email;
+    const statusEl = document.getElementById('quoteSendStatus'); if(statusEl) statusEl.textContent = email ? `Ready to email ${email}` : 'No email found on intake';
+    const sendBtn = document.getElementById('sendQuoteEmailBtn'); if(sendBtn) sendBtn.disabled = !email;
     const tierEl = document.getElementById('qTier');
     if(tierEl && recommended){
-      const key = recommended.toLowerCase().includes('tier 1') || recommended.toLowerCase().includes('curated distress') ? 'entry'
-        : recommended.toLowerCase().includes('tier 2') || recommended.toLowerCase().includes('probate') || recommended.toLowerCase().includes('breaking') ? 'specialty'
+      const key = recommended.toLowerCase().includes('tier 1') || recommended.toLowerCase().includes('curated distress') || recommended.toLowerCase().includes('entry') ? 'entry'
+        : recommended.toLowerCase().includes('tier 2') || recommended.toLowerCase().includes('probate') || recommended.toLowerCase().includes('breaking') || recommended.toLowerCase().includes('targeted premium') || recommended.toLowerCase().includes('specialty') ? 'specialty'
         : recommended.toLowerCase().includes('tier 3') || recommended.toLowerCase().includes('auction') ? 'hotsheet'
         : recommended.toLowerCase().includes('tier 4') || recommended.toLowerCase().includes('dominance') ? 'bundle'
         : recommended.toLowerCase().includes('tier 5') || recommended.toLowerCase().includes('exclusive') ? 'exclusive'
@@ -1836,6 +1858,60 @@ window.buildQuote = () => {
   window._currentQuoteUrl = url;
   toast('Quote link built — copy it next');
 };
+
+window.sendQuoteToCustomer = async () => {
+  const buyer = document.getElementById('qBuyer').value.trim();
+  const market = document.getElementById('qMarket').value.trim();
+  const tier = document.getElementById('qTier').value;
+  const intakeId = document.getElementById('qIntakeId').value.trim();
+  const email = document.getElementById('qEmail').value.trim();
+  const statusEl = document.getElementById('quoteSendStatus');
+  if(statusEl){ statusEl.style.color = 'var(--sl)'; statusEl.textContent = ''; }
+  if(!buyer || !market){ toast('Need a buyer name + market first'); return; }
+  if(!email){
+    if(statusEl){ statusEl.style.color = '#991b1b'; statusEl.textContent = 'No customer email on this intake.'; }
+    return;
+  }
+  if(!confirm('Send recommendation email to ' + email + '?')) return;
+
+  const btn = document.getElementById('sendQuoteEmailBtn');
+  if(btn) btn.disabled = true;
+  if(statusEl) statusEl.textContent = 'Sending...';
+
+  try {
+    const res = await fetch('https://jdmlsraqioigbukspduo.supabase.co/functions/v1/intake-autoresponse', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        record: {
+          id: intakeId,
+          name: buyer,
+          email,
+          markets: [market],
+          list_type: [],
+          notes: 'Operator-approved from dashboard'
+        },
+        override_tier_key: tier
+      })
+    });
+    const text = await res.text();
+    let data = {};
+    try { data = text ? JSON.parse(text) : {}; } catch(_err) {}
+    if(!res.ok || data.ok === false){
+      const message = data.error || text || `HTTP ${res.status}`;
+      if(statusEl){ statusEl.style.color = '#991b1b'; statusEl.textContent = message; }
+      if(btn) btn.disabled = false;
+      return;
+    }
+    if(statusEl){ statusEl.style.color = 'var(--em-d)'; statusEl.textContent = `Sent to ${email}`; }
+    toast('Recommendation email sent');
+    await loadFeed();
+  } catch(err) {
+    if(statusEl){ statusEl.style.color = '#991b1b'; statusEl.textContent = String(err?.message || err); }
+    if(btn) btn.disabled = false;
+  }
+};
+
 window.copyQuoteLink = () => {
   if (!window._currentQuoteUrl) return;
   navigator.clipboard.writeText(window._currentQuoteUrl).then(()=>toast('Quote link copied — paste in your message'));

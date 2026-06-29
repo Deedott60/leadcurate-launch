@@ -162,7 +162,7 @@
 
 <script>
   // 5-tier system (locked 2026-06-29 — see CLAUDE.md §3)
-  // Customer never sees "Tier 1/2/3/4/5" labels — operator passes ?tier=<slug> + optional ?lane=<lane>
+  // Customer never sees internal tier numbers — operator passes ?tier=<slug> + optional ?lane=<lane>
   // Adaptive brand labels are applied at render time based on the chosen lane.
   const TIERS = {
     entry: {
@@ -231,7 +231,7 @@
   const tier = params.get('tier') || 'entry';
   const t = TIERS[tier] || TIERS.entry;
 
-  // Optional ?lane= override of the brand label for Tier 1 and Tier 2 (adaptive labels per CLAUDE.md §3)
+  // Optional ?lane= override of the brand label for entry and specialty offers (adaptive labels per CLAUDE.md §3)
   const lane = (params.get('lane') || '').toLowerCase();
   const LANE_LABELS = {
     entry: {

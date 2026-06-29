@@ -14,6 +14,15 @@ type IntakeRecord = {
   created_at?: string | null;
 };
 
+type IntakePayload = {
+  record?: IntakeRecord;
+  override_tier_key?: string | null;
+  table?: string;
+  new_record?: IntakeRecord;
+  new?: IntakeRecord;
+  data?: IntakeRecord;
+};
+
 const SB_URL = Deno.env.get("SUPABASE_URL") ?? "https://jdmlsraqioigbukspduo.supabase.co";
 const SB_KEY =
   Deno.env.get("SUPABASE_PUBLISHABLE_KEY") ??
@@ -27,6 +36,9 @@ const HOSTINGER_MAIL_BASE_URL =
 
 const jsonHeaders = {
   "Content-Type": "application/json",
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
   "Connection": "keep-alive",
 };
 
@@ -39,48 +51,80 @@ function firstMarket(record: IntakeRecord): string {
   return markets[0] || "your market";
 }
 
-function pickTier(record: IntakeRecord): { tierKey: string; label: string; reason: string } {
+type TierRecommendation = { tierKey: string; label: string; reason: string };
+
+const TIER_LOOKUP: Record<string, TierRecommendation> = {
+  entry: {
+    tierKey: "entry",
+    label: "Curated Distress List",
+    reason: "Derrick matched this to the foundational lane for your first focused LeadCurate pull.",
+  },
+  specialty: {
+    tierKey: "specialty",
+    label: "Targeted Premium",
+    reason: "Derrick matched this to a premium specialty lane where freshness and source context matter most.",
+  },
+  hotsheet: {
+    tierKey: "hotsheet",
+    label: "Imminent Auction Hot Sheet",
+    reason: "Derrick matched this to urgent auction timing where speed and verified dates matter most.",
+  },
+  bundle: {
+    tierKey: "bundle",
+    label: "Market Dominance",
+    reason: "Derrick matched this to a full-market view across multiple distress signals.",
+  },
+  exclusive: {
+    tierKey: "exclusive",
+    label: "Exclusive Territory",
+    reason: "Derrick matched this to capped market access for one serious buyer in the territory.",
+  },
+};
+
+function pickTier(record: IntakeRecord): TierRecommendation {
   const urgency = normalize(record.urgency);
   const role = normalize(record.role);
   const volume = normalize(record.volume);
   const notes = normalize(record.notes);
+  const lane = normalize([...(record.list_type ?? []), record.notes ?? ""].join(" "));
+
+  if (lane.includes("probate")) {
+    return {
+      tierKey: "specialty",
+      label: "Probate Premium",
+      reason: "Probate is a premium court-scrape lane, so the right fit is a focused specialty pull.",
+    };
+  }
+
+  if (lane.includes("pre-foreclosure") || lane.includes("foreclosure")) {
+    return {
+      tierKey: "specialty",
+      label: "Pre-Foreclosure Premium",
+      reason: "Pre-foreclosure is a time-sensitive specialty lane that needs source freshness.",
+    };
+  }
+
+  if (lane.includes("code")) return { ...TIER_LOOKUP.specialty, label: "Code Violations List" };
+  if (lane.includes("permit")) return { ...TIER_LOOKUP.specialty, label: "Active Permits Distress" };
+  if (lane.includes("all signals") || lane.includes("all lanes") || role.includes("fund") || volume.includes("enterprise")) return TIER_LOOKUP.exclusive;
+  if (lane.includes("not sure") || lane.includes("multi") || role.includes("team") || role.includes("acquisitions")) return TIER_LOOKUP.bundle;
+  if (lane.includes("auction") || urgency.includes("this week") || urgency.includes("need it now") || urgency.includes("24") || urgency.includes("48")) return TIER_LOOKUP.hotsheet;
 
   if (
-    (urgency.includes("need it now") || urgency.includes("24") || urgency.includes("48")) &&
-    (urgency.includes("this week") || notes.includes("this week"))
+    lane.includes("debt") ||
+    volume.includes("500") ||
+    volume.includes("1500") ||
+    notes.includes("quality") ||
+    notes.includes("equity")
   ) {
     return {
-      tierKey: "hotsheet",
-      label: "Tier 1 - Imminent Auction Hot Sheet",
-      reason: "You flagged urgent timing and this-week need.",
+      tierKey: "specialty",
+      label: "The Breaking Point",
+      reason: "Your intake points toward a tighter pressure-signal subset rather than a broad entry pull.",
     };
   }
 
-  if (role.includes("acquisitions") && urgency.includes("this week")) {
-    return {
-      tierKey: "freshtrigger",
-      label: "Tier 2 - Fresh Triggers Feed",
-      reason: "An acquisitions team with this-week timing usually needs the newest trigger events first.",
-    };
-  }
-
-  if (
-    (volume.includes("500") || volume.includes("1500") || volume.includes("500-1500")) &&
-    (role.includes("solo") || role.includes("individual"))
-  ) {
-    return {
-      tierKey: "breakingpoint",
-      label: "Tier 3 - The Breaking Point",
-      reason: "Your solo operator profile and target volume point toward a tighter high-conversion subset.",
-    };
-  }
-
-  return {
-    tierKey: "deepdistress",
-    label: "Tier 4 - Curated Distress List",
-    reason:
-      "This is the best starting lane when the intake does not point to an urgent or team-based trigger feed.",
-  };
+  return TIER_LOOKUP.entry;
 }
 
 function buildQuoteUrl(record: IntakeRecord, tierKey: string): string {
@@ -256,7 +300,7 @@ async function discoverMailboxResourceId(token: string): Promise<string | null> 
   return typeof resourceId === "string" && resourceId.trim() ? resourceId.trim() : null;
 }
 
-function extractRecord(payload: any): IntakeRecord | null {
+function extractRecord(payload: IntakePayload): IntakeRecord | null {
   if (payload?.table && payload.table !== "intake_requests") return null;
   return payload?.record ?? payload?.new_record ?? payload?.new ?? payload?.data ?? payload ?? null;
 }
@@ -268,7 +312,7 @@ Deno.serve(async (req: Request) => {
   }
 
   try {
-    const payload = await req.json();
+    const payload = await req.json() as IntakePayload;
     const record = extractRecord(payload);
 
     if (!record || typeof record !== "object") {
@@ -278,7 +322,8 @@ Deno.serve(async (req: Request) => {
       });
     }
 
-    const tier = pickTier(record);
+    const overrideTierKey = normalize(payload.override_tier_key);
+    const tier = overrideTierKey && TIER_LOOKUP[overrideTierKey] ? TIER_LOOKUP[overrideTierKey] : pickTier(record);
     const quoteUrl = buildQuoteUrl(record, tier.tierKey);
     const to = String(record.email ?? "").trim();
     const subject = `LeadCurate recommendation: ${tier.label}`;
@@ -301,7 +346,7 @@ Deno.serve(async (req: Request) => {
       emailResult.sent ? `Provider: ${emailResult.provider}` : `Reason: ${emailResult.reason ?? "not sent"}`,
     ].join("\n");
 
-    await postActivity(emailResult.sent ? "conf:done" : "conf:status", statusTitle, statusBody, "claude");
+    await postActivity(emailResult.sent ? "quote:sent" : "conf:status", statusTitle, statusBody, emailResult.sent ? "derrick" : "claude");
 
     return new Response(JSON.stringify({ ok: true, tier, quoteUrl, email: emailResult }), {
       headers: jsonHeaders,
