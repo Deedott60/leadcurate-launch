@@ -1,4 +1,5 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
+import type { SupabaseClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 
 type MailPayload = Record<string, unknown>;
 
@@ -67,6 +68,9 @@ function extractPreview(payload: MailPayload): string | null {
 }
 
 function readSupabaseAdminKey(): string | null {
+  const legacyServiceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (legacyServiceRoleKey) return legacyServiceRoleKey;
+
   const secretKeysJson = Deno.env.get("SUPABASE_SECRET_KEYS");
   if (secretKeysJson) {
     try {
@@ -79,25 +83,42 @@ function readSupabaseAdminKey(): string | null {
     }
   }
 
-  return Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? null;
+  return null;
+}
+
+async function loadHostingerMailToken(supabase: SupabaseClient): Promise<string | null> {
+  const { data, error } = await supabase.rpc("get_app_secret", {
+    secret_name: "HOSTINGER_MAIL_TOKEN",
+  });
+
+  if (error) {
+    console.error("Failed to load HOSTINGER_MAIL_TOKEN", error);
+    return null;
+  }
+
+  return typeof data === "string" && data.trim() ? data.trim() : null;
 }
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   if (req.method !== "POST") return jsonResponse({ error: "Method not allowed" }, 405);
 
-  const expectedToken = Deno.env.get("HOSTINGER_MAIL_TOKEN");
-  if (!expectedToken) return jsonResponse({ error: "HOSTINGER_MAIL_TOKEN not configured" }, 500);
-
-  const auth = req.headers.get("authorization") ?? "";
-  const expectedAuth = `Bearer ${expectedToken}`;
-  if (auth !== expectedAuth) return unauthorized();
-
   const supabaseUrl = Deno.env.get("SUPABASE_URL");
   const supabaseAdminKey = readSupabaseAdminKey();
   if (!supabaseUrl || !supabaseAdminKey) {
     return jsonResponse({ error: "Supabase admin env vars not configured" }, 500);
   }
+
+  const supabase = createClient(supabaseUrl, supabaseAdminKey, {
+    auth: { persistSession: false },
+  });
+
+  const expectedToken = await loadHostingerMailToken(supabase);
+  if (!expectedToken) return jsonResponse({ error: "HOSTINGER_MAIL_TOKEN not configured" }, 500);
+
+  const auth = req.headers.get("authorization") ?? "";
+  const expectedAuth = `Bearer ${expectedToken}`;
+  if (auth !== expectedAuth) return unauthorized();
 
   let payload: MailPayload;
   try {
@@ -111,10 +132,6 @@ Deno.serve(async (req) => {
 
   const subject = readString(payload, ["subject", "title"]);
   const preview = extractPreview(payload);
-
-  const supabase = createClient(supabaseUrl, supabaseAdminKey, {
-    auth: { persistSession: false },
-  });
 
   const { data: emailRow, error: emailError } = await supabase
     .from("inbound_emails")
