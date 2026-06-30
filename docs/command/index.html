@@ -825,6 +825,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
             <option value="exclusive">Exclusive Territory — $1,497 launch / $1,997 std (1,000 records, capped 1 buyer per market)</option>
           </select>
           <input id="qRecords" placeholder="Records (optional, e.g. 5,678)" style="padding:12px 14px;border:1px solid var(--line);border-radius:8px;font-size:15px;font-family:inherit;" />
+          <input id="qListUrl" placeholder="Paid delivery XLSX URL (delivery audit only)" style="padding:12px 14px;border:1px solid var(--line);border-radius:8px;font-size:15px;font-family:inherit;" />
           <input type="hidden" id="qIntakeId" />
           <input type="hidden" id="qEmail" />
         </div>
@@ -833,6 +834,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px;">
           <button class="btn" id="sendQuoteEmailBtn" onclick="window.sendQuoteToCustomer()" disabled>Send to customer</button>
+          <button class="btn btn-ghost" id="sendDeliveryAuditBtn" onclick="window.sendDeliveryAudit()">Send Delivery Audit</button>
           <span id="quoteSendStatus" style="font-size:13px;color:var(--sl);"></span>
         </div>
 
@@ -1668,6 +1670,7 @@ function renderFeed(elId, countId){
     const actions = (ev.event_type==='intake:new') ? `
       <div class="f-actions" style="display:flex;gap:8px;margin-top:10px;">
         <button class="btn" onclick="window.reviewIntake('${esc(ev.id)}')">🔍 Review & Send Quote →</button>
+        <button class="btn btn-ghost" onclick="window.sendSampleAudit('${esc(ev.id)}')">Send Sample Audit</button>
         <button class="btn btn-ghost" onclick="window.rejectIntake('${esc(ev.id)}')">Reject</button>
       </div>` : '';
     return `
@@ -1734,6 +1737,85 @@ window.rejectIntake = async function(eventId){
     toast('Intake rejected');
   }
   await loadFeed();
+};
+
+const DELIVERY_ANALYTICS = {
+  'wake-nc': { market:'Wake County NC', total:500, hot:196, warm:304, absentee:156, top_equity:4491937, heirs_count:47, avg_debt:6490, median_years:2,
+    debt_buckets:[{label:'<$1K',value:42},{label:'$1K-$3K',value:118},{label:'$3K-$5K',value:92},{label:'$5K-$10K',value:52},{label:'$10K+',value:196}],
+    years_buckets:[{label:'0-1',value:110},{label:'2',value:194},{label:'3',value:101},{label:'4-5',value:69},{label:'6+',value:26}] },
+  'cobb-ga': { market:'Cobb County GA', total:500, hot:120, warm:260, absentee:90, top_equity:650000, heirs_count:12, avg_debt:4200 },
+  'fulton-ga': { market:'Fulton County GA', total:500, hot:95, warm:240, absentee:130, top_equity:780000, heirs_count:18, avg_debt:3900 },
+  'guilford-nc': { market:'Guilford County NC', total:500, hot:84, warm:230, absentee:110, top_equity:420000, heirs_count:9, avg_debt:3100 },
+  'harris-tx': { market:'Harris County TX', total:500, hot:150, warm:250, absentee:160, top_equity:540000, heirs_count:8, avg_debt:4700 },
+  'mecklenburg-nc': { market:'Mecklenburg County NC', total:500, hot:100, warm:250, absentee:120, top_equity:700000, heirs_count:20, avg_debt:4100 }
+};
+
+function slugMarket(market){
+  const s = String(market||'').toLowerCase();
+  if(s.includes('wake') || s.includes('raleigh')) return 'wake-nc';
+  if(s.includes('cobb')) return 'cobb-ga';
+  if(s.includes('fulton')) return 'fulton-ga';
+  if(s.includes('guilford') || s.includes('greensboro')) return 'guilford-nc';
+  if(s.includes('harris') || s.includes('houston')) return 'harris-tx';
+  if(s.includes('mecklenburg') || s.includes('charlotte')) return 'mecklenburg-nc';
+  return 'wake-nc';
+}
+
+function laneFromText(text){
+  const s = String(text||'').toLowerCase();
+  if(s.includes('probate')) return 'probate';
+  if(s.includes('permit')) return 'active-permits';
+  if(s.includes('foreclosure')) return 'pre-foreclosure';
+  if(s.includes('code')) return 'code-violations';
+  return 'tax-delinquent';
+}
+
+function eventField(ev, key){
+  const lines = String(ev?.body||'').split('\n');
+  const line = lines.find(l => l.toLowerCase().startsWith(key.toLowerCase()+':'));
+  return line ? line.split(':').slice(1).join(':').trim() : '';
+}
+
+function auditPayloadFromEvent(eventId, mode){
+  const ev = FEED.find(f => String(f.id)===String(eventId));
+  if(!ev) return null;
+  const name = (ev.title||'').replace(/^New intake:\s*/,'').split(' — ')[0].trim();
+  const email = eventField(ev,'Email');
+  const market = eventField(ev,'Markets') || 'Wake County NC';
+  const lane = laneFromText(eventField(ev,'List type') || ev.body);
+  const slug = slugMarket(market);
+  const cached = DELIVERY_ANALYTICS[slug] || DELIVERY_ANALYTICS['wake-nc'];
+  const sample = [
+    {owner:'Sample Owner Heirs', address:'123 Main St', owed:12500, value:210000, equity:197500, years:3, motivation:'HOT', absentee:'Yes'},
+    {owner:'Sample Owner', address:'456 Oak Ave', owed:7400, value:180000, equity:172600, years:2, motivation:'WARM', absentee:'No'}
+  ];
+  return {mode, to:email, name, market:cached.market || market, lane, sample, total:cached.total, hot:cached.hot, warm:cached.warm, absentee:cached.absentee, top_equity:cached.top_equity, heirs_count:cached.heirs_count, analytics:cached};
+}
+
+async function postSendDelivery(payload){
+  const res = await fetch('https://jdmlsraqioigbukspduo.supabase.co/functions/v1/send-delivery', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  });
+  const text = await res.text();
+  let data = {};
+  try { data = text ? JSON.parse(text) : {}; } catch(_err) {}
+  if(!res.ok || data.ok === false) throw new Error(data.error || text || `HTTP ${res.status}`);
+  return data;
+}
+
+window.sendSampleAudit = async function(eventId){
+  const payload = auditPayloadFromEvent(eventId, 'sample');
+  if(!payload || !payload.to){ toast('No customer email on this intake'); return; }
+  if(!confirm('Send sample audit to ' + payload.to + '?')) return;
+  try {
+    await postSendDelivery(payload);
+    toast('Sample audit sent');
+    await loadFeed();
+  } catch(err) {
+    toast('Sample audit failed: '+String(err?.message || err));
+  }
 };
 
 async function saveEvent(type, title, body, source='command-dashboard', target=null){
@@ -1913,6 +1995,55 @@ window.sendQuoteToCustomer = async () => {
     await loadFeed();
   } catch(err) {
     if(statusEl){ statusEl.style.color = '#991b1b'; statusEl.textContent = String(err?.message || err); }
+    if(btn) btn.disabled = false;
+  }
+};
+
+window.sendDeliveryAudit = async () => {
+  const buyer = document.getElementById('qBuyer').value.trim();
+  const market = document.getElementById('qMarket').value.trim();
+  const email = document.getElementById('qEmail').value.trim();
+  const listUrl = document.getElementById('qListUrl').value.trim();
+  const statusEl = document.getElementById('quoteSendStatus');
+  if(statusEl){ statusEl.style.color = 'var(--sl)'; statusEl.textContent = ''; }
+  if(!buyer || !market || !email){ toast('Need buyer, market, and email first'); return; }
+  if(!listUrl){
+    if(statusEl){ statusEl.style.color = '#991b1b'; statusEl.textContent = 'Paste the paid delivery XLSX URL first.'; }
+    return;
+  }
+  if(!confirm('Send paid delivery audit to ' + email + '?')) return;
+  const slug = slugMarket(market);
+  const cached = DELIVERY_ANALYTICS[slug] || DELIVERY_ANALYTICS['wake-nc'];
+  const payload = {
+    mode:'delivery',
+    to:email,
+    name:buyer,
+    market:cached.market || market,
+    lane:laneFromText(document.getElementById('qTier').value),
+    list_url:listUrl,
+    total:cached.total,
+    hot:cached.hot,
+    warm:cached.warm,
+    absentee:cached.absentee,
+    top_equity:cached.top_equity,
+    heirs_count:cached.heirs_count,
+    analytics:cached,
+    sample:[
+      {owner:'Sample Owner Heirs', address:'123 Main St', owed:12500, value:210000, equity:197500, years:3, motivation:'HOT', absentee:'Yes'},
+      {owner:'Sample Owner', address:'456 Oak Ave', owed:7400, value:180000, equity:172600, years:2, motivation:'WARM', absentee:'No'}
+    ]
+  };
+  const btn = document.getElementById('sendDeliveryAuditBtn');
+  if(btn) btn.disabled = true;
+  if(statusEl) statusEl.textContent = 'Sending delivery audit...';
+  try {
+    await postSendDelivery(payload);
+    if(statusEl){ statusEl.style.color = 'var(--em-d)'; statusEl.textContent = `Delivery audit sent to ${email}`; }
+    toast('Delivery audit sent');
+    await loadFeed();
+  } catch(err) {
+    if(statusEl){ statusEl.style.color = '#991b1b'; statusEl.textContent = String(err?.message || err); }
+  } finally {
     if(btn) btn.disabled = false;
   }
 };
