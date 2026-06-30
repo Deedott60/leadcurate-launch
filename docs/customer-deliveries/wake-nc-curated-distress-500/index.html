@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LeadCurate - Wake NC Curated Distress List - 500 records</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{--emerald:#15803d;--emerald-dark:#14532d;--cream:#faf7f2;--cream-2:#f3eddf;--dark:#0f172a;--slate:#475569;--slate-light:#94a3b8;--line:#e2dccf;--white:#fff;--gold:#b45309;--crimson:#991b1b;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Inter,sans-serif;background:var(--cream);color:var(--dark);line-height:1.55;}
+.wrap{max-width:1200px;margin:0 auto;padding:40px 24px 80px;}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:32px;}
+.brand-mark{width:40px;height:40px;border-radius:8px;background:var(--emerald);color:var(--cream);display:flex;align-items:center;justify-content:center;font-family:Playfair Display,serif;font-weight:700;font-size:22px;}
+.brand-name{font-family:Playfair Display,serif;font-weight:700;font-size:22px;}
+.eyebrow{display:inline-block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--emerald);font-weight:600;margin-bottom:12px;}
+h1{font-family:Playfair Display,serif;font-weight:700;font-size:42px;line-height:1.05;margin-bottom:12px;}
+.subtitle{font-size:17px;color:var(--slate);max-width:780px;}
+.meta{font-family:JetBrains Mono,monospace;font-size:13px;color:var(--slate-light);margin-top:16px;}
+.hr{height:1px;background:var(--line);margin:32px 0;}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:32px;}
+.stat{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:20px;}
+.stat-label{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--slate-light);font-weight:600;margin-bottom:8px;}
+.stat-value{font-family:Playfair Display,serif;font-size:28px;font-weight:700;line-height:1;}
+.stat-detail{font-size:12px;color:var(--slate);margin-top:6px;}
+.stat-em .stat-value{color:var(--emerald);}
+.stat-fire .stat-value{color:var(--crimson);}
+.dl{background:var(--dark);color:var(--cream);border-radius:18px;padding:30px;text-align:center;margin:24px 0;}
+.dl h3{font-family:Playfair Display,serif;font-size:22px;color:var(--cream);margin-bottom:8px;}
+.dl p{color:#cbd5e1;margin-bottom:18px;}
+.btn{display:inline-block;background:var(--emerald);color:var(--cream);padding:14px 28px;border-radius:10px;font-weight:700;text-decoration:none;font-size:15px;letter-spacing:.02em;}
+.btn:hover{background:var(--emerald-dark);}
+table{width:100%;border-collapse:collapse;background:var(--white);border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+thead{background:var(--emerald);color:white;}
+th,td{padding:10px 12px;text-align:left;font-size:13px;border-bottom:1px solid var(--line);}
+th{font-weight:600;letter-spacing:.04em;font-size:11px;text-transform:uppercase;}
+tbody tr:hover{background:var(--cream-2);}
+.num{font-family:JetBrains Mono,monospace;text-align:right;}
+.center{text-align:center;}
+.score{display:inline-block;background:var(--emerald-dark);color:white;font-family:JetBrains Mono,monospace;font-weight:600;padding:3px 10px;border-radius:999px;font-size:12px;}
+.preview-note{background:var(--cream-2);border-left:4px solid var(--emerald);padding:14px 18px;margin:18px 0;font-size:14px;color:var(--slate);border-radius:8px;}
+.tips{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:24px;margin:24px 0;}
+.tips h3{font-family:Playfair Display,serif;font-size:20px;margin-bottom:12px;}
+.tips ul{padding-left:20px;}
+.tips li{margin:8px 0;color:var(--slate);}
+.tips li strong{color:var(--dark);}
+</style></head><body><div class="wrap">
+<div class="brand"><div class="brand-mark">L</div><div class="brand-name">LeadCurate</div></div>
+<div class="eyebrow">Tier 1 - Curated Distress List</div>
+<h1>Wake County, NC - Tax Delinquent</h1>
+<p class="subtitle">500 residential records, scored top-to-bottom by motivation density. Owner names + property addresses + mailing addresses + balance owed + property value. Sourced this week from official Wake County tax-delinquent rolls. Commercial LLCs filtered out - residential owners only.</p>
+<div class="meta">Generated 2026-06-29 - Data pulled 2026-06-28 - Eligible pool: 4,223 residential records - Top 500 selected</div>
+<div class="hr"></div>
+
+<div class="stats">
+<div class="stat stat-fire"><div class="stat-label">Top Debt</div><div class="stat-value">$21,494</div><div class="stat-detail">Record #1 - call this week</div></div>
+<div class="stat stat-em"><div class="stat-label">Median Debt</div><div class="stat-value">$3,533</div><div class="stat-detail">Record #250</div></div>
+<div class="stat"><div class="stat-label">Records</div><div class="stat-value">500</div><div class="stat-detail">Hand-scored, ranked</div></div>
+<div class="stat"><div class="stat-label">Source Pool</div><div class="stat-value">4,223</div><div class="stat-detail">Residential filings</div></div>
+<div class="stat"><div class="stat-label">Format</div><div class="stat-value" style="font-size:20px;">XLSX</div><div class="stat-detail">22 cols, branded cover sheet</div></div>
+</div>
+
+<div class="dl">
+<h3>Download your file</h3>
+<p>Branded XLSX with cover sheet + 500 records on Sheet 2. Open directly in Excel, Numbers, or Google Sheets.</p>
+<a class="btn" href="../Wake-NC-Curated-Distress-500.xlsx" download>Download Wake-NC-Curated-Distress-500.xlsx</a>
+</div>
+
+<div class="tips"><h3>How to work this list</h3><ul>
+<li><strong>Records 1-50:</strong> top debt ($21K to $5K+). Call this week. Highest leverage in negotiations.</li>
+<li><strong>Records 50-200:</strong> mid-debt ($5K to $2K). Mix of calls + direct mail.</li>
+<li><strong>Records 200-500:</strong> smaller debt but still real distress. Direct mail or text campaigns.</li>
+<li><strong>Skip-trace</strong> through your own provider for phone numbers - we deliver address + owner name only, keeping you TCPA-safe by default.</li>
+<li><strong>All owners are individuals/families</strong> (commercial LLCs filtered out so you do not waste calls on entities that do not pick up).</li>
+</ul></div>
+
+<div class="preview-note">Below: the top 50 records, exactly as they appear in your XLSX. The full 500 is in the file above.</div>
+
+<table>
+<thead><tr><th>#</th><th>Owner</th><th>Property Address</th><th>City</th><th>Total Owed</th><th>Property Value</th><th>Yrs Behind</th><th>Score</th></tr></thead>
+<tbody>
+      <tr><td>1</td><td><strong>Slade, Fatress L Ii</strong></td><td>1002 MULFORD CT</td><td>Knightdale</td><td class="num">$21,493.78</td><td class="num">$2,047,206</td><td class="num center">1</td><td><span class="score">44</span></td></tr>
+      <tr><td>2</td><td><strong>Gaddy, Lucy Finch Heirs</strong></td><td>11101 FELLOWSHIP DR</td><td>Raleigh</td><td class="num">$16,234.70</td><td class="num">$3,404,524</td><td class="num center">3</td><td><span class="score">61</span></td></tr>
+      <tr><td>3</td><td><strong>Gaddy, Lucy Finch Heirs</strong></td><td>11101 FELLOWSHIP DR</td><td>Raleigh</td><td class="num">$15,995.54</td><td class="num">$4,539,358</td><td class="num center">2</td><td><span class="score">51</span></td></tr>
+      <tr><td>4</td><td><strong>Gaddy, Lucy Finch Heirs</strong></td><td>11101 FELLOWSHIP DR</td><td>Raleigh</td><td class="num">$15,190.90</td><td class="num">$4,539,358</td><td class="num center">1</td><td><span class="score">41</span></td></tr>
+      <tr><td>5</td><td><strong>Raleigh-Durham Airport Authority</strong></td><td>6852 MT HERMAN RD</td><td>Raleigh</td><td class="num">$14,653.11</td><td class="num">$493,822</td><td class="num center">20</td><td><span class="score">71</span></td></tr>
+      <tr><td>6</td><td><strong>Townes, Ralph Heirs</strong></td><td>717 MORGAN ST</td><td>Raleigh</td><td class="num">$13,178.64</td><td class="num">$1,416,159</td><td class="num center">1</td><td><span class="score">43</span></td></tr>
+      <tr><td>7</td><td><strong>Kamuju, Bala Krishna</strong></td><td>416 BURNBANK DR</td><td>Cary</td><td class="num">$12,672.49</td><td class="num">$1,337,540</td><td class="num center">1</td><td><span class="score">43</span></td></tr>
+      <tr><td>8</td><td><strong>Townes, Ralph Heirs</strong></td><td>715 MORGAN ST</td><td>Raleigh</td><td class="num">$10,538.85</td><td class="num">$1,306,230</td><td class="num center">1</td><td><span class="score">43</span></td></tr>
+      <tr><td>9</td><td><strong>Harrison, Charles Lester</strong></td><td>13100 CREEDMOOR RD</td><td>Raleigh</td><td class="num">$9,798.31</td><td class="num">$1,013,000</td><td class="num center">3</td><td><span class="score">63</span></td></tr>
+      <tr><td>10</td><td><strong>Department Of Transportation</strong></td><td>9020 WHITE OAK RD</td><td>Raleigh</td><td class="num">$9,692.73</td><td class="num">$1,422,321</td><td class="num center">1</td><td><span class="score">42</span></td></tr>
+      <tr><td>11</td><td><strong>Auspitz, Alexandre</strong></td><td>3724 ROLSTON DR</td><td>Raleigh</td><td class="num">$9,449.57</td><td class="num">$1,532,404</td><td class="num center">1</td><td><span class="score">42</span></td></tr>
+      <tr><td>12</td><td><strong>Harrison, Charles Lester</strong></td><td>13100 CREEDMOOR RD</td><td>Raleigh</td><td class="num">$9,416.31</td><td class="num">$1,316,900</td><td class="num center">2</td><td><span class="score">52</span></td></tr>
+      <tr><td>13</td><td><strong>Brannon, Matthew T</strong></td><td>7309 INCLINE DR</td><td>Raleigh</td><td class="num">$9,262.96</td><td class="num">$1,356,102</td><td class="num center">1</td><td><span class="score">42</span></td></tr>
+      <tr><td>14</td><td><strong>Harrison, Charles Lester</strong></td><td>13100 CREEDMOOR RD</td><td>Raleigh</td><td class="num">$8,942.62</td><td class="num">$1,316,900</td><td class="num center">1</td><td><span class="score">42</span></td></tr>
+      <tr><td>15</td><td><strong>Penny, Mollie F</strong></td><td>2509 NEW BETHEL CHURCH RD</td><td>Raleigh</td><td class="num">$8,790.68</td><td class="num">$1,340,395</td><td class="num center">2</td><td><span class="score">52</span></td></tr>
+      <tr><td>16</td><td><strong>Penny, Mollie F</strong></td><td>2509 NEW BETHEL CHURCH RD</td><td>Raleigh</td><td class="num">$8,348.47</td><td class="num">$1,340,395</td><td class="num center">1</td><td><span class="score">42</span></td></tr>
+      <tr><td>17</td><td><strong>Hanna, Meryt Ab</strong></td><td>5304 SINESIS CT</td><td>Raleigh</td><td class="num">$8,046.23</td><td class="num">$812,168</td><td class="num center">2</td><td><span class="score">53</span></td></tr>
+      <tr><td>18</td><td><strong>Newsom, Alfred D</strong></td><td>226 ELM ST</td><td>Raleigh</td><td class="num">$7,659.21</td><td class="num">$1,085,389</td><td class="num center">1</td><td><span class="score">42</span></td></tr>
+      <tr><td>19</td><td><strong>Ghosh, Abhijit</strong></td><td>1205 CAIRPHILLY CASTLE CT</td><td>Apex</td><td class="num">$7,628.66</td><td class="num">$811,216</td><td class="num center">1</td><td><span class="score">43</span></td></tr>
+      <tr><td>20</td><td><strong>Hanna, Meryt Ab</strong></td><td>5304 SINESIS CT</td><td>Raleigh</td><td class="num">$7,568.86</td><td class="num">$812,168</td><td class="num center">1</td><td><span class="score">43</span></td></tr>
+      <tr><td>21</td><td><strong>Sedlak, Frank George</strong></td><td>321 GARTRELL WAY</td><td>Apex</td><td class="num">$7,424.62</td><td class="num">$844,991</td><td class="num center">1</td><td><span class="score">43</span></td></tr>
+      <tr><td>22</td><td><strong>Nielsen, Clare</strong></td><td>400 VERNON TER</td><td>Raleigh</td><td class="num">$7,134.22</td><td class="num">$751,529</td><td class="num center">1</td><td><span class="score">43</span></td></tr>
+      <tr><td>23</td><td><strong>Keglers, Vilis Heirs</strong></td><td>418 CUTLER ST</td><td>Raleigh</td><td class="num">$6,920.88</td><td class="num">$684,116</td><td class="num center">2</td><td><span class="score">54</span></td></tr>
+      <tr><td>24</td><td><strong>Schoonover, Garry</strong></td><td>2708 KINGSLEY RD</td><td>Raleigh</td><td class="num">$6,858.07</td><td class="num">$681,373</td><td class="num center">2</td><td><span class="score">54</span></td></tr>
+      <tr><td>25</td><td><strong>Singh, Manmohan</strong></td><td>2709 CHARLESTON OAKS DR</td><td>Raleigh</td><td class="num">$6,832.94</td><td class="num">$732,934</td><td class="num center">1</td><td><span class="score">43</span></td></tr>
+      <tr><td>26</td><td><strong>Green, Dennis</strong></td><td>2511 KINGSLEY RD</td><td>Raleigh</td><td class="num">$6,776.39</td><td class="num">$701,555</td><td class="num center">1</td><td><span class="score">43</span></td></tr>
+      <tr><td>27</td><td><strong>Briggs, Paul G</strong></td><td>208 LORD BERKLEY RD</td><td>Raleigh</td><td class="num">$6,710.19</td><td class="num">$774,547</td><td class="num center">1</td><td><span class="score">43</span></td></tr>
+      <tr><td>28</td><td><strong>Raleigh-Durham Airport Authority</strong></td><td>6800 MT HERMAN RD</td><td>Raleigh</td><td class="num">$6,567.62</td><td class="num">$221,260</td><td class="num center">20</td><td><span class="score">71</span></td></tr>
+      <tr><td>29</td><td><strong>Perry, Susan</strong></td><td>1009 PAGE ST</td><td>Raleigh</td><td class="num">$6,477.72</td><td class="num">$855,422</td><td class="num center">1</td><td><span class="score">43</span></td></tr>
+      <tr><td>30</td><td><strong>Kennedy, Kristen</strong></td><td>116 CRESTVIEW RD</td><td>Raleigh</td><td class="num">$6,470.72</td><td class="num">$1,374,331</td><td class="num center">1</td><td><span class="score">41</span></td></tr>
+      <tr><td>31</td><td><strong>Patel, Jharna R</strong></td><td>6913 RAY FAMILY FARM CT</td><td>Raleigh</td><td class="num">$6,399.94</td><td class="num">$935,794</td><td class="num center">1</td><td><span class="score">42</span></td></tr>
+      <tr><td>32</td><td><strong>Penny, Mollie F</strong></td><td>2509 NEW BETHEL CHURCH RD</td><td>Raleigh</td><td class="num">$6,381.77</td><td class="num">$713,617</td><td class="num center">3</td><td><span class="score">63</span></td></tr>
+      <tr><td>33</td><td><strong>Keglers, Vilis Heirs</strong></td><td>418 CUTLER ST</td><td>Raleigh</td><td class="num">$6,379.52</td><td class="num">$684,116</td><td class="num center">1</td><td><span class="score">43</span></td></tr>
+      <tr><td>34</td><td><strong>Patel, Navin</strong></td><td>2917 CREEK MOSS AVE</td><td>Wake Forest</td><td class="num">$6,377.35</td><td class="num">$624,322</td><td class="num center">1</td><td><span class="score">44</span></td></tr>
+      <tr><td>35</td><td><strong>Schoonover, Garry</strong></td><td>2708 KINGSLEY RD</td><td>Raleigh</td><td class="num">$6,349.80</td><td class="num">$681,373</td><td class="num center">1</td><td><span class="score">43</span></td></tr>
+      <tr><td>36</td><td><strong>Singh, Ajay Pal</strong></td><td>104 ALDBOROUGH WAY</td><td>Holly Springs</td><td class="num">$6,290.78</td><td class="num">$735,634</td><td class="num center">1</td><td><span class="score">43</span></td></tr>
+      <tr><td>37</td><td><strong>Austin, Louise</strong></td><td>910 NORTHVIEW ST</td><td>Garner</td><td class="num">$6,262.55</td><td class="num">$522,701</td><td class="num center">2</td><td><span class="score">54</span></td></tr>
+      <tr><td>38</td><td><strong>Garner, Elizabeth B</strong></td><td>11701 NORWOOD RD</td><td>Raleigh</td><td class="num">$6,261.45</td><td class="num">$1,129,847</td><td class="num center">1</td><td><span class="score">42</span></td></tr>
+      <tr><td>39</td><td><strong>Wilson, Francis Albert</strong></td><td>3300 KEMBLE RIDGE DR</td><td>Wake Forest</td><td class="num">$6,242.28</td><td class="num">$610,787</td><td class="num center">1</td><td><span class="score">44</span></td></tr>
+      <tr><td>40</td><td><strong>Alphonse, Issacsathish</strong></td><td>1437 SABINO DR</td><td>Cary</td><td class="num">$6,039.64</td><td class="num">$769,178</td><td class="num center">1</td><td><span class="score">43</span></td></tr>
+      <tr><td>41</td><td><strong>Mitchiner, Dwane R Jr</strong></td><td>122 BROUGHTON ST</td><td>Garner</td><td class="num">$6,034.63</td><td class="num">$269,990</td><td class="num center">1</td><td><span class="score">48</span></td></tr>
+      <tr><td>42</td><td><strong>Gaonkar, Atmaran B</strong></td><td>1101 WOODLANDS CREEK WAY</td><td>Apex</td><td class="num">$5,995.39</td><td class="num">$642,021</td><td class="num center">1</td><td><span class="score">43</span></td></tr>
+      <tr><td>43</td><td><strong>Stephenson, Jennifer K</strong></td><td>4705 STUDBURY HALL CT</td><td>Wake Forest</td><td class="num">$5,994.82</td><td class="num">$663,687</td><td class="num center">1</td><td><span class="score">43</span></td></tr>
+      <tr><td>44</td><td><strong>Warsame, Osob Tahil</strong></td><td>5017 DILLSWOOD LN</td><td>Raleigh</td><td class="num">$5,983.60</td><td class="num">$847,308</td><td class="num center">1</td><td><span class="score">42</span></td></tr>
+      <tr><td>45</td><td><strong>Rigney, Carl Dean</strong></td><td>107 CHATBURN CIR</td><td>Cary</td><td class="num">$5,965.10</td><td class="num">$650,687</td><td class="num center">1</td><td><span class="score">43</span></td></tr>
+      <tr><td>46</td><td><strong>Siegl, Adelaide Moran</strong></td><td>1014 NEW CHESTER CT</td><td>Apex</td><td class="num">$5,938.64</td><td class="num">$629,465</td><td class="num center">1</td><td><span class="score">43</span></td></tr>
+      <tr><td>47</td><td><strong>Schoonover, Garry</strong></td><td>2600 SHERBORNE PL</td><td>Raleigh</td><td class="num">$5,901.30</td><td class="num">$585,993</td><td class="num center">2</td><td><span class="score">53</span></td></tr>
+      <tr><td>48</td><td><strong>Pero, Alexis Peters</strong></td><td>1321 KING CROSS CT</td><td>Raleigh</td><td class="num">$5,876.03</td><td class="num">$954,383</td><td class="num center">1</td><td><span class="score">41</span></td></tr>
+      <tr><td>49</td><td><strong>Richardson, Dorothy Mae Heirs</strong></td><td>2432 MT ZION CHURCH RD</td><td>Raleigh</td><td class="num">$5,854.88</td><td class="num">$774,026</td><td class="num center">2</td><td><span class="score">52</span></td></tr>
+      <tr><td>50</td><td><strong>Austin, Louise</strong></td><td>910 NORTHVIEW ST</td><td>Garner</td><td class="num">$5,794.60</td><td class="num">$522,701</td><td class="num center">1</td><td><span class="score">43</span></td></tr>
+</tbody></table>
+
+<div class="hr"></div>
+<p style="font-size:13px;color:var(--slate);text-align:center;">All records sourced from Wake County NC public tax-delinquent rolls. Direct-mail and door-knock use compliant by default. Phone outreach requires your own TCPA/DNC check after skip-tracing. Questions? hello@leadcurate.com</p>
+</div></body></html>
