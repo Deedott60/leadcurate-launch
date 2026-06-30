@@ -166,6 +166,60 @@ Use Playwright (already installed) for JS-blocked portals. Reference the `leadcu
 
 **Don't try to do all 10 lanes × 50+ counties in one go.** Build the 5 priority combos above. Then add more as real customer demand drives it. The point is the system CAN pull anything — not that it has every possible combo pre-built.
 
+## Task 6 — Build `verify-delivery` Edge Function (quality gate before any send)
+
+**Why:** principle #9 in CLAUDE.md requires every list be verified before the Delivery Audit fires. This Edge Function is the gate. No Delivery Audit goes out unless `verify-delivery` returns `ok: true`.
+
+**Endpoint:** `POST https://jdmlsraqioigbukspduo.supabase.co/functions/v1/verify-delivery`
+
+**Payload:**
+```json
+{
+  "list_url": "https://leadcurate.com/customer-deliveries/<file>.xlsx",
+  "expected": {
+    "total": 500,
+    "hot": 196,
+    "warm": 304,
+    "absentee": 156,
+    "top_equity": 4491937,
+    "heirs_count": 47,
+    "lane": "tax-delinquent",
+    "market": "Wake County NC"
+  },
+  "llm_review": true
+}
+```
+
+**What the function does:**
+1. Fetch the XLSX from `list_url`, parse it
+2. **Deterministic checks** (no LLM):
+   - Row count matches `expected.total`
+   - Recompute HOT count (records where Total Owed >= $10K or Years Behind >= 3) → must equal `expected.hot`
+   - Recompute absentee count → must equal `expected.absentee`
+   - Recompute top equity (max Estimated Equity column) → must equal `expected.top_equity` (within $100)
+   - Recompute Heirs count (records with "Heirs" or "Hrs" in owner name) → must equal `expected.heirs_count`
+   - Check for duplicates: no two rows with same (Parcel REID, Account ID)
+   - Check residential filter: zero rows with LLC/INC/CORP/TRUST/TTC in owner name (unless `expected.allow_entities=true`)
+   - Check required columns present: Owner Name, Property Address, Total Owed, Estimated Equity, Motivation
+3. **Optional LLM review** (only if `llm_review: true` and all deterministic checks passed):
+   - Call OpenRouter Sonnet 4.6 with a sample of 20 records + the audit stats
+   - Prompt: "Review this customer delivery. Does anything look off — wrong-looking owner names, addresses that aren't real streets, debt numbers that don't make sense, audit narrative that doesn't match the data? Respond JSON {ok: boolean, issues: string[]}."
+   - If Sonnet returns `ok: false`, treat as a failure
+4. Returns:
+   - `{"ok": true, "checks": {...}}` if all pass
+   - `{"ok": false, "failures": [...], "checks": {...}}` if any fail
+
+**The send-delivery Edge Function MUST call verify-delivery first** (when mode=delivery). If verify returns ok=false, send-delivery refuses to send and posts `conf:blocker` to derrick with the failure list. Operator fixes the issue, retries.
+
+**Sample mode** (`mode=sample`) does NOT require verify — Sample Audits use redacted data anyway, so the precision bar is lower.
+
+**Cost:** deterministic checks are free. LLM review = one Sonnet call (~$0.005 per delivery). Cheap insurance against shipping bad lists.
+
+**Acceptance:**
+- Send a valid delivery (current Wake NC) → verify returns ok=true
+- Manually corrupt a stat (claim hot=200 when file has 196) → verify returns ok=false with specific failure
+- send-delivery refuses to send when verify fails → activity_feed shows conf:blocker
+
 ## Out of scope for this session
 
 ---
