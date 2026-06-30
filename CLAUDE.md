@@ -379,16 +379,32 @@ The orchestrator (Claude) keeps all three in sync. Derrick never touches the VPS
 
 ---
 
-## ⚠️ FULFILLMENT STATUS — READ BEFORE QUOTING ANY CUSTOMER (2026-06-30)
+## ⚠️ FULFILLMENT MODEL (2026-06-30) — ON-DEMAND, NOT FIXED CATALOG
 
-**Only Wake NC tax-delinquent is fully build-script-fulfillable right now.** The other 8 sellable markets have raw data on the VPS but `build_delivery.py` is hardcoded to Wake NC and will NOT produce a valid file for them. Until Codex Task 1 (see `docs/codex-handoff-multi-market.md`) generalizes the script, follow this rule:
+**The product is custom-built lists for ANY market + ANY lane the customer orders.** Not a pre-packaged catalog of 9 markets. The 8 lanes we sell across any US county:
+1. Tax Delinquent
+2. Probate / Inherited
+3. Pre-Foreclosure / NOD
+4. Code Violations
+5. Active Permits / Damage
+6. Individual / Active Homeowner
+7. High-Equity / Free-and-Clear
+8. Absentee Owner
+9. Vacant Land
+10. Liens (mechanic, judgment)
 
-| If customer requests... | Operator response |
+**How we fulfill any market+lane combination:**
+
+| Data availability | Time to deliver |
 |---|---|
-| **Wake NC** tax-delinquent | ✅ Full Delivery Audit available today |
-| Any other market | "We're queuing your reservation — your file is being prepared this week. Founders pricing locked." Take payment, deliver once Codex Task 1 ships. DO NOT promise same-day delivery. |
+| **We have the raw data already pulled** (Wake NC tax-delinquent is the working example today; other markets exist at various levels of completeness in `/opt/leadcurate/raw_imports/`) | Same-day to 24h once `build_delivery.py` is generalized (Codex Task 1) |
+| **We don't have the data yet** | 48–72h typical. Hermes/Codex finds the county source URL, pulls it (Playwright if JS-blocked, see `leadcurate-js-blocker-bypass` skill), runs it through the standard pipeline, delivers. |
 
-**NEVER send a Delivery Audit for a non-Wake market until Codex Task 1 is verified working for that specific market.** The data IS in the raw VPS files for the other 8 — the script just doesn't know how to read those file formats yet.
+**Customer-facing promise:** "Custom-built file for your market + lanes. Typical 48–72h. We'll confirm the exact timeline when you reserve."
+
+**Operator rule:** never promise same-day delivery on first ask. Always confirm market data status first. The system supports on-demand pulls — but each new county takes real scrape work, not magic.
+
+**Today's actual constraint:** `build_delivery.py` is hardcoded to Wake NC tax-delinquent. Codex Task 1 generalizes it for all lanes/markets. Until that ships, only Wake NC is build-ready. AFTER it ships, every other market becomes ready once raw data exists or is pulled.
 
 ---
 

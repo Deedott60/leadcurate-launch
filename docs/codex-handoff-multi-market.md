@@ -124,13 +124,49 @@ Two new buttons to add:
 
 ---
 
-## Out of scope for this session
+## Task 4 — Scrape dispatcher for on-demand county pulls (NEW, critical)
 
-- ❌ `customer_deliveries` dedup table (track which parcels went to which customer) — future, after 3+ real customers
-- ❌ DKIM/SPF/DMARC DNS records — separate Hostinger DNS task
-- ❌ Payment integration — waiting on Derrick to pick Stripe/Mercury/Cash App
-- ❌ Multi-lane scrape expansion (probate, code violations beyond what we have) — future
-- ❌ Facebook/IG/X wiring — waiting on Derrick's Page token
+**Why:** the product is on-demand "any market + any lane," not a fixed catalog. When a customer orders Maricopa AZ probate and we don't have it pre-pulled, the system needs to fetch it within 48–72h.
+
+**Build `/opt/leadcurate/scripts/scrape_dispatcher.py`:**
+- Args: `--market <slug> --lane <lane>`
+- Checks if raw data already exists at `/opt/leadcurate/raw_imports/<market-slug>/<latest-date>/` matching the lane
+- If yes: print path and exit 0
+- If no: look up the county source URL in a registry, run the right scraper (per-lane scraper module — see Task 5), save raw output to `/opt/leadcurate/raw_imports/<market-slug>/<today>/`, then exit 0 with the new path
+- Posts to activity_feed: `scrape:started`, `scrape:done`, `scrape:failed` with target='derrick'
+
+Source URL registry (start with these 4–5 entries we already know):
+```python
+SOURCES = {
+  ("wake-nc", "tax-delinquent"): {"url": "https://...", "scraper": "wake_tax_delinquent"},
+  ("mecklenburg-nc", "tax-delinquent"): {"url": "...", "scraper": "mecklenburg_tax"},
+  ("mecklenburg-nc", "probate"): {"url": "...", "scraper": "mecklenburg_probate"},
+  # ... add more as we build scrapers
+}
+```
+
+If a (market, lane) combo isn't in the registry: exit 1 with a clear message "Source URL needed for <market>/<lane>. Add to registry first." Posts `scrape:blocker` for Derrick.
+
+## Task 5 — Per-lane scraper modules (NEW, large; build incrementally)
+
+Build `/opt/leadcurate/scrapers/<lane>/<market_slug>.py` modules. Each module:
+- Takes a `--output-dir` arg
+- Pulls the county source for that (market, lane)
+- Saves raw CSV/XLSX to the output dir
+- Returns 0 on success, prints record count
+
+Priority order (build for these markets first as they're the most likely Phase 1 customer requests):
+1. **wake-nc / tax-delinquent** — already pre-pulled, just verify the parser works
+2. **mecklenburg-nc / tax-delinquent** — Derrick's home county, likely first probate ask
+3. **mecklenburg-nc / probate** — high-value lane (All The Leads sells this for $249-$1099/mo)
+4. **harris-tx / tax-delinquent** + **harris-tx / active-permits** — Houston already has permit-burnout pulled
+5. **cobb-ga / tax-delinquent** + **fulton-ga / tax-delinquent** — Atlanta metro
+
+Use Playwright (already installed) for JS-blocked portals. Reference the `leadcurate-js-blocker-bypass` skill for the patterns that work.
+
+**Don't try to do all 10 lanes × 50+ counties in one go.** Build the 5 priority combos above. Then add more as real customer demand drives it. The point is the system CAN pull anything — not that it has every possible combo pre-built.
+
+## Out of scope for this session
 
 ---
 
