@@ -379,6 +379,21 @@ The orchestrator (Claude) keeps all three in sync. Derrick never touches the VPS
 
 ---
 
+## 🧭 OPERATING PRINCIPLES (the spirit that drives every decision)
+
+Read these before doing anything in this repo. If a decision feels like it's narrowing the product, you're drifting from the spirit. Re-read.
+
+1. **The intake form IS the menu.** Every market × every lane a customer can pick = a real product we deliver. Not a hypothetical, not a "coming soon." Never refuse based on "we don't have it pre-pulled" — the agents pull it.
+2. **No customer ever sees our limitations.** Internal labels (Tier 1/2/3/4/5), system status, "the script doesn't support this yet" — none of that is customer-facing. Operator translates internal capacity into customer-facing timing per order.
+3. **No customer ever sees the same generic email as everyone else.** Every Delivery Audit + every Sample Audit is built for THAT customer's specific market + lanes. If you're tempted to send a default template with one market's data to everyone, stop.
+4. **Timing is operator-judgment per order.** Never preset "48–72 hours" or any specific number to a customer. Some orders ship same day; some take longer. Operator confirms timing when sending the quote, based on whether data is pre-pulled or needs a fresh scrape.
+5. **Premium positioning, always.** "Custom-built for your market" — not "we have 9 markets in our catalog." The whole brand voice is: we don't sell pre-packaged recycled data; we build per order. PropStream is the pre-packaged option; LeadCurate is the curated, scored, custom option.
+6. **Capability > Automation.** The agents have the tools (Playwright, JS-blocker-bypass skill, county-data-pull skill, 22+ counties of scraping experience). Even if automation isn't fully wired for a market, the CAPABILITY exists and orders get fulfilled — assisted-manual if needed.
+7. **Two-mode communication.** Sample Audit = sales (redacted, charts, "Reserve Your County" CTA). Delivery Audit = post-paid (full data, XLSX attached, "Your file is attached"). Both share the same brand experience; neither leaks internal jargon.
+8. **Operator routes from intake, customer sees one offer.** No A/B/C/D menus to the customer. Operator reads intake → picks the right tier → customer sees one Confirm button. Decision overhead is ours, not theirs.
+
+---
+
 ## ⚠️ FULFILLMENT MODEL (2026-06-30) — WHATEVER THE INTAKE FORM OFFERS, WE DELIVER
 
 **The intake form IS the menu.** Every market × every lane the customer picks on the form is sellable and fulfillable. No "we don't have that pre-pulled" excuse. The agents have the tools (Playwright on VPS, `leadcurate-js-blocker-bypass` skill, `leadcurate-county-data-pull` skill, county scraping patterns proven across 22+ counties already) — when something isn't pre-pulled, **the system pulls it.**
