@@ -379,6 +379,19 @@ The orchestrator (Claude) keeps all three in sync. Derrick never touches the VPS
 
 ---
 
+## ⚠️ FULFILLMENT STATUS — READ BEFORE QUOTING ANY CUSTOMER (2026-06-30)
+
+**Only Wake NC tax-delinquent is fully build-script-fulfillable right now.** The other 8 sellable markets have raw data on the VPS but `build_delivery.py` is hardcoded to Wake NC and will NOT produce a valid file for them. Until Codex Task 1 (see `docs/codex-handoff-multi-market.md`) generalizes the script, follow this rule:
+
+| If customer requests... | Operator response |
+|---|---|
+| **Wake NC** tax-delinquent | ✅ Full Delivery Audit available today |
+| Any other market | "We're queuing your reservation — your file is being prepared this week. Founders pricing locked." Take payment, deliver once Codex Task 1 ships. DO NOT promise same-day delivery. |
+
+**NEVER send a Delivery Audit for a non-Wake market until Codex Task 1 is verified working for that specific market.** The data IS in the raw VPS files for the other 8 — the script just doesn't know how to read those file formats yet.
+
+---
+
 ## Delivery process — LOCKED 2026-06-29 (LIST + AUDIT, no permanent hosting)
 
 **Two artifacts per paying customer, every time:**
