@@ -6,19 +6,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
-:root{--emerald:#15803d;--emerald-dark:#14532d;--emerald-soft:#dff4e8;--cream:#faf7f2;--cream-2:#f3eddf;--dark:#0f172a;--slate:#475569;--slate-light:#94a3b8;--line:#e2dccf;--white:#fff;--gold:#b45309;--gold-soft:#fef3c7;--crimson:#991b1b;--crimson-soft:#fee2e2;}
+:root{--emerald:#15803d;--emerald-dark:#14532d;--emerald-soft:#dff4e8;--cream:#faf7f2;--cream-2:#f3eddf;--dark:#0f172a;--slate:#475569;--slate-light:#94a3b8;--line:#e2dccf;--white:#fff;--gold:#b45309;--gold-soft:#fef3c7;--crimson:#991b1b;--crimson-soft:#fee2e2;--blue:#1d4ed8;--blue-soft:#dbeafe;}
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:Inter,sans-serif;background:var(--cream);color:var(--dark);line-height:1.55;}
-.wrap{max-width:1200px;margin:0 auto;padding:40px 24px 80px;}
+.wrap{max-width:1280px;margin:0 auto;padding:40px 24px 80px;}
 .brand{display:flex;align-items:center;gap:12px;margin-bottom:32px;}
 .brand-mark{width:40px;height:40px;border-radius:8px;background:var(--emerald);color:var(--cream);display:flex;align-items:center;justify-content:center;font-family:Playfair Display,serif;font-weight:700;font-size:22px;}
 .brand-name{font-family:Playfair Display,serif;font-weight:700;font-size:22px;}
 .eyebrow{display:inline-block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--emerald);font-weight:600;margin-bottom:12px;}
 h1{font-family:Playfair Display,serif;font-weight:700;font-size:42px;line-height:1.05;margin-bottom:12px;}
-.subtitle{font-size:17px;color:var(--slate);max-width:780px;}
+.subtitle{font-size:17px;color:var(--slate);max-width:840px;}
 .meta{font-family:JetBrains Mono,monospace;font-size:13px;color:var(--slate-light);margin-top:16px;}
 .hr{height:1px;background:var(--line);margin:32px 0;}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:32px;}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:32px;}
 .stat{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:20px;}
 .stat-label{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--slate-light);font-weight:600;margin-bottom:8px;}
 .stat-value{font-family:Playfair Display,serif;font-size:30px;font-weight:700;line-height:1;}
@@ -26,6 +26,7 @@ h1{font-family:Playfair Display,serif;font-weight:700;font-size:42px;line-height
 .stat-em .stat-value{color:var(--emerald);}
 .stat-hot .stat-value{color:var(--crimson);}
 .stat-warm .stat-value{color:var(--gold);}
+.stat-blue .stat-value{color:var(--blue);}
 .dl{background:var(--dark);color:var(--cream);border-radius:18px;padding:30px;text-align:center;margin:24px 0;}
 .dl h3{font-family:Playfair Display,serif;font-size:22px;color:var(--cream);margin-bottom:8px;}
 .dl p{color:#cbd5e1;margin-bottom:18px;}
@@ -42,6 +43,7 @@ tbody tr:hover{background:var(--cream-2);}
 .badge-hot{display:inline-block;background:var(--crimson-soft);color:var(--crimson);border:1px solid #fecaca;font-family:JetBrains Mono,monospace;font-weight:700;padding:3px 10px;border-radius:999px;font-size:11px;letter-spacing:.04em;}
 .badge-warm{display:inline-block;background:var(--gold-soft);color:var(--gold);border:1px solid #fed7aa;font-family:JetBrains Mono,monospace;font-weight:700;padding:3px 10px;border-radius:999px;font-size:11px;letter-spacing:.04em;}
 .badge-working{display:inline-block;background:var(--emerald-soft);color:var(--emerald-dark);border:1px solid #bbf7d0;font-family:JetBrains Mono,monospace;font-weight:700;padding:3px 10px;border-radius:999px;font-size:11px;letter-spacing:.04em;}
+.badge-abs{display:inline-block;background:var(--blue-soft);color:var(--blue);border:1px solid #bfdbfe;font-family:JetBrains Mono,monospace;font-weight:600;padding:2px 7px;border-radius:6px;font-size:9px;letter-spacing:.05em;margin-left:6px;vertical-align:middle;}
 .preview-note{background:var(--cream-2);border-left:4px solid var(--emerald);padding:14px 18px;margin:18px 0;font-size:14px;color:var(--slate);border-radius:8px;}
 .tips{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:24px;margin:24px 0;}
 .tips h3{font-family:Playfair Display,serif;font-size:20px;margin-bottom:12px;}
@@ -52,29 +54,30 @@ tbody tr:hover{background:var(--cream-2);}
 <div class="brand"><div class="brand-mark">L</div><div class="brand-name">LeadCurate</div></div>
 <div class="eyebrow">Curated Distress List</div>
 <h1>Wake County, NC - Tax Delinquent</h1>
-<p class="subtitle">500 residential records sourced this week from official Wake County tax-delinquent rolls. Owner names, property addresses, mailing addresses, balance owed, and estimated equity. Commercial entities filtered out - all owners are individuals or families.</p>
-<div class="meta">Generated 2026-06-29 - Data pulled 2026-06-28 - Source pool: 4,223 residential records</div>
+<p class="subtitle">500 unique residential properties, aggregated across tax years and ranked by total tax debt owed. Includes owner names, property addresses, mailing addresses (with absentee owner flag), property values, and estimated equity. Commercial entities filtered out - all owners are individuals or families.</p>
+<div class="meta">Generated 2026-06-29 - Data pulled 2026-06-28 - Source pool: 2,618 unique residential parcels</div>
 <div class="hr"></div>
 
 <div class="stats">
-<div class="stat stat-em"><div class="stat-label">Top Equity</div><div class="stat-value">$2,025,712</div><div class="stat-detail">Property value minus debt</div></div>
-<div class="stat stat-em"><div class="stat-label">Median Equity</div><div class="stat-value">$374,406</div><div class="stat-detail">Across 500 records</div></div>
-<div class="stat stat-hot"><div class="stat-label">HOT</div><div class="stat-value">36</div><div class="stat-detail">$10K+ owed or 3+ yrs behind</div></div>
-<div class="stat stat-warm"><div class="stat-label">WARM</div><div class="stat-value">392</div><div class="stat-detail">$3K+ owed or 2+ yrs behind</div></div>
-<div class="stat"><div class="stat-label">WORKING</div><div class="stat-value">72</div><div class="stat-detail">Smaller debt, real distress</div></div>
+<div class="stat stat-em"><div class="stat-label">Top Equity</div><div class="stat-value">$4,491,937</div><div class="stat-detail">Property value minus debt</div></div>
+<div class="stat stat-em"><div class="stat-label">Median Equity</div><div class="stat-value">$197,924</div><div class="stat-detail">Across 500 records</div></div>
+<div class="stat stat-hot"><div class="stat-label">HOT</div><div class="stat-value">196</div><div class="stat-detail">$10K+ owed or 3+ yrs behind</div></div>
+<div class="stat stat-warm"><div class="stat-label">WARM</div><div class="stat-value">304</div><div class="stat-detail">$3K+ or 2+ yrs behind</div></div>
+<div class="stat stat-blue"><div class="stat-label">Absentee</div><div class="stat-value">156</div><div class="stat-detail">Mailing ZIP differs from property</div></div>
 </div>
 
 <div class="dl">
 <h3>Download your file</h3>
-<p>Branded XLSX - 500 records with cover sheet, owner + property + mailing details, debt amounts, estimated equity, and motivation status. Opens in Excel, Numbers, Google Sheets, or LibreOffice.</p>
+<p>Branded XLSX with cover sheet + 500 unique parcels. 21 columns including owner, property + mailing addresses (broken out by street/city/state/ZIP), property value, estimated equity, years behind, motivation status, and absentee flag.</p>
 <a class="btn" href="../Wake-NC-Curated-Distress-500.xlsx" download>Download Wake-NC-Curated-Distress-500.xlsx</a>
 </div>
 
 <div class="tips"><h3>How to work this list</h3><ul>
-<li><strong>HOT records</strong> (36): biggest debt or most years behind. Call this week. Highest leverage in negotiations.</li>
-<li><strong>WARM records</strong> (392): substantial distress, less acute. Mix of calls + direct mail.</li>
-<li><strong>WORKING records</strong> (72): smaller debt but real distress. Direct mail or text campaigns.</li>
-<li><strong>Estimated equity</strong> = property value minus tax debt. This is your negotiation room - what the owner could net at close.</li>
+<li><strong>HOT records</strong> (196): biggest debt or most years behind. Real motivation. Call this week.</li>
+<li><strong>WARM records</strong> (304): substantial distress, less acute. Mix of calls + direct mail.</li>
+<li><strong>Absentee owners</strong> (156): mailing address is in a different ZIP than the property. Higher conversion rate - owner can't easily check on the property and is often emotionally detached.</li>
+<li><strong>Estimated equity</strong> = property value minus tax debt. Your negotiation room - what the owner could net at close.</li>
+<li><strong>Years behind</strong> counts unique unpaid tax years. 3+ years = serious distress signal.</li>
 <li><strong>Skip-trace</strong> through your own provider for phone numbers. We deliver address + owner only, keeping you TCPA-safe by default.</li>
 </ul></div>
 
@@ -83,36 +86,36 @@ tbody tr:hover{background:var(--cream-2);}
 <table>
 <thead><tr><th>#</th><th>Owner</th><th>Property Address</th><th>City</th><th>Owed</th><th>Property Value</th><th>Est. Equity</th><th>Yrs</th><th>Status</th></tr></thead>
 <tbody>
-      <tr><td>1</td><td><strong>Slade, Fatress L Ii</strong></td><td>1002 MULFORD CT</td><td>Knightdale</td><td class="num">$21,493.78</td><td class="num">$2,047,206</td><td class="num em">$2,025,712</td><td class="center">1</td><td><span class="badge-hot">HOT</span></td></tr>
-      <tr><td>2</td><td><strong>Gaddy, Lucy Finch Heirs</strong></td><td>11101 FELLOWSHIP DR</td><td>Raleigh</td><td class="num">$16,234.70</td><td class="num">$3,404,524</td><td class="num em">$3,388,289</td><td class="center">3</td><td><span class="badge-hot">HOT</span></td></tr>
-      <tr><td>3</td><td><strong>Gaddy, Lucy Finch Heirs</strong></td><td>11101 FELLOWSHIP DR</td><td>Raleigh</td><td class="num">$15,995.54</td><td class="num">$4,539,358</td><td class="num em">$4,523,362</td><td class="center">2</td><td><span class="badge-hot">HOT</span></td></tr>
-      <tr><td>4</td><td><strong>Gaddy, Lucy Finch Heirs</strong></td><td>11101 FELLOWSHIP DR</td><td>Raleigh</td><td class="num">$15,190.90</td><td class="num">$4,539,358</td><td class="num em">$4,524,167</td><td class="center">1</td><td><span class="badge-hot">HOT</span></td></tr>
-      <tr><td>5</td><td><strong>Raleigh-Durham Airport Authority</strong></td><td>6852 MT HERMAN RD</td><td>Raleigh</td><td class="num">$14,653.11</td><td class="num">$493,822</td><td class="num em">$479,169</td><td class="center">20</td><td><span class="badge-hot">HOT</span></td></tr>
-      <tr><td>6</td><td><strong>Townes, Ralph Heirs</strong></td><td>717 MORGAN ST</td><td>Raleigh</td><td class="num">$13,178.64</td><td class="num">$1,416,159</td><td class="num em">$1,402,980</td><td class="center">1</td><td><span class="badge-hot">HOT</span></td></tr>
-      <tr><td>7</td><td><strong>Kamuju, Bala Krishna</strong></td><td>416 BURNBANK DR</td><td>Cary</td><td class="num">$12,672.49</td><td class="num">$1,337,540</td><td class="num em">$1,324,868</td><td class="center">1</td><td><span class="badge-hot">HOT</span></td></tr>
-      <tr><td>8</td><td><strong>Townes, Ralph Heirs</strong></td><td>715 MORGAN ST</td><td>Raleigh</td><td class="num">$10,538.85</td><td class="num">$1,306,230</td><td class="num em">$1,295,691</td><td class="center">1</td><td><span class="badge-hot">HOT</span></td></tr>
-      <tr><td>9</td><td><strong>Harrison, Charles Lester</strong></td><td>13100 CREEDMOOR RD</td><td>Raleigh</td><td class="num">$9,798.31</td><td class="num">$1,013,000</td><td class="num em">$1,003,202</td><td class="center">3</td><td><span class="badge-hot">HOT</span></td></tr>
-      <tr><td>10</td><td><strong>Department Of Transportation</strong></td><td>9020 WHITE OAK RD</td><td>Raleigh</td><td class="num">$9,692.73</td><td class="num">$1,422,321</td><td class="num em">$1,412,628</td><td class="center">1</td><td><span class="badge-warm">WARM</span></td></tr>
-      <tr><td>11</td><td><strong>Auspitz, Alexandre</strong></td><td>3724 ROLSTON DR</td><td>Raleigh</td><td class="num">$9,449.57</td><td class="num">$1,532,404</td><td class="num em">$1,522,954</td><td class="center">1</td><td><span class="badge-warm">WARM</span></td></tr>
-      <tr><td>12</td><td><strong>Harrison, Charles Lester</strong></td><td>13100 CREEDMOOR RD</td><td>Raleigh</td><td class="num">$9,416.31</td><td class="num">$1,316,900</td><td class="num em">$1,307,484</td><td class="center">2</td><td><span class="badge-warm">WARM</span></td></tr>
-      <tr><td>13</td><td><strong>Brannon, Matthew T</strong></td><td>7309 INCLINE DR</td><td>Raleigh</td><td class="num">$9,262.96</td><td class="num">$1,356,102</td><td class="num em">$1,346,839</td><td class="center">1</td><td><span class="badge-warm">WARM</span></td></tr>
-      <tr><td>14</td><td><strong>Harrison, Charles Lester</strong></td><td>13100 CREEDMOOR RD</td><td>Raleigh</td><td class="num">$8,942.62</td><td class="num">$1,316,900</td><td class="num em">$1,307,957</td><td class="center">1</td><td><span class="badge-warm">WARM</span></td></tr>
-      <tr><td>15</td><td><strong>Penny, Mollie F</strong></td><td>2509 NEW BETHEL CHURCH RD</td><td>Raleigh</td><td class="num">$8,790.68</td><td class="num">$1,340,395</td><td class="num em">$1,331,604</td><td class="center">2</td><td><span class="badge-warm">WARM</span></td></tr>
-      <tr><td>16</td><td><strong>Penny, Mollie F</strong></td><td>2509 NEW BETHEL CHURCH RD</td><td>Raleigh</td><td class="num">$8,348.47</td><td class="num">$1,340,395</td><td class="num em">$1,332,047</td><td class="center">1</td><td><span class="badge-warm">WARM</span></td></tr>
-      <tr><td>17</td><td><strong>Hanna, Meryt Ab</strong></td><td>5304 SINESIS CT</td><td>Raleigh</td><td class="num">$8,046.23</td><td class="num">$812,168</td><td class="num em">$804,122</td><td class="center">2</td><td><span class="badge-warm">WARM</span></td></tr>
-      <tr><td>18</td><td><strong>Newsom, Alfred D</strong></td><td>226 ELM ST</td><td>Raleigh</td><td class="num">$7,659.21</td><td class="num">$1,085,389</td><td class="num em">$1,077,730</td><td class="center">1</td><td><span class="badge-warm">WARM</span></td></tr>
-      <tr><td>19</td><td><strong>Ghosh, Abhijit</strong></td><td>1205 CAIRPHILLY CASTLE CT</td><td>Apex</td><td class="num">$7,628.66</td><td class="num">$811,216</td><td class="num em">$803,587</td><td class="center">1</td><td><span class="badge-warm">WARM</span></td></tr>
-      <tr><td>20</td><td><strong>Hanna, Meryt Ab</strong></td><td>5304 SINESIS CT</td><td>Raleigh</td><td class="num">$7,568.86</td><td class="num">$812,168</td><td class="num em">$804,599</td><td class="center">1</td><td><span class="badge-warm">WARM</span></td></tr>
-      <tr><td>21</td><td><strong>Sedlak, Frank George</strong></td><td>321 GARTRELL WAY</td><td>Apex</td><td class="num">$7,424.62</td><td class="num">$844,991</td><td class="num em">$837,566</td><td class="center">1</td><td><span class="badge-warm">WARM</span></td></tr>
-      <tr><td>22</td><td><strong>Nielsen, Clare</strong></td><td>400 VERNON TER</td><td>Raleigh</td><td class="num">$7,134.22</td><td class="num">$751,529</td><td class="num em">$744,395</td><td class="center">1</td><td><span class="badge-warm">WARM</span></td></tr>
-      <tr><td>23</td><td><strong>Keglers, Vilis Heirs</strong></td><td>418 CUTLER ST</td><td>Raleigh</td><td class="num">$6,920.88</td><td class="num">$684,116</td><td class="num em">$677,195</td><td class="center">2</td><td><span class="badge-warm">WARM</span></td></tr>
-      <tr><td>24</td><td><strong>Schoonover, Garry</strong></td><td>2708 KINGSLEY RD</td><td>Raleigh</td><td class="num">$6,858.07</td><td class="num">$681,373</td><td class="num em">$674,515</td><td class="center">2</td><td><span class="badge-warm">WARM</span></td></tr>
-      <tr><td>25</td><td><strong>Singh, Manmohan</strong></td><td>2709 CHARLESTON OAKS DR</td><td>Raleigh</td><td class="num">$6,832.94</td><td class="num">$732,934</td><td class="num em">$726,101</td><td class="center">1</td><td><span class="badge-warm">WARM</span></td></tr>
-      <tr><td>26</td><td><strong>Green, Dennis</strong></td><td>2511 KINGSLEY RD</td><td>Raleigh</td><td class="num">$6,776.39</td><td class="num">$701,555</td><td class="num em">$694,779</td><td class="center">1</td><td><span class="badge-warm">WARM</span></td></tr>
-      <tr><td>27</td><td><strong>Briggs, Paul G</strong></td><td>208 LORD BERKLEY RD</td><td>Raleigh</td><td class="num">$6,710.19</td><td class="num">$774,547</td><td class="num em">$767,837</td><td class="center">1</td><td><span class="badge-warm">WARM</span></td></tr>
-      <tr><td>28</td><td><strong>Raleigh-Durham Airport Authority</strong></td><td>6800 MT HERMAN RD</td><td>Raleigh</td><td class="num">$6,567.62</td><td class="num">$221,260</td><td class="num em">$214,692</td><td class="center">20</td><td><span class="badge-hot">HOT</span></td></tr>
-      <tr><td>29</td><td><strong>Perry, Susan</strong></td><td>1009 PAGE ST</td><td>Raleigh</td><td class="num">$6,477.72</td><td class="num">$855,422</td><td class="num em">$848,944</td><td class="center">1</td><td><span class="badge-warm">WARM</span></td></tr>
-      <tr><td>30</td><td><strong>Kennedy, Kristen</strong></td><td>116 CRESTVIEW RD</td><td>Raleigh</td><td class="num">$6,470.72</td><td class="num">$1,374,331</td><td class="num em">$1,367,860</td><td class="center">1</td><td><span class="badge-warm">WARM</span></td></tr>
+      <tr><td>1</td><td><strong>Gaddy, Lucy Finch Heirs</strong> <span class="badge-abs">ABSENTEE</span></td><td>11101 FELLOWSHIP DR</td><td>Wake Co</td><td class="num">$47,421.14</td><td class="num">$4,539,358</td><td class="num em">$4,491,937</td><td class="center">3</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>2</td><td><strong>Powell, Marjorie G Heirs</strong> <span class="badge-abs">ABSENTEE</span></td><td>0 MIAL PLANTATION RD</td><td>Wake Co</td><td class="num">$30,416.89</td><td class="num">$364,350</td><td class="num em">$333,933</td><td class="center">13</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>3</td><td><strong>Harrison, Charles Lester</strong></td><td>13100 CREEDMOOR RD</td><td>Wake Co</td><td class="num">$28,157.24</td><td class="num">$1,316,900</td><td class="num em">$1,288,743</td><td class="center">3</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>4</td><td><strong>Penny, Mollie F</strong></td><td>2509 NEW BETHEL CHURCH RD</td><td>Wake Co</td><td class="num">$23,520.92</td><td class="num">$1,340,395</td><td class="num em">$1,316,874</td><td class="center">3</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>5</td><td><strong>Sanders, John   Hrs</strong></td><td>0 BAGWELL ST</td><td>Garner</td><td class="num">$22,198.87</td><td class="num">$120,000</td><td class="num em">$97,801</td><td class="center">26</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>6</td><td><strong>Slade, Fatress L Ii</strong> <span class="badge-abs">ABSENTEE</span></td><td>1002 MULFORD CT</td><td>Knightdale</td><td class="num">$21,493.78</td><td class="num">$2,047,206</td><td class="num em">$2,025,712</td><td class="center">1</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>7</td><td><strong>Hanna, Meryt Ab</strong></td><td>5304 SINESIS CT</td><td>Raleigh</td><td class="num">$20,955.03</td><td class="num">$812,168</td><td class="num em">$791,213</td><td class="center">3</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>8</td><td><strong>Mitchell, George Jr Heirs</strong></td><td>610 CUMBERLAND ST</td><td>Raleigh</td><td class="num">$20,598.55</td><td class="num">$177,572</td><td class="num em">$156,973</td><td class="center">13</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>9</td><td><strong>Gibbs, Dorothy Mitchell</strong> <span class="badge-abs">ABSENTEE</span></td><td>619 CUMBERLAND ST</td><td>Raleigh</td><td class="num">$19,919.65</td><td class="num">$178,500</td><td class="num em">$158,580</td><td class="center">15</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>10</td><td><strong>Raleigh-Durham Airport Authority</strong> <span class="badge-abs">ABSENTEE</span></td><td>6852 MT HERMAN RD</td><td>Raleigh</td><td class="num">$18,424.51</td><td class="num">$79,302</td><td class="num em">$60,877</td><td class="center">3</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>11</td><td><strong>Austin, Louise</strong></td><td>910 NORTHVIEW ST</td><td>Garner</td><td class="num">$18,407.29</td><td class="num">$522,701</td><td class="num em">$504,294</td><td class="center">4</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>12</td><td><strong>Alston, Cary</strong> <span class="badge-abs">ABSENTEE</span></td><td>0 ALSTONBURG AV</td><td>Wake Co</td><td class="num">$18,150.79</td><td class="num">$72,360</td><td class="num em">$54,209</td><td class="center">21</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>13</td><td><strong>Townes, Ralph</strong> <span class="badge-abs">ABSENTEE</span></td><td>717 MORGAN ST</td><td>Raleigh</td><td class="num">$18,043.41</td><td class="num">$1,416,159</td><td class="num em">$1,398,116</td><td class="center">2</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>14</td><td><strong>Hanenberg, Carol L</strong></td><td>801 BENNINGTON DR</td><td>Wake Co</td><td class="num">$17,793.17</td><td class="num">$625,974</td><td class="num em">$608,181</td><td class="center">4</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>15</td><td><strong>Richardson, Dorothy Mae Heirs</strong></td><td>2432 MT ZION CHURCH RD</td><td>Wake Co</td><td class="num">$16,521.10</td><td class="num">$774,026</td><td class="num em">$757,505</td><td class="center">3</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>16</td><td><strong>Evans, Richard W</strong></td><td>123 COVINGTON SQUARE DR</td><td>Cary</td><td class="num">$16,445.06</td><td class="num">$562,788</td><td class="num em">$546,343</td><td class="center">4</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>17</td><td><strong>Raleigh-Durham Airport Authority</strong> <span class="badge-abs">ABSENTEE</span></td><td>6800 MT HERMAN RD</td><td>Raleigh</td><td class="num">$16,394.94</td><td class="num">$206,910</td><td class="num em">$190,515</td><td class="center">3</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>18</td><td><strong>Nicholson Jones, Charlie Grant</strong> <span class="badge-abs">ABSENTEE</span></td><td>2521 SHEPARD SCHOOL RD</td><td>Wake Co</td><td class="num">$15,889.55</td><td class="num">$304,700</td><td class="num em">$288,810</td><td class="center">9</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>19</td><td><strong>Yeargin, J W Heirs</strong> <span class="badge-abs">ABSENTEE</span></td><td>1107 FAYETTEVILLE ST</td><td>Raleigh</td><td class="num">$15,800.60</td><td class="num">$195,500</td><td class="num em">$179,699</td><td class="center">22</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>20</td><td><strong>Gay, William Michael Heirs</strong> <span class="badge-abs">ABSENTEE</span></td><td>4528 GRAHAM NEWTON RD</td><td>Wake Co</td><td class="num">$15,435.18</td><td class="num">$298,754</td><td class="num em">$283,319</td><td class="center">8</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>21</td><td><strong>Armstrong, Lillie M</strong></td><td>2000 ATKINS DR</td><td>Raleigh</td><td class="num">$15,419.64</td><td class="num">$238,454</td><td class="num em">$223,034</td><td class="center">8</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>22</td><td><strong>Moore, Frances Lee Heirs</strong></td><td>308 PAGE ST</td><td>Morrisville</td><td class="num">$15,004.64</td><td class="num">$217,438</td><td class="num em">$202,433</td><td class="center">9</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>23</td><td><strong>Willie, Linda</strong></td><td>1213 SAVANNAH DR</td><td>Raleigh</td><td class="num">$14,193.45</td><td class="num">$222,742</td><td class="num em">$208,549</td><td class="center">7</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>24</td><td><strong>Carrington, Marie     Etal</strong></td><td>0 SIX FORKS RD</td><td>Raleigh</td><td class="num">$13,814.96</td><td class="num">$33,660</td><td class="num em">$19,845</td><td class="center">26</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>25</td><td><strong>Keglers, Vilis Heirs</strong></td><td>418 CUTLER ST</td><td>Raleigh</td><td class="num">$13,762.94</td><td class="num">$684,116</td><td class="num em">$670,353</td><td class="center">3</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>26</td><td><strong>Mcdonald, Rosemary</strong></td><td>1217 STEINBECK DR</td><td>Raleigh</td><td class="num">$13,361.20</td><td class="num">$528,281</td><td class="num em">$514,920</td><td class="center">3</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>27</td><td><strong>Thompson, Rose Marie Heirs</strong> <span class="badge-abs">ABSENTEE</span></td><td>4506 JONES SAUSAGE RD</td><td>Wake Co</td><td class="num">$13,232.02</td><td class="num">$532,081</td><td class="num em">$518,849</td><td class="center">3</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>28</td><td><strong>Schoonover, Garry</strong></td><td>2708 KINGSLEY RD</td><td>Raleigh</td><td class="num">$13,207.87</td><td class="num">$681,373</td><td class="num em">$668,165</td><td class="center">2</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>29</td><td><strong>Townes, Ralph</strong> <span class="badge-abs">ABSENTEE</span></td><td>715 MORGAN ST</td><td>Raleigh</td><td class="num">$13,186.38</td><td class="num">$1,306,230</td><td class="num em">$1,293,044</td><td class="center">2</td><td><span class="badge-hot">HOT</span></td></tr>
+      <tr><td>30</td><td><strong>Hernandez, Daimar J</strong></td><td>312 WALNUT WOODS DR</td><td>Morrisville</td><td class="num">$13,025.57</td><td class="num">$359,140</td><td class="num em">$346,114</td><td class="center">5</td><td><span class="badge-hot">HOT</span></td></tr>
 </tbody></table>
 
 <div class="hr"></div>
