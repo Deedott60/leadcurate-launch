@@ -33,7 +33,7 @@ This was a hard session. Derrick called out multiple mistakes I made. Capturing 
 
 ### Brain stack
 - **Hermes (Danny) primary model:** `stepfun/step-3.7-flash` via OpenRouter ($0.20 in / $1.15 out per M tokens — cheapest competent model)
-- **Hermes fallback chain:** ❌ **EMPTY** — this is a gap. Derrick mentioned Sonnet 4.6 should be backup; recommend `hermes fallback add` to put `anthropic/claude-sonnet-4.6` in there. Don't touch without telling him.
+- **Hermes fallback chain:** ✅ Sonnet 4.6 → GPT-4.1 (added 2026-06-30 evening after Derrick approved). Primary stays on StepFun (cheap); fallbacks fire only when StepFun errors/loops. This protects against the Gemini-infinite-loop pattern that burned credits earlier.
 - **Verify-delivery LLM review pass:** Sonnet 4.6 via OpenRouter (set up correctly inside the Edge Function for quality verification of every Delivery Audit)
 - **OpenRouter balance:** $8.42 remaining as of 2026-06-30 evening
 
