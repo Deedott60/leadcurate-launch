@@ -391,6 +391,12 @@ Read these before doing anything in this repo. If a decision feels like it's nar
 6. **Capability > Automation.** The agents have the tools (Playwright, JS-blocker-bypass skill, county-data-pull skill, 22+ counties of scraping experience). Even if automation isn't fully wired for a market, the CAPABILITY exists and orders get fulfilled — assisted-manual if needed.
 7. **Two-mode communication.** Sample Audit = sales (redacted, charts, "Reserve Your County" CTA). Delivery Audit = post-paid (full data, XLSX attached, "Your file is attached"). Both share the same brand experience; neither leaks internal jargon.
 8. **Operator routes from intake, customer sees one offer.** No A/B/C/D menus to the customer. Operator reads intake → picks the right tier → customer sees one Confirm button. Decision overhead is ours, not theirs.
+9. **Quality check before every send. Non-negotiable.** Every list verified before the Delivery Audit fires:
+   - **Deduplicated** by parcel ID (one row per property, not per tax-year). The current `build_delivery.py` aggregates by REID + ACCOUNT — that pattern is mandatory for every market.
+   - **Filtered to what the customer actually ordered** — if they bought "probate", the file is probate records, not a generic distress dump. Lane in the file matches lane on the order.
+   - **Commercial entities removed** when the customer wants residential (default). LLCs / INC / CORP / TRUST / TTC owners stripped unless explicitly requested.
+   - **Audit stats match the file** — if the audit email says "196 HOT records, 156 absentee, $4.49M top equity," the XLSX must actually contain exactly that. Numbers in the audit are computed from the same dataset, not hand-typed. (Build script already does this; future audits MUST too.)
+   - **Operator (or future auto-check) reviews** before clicking Send. "If the product is good, we will be good." Bad lists kill the brand on the first refund.
 
 ---
 
