@@ -407,6 +407,25 @@ The orchestrator (Claude) keeps all three in sync. Derrick never touches the VPS
 
 **Script reference:** `/opt/leadcurate/scripts/build_delivery.py` — aggregates by parcel REID, filters residential only, parses mailing City/State/ZIP, computes Estimated Equity, detects Absentee Owners, assigns HOT/WARM Motivation. See Hermes skill `leadcurate` for full workflow doc.
 
+### TWO MODES of audit email (LOCKED 2026-06-30)
+
+The `send-delivery` Edge Function takes a `mode` parameter:
+
+| Mode | When to use | What customer gets | XLSX attached? |
+|---|---|---|---|
+| **`delivery`** (default) | Customer paid, ready to receive the real list | Full Delivery Audit: stats grid + analytics + sample records WITH real names/addresses + dark callout "Your full file is attached" | **YES** — branded XLSX |
+| **`sample`** | Sales teaser — prospect interested but hasn't paid | Sample Audit: same brand template + **richer analytical bar charts** (debt distribution, years behind distribution, signal density, market comparison) + sample records with **owner names and addresses redacted** (preserves "Heirs"/"Hrs" suffix + street type) + "Reserve Your County" CTA button | **NO** |
+
+**Endpoint:** `POST https://jdmlsraqioigbukspduo.supabase.co/functions/v1/send-delivery`
+
+**Required fields (both modes):** `to`, `name`, `market`, `lane`, `total`, `hot`, `warm`, `absentee`, `top_equity`, `sample` (array of records)
+
+**Delivery mode also requires:** `list_url` (public URL to the XLSX — Edge Function fetches, base64-encodes, attaches)
+
+**Both modes accept optional `analytics`:** `debt_buckets`, `years_buckets`, `heirs_count`, `comparison` (used to render the bar chart sections — recommended for `sample` mode to make it visually denser per the internal-audit design language at `docs/system-audit/`)
+
+**When operator says "send sample audit for X" — use mode=sample. When operator says "send delivery for X" — use mode=delivery.**
+
 ---
 
 ## Change log
