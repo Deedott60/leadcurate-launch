@@ -1727,7 +1727,12 @@ window.reviewIntake = async function(eventId){
 
 window.rejectIntake = async function(eventId){
   if(!confirm('Reject this intake? No email will be sent to the customer.')) return;
-  if(SYNC){ await sb.from('activity_feed').update({read:true, event_type:'intake:rejected'}).eq('id', eventId); }
+  if(SYNC){
+    const { data, error } = await sb.rpc('reject_intake_activity', { activity_id: eventId });
+    if(error) return toast('Could not reject intake: '+error.message);
+    if(!data) return toast('Could not reject intake');
+    toast('Intake rejected');
+  }
   await loadFeed();
 };
 
