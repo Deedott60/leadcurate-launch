@@ -379,6 +379,36 @@ The orchestrator (Claude) keeps all three in sync. Derrick never touches the VPS
 
 ---
 
+## Delivery process — LOCKED 2026-06-29 (LIST + AUDIT, no permanent hosting)
+
+**Two artifacts per paying customer, every time:**
+
+| Term | What it is | How it's delivered |
+|---|---|---|
+| **LIST** | The XLSX file. Real data — owner names, property/mailing addresses, debt, equity, status. What the customer uses for outreach. | **Attached to the delivery email** as `<Market>-Curated-Distress-<count>.xlsx` |
+| **AUDIT** | The visually-branded summary explaining the list — stats grid (top equity, HOT/WARM counts, absentee count), how-to-work-it tips, sample records. The 10-foot-look. | **Rendered as the HTML body** of the delivery email itself. NOT a permanent web page. |
+
+**End-to-end customer flow when payment confirmed:**
+1. Operator clicks "Send to customer" on dashboard (or n8n / Hermes triggers it after payment webhook)
+2. `intake-autoresponse` (or future `send-delivery`) Edge Function fires
+3. It calls the LIST builder: `python3 /opt/leadcurate/scripts/build_delivery.py --market <slug> --lane <lane> --count 500` (Hermes can run this too)
+4. The script outputs: branded XLSX + audit-data JSON
+5. The Edge Function renders the AUDIT as HTML email body using the JSON, attaches the XLSX, and sends via Hostinger Mail
+6. Customer receives ONE email containing: branded audit body + XLSX attached
+7. **Nothing is permanently hosted per customer.** No accumulating `/docs/customer-deliveries/<customer>/` folders. The audit lives only in the customer's inbox.
+
+**Why this matters:**
+- Premium experience (the 10-foot-look the customer paid for)
+- No cloud-hosting accumulation forever
+- Customer can re-read the audit any time (it's in their email)
+- One-step delivery: open email → see audit → grab attached file
+
+**Internal note:** the wake-nc-curated-distress-500/ folder currently in docs/customer-deliveries/ is the **template / proof-of-concept** for the audit design, not how production delivery works. Future deliveries are email-only.
+
+**Script reference:** `/opt/leadcurate/scripts/build_delivery.py` — aggregates by parcel REID, filters residential only, parses mailing City/State/ZIP, computes Estimated Equity, detects Absentee Owners, assigns HOT/WARM Motivation. See Hermes skill `leadcurate` for full workflow doc.
+
+---
+
 ## Change log
 
 - **2026-06-29 (late evening)** — Major day. Pricing system rewritten to 5 tiers (§3, supersedes prior 4-tier). Hermes brain on Gemini 2.5 Flash primary (Sonnet 4.6 fallback, Codex/gpt-5.5 last-resort) after Sonnet burned $15 in 4 hours from chatty Conference Room posts. Hostinger Agentic Mail fully wired — inbound webhook live (mail-webhook v8), outbound via intake-autoresponse v4. Dashboard cleaned: conf:* chatter hidden from main feed, intake:new cards now have [Review & Send Quote] + [Reject] buttons, full close-loop verified end-to-end (Codex's test email "Targeted Premium" landed). Domain `leadcurate.com` DNS finally swapped (apex → GitHub Pages IPs). `n8n.leadcurate.com` live with TLS. New `agent_tasks` table = explicit @mention queue (vs activity_feed = read-only log). New roadmap: per-delivery customer audit-report generator (Tier 4+5 differentiator, design template = docs/system-audit/). See `docs/GAME-PLAN-2026-06-29.md` for full state + decisions Derrick needs to make (payment method, FB Page timing, P0 polling→webhook cleanup).
