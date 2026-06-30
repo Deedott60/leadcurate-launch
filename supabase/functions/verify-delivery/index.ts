@@ -66,6 +66,29 @@ async function openRouterReview(rows: Record<string, unknown>[], expected: Expec
   }
 }
 
+async function fetchDeliveryFile(listUrl: string) {
+  const attempts = [listUrl];
+  try {
+    const url = new URL(listUrl);
+    if (url.hostname === "leadcurate.com" || url.hostname === "www.leadcurate.com") {
+      attempts.push(`https://deedott60.github.io/leadcurate-launch${url.pathname}`);
+    }
+  } catch {
+    // Let fetch surface the invalid URL error below.
+  }
+  let lastError = "";
+  for (const url of attempts) {
+    try {
+      const file = await fetch(url);
+      if (file.ok) return { file, resolved_url: url };
+      lastError = `${url}: ${file.status}`;
+    } catch (err) {
+      lastError = `${url}: ${String((err as Error)?.message ?? err)}`;
+    }
+  }
+  throw new Error(`Could not fetch list_url: ${lastError}`);
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers });
   if (req.method !== "POST") return json({ ok: false, error: "POST required" }, 405);
@@ -73,13 +96,24 @@ Deno.serve(async (req) => {
     const payload = await req.json();
     const expected = payload.expected as Expected;
     if (!payload.list_url || !expected) return json({ ok: false, error: "list_url and expected are required" }, 400);
-    const file = await fetch(payload.list_url);
-    if (!file.ok) return json({ ok: false, error: `Could not fetch list_url: ${file.status}` }, 400);
+    const { file, resolved_url } = await fetchDeliveryFile(String(payload.list_url));
     const data = new Uint8Array(await file.arrayBuffer());
-    const workbook = XLSX.read(data, { type: "array" });
-    const sheetName = workbook.SheetNames.includes("Records") ? "Records" : workbook.SheetNames[0];
-    const rows = XLSX.utils.sheet_to_json<Record<string, unknown>>(workbook.Sheets[sheetName], { defval: "" });
     const required = ["Owner Name", "Property Address", "Total Owed", "Estimated Equity", "Motivation"];
+    const workbook = XLSX.read(data, { type: "array" });
+    let rows: Record<string, unknown>[] = [];
+    let sheetName = workbook.SheetNames[0];
+    for (const candidate of workbook.SheetNames) {
+      const candidateRows = XLSX.utils.sheet_to_json<Record<string, unknown>>(workbook.Sheets[candidate], { defval: "" });
+      const candidateColumns = new Set(candidateRows.length ? Object.keys(candidateRows[0]) : []);
+      if (required.every((column) => candidateColumns.has(column))) {
+        sheetName = candidate;
+        rows = candidateRows;
+        break;
+      }
+    }
+    if (!rows.length) {
+      rows = XLSX.utils.sheet_to_json<Record<string, unknown>>(workbook.Sheets[sheetName], { defval: "" });
+    }
     const columns = new Set(rows.length ? Object.keys(rows[0]) : []);
     const duplicateKeys = new Set<string>();
     const seen = new Set<string>();
@@ -97,6 +131,8 @@ Deno.serve(async (req) => {
       duplicate_count: duplicateKeys.size,
       entity_owner_count: rows.filter((r) => isEntity(text(r["Owner Name"]))).length,
       missing_columns: required.filter((c) => !columns.has(c)),
+      sheet_name: sheetName,
+      resolved_url,
     };
     const failures: string[] = [];
     if (checks.total !== expected.total) failures.push(`row count ${checks.total} != expected ${expected.total}`);

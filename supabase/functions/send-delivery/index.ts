@@ -31,7 +31,7 @@ function barRow(label: string, value: number, max: number, suffix = "") {
 }
 
 function shell(title: string, body: string) {
-  return `<div style="margin:0;background:#faf7f2;padding:28px;font-family:Inter,Arial,sans-serif;color:#0f172a;"><table role="presentation" width="100%" style="max-width:760px;margin:0 auto;background:#fff;border:1px solid #e2dccf;border-radius:14px;overflow:hidden;"><tr><td style="padding:28px;background:#0f172a;color:#faf7f2;"><div style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#86efac;">LeadCurate</div><h1 style="margin:8px 0 0;font-family:Georgia,serif;font-size:30px;">${esc(title)}</h1></td></tr><tr><td style="padding:28px;">${body}</td></tr><tr><td style="padding:18px 28px;background:#f3eddf;color:#475569;font-size:13px;">LeadCurate LLC · curated, scored property records for the market you asked for.</td></tr></table></div>`;
+  return `<div style="margin:0;background:#faf7f2;padding:28px;font-family:Inter,Arial,sans-serif;color:#0f172a;"><table role="presentation" width="100%" style="max-width:760px;margin:0 auto;background:#fff;border:1px solid #e2dccf;border-radius:14px;overflow:hidden;"><tr><td style="padding:28px;background:#0f172a;color:#faf7f2;"><div style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#86efac;">LeadCurate</div><h1 style="margin:8px 0 0;font-family:Georgia,serif;font-size:30px;">${esc(title)}</h1></td></tr><tr><td style="padding:28px;">${body}</td></tr><tr><td style="padding:18px 28px;background:#f3eddf;color:#475569;font-size:13px;">LeadCurate LLC - curated, scored property records for the market you asked for.</td></tr></table></div>`;
 }
 
 function statCards(p: any) {
@@ -114,6 +114,29 @@ async function verifyBeforeSend(payload: any) {
   return await res.json();
 }
 
+async function fetchDeliveryFile(listUrl: string) {
+  const attempts = [listUrl];
+  try {
+    const url = new URL(listUrl);
+    if (url.hostname === "leadcurate.com" || url.hostname === "www.leadcurate.com") {
+      attempts.push(`https://deedott60.github.io/leadcurate-launch${url.pathname}`);
+    }
+  } catch {
+    // Let fetch surface the invalid URL error below.
+  }
+  let lastError = "";
+  for (const url of attempts) {
+    try {
+      const file = await fetch(url);
+      if (file.ok) return file;
+      lastError = `${url}: ${file.status}`;
+    } catch (err) {
+      lastError = `${url}: ${String((err as Error)?.message ?? err)}`;
+    }
+  }
+  throw new Error(`list_url fetch failed: ${lastError}`);
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers });
   if (req.method !== "POST") return json({ ok: false, error: "POST required" }, 405);
@@ -137,8 +160,7 @@ Deno.serve(async (req) => {
         await activity("conf:blocker", "Delivery verification failed", JSON.stringify(verified.failures ?? verified, null, 2));
         return json({ ok: false, error: "delivery verification failed", verify: verified }, 400);
       }
-      const file = await fetch(p.list_url);
-      if (!file.ok) return json({ ok: false, error: `list_url fetch failed: ${file.status}` }, 400);
+      const file = await fetchDeliveryFile(String(p.list_url));
       const bytes = new Uint8Array(await file.arrayBuffer());
       let binary = "";
       for (const b of bytes) binary += String.fromCharCode(b);
