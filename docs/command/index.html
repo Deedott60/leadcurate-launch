@@ -792,10 +792,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
           Send this link to anyone who shows interest. They fill in market, list type, urgency, volume, contact info. Submissions land in your inbox + auto-create a prospect in the Pipeline.
         </p>
         <div style="font-family:'JetBrains Mono',monospace;font-size:13px;background:var(--cream2);padding:12px 14px;border-radius:8px;margin:12px 0;word-break:break-all;">
-          https://leadcurate.com/intake/
+          http://leadcurate.com/intake/
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <button class="btn" onclick="navigator.clipboard.writeText('https://leadcurate.com/intake/').then(()=>{this.textContent='✓ Copied';setTimeout(()=>this.textContent='🔗 Copy link',1800);})">🔗 Copy link</button>
+          <button class="btn" onclick="window.copyIntakeLink(this)">🔗 Copy link</button>
+          <button class="btn btn-ghost" onclick="window.shareIntakeLink()">Share from phone</button>
           <a href="../intake/" target="_blank" class="btn btn-ghost" style="text-decoration:none;">Open form →</a>
         </div>
       </div>
@@ -936,10 +937,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div class="card mb16">
         <div class="card-h"><span class="card-title">📋 Intake Form (the link you send prospects)</span></div>
         <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-bottom:8px;font-family:'JetBrains Mono',monospace;background:var(--cream2);padding:10px 12px;border-radius:8px;word-break:break-all;font-size:13px;">
-          https://leadcurate.com/intake/
+          http://leadcurate.com/intake/
         </p>
         <div class="flex-row" style="gap:8px;margin-top:10px;">
           <button class="btn" onclick="window.copyIntakeLink()">🔗 Copy link</button>
+          <button class="btn btn-ghost" onclick="window.shareIntakeLink()">Share from phone</button>
           <a href="../intake/" target="_blank" class="btn btn-ghost" style="text-decoration:none;">Open form →</a>
         </div>
       </div>
@@ -1079,7 +1081,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-const INTAKE_URL  = 'https://leadcurate.com/intake/';
+const INTAKE_URL  = 'http://leadcurate.com/intake/';
 const SAMPLES_URL = 'https://leadcurate.com/sample-deliveries/';
 const SB_URL = 'https://jdmlsraqioigbukspduo.supabase.co';
 const SB_KEY = 'sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4';
@@ -1925,8 +1927,43 @@ function renderTemplates(){
     </div>`).join('');
   window._tpls = tpls;
 }
-window.copyTpl = (i) => { navigator.clipboard.writeText(window._tpls[i].body).then(()=>toast('Copied')); };
-window.copyIntakeLink = () => { navigator.clipboard.writeText(INTAKE_URL).then(()=>toast('Intake link copied — paste anywhere')); };
+async function copyText(text, okMessage, button){
+  try {
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(text);
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
+    if(button){
+      const old = button.textContent;
+      button.textContent = 'Copied';
+      setTimeout(()=>button.textContent=old, 1800);
+    }
+    toast(okMessage || 'Copied');
+  } catch(err) {
+    window.prompt('Copy this link:', text);
+  }
+}
+window.copyTpl = (i) => copyText(window._tpls[i].body, 'Copied');
+window.copyIntakeLink = (button) => copyText(INTAKE_URL, 'Intake link copied - paste anywhere', button);
+window.shareIntakeLink = async () => {
+  if(navigator.share){
+    try {
+      await navigator.share({title:'LeadCurate intake form', text:'Fill this out and I can quote the list:', url:INTAKE_URL});
+      return;
+    } catch(_err) {}
+  }
+  await copyText(INTAKE_URL, 'Intake link copied - paste anywhere');
+};
 
 // ─── QUOTE BUILDER ────────────────────────────────────────────
 window.buildQuote = () => {
