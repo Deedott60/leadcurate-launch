@@ -379,32 +379,26 @@ The orchestrator (Claude) keeps all three in sync. Derrick never touches the VPS
 
 ---
 
-## ⚠️ FULFILLMENT MODEL (2026-06-30) — ON-DEMAND, NOT FIXED CATALOG
+## ⚠️ FULFILLMENT MODEL (2026-06-30) — WHATEVER THE INTAKE FORM OFFERS, WE DELIVER
 
-**The product is custom-built lists for ANY market + ANY lane the customer orders.** Not a pre-packaged catalog of 9 markets. The 8 lanes we sell across any US county:
-1. Tax Delinquent
-2. Probate / Inherited
-3. Pre-Foreclosure / NOD
-4. Code Violations
-5. Active Permits / Damage
-6. Individual / Active Homeowner
-7. High-Equity / Free-and-Clear
-8. Absentee Owner
-9. Vacant Land
-10. Liens (mechanic, judgment)
+**The intake form IS the menu.** Every market × every lane the customer picks on the form is sellable and fulfillable. No "we don't have that pre-pulled" excuse. The agents have the tools (Playwright on VPS, `leadcurate-js-blocker-bypass` skill, `leadcurate-county-data-pull` skill, county scraping patterns proven across 22+ counties already) — when something isn't pre-pulled, **the system pulls it.**
 
-**How we fulfill any market+lane combination:**
+**The 10+ lanes the form offers (any US county):**
+Tax Delinquent · Probate / Inherited · Pre-Foreclosure / NOD · Code Violations · Liens (mechanic, judgment) · Absentee Owner · Active Permits / Damage · High-Equity / Free-and-Clear · Individual / Active Homeowner · Entity-owned (LLC) · Vacant Land
 
-| Data availability | Time to deliver |
-|---|---|
-| **We have the raw data already pulled** (Wake NC tax-delinquent is the working example today; other markets exist at various levels of completeness in `/opt/leadcurate/raw_imports/`) | Same-day to 24h once `build_delivery.py` is generalized (Codex Task 1) |
-| **We don't have the data yet** | 48–72h typical. Hermes/Codex finds the county source URL, pulls it (Playwright if JS-blocked, see `leadcurate-js-blocker-bypass` skill), runs it through the standard pipeline, delivers. |
+**The 20 markets on the form** (Charlotte, Raleigh, Atlanta, Houston, Phoenix, etc.) — plus the "Other" option means literally any US county.
 
-**Customer-facing promise:** "Custom-built file for your market + lanes. Typical 48–72h. We'll confirm the exact timeline when you reserve."
+**Fulfillment flow when an order comes in:**
+1. Hermes/Codex check `/opt/leadcurate/raw_imports/<market-slug>/` for relevant raw data
+2. If present and recent → run through `build_delivery.py` for the lane(s) requested → deliver
+3. If not present → use existing tools (Playwright, JS-blocker-bypass skill, county-data-pull skill) to scrape the county source → save raw → run through `build_delivery.py` → deliver
+4. **Refusing an order because data isn't pre-pulled is not an option.** We have the capability to scrape any US county's public records.
 
-**Operator rule:** never promise same-day delivery on first ask. Always confirm market data status first. The system supports on-demand pulls — but each new county takes real scrape work, not magic.
+**Customer-facing timing:** decided per-order by the operator at quote time. Don't preset a "48-72h" expectation in customer copy. Some orders ship same day (already-pulled data). Some take longer (new scrape required). Operator confirms timeline when sending the quote.
 
-**Today's actual constraint:** `build_delivery.py` is hardcoded to Wake NC tax-delinquent. Codex Task 1 generalizes it for all lanes/markets. Until that ships, only Wake NC is build-ready. AFTER it ships, every other market becomes ready once raw data exists or is pulled.
+**Today's only real constraint:** `build_delivery.py` script is currently Wake-NC-hardcoded. Codex Tasks 1, 4, 5 (in `docs/codex-handoff-multi-market.md`) generalize it + add the scrape dispatcher + add the per-lane scraper modules. Once those ship, the agents can fulfill anything on the intake form end-to-end.
+
+**Until Codex Task 1 ships:** if a non-Wake order comes in, Derrick handles the data assembly manually using the existing scraping skills and the agents help with the pipeline. The CAPABILITY exists — the automation just isn't done. Never tell a customer no.
 
 ---
 
