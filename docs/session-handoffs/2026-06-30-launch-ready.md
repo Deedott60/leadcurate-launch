@@ -32,8 +32,10 @@ This was a hard session. Derrick called out multiple mistakes I made. Capturing 
 ## 1. Current state of the world (LOCKED in CLAUDE.md, verified 2026-06-30)
 
 ### Brain stack
-- **Hermes (Danny) primary model:** `stepfun/step-3.7-flash` via OpenRouter ($0.20 in / $1.15 out per M tokens — cheapest competent model)
-- **Hermes fallback chain:** ✅ Sonnet 4.6 → GPT-4.1 (added 2026-06-30 evening after Derrick approved). Primary stays on StepFun (cheap); fallbacks fire only when StepFun errors/loops. This protects against the Gemini-infinite-loop pattern that burned credits earlier.
+- **Hermes (Danny) primary model:** `anthropic/claude-sonnet-4.6` via OpenRouter — SWITCHED back from StepFun late 2026-06-30 after Derrick lost confidence in untested cheap models. Sonnet costs more per call ($3/$15 per M) but is verified reliable for tool calling, vision, and complex reasoning. Verified working with a live $0.23 cost-delta test.
+- **Hermes fallback chain:** GPT-4.1 (OpenRouter) → Codex/gpt-5.5 (free, Derrick's ChatGPT Pro plan, last resort)
+- **Why Sonnet over StepFun/Gemini:** Both cheap models failed reliability tests today. Gemini Flash looped + claimed no vision; StepFun was untested. Derrick burned $15 on Sonnet earlier in the session — but that was from my chatty conf:role posts triggering multi-turn executions, NOT from Sonnet being expensive at idle. Sonnet at idle = $0. The cost trap was MY behavior. Principle #2 in CLAUDE.md now bans chatter posts.
+- **Idle-state safety verified late 2026-06-30:** crontab has no Hermes entries (only weekly auction scrapers); no systemd timers for Hermes; conference-watcher cron disabled; only running process is the gateway daemon (idle until Telegram message arrives). If Derrick doesn't message Danny, balance stays exactly where it is.
 - **Verify-delivery LLM review pass:** Sonnet 4.6 via OpenRouter (set up correctly inside the Edge Function for quality verification of every Delivery Audit)
 - **OpenRouter balance:** $8.42 remaining as of 2026-06-30 evening
 
