@@ -1,0 +1,142 @@
+{
+  "name": "LeadCurate - ground_floor_manual",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "market", "name": "market", "value": "guilford-nc", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "manual-inputs",
+      "name": "Manual inputs",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [220, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://172.18.0.1:8788/run",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "jsonBody": "={{ JSON.stringify({ task: 'ground_floor_seed' }) }}",
+        "options": { "response": { "response": { "responseFormat": "json" } } }
+      },
+      "id": "seed-investments",
+      "name": "Seed verified investments",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 0],
+      "continueOnFail": true,
+      "credentials": { "httpHeaderAuth": { "id": "Ah0PYxcoomp17XGl" } }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "HTTP-Referer", "value": "https://leadcurate.com" },
+            { "name": "X-Title", "value": "LeadCurate Ground Floor decision" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'anthropic/claude-sonnet-5', messages: [{ role: 'user', content: 'You are the LeadCurate Ground Floor decision node. Review the investment seed output and decide whether it is safe to package the requested county. Approve only if at least two sources exist for the investment and the market is mapped. Respond only JSON {\"approved\": boolean, \"reason\": string}. Market: ' + $('Manual inputs').first().json.market + '. Seed output: ' + JSON.stringify($json).slice(0, 12000) }], response_format: { type: 'json_object' }, max_tokens: 400 }) }}",
+        "options": { "response": { "response": { "responseFormat": "json" } } }
+      },
+      "id": "llm-ground-floor-decision",
+      "name": "LLM Ground Floor decision",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [700, 0],
+      "continueOnFail": true,
+      "credentials": { "httpBearerAuth": { "id": "bfAGA57sWNBv9wk7" } }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://172.18.0.1:8788/run",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "jsonBody": "={{ JSON.stringify({ task: 'ground_floor_package', market: $('Manual inputs').first().json.market }) }}",
+        "options": { "response": { "response": { "responseFormat": "json" } } }
+      },
+      "id": "package-county",
+      "name": "Package county parcels",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [940, 0],
+      "continueOnFail": true,
+      "credentials": { "httpHeaderAuth": { "id": "Ah0PYxcoomp17XGl" } }
+    },
+    {
+      "parameters": {
+        "jsCode": "const seed = $('Seed verified investments').first().json;\nconst pkg = $json.result || $json;\nlet decision = { approved: false, reason: 'LLM decision unavailable' };\ntry { decision = JSON.parse($('LLM Ground Floor decision').first().json.choices?.[0]?.message?.content || '{}'); } catch {}\nreturn [{ json: { seed, package: pkg, llm_decision: decision, approved: Boolean(pkg.ok && decision.approved) } }];"
+      },
+      "id": "merge-results",
+      "name": "Merge Ground Floor result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1180, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://jdmlsraqioigbukspduo.supabase.co/rest/v1/activity_feed",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4" },
+            { "name": "Authorization", "value": "Bearer sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "return=minimal" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "jsonBody": "={{ JSON.stringify({ event_type: $json.approved ? 'ground_floor:ready_for_review' : 'ground_floor:needs_review', source: 'n8n', title: $json.approved ? 'Ground Floor package ready' : 'Ground Floor package needs review', body: JSON.stringify($json).slice(0, 6000), target: 'derrick' }) }}",
+        "options": {}
+      },
+      "id": "post-dashboard-state",
+      "name": "Post dashboard state",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1420, 0]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": { "main": [[{ "node": "Manual inputs", "type": "main", "index": 0 }]] },
+    "Manual inputs": { "main": [[{ "node": "Seed verified investments", "type": "main", "index": 0 }]] },
+    "Seed verified investments": { "main": [[{ "node": "LLM Ground Floor decision", "type": "main", "index": 0 }]] },
+    "LLM Ground Floor decision": { "main": [[{ "node": "Package county parcels", "type": "main", "index": 0 }]] },
+    "Package county parcels": { "main": [[{ "node": "Merge Ground Floor result", "type": "main", "index": 0 }]] },
+    "Merge Ground Floor result": { "main": [[{ "node": "Post dashboard state", "type": "main", "index": 0 }]] }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/New_York",
+    "saveDataSuccessExecution": "all",
+    "saveDataErrorExecution": "all"
+  }
+}

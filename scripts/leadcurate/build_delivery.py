@@ -19,17 +19,45 @@ from openpyxl.utils import get_column_letter
 RAW_ROOT = Path("/opt/leadcurate/raw_imports")
 SNAPSHOT_ROOT = Path("/opt/leadcurate/snapshots")
 
+LANE_LABELS = {
+    "tax-delinquent": "Tax Delinquent",
+    "probate": "Probate Premium",
+    "pre-foreclosure": "Pre-Foreclosure Premium",
+    "code-violations": "Code Violations List",
+    "liens": "Liens Watchlist",
+    "absentee": "Absentee Owner List",
+    "active-permits": "Active Permits Distress",
+    "high-equity": "High-Equity Owners List",
+    "individual-homeowner": "Active Homeowner List",
+    "entity-owned": "Entity-Owned Properties",
+    "vacant-land": "Vacant Land",
+}
+
 MARKET_REGISTRY: dict[str, dict[str, Any]] = {
-    "wake-nc": {"display": "Wake County NC", "raw_dir": RAW_ROOT / "wake-nc", "raw_pattern": "delinquent*.xlsx", "default_city": "Raleigh", "state": "NC"},
-    "cobb-ga": {"display": "Cobb County GA", "raw_dir": RAW_ROOT / "cobb-ga", "raw_pattern": "*.pdf", "default_city": "Marietta", "state": "GA", "snapshot_pattern": "cobb-ga-delinquent-*.csv"},
-    "guilford-nc": {"display": "Guilford County NC", "raw_dir": RAW_ROOT / "guilford-nc", "raw_pattern": "tax-delinquent-report.csv", "default_city": "Greensboro", "state": "NC"},
-    "marion-in": {"display": "Marion County IN", "raw_dir": RAW_ROOT / "marion-in", "raw_pattern": "parcels-owner-assessed.csv", "default_city": "Indianapolis", "state": "IN", "snapshot_pattern": "marion-in-*.csv"},
-    "dekalb-ga": {"display": "DeKalb County GA", "raw_dir": RAW_ROOT / "dekalb-ga", "raw_pattern": "tax-parcels-2025.csv", "default_city": "Decatur", "state": "GA", "snapshot_pattern": "dekalb-ga-*.csv"},
-    "forsyth-nc": {"display": "Forsyth County NC", "raw_dir": RAW_ROOT / "forsyth-nc", "raw_pattern": "parcels.csv", "default_city": "Winston-Salem", "state": "NC", "snapshot_pattern": "forsyth-nc-*.csv"},
-    "fulton-ga": {"display": "Fulton County GA", "raw_dir": RAW_ROOT / "fulton-ga", "raw_pattern": "tax-parcels-2025.csv", "default_city": "Atlanta", "state": "GA", "snapshot_pattern": "fulton-ga-*.csv"},
-    "harris-tx": {"display": "Harris County TX", "raw_dir": RAW_ROOT / "harris-tx", "raw_pattern": "real_acct.txt", "default_city": "Houston", "state": "TX", "snapshot_pattern": "harris-tx-permit-burnout-*.csv"},
-    "jefferson-al": {"display": "Jefferson County AL", "raw_dir": RAW_ROOT / "jefferson-al", "raw_pattern": "DelinquentParcelList.xls", "default_city": "Birmingham", "state": "AL", "snapshot_pattern": "jefferson-al-delinquent-*.csv"},
-    "mecklenburg-nc": {"display": "Mecklenburg County NC", "raw_dir": RAW_ROOT / "mecklenburg-nc", "raw_pattern": "parcel-lookup.csv", "default_city": "Charlotte", "state": "NC"},
+    "wake-nc": {"display": "Wake County NC", "raw_dir": RAW_ROOT / "wake-nc", "raw_pattern": "delinquent*.xlsx", "lane_patterns": {"default": ["parcels.csv", "property.csv"], "tax-delinquent": ["delinquent*.xlsx"], "absentee": ["parcels.csv", "property.csv"], "high-equity": ["parcels.csv", "property.csv"], "individual-homeowner": ["parcels.csv", "property.csv"], "entity-owned": ["parcels.csv", "property.csv"], "vacant-land": ["parcels.csv", "property.csv"]}, "default_city": "Raleigh", "state": "NC"},
+    "cobb-ga": {"display": "Cobb County GA", "raw_dir": RAW_ROOT / "cobb-ga", "raw_pattern": "*.pdf", "lane_patterns": {"tax-delinquent": ["*.pdf"], "default": ["*.pdf"]}, "default_city": "Marietta", "state": "GA", "snapshot_pattern": "cobb-ga-delinquent-*.csv"},
+    "guilford-nc": {"display": "Guilford County NC", "raw_dir": RAW_ROOT / "guilford-nc", "raw_pattern": "tax-delinquent-report.csv", "lane_patterns": {"tax-delinquent": ["tax-delinquent-report.csv"], "pre-foreclosure": ["parcel-foreclosure.csv"], "default": ["county-parcels.csv", "historical-parcels-2025.csv"]}, "default_city": "Greensboro", "state": "NC"},
+    "marion-in": {"display": "Marion County IN", "raw_dir": RAW_ROOT / "marion-in", "raw_pattern": "parcels-owner-assessed.csv", "lane_patterns": {"default": ["parcels-owner-assessed.csv", "parcels-base.csv", "hhc-parcel-owner.csv"]}, "default_city": "Indianapolis", "state": "IN", "snapshot_pattern": "marion-in-*.csv"},
+    "dekalb-ga": {"display": "DeKalb County GA", "raw_dir": RAW_ROOT / "dekalb-ga", "raw_pattern": "tax-parcels-2025.csv", "lane_patterns": {"default": ["tax-parcels-2025.csv"]}, "default_city": "Decatur", "state": "GA", "snapshot_pattern": "dekalb-ga-*.csv"},
+    "forsyth-nc": {"display": "Forsyth County NC", "raw_dir": RAW_ROOT / "forsyth-nc", "raw_pattern": "parcels.csv", "lane_patterns": {"default": ["parcels.csv", "parcels-hosted.csv"], "pre-foreclosure": ["bank-foreclosures.csv"]}, "default_city": "Winston-Salem", "state": "NC", "snapshot_pattern": "forsyth-nc-*.csv"},
+    "fulton-ga": {"display": "Fulton County GA", "raw_dir": RAW_ROOT / "fulton-ga", "raw_pattern": "tax-parcels-2025.csv", "lane_patterns": {"default": ["tax-parcels-2025.csv", "current-parcels.csv", "parcels.csv"]}, "default_city": "Atlanta", "state": "GA", "snapshot_pattern": "fulton-ga-*.csv"},
+    "harris-tx": {"display": "Harris County TX", "raw_dir": RAW_ROOT / "harris-tx", "raw_pattern": "real_acct.txt", "lane_patterns": {"default": ["real_acct.txt"], "active-permits": ["permits.txt", "real_acct.txt"]}, "default_city": "Houston", "state": "TX", "snapshot_pattern": "harris-tx-permit-burnout-*.csv"},
+    "jefferson-al": {"display": "Jefferson County AL", "raw_dir": RAW_ROOT / "jefferson-al", "raw_pattern": "DelinquentParcelList.xls", "lane_patterns": {"tax-delinquent": ["DelinquentParcelList.xls"], "default": ["DelinquentParcelList.xls"]}, "default_city": "Birmingham", "state": "AL", "snapshot_pattern": "jefferson-al-delinquent-*.csv"},
+    "mecklenburg-nc": {"display": "Mecklenburg County NC", "raw_dir": RAW_ROOT / "mecklenburg-nc", "raw_pattern": "parcel-lookup.csv", "lane_patterns": {"default": ["parcel-lookup.csv", "parcels-full.csv"], "probate": ["mecklenburg-probate.csv"], "liens": ["lien-data.csv"], "vacant-land": ["vacant-land.csv"], "absentee": ["parcel-lookup.csv", "parcels-full.csv"], "high-equity": ["parcel-lookup.csv", "parcels-full.csv"], "individual-homeowner": ["parcel-lookup.csv", "parcels-full.csv"], "entity-owned": ["parcel-lookup.csv", "parcels-full.csv"]}, "default_city": "Charlotte", "state": "NC"},
+    "cuyahoga-oh": {"display": "Cuyahoga County OH", "raw_dir": RAW_ROOT / "cuyahoga-oh", "raw_pattern": "tax-parcels.csv", "lane_patterns": {"default": ["tax-parcels.csv"], "high-equity": ["tax-parcels.csv"], "absentee": ["tax-parcels.csv"], "individual-homeowner": ["tax-parcels.csv"], "entity-owned": ["tax-parcels.csv"], "vacant-land": ["tax-parcels.csv"]}, "default_city": "Cleveland", "state": "OH"},
+    "tarrant-tx": {"display": "Tarrant County TX", "raw_dir": RAW_ROOT / "tarrant-tx", "raw_pattern": "tax-roll.zip", "lane_patterns": {"default": ["tax-roll.zip"], "tax-delinquent": ["tax-roll.zip"]}, "default_city": "Fort Worth", "state": "TX"},
+    "jefferson-ky": {"display": "Jefferson County KY", "raw_dir": RAW_ROOT / "jefferson-ky", "raw_pattern": "parcels.csv", "lane_patterns": {"default": ["parcels.csv"], "code-violations": ["property-maintenance-violations.csv"], "liens": ["lien-holder-final-orders.csv"], "pre-foreclosure": ["property-foreclosures.csv"]}, "default_city": "Louisville", "state": "KY"},
+    "shelby-tn": {"display": "Shelby County TN", "raw_dir": RAW_ROOT / "shelby-tn", "raw_pattern": "tax-sale-extract.csv", "lane_patterns": {"default": ["tax-sale-extract.csv"], "tax-delinquent": ["tax-sale-extract.csv"], "pre-foreclosure": ["tax-sale-extract.csv"]}, "default_city": "Memphis", "state": "TN"},
+    "duval-fl": {"display": "Duval County FL", "raw_dir": RAW_ROOT / "duval-fl", "raw_pattern": "parcels.csv", "lane_patterns": {"default": ["parcels.csv"], "tax-delinquent": ["tax-delinquent*.csv", "parcels.csv"], "pre-foreclosure": ["pre-foreclosure*.csv", "foreclosure*.csv"], "code-violations": ["code-violations*.csv"], "liens": ["liens*.csv"], "active-permits": ["permits*.csv"], "absentee": ["parcels.csv"], "high-equity": ["parcels.csv"], "individual-homeowner": ["parcels.csv"], "entity-owned": ["parcels.csv"], "vacant-land": ["parcels.csv"]}, "default_city": "Jacksonville", "state": "FL"},
+    "davidson-tn": {"display": "Davidson County TN", "raw_dir": RAW_ROOT / "davidson-tn", "raw_pattern": "parcels.csv", "lane_patterns": {"default": ["parcels.csv"], "tax-delinquent": ["tax-delinquent*.csv", "parcels.csv"], "pre-foreclosure": ["pre-foreclosure*.csv", "foreclosure*.csv"], "code-violations": ["code-violations*.csv"], "liens": ["liens*.csv"], "active-permits": ["permits*.csv"], "absentee": ["parcels.csv"], "high-equity": ["parcels.csv"], "individual-homeowner": ["parcels.csv"], "entity-owned": ["parcels.csv"], "vacant-land": ["parcels.csv"]}, "default_city": "Nashville", "state": "TN"},
+    "maricopa-az": {"display": "Maricopa County AZ", "raw_dir": RAW_ROOT / "maricopa-az", "raw_pattern": "residential-master.zip", "lane_patterns": {"default": ["residential-master.zip", "secured-master.zip"], "individual-homeowner": ["residential-master.zip"], "high-equity": ["residential-master.zip", "secured-master.zip"], "entity-owned": ["commercial-master.zip", "secured-master.zip"], "vacant-land": ["secured-master.zip"]}, "default_city": "Phoenix", "state": "AZ"},
+    "allen-in": {"display": "Allen County IN", "raw_dir": RAW_ROOT / "allen-in", "raw_pattern": "2025-delinquent-property.xlsx", "lane_patterns": {"default": ["2025-delinquent-property.xlsx"], "tax-delinquent": ["2025-delinquent-property.xlsx"]}, "default_city": "Fort Wayne", "state": "IN"},
+    "charleston-sc": {"display": "Charleston County SC", "raw_dir": RAW_ROOT / "charleston-sc", "raw_pattern": "*Tax-Sale-Listing.pdf", "lane_patterns": {"default": ["*Tax-Sale-Listing.pdf"], "tax-delinquent": ["*Tax-Sale-Listing.pdf"]}, "default_city": "Charleston", "state": "SC"},
+    "greenville-sc": {"display": "Greenville County SC", "raw_dir": RAW_ROOT / "greenville-sc", "raw_pattern": "tax-sale-info.pdf", "lane_patterns": {"default": ["tax-sale-info.pdf", "tax-sale-app.html"], "tax-delinquent": ["tax-sale-info.pdf", "tax-sale-app.html"]}, "default_city": "Greenville", "state": "SC"},
+    "dallas-tx": {"display": "Dallas County TX", "raw_dir": RAW_ROOT / "dallas-tx", "raw_pattern": "2025-real-property-cert-roll.zip", "lane_patterns": {"default": ["2025-real-property-cert-roll.zip", "parcel2025.zip"], "tax-delinquent": ["2025-real-property-cert-roll.zip"], "vacant-land": ["parcel2025.zip"]}, "default_city": "Dallas", "state": "TX"},
+    "erie-ny": {"display": "Erie County NY", "raw_dir": RAW_ROOT / "erie-ny", "raw_pattern": "*.pdf", "lane_patterns": {"default": ["*.pdf"], "tax-delinquent": ["*delinquent*.pdf", "*.pdf"], "pre-foreclosure": ["*foreclosure*.pdf", "*.pdf"]}, "default_city": "Buffalo", "state": "NY"},
+    "fayette-ky": {"display": "Fayette County KY", "raw_dir": RAW_ROOT / "fayette-ky", "raw_pattern": "parcel.csv", "lane_patterns": {"default": ["parcel.csv"], "vacant-land": ["vacant-land-2010.csv"], "individual-homeowner": ["parcel.csv"]}, "default_city": "Lexington", "state": "KY"},
+    "nyc": {"display": "New York City NY", "raw_dir": RAW_ROOT / "nyc", "raw_pattern": "tax-lien.csv", "lane_patterns": {"default": ["tax-lien.csv"], "tax-delinquent": ["tax-lien.csv", "hpd-tax-delinquency.csv"], "liens": ["tax-lien.csv"], "code-violations": ["dob-violations.csv"]}, "default_city": "New York", "state": "NY"},
 }
 
 ENTITY_WORDS = (" LLC", " INC", " CORP", " LP", " TTC", " FUND", " TRUST", " L P", " L L C", " LLP", " COMPANY", " PROPERTIES", " INVESTMENTS", " HOLDINGS", " PARTNERS", " CHURCH", " CITY OF", " COUNTY")
@@ -80,16 +108,27 @@ def motivation(owed: float, years: int) -> str:
 
 
 def date_dirs(raw_dir: Path) -> list[Path]:
+    if not raw_dir.exists():
+        return []
     dirs = [p for p in raw_dir.iterdir() if p.is_dir()]
     return sorted(dirs, key=lambda p: p.name, reverse=True)
+
+
+def lane_patterns(cfg: dict[str, Any], lane: str) -> list[str]:
+    raw = cfg.get("lane_patterns") or {}
+    patterns = raw.get(lane) or raw.get("default") or [cfg.get("raw_pattern", "*")]
+    if isinstance(patterns, str):
+        patterns = [patterns]
+    fallback = cfg.get("raw_pattern")
+    if fallback and fallback not in patterns:
+        patterns.append(fallback)
+    return patterns
 
 
 def latest_file(market: str, lane: str) -> Path:
     cfg = MARKET_REGISTRY[market]
     raw_dir = Path(cfg["raw_dir"])
-    patterns = [cfg.get("raw_pattern", "*")]
-    if lane == "active-permits":
-        patterns = ["permits.txt", "real_acct.txt"]
+    patterns = lane_patterns(cfg, lane)
     for dated in date_dirs(raw_dir):
         for pattern in patterns:
             matches = sorted(dated.glob(pattern), key=lambda p: p.stat().st_mtime, reverse=True)
@@ -127,48 +166,111 @@ def read_xlsx_rows(path: Path) -> tuple[list[str], list[tuple[Any, ...]]]:
     return headers, list(rows)
 
 
-def normalize_record(raw: dict[str, Any], cfg: dict[str, Any], lane_label: str) -> dict[str, Any] | None:
-    owner = clean(raw.get("owner") or raw.get("owner_name") or raw.get("Owner Name") or raw.get("OWNER_NAME") or raw.get("OWNERNME1") or raw.get("FULLOWNERNAME") or raw.get("CURRENTOWNERNAME1"))
-    if not is_residential_owner(owner):
+def read_xlsx_dicts(path: Path) -> list[dict[str, Any]]:
+    headers, rows = read_xlsx_rows(path)
+    return [dict(zip(headers, row)) for row in rows]
+
+
+def first_present(raw: dict[str, Any], *names: str) -> Any:
+    for name in names:
+        value = raw.get(name)
+        if clean(value):
+            return value
+    return ""
+
+
+def join_present(*values: Any) -> str:
+    return " ".join(clean(v) for v in values if clean(v))
+
+
+def is_entity_owner(owner: str) -> bool:
+    upper = f" {owner.upper()} "
+    return any(word in upper for word in ENTITY_WORDS)
+
+
+def normalize_record(raw: dict[str, Any], cfg: dict[str, Any], lane_label: str, lane: str = "tax-delinquent") -> dict[str, Any] | None:
+    owner = clean(
+        first_present(
+            raw,
+            "owner", "owner_name", "Owner Name", "OWNER_NAME", "OWNERNME1",
+            "FULLOWNERNAME", "CURRENTOWNERNAME1", "parcel_owner", "mail_name",
+            "Pay Yr Owner Of Record", "Customer_Name", "fullname",
+        )
+        or join_present(raw.get("Owner_FirstName"), raw.get("Owner_LastName"))
+        or join_present(raw.get("ownerfirstname"), raw.get("ownerlastname"))
+    )
+    allow_entities = lane == "entity-owned"
+    if not is_residential_owner(owner, allow_entities=allow_entities):
         return None
-    parcel = clean(raw.get("parcel") or raw.get("parcel_id") or raw.get("Parcel REID") or raw.get("PARCEL_NUM") or raw.get("PARCELID") or raw.get("ParcelID") or raw.get("PID") or raw.get("Tax_ID"))
-    account = clean(raw.get("account") or raw.get("Account ID") or raw.get("acct") or parcel)
+    parcel = clean(first_present(raw, "parcel", "parcel_id", "Parcel REID", "PARCEL_NUM", "PARCELID", "ParcelID", "PID", "Tax_ID", "taxpid", "pid", "nc_pin", "Parcel/Property Number", "PARCEL_ID", "Full_Parcel_ID", "PVANUM", "Block ", "BLOCK"))
+    account = clean(first_present(raw, "account", "Account ID", "acct", "ACCOUNT_NUM", "LienNo", "InvoiceNo", "Case_", "b1_alt_id") or parcel)
     if not (parcel or account):
         return None
-    total_owed = money(raw.get("total_owed") or raw.get("Total Owed") or raw.get("TOTAL_DUE_AMOUNT") or raw.get("delinquent_amount") or raw.get("total_due") or raw.get("BILL_DUE_AMT") or raw.get("score"))
-    value = money(raw.get("value") or raw.get("Property Value") or raw.get("PROP_ASSESS_VALUE") or raw.get("TOT_APPR") or raw.get("APPRAISED_VALUE") or raw.get("CAMAPARCELID") or raw.get("mkt_val") or raw.get("Total_Value") or raw.get("TOTALVALUE"))
-    if value <= 0 and total_owed <= 0:
+    total_owed = money(first_present(raw, "total_owed", "Total Owed", "TOTAL_DUE_AMOUNT", "delinquent_amount", "total_due", "BILL_DUE_AMT", "score", "Delinquent Amt", "Delinquent Amt ", "CitationAmount", "final_citation_amount", "Sale_Price", "Water Debt Only"))
+    value = money(first_present(raw, "value", "Property Value", "PROP_ASSESS_VALUE", "TOT_APPR", "APPRAISED_VALUE", "CAMAPARCELID", "mkt_val", "Total_Value", "TOTALVALUE", "tax_market_total", "certified_tax_total", "totalvalue", "Total Value"))
+    source_signal_lanes = {"pre-foreclosure", "code-violations", "liens", "probate"}
+    if value <= 0 and total_owed <= 0 and lane not in source_signal_lanes:
         return None
-    years = int(money(raw.get("years") or raw.get("Years Behind") or raw.get("tax_years") or 1)) or 1
-    prop_zip = clean(raw.get("Property ZIP") or raw.get("SITEZIP") or raw.get("ZIPCODE") or raw.get("site_zip") or raw.get("Zip_Code"))
-    mail_zip = clean(raw.get("Mailing ZIP") or raw.get("MAIL_ZIP") or raw.get("PSTLZIP5") or raw.get("OWNERZIP") or raw.get("mail_zip") or raw.get("Zip_Code"))
+    years = int(money(first_present(raw, "years", "Years Behind", "tax_years", "Cycle") or 1)) or 1
+    prop_zip = clean(first_present(raw, "Property ZIP", "SITEZIP", "ZIPCODE", "site_zip", "Zip_Code", "parcel_zip", "Zip", "zip", "Zip Code"))
+    mail_zip = clean(first_present(raw, "Mailing ZIP", "MAIL_ZIP", "PSTLZIP5", "OWNERZIP", "mail_zip", "Zip_Code", "mail_zip", "zipcode"))
     absentee = "Yes" if (mail_zip and prop_zip and mail_zip[:5] != prop_zip[:5]) or clean(raw.get("absentee")).upper() in ("Y", "YES", "TRUE") else "No"
-    address = clean(raw.get("address") or raw.get("Property Address") or raw.get("SITEADDRESS") or raw.get("site_addr") or raw.get("PROPERTYADDRESS") or raw.get("Location"))
-    city = clean(raw.get("city") or raw.get("Property City") or raw.get("SITECITY") or raw.get("site_city") or raw.get("CITY") or cfg.get("default_city"))
+    address = clean(
+        first_present(raw, "address", "Property Address", "SITEADDRESS", "site_addr", "PROPERTYADDRESS", "Location", "parcel_addr", "FullAddress", "PartialAddress", "Property_Address", "ADDRESS", "FULL_ADDRESS")
+        or join_present(raw.get("House_Nr"), raw.get("Dir"), raw.get("Street_Name"), raw.get("St_Type"), raw.get("Post_Dir"))
+        or join_present(raw.get("Street Number"), raw.get("Street Name"))
+        or join_present(raw.get("House Number"), raw.get("Street Name"))
+    )
+    city = clean(first_present(raw, "city", "Property City", "SITECITY", "site_city", "CITY", "parcel_city", "municipality") or cfg.get("default_city"))
     equity = max(0.0, value - total_owed)
-    return {
+    rec = {
         "Account ID": account,
         "Parcel REID": parcel,
         "Owner Name": owner.title(),
-        "Secondary Owner": clean(raw.get("secondary") or raw.get("Secondary Owner") or raw.get("OWNERNME2")),
+        "Secondary Owner": clean(first_present(raw, "secondary", "Secondary Owner", "OWNERNME2", "second_owner", "cownerfirstname")),
         "Property Address": address.title(),
         "Property City": city.title(),
         "Property ZIP": prop_zip,
-        "Mailing Street": clean(raw.get("Mailing Street") or raw.get("MAIL_ADDR1") or raw.get("PSTLADDRESS") or raw.get("OWNERADDRESS") or raw.get("mail_address_1")).title(),
-        "Mailing City": clean(raw.get("Mailing City") or raw.get("MAIL_CITY") or raw.get("PSTLCITY") or raw.get("OWNERCITY") or raw.get("mail_city")).title(),
-        "Mailing State": clean(raw.get("Mailing State") or raw.get("MAIL_STATE") or raw.get("PSTLSTATE") or raw.get("OWNERSTATE") or raw.get("mail_state")),
+        "Mailing Street": clean(first_present(raw, "Mailing Street", "MAIL_ADDR1", "PSTLADDRESS", "OWNERADDRESS", "mail_address_1", "mail_addr_street", "Mailing_Address", "mailaddr1", "addr1")).title(),
+        "Mailing City": clean(first_present(raw, "Mailing City", "MAIL_CITY", "PSTLCITY", "OWNERCITY", "mail_city", "city")).title(),
+        "Mailing State": clean(first_present(raw, "Mailing State", "MAIL_STATE", "PSTLSTATE", "OWNERSTATE", "mail_state", "state")),
         "Mailing ZIP": mail_zip,
         "Absentee Owner": absentee,
-        "Acres": round(money(raw.get("Acres") or raw.get("PROP_SIZE") or raw.get("ACREAGE") or raw.get("Total_Acreage")), 2),
+        "Acres": round(money(first_present(raw, "Acres", "PROP_SIZE", "ACREAGE", "Total_Acreage", "parcel_acreage", "totalac", "PVA_ACRE")), 2),
         "Property Value": round(value, 2),
-        "Building Value": round(money(raw.get("Building Value") or raw.get("IMPR_APPR") or raw.get("Building_Value") or raw.get("bld_val")), 2),
-        "Land Value": round(money(raw.get("Land Value") or raw.get("LNDVALUE") or raw.get("Land_Value") or raw.get("land_val")), 2),
+        "Building Value": round(money(first_present(raw, "Building Value", "IMPR_APPR", "Building_Value", "bld_val", "Building_Value", "certified_tax_building", "netbldgvalue")), 2),
+        "Land Value": round(money(first_present(raw, "Land Value", "LNDVALUE", "Land_Value", "land_val", "certified_tax_land", "landvalue")), 2),
         "Years Behind": years,
         "Total Owed": round(total_owed, 2),
         "Estimated Equity": round(equity, 2),
         "Motivation": motivation(total_owed, years),
         "Lane": lane_label,
     }
+    if not lane_match(raw, rec, lane):
+        return None
+    return rec
+
+
+def lane_match(raw: dict[str, Any], rec: dict[str, Any], lane: str) -> bool:
+    text = " ".join(clean(v) for v in raw.values()).lower()
+    if lane in {"tax-delinquent", "active-permits", "probate", "pre-foreclosure", "code-violations", "liens"}:
+        return True
+    if lane == "absentee":
+        return rec["Absentee Owner"] == "Yes"
+    if lane == "high-equity":
+        return float(rec["Estimated Equity"]) >= 100000
+    if lane == "individual-homeowner":
+        return not is_entity_owner(rec["Owner Name"])
+    if lane == "entity-owned":
+        return is_entity_owner(rec["Owner Name"])
+    if lane == "vacant-land":
+        return (
+            float(rec["Building Value"]) <= 0
+            or "vacant" in text
+            or "land" in text
+            or clean(raw.get("vacantorimproved")).lower() == "vacant"
+        )
+    return True
 
 
 def parse_wake_nc(path: Path, cfg: dict[str, Any], lane: str) -> list[dict[str, Any]]:
@@ -210,7 +312,7 @@ def parse_wake_nc(path: Path, cfg: dict[str, Any], lane: str) -> list[dict[str, 
     out = []
     for p in parcels.values():
         p["years"] = len(p.pop("tax_years"))
-        rec = normalize_record(p, cfg, "Tax Delinquent")
+        rec = normalize_record(p, cfg, LANE_LABELS.get(lane, "Tax Delinquent"), lane)
         if rec:
             out.append(rec)
     return out
@@ -228,20 +330,25 @@ def parse_guilford_nc(path: Path, cfg: dict[str, Any], lane: str) -> list[dict[s
     out = []
     for rec in grouped.values():
         rec["years"] = len(rec.pop("tax_years"))
-        normalized = normalize_record(rec, cfg, "Tax Delinquent")
+        normalized = normalize_record(rec, cfg, LANE_LABELS.get(lane, "Tax Delinquent"), lane)
         if normalized:
             out.append(normalized)
     return out
 
 
 def parse_snapshot(path: Path, cfg: dict[str, Any], lane: str) -> list[dict[str, Any]]:
-    label = "Active Permits Distress" if lane == "active-permits" else "Tax Delinquent"
-    return [r for r in (normalize_record(row, cfg, label) for row in read_csv(path)) if r]
+    label = LANE_LABELS.get(lane, "Tax Delinquent")
+    return [r for r in (normalize_record(row, cfg, label, lane) for row in read_csv(path)) if r]
 
 
 def parse_generic_csv(path: Path, cfg: dict[str, Any], lane: str) -> list[dict[str, Any]]:
-    label = "Probate Premium" if lane == "probate" else "Tax Delinquent"
-    return [r for r in (normalize_record(row, cfg, label) for row in read_csv(path)) if r]
+    label = LANE_LABELS.get(lane, "Tax Delinquent")
+    return [r for r in (normalize_record(row, cfg, label, lane) for row in read_csv(path)) if r]
+
+
+def parse_generic_xlsx(path: Path, cfg: dict[str, Any], lane: str) -> list[dict[str, Any]]:
+    label = LANE_LABELS.get(lane, "Tax Delinquent")
+    return [r for r in (normalize_record(row, cfg, label, lane) for row in read_xlsx_dicts(path)) if r]
 
 
 PARSERS: dict[str, Callable[[Path, dict[str, Any], str], list[dict[str, Any]]]] = {
@@ -259,7 +366,15 @@ def load_records(market: str, lane: str) -> tuple[Path, list[dict[str, Any]]]:
     if snap:
         return snap, parse_snapshot(snap, cfg, lane)
     src = latest_file(market, lane)
-    return src, parse_generic_csv(src, cfg, lane)
+    suffix = src.suffix.lower()
+    if suffix == ".csv" or suffix in {".txt", ".dat"}:
+        return src, parse_generic_csv(src, cfg, lane)
+    if suffix in {".xlsx", ".xlsm"}:
+        return src, parse_generic_xlsx(src, cfg, lane)
+    raise SystemExit(
+        f"Unsupported raw source for {market}/{lane}: {src}. "
+        "Workflow should route this to LLM/manual review or an extractor module before delivery."
+    )
 
 
 def add_analytics(records: list[dict[str, Any]], market: str, lane: str, src: Path) -> dict[str, Any]:
@@ -348,6 +463,22 @@ def write_outputs(records: list[dict[str, Any]], summary: dict[str, Any], output
     return {"xlsx": str(xlsx_path), "json": str(json_path)}
 
 
+def dedupe_records(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    best: dict[str, dict[str, Any]] = {}
+    for rec in records:
+        key = f"{rec.get('Parcel REID', '')}|{rec.get('Account ID', '')}"
+        if key not in best:
+            best[key] = rec
+            continue
+        current = best[key]
+        if (float(rec.get("Total Owed") or 0), float(rec.get("Estimated Equity") or 0)) > (
+            float(current.get("Total Owed") or 0),
+            float(current.get("Estimated Equity") or 0),
+        ):
+            best[key] = rec
+    return list(best.values())
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--market", required=True, choices=sorted(MARKET_REGISTRY))
@@ -356,6 +487,7 @@ def main() -> int:
     parser.add_argument("--output-dir", default="/tmp")
     args = parser.parse_args()
     src, records = load_records(args.market, args.lane)
+    records = dedupe_records(records)
     records.sort(key=lambda r: (-float(r["Total Owed"]), -float(r["Estimated Equity"])))
     top = records[: args.count]
     if not top:

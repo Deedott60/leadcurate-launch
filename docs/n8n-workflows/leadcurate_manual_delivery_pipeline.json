@@ -1,0 +1,145 @@
+{
+  "name": "LeadCurate - manual_delivery_pipeline",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "market", "name": "market", "value": "wake-nc", "type": "string" },
+            { "id": "lane", "name": "lane", "value": "tax-delinquent", "type": "string" },
+            { "id": "count", "name": "count", "value": 25, "type": "number" },
+            { "id": "allow_scrape", "name": "allow_scrape", "value": false, "type": "boolean" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "manual-inputs",
+      "name": "Manual inputs",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [220, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://172.18.0.1:8788/run",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "jsonBody": "={{ JSON.stringify({ task: 'delivery', market: $json.market, lane: $json.lane, count: $json.count, allow_scrape: $json.allow_scrape }) }}",
+        "options": { "response": { "response": { "responseFormat": "json" } } }
+      },
+      "id": "run-pipeline",
+      "name": "Run delivery pipeline",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 0],
+      "continueOnFail": true,
+      "credentials": { "httpHeaderAuth": { "id": "Ah0PYxcoomp17XGl" } }
+    },
+    {
+      "parameters": {
+        "jsCode": "const parsed = $json.result || $json;\nreturn [{ json: { ...parsed, runner_ok: $json.ok, command_exit_code: $json.returncode ?? 0, command_stderr: $json.stderr || '' } }];"
+      },
+      "id": "parse-pipeline-output",
+      "name": "Parse pipeline output",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [700, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "HTTP-Referer", "value": "https://leadcurate.com" },
+            { "name": "X-Title", "value": "LeadCurate manual delivery quality decision" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'anthropic/claude-sonnet-5', messages: [{ role: 'user', content: 'You are the LeadCurate quality decision node. Review this pipeline result. If ok is true and verify_delivery is ok, approve. If raw data is missing, source unsupported, signal columns are absent, or command failed, reject and explain. Respond only JSON {\"approved\": boolean, \"reason\": string, \"needed_action\": string}. Pipeline result: ' + JSON.stringify($json).slice(0, 12000) }], response_format: { type: 'json_object' }, max_tokens: 500 }) }}",
+        "options": { "response": { "response": { "responseFormat": "json" } } }
+      },
+      "id": "llm-quality-decision",
+      "name": "LLM quality decision",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [940, 0],
+      "continueOnFail": true,
+      "credentials": { "httpBearerAuth": { "id": "bfAGA57sWNBv9wk7" } }
+    },
+    {
+      "parameters": {
+        "jsCode": "const previous = $('Parse pipeline output').first().json;\nlet decision = { approved: false, reason: 'LLM decision unavailable', needed_action: 'manual review' };\ntry { decision = JSON.parse($json.choices?.[0]?.message?.content || '{}'); } catch {}\nconst approved = Boolean(previous.ok && decision.approved);\nreturn [{ json: { ...previous, llm_decision: decision, approved } }];"
+      },
+      "id": "merge-decision",
+      "name": "Merge decision",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1180, 0]
+    },
+    {
+      "parameters": {},
+      "id": "payment-placeholder",
+      "name": "Payment approval placeholder",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1420, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://jdmlsraqioigbukspduo.supabase.co/rest/v1/activity_feed",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4" },
+            { "name": "Authorization", "value": "Bearer sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "return=minimal" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "jsonBody": "={{ JSON.stringify({ event_type: $json.approved ? 'delivery:ready_to_send' : 'delivery:needs_review', source: 'n8n', title: ($json.approved ? 'Delivery ready: ' : 'Delivery needs review: ') + $json.market + '/' + $json.lane, body: JSON.stringify({ delivery: $json.delivery || null, decision: $json.llm_decision, steps: $json.steps }).slice(0, 6000), target: 'derrick' }) }}",
+        "options": {}
+      },
+      "id": "post-ready-state",
+      "name": "Post dashboard state",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1660, 0]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": { "main": [[{ "node": "Manual inputs", "type": "main", "index": 0 }]] },
+    "Manual inputs": { "main": [[{ "node": "Run delivery pipeline", "type": "main", "index": 0 }]] },
+    "Run delivery pipeline": { "main": [[{ "node": "Parse pipeline output", "type": "main", "index": 0 }]] },
+    "Parse pipeline output": { "main": [[{ "node": "LLM quality decision", "type": "main", "index": 0 }]] },
+    "LLM quality decision": { "main": [[{ "node": "Merge decision", "type": "main", "index": 0 }]] },
+    "Merge decision": { "main": [[{ "node": "Payment approval placeholder", "type": "main", "index": 0 }]] },
+    "Payment approval placeholder": { "main": [[{ "node": "Post dashboard state", "type": "main", "index": 0 }]] }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/New_York",
+    "saveDataSuccessExecution": "all",
+    "saveDataErrorExecution": "all"
+  }
+}
