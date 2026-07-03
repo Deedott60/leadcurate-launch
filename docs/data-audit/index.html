@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>LeadCurate · Data Inventory</title>
-<meta name="description" content="LeadCurate data inventory — 21 US markets, 4.1 GB of property data pulled directly from county portals, 6.5M+ records across 10 distress lanes." />
+<meta name="description" content="LeadCurate data inventory — 22 US markets, 9.2 GB of property data pulled directly from county portals, 5.05M+ verified records across 11 distress lanes." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -192,7 +192,7 @@
   <div class="container header-row">
     <div>
       <div class="logo">Lead<span>Curate</span>.</div>
-      <div class="doc-meta">Data Inventory · v3 · 2026-06-19</div>
+      <div class="doc-meta">Data Inventory · v4 · 2026-07-03</div>
     </div>
     <div class="badge"><span>●</span> Live data assets</div>
   </div>
@@ -210,7 +210,7 @@
   <div class="metric-grid">
     <div class="metric">
       <div class="label">Markets covered</div>
-      <div class="value">21</div>
+      <div class="value">22</div>
       <div class="note">US counties / metros</div>
     </div>
     <div class="metric">
@@ -220,18 +220,18 @@
     </div>
     <div class="metric">
       <div class="label">Raw data on disk</div>
-      <div class="value">4.1 GB</div>
+      <div class="value">9.2 GB</div>
       <div class="note">pulled directly from source</div>
     </div>
     <div class="metric">
-      <div class="label">Structured records</div>
-      <div class="value">6.5M</div>
-      <div class="note">CSV-form, ready to filter</div>
+      <div class="label">Structured records (verified)</div>
+      <div class="value">5.05M+</div>
+      <div class="note">counted from primary parcel files, not auxiliary detail tables — several large markets still being counted</div>
     </div>
     <div class="metric">
       <div class="label">Distress lanes</div>
-      <div class="value">10</div>
-      <div class="note">distinct categorizations</div>
+      <div class="value">11</div>
+      <div class="note">distinct categorizations, matching the live intake form</div>
     </div>
     <div class="metric">
       <div class="label">Refresh lead vs major resellers</div>
@@ -248,9 +248,9 @@
   <div class="state-block">
     <h3>North Carolina</h3>
     <ul>
-      <li><strong>Mecklenburg</strong> (Charlotte) — parcels with owner detail, vacant land, active city liens</li>
-      <li><strong>Wake</strong> (Raleigh) — parcels, property records, daily-refreshed delinquent file</li>
-      <li><strong>Guilford</strong> (Greensboro) — tax-delinquent records, pre-foreclosure with auction dates</li>
+      <li><strong>Mecklenburg</strong> (Charlotte) — parcels with owner detail, vacant land, active city liens, probate/inherited (72 hand-verified decedent-estate parcels, live delivery confirmed 2026-07-03)</li>
+      <li><strong>Wake</strong> (Raleigh) — parcels, property records, daily-refreshed delinquent file — full 500-record delivery product live and sold</li>
+      <li><strong>Guilford</strong> (Greensboro) — tax-delinquent records, pre-foreclosure with auction dates. Also our first <strong>Ground Floor</strong> candidate: JetZero's $4.7B/14,500-job aerospace campus at Piedmont Triad Airport, groundbreaking underway</li>
       <li><strong>Forsyth</strong> (Winston-Salem) — parcels with property address and owner</li>
     </ul>
   </div>
@@ -293,28 +293,28 @@
     <h3>Indiana</h3>
     <ul>
       <li><strong>Marion</strong> (Indianapolis) — parcels with owner detail and assessed values</li>
-      <li><strong>Allen</strong> (Fort Wayne) — published delinquent property list</li>
+      <li><strong>Allen</strong> (Fort Wayne) — published delinquent property list, tax-delinquent delivery confirmed working 2026-07-03</li>
     </ul>
   </div>
 
   <div class="state-block">
     <h3>Other</h3>
     <ul>
-      <li><strong>Shelby, TN</strong> (Memphis) — upcoming tax sale property extract</li>
-      <li><strong>Maricopa, AZ</strong> (Phoenix) — assessor master files: residential, commercial, apartment, secured</li>
-      <li><strong>Cuyahoga, OH</strong> (Cleveland) — tax parcels plus recent parcel sales</li>
+      <li><strong>Shelby, TN</strong> (Memphis) — upcoming tax sale property extract, direct S3 source most competitors don't know exists. Source file has no owner-name column; a dedicated processing approach is required rather than the generic pipeline, in progress</li>
+      <li><strong>Maricopa, AZ</strong> (Phoenix) — assessor master files: residential, commercial, apartment, secured. Raw files are ZIP archives; an extractor module is in progress</li>
+      <li><strong>Cuyahoga, OH</strong> (Cleveland) — tax parcels plus recent parcel sales, high-equity delivery confirmed working 2026-07-03 (top single parcel: $62.2M assessed equity)</li>
       <li><strong>Charleston, SC</strong> — annual tax sale listings</li>
       <li><strong>Greenville, SC</strong> — annual tax sale information</li>
       <li><strong>Jefferson, AL</strong> (Birmingham) — landing pages identified; pulls pending</li>
     </ul>
   </div>
 
-  <p style="margin-top: 22px;">Three counties (Harris TX, Cobb GA, Jefferson AL) currently sit behind JavaScript-rendered portals that need browser automation to extract. The data is available — the pull just needs a different method. Closing those gaps is in the active queue.</p>
+  <p style="margin-top: 22px;">Harris TX and Cobb GA sit behind JavaScript-rendered portals needing browser automation. Jacksonville FL and Nashville TN are on the live intake form with no raw data pulled yet — active work item. Tarrant TX and Maricopa AZ have raw data already but need a ZIP-extraction step before delivery. The data is available or reachable in every case — the pull just needs the right method per source. Closing these gaps is the active queue as of 2026-07-03.</p>
 </section>
 
 <section class="container">
   <h4>Distress lanes</h4>
-  <h2>Ten ways to slice the data.</h2>
+  <h2>Ten ways to slice the data — eleven categories on the live intake form.</h2>
   <p>A lane is a category of distress signal that defines what kind of buyer the record is worth selling to. The same county can support multiple lanes simultaneously, each serving a different buyer profile without overlap.</p>
   <div class="table-wrap">
     <table>
@@ -437,6 +437,23 @@
 </section>
 
 <section class="container">
+  <h4>New — Ground Floor</h4>
+  <h2>Market-selection intelligence, not property records.</h2>
+  <p>A separate product line from the property lists above: real, sourced, dated capital-investment signals that show where money is moving before it shows up in property values or headlines. Every claim traces to a real dollar figure and a public source — no speculation, no "up and coming neighborhood" hype.</p>
+  <div class="example">
+    <h3>Guilford County, NC — Greensboro (first live candidate)</h3>
+    <dl>
+      <dt>Signal</dt><dd>JetZero aerospace manufacturing campus, Piedmont Triad International Airport</dd>
+      <dt>Commitment</dt><dd>$4.7 billion, 8M sq ft facility, 14,500 high-wage jobs</dd>
+      <dt>Stage</dt><dd>Groundbreaking underway (high confidence)</dd>
+      <dt>Existing data</dt><dd>222,645 real parcels already pulled for Guilford County — zero new scraping needed to pair this signal with property data</dd>
+    </dl>
+    <div class="source">Source: JetZero company newsroom, verified via independent business press · confirmed 2026-07-03</div>
+  </div>
+  <p>Two additional candidates under second-source verification: Durham County, NC (AbbVie, $1.4B pharmaceutical campus, announced April 2026) and Cherokee County, SC (USA Rare Earth, $1.2B magnet factory, Blacksburg).</p>
+</section>
+
+<section class="container">
   <h4>What's next</h4>
   <h2>The path from here.</h2>
   <p>Three counties remain to bring online (Harris TX, Cobb GA, Jefferson AL). Each requires browser-driven extraction rather than direct download — a focused work session each, not a fundamental obstacle.</p>
@@ -446,7 +463,7 @@
 
 <footer>
   <div class="container">
-    <p><strong>LeadCurate</strong> · Data Inventory · v3 · Last updated 2026-06-19</p>
+    <p><strong>LeadCurate</strong> · Data Inventory · v4 · Last updated 2026-07-03</p>
     <p>This document is the canonical inventory and is updated as markets and lanes change.</p>
     <p class="tagline">Better data. Cleaner workflow. No hype.</p>
   </div>

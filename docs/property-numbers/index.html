@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>LeadCurate · Property Numbers Audit</title>
-<meta name="description" content="LeadCurate analytical breakdown — 14.2M records across 21 markets, the value of the full inventory, and the overlooked markets that punch above their weight." />
+<meta name="description" content="LeadCurate analytical breakdown — 5.05M+ verified records across 22 markets, the value of the full inventory, and the overlooked markets that punch above their weight." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -165,7 +165,7 @@
   <div class="container header-row">
     <div>
       <div class="logo">Lead<span>Curate</span>.</div>
-      <div class="doc-meta">Property Numbers Audit · v2 · 2026-06-19</div>
+      <div class="doc-meta">Property Numbers Audit · v3 · 2026-07-03</div>
     </div>
     <div class="badge"><span>●</span> Analytical breakdown</div>
   </div>
@@ -173,8 +173,8 @@
 
 <section class="cover no-divider container">
   <h4>The full picture</h4>
-  <h1>What 14 million records buy you.</h1>
-  <p class="lead">An analytical breakdown of what's in the data across all 21 markets — record volumes, addressable distress, owner concentration, refresh velocity, and the less-obvious markets in the inventory that carry the most leverage.</p>
+  <h1>What 5 million verified records buy you.</h1>
+  <p class="lead">Record counts are counted directly from each county's primary parcel file as of 2026-07-03 - a prior estimate of 14.2M included auxiliary detail-table rows (building fixtures, exemption codes, etc.) that describe existing parcels rather than additional properties, and has been corrected. An analytical breakdown of what's in the data across all 22 markets — record volumes, addressable distress, owner concentration, refresh velocity, and the less-obvious markets in the inventory that carry the most leverage.</p>
 </section>
 
 <section class="container">
@@ -182,9 +182,9 @@
   <h2>Four numbers to anchor on.</h2>
   <div class="headline-grid">
     <div class="headline">
-      <div class="label">Structured records</div>
-      <div class="value">14.2M</div>
-      <div class="note">across 21 markets, 12 states</div>
+      <div class="label">Structured records (verified)</div>
+      <div class="value">5.05M+</div>
+      <div class="note">across 22 markets, 12 states - primary parcel files only, several large markets still being counted</div>
     </div>
     <div class="headline">
       <div class="label">Active distress signals available</div>
@@ -517,6 +517,24 @@
 </section>
 
 <section class="container">
+  <h4>New — Ground Floor signals</h4>
+  <h2>Where capital is moving before the property data shows it.</h2>
+  <p>A separate analytical layer from the record counts above: real, sourced, dated capital-investment commitments in or near our markets, tracked as leading indicators rather than lagging property-value data.</p>
+  <div class="spotlight">
+    <div class="sub">First live candidate - high confidence</div>
+    <h3>Guilford County, NC - Greensboro</h3>
+    <p>JetZero's <strong>$4.7 billion</strong> aerospace manufacturing campus at Piedmont Triad International Airport - <strong>14,500 high-wage jobs</strong>, groundbreaking already underway. We hold 222,645 real parcels for Guilford County already, so this signal pairs with existing inventory rather than requiring a new pull.</p>
+    <div class="metric-grid">
+      <div class="metric"><div class="label">Committed capital</div><div class="value">$4.7B</div></div>
+      <div class="metric"><div class="label">Jobs</div><div class="value">14,500</div></div>
+      <div class="metric"><div class="label">Guilford parcels on hand</div><div class="value">222,645</div></div>
+    </div>
+    <div class="takeaway"><strong>Takeaway:</strong> this is the kind of signal that precedes a market becoming obviously competitive - the data foundation to act on it already exists in our inventory.</div>
+  </div>
+  <p>Two additional candidates under second-source verification before customer use: Durham County, NC (AbbVie, $1.4B pharmaceutical campus, announced April 2026) and Cherokee County, SC (USA Rare Earth, $1.2B magnet factory, Blacksburg).</p>
+</section>
+
+<section class="container">
   <h4>Method</h4>
   <h2>How these numbers were derived.</h2>
   <ul style="font-size: 14px; line-height: 1.8;">
@@ -525,12 +543,13 @@
     <li><strong>High-value</strong> = $200,000+ total assessed value. County-published assessed values typically run 10–30% below market.</li>
     <li>NYC, Marion, Mecklenburg, Wake, Cuyahoga, Jefferson KY, Forsyth, Fulton, DeKalb, Guilford, Fayette, and Shelby counts are exact from CSV files.</li>
     <li>Maricopa, Tarrant, and Dallas counts are estimated from binary tax-roll files pending full ingestion. Actuals likely to revise upward.</li>
+    <li><strong>2026-07-03 correction:</strong> the headline structured-record figure was recomputed by counting rows in each market's primary parcel file directly (not summing every file in raw_imports). Auxiliary detail tables - building fixtures, exemption codes, structural elements, jurisdiction lookups - describe existing parcels and were excluded from the corrected 5.05M+ figure. Per-market bar chart below reflects the prior count pass and has not been fully re-verified market-by-market; Mecklenburg NC's parcel-lookup file was independently re-counted 2026-07-03 at 446,213 rows.</li>
   </ul>
 </section>
 
 <footer>
   <div class="container">
-    <p><strong>LeadCurate</strong> · Property Numbers Audit · v2 · 2026-06-19</p>
+    <p><strong>LeadCurate</strong> · Property Numbers Audit · v3 · 2026-07-03</p>
     <p>This is one of two living audits. The Data Inventory document covers markets and lanes qualitatively; this document covers volume and value quantitatively.</p>
     <p class="tagline">The data is the data.</p>
   </div>
