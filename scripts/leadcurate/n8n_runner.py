@@ -65,6 +65,8 @@ def task_command(payload: dict[str, Any]) -> list[str]:
         return cmd
     if task == "ground_floor_seed":
         return [sys.executable, str(SCRIPT_DIR / "ground_floor_pipeline.py"), "seed-investments"]
+    if task == "ground_floor_scan":
+        return [sys.executable, str(SCRIPT_DIR / "ground_floor_pipeline.py"), "scan-investments"]
     if task == "ground_floor_package":
         return [sys.executable, str(SCRIPT_DIR / "ground_floor_pipeline.py"), "package-county", "--market", str(payload["market"])]
     raise ValueError(f"Unsupported task: {task}")

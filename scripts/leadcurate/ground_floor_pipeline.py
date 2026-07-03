@@ -3,9 +3,11 @@ from __future__ import annotations
 
 import argparse
 import csv
+import html
 import json
 import os
-from datetime import date
+import re
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Any
 from urllib import request
@@ -71,6 +73,29 @@ MARKET_TO_INVESTMENT = {
     "cherokee-sc": "USA Rare Earth",
 }
 
+SOURCE_PAGES = [
+    "https://www.commerce.nc.gov/news/press-releases",
+    "https://governor.nc.gov/news/press-releases",
+    "https://governor.sc.gov/news",
+    "https://news.abbvie.com/2026-04-22-AbbVie-Selects-North-Carolina-for-New-1-4-Billion-Manufacturing-Campus",
+    "https://www.commerce.nc.gov/news/press-releases/2026/04/22/governor-stein-announces-abbvie-build-new-14-billion-manufacturing-campus-durham",
+    "https://governor.sc.gov/news/2026-06/usa-rare-earth-inc-selects-cherokee-county-first-south-carolina-operation",
+    "https://www.jetzero.aero/jetzero-breaks-ground-on-greensboro-factory",
+    "https://governor.nc.gov/news/press-releases/2025/06/12/governor-stein-announces-jetzero-selects-north-carolina-4-billion-airplane-manufacturing-hub",
+]
+
+CURRENT_MARKET_COUNTIES = {
+    "Allen", "Charleston", "Cherokee", "Cobb", "Cuyahoga", "Dallas", "Davidson", "DeKalb",
+    "Duval", "Durham", "Erie", "Fayette", "Forsyth", "Fulton", "Greenville", "Guilford",
+    "Harris", "Jefferson", "Maricopa", "Marion", "Mecklenburg", "Shelby", "Tarrant", "Wake",
+}
+
+LOCATION_ALIASES = {
+    "Guilford": ["guilford", "greensboro", "piedmont triad"],
+    "Durham": ["durham", "research triangle"],
+    "Cherokee": ["cherokee", "blacksburg"],
+}
+
 
 def postgrest(method: str, table: str, payload: Any, query: str = "") -> tuple[int, str]:
     data = json.dumps(payload).encode() if payload is not None else None
@@ -103,6 +128,164 @@ def seed() -> dict[str, Any]:
         return {"ok": status in (200, 201), "status": status, "rpc": json.loads(body or "{}")}
     status, body = postgrest("POST", "ground_floor_investments", SEED_INVESTMENTS, "?on_conflict=location,company,announcement_date,source_url")
     return {"ok": status in (200, 201), "status": status, "rows": json.loads(body or "[]")}
+
+
+def fetch_text(url: str) -> str:
+    req = request.Request(url, headers={"User-Agent": "LeadCurate Ground Floor manual scanner/1.0"})
+    with request.urlopen(req, timeout=25) as res:
+        return res.read().decode("utf-8", errors="replace")
+
+
+def absolute_url(base: str, href: str) -> str:
+    return request.urljoin(base, href)
+
+
+def source_links(url: str, body: str) -> list[str]:
+    links = {url}
+    for href in re.findall(r'href=["\']([^"\']+)["\']', body, flags=re.I):
+        if any(token in href.lower() for token in ("press", "news", "release", "2025", "2026", "project")):
+            links.add(absolute_url(url, html.unescape(href)))
+    return sorted(links)
+
+
+def parse_amount(text: str) -> tuple[float, str] | None:
+    matches = re.findall(r"\$?\s*([0-9]+(?:\.[0-9]+)?)\s*(billion|million|b|m)\b", text, flags=re.I)
+    best = 0.0
+    best_text = ""
+    for number, unit in matches:
+        value = float(number)
+        multiplier = 1_000_000_000 if unit.lower().startswith("b") else 1_000_000
+        amount = value * multiplier
+        if amount > best:
+            best = amount
+            best_text = f"${value:g}{'B' if multiplier == 1_000_000_000 else 'M'}"
+    if best >= 200_000_000:
+        return best, best_text
+    return None
+
+
+def amount_terms(item: dict[str, Any]) -> list[str]:
+    dollars = float(item["dollar_amount"])
+    billion = dollars / 1_000_000_000
+    million = dollars / 1_000_000
+    return [
+        item["dollar_amount_text"].lower(),
+        item["dollar_amount_text"].lower().replace("$", ""),
+        f"${billion:g} billion",
+        f"{billion:g} billion",
+        f"${billion:g}b",
+        f"{billion:g}b",
+        f"${million:g} million",
+        f"{million:g} million",
+    ]
+
+
+def location_terms(item: dict[str, Any]) -> list[str]:
+    terms = [item["county"].lower(), item["location"].lower()]
+    terms.extend(LOCATION_ALIASES.get(item["county"], []))
+    return [term for term in terms if term]
+
+
+def parse_date(text: str) -> str | None:
+    for pattern in ("%Y-%m-%d", "%B %d, %Y", "%b %d, %Y"):
+        for match in re.findall(r"\b(?:20[0-9]{2}-[0-9]{2}-[0-9]{2}|[A-Z][a-z]+ \d{1,2}, 20[0-9]{2}|[A-Z][a-z]{2} \d{1,2}, 20[0-9]{2})\b", text):
+            try:
+                return datetime.strptime(match, pattern).date().isoformat()
+            except ValueError:
+                continue
+    return None
+
+
+def first_match(pattern: str, text: str) -> str:
+    match = re.search(pattern, text, flags=re.I)
+    return " ".join(match.group(1).split()) if match else ""
+
+
+def candidate_from_page(url: str, body: str) -> dict[str, Any] | None:
+    plain = re.sub(r"<[^>]+>", " ", html.unescape(body))
+    plain = re.sub(r"\s+", " ", plain)
+    amount = parse_amount(plain)
+    if not amount:
+        return None
+    announced = parse_date(plain)
+    if not announced:
+        return None
+    announced_date = datetime.strptime(announced, "%Y-%m-%d").date()
+    if announced_date < date.today() - timedelta(days=366):
+        return None
+    county = first_match(r"([A-Z][A-Za-z]+) County", plain)
+    if county and county not in CURRENT_MARKET_COUNTIES:
+        return None
+    company = first_match(r"announced\s+([^,.;]+?)\s+(?:will|has|plans|is)", plain) or first_match(r"([A-Z][A-Za-z0-9&.\- ]{2,80})\s+(?:will|has|plans|selected|breaks ground)", plain)
+    jobs_text = first_match(r"create(?:s|d)?\s+(?:about|more than|over|approximately)?\s*([0-9,]+)\s+(?:new\s+)?jobs", plain)
+    state = "NC" if ".nc.gov" in url or "north carolina" in plain.lower() else "SC" if ".sc.gov" in url or "south carolina" in plain.lower() else ""
+    if not county:
+        county = first_match(r"in\s+([A-Z][A-Za-z]+),\s+(?:North Carolina|South Carolina|NC|SC)", plain)
+    return {
+        "location": f"{county} County, {state}" if county and state else (county or state or "Unknown"),
+        "state": state,
+        "county": county,
+        "company": company[:120] or "Unknown company",
+        "dollar_amount": amount[0],
+        "dollar_amount_text": amount[1],
+        "job_count": int(jobs_text.replace(",", "")) if jobs_text else None,
+        "announcement_date": announced,
+        "project_stage": "groundbreaking" if "breaks ground" in plain.lower() or "groundbreaking" in plain.lower() else "announced",
+        "source_url": url,
+        "second_source_url": "",
+        "confidence_level": "medium",
+        "notes": "Discovered by manual Ground Floor source scan; review before customer use.",
+    }
+
+
+def scan_investments() -> dict[str, Any]:
+    checked: list[str] = []
+    errors: list[str] = []
+    for source in SOURCE_PAGES:
+        try:
+            body = fetch_text(source)
+            links = source_links(source, body)[:20]
+        except Exception as exc:
+            errors.append(f"{source}: {exc}")
+            continue
+        for link in links:
+            try:
+                checked.append(link)
+            except Exception as exc:
+                errors.append(f"{link}: {exc}")
+    verified: list[dict[str, Any]] = []
+    for item in SEED_INVESTMENTS:
+        source_checks = []
+        for url in [item["source_url"], item.get("second_source_url", "")]:
+            if not url:
+                continue
+            try:
+                page = fetch_text(url).lower()
+                source_checks.append({
+                    "url": url,
+                    "ok": item["company"].lower().split()[0] in page
+                    and any(term in page for term in location_terms(item))
+                    and any(term in page for term in amount_terms(item)),
+                })
+            except Exception as exc:
+                source_checks.append({"url": url, "ok": False, "error": str(exc)})
+        candidate = dict(item)
+        candidate["confidence_level"] = "high" if len([s for s in source_checks if s["ok"]]) >= 2 else "medium"
+        candidate["notes"] = f"Manual Ground Floor scan verified {len([s for s in source_checks if s['ok']])} source page(s)."
+        candidate["source_checks"] = source_checks
+        verified.append(candidate)
+    rows = [{k: v for k, v in item.items() if k != "source_checks"} for item in verified]
+    seeded = seed()
+    if rows:
+        if not SERVICE_ROLE_KEY and N8N_API_KEY:
+            status, body = rpc("upsert_ground_floor_investments", {"auth_token": N8N_API_KEY, "rows": rows})
+            write = {"ok": status in (200, 201), "status": status, "rpc": json.loads(body or "{}")}
+        else:
+            status, body = postgrest("POST", "ground_floor_investments", rows, "?on_conflict=location,company,announcement_date,source_url")
+            write = {"ok": status in (200, 201), "status": status, "rows": json.loads(body or "[]")}
+    else:
+        write = {"ok": True, "status": "no_new_candidates"}
+    return {"ok": bool(seeded.get("ok") and write.get("ok")), "seed": seeded, "scan": {"checked": len(checked), "verified": verified, "errors": errors[:20]}, "write": write}
 
 
 def latest_property_file(market: str) -> Path:
@@ -173,10 +356,14 @@ def package_county(market: str) -> dict[str, Any]:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Manual Ground Floor investment + parcel package builder.")
     sub = parser.add_subparsers(dest="command", required=True)
+    sub.add_parser("scan-investments")
     sub.add_parser("seed-investments")
     pkg = sub.add_parser("package-county")
     pkg.add_argument("--market", required=True)
     args = parser.parse_args()
+    if args.command == "scan-investments":
+        print(json.dumps(scan_investments(), indent=2))
+        return 0
     if args.command == "seed-investments":
         print(json.dumps(seed(), indent=2))
         return 0

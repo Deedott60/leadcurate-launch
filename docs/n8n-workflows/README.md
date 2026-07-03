@@ -47,10 +47,10 @@ The live queue was empty when this workflow was installed, so no fake intake was
 - Export: `leadcurate_ground_floor_manual.json`
 - Live workflow id: `eToSdkvZxBRWLNmm`
 - Trigger: manual only. The workflow is intentionally inactive and has no cron/webhook trigger.
-- Purpose: seed/refresh verified $200M+ investment signals and package one county's investment signal + parcel data for Claude review.
+- Purpose: manually scan/refresh $200M+ investment signals and package one county's investment signal + parcel data for Claude review.
 - Steps:
   1. Operator edits the Manual inputs node (`market`, default `guilford-nc`).
-  2. POST to the protected host runner to execute `/opt/leadcurate/scripts/ground_floor_pipeline.py seed-investments`.
+  2. POST to the protected host runner to execute `/opt/leadcurate/scripts/ground_floor_pipeline.py scan-investments`.
   3. Run an OpenRouter LLM decision node to confirm source confidence.
   4. POST to the protected host runner to execute `/opt/leadcurate/scripts/ground_floor_pipeline.py package-county --market <market>`.
   5. Post `ground_floor:ready_for_review` or `ground_floor:needs_review` to `activity_feed`.

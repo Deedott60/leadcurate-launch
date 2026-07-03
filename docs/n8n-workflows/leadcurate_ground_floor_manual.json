@@ -33,11 +33,11 @@
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "contentType": "json",
-        "jsonBody": "={{ JSON.stringify({ task: 'ground_floor_seed' }) }}",
+        "jsonBody": "={{ JSON.stringify({ task: 'ground_floor_scan' }) }}",
         "options": { "response": { "response": { "responseFormat": "json" } } }
       },
       "id": "seed-investments",
-      "name": "Seed verified investments",
+      "name": "Scan investment sources",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [460, 0],
@@ -92,7 +92,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const seed = $('Seed verified investments').first().json;\nconst pkg = $json.result || $json;\nlet decision = { approved: false, reason: 'LLM decision unavailable' };\ntry { decision = JSON.parse($('LLM Ground Floor decision').first().json.choices?.[0]?.message?.content || '{}'); } catch {}\nreturn [{ json: { seed, package: pkg, llm_decision: decision, approved: Boolean(pkg.ok && decision.approved) } }];"
+        "jsCode": "const seed = $('Scan investment sources').first().json;\nconst pkg = $json.result || $json;\nlet decision = { approved: false, reason: 'LLM decision unavailable' };\ntry { decision = JSON.parse($('LLM Ground Floor decision').first().json.choices?.[0]?.message?.content || '{}'); } catch {}\nreturn [{ json: { seed, package: pkg, llm_decision: decision, approved: Boolean(pkg.ok && decision.approved) } }];"
       },
       "id": "merge-results",
       "name": "Merge Ground Floor result",
@@ -127,8 +127,8 @@
   ],
   "connections": {
     "Manual Trigger": { "main": [[{ "node": "Manual inputs", "type": "main", "index": 0 }]] },
-    "Manual inputs": { "main": [[{ "node": "Seed verified investments", "type": "main", "index": 0 }]] },
-    "Seed verified investments": { "main": [[{ "node": "LLM Ground Floor decision", "type": "main", "index": 0 }]] },
+    "Manual inputs": { "main": [[{ "node": "Scan investment sources", "type": "main", "index": 0 }]] },
+    "Scan investment sources": { "main": [[{ "node": "LLM Ground Floor decision", "type": "main", "index": 0 }]] },
     "LLM Ground Floor decision": { "main": [[{ "node": "Package county parcels", "type": "main", "index": 0 }]] },
     "Package county parcels": { "main": [[{ "node": "Merge Ground Floor result", "type": "main", "index": 0 }]] },
     "Merge Ground Floor result": { "main": [[{ "node": "Post dashboard state", "type": "main", "index": 0 }]] }
