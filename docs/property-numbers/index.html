@@ -319,6 +319,34 @@
 </section>
 
 <section class="container">
+  <h4>Signal density</h4>
+  <h2>What motivation actually looks like inside a delivered list.</h2>
+  <p>Every list is scored before delivery, not left as a flat export. Wake County, NC - 500-record tax-delinquent file, current cadence.</p>
+  <div class="vd-chart">
+    <div class="vd-legend">
+      <span><span class="vd-swatch" style="background: #991b1b"></span>HOT</span>
+      <span><span class="vd-swatch" style="background: #b45309"></span>WARM</span>
+      <span><span class="vd-swatch" style="background: #1d4ed8"></span>Absentee</span>
+    </div>
+    <div class="vd-row">
+      <div class="market">Wake NC<br><span style="color: var(--muted); font-weight: 400; font-size: 11px;">500 records</span></div>
+      <div class="stack">
+        <div class="vd-seg" style="width: 41%; background:#991b1b;">205 HOT</div>
+        <div class="vd-seg" style="width: 59%; background:#b45309;">295 WARM</div>
+      </div>
+    </div>
+    <div class="vd-row">
+      <div class="market">Wake NC<br><span style="color: var(--muted); font-weight: 400; font-size: 11px;">absentee share</span></div>
+      <div class="stack">
+        <div class="vd-seg" style="width: 31%; background:#1d4ed8;">157 absentee</div>
+        <div class="vd-seg" style="width: 69%; background: var(--stone); color: var(--ink);">343 local</div>
+      </div>
+    </div>
+    <p class="vd-counts">HOT = $10K+ owed or 3+ years behind. WARM = everything else in the delivered file. Absentee = mailing address differs from property address.</p>
+  </div>
+</section>
+
+<section class="container">
   <h4>Value distribution by market</h4>
   <h2>What each market actually looks like by property value.</h2>
   <p>Across five markets where we have a parcel file with assessed value, the property-value distribution tells dramatically different market stories. Same horizontal scale, percentages within each market.</p>
@@ -459,30 +487,30 @@
   </div>
 
   <h3>Real Charlotte owner-occupants in the data</h3>
-  <p>Five randomly-selected records from the 95,918 owner-occupant segment. These people live in the homes they own; direct mail to the property address reaches the right person.</p>
+  <p>Five randomly-selected records from the 95,918 owner-occupant segment. These people live in the homes they own; direct mail to the property address reaches the right person. Owner names redacted in this preview - full detail unlocks when a market is reserved.</p>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>Owner</th><th>Property</th><th class="num">Assessed value</th><th class="num">Built</th></tr></thead>
+      <thead><tr><th>Owner</th><th>Property</th><th class="num">Assessed value</th><th class="num">Built</th><th>Status</th></tr></thead>
       <tbody>
-        <tr><td>CLARLISSA MAE PONDS</td><td>3508 Weddington Rd, Charlotte</td><td class="num">$388,800</td><td class="num">2022</td></tr>
-        <tr><td>NATALIE CHRISTINE HYMAN</td><td>3422 Weddington Rd, Charlotte</td><td class="num">$353,800</td><td class="num">2022</td></tr>
-        <tr><td>MARIE MUKANTABANA</td><td>3416 Weddington Rd, Charlotte</td><td class="num">$325,200</td><td class="num">2021</td></tr>
-        <tr><td>MACKY MASALAYINGA</td><td>3410 Weddington Rd, Charlotte</td><td class="num">$320,900</td><td class="num">2020</td></tr>
-        <tr><td>JACQUELINE MCDONALD</td><td>2108 Kaybird Ln, Charlotte</td><td class="num">$342,000</td><td class="num">1999</td></tr>
+        <tr><td>C******* M** P****</td><td>35** Weddington Rd, Charlotte</td><td class="num">$388,800</td><td class="num">2022</td><td><span style="display:inline-block;background:#dff4e8;color:#15803d;font-weight:700;padding:3px 10px;border-radius:999px;font-size:11px;">OWNER-OCCUPIED</span></td></tr>
+        <tr><td>N******* C******** H****</td><td>34** Weddington Rd, Charlotte</td><td class="num">$353,800</td><td class="num">2022</td><td><span style="display:inline-block;background:#dff4e8;color:#15803d;font-weight:700;padding:3px 10px;border-radius:999px;font-size:11px;">OWNER-OCCUPIED</span></td></tr>
+        <tr><td>M**** M**********</td><td>34** Weddington Rd, Charlotte</td><td class="num">$325,200</td><td class="num">2021</td><td><span style="display:inline-block;background:#dff4e8;color:#15803d;font-weight:700;padding:3px 10px;border-radius:999px;font-size:11px;">OWNER-OCCUPIED</span></td></tr>
+        <tr><td>M**** M*********</td><td>34** Weddington Rd, Charlotte</td><td class="num">$320,900</td><td class="num">2020</td><td><span style="display:inline-block;background:#dff4e8;color:#15803d;font-weight:700;padding:3px 10px;border-radius:999px;font-size:11px;">OWNER-OCCUPIED</span></td></tr>
+        <tr><td>J******** M*******</td><td>21** Kaybird Ln, Charlotte</td><td class="num">$342,000</td><td class="num">1999</td><td><span style="display:inline-block;background:#dff4e8;color:#15803d;font-weight:700;padding:3px 10px;border-radius:999px;font-size:11px;">OWNER-OCCUPIED</span></td></tr>
       </tbody>
     </table>
   </div>
 
   <h3>Real Charlotte out-of-state individual absentees</h3>
-  <p>Real people, not LLCs, owning Charlotte property while living elsewhere.</p>
+  <p>Real people, not LLCs, owning Charlotte property while living elsewhere. Owner names redacted in this preview.</p>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>Owner</th><th>Mailing address</th><th>Charlotte property</th><th class="num">Assessed</th></tr></thead>
+      <thead><tr><th>Owner</th><th>Mailing state</th><th>Charlotte property</th><th class="num">Assessed</th><th>Status</th></tr></thead>
       <tbody>
-        <tr><td>HAZEL L LEAVITT</td><td>Edmond, OK</td><td>2116 Kaybird Ln</td><td class="num">$341,000</td></tr>
-        <tr><td>DENNIS F FLYNN</td><td>Parkertown, NJ</td><td>2043 McKenzie Creek Dr</td><td class="num">$333,800</td></tr>
-        <tr><td>WILLIAM E CHARLES</td><td>Lake Wylie, SC</td><td>3282 Mannington Dr</td><td class="num">$303,600</td></tr>
-        <tr><td>LING HAN</td><td>Highland, NY</td><td>3262 Mannington Dr</td><td class="num">$301,100</td></tr>
+        <tr><td>H**** L L******</td><td>OK</td><td>21** Kaybird Ln</td><td class="num">$341,000</td><td><span style="display:inline-block;background:#dbeafe;color:#1d4ed8;font-weight:700;padding:3px 10px;border-radius:999px;font-size:11px;">ABSENTEE</span></td></tr>
+        <tr><td>D***** F F****</td><td>NJ</td><td>20** McKenzie Creek Dr</td><td class="num">$333,800</td><td><span style="display:inline-block;background:#dbeafe;color:#1d4ed8;font-weight:700;padding:3px 10px;border-radius:999px;font-size:11px;">ABSENTEE</span></td></tr>
+        <tr><td>W****** E C******</td><td>SC</td><td>32** Mannington Dr</td><td class="num">$303,600</td><td><span style="display:inline-block;background:#dbeafe;color:#1d4ed8;font-weight:700;padding:3px 10px;border-radius:999px;font-size:11px;">ABSENTEE</span></td></tr>
+        <tr><td>L*** H**</td><td>NY</td><td>32** Mannington Dr</td><td class="num">$301,100</td><td><span style="display:inline-block;background:#dbeafe;color:#1d4ed8;font-weight:700;padding:3px 10px;border-radius:999px;font-size:11px;">ABSENTEE</span></td></tr>
       </tbody>
     </table>
   </div>
