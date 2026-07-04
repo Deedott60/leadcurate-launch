@@ -24,7 +24,7 @@ The JavaScript file that exposes this is:
 Base owner/value/mailing fields:
 
 - Source: Register GIS `/details` and `/completedetails`
-- Fields: owner, owner mailing address, property class, land use, current land/building/total/assessed values, acres, sales instrument codes, tax-sale status when present.
+- Fields: owner, owner mailing address, property class, land use, current land/building/total/assessed values, greenbelt/homestead/partial values when present, prior-year values, acres, lot dimensions, subdivision, neighborhood, map page, year built, rooms, beds, baths, living area, building features, sales instrument codes, sale history, deed document URLs, tax-map document URL, trustee id, and tax-sale status when present.
 
 Derived from base:
 
@@ -71,6 +71,7 @@ Result:
 
 - prefix `001` returned 150 sampled parcel candidates from Register GIS.
 - 30 completed parcel detail records were written.
+- expanded CSV output has 76 public-record columns plus a `public_record_json` audit payload containing the full Register GIS `content` and `sales` response for each parcel.
 - overlay keys loaded:
   - tax sale: 4,976 keys
   - code violations: 1,032 keys from sample overlay pull
