@@ -369,6 +369,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div class="nav-item" data-page="send-quote">
         <span class="icon">📄</span> Send a quote
       </div>
+      <div class="nav-item" onclick="window.open('https://leadcurate.com/property-numbers/','_blank')">
+        <span class="icon">📊</span> Public audit
+      </div>
     </div>
     <div class="nav-divider"></div>
     <div class="nav-label">Learning (for you)</div>
@@ -377,7 +380,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
         <span class="icon">📚</span> Learning hub
       </div>
       <div class="nav-item" data-page="tiers-ref">
-        <span class="icon">🎯</span> 4-tier system
+        <span class="icon">🎯</span> 5-tier system
       </div>
       <div class="nav-item" data-page="help">
         <span class="icon">❓</span> How it works
@@ -2172,7 +2175,9 @@ const CMD_ITEMS = [
   {icon:'🏛️',label:'Conference room',     action:()=>nav('conference')},
   {icon:'📋',label:'Send intake link',     action:()=>nav('send-intake')},
   {icon:'📄',label:'Send a quote',         action:()=>nav('send-quote')},
-  {icon:'🎯',label:'4-tier system',        action:()=>nav('tiers-ref')},
+  {icon:'📊',label:'Open public audit',     action:()=>window.open(AUDIT_URL,'_blank')},
+  {icon:'🔗',label:'Copy public audit link', action:()=>window.copyAuditLink()},
+  {icon:'🎯',label:'5-tier system',        action:()=>nav('tiers-ref')},
   {icon:'📚',label:'Learning hub',         action:()=>nav('learn')},
   {icon:'❓',label:'Help / How it works', action:()=>nav('help')},
   {icon:'🔗',label:'Copy intake link',    action:()=>window.copyIntakeLink()},
