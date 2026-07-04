@@ -11,6 +11,7 @@ from pathlib import Path
 from urllib import request
 
 RAW_ROOT = Path("/opt/leadcurate/raw_imports")
+PROCESSED_ROOT = Path("/opt/leadcurate/processed")
 SCRIPT_ROOT = Path("/opt/leadcurate")
 SCRIPT_DIR = Path("/opt/leadcurate/scripts")
 
@@ -23,6 +24,7 @@ SOURCES = {
     ("cobb-ga", "tax-delinquent"): {"url": "https://www.cobbtax.org/", "scraper": "tax-delinquent/cobb-ga.py", "pattern": "*.pdf"},
     ("fulton-ga", "tax-delinquent"): {"url": "https://data.fultoncountyga.gov/", "scraper": "tax-delinquent/fulton-ga.py", "pattern": "tax-parcels-2025.csv"},
     ("jefferson-ky", "code-violations"): {"url": "https://jeffersonpva.ky.gov/property-search/", "cmd": ["enrich_jefferson_ky_code_violations.py", "--limit", "1000"], "pattern": "property-maintenance-violations-enriched.csv"},
+    ("shelby-tn", "tax_sale_upcoming"): {"url": "https://gis.register.shelby.tn.us/", "cmd": ["enrich_shelby_tn.py", "--limit", "200"], "pattern": "shelby-tn-tax-sale-*-enriched.csv", "root": PROCESSED_ROOT / "shelby-tn"},
     ("duval-fl", "individual-homeowner"): {"url": "https://maps.clayutility.org/server/rest/services/ParcelsHybridv2_LGIM/MapServer/14", "cmd": ["arcgis_property_pull.py", "--market", "duval-fl", "--limit", "8000"], "pattern": "parcels.csv"},
     ("davidson-tn", "individual-homeowner"): {"url": "https://datanashvillegov-nashville.hub.arcgis.com/datasets/fa26cd9326c446179be059e00449cb1f_0/about", "cmd": ["arcgis_property_pull.py", "--market", "davidson-tn", "--limit", "8000"], "pattern": "parcels.csv"},
     ("york-sc", "individual-homeowner"): {"url": "https://www.yorkcountysc.gov/239/GIS-Data-Download", "cmd": ["arcgis_property_pull.py", "--market", "york-sc", "--limit", "8000"], "pattern": "parcels.csv"},
@@ -52,8 +54,8 @@ def post_activity(event_type: str, title: str, body: str = "") -> None:
         print(f"activity_feed warning: {exc}", file=sys.stderr)
 
 
-def latest_existing(market: str, pattern: str) -> Path | None:
-    root = RAW_ROOT / market
+def latest_existing(market: str, pattern: str, root_override: Path | None = None) -> Path | None:
+    root = root_override or RAW_ROOT / market
     if not root.exists():
         return None
     candidates = []
@@ -79,7 +81,7 @@ def main() -> int:
         print(message, file=sys.stderr)
         return 1
 
-    existing = latest_existing(args.market, source["pattern"])
+    existing = latest_existing(args.market, source["pattern"], source.get("root"))
     if existing:
         print(existing)
         return 0
@@ -95,7 +97,7 @@ def main() -> int:
             post_activity("scrape:failed", f"Scrape failed: {args.market}/{args.lane}", body)
             print(body, file=sys.stderr)
             return proc.returncode
-        produced = latest_existing(args.market, source["pattern"]) or out_dir
+        produced = latest_existing(args.market, source["pattern"], source.get("root")) or out_dir
         post_activity("scrape:done", f"Scrape done: {args.market}/{args.lane}", str(produced))
         print(produced)
         return 0
@@ -113,7 +115,7 @@ def main() -> int:
         post_activity("scrape:failed", f"Scrape failed: {args.market}/{args.lane}", body)
         print(body, file=sys.stderr)
         return proc.returncode
-    produced = latest_existing(args.market, source["pattern"]) or out_dir
+    produced = latest_existing(args.market, source["pattern"], source.get("root")) or out_dir
     post_activity("scrape:done", f"Scrape done: {args.market}/{args.lane}", str(produced))
     print(produced)
     return 0
