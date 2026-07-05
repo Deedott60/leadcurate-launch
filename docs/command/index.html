@@ -369,6 +369,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div class="nav-item" data-page="send-quote">
         <span class="icon">📄</span> Send a quote
       </div>
+      <div class="nav-item" onclick="window.open('https://leadcurate.com/property-numbers/','_blank')">
+        <span class="icon">📊</span> Public audit
+      </div>
     </div>
     <div class="nav-divider"></div>
     <div class="nav-label">Learning (for you)</div>
@@ -377,7 +380,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
         <span class="icon">📚</span> Learning hub
       </div>
       <div class="nav-item" data-page="tiers-ref">
-        <span class="icon">🎯</span> 4-tier system
+        <span class="icon">🎯</span> 5-tier system
       </div>
       <div class="nav-item" data-page="help">
         <span class="icon">❓</span> How it works
@@ -800,6 +803,21 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
           <a href="../intake/" target="_blank" class="btn btn-ghost" style="text-decoration:none;">Open form →</a>
         </div>
       </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">📊 Public Property Audit</span></div>
+        <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-bottom:10px;">
+          Use this when someone needs to understand what LeadCurate does before they fill the intake form. It explains the markets, list categories, data depth, and why the lists are fresher than reseller data.
+        </p>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;background:var(--cream2);padding:12px 14px;border-radius:8px;margin:12px 0;word-break:break-all;">
+          https://leadcurate.com/property-numbers/
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn" onclick="window.copyAuditLink(this)">🔗 Copy audit link</button>
+          <button class="btn btn-ghost" onclick="window.shareAuditLink()">Share from phone</button>
+          <a href="../property-numbers/" target="_blank" class="btn btn-ghost" style="text-decoration:none;">Open audit →</a>
+        </div>
+      </div>
     </div>
 
     <!-- ── SEND A QUOTE ─────────────────────── -->
@@ -905,6 +923,18 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
           The scoring framework that separates us from PropStream. Hot Sheet (auction imminent), Fresh Triggers (just filed), Breaking Point (debt snowballing), Deep Distress (steady-state). Includes the 30-second velocity pitch, decision matrix for recommending tiers, and pricing per tier. <strong>Internal only — customers don't see this until full launch.</strong>
         </p>
         <a href="../tiers/" target="_blank" class="btn" style="text-decoration:none;display:inline-block;">Open tier reference →</a>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">📊 Public Property Audit</span></div>
+        <p style="font-size:15px;color:var(--sl);line-height:1.55;margin-bottom:14px;">
+          Shareable proof page for Facebook, DMs, and warm prospects. Shows supported markets, list categories, inventory depth, refresh advantage, and market examples.
+        </p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn" onclick="window.copyAuditLink(this)">🔗 Copy link</button>
+          <button class="btn btn-ghost" onclick="window.shareAuditLink()">Share from phone</button>
+          <a href="../property-numbers/" target="_blank" class="btn btn-ghost" style="text-decoration:none;">Open audit →</a>
+        </div>
       </div>
 
       <div class="card mb16">
@@ -1083,6 +1113,7 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 
 const INTAKE_URL  = 'http://leadcurate.com/intake/';
 const SAMPLES_URL = 'https://leadcurate.com/sample-deliveries/';
+const AUDIT_URL   = 'https://leadcurate.com/property-numbers/';
 const SB_URL = 'https://jdmlsraqioigbukspduo.supabase.co';
 const SB_KEY = 'sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4';
 const sb = createClient(SB_URL, SB_KEY);
@@ -1955,6 +1986,16 @@ async function copyText(text, okMessage, button){
 }
 window.copyTpl = (i) => copyText(window._tpls[i].body, 'Copied');
 window.copyIntakeLink = (button) => copyText(INTAKE_URL, 'Intake link copied - paste anywhere', button);
+window.copyAuditLink = (button) => copyText(AUDIT_URL, 'Audit link copied - paste anywhere', button);
+window.shareAuditLink = async () => {
+  if(navigator.share){
+    try {
+      await navigator.share({title:'LeadCurate property audit', text:'This explains how LeadCurate builds fresh property lists:', url:AUDIT_URL});
+      return;
+    } catch(_err) {}
+  }
+  await copyText(AUDIT_URL, 'Audit link copied - paste anywhere');
+};
 window.shareIntakeLink = async () => {
   if(navigator.share){
     try {
@@ -2134,7 +2175,9 @@ const CMD_ITEMS = [
   {icon:'🏛️',label:'Conference room',     action:()=>nav('conference')},
   {icon:'📋',label:'Send intake link',     action:()=>nav('send-intake')},
   {icon:'📄',label:'Send a quote',         action:()=>nav('send-quote')},
-  {icon:'🎯',label:'4-tier system',        action:()=>nav('tiers-ref')},
+  {icon:'📊',label:'Open public audit',     action:()=>window.open(AUDIT_URL,'_blank')},
+  {icon:'🔗',label:'Copy public audit link', action:()=>window.copyAuditLink()},
+  {icon:'🎯',label:'5-tier system',        action:()=>nav('tiers-ref')},
   {icon:'📚',label:'Learning hub',         action:()=>nav('learn')},
   {icon:'❓',label:'Help / How it works', action:()=>nav('help')},
   {icon:'🔗',label:'Copy intake link',    action:()=>window.copyIntakeLink()},
