@@ -1,3 +1,8 @@
+declare const Deno: {
+  env: { get(name: string): string | undefined };
+  serve(handler: (req: Request) => Response | Promise<Response>): void;
+};
+
 const SB_URL = Deno.env.get("SUPABASE_URL") ?? "https://jdmlsraqioigbukspduo.supabase.co";
 const SB_KEY = Deno.env.get("SUPABASE_PUBLISHABLE_KEY") ?? Deno.env.get("SUPABASE_ANON_KEY") ?? "sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4";
 const FROM_EMAIL = Deno.env.get("LEADCURATE_FROM_EMAIL") ?? "LeadCurate <hello@leadcurate.com>";
@@ -39,6 +44,36 @@ function statCards(p: any) {
   return `<table width="100%" style="border-collapse:separate;border-spacing:8px;margin:16px 0;"><tr>${cards.map(([k, v]) => `<td style="border:1px solid #e2dccf;border-radius:10px;padding:14px;"><div style="font-size:11px;text-transform:uppercase;color:#475569;">${k}</div><div style="font-size:22px;font-weight:800;color:#15803d;">${v}</div></td>`).join("")}</tr></table>`;
 }
 
+function executiveStatRow(p: any) {
+  const averageValue = p.avg_property_value ?? p.analytics?.avg_property_value ?? p.analytics?.average_value;
+  const medianHeld = p.median_years_held ?? p.analytics?.median_years_held ?? p.analytics?.avg_years_held;
+  const mailingCoverage = p.mailing_coverage ?? p.analytics?.mailing_coverage ?? p.analytics?.mailing_address_coverage;
+  const stats = [
+    ["Total records", Number(p.total || 0).toLocaleString()],
+    ["Avg. property value", averageValue !== undefined ? money(averageValue) : "Source-backed"],
+    ["Median years held", medianHeld !== undefined ? `${Number(medianHeld).toLocaleString()} yrs` : "Included where public"],
+    ["Mailing coverage", mailingCoverage !== undefined ? `${Math.round(Number(mailingCoverage))}%` : "Included where public"],
+  ];
+  return `<table width="100%" style="border-collapse:separate;border-spacing:8px;margin:18px 0;"><tr>${stats.map(([label, value]) => `<td style="border:1px solid #e2dccf;background:#faf7f2;border-radius:10px;padding:14px;vertical-align:top;"><div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#475569;">${esc(label)}</div><div style="font-size:20px;font-weight:800;color:#0f172a;margin-top:4px;">${esc(value)}</div></td>`).join("")}</tr></table>`;
+}
+
+function sampleRows(rows: any[] = [], limit = 5) {
+  const body = rows.slice(0, limit).map((r) => `<tr><td>${esc(r.owner ?? r.owner_name ?? "")}</td><td>${esc(r.address ?? r.property_address ?? "")}</td><td>${money(r.value ?? r.property_value ?? r.total_value ?? r.owed)}</td><td>${esc(r.motivation ?? r.signal ?? r.lane ?? "")}</td></tr>`).join("");
+  return `<table width="100%" style="border-collapse:collapse;margin-top:12px;font-size:13px;"><tr style="background:#f3eddf;"><th align="left" style="padding:8px;">Owner</th><th align="left" style="padding:8px;">Property</th><th align="right" style="padding:8px;">Value / Owed</th><th align="left" style="padding:8px;">Signal</th></tr>${body.replaceAll("<td>", "<td style=\"border-bottom:1px solid #e2dccf;padding:8px;\">").replaceAll("<td>$", "<td style=\"border-bottom:1px solid #e2dccf;padding:8px;text-align:right;\">$")}</table>`;
+}
+
+function upsellBlock() {
+  const links = [
+    ["Verified Vacant Land", "https://leadcurate.com/sample-deliveries/"],
+    ["Absentee", "https://leadcurate.com/sample-deliveries/"],
+    ["Out-of-State", "https://leadcurate.com/sample-deliveries/"],
+    ["Tax Delinquent", "https://leadcurate.com/sample-deliveries/"],
+    ["Asset Locator", "https://leadcurate.com/sample-deliveries/charlotte-asset-locator-2026-07-06/"],
+    ["County Intelligence", "https://leadcurate.com/sample-deliveries/"],
+  ];
+  return `<div style="margin-top:24px;padding:18px;border:1px solid #bbf7d0;background:#f0fdf4;border-radius:10px;"><div style="font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:#14532d;font-weight:800;">Available today</div><div style="margin-top:10px;display:block;line-height:2;">${links.map(([label, href]) => `<a href="${href}" style="display:inline-block;margin:0 8px 8px 0;color:#14532d;text-decoration:none;font-weight:800;">✓ ${esc(label)}</a>`).join("")}</div></div>`;
+}
+
 function sampleTable(sample: any[] = [], redact = false) {
   const rows = sample.slice(0, 8).map((r) => `<tr><td>${esc(redact ? redactName(r.owner) : r.owner)}</td><td>${esc(redact ? redactAddress(r.address) : r.address)}</td><td>${money(r.owed)}</td><td>${esc(r.motivation)}</td></tr>`).join("");
   return `<table width="100%" style="border-collapse:collapse;margin-top:16px;font-size:13px;"><tr style="background:#f3eddf;"><th align="left" style="padding:8px;">Owner</th><th align="left" style="padding:8px;">Property</th><th align="right" style="padding:8px;">Owed</th><th align="left" style="padding:8px;">Signal</th></tr>${rows.replaceAll("<td>", "<td style=\"border-bottom:1px solid #e2dccf;padding:8px;\">").replaceAll("<td>$", "<td style=\"border-bottom:1px solid #e2dccf;padding:8px;text-align:right;\">$")}</table>`;
@@ -61,7 +96,11 @@ function renderSample(p: any) {
 }
 
 function renderDelivery(p: any) {
-  return shell(`Delivery Audit: ${p.market}`, `<p style="font-size:16px;line-height:1.6;">${esc(p.name)}, your curated delivery audit is below. Your full XLSX file is attached.</p>${statCards(p)}${sampleTable(p.sample, false)}<div style="margin-top:22px;padding:18px;background:#0f172a;color:white;border-radius:10px;"><strong>Your full file is attached.</strong> Work the HOT records first, then the WARM segment.</div>`);
+  const headline = p.opportunity_headline ?? `${Number(p.total || 0).toLocaleString()} ${p.market} ${p.lane} records ready for investor outreach. Delivered today. Cleaned, verified, ready to market.`;
+  const notes = p.working_notes ?? p.analytics?.working_notes ?? "Work the highest-scored records first. Prioritize owners with stronger motivation density, absentee signals, older hold periods, or larger value gaps before broad follow-up.";
+  const strategy = p.outreach_strategy ?? p.analytics?.outreach_strategy ?? "Suggested outreach: direct mail first for long-held or absentee records, then follow with a concise owner-specific second touch.";
+  const summary = p.summary ?? `${p.name}, this is your paid LeadCurate delivery briefing for ${p.market} / ${p.lane}. The attached XLSX is the working file; this email gives you the one-page read on how to use it.`;
+  return shell(`Delivery Briefing: ${p.market}`, `<div style="font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#15803d;font-weight:800;">Opportunity headline</div><h2 style="font-family:Georgia,serif;font-size:26px;line-height:1.2;margin:8px 0 14px;color:#0f172a;">${esc(headline)}</h2>${executiveStatRow(p)}<div style="margin:12px 0 20px;"><a href="${esc(p.list_url)}" style="display:inline-block;background:#15803d;color:white;text-decoration:none;font-weight:800;padding:12px 16px;border-radius:8px;">Download attached list</a></div><p style="font-size:16px;line-height:1.65;">${esc(summary)}</p><div style="padding:16px;background:#faf7f2;border-left:4px solid #15803d;margin:18px 0;"><strong>Working notes:</strong><br>${esc(notes)}</div><div style="padding:16px;background:#0f172a;color:#faf7f2;border-radius:10px;margin:18px 0;"><strong>Suggested outreach strategy:</strong> ${esc(strategy)}</div><h2 style="font-size:18px;margin-top:22px;">Five records from the file</h2>${sampleRows(p.sample, 5)}${upsellBlock()}<div style="margin-top:22px;padding:18px;background:#0f172a;color:white;border-radius:10px;"><strong>Your full XLSX is attached.</strong> Use this briefing as the work order; use the attachment as the source file.</div>`);
 }
 
 function renderComparison(p: any) {

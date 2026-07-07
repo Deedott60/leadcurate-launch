@@ -1,0 +1,204 @@
+{
+  "name": "LeadCurate - NYC contractor outreach manual",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "action", "name": "action", "value": "send_one", "type": "string" },
+            { "id": "sample_url", "name": "sample_url", "value": "https://leadcurate.com/sample-deliveries/nyc-code-violations-2026-07-06/", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "manual-settings",
+      "name": "Manual settings",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [220, 0]
+    },
+    {
+      "parameters": {
+        "url": "https://data.cityofnewyork.us/resource/9hiw-49pz.json?$limit=50000&license_status=ACTIVE",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Accept", "value": "application/json" }
+          ]
+        },
+        "options": { "response": { "response": { "responseFormat": "json" } } }
+      },
+      "id": "pull-dob-licenses",
+      "name": "Pull active DOB licenses",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, -180]
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = Array.isArray($json) ? $json : [$json];\nconst keep = /GENERAL CONTRACTOR|FIRE SUPPRESSION|OIL BURNER|MASTER PLUMBER|RIGGER|WELDER|ELEVATOR|SPECIAL INSPECTION|CONCRETE/i;\nconst sampleUrl = $('Manual settings').first().json.sample_url;\nconst out = [];\nfor (const r of rows) {\n  const email = String(r.business_email || '').trim().toLowerCase();\n  const type = String(r.license_type || '').trim();\n  if (!email || !keep.test(type)) continue;\n  const contact = [r.first_name, r.last_name].filter(Boolean).join(' ').trim();\n  const firm = String(r.business_name || contact || '').trim();\n  const trade = /OIL BURNER|MASTER PLUMBER|BOILER/i.test(type) ? 'boiler/mechanical' : /RIGGER|WELDER|CONCRETE/i.test(type) ? 'facade/masonry' : 'restoration/general';\n  out.push({ json: {\n    source: 'nyc_dob_active_licenses', lane: 'nyc_code_violations', firm_name: firm, contact_name: contact,\n    email, phone: r.business_phone_number || '', license_type: type, license_number: r.license_number || '',\n    business_city: r.license_business_city || '', business_state: r.business_state || '', business_zip: r.business_zip_code || '',\n    trade, territory: 'NYC', sample_url: sampleUrl, status: 'queued',\n    metadata: { license_sl_no: r.license_sl_no || null }\n  }});\n}\nreturn out;"
+      },
+      "id": "normalize-filter",
+      "name": "Normalize + filter contractor contacts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [700, -180]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://jdmlsraqioigbukspduo.supabase.co/rest/v1/contractor_outreach_queue",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "resolution=ignore-duplicates,return=minimal" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "upsert-queue",
+      "name": "Queue contacts in Supabase",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [940, -180],
+      "credentials": { "httpHeaderAuth": { "id": "SUPABASE_SERVICE_ROLE_HEADER" } }
+    },
+    {
+      "parameters": {
+        "url": "https://jdmlsraqioigbukspduo.supabase.co/rest/v1/contractor_outreach_queue?status=eq.queued&select=*&order=created_at.asc&limit=1",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": { "response": { "response": { "responseFormat": "json" } } }
+      },
+      "id": "fetch-one",
+      "name": "Fetch one queued contact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 120],
+      "credentials": { "httpHeaderAuth": { "id": "SUPABASE_SERVICE_ROLE_HEADER" } }
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = Array.isArray($json) ? $json : [];\nif (!rows.length) return [];\nconst r = rows[0];\nconst name = r.contact_name || r.firm_name || 'there';\nconst subject = 'NYC buildings with open violations in your trade';\nconst html = `<p>Hi ${name} - quick one.</p><p>We processed the full NYC DOB violation file down to buildings with open violations that turn into contracted work: facade/FISP, hazardous-class, boiler/mechanical, and related restoration signals.</p><p>Sample here: <a href=\"${r.sample_url}\">${r.sample_url}</a></p><p>We can cut it by borough and by violation class - facade-only in Manhattan, hazardous in Brooklyn, boiler/mechanical citywide, whatever your crew works.</p><p>Want the count for your trade + territory?</p><p>- Derrick<br>LeadCurate</p>`;\nreturn [{ json: { ...r, subject, html, text: html.replace(/<[^>]+>/g, ' ') } }];"
+      },
+      "id": "build-email",
+      "name": "Build first outreach email",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [700, 120]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.mail.hostinger.com/api/v1/mailboxes/{{$env.HOSTINGER_MAILBOX_RESOURCE_ID}}/send",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Accept", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "jsonBody": "={{ JSON.stringify({ to: [$json.email], displayName: 'LeadCurate', subject: $json.subject, html: $json.html, text: $json.text }) }}",
+        "options": {}
+      },
+      "id": "send-hostinger",
+      "name": "Send via Hostinger hello@",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [940, 120],
+      "credentials": { "httpBearerAuth": { "id": "HOSTINGER_MAIL_TOKEN" } }
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ 'https://jdmlsraqioigbukspduo.supabase.co/rest/v1/contractor_outreach_queue?id=eq.' + $('Build first outreach email').first().json.id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "return=minimal" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "jsonBody": "={{ JSON.stringify({ status: 'first_sent', first_sent_at: new Date().toISOString(), follow_up_due_at: new Date(Date.now() + 3*24*60*60*1000).toISOString(), updated_at: new Date().toISOString() }) }}",
+        "options": {}
+      },
+      "id": "mark-sent",
+      "name": "Mark sent + 3-day follow-up due",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1180, 120],
+      "credentials": { "httpHeaderAuth": { "id": "SUPABASE_SERVICE_ROLE_HEADER" } }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://jdmlsraqioigbukspduo.supabase.co/rest/v1/activity_feed",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "return=minimal" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "jsonBody": "={{ JSON.stringify({ event_type: 'conf:status', source: 'n8n', title: 'NYC contractor outreach sent', body: $('Build first outreach email').first().json.email + ' | ' + $('Build first outreach email').first().json.firm_name, target: 'derrick' }) }}",
+        "options": {}
+      },
+      "id": "post-activity",
+      "name": "Log send to activity_feed",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1420, 120],
+      "credentials": { "httpHeaderAuth": { "id": "SUPABASE_SERVICE_ROLE_HEADER" } }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": { "main": [[{ "node": "Manual settings", "type": "main", "index": 0 }]] },
+    "Manual settings": {
+      "main": [
+        [
+          { "node": "Pull active DOB licenses", "type": "main", "index": 0 },
+          { "node": "Fetch one queued contact", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Pull active DOB licenses": { "main": [[{ "node": "Normalize + filter contractor contacts", "type": "main", "index": 0 }]] },
+    "Normalize + filter contractor contacts": { "main": [[{ "node": "Queue contacts in Supabase", "type": "main", "index": 0 }]] },
+    "Fetch one queued contact": { "main": [[{ "node": "Build first outreach email", "type": "main", "index": 0 }]] },
+    "Build first outreach email": { "main": [[{ "node": "Send via Hostinger hello@", "type": "main", "index": 0 }]] },
+    "Send via Hostinger hello@": { "main": [[{ "node": "Mark sent + 3-day follow-up due", "type": "main", "index": 0 }]] },
+    "Mark sent + 3-day follow-up due": { "main": [[{ "node": "Log send to activity_feed", "type": "main", "index": 0 }]] }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/New_York",
+    "saveDataSuccessExecution": "all",
+    "saveDataErrorExecution": "all"
+  }
+}
