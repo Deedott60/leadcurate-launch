@@ -498,12 +498,13 @@
           <p style="margin-top: 10px;">No hype. No fake guarantees. The review shows what the county can actually support.</p>
         </div>
 
-        <div class="toggle-wrap">
+        <!-- Annual billing hidden until pricing is proven (Codex handoff 2026-07-07 item 5). Monthly stays the only displayed plan. -->
+        <div class="toggle-wrap" style="display:none;" hidden>
           <span class="toggle-label active" id="label-monthly">Monthly Billing</span>
           <div class="toggle-switch" id="billing-toggle" role="switch" aria-checked="false" tabindex="0"></div>
           <span class="toggle-label" id="label-annual">Annual Billing <span class="discount-pill">Save 15%</span></span>
         </div>
-        <div class="billing-note" id="billing-note">Switch to annual billing to save 15%</div>
+        <div class="billing-note" id="billing-note" style="display:none;" hidden>Switch to annual billing to save 15%</div>
 
         <div class="deposit-notice">
           <div class="deposit-icon">✓</div>

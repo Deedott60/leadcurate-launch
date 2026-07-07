@@ -173,7 +173,7 @@
       records: "500 records",
       refresh: "Optional $99/month refresh",
       price: 149,
-      per: "one-time (launch)"
+      per: "one-time (soft-open)"
     },
     specialty: {
       tag: "Court-Scrape Specialty",
@@ -183,7 +183,7 @@
       records: "250–500 records",
       refresh: "Optional $99/month refresh",
       price: 249,
-      per: "one-time (launch)"
+      per: "one-time (soft-open)"
     },
     hotsheet: {
       tag: "Auction Imminent",
@@ -192,8 +192,48 @@
       desc: "Owners in the final window before losing their property to the county. Distress score forced 95-100. Calls land at peak motivation. Scarce by nature — auctions are episodic, so the list is small and the price reflects exclusivity.",
       records: "250 records (scarcity premium)",
       refresh: "One-time per sheet",
-      price: 397,
-      per: "one-time (launch)"
+      price: 497,
+      per: "one-time (soft-open)"
+    },
+    groundfloor: {
+      tag: "Capital-Investment Signals",
+      title: "Ground Floor Report",
+      subH: "Sourced capital commitments paired with county parcel data",
+      desc: "Not property records — real, dated, dollar-figure capital commitments ($200M+ bar: plants, campuses, infrastructure) that show where money is moving before it reaches property values. Each signal is paired with the county parcel data we already hold, so you see the opportunity and the owners in one report.",
+      records: "1 market report",
+      refresh: "Per report",
+      price: 299,
+      per: "per report (soft-open)"
+    },
+    vacantland: {
+      tag: "Verified Vacant Land",
+      title: "Verified Vacant Land File",
+      subH: "Six-check verified vacant parcels, scored and absentee-flagged",
+      desc: "Vacant land parcels that pass all six verification checks (vacant flag, land/building value ratio, year built, heated area, owner, acreage), scored and flagged for absentee ownership. Delivered as a clean working file for land acquisition outreach.",
+      records: "Top-scored parcels per county",
+      refresh: "Per county file",
+      price: 149,
+      per: "per county (soft-open)"
+    },
+    contractor: {
+      tag: "Active Code Violations",
+      title: "Contractor Violations Cut",
+      subH: "Active relevant violations, cut by borough + trade class",
+      desc: "Buildings with active code violations in your trade lane (facade, hazardous, boiler, structural), cut to your borough and class. Every row is an open violation the owner is required to resolve — a ready-made outreach list for restoration and specialty contractors. Citywide all-class cut available at $349.",
+      records: "Top buildings per cut",
+      refresh: "Per cut",
+      price: 199,
+      per: "borough + class (soft-open)"
+    },
+    assetlocator: {
+      tag: "Post-Judgment Asset Identification",
+      title: "Asset Locator File",
+      subH: "Judgment/lien records cross-referenced against county parcels",
+      desc: "Public-record judgments and liens cross-referenced against county parcel ownership to identify real-property assets connected to judgment debtors. Built for collection attorneys and judgment-recovery firms. Custom research book (multi-county, deeper enrichment) available at $1,500. Not a consumer report — never used for creditworthiness or eligibility determinations.",
+      records: "Per file (typ. 100 matches)",
+      refresh: "Per file",
+      price: 750,
+      per: "per file (soft-open)"
     },
     bundle: {
       tag: "Every Distress Signal",
@@ -225,7 +265,7 @@
   };
   TIERS.deepdistress  = { ...TIERS.entry };
   TIERS.breakingpoint = { ...TIERS.specialty, title: "The Breaking Point", tag: "Debt at Breaking Point", subH: "500 records · debt above 5% of property value OR growing year-over-year" };
-  TIERS.freshtrigger  = { ...TIERS.specialty, title: "Fresh Triggers Feed", tag: "Just-Filed Triggers", subH: "Weekly drop · new court filings from the last 7 days (Phase 3 subscription preview)" };
+  TIERS.freshtrigger  = { ...TIERS.specialty, title: "Fresh Triggers Feed", tag: "Just-Filed Triggers", subH: "Weekly drops · new court filings from the last 7 days", price: 199, per: "per month (soft-open)", refresh: "Weekly drops, billed monthly" };
 
   const params = new URLSearchParams(window.location.search);
   const tier = params.get('tier') || 'entry';
@@ -259,6 +299,9 @@
   const buyer  = params.get('buyer')  || 'Friend';
   const market = params.get('market') || 'Your Market';
   const records = params.get('records') || t.records;
+  // Operator price override (e.g. ?price=99 for the first-5-buyers Curated Distress soft-open)
+  const priceOverride = parseInt(params.get('price'), 10);
+  if (!isNaN(priceOverride) && priceOverride > 0) t.price = priceOverride;
   const quote = params.get('quote') || ('LC-' + new Date().getFullYear() + '-' + Math.floor(Math.random()*9000+1000));
   const today = new Date().toISOString().slice(0,10);
 
