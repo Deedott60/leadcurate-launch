@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>LeadCurate — Asset Locator Sample · Mecklenburg County, NC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+:root{--emerald:#15803d;--emerald-dark:#14532d;--emerald-soft:#dff4e8;--cream:#faf7f2;--cream-2:#f3eddf;--dark:#0f172a;--slate:#475569;--slate-light:#94a3b8;--line:#e2dccf;--white:#fff;--gold:#b45309;--gold-soft:#fef3c7;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(--dark);line-height:1.6;}
+.wrap{max-width:980px;margin:0 auto;padding:48px 24px 80px;}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:40px;}
+.brand-mark{width:42px;height:42px;border-radius:8px;background:var(--emerald);color:var(--cream);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:24px;}
+.brand-name{font-family:'Playfair Display',serif;font-weight:700;font-size:22px;}
+.eyebrow{display:inline-block;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--emerald);font-weight:600;margin-bottom:14px;}
+h1{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(32px,4.6vw,46px);line-height:1.08;letter-spacing:-0.02em;margin-bottom:14px;}
+h2{font-family:'Playfair Display',serif;font-size:24px;margin:36px 0 12px;}
+.lede{font-size:17px;color:var(--slate);max-width:700px;margin-bottom:8px;}
+.hr{height:1px;background:var(--line);margin:36px 0;}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:26px 0;}
+.stat{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:16px;}
+.stat .label{font-size:11px;color:var(--slate-light);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;}
+.stat .value{font-size:26px;font-weight:700;letter-spacing:-0.02em;margin-top:4px;font-family:'Playfair Display',serif;}
+.stat .note{font-size:11px;color:var(--slate-light);margin-top:3px;}
+.table-wrap{overflow-x:auto;margin:16px 0 8px;background:var(--white);border:1px solid var(--line);border-radius:14px;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead th{text-align:left;padding:11px 14px;background:var(--cream-2);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--line);white-space:nowrap;}
+tbody td{padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top;white-space:nowrap;}
+tbody tr:last-child td{border-bottom:none;}
+td.num{font-family:'JetBrains Mono',monospace;font-weight:600;}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:600;}
+.pill.oos{background:var(--gold-soft);color:var(--gold);}
+.pill.ins{background:var(--emerald-soft);color:var(--emerald);}
+.redact{color:var(--slate-light);letter-spacing:0.1em;}
+.note-box{background:var(--white);border:1px solid var(--line);border-left:4px solid var(--emerald);border-radius:12px;padding:18px 22px;margin:18px 0;font-size:14px;color:var(--slate);}
+.compliance{background:var(--dark);color:var(--cream);border-radius:14px;padding:24px 28px;margin:28px 0;font-size:14px;}
+.compliance h3{font-family:'Playfair Display',serif;font-size:19px;margin-bottom:10px;color:#fff;}
+.compliance li{margin:6px 0 6px 18px;color:#cbd5e1;}
+.cta-box{background:linear-gradient(135deg,var(--emerald) 0%,var(--emerald-dark) 100%);color:var(--cream);border-radius:16px;padding:30px;margin-top:36px;text-align:center;}
+.cta-box h3{font-family:'Playfair Display',serif;font-size:23px;margin-bottom:10px;}
+.cta-box p{opacity:0.92;margin-bottom:16px;font-size:15px;}
+.cta-btn{display:inline-block;padding:13px 26px;background:var(--cream);color:var(--emerald-dark);border-radius:999px;font-weight:600;text-decoration:none;font-size:15px;}
+footer{text-align:center;margin-top:44px;font-size:12px;color:var(--slate-light);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand">
+    <div class="brand-mark">L</div>
+    <div class="brand-name">Lead<span style="color:var(--emerald)">Curate</span>.</div>
+  </div>
+
+  <span class="eyebrow">Sample · Asset Locator Report</span>
+  <h1>Does your debtor own real property?</h1>
+  <p class="lede">A preview of LeadCurate's asset-location cross-reference for collection attorneys and judgment recovery professionals. We cross-referenced <strong>24,417 filed city liens</strong> against <strong>446,000 county parcel-owner records</strong> in Mecklenburg County, NC — matching lien debtors to the real property they hold, with assessed values and out-of-state flags on every match.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="label">Liens cross-referenced</div><div class="value">24,417</div><div class="note">filed city liens</div></div>
+    <div class="stat"><div class="label">Parcel records matched against</div><div class="value">446K</div><div class="note">county-wide owner records</div></div>
+    <div class="stat"><div class="label">Debtor-to-property matches</div><div class="value">843</div><div class="note">verified owner matches</div></div>
+    <div class="stat"><div class="label">Aggregate property value</div><div class="value">$73.9M</div><div class="note">top 100 matches</div></div>
+    <div class="stat"><div class="label">Out-of-state owners</div><div class="value">73<span style="font-size:15px;color:var(--slate-light)">/100</span></div><div class="note">of the top 100 matches</div></div>
+  </div>
+
+  <div class="note-box">
+    <strong>What this means for your practice:</strong> every row below is a person or entity with a recorded lien against them who <em>also verifiably owns real property in the county</em> — with the assessed value of that property and a direct link to the county register of deeds record. This is the go / no-go question of judgment enforcement, answered from primary public records, in bulk.
+  </div>
+
+  <h2>Sample matches (top-scored, names redacted in preview)</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Debtor / Owner</th><th>Property</th><th>Lien Status</th><th>Filed</th><th>Assessed Value</th><th>Owner Location</th><th>Deeds Record</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="num">1</td><td><span class="redact">G*** L. K*** III</span></td><td>911 E Woodlawn Rd, Charlotte</td><td>LIEN FILED</td><td class="num">2013-10-07</td><td class="num">$497,000</td><td><span class="pill oos">FL — out of state</span></td><td>✓ linked</td></tr>
+        <tr><td class="num">2</td><td><span class="redact">J*** K. F***</span></td><td>2425 Beatties Ford Rd, Charlotte</td><td>LIEN FILED ×4</td><td class="num">2013–2015</td><td class="num">$629,000</td><td><span class="pill oos">VA — out of state</span></td><td>✓ linked</td></tr>
+        <tr><td class="num">3</td><td><span class="redact">8*** C*** PROPERTIES LLC</span></td><td>8538 N Tryon St, Charlotte</td><td>LIEN FILED</td><td class="num">2022-10-26</td><td class="num">$5,097,200</td><td><span class="pill oos">IL — out of state</span></td><td>✓ linked</td></tr>
+        <tr><td class="num">4</td><td><span class="redact">H*** W*** LLC</span></td><td>4211 Pete Brown Rd, Charlotte</td><td>LIEN FILED</td><td class="num">2023-02-02</td><td class="num">$2,336,000</td><td><span class="pill oos">PA — out of state</span></td><td>✓ linked</td></tr>
+        <tr><td class="num">5</td><td><span class="redact">D*** D. W***</span></td><td>2614 Golf Course Ln, Charlotte</td><td>LIEN FILED ×5</td><td class="num">2015–2017</td><td class="num">$296,600</td><td><span class="pill oos">NY — out of state</span></td><td>✓ linked</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:13px;color:var(--slate-light);margin-top:8px;">Full delivery includes unredacted owner names, complete mailing addresses, parcel IDs, year built, square footage, building/land value split, and a direct URL to the county register of deeds record for every match. Source URL and pull date stamped on every row.</p>
+
+  <h2>Every field in the full report</h2>
+  <div class="note-box" style="font-family:'JetBrains Mono',monospace;font-size:12px;line-height:2;">
+    owner_name · property_address · lien_status · lien_no · invoice_date · property_total_value · property_building_value · property_land_value · year_built · heated_sqft · property_use · owner_mailing_address · owner_mail_city/state/zip · is_out_of_state · parcel_id · parcel_record_url (register of deeds) · score · rank
+  </div>
+
+  <div class="compliance">
+    <h3>Compliance posture</h3>
+    <ul>
+      <li>100% primary public records — county tax assessor, city lien filings, register of deeds. No credit bureau data, no consumer report data.</li>
+      <li>Property-record data only: no SSNs, no dates of birth, no bank information, no skip-traced phone numbers.</li>
+      <li>Provided for <strong>post-judgment asset identification and enforcement of existing legal claims</strong> — not for use in determining eligibility for credit, employment, insurance, or housing, and not usable as a consumer report under the FCRA.</li>
+      <li>Every record carries its source URL and pull date. Verify any row directly against the county portal before you rely on it.</li>
+    </ul>
+  </div>
+
+  <div class="cta-box">
+    <h3>Run this against your judgment book.</h3>
+    <p>We can cross-reference your existing debtor list against county ownership records in any of our 22 covered markets — or build your county from scratch. Same-week turnaround.</p>
+    <a class="cta-btn" href="https://leadcurate.com/intake/">Request your market →</a>
+  </div>
+
+  <footer>
+    LeadCurate · Asset Locator sample · Cross-reference built from Mecklenburg County NC public records · Liens pulled 2026-06-18, parcels pulled 2026-06-18 · Preview rows redacted; full delivery is unredacted.
+  </footer>
+</div>
+</body>
+</html>

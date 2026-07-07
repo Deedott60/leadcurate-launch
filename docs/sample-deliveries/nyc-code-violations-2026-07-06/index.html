@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>LeadCurate — Active Code Violations Sample · NYC (5 Boroughs)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+:root{--emerald:#15803d;--emerald-dark:#14532d;--emerald-soft:#dff4e8;--cream:#faf7f2;--cream-2:#f3eddf;--dark:#0f172a;--slate:#475569;--slate-light:#94a3b8;--line:#e2dccf;--white:#fff;--crimson:#991b1b;--crimson-soft:#fee2e2;--gold:#b45309;--gold-soft:#fef3c7;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(--dark);line-height:1.6;}
+.wrap{max-width:980px;margin:0 auto;padding:48px 24px 80px;}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:40px;}
+.brand-mark{width:42px;height:42px;border-radius:8px;background:var(--emerald);color:var(--cream);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:24px;}
+.brand-name{font-family:'Playfair Display',serif;font-weight:700;font-size:22px;}
+.eyebrow{display:inline-block;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--emerald);font-weight:600;margin-bottom:14px;}
+h1{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(32px,4.6vw,46px);line-height:1.08;letter-spacing:-0.02em;margin-bottom:14px;}
+h2{font-family:'Playfair Display',serif;font-size:24px;margin:36px 0 12px;}
+.lede{font-size:17px;color:var(--slate);max-width:700px;margin-bottom:8px;}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:26px 0;}
+.stat{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:16px;}
+.stat .label{font-size:11px;color:var(--slate-light);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;}
+.stat .value{font-size:26px;font-weight:700;letter-spacing:-0.02em;margin-top:4px;font-family:'Playfair Display',serif;}
+.stat .note{font-size:11px;color:var(--slate-light);margin-top:3px;}
+.table-wrap{overflow-x:auto;margin:16px 0 8px;background:var(--white);border:1px solid var(--line);border-radius:14px;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead th{text-align:left;padding:11px 14px;background:var(--cream-2);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--line);white-space:nowrap;}
+tbody td{padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top;}
+tbody tr:last-child td{border-bottom:none;}
+td.num{font-family:'JetBrains Mono',monospace;font-weight:600;white-space:nowrap;}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:600;white-space:nowrap;}
+.pill.hz{background:var(--crimson-soft);color:var(--crimson);}
+.pill.fc{background:var(--gold-soft);color:var(--gold);}
+.pill.bl{background:var(--emerald-soft);color:var(--emerald);}
+.redact{color:var(--slate-light);letter-spacing:0.08em;}
+.note-box{background:var(--white);border:1px solid var(--line);border-left:4px solid var(--emerald);border-radius:12px;padding:18px 22px;margin:18px 0;font-size:14px;color:var(--slate);}
+.quote-box{background:var(--white);border:1px solid var(--line);border-left:4px solid var(--crimson);border-radius:12px;padding:18px 22px;margin:18px 0;}
+.quote-box .q{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--dark);line-height:1.7;}
+.quote-box .src{font-size:11px;color:var(--slate-light);margin-top:10px;text-transform:uppercase;letter-spacing:0.08em;}
+.compliance{background:var(--dark);color:var(--cream);border-radius:14px;padding:24px 28px;margin:28px 0;font-size:14px;}
+.compliance h3{font-family:'Playfair Display',serif;font-size:19px;margin-bottom:10px;color:#fff;}
+.compliance li{margin:6px 0 6px 18px;color:#cbd5e1;}
+.cta-box{background:linear-gradient(135deg,var(--emerald) 0%,var(--emerald-dark) 100%);color:var(--cream);border-radius:16px;padding:30px;margin-top:36px;text-align:center;}
+.cta-box h3{font-family:'Playfair Display',serif;font-size:23px;margin-bottom:10px;}
+.cta-box p{opacity:0.92;margin-bottom:16px;font-size:15px;}
+.cta-btn{display:inline-block;padding:13px 26px;background:var(--cream);color:var(--emerald-dark);border-radius:999px;font-weight:600;text-decoration:none;font-size:15px;}
+footer{text-align:center;margin-top:44px;font-size:12px;color:var(--slate-light);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand">
+    <div class="brand-mark">L</div>
+    <div class="brand-name">Lead<span style="color:var(--emerald)">Curate</span>.</div>
+  </div>
+
+  <span class="eyebrow">Sample · Active Code Violations — Contractor Edition</span>
+  <h1>Buildings that are legally required to hire you.</h1>
+  <p class="lede">A preview of LeadCurate's active-violation building list for restoration, facade, masonry, and mechanical contractors working NYC. We processed the <strong>full citywide DOB violation file — 2,475,143 records</strong> — down to the buildings with open, unresolved violations in the classes that turn into contracted repair work.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="label">Source records processed</div><div class="value">2.47M</div><div class="note">full citywide DOB file</div></div>
+    <div class="stat"><div class="label">Active, relevant violations</div><div class="value">184,181</div><div class="note">open · issued within 6 years</div></div>
+    <div class="stat"><div class="label">Buildings identified</div><div class="value">54,513</div><div class="note">with ≥1 active relevant violation</div></div>
+    <div class="stat"><div class="label">Facade (FISP/LL11)</div><div class="value">5,111</div><div class="note">legally mandated repairs</div></div>
+    <div class="stat"><div class="label">Hazardous class</div><div class="value">1,877</div><div class="note">active hazardous violations</div></div>
+  </div>
+
+  <div class="note-box">
+    <strong>Why these are the warmest leads in the trade:</strong> an owner with an active DOB violation isn't a maybe — they are under a legal obligation to remediate, with fines accruing until they do. Facade (Local Law 11 / FISP) violations in particular <em>require</em> a licensed contractor. You are not selling them on whether to do the work. Only on who does it.
+  </div>
+
+  <h2>What an actual record looks like</h2>
+  <div class="quote-box">
+    <div class="q">"EMERGENCY WORK ORDER DUE TO THE IMMEDIATE HAZARD POSED BY THE CRACKED AND SPALLING CONCRETE, AND MASONRY STUCCO AT ALL EXPOSURES 1, 2, 3 &amp; 4"</div>
+    <div class="src">Verbatim violation description · Brooklyn building, 190 active violations on file · issued by NYC DOB</div>
+  </div>
+
+  <h2>Top-scored buildings (preview — house numbers redacted)</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Borough</th><th>Street</th><th>Active Violations</th><th>Classes</th><th>Latest Issued</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="num">1</td><td>Manhattan</td><td><span class="redact">2** West 37 Street</span></td><td class="num">514</td><td><span class="pill bl">Boiler ×509</span> <span class="pill fc">Facade ×1</span> <span class="pill hz">Hazardous ×1</span></td><td class="num">2025-11-14</td></tr>
+        <tr><td class="num">2</td><td>Brooklyn</td><td><span class="redact">1** B 58 Street</span></td><td class="num">427</td><td><span class="pill bl">Boiler ×410</span> <span class="pill bl">Elevator ×17</span></td><td class="num">2025-11-14</td></tr>
+        <tr><td class="num">3</td><td>Brooklyn</td><td><span class="redact">2** Classon Avenue</span></td><td class="num">272</td><td><span class="pill bl">Boiler ×263</span> <span class="pill bl">Elevator ×5</span></td><td class="num">2025-11-14</td></tr>
+        <tr><td class="num">4</td><td>Queens</td><td><span class="redact">1*-** 81 Street</span></td><td class="num">210</td><td><span class="pill bl">Boiler ×210</span></td><td class="num">2025-11-14</td></tr>
+        <tr><td class="num">5</td><td>Brooklyn</td><td><span class="redact">1** A 58 Street</span></td><td class="num">190</td><td><span class="pill bl">Boiler ×187</span> <span class="pill hz">Hazardous ×1</span> — emergency masonry work order</td><td class="num">2024-07-29</td></tr>
+        <tr><td class="num">6</td><td>Manhattan</td><td><span class="redact">2** West 38 Street</span></td><td class="num">164</td><td><span class="pill bl">Boiler ×161</span> <span class="pill fc">Facade ×1</span></td><td class="num">2025-11-14</td></tr>
+        <tr><td class="num">7</td><td>Manhattan</td><td><span class="redact">2** West 35 Street</span></td><td class="num">158</td><td><span class="pill bl">Boiler ×149</span> <span class="pill fc">Facade ×1</span> <span class="pill hz">Hazardous ×1</span></td><td class="num">2025-11-14</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:13px;color:var(--slate-light);margin-top:8px;">Full delivery includes complete street addresses, BIN / block / lot identifiers (mail-merge and DOB-lookup ready), full violation class breakdown per building, latest violation description verbatim, and issue-date history. Filterable by borough and by class — facade-only, hazardous-only, boiler-only, or your custom mix.</p>
+
+  <h2>Building counts by borough</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Borough</th><th>Buildings with active relevant violations</th></tr></thead>
+      <tbody>
+        <tr><td>Brooklyn</td><td class="num">20,474</td></tr>
+        <tr><td>Manhattan</td><td class="num">12,186</td></tr>
+        <tr><td>Queens</td><td class="num">12,011</td></tr>
+        <tr><td>Bronx</td><td class="num">7,904</td></tr>
+        <tr><td>Staten Island</td><td class="num">1,889</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="compliance">
+    <h3>Source &amp; compliance</h3>
+    <ul>
+      <li>Single source: NYC Department of Buildings violation records via NYC Open Data — an official, public, citywide feed.</li>
+      <li>Property and violation data only. No phone numbers, no emails, no DNC-regulated contact data. Door, mail, and permit-lookup outreach are yours to run.</li>
+      <li>Every batch stamped with source URL and pull date — verify any building directly against the DOB Building Information System.</li>
+      <li>LeadCurate provides data only and does not guarantee jobs, contracts, or response rates.</li>
+    </ul>
+  </div>
+
+  <div class="cta-box">
+    <h3>Get the buildings in your trade and your borough.</h3>
+    <p>Facade-only in Manhattan. Hazardous + structural in Brooklyn. Boiler books citywide. Tell us your trade and territory — delivery within days, sorted so the most violation-loaded buildings are on top.</p>
+    <a class="cta-btn" href="https://leadcurate.com/intake/">Request your list →</a>
+  </div>
+
+  <footer>
+    LeadCurate · Active Code Violations sample · NYC DOB violations pulled 2026-06-19 · processed 2026-07-06 · Preview redacted; full delivery is complete and unredacted.
+  </footer>
+</div>
+</body>
+</html>
