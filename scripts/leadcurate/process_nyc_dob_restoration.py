@@ -6,6 +6,7 @@ groups by building (BIN), scores by severity + volume + recency,
 writes full snapshot + redacted-style preview + meta JSON.
 """
 import csv
+import argparse
 import json
 import re
 import sys
@@ -57,7 +58,26 @@ def parse_date(s):
             continue
     return None
 
+CLASS_ALIASES = {
+    "facade": {"Facade (FISP/LL11)"},
+    "hazardous": {"Hazardous"},
+    "boiler": {"Boiler"},
+    "structural": {"Structural"},
+    "wwp": {"Work Without Permit"},
+}
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Build NYC DOB restoration contractor cuts.")
+    parser.add_argument("--borough", choices=sorted(BORO.values()), help="Limit output to one borough.")
+    parser.add_argument("--class", dest="violation_class", choices=sorted(CLASS_ALIASES), help="Limit output to one violation class family.")
+    parser.add_argument("--top", type=int, default=150, help="Number of ranked buildings to export.")
+    parser.add_argument("--source", default=SRC)
+    parser.add_argument("--output-dir", default=OUT_DIR)
+    return parser.parse_args()
+
 def main():
+    args = parse_args()
+    allowed_classes = CLASS_ALIASES.get(args.violation_class or "", set())
     buildings = defaultdict(lambda: {
         "violations": 0, "score": 0, "classes": defaultdict(int),
         "latest_issue": None, "earliest_issue": None,
@@ -66,12 +86,14 @@ def main():
     })
     total = 0
     kept = 0
-    with open(SRC, newline="", encoding="utf-8-sig", errors="replace") as f:
+    with open(args.source, newline="", encoding="utf-8-sig", errors="replace") as f:
         reader = csv.DictReader(f)
         for row in reader:
             total += 1
             cls, weight = classify(row.get("VIOLATION_CATEGORY"), row.get("VIOLATION_TYPE"))
             if not cls:
+                continue
+            if allowed_classes and cls not in allowed_classes:
                 continue
             issued = parse_date(row.get("ISSUE_DATE"))
             # keep only violations issued in last 6 years (active + actionable)
@@ -82,10 +104,13 @@ def main():
             street = (row.get("STREET") or "").strip()
             if not bin_id or not street:
                 continue
+            boro_name = BORO.get((row.get("BORO") or "").strip(), row.get("BORO") or "")
+            if args.borough and boro_name != args.borough:
+                continue
             kept += 1
             b = buildings[bin_id]
             b["bin"] = bin_id
-            b["boro"] = BORO.get((row.get("BORO") or "").strip(), row.get("BORO") or "")
+            b["boro"] = boro_name
             b["address"] = f"{house} {street}".strip()
             b["block"] = (row.get("BLOCK") or "").strip()
             b["lot"] = (row.get("LOT") or "").strip()
@@ -102,13 +127,20 @@ def main():
                 b["earliest_issue"] = issued
 
     ranked = sorted(buildings.values(), key=lambda b: b["score"], reverse=True)
-    top = ranked[:150]
+    top = ranked[: max(1, args.top)]
 
     import os
-    os.makedirs(OUT_DIR, exist_ok=True)
-    full_path = f"{OUT_DIR}/nyc-dob-active-restoration-2026-07-06.csv"
-    prev_path = f"{OUT_DIR}/nyc-dob-active-restoration-2026-07-06-preview.csv"
-    meta_path = f"{OUT_DIR}/nyc-dob-active-restoration-2026-07-06-meta.json"
+    os.makedirs(args.output_dir, exist_ok=True)
+    suffix = ""
+    if args.borough:
+        suffix += "-" + args.borough.lower().replace(" ", "-")
+    if args.violation_class:
+        suffix += "-" + args.violation_class
+    if args.top != 150:
+        suffix += f"-top{args.top}"
+    full_path = f"{args.output_dir}/nyc-dob-active-restoration-2026-07-06{suffix}.csv"
+    prev_path = f"{args.output_dir}/nyc-dob-active-restoration-2026-07-06{suffix}-preview.csv"
+    meta_path = f"{args.output_dir}/nyc-dob-active-restoration-2026-07-06{suffix}-meta.json"
 
     cols = ["rank", "score", "borough", "property_address", "bin", "block", "lot",
             "active_violations", "violation_classes", "latest_issue_date",
@@ -153,6 +185,11 @@ def main():
         "source": "NYC Open Data — DOB Violations (full citywide extract)",
         "source_pull_date": "2026-06-19",
         "processed_date": "2026-07-06",
+        "filters": {
+            "borough": args.borough,
+            "class": args.violation_class,
+            "top": args.top,
+        },
         "total_source_rows": total,
         "active_relevant_violations_last6y": kept,
         "buildings_with_active_relevant": len(buildings),
