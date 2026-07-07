@@ -42,7 +42,23 @@ h1{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(36px,5vw
 .cta-btn{display:inline-block;padding:14px 28px;background:var(--cream);color:var(--emerald-dark);border-radius:999px;font-weight:600;text-decoration:none;font-size:15px;}
 .cta-btn:hover{background:#fff;}
 footer{text-align:center;margin-top:48px;font-size:13px;color:var(--slate-light);}
+.copy-chip{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--cream);color:var(--dark);font-size:12px;font-weight:600;cursor:pointer;}
+.copy-chip:hover{background:var(--emerald);color:var(--cream);border-color:var(--emerald);}
 </style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.grid > a[href]').forEach(function(a){
+    var card=a.querySelector('.card'); if(!card) return;
+    var chip=document.createElement('span'); chip.className='copy-chip'; chip.textContent='🔗 Copy link';
+    chip.addEventListener('click',function(e){
+      e.preventDefault(); e.stopPropagation();
+      var url=new URL(a.getAttribute('href'),window.location.href).href;
+      navigator.clipboard.writeText(url).then(function(){ chip.textContent='✓ Copied — paste in your DM'; setTimeout(function(){chip.textContent='🔗 Copy link';},2000); });
+    });
+    card.appendChild(chip);
+  });
+});
+</script>
 </head>
 <body>
 <div class="wrap">
