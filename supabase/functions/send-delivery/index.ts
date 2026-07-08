@@ -35,31 +35,36 @@ function barRow(label: string, value: number, max: number, suffix = "") {
   return `<tr><td style="width:150px;padding:6px 8px;color:#475569;">${esc(label)}</td><td style="padding:6px 8px;"><div style="background:#f3eddf;border-radius:999px;height:12px;"><div style="width:${pct(value, max)}%;background:#15803d;height:12px;border-radius:999px;"></div></div></td><td style="width:90px;text-align:right;font-weight:700;color:#0f172a;">${esc(value.toLocaleString())}${suffix}</td></tr>`;
 }
 
-function shell(title: string, body: string) {
-  return `<div style="margin:0;background:#faf7f2;padding:28px;font-family:Inter,Arial,sans-serif;color:#0f172a;"><table role="presentation" width="100%" style="max-width:760px;margin:0 auto;background:#fff;border:1px solid #e2dccf;border-radius:14px;overflow:hidden;"><tr><td style="padding:28px;background:#0f172a;color:#faf7f2;"><div style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#86efac;">LeadCurate</div><h1 style="margin:8px 0 0;font-family:Georgia,serif;font-size:30px;">${esc(title)}</h1></td></tr><tr><td style="padding:28px;">${body}</td></tr><tr><td style="padding:18px 28px;background:#f3eddf;color:#475569;font-size:13px;">LeadCurate LLC - curated, scored property records for the market you asked for.</td></tr></table></div>`;
+// Gmail/Outlook ignore CSS margin:auto on tables about half the time. The only
+// reliable way to center an email body is an outer 100%-wide table with
+// align="center" (HTML attribute, not CSS) wrapping a fixed-width inner table.
+function shell(eyebrow: string, title: string, greetingName: string, greetingLine: string, body: string) {
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#faf7f2;padding:32px 16px;font-family:Arial,sans-serif;"><tr><td align="center">
+<table role="presentation" width="640" cellpadding="0" cellspacing="0" align="center" style="max-width:640px;width:100%;background:#ffffff;border:1px solid #e2dccf;border-radius:14px;overflow:hidden;">
+<tr><td style="padding:28px 32px 8px;">
+  <table role="presentation" cellpadding="0" cellspacing="0"><tr>
+    <td style="width:36px;height:36px;background:#15803d;border-radius:8px;text-align:center;vertical-align:middle;"><span style="color:#fff;font-family:Georgia,serif;font-weight:700;font-size:20px;">L</span></td>
+    <td style="padding-left:10px;font-family:Georgia,serif;font-weight:700;font-size:20px;color:#0f172a;vertical-align:middle;">LeadCurate</td>
+  </tr></table>
+</td></tr>
+<tr><td style="padding:8px 32px 0;">
+  <div style="font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#15803d;">${esc(eyebrow)}</div>
+  <h1 style="font-family:Georgia,serif;font-size:26px;line-height:1.2;color:#0f172a;margin:8px 0 12px;">${esc(title)}</h1>
+  <p style="font-size:15px;line-height:1.6;color:#334155;margin:0 0 4px;">${esc(greetingName)},</p>
+  <p style="font-size:15px;line-height:1.6;color:#334155;margin:0 0 4px;">${esc(greetingLine)}</p>
+</td></tr>
+${body}
+<tr><td style="padding:20px 32px;background:#f3eddf;font-size:13px;color:#475569;">Any questions, just reply.<br><br><strong>Derrick</strong><br>LeadCurate<br><a href="mailto:hello@leadcurate.com" style="color:#15803d;">hello@leadcurate.com</a></td></tr>
+</table>
+</td></tr></table>`;
 }
 
-function statCards(p: any) {
-  const cards = [["Records", p.total], ["HOT", p.hot], ["Absentee", p.absentee], ["Top equity", money(p.top_equity)]];
-  return `<table width="100%" style="border-collapse:separate;border-spacing:8px;margin:16px 0;"><tr>${cards.map(([k, v]) => `<td style="border:1px solid #e2dccf;border-radius:10px;padding:14px;"><div style="font-size:11px;text-transform:uppercase;color:#475569;">${k}</div><div style="font-size:22px;font-weight:800;color:#15803d;">${v}</div></td>`).join("")}</tr></table>`;
+function section(inner: string) {
+  return `<tr><td style="padding:22px 32px 0;">${inner}</td></tr>`;
 }
 
-function executiveStatRow(p: any) {
-  const averageValue = p.avg_property_value ?? p.analytics?.avg_property_value ?? p.analytics?.average_value;
-  const medianHeld = p.median_years_held ?? p.analytics?.median_years_held ?? p.analytics?.avg_years_held;
-  const mailingCoverage = p.mailing_coverage ?? p.analytics?.mailing_coverage ?? p.analytics?.mailing_address_coverage;
-  const stats = [
-    ["Total records", Number(p.total || 0).toLocaleString()],
-    ["Avg. property value", averageValue !== undefined ? money(averageValue) : "Source-backed"],
-    ["Median years held", medianHeld !== undefined ? `${Number(medianHeld).toLocaleString()} yrs` : "Included where public"],
-    ["Mailing coverage", mailingCoverage !== undefined ? `${Math.round(Number(mailingCoverage))}%` : "Included where public"],
-  ];
-  return `<table width="100%" style="border-collapse:separate;border-spacing:8px;margin:18px 0;"><tr>${stats.map(([label, value]) => `<td style="border:1px solid #e2dccf;background:#faf7f2;border-radius:10px;padding:14px;vertical-align:top;"><div style="font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#475569;">${esc(label)}</div><div style="font-size:20px;font-weight:800;color:#0f172a;margin-top:4px;">${esc(value)}</div></td>`).join("")}</tr></table>`;
-}
-
-function sampleRows(rows: any[] = [], limit = 5) {
-  const body = rows.slice(0, limit).map((r) => `<tr><td>${esc(r.owner ?? r.owner_name ?? "")}</td><td>${esc(r.address ?? r.property_address ?? "")}</td><td>${money(r.value ?? r.property_value ?? r.total_value ?? r.owed)}</td><td>${esc(r.motivation ?? r.signal ?? r.lane ?? "")}</td></tr>`).join("");
-  return `<table width="100%" style="border-collapse:collapse;margin-top:12px;font-size:13px;"><tr style="background:#f3eddf;"><th align="left" style="padding:8px;">Owner</th><th align="left" style="padding:8px;">Property</th><th align="right" style="padding:8px;">Value / Owed</th><th align="left" style="padding:8px;">Signal</th></tr>${body.replaceAll("<td>", "<td style=\"border-bottom:1px solid #e2dccf;padding:8px;\">").replaceAll("<td>$", "<td style=\"border-bottom:1px solid #e2dccf;padding:8px;text-align:right;\">$")}</table>`;
+function boxedRows(rows: string[]) {
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e2dccf;border-radius:10px;">${rows.join("")}</table>`;
 }
 
 function upsellBlock() {
@@ -72,11 +77,6 @@ function upsellBlock() {
     ["County Intelligence", "https://leadcurate.com/sample-deliveries/"],
   ];
   return `<div style="margin-top:24px;padding:18px;border:1px solid #bbf7d0;background:#f0fdf4;border-radius:10px;"><div style="font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:#14532d;font-weight:800;">Available today</div><div style="margin-top:10px;display:block;line-height:2;">${links.map(([label, href]) => `<a href="${href}" style="display:inline-block;margin:0 8px 8px 0;color:#14532d;text-decoration:none;font-weight:800;">✓ ${esc(label)}</a>`).join("")}</div></div>`;
-}
-
-function sampleTable(sample: any[] = [], redact = false) {
-  const rows = sample.slice(0, 8).map((r) => `<tr><td>${esc(redact ? redactName(r.owner) : r.owner)}</td><td>${esc(redact ? redactAddress(r.address) : r.address)}</td><td>${money(r.owed)}</td><td>${esc(r.motivation)}</td></tr>`).join("");
-  return `<table width="100%" style="border-collapse:collapse;margin-top:16px;font-size:13px;"><tr style="background:#f3eddf;"><th align="left" style="padding:8px;">Owner</th><th align="left" style="padding:8px;">Property</th><th align="right" style="padding:8px;">Owed</th><th align="left" style="padding:8px;">Signal</th></tr>${rows.replaceAll("<td>", "<td style=\"border-bottom:1px solid #e2dccf;padding:8px;\">").replaceAll("<td>$", "<td style=\"border-bottom:1px solid #e2dccf;padding:8px;text-align:right;\">$")}</table>`;
 }
 
 function redactName(name = "") {
@@ -94,14 +94,44 @@ function redactAddress(addr = "") {
 // render function. There is exactly one now.
 
 function numbersBlock(title: string, items: [string, string | number][]) {
-  const rows = items.map(([label, value]) =>
-    `<tr><td style="padding:10px 0;border-bottom:1px solid var(--line,#e2dccf);color:#475569;">${esc(label)}</td><td style="padding:10px 0;border-bottom:1px solid #e2dccf;text-align:right;font-weight:800;color:#0f172a;">${esc(value)}</td></tr>`
+  const rows = items.map(([label, value], i) =>
+    `<tr><td style="padding:10px 16px;${i < items.length - 1 ? "border-bottom:1px solid #e2dccf;" : ""}font-size:14px;color:#475569;">${esc(label)}</td><td style="padding:10px 16px;${i < items.length - 1 ? "border-bottom:1px solid #e2dccf;" : ""}font-size:14px;font-weight:800;color:#0f172a;text-align:right;">${esc(value)}</td></tr>`
   ).join("");
-  return `<h2 style="font-family:Georgia,serif;font-size:20px;margin:22px 0 6px;color:#0f172a;">${esc(title)}</h2><table width="100%" style="border-collapse:collapse;background:#faf7f2;border-radius:10px;padding:4px 16px;"><tbody>${rows}</tbody></table>`;
+  return `<h2 style="font-family:Georgia,serif;font-size:18px;color:#0f172a;margin:0 0 6px;">${esc(title)}</h2>${boxedRows([rows])}`;
 }
 
 function heroStatCards(items: [string, string | number][]) {
-  return `<table width="100%" style="border-collapse:separate;border-spacing:8px;margin:16px 0;"><tr>${items.map(([k, v]) => `<td style="border:1px solid #e2dccf;border-radius:10px;padding:14px;"><div style="font-size:11px;text-transform:uppercase;color:#475569;">${esc(k)}</div><div style="font-size:22px;font-weight:800;color:#15803d;">${esc(v)}</div></td>`).join("")}</tr></table>`;
+  const width = Math.floor(100 / Math.max(1, items.length));
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="8"><tr>${items.map(([k, v]) => `<td width="${width}%" style="border:1px solid #e2dccf;border-radius:10px;padding:14px;background:#faf7f2;"><div style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#64748b;font-weight:700;">${esc(k)}</div><div style="font-size:20px;font-weight:800;color:#0f172a;margin-top:4px;">${esc(v)}</div></td>`).join("")}</tr></table>`;
+}
+
+// The actual differentiation reasoning, generic across lanes: WHY a rebuilt/verified
+// file beats a static purchased one. Caller can override entirely via p.differentiators
+// (array of [heading, body]); falls back to lane-flavored defaults otherwise so this
+// section is never empty and never just "we use fresh data."
+const LANE_DEFAULT_DIFFERENTIATORS: Record<string, [string, string][]> = {
+  verified_vacant_land: [
+    ["Rebuilt from the current county file", "not resold from a stockpile that could be a year or more old."],
+    ["Cross-checked before it ships", "the county's own vacancy and improvement fields get verified, not taken at face value."],
+    ["Absentee owners flagged specifically", "these owners are structurally more likely to sell than build or hold."],
+    ["Refreshed on request", "sold once and left to rot is the opposite of how this works."],
+  ],
+  default: [
+    ["Pulled directly from the county's source records", "not aggregated from a third-party reseller with unknown lag."],
+    ["Deduplicated and lane-matched", "the file only contains what you actually ordered, one row per property."],
+    ["Verified before it ships", "stats in this email are computed from the same file you're getting, not hand-typed."],
+    ["Refreshed on request", "this isn't a static download you're stuck with once purchased."],
+  ],
+};
+
+function differentiatorsBlock(p: any) {
+  const items: [string, string][] = Array.isArray(p.differentiators) && p.differentiators.length
+    ? p.differentiators
+    : (LANE_DEFAULT_DIFFERENTIATORS[String(p.lane ?? "")] ?? LANE_DEFAULT_DIFFERENTIATORS.default);
+  const rows = items.map(([head, tail], i) =>
+    `<tr><td style="padding:12px 16px;${i < items.length - 1 ? "border-bottom:1px solid #e2dccf;" : ""}font-size:14px;color:#334155;"><strong style="color:#0f172a;">${esc(head)}</strong> — ${esc(tail)}</td></tr>`
+  ).join("");
+  return `<h2 style="font-family:Georgia,serif;font-size:18px;color:#0f172a;margin:0 0 10px;">Why this beats a purchased list</h2>${boxedRows([rows])}`;
 }
 
 // Derives the "value" column label + value from whichever field is present on a record,
@@ -113,17 +143,33 @@ function recordValue(r: any): [string, string] {
   return ["Value", "—"];
 }
 
+function badge(label: string, bg: string, fg: string) {
+  return `<span style="display:inline-block;background:${bg};color:${fg};font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:3px 8px;border-radius:999px;">${esc(label)}</span>`;
+}
+
+// Matches the real, previously-proven table design: green header row, owner name
+// with an ABSENTEE badge inline when flagged, a colored STATUS pill per row.
+// Works for any lane because it reads whatever fields recordValue()/status find.
+function recordStatus(r: any): [string, string, string] {
+  if (r.motivation === "HOT" || r.status === "HOT") return ["HOT", "#fee2e2", "#991b1b"];
+  if (r.motivation === "WARM" || r.status === "WARM") return ["WARM", "#fef3c7", "#b45309"];
+  if (r.vacant_signal || r.lane === "verified_vacant_land" || r.land_value !== undefined) return ["VACANT", "#dff4e8", "#15803d"];
+  return ["ACTIVE", "#dff4e8", "#15803d"];
+}
+
 function genericSampleTable(sample: any[] = [], redact = false, limit = 8) {
-  const valueLabel = sample.length ? recordValue(sample[0])[0] : "Value";
-  const rows = sample.slice(0, limit).map((r) => {
+  const secondaryLabel = sample.length && sample[0].acreage !== undefined ? "Acreage" : (sample.length && sample[0].equity !== undefined ? "Equity" : null);
+  const rows = sample.slice(0, limit).map((r, i) => {
     const owner = r.owner ?? r.owner_name ?? "";
     const address = r.address ?? r.property_address ?? "";
     const [, value] = recordValue(r);
-    const extra = r.acreage !== undefined ? `${Number(r.acreage).toLocaleString()} ac` : (r.motivation ?? r.signal ?? "");
-    return `<tr><td style="border-bottom:1px solid #e2dccf;padding:8px;">${esc(redact ? redactName(owner) : owner)}</td><td style="border-bottom:1px solid #e2dccf;padding:8px;">${esc(redact ? redactAddress(address) : address)}</td><td style="border-bottom:1px solid #e2dccf;padding:8px;text-align:right;">${esc(value)}</td><td style="border-bottom:1px solid #e2dccf;padding:8px;">${esc(extra)}</td></tr>`;
+    const secondary = r.acreage !== undefined ? `${Number(r.acreage).toLocaleString()} ac` : (r.equity !== undefined ? money(r.equity) : "");
+    const [statusLabel, statusBg, statusFg] = recordStatus(r);
+    const ownerCell = `${esc(redact ? redactName(owner) : owner)}${r.is_absentee_owner === "yes" || r.absentee ? `<br>${badge("Absentee", "#dbeafe", "#1d4ed8")}` : ""}`;
+    return `<tr><td style="border-bottom:1px solid #e2dccf;padding:10px 8px;color:#94a3b8;font-size:12px;">${i + 1}</td><td style="border-bottom:1px solid #e2dccf;padding:10px 8px;font-weight:700;">${ownerCell}</td><td style="border-bottom:1px solid #e2dccf;padding:10px 8px;">${esc(redact ? redactAddress(address) : address)}</td><td style="border-bottom:1px solid #e2dccf;padding:10px 8px;text-align:right;font-weight:700;">${esc(value)}</td>${secondaryLabel ? `<td style="border-bottom:1px solid #e2dccf;padding:10px 8px;text-align:right;color:#15803d;font-weight:700;">${esc(secondary)}</td>` : ""}<td style="border-bottom:1px solid #e2dccf;padding:10px 8px;text-align:center;">${badge(statusLabel, statusBg, statusFg)}</td></tr>`;
   }).join("");
-  const extraLabel = sample.length && sample[0].acreage !== undefined ? "Acreage" : "Signal";
-  return `<table width="100%" style="border-collapse:collapse;margin-top:12px;font-size:13px;"><tr style="background:#f3eddf;"><th align="left" style="padding:8px;">Owner</th><th align="left" style="padding:8px;">Property</th><th align="right" style="padding:8px;">${esc(valueLabel)}</th><th align="left" style="padding:8px;">${esc(extraLabel)}</th></tr>${rows}</table>`;
+  const valueLabel = sample.length ? recordValue(sample[0])[0] : "Value";
+  return `<table width="100%" style="border-collapse:collapse;margin-top:12px;font-size:13px;"><tr style="background:#15803d;color:#ffffff;"><th align="left" style="padding:10px 8px;font-size:11px;text-transform:uppercase;">#</th><th align="left" style="padding:10px 8px;font-size:11px;text-transform:uppercase;">Owner</th><th align="left" style="padding:10px 8px;font-size:11px;text-transform:uppercase;">Address</th><th align="right" style="padding:10px 8px;font-size:11px;text-transform:uppercase;">${esc(valueLabel)}</th>${secondaryLabel ? `<th align="right" style="padding:10px 8px;font-size:11px;text-transform:uppercase;">${esc(secondaryLabel)}</th>` : ""}<th align="center" style="padding:10px 8px;font-size:11px;text-transform:uppercase;">Status</th></tr>${rows}</table>`;
 }
 
 // Builds the "By the numbers" block generically from whatever the caller passed in
@@ -144,27 +190,56 @@ function deriveNumbers(p: any): [string, string | number][] {
 function heroCards(p: any): [string, string | number][] {
   if (Array.isArray(p.hero_cards) && p.hero_cards.length) return p.hero_cards;
   const nums = deriveNumbers(p);
-  return nums.slice(0, 4);
+  return nums.slice(1, 4); // skip "Total records" here, it's already in the headline
+}
+
+function ctaSection(label: string, href: string) {
+  return section(`<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:0 0 10px;"><a href="${esc(href)}" style="display:inline-block;background:#15803d;color:#ffffff;text-decoration:none;font-weight:800;padding:14px 28px;border-radius:8px;font-size:15px;">${esc(label)}</a></td></tr></table>`);
 }
 
 function renderSample(p: any) {
-  const headline = p.opportunity_headline ?? `${esc(p.name)}, here is the redacted preview audit for ${esc(p.market)} / ${esc(p.lane)}.`;
-  return shell(`Preview Audit: ${p.market}`, `<p style="font-size:16px;line-height:1.6;">${esc(headline)}</p>${heroStatCards(heroCards(p))}${numbersBlock("By the numbers", deriveNumbers(p))}${p.working_notes ? `<div style="padding:16px;background:#faf7f2;border-left:4px solid #15803d;margin:18px 0;"><strong>Working notes:</strong><br>${esc(p.working_notes)}</div>` : ""}<h2 style="font-size:18px;margin-top:22px;">Sample from the file</h2>${genericSampleTable(p.sample, true)}<div style="margin-top:22px;padding:18px;background:#15803d;color:white;border-radius:10px;text-align:center;"><a href="https://leadcurate.com/intake/" style="color:white;font-weight:800;text-decoration:none;">Reserve Your County</a></div>`);
+  const eyebrow = `Preview Audit · ${p.lane ? String(p.lane).replace(/_/g, " ").replace(/\b\w/g, (c: string) => c.toUpperCase()) : "Curated List"}`;
+  const greeting = p.opportunity_headline ?? "Here's the real answer to what makes this different from a static purchased list.";
+  const fullAuditBox = p.audit_url
+    ? section(`<div style="padding:22px;background:#0f172a;border-radius:12px;text-align:center;"><div style="color:#ffffff;font-family:Georgia,serif;font-size:20px;font-weight:700;margin-bottom:6px;">Your full breakdown is ready</div><div style="color:#cbd5e1;font-size:13px;margin-bottom:16px;">Full market audit, records, and geography — no customer data, just the real picture of what's available.</div><a href="${esc(p.audit_url)}" style="display:inline-block;background:#15803d;color:#ffffff;text-decoration:none;font-weight:800;padding:12px 24px;border-radius:8px;font-size:14px;">Open Full Audit →</a></div>`)
+    : ctaSection("Reserve Your County", "https://leadcurate.com/intake/");
+  const body = [
+    section(heroStatCards(heroCards(p))),
+    section(differentiatorsBlock(p)),
+    section(`<h2 style="font-family:Georgia,serif;font-size:18px;color:#0f172a;margin:0 0 6px;">Sample from the file</h2><p style="font-size:13px;color:#64748b;margin:0 0 4px;">A few real trigger examples below — the full file is in your audit, not attached here.</p>${genericSampleTable(p.sample, true, 5)}`),
+    fullAuditBox,
+  ].join("");
+  return shell(eyebrow, `${p.market}`, p.name, greeting, body);
 }
 
 function renderDelivery(p: any) {
-  const headline = p.opportunity_headline ?? `${Number(p.total || 0).toLocaleString()} ${p.market} ${p.lane} records ready for investor outreach. Delivered today. Cleaned, verified, ready to market.`;
+  const eyebrow = `Delivery Briefing · ${p.lane ? String(p.lane).replace(/_/g, " ").replace(/\b\w/g, (c: string) => c.toUpperCase()) : "Curated List"}`;
+  const greeting = p.summary ?? `Your order is delivered. The full XLSX is attached to this email.`;
   const notes = p.working_notes ?? "Work the highest-scored records first. Prioritize owners with stronger motivation density, absentee signals, older hold periods, or larger value gaps before broad follow-up.";
-  const strategy = p.outreach_strategy ?? "Suggested outreach: direct mail first for long-held or absentee records, then follow with a concise owner-specific second touch.";
-  const summary = p.summary ?? `${p.name}, this is your paid LeadCurate delivery briefing for ${p.market} / ${p.lane}. The attached XLSX is the working file; this email gives you the one-page read on how to use it.`;
-  return shell(`Delivery Briefing: ${p.market}`, `<div style="font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#15803d;font-weight:800;">Opportunity headline</div><h2 style="font-family:Georgia,serif;font-size:26px;line-height:1.2;margin:8px 0 14px;color:#0f172a;">${esc(headline)}</h2>${heroStatCards(heroCards(p))}<div style="margin:12px 0 20px;"><a href="${esc(p.list_url)}" style="display:inline-block;background:#15803d;color:white;text-decoration:none;font-weight:800;padding:12px 16px;border-radius:8px;">Download attached list</a></div><p style="font-size:16px;line-height:1.65;">${esc(summary)}</p>${numbersBlock("By the numbers", deriveNumbers(p))}<div style="padding:16px;background:#faf7f2;border-left:4px solid #15803d;margin:18px 0;"><strong>Working notes:</strong><br>${esc(notes)}</div><div style="padding:16px;background:#0f172a;color:#faf7f2;border-radius:10px;margin:18px 0;"><strong>Suggested outreach strategy:</strong> ${esc(strategy)}</div><h2 style="font-size:18px;margin-top:22px;">Five records from the file</h2>${genericSampleTable(p.sample, false, 5)}${upsellBlock()}<div style="margin-top:22px;padding:18px;background:#0f172a;color:white;border-radius:10px;"><strong>Your full XLSX is attached.</strong> Use this briefing as the work order; use the attachment as the source file.</div>`);
+  const strategy = p.outreach_strategy ?? "Direct mail first for long-held or absentee records, then follow with a concise owner-specific second touch.";
+  const body = [
+    section(heroStatCards(heroCards(p))),
+    p.list_url ? ctaSection("Download attached list", p.list_url) : "",
+    section(differentiatorsBlock(p)),
+    section(numbersBlock("By the numbers", deriveNumbers(p))),
+    section(`<h2 style="font-family:Georgia,serif;font-size:18px;color:#0f172a;margin:0 0 6px;">Working notes</h2>${boxedRows([`<tr><td style="padding:12px 16px;font-size:14px;color:#334155;">${esc(notes)}</td></tr>`])}`),
+    section(`<h2 style="font-family:Georgia,serif;font-size:18px;color:#0f172a;margin:0 0 6px;">Suggested outreach strategy</h2>${boxedRows([`<tr><td style="padding:12px 16px;font-size:14px;color:#334155;">${esc(strategy)}</td></tr>`])}`),
+    section(`<h2 style="font-family:Georgia,serif;font-size:18px;color:#0f172a;margin:0 0 6px;">Five records from the file</h2>${genericSampleTable(p.sample, false, 5)}`),
+    section(upsellBlock()),
+    section(`<div style="padding:16px;background:#0f172a;color:#faf7f2;border-radius:10px;"><strong>Your full XLSX is attached.</strong> Use this briefing as the work order; use the attachment as the source file.</div>`),
+  ].join("");
+  return shell(eyebrow, `${p.market}`, p.name, greeting, body);
 }
 
 function renderComparison(p: any) {
   const markets = p.markets ?? [];
   const max = (field: string) => Math.max(1, ...markets.map((m: any) => Number(m[field] || 0)));
-  const metric = (title: string, field: string, fmt = (n: number) => n.toLocaleString()) => `<h2>${esc(title)}</h2><table width="100%">${markets.map((m: any) => barRow(m.name || m.slug, Number(m[field] || 0), max(field), field.includes("equity") || field.includes("debt") ? "" : "")).join("").replace(/(<td style="width:90px[^>]*>)([^<]+)/g, (_m: string, a: string, b: string) => a + fmt(Number(String(b).replace(/,/g, ""))))}</table>`;
-  return shell("Market Comparison Audit", `<p style="font-size:16px;line-height:1.6;">${esc(p.name)}, here is a side-by-side view of the counties you asked about.</p>${metric("Average Tax Debt", "avg_debt", money)}${metric("HOT Records", "hot")}${metric("Absentee Owners", "absentee")}${metric("Probate / Heirs Count", "heirs_count")}${metric("Top Equity", "top_equity", money)}<div style="margin-top:22px;padding:18px;background:#15803d;color:white;border-radius:10px;text-align:center;"><a href="https://leadcurate.com/intake/" style="color:white;font-weight:800;text-decoration:none;">Reserve any of these counties - $149 launch price</a></div>`);
+  const metric = (title: string, field: string, fmt = (n: number) => n.toLocaleString()) => `<h2 style="font-family:Georgia,serif;font-size:16px;color:#0f172a;margin:14px 0 6px;">${esc(title)}</h2><table width="100%">${markets.map((m: any) => barRow(m.name || m.slug, Number(m[field] || 0), max(field), field.includes("equity") || field.includes("debt") ? "" : "")).join("").replace(/(<td style="width:90px[^>]*>)([^<]+)/g, (_m: string, a: string, b: string) => a + fmt(Number(String(b).replace(/,/g, ""))))}</table>`;
+  const body = [
+    section(`${metric("Average Tax Debt", "avg_debt", money)}${metric("HOT Records", "hot")}${metric("Absentee Owners", "absentee")}${metric("Probate / Heirs Count", "heirs_count")}${metric("Top Equity", "top_equity", money)}`),
+    ctaSection("Reserve any of these counties — $149 launch price", "https://leadcurate.com/intake/"),
+  ].join("");
+  return shell("Market Comparison Audit", "Side by side", p.name, "Here is a side-by-side view of the counties you asked about.", body);
 }
 
 function adminKey() {

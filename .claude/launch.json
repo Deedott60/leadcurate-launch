@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "template-check",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8935", "--directory", "C:/Users/lenovo/AppData/Local/Temp/claude/C--Users-lenovo--claude/8e9e3562-3e04-4d52-86f5-f06ff90166f8/scratchpad"],
+      "port": 8935
+    }
+  ]
+}
