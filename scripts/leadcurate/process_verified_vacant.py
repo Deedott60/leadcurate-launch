@@ -5,7 +5,7 @@ import argparse
 import csv
 import json
 import re
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
@@ -39,6 +39,28 @@ ENTITY_OWNER = re.compile(
 
 def ownership_type(owner: str) -> str:
     return "entity" if ENTITY_OWNER.search(owner or "") else "individual"
+
+
+def parse_date(value: str) -> date | None:
+    text = clean(value)
+    if not text or text.upper() in {"N/R", "NA", "N/A", "NULL", "0"}:
+        return None
+    if re.search(r"\d{1,2}:\d{2}", text):
+        text = re.sub(r"[+-]\d{2}:?\d{0,2}$", "", text).strip()
+    for fmt in ("%m-%d-%Y", "%m/%d/%Y", "%Y-%m-%d", "%Y/%m/%d", "%Y/%m/%d %H:%M:%S", "%Y-%m-%d %H:%M:%S"):
+        try:
+            return datetime.strptime(text, fmt).date()
+        except ValueError:
+            continue
+    return None
+
+
+def years_since(value: str, as_of: date | None = None) -> float | str:
+    as_of = as_of or date.fromisoformat(TODAY)
+    parsed = parse_date(value)
+    if not parsed or parsed > as_of:
+        return ""
+    return round((as_of - parsed).days / 365.25, 1)
 
 MARKETS: dict[str, dict[str, Any]] = {
     "mecklenburg-nc": {
@@ -210,6 +232,7 @@ MARKETS: dict[str, dict[str, Any]] = {
             "mail_state": ["MAIL_STATE"],
             "mail_zip": ["MAIL_ZIP"],
             "land_use": ["LAND_USE_CODE_DESC", "PROP_TYPE_CODE_DESC", "CURRENT_USE_CODE_DESC"],
+            "sale_date": ["SALE_1_DATE"],
         },
         "acreage_divisor_above": {"threshold": 1000, "divisor": 43560},
     },
@@ -253,7 +276,7 @@ def parse_city_state_zip(value: str) -> tuple[str, str, str]:
 
 
 def field_value(row: dict[str, str], cfg: dict[str, Any], key: str) -> str:
-    fields = cfg["fields"][key]
+    fields = cfg["fields"].get(key, [])
     if key in cfg.get("join_fields", set()) and len(fields) > 1:
         return join_fields(row, fields)
     return first(row, fields)
@@ -316,6 +339,7 @@ def qualifies(row: dict[str, str], cfg: dict[str, Any]) -> tuple[bool, dict[str,
     heated = money(field_value(row, cfg, "heated"))
     ac = acreage(row, cfg)
     owner = field_value(row, cfg, "owner")
+    sale_date = field_value(row, cfg, "sale_date")
     failures = []
     if not vacant_ok:
         failures.append("vacant signal missing")
@@ -348,6 +372,7 @@ def qualifies(row: dict[str, str], cfg: dict[str, Any]) -> tuple[bool, dict[str,
         "vacant_signal": vacant_text,
         "parcel_pid": field_value(row, cfg, "parcel"),
         "ownership_type": ownership_type(owner),
+        "years_owned": years_since(sale_date),
     }
 
 
@@ -367,7 +392,7 @@ def write_outputs(market: str, rows: list[dict[str, Any]], total: int, cfg: dict
     cols = [
         "rank", "score", "owner_name", "property_address", "municipality", "mail_city",
         "mail_state", "mail_zip", "total_acreage", "land_value", "total_value",
-        "is_absentee_owner", "ownership_type", "vacant_signal", "building_value", "year_built",
+        "is_absentee_owner", "ownership_type", "years_owned", "vacant_signal", "building_value", "year_built",
         "heated_sqft", "land_use_code", "parcel_pid", "lane", "county", "state",
     ]
     with full.open("w", newline="", encoding="utf-8") as f:
@@ -394,6 +419,7 @@ def write_outputs(market: str, rows: list[dict[str, Any]], total: int, cfg: dict
     mail_ok = sum(1 for row in rows if clean(row["mail_city"]) and clean(row["mail_state"]) and clean(row["mail_zip"]))
     land_values = [row["land_value"] for row in rows if row["land_value"] > 0]
     acreages = [row["total_acreage"] for row in rows if row["total_acreage"] > 0]
+    ownership_years = [row["years_owned"] for row in rows if isinstance(row.get("years_owned"), (int, float))]
     payload = {
         "lane": "verified_vacant_land",
         "market": market,
@@ -415,6 +441,8 @@ def write_outputs(market: str, rows: list[dict[str, Any]], total: int, cfg: dict
         "total_acreage_sum": round(sum(acreages), 2),
         "avg_acreage": round(sum(acreages) / len(acreages), 3) if acreages else 0,
         "median_acreage": sorted(acreages)[len(acreages) // 2] if acreages else 0,
+        "avg_years_owned": round(sum(ownership_years) / len(ownership_years), 1) if ownership_years else "",
+        "median_years_owned": sorted(ownership_years)[len(ownership_years) // 2] if ownership_years else "",
         "exported": len(top),
         "outputs": {"full": str(full), "preview": str(preview), "meta": str(meta)},
         "verification_criteria": [
