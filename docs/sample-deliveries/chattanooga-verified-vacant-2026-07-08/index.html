@@ -16,7 +16,8 @@
   section{padding:38px 0;border-top:1px solid var(--line)}section.cover{border-top:0;padding:52px 0 34px}h1,h2{font-family:"Playfair Display",serif;letter-spacing:-.03em;color:var(--dark);line-height:1.08}h1{font-size:clamp(34px,5.2vw,54px);margin:12px 0 16px;max-width:900px}h2{font-size:clamp(24px,2.8vw,32px);margin:0 0 12px}h3{font-size:19px;font-weight:700;margin:0 0 8px;color:var(--dark)}h4{font-size:12px;color:var(--emerald);letter-spacing:.14em;text-transform:uppercase;margin:0 0 8px}.lead{font-size:18px;max-width:760px;color:#334155}
   .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:20px}.metric{background:white;border:1px solid var(--line);border-radius:14px;padding:18px}.label{font-size:11px;color:var(--muted);font-weight:800;letter-spacing:.08em;text-transform:uppercase}.value{font-size:30px;font-weight:800;letter-spacing:-.03em;color:var(--dark);margin-top:4px}.note{font-size:12px;color:var(--muted);margin-top:4px}
   .metric.priority{background:var(--dark);border-color:var(--dark)}.metric.priority .label{color:#86efac}.metric.priority .value{color:white}.metric.priority .note{color:#94a3b8}
-  .panel{background:white;border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:16px}.bars{display:grid;gap:12px;margin-top:18px}.bar{display:grid;grid-template-columns:170px 1fr 80px;gap:12px;align-items:center}.track{height:14px;border-radius:999px;background:var(--stone);overflow:hidden}.fill{height:100%;background:var(--emerald);border-radius:999px}.bar .name{font-weight:700;font-size:13px}.bar .num{text-align:right;color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+  .metric.small .value{font-size:22px}
+  .panel{background:white;border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:16px}.bars{display:grid;gap:12px;margin-top:18px}.bar{display:grid;grid-template-columns:170px 1fr 80px;gap:12px;align-items:center}.track{height:14px;border-radius:999px;background:var(--stone);overflow:hidden}.fill{height:100%;background:var(--emerald);border-radius:999px}.fill.gold{background:var(--gold)}.bar .name{font-weight:700;font-size:13px}.bar .num{text-align:right;color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
   table{width:100%;border-collapse:collapse;background:white;font-size:14px}th,td{padding:12px 14px;border-bottom:1px solid var(--line);text-align:left}th{background:var(--stone);font-size:12px;text-transform:uppercase;letter-spacing:.07em}td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
   .callout{background:var(--dark);color:white;border-radius:16px;padding:24px;margin-top:18px}.callout h3{margin:0 0 8px;font-size:20px;color:white}.callout p{margin:0;color:#cbd5e1}.callout strong{color:var(--emerald-2)}footer{padding:34px 0 52px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
   .vs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
@@ -33,6 +34,13 @@
   .step .num{width:40px;height:40px;border-radius:999px;background:var(--soft);color:var(--emerald);font-family:"Playfair Display",serif;font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center}
   .step h3{margin:0 0 4px}
   .step p{margin:0;color:#334155;font-size:14px}
+  .checklist{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:16px}
+  .check{display:flex;align-items:center;gap:10px;background:white;border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:14px;font-weight:700;color:var(--dark)}
+  .check .dot{width:22px;height:22px;border-radius:999px;background:var(--soft);color:var(--emerald);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+  .insights{display:grid;gap:12px;margin-top:16px}
+  .insight{background:white;border-left:4px solid var(--emerald);border-radius:0 12px 12px 0;padding:16px 20px;font-size:14px;color:#334155}
+  .insight strong{color:var(--dark)}
+  .unavailable{background:var(--stone);border:1px dashed var(--line);border-radius:12px;padding:16px 18px;font-size:13px;color:var(--muted);margin-top:14px}
   @media(max-width:640px){.bar{grid-template-columns:1fr}.bar .num{text-align:left}.value{font-size:26px}section.cover{padding-top:34px}.vs{grid-template-columns:1fr}.step{grid-template-columns:1fr}}
 </style>
 </head>
@@ -43,6 +51,20 @@
     <div class="badge">Current county file</div>
   </div>
 </header>
+
+<section class="container" style="padding-top:24px;padding-bottom:0;border-top:none;">
+  <h4>Executive summary</h4>
+  <table>
+    <tbody>
+      <tr><td>Report type</td><td>Verified Vacant Land, Preview Audit</td></tr>
+      <tr><td>County</td><td>Hamilton</td></tr>
+      <tr><td>State</td><td>Tennessee</td></tr>
+      <tr><td>Report date</td><td>2026-07-08</td></tr>
+      <tr><td>Total verified parcels</td><td>21,654</td></tr>
+      <tr><td>Estimated combined land value</td><td>$3.01B (median $55K is the more representative figure, see Market Intelligence below)</td></tr>
+    </tbody>
+  </table>
+</section>
 
 <section class="cover container">
   <h4>Hamilton County vacant land</h4>
@@ -118,17 +140,48 @@
 </section>
 
 <section class="container">
+  <h4>Ownership intelligence</h4>
+  <h2>Most of the list is real people, not companies.</h2>
+  <div class="metrics">
+    <div class="metric small"><div class="label">Individual owners</div><div class="value">14,853</div><div class="note">68.6% of the list</div></div>
+    <div class="metric small"><div class="label">Entity owners</div><div class="value">6,801</div><div class="note">31.4%, includes LLC, trust, church, HOA</div></div>
+    <div class="metric small"><div class="label">LLC-owned specifically</div><div class="value">4,740</div><div class="note">the largest entity type</div></div>
+    <div class="metric small"><div class="label">Mailing address coverage</div><div class="value">99.5%</div><div class="note">direct mail is viable across nearly the whole list</div></div>
+  </div>
+  <div class="panel">
+    <div class="bars">
+      <div class="bar"><div class="name">Individual absentee</div><div class="track"><div class="fill" style="width:51%"></div></div><div class="num">1,398</div></div>
+      <div class="bar"><div class="name">Entity absentee</div><div class="track"><div class="fill gold" style="width:49%"></div></div><div class="num">1,331</div></div>
+    </div>
+  </div>
+  <p style="max-width:760px;margin-top:14px;color:#334155;">Absentee ownership splits almost evenly between individuals and entities, so outreach shouldn't assume it's always a person answering. Years-of-ownership isn't captured for this lane yet; if that matters to your outreach strategy, say so and it can be added to a future pull.</p>
+</section>
+
+<section class="container">
   <h4>Value bands</h4>
   <h2>Most of the list sits in the starter-lot range.</h2>
   <div class="panel">
     <div class="bars">
       <div class="bar"><div class="name">Under $50K</div><div class="track"><div class="fill" style="width:43%"></div></div><div class="num">9,239</div></div>
-      <div class="bar"><div class="name">$50K–$150K</div><div class="track"><div class="fill" style="width:41%"></div></div><div class="num">8,862</div></div>
-      <div class="bar"><div class="name">$150K–$500K</div><div class="track"><div class="fill" style="width:12%"></div></div><div class="num">2,499</div></div>
-      <div class="bar"><div class="name">$500K+</div><div class="track"><div class="fill" style="width:5%"></div></div><div class="num">1,054</div></div>
+      <div class="bar"><div class="name">$50K–$150K</div><div class="track"><div class="fill" style="width:42%"></div></div><div class="num">9,132</div></div>
+      <div class="bar"><div class="name">$150K–$500K</div><div class="track"><div class="fill" style="width:10%"></div></div><div class="num">2,235</div></div>
+      <div class="bar"><div class="name">$500K+</div><div class="track"><div class="fill" style="width:5%"></div></div><div class="num">1,048</div></div>
     </div>
   </div>
   <p style="max-width:760px;margin-top:14px;color:#334155;">Under $150K is where the volume is, and it's also where the Priority segment lives. The $150K+ tiers are fewer records but bigger deals, worth a slower, more targeted approach.</p>
+</section>
+
+<section class="container">
+  <h4>Market intelligence</h4>
+  <h2>The average is misleading here. Use the median.</h2>
+  <div class="metrics">
+    <div class="metric small"><div class="label">Combined land value</div><div class="value">$3.01B</div></div>
+    <div class="metric small"><div class="label">Average parcel value</div><div class="value">$139K</div><div class="note">pulled up by a small number of large parcels</div></div>
+    <div class="metric small"><div class="label">Median parcel value</div><div class="value">$55K</div><div class="note">the representative figure</div></div>
+    <div class="metric small"><div class="label">Highest-value parcel</div><div class="value">$124.7M</div><div class="note">a single large tract, not typical of the list</div></div>
+  </div>
+  <p style="max-width:760px;margin-top:14px;color:#334155;">The average land value is more than double the median, which means a handful of unusually large parcels (institutional-scale land, not typical starter lots) are pulling the average up. The median is the honest number to work from when sizing the opportunity: half the list is worth $55,000 or less.</p>
+  <div class="unavailable">Regional comparison against neighboring counties isn't available yet. Bradley, Marion, and Walker haven't been pulled through this same verification process. See Nearby Markets below to request one.</div>
 </section>
 
 <section class="container">
@@ -155,10 +208,64 @@
   <h4>Parcel size</h4>
   <h2>The list can be narrowed by lot size too.</h2>
   <div class="metrics">
-    <div class="metric"><div class="label">Median parcel size</div><div class="value">1.0 ac</div></div>
-    <div class="metric"><div class="label">1–5 acres</div><div class="value">18,899</div><div class="note">the deepest size band</div></div>
-    <div class="metric"><div class="label">5–25 acres</div><div class="value">1,830</div><div class="note">larger land opportunities</div></div>
-    <div class="metric"><div class="label">25+ acres</div><div class="value">628</div><div class="note">larger tract review set</div></div>
+    <div class="metric small"><div class="label">Median parcel size</div><div class="value">1.0 ac</div><div class="note">the representative figure</div></div>
+    <div class="metric small"><div class="label">Average parcel size</div><div class="value">4.4 ac</div><div class="note">pulled up by a few large tracts, same pattern as value</div></div>
+  </div>
+  <div class="panel">
+    <div class="bars">
+      <div class="bar"><div class="name">Under 1 acre</div><div class="track"><div class="fill" style="width:1%"></div></div><div class="num">297</div></div>
+      <div class="bar"><div class="name">1–5 acres</div><div class="track"><div class="fill" style="width:88%"></div></div><div class="num">19,037</div></div>
+      <div class="bar"><div class="name">5–25 acres</div><div class="track"><div class="fill" style="width:8%"></div></div><div class="num">1,699</div></div>
+      <div class="bar"><div class="name">25+ acres</div><div class="track"><div class="fill" style="width:3%"></div></div><div class="num">621</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Quality summary</h4>
+  <h2>What "verified" actually means before it reaches you.</h2>
+  <div class="checklist">
+    <div class="check"><div class="dot">&#10003;</div> Professionally reviewed</div>
+    <div class="check"><div class="dot">&#10003;</div> Investor-ready formatting</div>
+    <div class="check"><div class="dot">&#10003;</div> Standardized ownership records</div>
+    <div class="check"><div class="dot">&#10003;</div> Duplicate parcels removed</div>
+    <div class="check"><div class="dot">&#10003;</div> Public record research completed</div>
+    <div class="check"><div class="dot">&#10003;</div> Delivery-ready formatting</div>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Executive insights</h4>
+  <h2>What the numbers actually say.</h2>
+  <div class="insights">
+    <div class="insight"><strong>Most of this list is a real conversation with a real person.</strong> 68.6% of qualified parcels are individually owned, not corporate. That changes how outreach should be written: this isn't a cold call to a business office.</div>
+    <div class="insight"><strong>Priority isn't a small slice.</strong> 84% of all absentee owners on this list (2,298 of 2,729) hold land under $150K. Absentee and affordable overlap more than they don't here.</div>
+    <div class="insight"><strong>The median tells the real story, not the average.</strong> Median land value ($55K) sits well below the average ($139K). A small number of large, institutional-scale parcels, including a single airport tract north of $124M, are doing the pulling. Most of the list is genuinely small, affordable land.</div>
+    <div class="insight"><strong>Direct mail works here.</strong> 99.5% mailing address coverage means almost nothing on this list is unreachable by mail, even where a phone number isn't available.</div>
+    <div class="insight"><strong>The city doesn't dominate the way you'd expect.</strong> Chattanooga proper holds under half the list. Combined, the unincorporated County North and South areas carry more than 8,100 parcels between them, real volume outside the city limits.</div>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Executive recommendations</h4>
+  <h2>Where to put effort first.</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="num">1</div>
+      <div><h3>Outreach strategy</h3><p>Work Priority (2,298) by phone or text first. Follow with a direct mail pass across the rest of the absentee segment, since mailing coverage is near-total.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div><h3>Best investor profile</h3><p>Small infill or spec-build buyers fit the bulk of this list. The 1-5 acre band dominates. A smaller number of 5-25 and 25+ acre tracts suit a subdivision-style play instead.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div><h3>Development potential</h3><p>Acreage and land value point toward viable build lots, but zoning and buildability should still be confirmed per-parcel through the county before committing capital. This file verifies ownership and vacancy, not zoning entitlement.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div><h3>Follow-up and cross-sell</h3><p>See Nearby Markets below for the next counties worth scanning. This same verified approach is also live for tax delinquent, code violations, and asset locator lanes if vacant land isn't the only thing you're working.</p></div>
+    </div>
   </div>
 </section>
 
@@ -187,6 +294,7 @@
       <tr><td>Mailing address (city, state, zip)</td><td>Where the owner actually receives mail. This is how absentee status gets flagged.</td></tr>
       <tr><td>Acreage</td><td>Real usable lot size.</td></tr>
       <tr><td>Land value</td><td>The county's own assessed land value.</td></tr>
+      <tr><td>Ownership type</td><td>Individual or entity, so you know who you're calling before you dial.</td></tr>
       <tr><td>Absentee flag</td><td>Yes or no, computed from the mailing address against the property address.</td></tr>
       <tr><td>County parcel ID</td><td>For pulling the record up directly on the county GIS site.</td></tr>
     </tbody>
