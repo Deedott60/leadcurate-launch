@@ -3,41 +3,76 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>LeadCurate | Chattanooga Vacant Land Preview Audit</title>
-<meta name="description" content="Hamilton County TN vacant land preview audit built from the current county assessor file." />
+<title>LeadCurate · Chattanooga Vacant Land Preview Audit</title>
+<meta name="description" content="Hamilton County TN vacant land preview audit built from the current county assessor file — why verified beats static." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <style>
-  :root{--ink:#1e293b;--muted:#64748b;--cream:#faf7f2;--stone:#f5f1eb;--dark:#0f172a;--emerald:#15803d;--emerald-2:#22c55e;--soft:#dff4e8;--gold:#b45309;--line:rgba(30,41,59,.12)}
+  :root{--ink:#1e293b;--muted:#64748b;--cream:#faf7f2;--stone:#f5f1eb;--dark:#0f172a;--emerald:#15803d;--emerald-2:#22c55e;--soft:#dff4e8;--gold:#b45309;--crimson:#991b1b;--crimson-soft:#fee2e2;--line:rgba(30,41,59,.12)}
   *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6}.container{width:min(1040px,calc(100% - 40px));margin:0 auto}
   header{padding:30px 0 22px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.55)}.row{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}.logo{font-family:"Playfair Display",serif;font-size:28px;font-weight:700;color:var(--dark)}.logo span{color:var(--emerald)}.meta{font-size:13px;color:var(--muted)}
   .badge{display:inline-flex;background:var(--soft);color:var(--emerald);border-radius:999px;padding:8px 14px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
-  section{padding:38px 0;border-top:1px solid var(--line)}section.cover{border-top:0;padding:52px 0 34px}h1,h2{font-family:"Playfair Display",serif;letter-spacing:-.03em;color:var(--dark);line-height:1.08}h1{font-size:clamp(36px,5.5vw,58px);margin:12px 0 16px;max-width:900px}h2{font-size:clamp(26px,3vw,34px);margin:0 0 12px}h4{font-size:12px;color:var(--emerald);letter-spacing:.14em;text-transform:uppercase;margin:0 0 8px}.lead{font-size:18px;max-width:760px;color:#334155}
+  section{padding:38px 0;border-top:1px solid var(--line)}section.cover{border-top:0;padding:52px 0 34px}h1,h2{font-family:"Playfair Display",serif;letter-spacing:-.03em;color:var(--dark);line-height:1.08}h1{font-size:clamp(34px,5.2vw,54px);margin:12px 0 16px;max-width:900px}h2{font-size:clamp(24px,2.8vw,32px);margin:0 0 12px}h3{font-size:19px;font-weight:700;margin:0 0 8px;color:var(--dark)}h4{font-size:12px;color:var(--emerald);letter-spacing:.14em;text-transform:uppercase;margin:0 0 8px}.lead{font-size:18px;max-width:760px;color:#334155}
   .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:20px}.metric{background:white;border:1px solid var(--line);border-radius:14px;padding:18px}.label{font-size:11px;color:var(--muted);font-weight:800;letter-spacing:.08em;text-transform:uppercase}.value{font-size:30px;font-weight:800;letter-spacing:-.03em;color:var(--dark);margin-top:4px}.note{font-size:12px;color:var(--muted);margin-top:4px}
-  .panel{background:white;border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:16px}.bars{display:grid;gap:12px;margin-top:18px}.bar{display:grid;grid-template-columns:160px 1fr 80px;gap:12px;align-items:center}.track{height:14px;border-radius:999px;background:var(--stone);overflow:hidden}.fill{height:100%;background:var(--emerald);border-radius:999px}.bar .name{font-weight:700;font-size:13px}.bar .num{text-align:right;color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+  .panel{background:white;border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:16px}.bars{display:grid;gap:12px;margin-top:18px}.bar{display:grid;grid-template-columns:170px 1fr 80px;gap:12px;align-items:center}.track{height:14px;border-radius:999px;background:var(--stone);overflow:hidden}.fill{height:100%;background:var(--emerald);border-radius:999px}.bar .name{font-weight:700;font-size:13px}.bar .num{text-align:right;color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
   table{width:100%;border-collapse:collapse;background:white;font-size:14px}th,td{padding:12px 14px;border-bottom:1px solid var(--line);text-align:left}th{background:var(--stone);font-size:12px;text-transform:uppercase;letter-spacing:.07em}td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
-  .callout{background:var(--dark);color:white;border-radius:16px;padding:24px;margin-top:18px}.callout h3{margin:0 0 8px;font-size:20px}.callout p{margin:0;color:#cbd5e1}.callout strong{color:var(--emerald-2)}footer{padding:34px 0 52px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
-  @media(max-width:640px){.bar{grid-template-columns:1fr}.bar .num{text-align:left}.value{font-size:26px}section.cover{padding-top:34px}}
+  .callout{background:var(--dark);color:white;border-radius:16px;padding:24px;margin-top:18px}.callout h3{margin:0 0 8px;font-size:20px;color:white}.callout p{margin:0;color:#cbd5e1}.callout strong{color:var(--emerald-2)}footer{padding:34px 0 52px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+  .vs .card{border-radius:16px;padding:22px}
+  .vs .card.bad{background:var(--crimson-soft);border:1px solid rgba(153,27,27,.25)}
+  .vs .card.good{background:var(--soft);border:1px solid rgba(21,128,61,.25)}
+  .vs .card h3{font-size:15px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+  .vs .card.bad h3{color:var(--crimson)}
+  .vs .card.good h3{color:var(--emerald)}
+  .vs .card ul{margin:0;padding-left:18px}
+  .vs .card li{margin:8px 0;font-size:14px;color:#334155}
+  @media(max-width:640px){.bar{grid-template-columns:1fr}.bar .num{text-align:left}.value{font-size:26px}section.cover{padding-top:34px}.vs{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <header>
   <div class="container row">
-    <div><div class="logo">Lead<span>Curate</span>.</div><div class="meta">Chattanooga TN | Hamilton County | Vacant Land Preview Audit | 2026-07-08</div></div>
+    <div><div class="logo">Lead<span>Curate</span>.</div><div class="meta">Chattanooga TN · Hamilton County · Vacant Land Preview Audit · 2026-07-08</div></div>
     <div class="badge">Current county file</div>
   </div>
 </header>
 
 <section class="cover container">
   <h4>Hamilton County vacant land</h4>
-  <h1>Chattanooga has a real vacant-land lane worth working.</h1>
-  <p class="lead">This preview was built from Hamilton County's current Assessor property file, updated July 4, 2026. The point is simple: start with the county's live parcel base, remove stale or unusable records, then flag the owners who are not sitting locally on the property.</p>
+  <h1>Most vacant-land data tells you what a parcel used to be. This tells you what it is right now.</h1>
+  <p class="lead">If you're already running SMS campaigns off a purchased list, this is worth five minutes: this file was built fresh from Hamilton County's current Assessor export (updated July 4, 2026), not resold from a data broker's stockpile. The difference shows up the moment you start dialing — fewer dead numbers, fewer "that's already got a house on it" calls, fewer wasted texts to land that sold two years ago.</p>
   <div class="metrics">
     <div class="metric"><div class="label">County parcel rows reviewed</div><div class="value">168,952</div><div class="note">official Assessor export</div></div>
     <div class="metric"><div class="label">Vacant-land candidates</div><div class="value">21,654</div><div class="note">current review-ready universe</div></div>
-    <div class="metric"><div class="label">Absentee / out-of-state</div><div class="value">2,729</div><div class="note">highest-priority ownership angle</div></div>
+    <div class="metric"><div class="label">Absentee / out-of-state owners</div><div class="value">2,729</div><div class="note">highest-priority ownership angle</div></div>
     <div class="metric"><div class="label">Median land value</div><div class="value">$55K</div><div class="note">across the review-ready universe</div></div>
+  </div>
+</section>
+
+<section class="container">
+  <h4>The actual question you asked</h4>
+  <h2>"What's the difference between your data and what I already have?"</h2>
+  <p style="max-width:760px;">Fair question — you didn't ask for a sales pitch, you asked what's different. So here it is straight: most vacant-land lists on the market get compiled once, sold many times, and never rechecked. The list you're texting today might be six, twelve, eighteen months old. In that window, a real share of it stops being true — someone broke ground, someone sold, or the county's own vacancy flag was wrong to begin with (assessor systems misclassify parcels more than people assume). You keep paying for outreach against land that isn't actually available anymore.</p>
+  <div class="vs">
+    <div class="card bad">
+      <h3>What a stale purchased list gets you</h3>
+      <ul>
+        <li>A snapshot from whenever it was last compiled — could be a year or more old</li>
+        <li>No way to tell which parcels already sold or got built on</li>
+        <li>Vacancy flags taken at face value from the source file, errors included</li>
+        <li>No signal on which owners are actually likely to sell vs. just holding</li>
+      </ul>
+    </div>
+    <div class="card good">
+      <h3>What this file gets you</h3>
+      <ul>
+        <li>Rebuilt from Hamilton County's <strong>current</strong> Assessor export, not a resold snapshot</li>
+        <li>Cross-checked against the county's own value and improvement fields before a record ships</li>
+        <li>Absentee ownership flagged specifically — the owners structurally more likely to sell than build</li>
+        <li>Refreshed on request, not sold once and left to rot</li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -47,11 +82,23 @@
   <div class="panel">
     <div class="bars">
       <div class="bar"><div class="name">Under $50K</div><div class="track"><div class="fill" style="width:43%"></div></div><div class="num">9,239</div></div>
-      <div class="bar"><div class="name">$50K-$150K</div><div class="track"><div class="fill" style="width:41%"></div></div><div class="num">8,862</div></div>
-      <div class="bar"><div class="name">$150K-$500K</div><div class="track"><div class="fill" style="width:12%"></div></div><div class="num">2,499</div></div>
+      <div class="bar"><div class="name">$50K–$150K</div><div class="track"><div class="fill" style="width:41%"></div></div><div class="num">8,862</div></div>
+      <div class="bar"><div class="name">$150K–$500K</div><div class="track"><div class="fill" style="width:12%"></div></div><div class="num">2,499</div></div>
       <div class="bar"><div class="name">$500K+</div><div class="track"><div class="fill" style="width:5%"></div></div><div class="num">1,054</div></div>
     </div>
   </div>
+</section>
+
+<section class="container">
+  <h4>Where it sits geographically</h4>
+  <h2>Not just "Chattanooga" — the current top-scored working file breaks down by area.</h2>
+  <p style="max-width:760px;">In the current highest-priority working file, the split runs roughly: <strong>County North</strong> and <strong>County South</strong> unincorporated parcels carry the largest share, with the city of <strong>Chattanooga</strong> itself next, and smaller pockets in <strong>Soddy-Daisy</strong>, <strong>Signal Mountain</strong>, <strong>Collegedale</strong>, <strong>Red Bank</strong>, and <strong>East Ridge</strong>. That means this isn't a one-neighborhood list — it can be narrowed to whichever part of the metro fits your build/hold strategy before delivery.</p>
+</section>
+
+<section class="container">
+  <h4>Absentee ownership — the motivated-seller angle</h4>
+  <h2>Out-of-state owners show up from a real spread of states.</h2>
+  <p style="max-width:760px;">Among the flagged absentee owners in the current working file, the heaviest out-of-state concentration comes from <strong>Georgia</strong> and <strong>North Carolina</strong>, with additional owners spread across Florida, Virginia, Texas, Kentucky, and beyond. An owner who bought Hamilton County land but lives states away is a fundamentally different conversation than a local holder — that's the segment worth calling first.</p>
 </section>
 
 <section class="container">
@@ -59,13 +106,9 @@
   <h2>The file can be narrowed by lot size, budget, or target area.</h2>
   <div class="metrics">
     <div class="metric"><div class="label">Median parcel size</div><div class="value">1.0 ac</div><div class="note">county area field normalized for oversized entries</div></div>
-    <div class="metric"><div class="label">1-5 acres</div><div class="value">18,899</div><div class="note">the deepest size band</div></div>
-    <div class="metric"><div class="label">5-25 acres</div><div class="value">1,830</div><div class="note">larger land opportunities</div></div>
+    <div class="metric"><div class="label">1–5 acres</div><div class="value">18,899</div><div class="note">the deepest size band</div></div>
+    <div class="metric"><div class="label">5–25 acres</div><div class="value">1,830</div><div class="note">larger land opportunities</div></div>
     <div class="metric"><div class="label">25+ acres</div><div class="value">628</div><div class="note">larger tract review set</div></div>
-  </div>
-  <div class="callout">
-    <h3>Why this is different from a static vacant-land list</h3>
-    <p>LeadCurate rebuilds from the county's current parcel file before delivery, so outreach is aimed at land that still fits the lane today. The working file can be narrowed before delivery around Chattanooga, Soddy-Daisy, Signal Mountain, Red Bank, East Ridge, Collegedale, or county-side pockets.</p>
   </div>
 </section>
 
@@ -80,6 +123,10 @@
       <tr><td><strong>Walker County GA</strong></td><td>South of Hamilton, close enough to matter for Chattanooga-area land buyers.</td></tr>
     </tbody>
   </table>
+  <div class="callout">
+    <h3>Want any of these scanned next?</h3>
+    <p>Say the word and we run the same current-file rebuild on whichever of these fits your pipeline — same standard, same freshness, no static resell.</p>
+  </div>
 </section>
 
 <section class="container">
@@ -90,7 +137,7 @@
 
 <footer>
   <div class="container">
-    <strong>LeadCurate</strong> | Curated county property data | hello@leadcurate.com
+    <strong>LeadCurate</strong> · Curated county property data · hello@leadcurate.com
   </div>
 </footer>
 </body>
