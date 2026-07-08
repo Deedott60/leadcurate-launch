@@ -120,6 +120,17 @@ Update this whenever you discover, refresh, or fix a county URL. **Section below
 
 - **York SC, Lancaster SC — NOT YET DOCUMENTED**: solved by Codex 2026-07-04, working URLs never appended. Backfill needed.
 
+### TN
+
+- **Hamilton TN (Chattanooga) -- Tier 3 official county downloads**:
+  - Landing page: `https://www.hamiltontn.gov/DownloadRecords.aspx`
+  - Assessor CSV zip: `https://www.hamiltontn.gov/_downloadsAssessor/AssessorExportCSV.zip`
+  - Assessor building export zip: `https://www.hamiltontn.gov/_downloadsAssessor/AssessorBuildingExport.zip`
+  - Layout PDF: `https://www.hamiltontn.gov/_downloadsAssessor/AssessorExtractLayout.pdf`
+  - Discovery method used 2026-07-08: searched for `Hamilton County TN property assessor GIS parcels`, opened the official Hamilton County Assessor page, followed the `download the raw data` link to Download Records, then read the page's live hrefs with PowerShell instead of guessing filenames. Verified the page listed the Assessor CSV as last updated `7/4/2026`. Downloaded the CSV zip on VPS into `/opt/leadcurate/raw_imports/hamilton-tn/2026-07-04/` and extracted `AssessorExport.csv`.
+  - Processing notes: the CSV has no header row. Column names come from `AssessorExtractLayout.pdf` pages 5-6. Registered in `scripts/leadcurate/process_verified_vacant.py` as `hamilton-tn`. Hamilton `CALC_ACRES` values above 1,000 can be square-foot-like, so the config normalizes those by dividing by 43,560 before scoring.
+  - Verified production run 2026-07-08: 168,952 source rows, 21,654 verified-vacant candidates, 2,729 absentee/out-of-state, top 250 exported to `/opt/leadcurate/processed/hamilton-tn/2026-07-08/`.
+
 ### TX
 
 - **Tarrant TX (Fort Worth) — Tier 3 weekly zip**: `https://www.tarrantcountytx.gov/content/dam/main/tax/tax-rolls/2026/TaxRoll{YYYYMMDD}.zip` — created weekly on Fridays, available the following Monday. Contains Master.dat (2 GB) + Rec.DAT (3.7 GB) fixed-width files. **~2M records.** (Codex cleared a blocker here 2026-07-04 — 4,915 rows extracted; exact fix not documented, backfill needed.)
@@ -166,7 +177,6 @@ Update this whenever you discover, refresh, or fix a county URL. **Section below
 - **Fayette KY (Lexington) — Tier 1 ArcGIS** at `data.lexingtonky.gov` (4 property datasets in DCAT — catalog pulled, datasets not yet downloaded).
 - **Jefferson AL (Birmingham) — BLOCKED**: `eringcapture.jccal.org` is a React SPA returning ~830 bytes of shell HTML. **Chrome MCP escalation required.**
 - **Duval FL (Jacksonville), Davidson TN (Nashville) — NOT YET DOCUMENTED**: both were "previously zero-data," solved by Codex 2026-07-04 (3,000 rows each). Backfill needed.
-- **Hamilton TN (Chattanooga) — IN PROGRESS 2026-07-08**: real buyer waiting, see `docs/CURRENT-HANDOFF.md` item 1. Append the working URL here once solved.
 
 ## Processing patterns (Discovery Snapshot pipeline)
 
