@@ -156,6 +156,20 @@ Update this whenever you discover, refresh, or fix a county URL. **Backfill stat
   - Public hub page: `https://datanashvillegov-nashville.hub.arcgis.com/datasets/fa26cd9326c446179be059e00449cb1f_0/about`
   - Working method: `scripts/leadcurate/arcgis_property_pull.py --market davidson-tn --limit 8000`
   - Key fields: `STANPAR`, `Owner`, `PropAddr`, `PropCity`, `PropZip`, `OwnAddr1`, `OwnCity`, `OwnState`, `OwnZip`, `TotlAppr`, `ImprAppr`, `LandAppr`, `Acres`.
+- **Bradley TN (Cleveland) -- Tier 3 Tennessee Comptroller TPAD**:
+  - Source URL: `https://assessment.cot.tn.gov/TPAD`
+  - Search endpoint: `POST https://assessment.cot.tn.gov/TPAD/Search/GetSearchResults`
+  - Jurisdiction code: `006`
+  - Working method: `scripts/leadcurate/pull_tpad_land.py --market bradley-tn --workers 3 --sleep 0.1`, then `scripts/leadcurate/process_verified_vacant.py --market bradley-tn --top 250`.
+  - Discovery method used 2026-07-08: opened TPAD search assets, found `Search/GetSearchResults` in `SearchResultsDatatable.js`, verified Bradley jurisdiction `006`, pulled land-heavy property classes 10 Farm, 11 Agricultural, 12 Forest, and 13 Open Space, then fetched each official TPAD parcel detail page for owner mailing, land market value, improvement value, appraisal, deed acreage, buildings, utilities, sale date, and vacant/improved status.
+  - Verified production run 2026-07-08: 2,603 TPAD land-class rows pulled with 0 detail errors; 33 verified-vacant candidates after the same six-check processor.
+- **Marion TN (Jasper/South Pittsburg/Sequatchie Valley) -- Tier 3 Tennessee Comptroller TPAD**:
+  - Source URL: `https://assessment.cot.tn.gov/TPAD`
+  - Search endpoint: `POST https://assessment.cot.tn.gov/TPAD/Search/GetSearchResults`
+  - Jurisdiction code: `058`
+  - Working method: `scripts/leadcurate/pull_tpad_land.py --market marion-tn --workers 3 --sleep 0.1`, then `scripts/leadcurate/process_verified_vacant.py --market marion-tn --top 250`.
+  - Discovery method used 2026-07-08: same TPAD endpoint pattern as Bradley, with Marion jurisdiction `058`, property classes 10 Farm, 11 Agricultural, 12 Forest, and 13 Open Space. Detail pages expose owner mailing, land/improvement/appraisal values, deed acreage, building count, utilities, sale date, and vacant/improved status.
+  - Verified production run 2026-07-08: 2,306 TPAD land-class rows pulled with 0 detail errors; 238 verified-vacant candidates after the same six-check processor.
 
 ### TX
 
@@ -174,6 +188,12 @@ Update this whenever you discover, refresh, or fix a county URL. **Backfill stat
   - Tax Parcels 2025: `https://dcgis-dekalbgis.hub.arcgis.com/api/download/v1/items/7aa40e4967744cb0abadd6cb0dc23c97/csv?layers=0` (246k rows)
   - Tax Parcels 2024: `https://dcgis-dekalbgis.hub.arcgis.com/api/download/v1/items/5966b70b6f344154a803caa18aa4d98d/csv?layers=1` (246k rows)
 - **Cobb GA — BLOCKED**: monthly delinquent PDFs at `cms9files.revize.com/cobbcounty/Property/Delinquent/...` — URL pattern changed since cached examples. Page at `https://www.cobbtax.gov/property/delinquent_taxes/index.php` lists current paths but loads via JS. **Chrome MCP escalation.**
+- **Walker GA (LaFayette/Chickamauga) -- PARTIAL / BLOCKED for verified-vacant comparison**:
+  - Official assessor landing page: `https://www.qpublic.net/ga/walker/`
+  - Official record search link from that page: `https://qpublic.schneidercorp.com/Application.aspx?App=WalkerCountyGA&Layer=Parcels&PageType=Search`
+  - Blocker confirmed 2026-07-08: the Schneider qPublic app returns Cloudflare block pages to direct HTTP from the VPS. Local Playwright could not be used because local browser network was denied in the Node REPL environment.
+  - Partial alternate source found: `https://services.arcgis.com/UnTXoPXBYERF0OH6/arcgis/rest/services/Walker_Parcels_2026LLLT/FeatureServer/4` has 7,811 parcel features with `Parcel_No`, `ownerName`, `parcelAddress`, `ownerAddress`, `totalacres`, and `qPub_Link`.
+  - Why it is not enough: the reachable ArcGIS layer does not expose land value, building/improvement value, total appraisal, building count, or vacant/improved status. Do not run it through `process_verified_vacant.py` by fabricating values. Exact same-pipeline verified-vacant output needs qPublic browser access, a bulk assessor export, or a public-records request.
 
 ### FL
 
