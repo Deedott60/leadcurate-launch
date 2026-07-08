@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>LeadCurate · Multi-Market Investor Audit</title>
+<meta name="description" content="Charlotte NC and Louisville KY preview audit built from current county records." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#1e293b;--muted:#64748b;--cream:#faf7f2;--stone:#f5f1eb;--dark:#0f172a;--emerald:#15803d;--emerald-2:#22c55e;--soft:#dff4e8;--gold:#b45309;--crimson:#991b1b;--crimson-soft:#fee2e2;--line:rgba(30,41,59,.12)}
+  *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6}.container{width:min(1040px,calc(100% - 40px));margin:0 auto}
+  header{padding:30px 0 22px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.55)}.row{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}.logo{font-family:"Playfair Display",serif;font-size:28px;font-weight:700;color:var(--dark)}.logo span{color:var(--emerald)}.meta{font-size:13px;color:var(--muted)}
+  .badge{display:inline-flex;background:var(--soft);color:var(--emerald);border-radius:999px;padding:8px 14px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  section{padding:36px 0;border-top:1px solid var(--line)}section.cover{border-top:0;padding:48px 0 30px}h1,h2{font-family:"Playfair Display",serif;letter-spacing:-.03em;color:var(--dark);line-height:1.08}h1{font-size:clamp(32px,5vw,50px);margin:12px 0 16px;max-width:900px}h2{font-size:clamp(22px,2.6vw,30px);margin:0 0 12px}h3{font-size:18px;font-weight:700;margin:0 0 8px;color:var(--dark)}h4{font-size:12px;color:var(--emerald);letter-spacing:.14em;text-transform:uppercase;margin:0 0 8px}.lead{font-size:18px;max-width:760px;color:#334155}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:18px}.metric{background:white;border:1px solid var(--line);border-radius:14px;padding:16px}.label{font-size:11px;color:var(--muted);font-weight:800;letter-spacing:.08em;text-transform:uppercase}.value{font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--dark);margin-top:4px}.note{font-size:12px;color:var(--muted);margin-top:4px}
+  .market-block{background:white;border:1px solid var(--line);border-radius:16px;padding:26px;margin-top:18px}
+  .market-block h3{font-family:"Playfair Display",serif;font-size:22px;color:var(--dark)}
+  table{width:100%;border-collapse:collapse;background:white;font-size:14px}th,td{padding:11px 13px;border-bottom:1px solid var(--line);text-align:left}th{background:var(--stone);font-size:11px;text-transform:uppercase;letter-spacing:.06em}td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+  .callout{background:var(--dark);color:white;border-radius:16px;padding:24px;margin-top:18px;text-align:center}.callout h3{margin:0 0 8px;font-size:20px;color:white}.callout p{margin:0 0 14px;color:#cbd5e1}
+  .btn{display:inline-block;background:var(--emerald);color:#fff;text-decoration:none;font-weight:800;padding:13px 26px;border-radius:8px;font-size:15px}
+  .lane-tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:var(--soft);color:var(--emerald);margin-bottom:8px}
+  footer{padding:30px 0 48px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+  @media(max-width:640px){.value{font-size:22px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="container row">
+    <div><div class="logo">Lead<span>Curate</span>.</div><div class="meta">Charlotte NC + Louisville KY · Multi-Market Preview Audit · 2026-07-08</div></div>
+    <div class="badge">Current county records</div>
+  </div>
+</header>
+
+<section class="cover container">
+  <h4>Prepared for Fatmata</h4>
+  <h1>You asked for 6 markets. Here's the real depth we have in your two strongest right now.</h1>
+  <p class="lead">You listed pre-foreclosure, probate, code violations, absentee, active permits, and high-equity across Charlotte, Greensboro, Raleigh, Louisville, Nashville, and Cleveland. Rather than send a generic list touching all six lightly, this is the honest, deep version: what's real and verified in Charlotte and Louisville today, the two markets where we already have the strongest data.</p>
+  <div class="metrics">
+    <div class="metric"><div class="label">Charlotte lanes ready</div><div class="value">2</div><div class="note">Probate, Absentee/High-Equity</div></div>
+    <div class="metric"><div class="label">Louisville lanes ready</div><div class="value">2</div><div class="note">Pre-foreclosure, Code Violations</div></div>
+    <div class="metric"><div class="label">Charlotte verified probate</div><div class="value">72</div><div class="note">of 1,761 raw, false positives removed</div></div>
+    <div class="metric"><div class="label">Louisville pre-foreclosure</div><div class="value">259</div><div class="note">active filings, of 3,000 reviewed</div></div>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Charlotte, NC (Mecklenburg County)</h4>
+  <h2>Two of your six lanes, both real here.</h2>
+
+  <div class="market-block">
+    <span class="lane-tag">Probate / Inherited</span>
+    <h3>72 verified decedent-estate parcels, not a keyword-matched guess.</h3>
+    <p style="color:#334155;">The raw county file flagged 1,761 parcels on a probate-related search. Most of those were false positives: commercial entities with "Real Estate" in their name (national retailers, banks, corporate holding companies), not actual inherited property. After removing those, 72 genuine decedent-estate residential parcels remain. That filtering is the actual work, and it's already done for Charlotte.</p>
+  </div>
+
+  <div class="market-block">
+    <span class="lane-tag">Absentee / High-Equity</span>
+    <h3>446,213 parcels reviewed. 47,151 qualify as out-of-state or high-value absentee owners.</h3>
+    <p style="color:#334155;">Every record below is a real single-family home, owned by someone who lives outside Charlotte, with a real assessed value pulled from the county's own parcel-lookup system.</p>
+    <table>
+      <thead><tr><th>Owner</th><th>Property</th><th class="num">Value</th></tr></thead>
+      <tbody>
+        <tr><td>R*** S*** P*** B L*</td><td>### AMANDA DR, Charlotte, NC</td><td class="num">$678,100</td></tr>
+        <tr><td>A*** C*** G*** W***</td><td>### KUYKENDALL RD, Charlotte, NC</td><td class="num">$602,600</td></tr>
+        <tr><td>J*** W***</td><td>### SUNNINGDALE DR, Charlotte, NC</td><td class="num">$835,700</td></tr>
+        <tr><td>M*** A*** F***</td><td>### SYDNEY DR, Charlotte, NC</td><td class="num">$730,900</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Louisville, KY (Jefferson County)</h4>
+  <h2>Your two other real lanes, both active right now.</h2>
+
+  <div class="market-block">
+    <span class="lane-tag">Pre-Foreclosure</span>
+    <h3>3,000 county filings reviewed. 259 are active pre-foreclosure cases right now.</h3>
+    <p style="color:#334155;">Real case numbers pulled directly from the county foreclosure docket: 6 with an upcoming sale date already scheduled, 50 from a recent past sale, and 44 filed but not yet scheduled. Heaviest concentration is in Parkland (20 cases), Park Hill (18), and South Louisville (17).</p>
+    <table>
+      <thead><tr><th>Property</th><th>Case Number</th><th>Sale Date</th></tr></thead>
+      <tbody>
+        <tr><td>#### HALE Ave, Louisville, KY</td><td>25CI401179</td><td>2026-06-26</td></tr>
+        <tr><td>#### W KENTUCKY St, Louisville, KY</td><td>25CI400967</td><td>2026-06-26</td></tr>
+        <tr><td>#### W Kentucky St, Louisville, KY</td><td>25-CI-401322</td><td>2026-07-17</td></tr>
+        <tr><td>#### W Chestnut St, Louisville, KY</td><td>24CI400689</td><td>2026-07-17</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="market-block">
+    <span class="lane-tag">Code Violations</span>
+    <h3>17,756 violation records reviewed. 13,398 are active, open citations right now.</h3>
+    <p style="color:#334155;">Buildings with a real, currently-open code citation on file with the county: vacant lots and vacant structures with citations already filed, not a stale historical list.</p>
+    <table>
+      <thead><tr><th>Property</th><th>Status</th><th class="num">Citation</th></tr></thead>
+      <tbody>
+        <tr><td>#### NORTHWESTERN PKY, Louisville, KY</td><td>Citation Referral</td><td class="num">$700</td></tr>
+        <tr><td>#### E ST CATHERINE ST, Louisville, KY</td><td>Citation</td><td class="num">$800</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Your other 4 markets</h4>
+  <h2>Raleigh, Greensboro, Nashville, and Cleveland, honestly.</h2>
+  <p style="max-width:760px;color:#334155;">Greensboro has real absentee-owner data ready today too. Raleigh, Nashville, and Cleveland have county parcel files on hand, but nothing processed into your specific lanes yet. Rather than quote you something we'd have to scramble to catch up on, the plan is simple: tell us which of these you're actively working deals in, and we build that one next with the same standard shown above.</p>
+</section>
+
+<section class="container">
+  <div class="callout">
+    <h3>Let's get you on a call.</h3>
+    <p>15 minutes to walk through exactly what's in the Charlotte and Louisville files, what a first order looks like, and which of your other markets to build next.</p>
+    <a class="btn" href="mailto:hello@leadcurate.com?subject=Let%27s%20schedule%20a%20call">Schedule a Call</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <strong>LeadCurate</strong> · Curated county property data · hello@leadcurate.com
+  </div>
+</footer>
+</body>
+</html>
