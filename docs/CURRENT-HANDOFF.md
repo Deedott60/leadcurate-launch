@@ -12,11 +12,26 @@ Last updated: 2026-07-08 by Claude (Sonnet 5)
 
 ## Open now
 
-0. **Backfill the scraping playbook.** `docs/playbooks/county-data-pull.md` and `docs/playbooks/js-blocker-bypass.md` are now the canonical scraping references (moved from a local-only Claude Code skill folder Codex/Danny could never read — see AGENT-OPERATING-RULES.md "Scraping / data-pull playbook discipline"). The catalog is missing every county solved 2026-06-25 through 2026-07-07: York SC, Cabarrus NC, Lancaster SC, Gaston NC, Duval FL, Davidson TN, the Tarrant TX blocker fix, the Maricopa AZ pull, and the Jefferson KY code-violations PVA enrichment. Codex: you solved these, you know the working URLs/methods — append them to the playbook file, commit, push. Going forward, EVERY new county gets appended before the session ends, no exceptions.
-1. **Hamilton County TN (Chattanooga) pull — real buyer waiting.** Facebook lead Jerome (`Jeromedoesdeals@gmail.com`) wants vacant land in Hamilton County. Pull the parcel file, run through `process_verified_vacant.py` (six-check process, absentee-flagged), then build a **customer-facing** audit (NOT the internal `property-numbers.html` methodology style — outcome language only, never list the six checks or scoring logic, per the Vacant Land differentiation doctrine in `AGENT-OPERATING-RULES.md`). Add a short "nearby markets worth a look" teaser (Bradley TN, Marion TN, Sequatchie TN, Walker GA, Catoosa GA — verify these are the real neighbors before naming any). Add Chattanooga TN to the intake form + property-numbers audit list once the pull is real. Report `conf:done` with file path + record counts.
-2. **Executive-report delivery email** — in progress, uncommitted local `supabase/functions/send-delivery/index.ts` changes exist (executive stat row, sample rows, upsell block). Finish, test, commit.
-3. **n8n contractor outreach workflow** — uncommitted local files exist: `docs/n8n-workflows/nyc_contractor_outreach_manual.json`, `scripts/leadcurate/nyc_contractor_outreach_seed.py`, `supabase/migrations/20260707133000_contractor_outreach_queue.sql`. Manual-trigger ONLY. Finish, test, commit.
-4. **Nationwide verified-vacant column mapper** — refactor `scripts/leadcurate/process_verified_vacant.py` for a per-county column map. Target next: Wake NC, Guilford NC, Fulton GA, Marion IN — and now Hamilton TN (item 1) is a real-world test case for this.
+0. **Backfill the scraping playbook (STILL OPEN, 3 counties left).** `docs/playbooks/county-data-pull.md` still has 3 "NOT YET DOCUMENTED" placeholders (York SC, Cabarrus NC/Lancaster SC/Gaston NC group, and the Tarrant TX / Maricopa AZ / Jefferson KY group — check the file for exact list). Codex: you solved these 2026-06-25 through 2026-07-07, you know the working URLs/methods. Append them, commit, push. This is not optional — see "Scraping / data-pull playbook discipline" in `AGENT-OPERATING-RULES.md`.
+1. **Years-owned enrichment for verified-vacant-land.** The raw county Assessor files have sale-date fields (`SALE_1_DATE` etc.) that aren't wired into `scripts/leadcurate/process_verified_vacant.py` yet. Add a `years_owned` computed field (today minus sale date) to the `qualifies()` output dict and the CSV columns, same pattern as `ownership_type` (just added 2026-07-08, see that function for the pattern to follow). This unlocks an "Ownership tenure" section on future vacant-land audits that currently has to say "not available."
+2. **Regional comparison pulls.** Run Bradley County TN, Marion County TN, and Walker County GA through the SAME `process_verified_vacant.py` pipeline used for Hamilton TN (already multi-market capable via the `MARKETS` dict). This gives the Chattanooga audit page's "Regional comparison" section real numbers instead of an honest placeholder. Add each to `MARKETS` in the script, following the Hamilton TN config as the template.
+3. **Auto-generate the send-delivery payload from `meta.json`.** Right now every email send is a hand-typed `curl` payload (Claude did this all session 2026-07-08). Build a small script (`scripts/leadcurate/build_email_payload.py` or similar) that reads a market's `meta.json` output and produces the exact JSON `send-delivery` expects (`mode`, `market`, `lane`, `total`, `absentee`, `median_land_value`, `sample` rows redacted correctly, `audit_url`). This is the actual fix for "repeatable and automated" — read `supabase/functions/send-delivery/index.ts` to see the exact payload shape it expects (`renderSample`/`renderDelivery`/`deriveNumbers`/`genericSampleTable`).
+4. **Backfill `ownership_type` into already-pulled markets.** `process_verified_vacant.py` now computes `ownership_type` (individual/entity) for every NEW pull, but Mecklenburg, Guilford, Forsyth, and any other markets already pulled before 2026-07-08 don't have it in their existing output files. Re-run the processor for those markets to backfill (cheap — it's just a re-run, source files are already on disk).
+5. **Geocoding (bigger lift, scope it before starting).** This is the real fix for "geographic destiny" / heat maps — right now geography is municipality-level only, no real lat/long. The US Census Bureau has a free batch geocoder API (no cost, no key needed for reasonable volume) that could turn property addresses into coordinates, enabling real zip-level concentration and an honest density visualization instead of fake precision. Don't start this without confirming with Derrick first — it's a real build, not a quick add, and its own item in `AGENT-OPERATING-RULES.md`-style scoping should happen before code.
+6. **n8n contractor outreach workflow — verify it actually works.** Files exist and are committed (`docs/n8n-workflows/nyc_contractor_outreach_manual.json`, `scripts/leadcurate/nyc_contractor_outreach_seed.py`, the `contractor_outreach_queue` migration), but nobody has confirmed end-to-end that the workflow actually sends through Hostinger correctly. Codex: test it for real (manual trigger only, per the locked rule — do not auto-activate), report `conf:done` with proof.
+
+## Email template — LOCKED, read before touching send-delivery
+
+`supabase/functions/send-delivery/index.ts` is the ONLY email-sending code for LeadCurate, now at v13 (deployed 2026-07-08). Major rebuild happened today:
+- One generic renderer for every lane (`renderSample`/`renderDelivery`), content varies by data (`deriveNumbers`, `extraColumns`), never by a second code path.
+- Table now shows up to 3 numeric columns dynamically (Owed+Equity+Yrs for debt lanes, Land Value+Acreage for vacant land), with HOT/WARM/VACANT status pills and an Absentee badge, matching the originally-proven Wake County design.
+- Signs as **"The LeadCurate Team"**, never a personal name — decided 2026-07-08 so automated sends (Codex/Danny/workflows) don't attach Derrick's name to interactions he didn't personally have.
+- **Zero em dashes anywhere in customer-facing copy.** Grep for `—` before calling any customer-facing text done. This is a hard rule now, see `AGENT-OPERATING-RULES.md`.
+- If a new lane needs a field type the table doesn't handle, extend `extraColumns()`/`deriveNumbers()`. Do NOT write a new render function.
+
+## Vacant Land audit page — the reusable pattern
+
+`docs/sample-deliveries/chattanooga-verified-vacant-2026-07-08/index.html` is the reference template for every future county's Verified Vacant Land audit page. Sections, in order: Executive Summary → hero/Priority tier → How to work this list (call order) → differentiation vs. stale lists → six-factor verification (outcome language only) → Ownership Intelligence → Value bands → Market Intelligence (median vs. average skew called out explicitly) → Geography → Parcel size → Quality Summary checklist → Executive Insights (analyst-voice observations tied to real numbers) → Executive Recommendations → Nearby markets → What's in your file → Source. Every number on it is pulled from the real `meta.json` / production CSV, nothing estimated. When building the next county's page, copy this structure, swap the data, do NOT invent stats you can't back with a real computation — if something isn't available (years-owned, regional comparison), say so on the page instead of guessing.
 
 ## Payment status (do not re-litigate — this is done)
 
@@ -28,16 +43,20 @@ Tier 1 Hot Sheet $497 · Tier 2 Fresh Triggers $199/mo · Tier 3 Breaking Point 
 
 ## Recently closed (for context, not action)
 
+- **Hamilton County TN (Chattanooga) fully done, Derrick-approved 2026-07-08.** Real data pulled and verified (21,654 qualified parcels of 168,952 reviewed), full executive-analytics audit page built, ownership_type wired into the real pipeline, live at the URL above. Ready to send to the real Facebook lead (Jerome, `Jeromedoesdeals@gmail.com`) whenever Derrick gives the go.
+- Scraping playbooks moved from a local-only Claude Code skill folder (unreachable by Codex/Danny) into the git repo at `docs/playbooks/` — this was the real root cause of counties getting re-solved from scratch.
+- `AGENT-OPERATING-RULES.md` now has: Sync discipline, Vacant Land differentiation doctrine, Customer-facing writing style (em dash ban + signature rule), Email template discipline, Scraping/data-pull playbook discipline.
 - Dead auction cron (Mecklenburg/Fulton/Wake, 0-row silent failure) disabled by Codex 2026-07-07.
 - Asset Locator generalized (`scripts/leadcurate/asset_locator.py`), tested on Mecklenburg.
 - NYC DOB cut tool got `--borough`/`--class` flags, tested on Brooklyn facade.
 - Annual billing toggle hidden on landing page (both `site/index.html` and live `docs/site/index.html`).
 - 4 new NC/SC markets (Gastonia, Concord, Rock Hill, Lancaster) added to intake form + property-numbers audit.
-- `AGENT-OPERATING-RULES.md` got a "Sync discipline" rule + Vacant Land differentiation doctrine (2026-07-08) — read that file, it's short.
 
 ## Pending on Derrick only
 
 - Payment provider pick (Stripe live vs. manual Cash App/Zelle).
+- **Send the Jerome email** — reviewed and approved 2026-07-08, ready to go to `Jeromedoesdeals@gmail.com` whenever Derrick says send.
 - Send outreach scripts (land groups → NYC facade contractors → Charlotte collection attorneys).
 - ~1hr attorney review before first law-firm (Asset Locator) sale.
 - Ground Floor pricing lock, ad carousel pick, Private Market Engine strategy review.
+- **Geocoding go/no-go** (item 5 above) — real build, needs Derrick's sign-off before Codex starts.
