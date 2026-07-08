@@ -87,7 +87,29 @@ function redactAddress(addr = "") {
   return String(addr).replace(/\b\d{1,6}\b/, "###");
 }
 
+const VACANT_LAND_LANES = new Set(["verified_vacant_land", "vacant_land"]);
+
+function vacantLandStatCards(p: any) {
+  const cards = [
+    ["Records", Number(p.total || 0).toLocaleString()],
+    ["Vacant candidates", Number(p.vacant_candidates ?? p.analytics?.verified_vacant ?? p.total ?? 0).toLocaleString()],
+    ["Absentee owners", Number(p.absentee || 0).toLocaleString()],
+    ["Median land value", money(p.median_land_value ?? p.analytics?.median_land_value ?? 0)],
+  ];
+  return `<table width="100%" style="border-collapse:separate;border-spacing:8px;margin:16px 0;"><tr>${cards.map(([k, v]) => `<td style="border:1px solid #e2dccf;border-radius:10px;padding:14px;"><div style="font-size:11px;text-transform:uppercase;color:#475569;">${k}</div><div style="font-size:22px;font-weight:800;color:#15803d;">${v}</div></td>`).join("")}</tr></table>`;
+}
+
+function vacantLandSampleTable(sample: any[] = [], redact = false) {
+  const rows = sample.slice(0, 8).map((r) => `<tr><td>${esc(redact ? redactName(r.owner) : r.owner)}</td><td>${esc(redact ? redactAddress(r.address) : r.address)}</td><td>${esc(Number(r.acreage || 0).toLocaleString())} ac</td><td>${money(r.land_value)}</td></tr>`).join("");
+  return `<table width="100%" style="border-collapse:collapse;margin-top:16px;font-size:13px;"><tr style="background:#f3eddf;"><th align="left" style="padding:8px;">Owner</th><th align="left" style="padding:8px;">Property</th><th align="right" style="padding:8px;">Acreage</th><th align="right" style="padding:8px;">Land Value</th></tr>${rows.replaceAll("<td>", "<td style=\"border-bottom:1px solid #e2dccf;padding:8px;\">").replaceAll("<td>$", "<td style=\"border-bottom:1px solid #e2dccf;padding:8px;text-align:right;\">$")}</table>`;
+}
+
+function renderSampleVacantLand(p: any) {
+  return shell(`Sample Audit: ${p.market}`, `<p style="font-size:16px;line-height:1.6;">${esc(p.name)}, here is the actual answer to what makes this different from a static purchased list: this file is rebuilt from ${esc(p.market)}'s current county parcel data, not resold from a stockpile. Absentee owners — the ones structurally more likely to sell than build or hold — are flagged specifically.</p>${vacantLandStatCards(p)}<div style="margin:16px 0;padding:18px;background:#0f172a;color:white;border-radius:10px;"><strong style="color:#22c55e;">The short version:</strong> <span style="color:#cbd5e1;">most vacant-land lists get compiled once and never rechecked, so a real share of what's on them is already gone or was never really buildable. This one is checked against the county's current file before it ships.</span></div>${vacantLandSampleTable(p.sample, true)}<div style="margin-top:22px;padding:18px;background:#15803d;color:white;border-radius:10px;text-align:center;"><a href="https://leadcurate.com/intake/" style="color:white;font-weight:800;text-decoration:none;">Reserve Your County</a></div>`);
+}
+
 function renderSample(p: any) {
+  if (VACANT_LAND_LANES.has(String(p.lane ?? ""))) return renderSampleVacantLand(p);
   const debt = p.analytics?.debt_buckets ?? [];
   const years = p.analytics?.years_buckets ?? [];
   const maxDebt = Math.max(1, ...debt.map((b: any) => Number(b.value || 0)));
