@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LeadCurate | Chattanooga Vacant Land Preview Audit</title>
+<meta name="description" content="Hamilton County TN vacant land preview audit built from the current county assessor file." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#1e293b;--muted:#64748b;--cream:#faf7f2;--stone:#f5f1eb;--dark:#0f172a;--emerald:#15803d;--emerald-2:#22c55e;--soft:#dff4e8;--gold:#b45309;--line:rgba(30,41,59,.12)}
+  *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6}.container{width:min(1040px,calc(100% - 40px));margin:0 auto}
+  header{padding:30px 0 22px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.55)}.row{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}.logo{font-family:"Playfair Display",serif;font-size:28px;font-weight:700;color:var(--dark)}.logo span{color:var(--emerald)}.meta{font-size:13px;color:var(--muted)}
+  .badge{display:inline-flex;background:var(--soft);color:var(--emerald);border-radius:999px;padding:8px 14px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  section{padding:38px 0;border-top:1px solid var(--line)}section.cover{border-top:0;padding:52px 0 34px}h1,h2{font-family:"Playfair Display",serif;letter-spacing:-.03em;color:var(--dark);line-height:1.08}h1{font-size:clamp(36px,5.5vw,58px);margin:12px 0 16px;max-width:900px}h2{font-size:clamp(26px,3vw,34px);margin:0 0 12px}h4{font-size:12px;color:var(--emerald);letter-spacing:.14em;text-transform:uppercase;margin:0 0 8px}.lead{font-size:18px;max-width:760px;color:#334155}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:20px}.metric{background:white;border:1px solid var(--line);border-radius:14px;padding:18px}.label{font-size:11px;color:var(--muted);font-weight:800;letter-spacing:.08em;text-transform:uppercase}.value{font-size:30px;font-weight:800;letter-spacing:-.03em;color:var(--dark);margin-top:4px}.note{font-size:12px;color:var(--muted);margin-top:4px}
+  .panel{background:white;border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:16px}.bars{display:grid;gap:12px;margin-top:18px}.bar{display:grid;grid-template-columns:160px 1fr 80px;gap:12px;align-items:center}.track{height:14px;border-radius:999px;background:var(--stone);overflow:hidden}.fill{height:100%;background:var(--emerald);border-radius:999px}.bar .name{font-weight:700;font-size:13px}.bar .num{text-align:right;color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;background:white;font-size:14px}th,td{padding:12px 14px;border-bottom:1px solid var(--line);text-align:left}th{background:var(--stone);font-size:12px;text-transform:uppercase;letter-spacing:.07em}td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+  .callout{background:var(--dark);color:white;border-radius:16px;padding:24px;margin-top:18px}.callout h3{margin:0 0 8px;font-size:20px}.callout p{margin:0;color:#cbd5e1}.callout strong{color:var(--emerald-2)}footer{padding:34px 0 52px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+  @media(max-width:640px){.bar{grid-template-columns:1fr}.bar .num{text-align:left}.value{font-size:26px}section.cover{padding-top:34px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="container row">
+    <div><div class="logo">Lead<span>Curate</span>.</div><div class="meta">Chattanooga TN | Hamilton County | Vacant Land Preview Audit | 2026-07-08</div></div>
+    <div class="badge">Current county file</div>
+  </div>
+</header>
+
+<section class="cover container">
+  <h4>Hamilton County vacant land</h4>
+  <h1>Chattanooga has a real vacant-land lane worth working.</h1>
+  <p class="lead">This preview was built from Hamilton County's current Assessor property file, updated July 4, 2026. The point is simple: start with the county's live parcel base, remove stale or unusable records, then flag the owners who are not sitting locally on the property.</p>
+  <div class="metrics">
+    <div class="metric"><div class="label">County parcel rows reviewed</div><div class="value">168,952</div><div class="note">official Assessor export</div></div>
+    <div class="metric"><div class="label">Vacant-land candidates</div><div class="value">21,654</div><div class="note">current review-ready universe</div></div>
+    <div class="metric"><div class="label">Absentee / out-of-state</div><div class="value">2,729</div><div class="note">highest-priority ownership angle</div></div>
+    <div class="metric"><div class="label">Median land value</div><div class="value">$55K</div><div class="note">across the review-ready universe</div></div>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Value bands</h4>
+  <h2>Most of the usable universe sits in the starter-lot range.</h2>
+  <div class="panel">
+    <div class="bars">
+      <div class="bar"><div class="name">Under $50K</div><div class="track"><div class="fill" style="width:43%"></div></div><div class="num">9,239</div></div>
+      <div class="bar"><div class="name">$50K-$150K</div><div class="track"><div class="fill" style="width:41%"></div></div><div class="num">8,862</div></div>
+      <div class="bar"><div class="name">$150K-$500K</div><div class="track"><div class="fill" style="width:12%"></div></div><div class="num">2,499</div></div>
+      <div class="bar"><div class="name">$500K+</div><div class="track"><div class="fill" style="width:5%"></div></div><div class="num">1,054</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Parcel size</h4>
+  <h2>The file can be narrowed by lot size, budget, or target area.</h2>
+  <div class="metrics">
+    <div class="metric"><div class="label">Median parcel size</div><div class="value">1.0 ac</div><div class="note">county area field normalized for oversized entries</div></div>
+    <div class="metric"><div class="label">1-5 acres</div><div class="value">18,899</div><div class="note">the deepest size band</div></div>
+    <div class="metric"><div class="label">5-25 acres</div><div class="value">1,830</div><div class="note">larger land opportunities</div></div>
+    <div class="metric"><div class="label">25+ acres</div><div class="value">628</div><div class="note">larger tract review set</div></div>
+  </div>
+  <div class="callout">
+    <h3>Why this is different from a static vacant-land list</h3>
+    <p>LeadCurate rebuilds from the county's current parcel file before delivery, so outreach is aimed at land that still fits the lane today. The working file can be narrowed before delivery around Chattanooga, Soddy-Daisy, Signal Mountain, Red Bank, East Ridge, Collegedale, or county-side pockets.</p>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Nearby markets</h4>
+  <h2>Three adjacent counties are worth a second look.</h2>
+  <table>
+    <thead><tr><th>Nearby county</th><th>Why it belongs in the next scan</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Bradley County TN</strong></td><td>Cleveland-side growth corridor east of Hamilton County.</td></tr>
+      <tr><td><strong>Marion County TN</strong></td><td>West of Hamilton, tied to Sequatchie Valley and I-24 movement.</td></tr>
+      <tr><td><strong>Walker County GA</strong></td><td>South of Hamilton, close enough to matter for Chattanooga-area land buyers.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="container">
+  <h4>Source</h4>
+  <h2>Built from the official county export.</h2>
+  <p>Source checked: Hamilton County Government, Download Property Records page. Assessor CSV file listed as updated July 4, 2026. The customer delivery file is not posted publicly; this page is the preview audit only.</p>
+</section>
+
+<footer>
+  <div class="container">
+    <strong>LeadCurate</strong> | Curated county property data | hello@leadcurate.com
+  </div>
+</footer>
+</body>
+</html>

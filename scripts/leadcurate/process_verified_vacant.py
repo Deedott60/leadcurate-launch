@@ -147,6 +147,53 @@ MARKETS: dict[str, dict[str, Any]] = {
         },
         "acreage_from_squarefeet": "ESTSQFT",
     },
+    "hamilton-tn": {
+        "display": "Hamilton County TN",
+        "source": RAW_ROOT / "hamilton-tn" / "2026-07-04" / "AssessorExport.csv",
+        "source_url": "https://www.hamiltontn.gov/DownloadRecords.aspx",
+        "output_date": TODAY,
+        "state": "TN",
+        "county": "Hamilton",
+        "csv_fields": [
+            "GISLink", "OWNER_NAME_1", "OWNER_NAME_2", "OWNER_NAME_3", "ST_NUM",
+            "ST_DIR_PFX", "ST_NAME", "ST_TYPE_SFX", "ST_ADDR_UNIT", "ST_ADDRESS",
+            "MAP", "GROUP", "PARCEL", "STATE_GRID", "MAIL_ST_NAME", "MAIL_UNIT",
+            "MAIL_LINE_2", "MAIL_CITY", "MAIL_STATE", "MAIL_ZIP", "LEGAL_DESC",
+            "CALC_ACRES", "LAND_USE_CODE", "LAND_USE_CODE_DESC", "NEIGHBORHOOD_CODE",
+            "NEIGHBORHOOD_CODE_DESC", "LAND_VALUE", "BUILDING_VALUE",
+            "YARDITEMS_VALUE", "APPRAISED_VALUE", "ASSESSED_VALUE", "DISTRICT",
+            "DISTRICT_DESC", "ZONING", "ZONING_DESC", "PROP_TYPE_CODE",
+            "PROP_TYPE_CODE_DESC", "EXEMPT_CODE", "EXEMPT_CODE_DESC", "PLAT_BOOK_1",
+            "PLAT_PAGE_1", "PLAT_PG_1", "PLAT_LOT_1", "SALE_1_DATE",
+            "SALE_1_CONSIDERATION", "SALE_1_BOOK", "SALE_1_PAGE", "SALE_1_TYPE",
+            "SALE_1_CONF", "SALE_2_DATE", "SALE_2_CONSIDERATION", "SALE_2_BOOK",
+            "SALE_2_PAGE", "SALE_2_TYPE", "SALE_2_CONF", "SALE_3_DATE",
+            "SALE_3_CONSIDERATION", "SALE_3_BOOK", "SALE_3_PAGE", "SALE_3_TYPE",
+            "SALE_3_CONF", "SALE_4_DATE", "SALE_4_CONSIDERATION", "SALE_4_BOOK",
+            "SALE_4_PAGE", "SALE_4_TYPE", "SALE_4_CONF", "SUBDIVISION_NAME",
+            "REFERENCE_NUMBER", "CURRENT_USE_CODE", "CURRENT_USE_CODE_DESC",
+            "TRAILING_SPACE",
+        ],
+        "fields": {
+            "vacant": ["LAND_USE_CODE_DESC", "PROP_TYPE_CODE_DESC", "CURRENT_USE_CODE_DESC"],
+            "vacant_values": set(),
+            "land": ["LAND_VALUE"],
+            "building": ["BUILDING_VALUE"],
+            "total": ["APPRAISED_VALUE"],
+            "year": [],
+            "heated": [],
+            "owner": ["OWNER_NAME_1"],
+            "acreage": ["CALC_ACRES"],
+            "parcel": ["GISLink", "STATE_GRID"],
+            "address": ["ST_ADDRESS"],
+            "city": ["DISTRICT_DESC"],
+            "mail_city": ["MAIL_CITY"],
+            "mail_state": ["MAIL_STATE"],
+            "mail_zip": ["MAIL_ZIP"],
+            "land_use": ["LAND_USE_CODE_DESC", "PROP_TYPE_CODE_DESC", "CURRENT_USE_CODE_DESC"],
+        },
+        "acreage_divisor_above": {"threshold": 1000, "divisor": 43560},
+    },
 }
 
 
@@ -209,6 +256,9 @@ def vacant_signal(row: dict[str, str], cfg: dict[str, Any]) -> tuple[bool, str]:
 def acreage(row: dict[str, str], cfg: dict[str, Any]) -> float:
     value = money(field_value(row, cfg, "acreage"))
     if value:
+        normalizer = cfg.get("acreage_divisor_above")
+        if normalizer and value > normalizer["threshold"]:
+            return value / normalizer["divisor"]
         return value
     area_field = cfg.get("acreage_from_shape_area")
     if area_field:
@@ -348,7 +398,8 @@ def process_market(market: str, source: Path | None, output_dir: Path | None, to
     rows = []
     total = 0
     with source_path.open(newline="", encoding="utf-8-sig", errors="replace") as f:
-        for raw in csv.DictReader(f):
+        reader = csv.DictReader(f, fieldnames=cfg.get("csv_fields"))
+        for raw in reader:
             total += 1
             ok, row = qualifies(raw, cfg)
             if not ok:
