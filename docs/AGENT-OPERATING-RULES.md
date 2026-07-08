@@ -26,6 +26,12 @@ Our answer: every Verified Vacant Land record is checked against the county's **
 
 **This is internal doctrine, not customer-facing copy.** Customer-facing material (audits, sample deliveries, sales messages) should describe the *outcome* — "you're not wasting outreach on land that's already gone or was never really vacant" — never the specific checks or scoring logic. That process is the moat; don't let it end up in something a prospect can copy-paste into their own script. See `docs/CURRENT-HANDOFF.md` for the active work generalizing this to new counties.
 
+## Customer-facing writing style — LOCKED, non-negotiable
+
+- **Never use an em dash (—) or en dash used as a connector in anything a customer reads** — emails, audit pages, sample deliveries, sales copy, quote templates. Split into two sentences, or use a period/colon instead. Derrick has flagged this repeatedly (Hermes cleaned "AI-sounding em dashes" from audit copy 2026-07-03; raised again 2026-07-08 against email/audit copy) — an em dash left in customer-facing text reads as AI-generated and undermines the "custom-built, not automated" premium positioning. This is not a style preference, it's a brand-trust rule.
+- **No signature uses a personal name in automated or agent-sent customer emails.** Sign as "The LeadCurate Team," never "Derrick." Reasoning: once sends can be triggered by Codex, Danny, or a workflow without Derrick personally reviewing each one, a personal name attaches him to interactions he didn't personally have. Decided 2026-07-08.
+- Before shipping ANY customer-facing text (email, audit page, sample delivery, quote), grep it for `—` before calling it done. This is a two-second check, do it every time.
+
 ## Email template discipline — ONE template, no exceptions
 
 `supabase/functions/send-delivery/index.ts` is the only email-sending code for LeadCurate. It renders every lane (debt, vacant land, asset locator, contractor cuts, anything future) through the SAME `renderSample`/`renderDelivery` functions, which build their content generically from `deriveNumbers()`/`recordValue()`/`genericSampleTable()` — never from a lane-specific hardcoded branch or a second render function.

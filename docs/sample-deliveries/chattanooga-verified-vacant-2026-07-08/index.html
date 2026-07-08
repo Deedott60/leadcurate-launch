@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>LeadCurate · Chattanooga Vacant Land Preview Audit</title>
-<meta name="description" content="Hamilton County TN vacant land preview audit built from the current county assessor file — why verified beats static." />
+<meta name="description" content="Hamilton County TN vacant land preview audit built from the current county assessor file. Why verified beats static." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -41,7 +41,7 @@
 <section class="cover container">
   <h4>Hamilton County vacant land</h4>
   <h1>Most vacant-land data tells you what a parcel used to be. This tells you what it is right now.</h1>
-  <p class="lead">If you're already running SMS campaigns off a purchased list, this is worth five minutes: this file was built fresh from Hamilton County's current Assessor export (updated July 4, 2026), not resold from a data broker's stockpile. The difference shows up the moment you start dialing — fewer dead numbers, fewer "that's already got a house on it" calls, fewer wasted texts to land that sold two years ago.</p>
+  <p class="lead">If you're already running SMS campaigns off a purchased list, this is worth five minutes. This file was built fresh from Hamilton County's current Assessor export (updated July 4, 2026), not resold from a data broker's stockpile. The difference shows up the moment you start dialing: fewer dead numbers, fewer "that's already got a house on it" calls, fewer wasted texts to land that sold two years ago.</p>
   <div class="metrics">
     <div class="metric"><div class="label">County parcel rows reviewed</div><div class="value">168,952</div><div class="note">official Assessor export</div></div>
     <div class="metric"><div class="label">Vacant-land candidates</div><div class="value">21,654</div><div class="note">current review-ready universe</div></div>
@@ -53,26 +53,42 @@
 <section class="container">
   <h4>The actual question you asked</h4>
   <h2>"What's the difference between your data and what I already have?"</h2>
-  <p style="max-width:760px;">Fair question — you didn't ask for a sales pitch, you asked what's different. So here it is straight: most vacant-land lists on the market get compiled once, sold many times, and never rechecked. The list you're texting today might be six, twelve, eighteen months old. In that window, a real share of it stops being true — someone broke ground, someone sold, or the county's own vacancy flag was wrong to begin with (assessor systems misclassify parcels more than people assume). You keep paying for outreach against land that isn't actually available anymore.</p>
+  <p style="max-width:760px;">Fair question. You didn't ask for a sales pitch, you asked what's different. So here it is straight: most vacant-land lists on the market get compiled once, sold many times, and never rechecked. The list you're texting today might be six, twelve, eighteen months old. In that window, a real share of it stops being true. Someone broke ground, someone sold, or the county's own vacancy flag was wrong to begin with (assessor systems misclassify parcels more than people assume). You keep paying for outreach against land that isn't actually available anymore.</p>
   <div class="vs">
     <div class="card bad">
       <h3>What a stale purchased list gets you</h3>
       <ul>
-        <li>A snapshot from whenever it was last compiled — could be a year or more old</li>
-        <li>No way to tell which parcels already sold or got built on</li>
-        <li>Vacancy flags taken at face value from the source file, errors included</li>
-        <li>No signal on which owners are actually likely to sell vs. just holding</li>
+        <li>A snapshot from whenever it was last compiled. Could be a year or more old.</li>
+        <li>No way to tell which parcels already sold or got built on.</li>
+        <li>Vacancy flags taken at face value from the source file, errors included.</li>
+        <li>No signal on which owners are actually likely to sell vs. just holding.</li>
       </ul>
     </div>
     <div class="card good">
       <h3>What this file gets you</h3>
       <ul>
-        <li>Rebuilt from Hamilton County's <strong>current</strong> Assessor export, not a resold snapshot</li>
-        <li>Cross-checked against the county's own value and improvement fields before a record ships</li>
-        <li>Absentee ownership flagged specifically — the owners structurally more likely to sell than build</li>
-        <li>Refreshed on request, not sold once and left to rot</li>
+        <li>Rebuilt from Hamilton County's <strong>current</strong> Assessor export, not a resold snapshot.</li>
+        <li>Cross-checked against the county's own value and improvement fields before a record ships.</li>
+        <li>Absentee ownership flagged specifically. These are the owners structurally more likely to sell than build.</li>
+        <li>Refreshed on request, not sold once and left to rot.</li>
       </ul>
     </div>
+  </div>
+</section>
+
+<section class="container">
+  <h4>How a parcel earns a spot on this list</h4>
+  <h2>168,952 parcels reviewed. Only 21,654 make the cut.</h2>
+  <p style="max-width:760px;">That's roughly 1 in 8. The other seven get knocked out because a "vacant" flag in a county file is a starting point, not proof. Before a parcel counts as sellable land on this list, it has to clear all six of these:</p>
+  <div class="panel">
+    <ol style="margin:0;padding-left:20px;display:grid;gap:12px;">
+      <li><strong>Still vacant right now.</strong> Not vacant according to a record from a year ago.</li>
+      <li><strong>No hidden building value.</strong> A parcel can be labeled vacant land and still carry an improvement on the books. This one doesn't.</li>
+      <li><strong>The county's own numbers back it up.</strong> The land use classification actually supports "vacant," not an ambiguous or mislabeled parcel type.</li>
+      <li><strong>Real usable acreage.</strong> Not a leftover sliver, right-of-way remnant, or drainage strip too small to build on.</li>
+      <li><strong>An owner who can actually sell.</strong> Government, utility, church, HOA, and similar institutional owners are excluded. They almost never sell.</li>
+      <li><strong>Current ownership on file.</strong> So outreach lands on the person who actually owns it today, not whoever owned it when the county last updated its master file.</li>
+    </ol>
   </div>
 </section>
 
@@ -91,14 +107,14 @@
 
 <section class="container">
   <h4>Where it sits geographically</h4>
-  <h2>Not just "Chattanooga" — the current top-scored working file breaks down by area.</h2>
-  <p style="max-width:760px;">In the current highest-priority working file, the split runs roughly: <strong>County North</strong> and <strong>County South</strong> unincorporated parcels carry the largest share, with the city of <strong>Chattanooga</strong> itself next, and smaller pockets in <strong>Soddy-Daisy</strong>, <strong>Signal Mountain</strong>, <strong>Collegedale</strong>, <strong>Red Bank</strong>, and <strong>East Ridge</strong>. That means this isn't a one-neighborhood list — it can be narrowed to whichever part of the metro fits your build/hold strategy before delivery.</p>
+  <h2>Not just "Chattanooga." The current top-scored working file breaks down by area.</h2>
+  <p style="max-width:760px;">In the current highest-priority working file, the split runs roughly: <strong>County North</strong> and <strong>County South</strong> unincorporated parcels carry the largest share, with the city of <strong>Chattanooga</strong> itself next, and smaller pockets in <strong>Soddy-Daisy</strong>, <strong>Signal Mountain</strong>, <strong>Collegedale</strong>, <strong>Red Bank</strong>, and <strong>East Ridge</strong>. That means this isn't a one-neighborhood list. It can be narrowed to whichever part of the metro fits your build/hold strategy before delivery.</p>
 </section>
 
 <section class="container">
-  <h4>Absentee ownership — the motivated-seller angle</h4>
+  <h4>Absentee ownership: the motivated-seller angle</h4>
   <h2>Out-of-state owners show up from a real spread of states.</h2>
-  <p style="max-width:760px;">Among the flagged absentee owners in the current working file, the heaviest out-of-state concentration comes from <strong>Georgia</strong> and <strong>North Carolina</strong>, with additional owners spread across Florida, Virginia, Texas, Kentucky, and beyond. An owner who bought Hamilton County land but lives states away is a fundamentally different conversation than a local holder — that's the segment worth calling first.</p>
+  <p style="max-width:760px;">Among the flagged absentee owners in the current working file, the heaviest out-of-state concentration comes from <strong>Georgia</strong> and <strong>North Carolina</strong>, with additional owners spread across Florida, Virginia, Texas, Kentucky, and beyond. An owner who bought Hamilton County land but lives states away is a fundamentally different conversation than a local holder. That's the segment worth calling first.</p>
 </section>
 
 <section class="container">
@@ -118,14 +134,14 @@
   <table>
     <thead><tr><th>Nearby county</th><th>Why it belongs in the next scan</th></tr></thead>
     <tbody>
-      <tr><td><strong>Bradley County TN</strong></td><td>Cleveland-side growth corridor east of Hamilton County.</td></tr>
-      <tr><td><strong>Marion County TN</strong></td><td>West of Hamilton, tied to Sequatchie Valley and I-24 movement.</td></tr>
-      <tr><td><strong>Walker County GA</strong></td><td>South of Hamilton, close enough to matter for Chattanooga-area land buyers.</td></tr>
+      <tr><td><strong>Bradley County TN</strong></td><td>Cleveland-side growth corridor east of Hamilton County. Land prices there typically lag Chattanooga proper, which is exactly the kind of gap a build/hold buyer wants to find before it closes.</td></tr>
+      <tr><td><strong>Marion County TN</strong></td><td>West of Hamilton, tied to the Sequatchie Valley and I-24 corridor. More rural, larger average parcel sizes, a different buyer profile than in-town Chattanooga lots.</td></tr>
+      <tr><td><strong>Walker County GA</strong></td><td>South of Hamilton, across the state line. Close enough to matter for Chattanooga-area buyers, and a different tax and permitting environment worth knowing before you commit.</td></tr>
     </tbody>
   </table>
   <div class="callout">
     <h3>Want any of these scanned next?</h3>
-    <p>Say the word and we run the same current-file rebuild on whichever of these fits your pipeline — same standard, same freshness, no static resell.</p>
+    <p>Say the word and we run the same current-file rebuild on whichever of these fits your pipeline. Same standard, same freshness, no static resell.</p>
   </div>
 </section>
 

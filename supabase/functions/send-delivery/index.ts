@@ -54,7 +54,7 @@ function shell(eyebrow: string, title: string, greetingName: string, greetingLin
   <p style="font-size:15px;line-height:1.6;color:#334155;margin:0 0 4px;">${esc(greetingLine)}</p>
 </td></tr>
 ${body}
-<tr><td style="padding:20px 32px;background:#f3eddf;font-size:13px;color:#475569;">Any questions, just reply.<br><br><strong>Derrick</strong><br>LeadCurate<br><a href="mailto:hello@leadcurate.com" style="color:#15803d;">hello@leadcurate.com</a></td></tr>
+<tr><td style="padding:20px 32px;background:#f3eddf;font-size:13px;color:#475569;">Any questions, just reply.<br><br><strong>The LeadCurate Team</strong><br><a href="mailto:hello@leadcurate.com" style="color:#15803d;">hello@leadcurate.com</a></td></tr>
 </table>
 </td></tr></table>`;
 }
@@ -116,16 +116,16 @@ function heroStatCards(items: [string, string | number][]) {
 // section is never empty and never just "we use fresh data."
 const LANE_DEFAULT_DIFFERENTIATORS: Record<string, [string, string][]> = {
   verified_vacant_land: [
-    ["Rebuilt from the current county file", "not resold from a stockpile that could be a year or more old."],
-    ["Cross-checked before it ships", "the county's own vacancy and improvement fields get verified, not taken at face value."],
-    ["Absentee owners flagged specifically", "these owners are structurally more likely to sell than build or hold."],
-    ["Refreshed on request", "sold once and left to rot is the opposite of how this works."],
+    ["Rebuilt from the current county file", "Not resold from a stockpile that could be a year or more old."],
+    ["Cross-checked before it ships", "The county's own vacancy and improvement fields get verified, not taken at face value."],
+    ["Absentee owners flagged specifically", "These owners are structurally more likely to sell than build or hold."],
+    ["Refreshed on request", "Sold once and left to rot is the opposite of how this works."],
   ],
   default: [
-    ["Pulled directly from the county's source records", "not aggregated from a third-party reseller with unknown lag."],
-    ["Deduplicated and lane-matched", "the file only contains what you actually ordered, one row per property."],
-    ["Verified before it ships", "stats in this email are computed from the same file you're getting, not hand-typed."],
-    ["Refreshed on request", "this isn't a static download you're stuck with once purchased."],
+    ["Pulled directly from the county's source records", "Not aggregated from a third-party reseller with unknown lag."],
+    ["Deduplicated and lane-matched", "The file only contains what you actually ordered, one row per property."],
+    ["Verified before it ships", "Stats in this email are computed from the same file you're getting, not hand-typed."],
+    ["Refreshed on request", "This isn't a static download you're stuck with once purchased."],
   ],
 };
 
@@ -134,7 +134,7 @@ function differentiatorsBlock(p: any) {
     ? p.differentiators
     : (LANE_DEFAULT_DIFFERENTIATORS[String(p.lane ?? "")] ?? LANE_DEFAULT_DIFFERENTIATORS.default);
   const rows = items.map(([head, tail], i) =>
-    `<tr><td style="padding:12px 16px;${i < items.length - 1 ? "border-bottom:1px solid #e2dccf;" : ""}font-size:14px;color:#334155;"><strong style="color:#0f172a;">${esc(head)}</strong> — ${esc(tail)}</td></tr>`
+    `<tr><td style="padding:12px 16px;${i < items.length - 1 ? "border-bottom:1px solid #e2dccf;" : ""}font-size:14px;color:#334155;"><strong style="color:#0f172a;">${esc(head)}.</strong> ${esc(tail)}</td></tr>`
   ).join("");
   return `<h2 style="font-family:Georgia,serif;font-size:18px;color:#0f172a;margin:0 0 10px;">Why this beats a purchased list</h2>${boxedRows([rows])}`;
 }
@@ -145,7 +145,7 @@ function recordValue(r: any): [string, string] {
   if (r.owed !== undefined) return ["Owed", money(r.owed)];
   if (r.land_value !== undefined) return ["Land Value", money(r.land_value)];
   if (r.value !== undefined || r.property_value !== undefined || r.total_value !== undefined) return ["Value", money(r.value ?? r.property_value ?? r.total_value)];
-  return ["Value", "—"];
+  return ["Value", "N/A"];
 }
 
 function badge(label: string, bg: string, fg: string) {
@@ -206,12 +206,12 @@ function renderSample(p: any) {
   const eyebrow = `Preview Audit · ${p.lane ? String(p.lane).replace(/_/g, " ").replace(/\b\w/g, (c: string) => c.toUpperCase()) : "Curated List"}`;
   const greeting = p.opportunity_headline ?? "Here's the real answer to what makes this different from a static purchased list.";
   const fullAuditBox = p.audit_url
-    ? section(`<div style="padding:22px;background:#0f172a;border-radius:12px;text-align:center;"><div style="color:#ffffff;font-family:Georgia,serif;font-size:20px;font-weight:700;margin-bottom:6px;">Your full breakdown is ready</div><div style="color:#cbd5e1;font-size:13px;margin-bottom:16px;">Full market audit, records, and geography — no customer data, just the real picture of what's available.</div><a href="${esc(p.audit_url)}" style="display:inline-block;background:#15803d;color:#ffffff;text-decoration:none;font-weight:800;padding:12px 24px;border-radius:8px;font-size:14px;">Open Full Audit →</a></div>`)
+    ? section(`<div style="padding:22px;background:#0f172a;border-radius:12px;text-align:center;"><div style="color:#ffffff;font-family:Georgia,serif;font-size:20px;font-weight:700;margin-bottom:6px;">Your full breakdown is ready</div><div style="color:#cbd5e1;font-size:13px;margin-bottom:16px;">Full market audit, records, and geography. No customer data, just the real picture of what's available.</div><a href="${esc(p.audit_url)}" style="display:inline-block;background:#15803d;color:#ffffff;text-decoration:none;font-weight:800;padding:12px 24px;border-radius:8px;font-size:14px;">Open Full Audit →</a></div>`)
     : ctaSection("Reserve Your County", "https://leadcurate.com/intake/");
   const body = [
     section(heroStatCards(heroCards(p))),
     section(differentiatorsBlock(p)),
-    section(`<h2 style="font-family:Georgia,serif;font-size:18px;color:#0f172a;margin:0 0 6px;">Sample from the file</h2><p style="font-size:13px;color:#64748b;margin:0 0 4px;">A few real trigger examples below — the full file is in your audit, not attached here.</p>${genericSampleTable(p.sample, true, 5)}`),
+    section(`<h2 style="font-family:Georgia,serif;font-size:18px;color:#0f172a;margin:0 0 6px;">Sample from the file</h2><p style="font-size:13px;color:#64748b;margin:0 0 4px;">A few real trigger examples below. The full file is in your audit, not attached here.</p>${genericSampleTable(p.sample, true, 5)}`),
     fullAuditBox,
   ].join("");
   return shell(eyebrow, `${p.market}`, p.name, greeting, body);
@@ -242,7 +242,7 @@ function renderComparison(p: any) {
   const metric = (title: string, field: string, fmt = (n: number) => n.toLocaleString()) => `<h2 style="font-family:Georgia,serif;font-size:16px;color:#0f172a;margin:14px 0 6px;">${esc(title)}</h2><table width="100%">${markets.map((m: any) => barRow(m.name || m.slug, Number(m[field] || 0), max(field), field.includes("equity") || field.includes("debt") ? "" : "")).join("").replace(/(<td style="width:90px[^>]*>)([^<]+)/g, (_m: string, a: string, b: string) => a + fmt(Number(String(b).replace(/,/g, ""))))}</table>`;
   const body = [
     section(`${metric("Average Tax Debt", "avg_debt", money)}${metric("HOT Records", "hot")}${metric("Absentee Owners", "absentee")}${metric("Probate / Heirs Count", "heirs_count")}${metric("Top Equity", "top_equity", money)}`),
-    ctaSection("Reserve any of these counties — $149 launch price", "https://leadcurate.com/intake/"),
+    ctaSection("Reserve any of these counties, $149 launch price", "https://leadcurate.com/intake/"),
   ].join("");
   return shell("Market Comparison Audit", "Side by side", p.name, "Here is a side-by-side view of the counties you asked about.", body);
 }
