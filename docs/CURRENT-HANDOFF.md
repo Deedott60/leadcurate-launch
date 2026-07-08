@@ -6,13 +6,12 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-07-08 by Claude (Sonnet 5)
+Last updated: 2026-07-08 by Codex
 
 ---
 
 ## Open now
 
-0. **Backfill the scraping playbook (STILL OPEN, 3 counties left).** `docs/playbooks/county-data-pull.md` still has 3 "NOT YET DOCUMENTED" placeholders (York SC, Cabarrus NC/Lancaster SC/Gaston NC group, and the Tarrant TX / Maricopa AZ / Jefferson KY group — check the file for exact list). Codex: you solved these 2026-06-25 through 2026-07-07, you know the working URLs/methods. Append them, commit, push. This is not optional — see "Scraping / data-pull playbook discipline" in `AGENT-OPERATING-RULES.md`.
 1. **Years-owned enrichment for verified-vacant-land.** The raw county Assessor files have sale-date fields (`SALE_1_DATE` etc.) that aren't wired into `scripts/leadcurate/process_verified_vacant.py` yet. Add a `years_owned` computed field (today minus sale date) to the `qualifies()` output dict and the CSV columns, same pattern as `ownership_type` (just added 2026-07-08, see that function for the pattern to follow). This unlocks an "Ownership tenure" section on future vacant-land audits that currently has to say "not available."
 2. **Regional comparison pulls.** Run Bradley County TN, Marion County TN, and Walker County GA through the SAME `process_verified_vacant.py` pipeline used for Hamilton TN (already multi-market capable via the `MARKETS` dict). This gives the Chattanooga audit page's "Regional comparison" section real numbers instead of an honest placeholder. Add each to `MARKETS` in the script, following the Hamilton TN config as the template.
 3. **Auto-generate the send-delivery payload from `meta.json`.** Right now every email send is a hand-typed `curl` payload (Claude did this all session 2026-07-08). Build a small script (`scripts/leadcurate/build_email_payload.py` or similar) that reads a market's `meta.json` output and produces the exact JSON `send-delivery` expects (`mode`, `market`, `lane`, `total`, `absentee`, `median_land_value`, `sample` rows redacted correctly, `audit_url`). This is the actual fix for "repeatable and automated" — read `supabase/functions/send-delivery/index.ts` to see the exact payload shape it expects (`renderSample`/`renderDelivery`/`deriveNumbers`/`genericSampleTable`).
@@ -43,6 +42,7 @@ Tier 1 Hot Sheet $497 · Tier 2 Fresh Triggers $199/mo · Tier 3 Breaking Point 
 
 ## Recently closed (for context, not action)
 
+- **Scraping playbook backfill complete (Codex 2026-07-08).** `docs/playbooks/county-data-pull.md` now documents York SC, Cabarrus NC, Lancaster SC, Gaston NC, Duval FL, Davidson TN, Tarrant TX, Maricopa AZ, Jefferson KY code-violations, Shelby TN, and Hamilton TN. The old undocumented-county placeholders are removed.
 - **Hamilton County TN (Chattanooga) fully done, Derrick-approved 2026-07-08.** Real data pulled and verified (21,654 qualified parcels of 168,952 reviewed), full executive-analytics audit page built, ownership_type wired into the real pipeline, live at the URL above. Ready to send to the real Facebook lead (Jerome, `Jeromedoesdeals@gmail.com`) whenever Derrick gives the go.
 - Scraping playbooks moved from a local-only Claude Code skill folder (unreachable by Codex/Danny) into the git repo at `docs/playbooks/` — this was the real root cause of counties getting re-solved from scratch.
 - `AGENT-OPERATING-RULES.md` now has: Sync discipline, Vacant Land differentiation doctrine, Customer-facing writing style (em dash ban + signature rule), Email template discipline, Scraping/data-pull playbook discipline.

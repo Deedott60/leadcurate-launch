@@ -99,7 +99,7 @@ Last resort. Some counties only publish in newspapers and require a phone call o
 
 ## Working URL catalog
 
-Update this whenever you discover, refresh, or fix a county URL. **Section below was last fully verified 2026-06-19 — counties solved 2026-06-25 through 2026-07-07 (York SC, Cabarrus NC, Lancaster SC, Gaston NC, Duval FL, Davidson TN, Tarrant TX blocker clear, Maricopa AZ, Shelby TN universal-key expansion, Jefferson KY code violations) were never appended here. Codex: backfill those entries from your own session work — see `docs/CURRENT-HANDOFF.md`.**
+Update this whenever you discover, refresh, or fix a county URL. **Backfill status 2026-07-08:** York SC, Cabarrus NC, Lancaster SC, Gaston NC, Duval FL, Davidson TN, Tarrant TX, Maricopa AZ, Jefferson KY code-violations, Shelby TN, and Hamilton TN are now documented below. Keep adding new counties here as they are solved.
 
 ### NC
 
@@ -114,11 +114,32 @@ Update this whenever you discover, refresh, or fix a county URL. **Section below
 - **Forsyth NC (Winston-Salem) — Tier 1 ArcGIS** at `mapforsyth.org`:
   - Parcels Hosted CSV: `https://www.mapforsyth.org/api/download/v1/items/fd915221da64453aad7989b05f06707e/csv?layers=0` (167k rows incl. CURRENTOWNERNAME, PROPERTYADDRESS)
   - **Async generation**: expect HTTP 202 first time, retry after 30-60s.
-- **Gaston NC, Cabarrus NC — NOT YET DOCUMENTED**: solved by Codex 2026-07-04, working URLs never appended. Backfill needed.
+- **Cabarrus NC (Concord/Kannapolis) -- Tier 1 ArcGIS REST**:
+  - Layer URL: `https://location.cabarruscounty.us/arcgisservices/rest/services/OpenData/Tax_Parcels/MapServer/1`
+  - Public hub: `https://gis-cabarrus.opendata.arcgis.com/`
+  - Working method: `scripts/leadcurate/arcgis_property_pull.py --market cabarrus-nc --limit 8000`
+  - Query filter used: `AcctName1 is not null and AcctNumber is not null`
+  - Key fields: `PIN14`, `AcctName1`, `AcctName2`, `MailAddr1`, `MailCity`, `MailState`, `MailZipCode`, `MarketValue`, `BuildingValue`, `LandValue`, `CALCULATED_ACREAGE`.
+- **Gaston NC (Gastonia) -- Tier 1 ArcGIS REST**:
+  - Layer URL: `https://gis.gastoncountync.gov/publicgis/rest/services/PublicGIS/Parcels/MapServer/11`
+  - Layer index page: `https://gis.gastoncountync.gov/publicgis/rest/services/PublicGIS/Parcels/MapServer/layers`
+  - Working method: `scripts/leadcurate/arcgis_property_pull.py --market gaston-nc --limit 8000`
+  - Query filter used: `JAN1_NAME1 is not null and AKPAR is not null`
+  - Key fields: `AKPAR`, `JAN1_NAME1`, `JAN1_NAME2`, `WHOLE_ADDRESS`, `CURR_ADDR1`, `CURR_CITY`, `CURR_STATE`, `CURR_ZIPCODE`, `FMV_TOTAL`, `FMV_IMPRV`, `FMV_LAND`, `CALCAC`.
 
 ### SC
 
-- **York SC, Lancaster SC — NOT YET DOCUMENTED**: solved by Codex 2026-07-04, working URLs never appended. Backfill needed.
+- **York SC (Rock Hill/Fort Mill/Tega Cay) -- Tier 1 ArcGIS REST**:
+  - Layer URL: `https://services1.arcgis.com/2AGLxyiJoNiVHKwq/arcgis/rest/services/Parcels/FeatureServer/0`
+  - County GIS download page: `https://www.yorkcountysc.gov/239/GIS-Data-Download`
+  - Working method: `scripts/leadcurate/arcgis_property_pull.py --market york-sc --limit 8000`
+  - Key fields: `ParcelID`, `Owner1`, `Owner2`, `PropertyAddress`, `MailAddr1`, `MailCity`, `MailState`, `MailZip`, `AprTotVal`, `AprBldgVal`, `AprLandVal`, `deededacres`.
+- **Lancaster SC (Indian Land/Lancaster) -- Tier 1 ArcGIS REST**:
+  - Layer URL: `https://services3.arcgis.com/rJcpRneDUBgTeCT3/arcgis/rest/services/SDE_County_Parcels_Patriot_View/FeatureServer/0`
+  - Public hub page: `https://lancaster-launch-lancogis.hub.arcgis.com/pages/2f49a6ade70a4197bcdaeb3202cedbf7`
+  - Working method: `scripts/leadcurate/arcgis_property_pull.py --market lancaster-sc --limit 8000`
+  - Query filter used: `Owner1 is not null and ParcelID is not null and TotalValue is not null`
+  - Key fields: `ParcelID`, `Owner1`, `Owner2`, `StreetNum`, `StreetName`, `BillingAddress`, `City`, `State`, `Zip`, `TotalValue`, `TotalBuildingBalue`, `TotalLandValue`, `TotalAcres`.
 
 ### TN
 
@@ -130,10 +151,15 @@ Update this whenever you discover, refresh, or fix a county URL. **Section below
   - Discovery method used 2026-07-08: searched for `Hamilton County TN property assessor GIS parcels`, opened the official Hamilton County Assessor page, followed the `download the raw data` link to Download Records, then read the page's live hrefs with PowerShell instead of guessing filenames. Verified the page listed the Assessor CSV as last updated `7/4/2026`. Downloaded the CSV zip on VPS into `/opt/leadcurate/raw_imports/hamilton-tn/2026-07-04/` and extracted `AssessorExport.csv`.
   - Processing notes: the CSV has no header row. Column names come from `AssessorExtractLayout.pdf` pages 5-6. Registered in `scripts/leadcurate/process_verified_vacant.py` as `hamilton-tn`. Hamilton `CALC_ACRES` values above 1,000 can be square-foot-like, so the config normalizes those by dividing by 43,560 before scoring.
   - Verified production run 2026-07-08: 168,952 source rows, 21,654 verified-vacant candidates, 2,729 absentee/out-of-state, top 250 exported to `/opt/leadcurate/processed/hamilton-tn/2026-07-08/`.
+- **Davidson TN (Nashville) -- Tier 1 ArcGIS REST**:
+  - Layer URL: `https://services2.arcgis.com/HdTo6HJqh92wn4D8/arcgis/rest/services/Parcels_view/FeatureServer/0`
+  - Public hub page: `https://datanashvillegov-nashville.hub.arcgis.com/datasets/fa26cd9326c446179be059e00449cb1f_0/about`
+  - Working method: `scripts/leadcurate/arcgis_property_pull.py --market davidson-tn --limit 8000`
+  - Key fields: `STANPAR`, `Owner`, `PropAddr`, `PropCity`, `PropZip`, `OwnAddr1`, `OwnCity`, `OwnState`, `OwnZip`, `TotlAppr`, `ImprAppr`, `LandAppr`, `Acres`.
 
 ### TX
 
-- **Tarrant TX (Fort Worth) — Tier 3 weekly zip**: `https://www.tarrantcountytx.gov/content/dam/main/tax/tax-rolls/2026/TaxRoll{YYYYMMDD}.zip` — created weekly on Fridays, available the following Monday. Contains Master.dat (2 GB) + Rec.DAT (3.7 GB) fixed-width files. **~2M records.** (Codex cleared a blocker here 2026-07-04 — 4,915 rows extracted; exact fix not documented, backfill needed.)
+- **Tarrant TX (Fort Worth) — Tier 3 weekly zip**: `https://www.tarrantcountytx.gov/content/dam/main/tax/tax-rolls/2026/TaxRoll{YYYYMMDD}.zip` — created weekly on Fridays, available the following Monday. Contains `Master.dat` + `Rec.DAT` fixed-width files. Working method: save as `/opt/leadcurate/raw_imports/tarrant-tx/<date>/tax-roll.zip`, then run `scripts/leadcurate/extract_tarrant_tx.py --zip <zip> --output-dir /opt/leadcurate/raw_imports/tarrant-tx/<date> --limit 10000`. Extractor joins account IDs from `Rec.DAT` receivables to owner/address rows in `Master.dat` and writes `tax-roll-extracted.csv`.
 - **Dallas TX — Tier 3 DCAD ViewPDFs.aspx**:
   - Real Property Roll 2025: `https://www.dallascad.org/ViewPDFs.aspx?type=3&id=%5C%5CDCAD.ORG%5CWEB%5CWEBDATA%5CWEBFORMS%5CDATA%20PRODUCTS%5C2025_REAL_PROPERTY_CERT_APPR_ROLL.zip` (118 MB → 2.4 GB uncompressed)
   - Parcel 2025: `https://www.dallascad.org/ViewPDFs.aspx?type=3&id=%5C%5CDCAD.ORG%5CWEB%5CWEBDATA%5CWEBFORMS%5CGIS%20PRODUCTS%5CPARCEL2025.zip`
@@ -149,6 +175,14 @@ Update this whenever you discover, refresh, or fix a county URL. **Section below
   - Tax Parcels 2024: `https://dcgis-dekalbgis.hub.arcgis.com/api/download/v1/items/5966b70b6f344154a803caa18aa4d98d/csv?layers=1` (246k rows)
 - **Cobb GA — BLOCKED**: monthly delinquent PDFs at `cms9files.revize.com/cobbcounty/Property/Delinquent/...` — URL pattern changed since cached examples. Page at `https://www.cobbtax.gov/property/delinquent_taxes/index.php` lists current paths but loads via JS. **Chrome MCP escalation.**
 
+### FL
+
+- **Duval FL (Jacksonville) -- Tier 1 ArcGIS REST via regional parcel layer**:
+  - Layer URL: `https://maps.clayutility.org/server/rest/services/ParcelsHybridv2_LGIM/MapServer/14`
+  - Working method: `scripts/leadcurate/arcgis_property_pull.py --market duval-fl --limit 8000`
+  - Notes: this source is the ArcGIS parcel layer registered in `scrape_dispatcher.py` for Jacksonville/Duval individual-homeowner pulls. It exposes parcel ID, owner, location address parts, city, ZIP, and acreage.
+  - Key fields: `RE`, `LNAME`, `LOC_ST_NO`, `LOC_ST_DIR`, `LOC_ST_NAM`, `LOC_ST_TYP`, `LOC_ST_UNI`, `LOC_CITY`, `LOC_ZIP`, `ACRES`.
+
 ### Other states
 
 - **Maricopa AZ (Phoenix) — Tier 1 ArcGIS + ArcGIS Online items**: data sales page at `https://www.mcassessor.maricopa.gov/page/data_sales/` links 17 datasets. **Master files come from ArcGIS Online item API** (binary zip):
@@ -156,7 +190,7 @@ Update this whenever you discover, refresh, or fix a county URL. **Section below
   - Residential Master: `https://www.arcgis.com/sharing/rest/content/items/e22983d41d91490d90965544b718a120/data` (58 MB → 364 MB)
   - Commercial Master: `https://www.arcgis.com/sharing/rest/content/items/12ce08cf4d264f9d97bb7ef4d6eb9944/data` (21 MB → 525 MB)
   - Apartment Master: `https://www.arcgis.com/sharing/rest/content/items/0b5770a1b73f4637b8f92f088465890b/data` (343 KB)
-  - (Codex reported "10,000 rows" pulled 2026-07-04 — confirm this used the master files above or a different endpoint; backfill.)
+  - Working method: save the master zips under `/opt/leadcurate/raw_imports/maricopa-az/<date>/` as `secured-master.zip`, `residential-master.zip`, and optionally `commercial-master.zip`, then run `scripts/leadcurate/extract_maricopa_az.py --raw-dir /opt/leadcurate/raw_imports/maricopa-az/<date> --output-dir /opt/leadcurate/raw_imports/maricopa-az/<date> --limit 10000`. Extractor reads `Data/Residential_Master.txt` and `Data/Secured_Master*` pipe-delimited files and writes `parcels-extracted.csv`.
 - **Marion IN (Indianapolis) — Tier 1 ArcGIS** at `data.indy.gov`:
   - Parcels w/ Owner + Assessed Values: `https://data.indy.gov/api/download/v1/items/0d28e222479743baa97f8f4456da7bb4/csv?layers=10` (347k rows)
   - HHC Parcel Owner: `https://data.indy.gov/api/download/v1/items/1dbe42c87bf24d5780bee61907bcbfc2/csv?layers=1` (408k rows)
@@ -164,7 +198,8 @@ Update this whenever you discover, refresh, or fix a county URL. **Section below
   - Property Foreclosures (premium): `https://data.louisvilleky.gov/api/download/v1/items/62c648120ab44b7794f8b484884efaa9/csv?layers=0` (3k court cases w/ Action_Filed, Sale_Date, Sale_Price, Purchaser)
   - Parcels: `https://data.louisvilleky.gov/api/download/v1/items/47085b87ac754d60942ea324a3b0f54f/csv?layers=1` (293k)
   - Lien Holder Final Orders: `https://data.louisvilleky.gov/api/download/v1/items/8f25a99a0e2347cc871a203ca325ab5e/csv?layers=0` (516)
-  - Property Maintenance Violations: `https://data.louisvilleky.gov/api/download/v1/items/1fd891c3301c4c4581b86c338468fbe4/csv?layers=0` (17.7k) — used for the "18 live lookups" code-violations enrichment Codex ran 2026-07-04, PVA enrichment method not documented, backfill.
+  - Property Maintenance Violations: `https://data.louisvilleky.gov/api/download/v1/items/1fd891c3301c4c4581b86c338468fbe4/csv?layers=0` (17.7k)
+  - Code-violations enrichment method: store the violations CSV as `/opt/leadcurate/raw_imports/jefferson-ky/<date>/property-maintenance-violations.csv`, then run `scripts/leadcurate/enrich_jefferson_ky_code_violations.py --limit 1000`. The script queries `https://jeffersonpva.ky.gov/property-search/property-listings/?psfldParcelId=<PARCEL_ID>&searchType=ParcelSearch`, parses the PVA detail page for owner and assessed value, and writes `property-maintenance-violations-enriched.csv`.
 - **Cuyahoga OH (Cleveland) — Tier 1 ArcGIS** at `data-cuyahoga.opendata.arcgis.com`:
   - Tax Parcels: `https://data-cuyahoga.opendata.arcgis.com/api/download/v1/items/ffaaa1651d5540419469375d680f3245/csv?layers=0` (527k)
   - Parcel Sales 2021-Present: `https://data-cuyahoga.opendata.arcgis.com/api/download/v1/items/234b606bf7304a9f93bcc9e00afb28fc/csv?layers=0` (130k)
@@ -176,7 +211,6 @@ Update this whenever you discover, refresh, or fix a county URL. **Section below
 - **Erie NY (Buffalo) — Tier 4 PDF publications**: `https://www3.erie.gov/ecrpts/sites/www3.erie.gov.ecrpts/files/2026-05/filed-list-of-delinquent-taxes-9691950.1.pdf` (5 MB filed delinquent list). Filename includes a generated number — check `https://www3.erie.gov/ecrpts/auction-foreclosure-information` for current.
 - **Fayette KY (Lexington) — Tier 1 ArcGIS** at `data.lexingtonky.gov` (4 property datasets in DCAT — catalog pulled, datasets not yet downloaded).
 - **Jefferson AL (Birmingham) — BLOCKED**: `eringcapture.jccal.org` is a React SPA returning ~830 bytes of shell HTML. **Chrome MCP escalation required.**
-- **Duval FL (Jacksonville), Davidson TN (Nashville) — NOT YET DOCUMENTED**: both were "previously zero-data," solved by Codex 2026-07-04 (3,000 rows each). Backfill needed.
 
 ## Processing patterns (Discovery Snapshot pipeline)
 
