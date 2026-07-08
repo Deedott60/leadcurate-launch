@@ -100,9 +100,14 @@ function numbersBlock(title: string, items: [string, string | number][]) {
   return `<h2 style="font-family:Georgia,serif;font-size:18px;color:#0f172a;margin:0 0 6px;">${esc(title)}</h2>${boxedRows([rows])}`;
 }
 
+// cellspacing + percentage-width <td> is a known email-client trap: Gmail/Outlook
+// don't subtract spacing from the percentage math, so the row silently overflows
+// the 640px container and shoves right/wraps on a phone screen. Real spacer
+// cells (fixed px, no percentage) are the bulletproof fix.
 function heroStatCards(items: [string, string | number][]) {
-  const width = Math.floor(100 / Math.max(1, items.length));
-  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="8"><tr>${items.map(([k, v]) => `<td width="${width}%" style="border:1px solid #e2dccf;border-radius:10px;padding:14px;background:#faf7f2;"><div style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#64748b;font-weight:700;">${esc(k)}</div><div style="font-size:20px;font-weight:800;color:#0f172a;margin-top:4px;">${esc(v)}</div></td>`).join("")}</tr></table>`;
+  const cell = ([k, v]: [string, string | number]) => `<td style="border:1px solid #e2dccf;border-radius:10px;padding:14px;background:#faf7f2;"><div style="font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#64748b;font-weight:700;">${esc(k)}</div><div style="font-size:20px;font-weight:800;color:#0f172a;margin-top:4px;">${esc(v)}</div></td>`;
+  const spacer = `<td width="8"></td>`;
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>${items.map(cell).join(spacer)}</tr></table>`;
 }
 
 // The actual differentiation reasoning, generic across lanes: WHY a rebuilt/verified
