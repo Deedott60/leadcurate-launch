@@ -21,6 +21,25 @@ EXCLUDE_OWNER = re.compile(
     re.I,
 )
 
+# Broader than EXCLUDE_OWNER (which drops institutional owners entirely) -- this
+# just labels ownership type on records that stay in the list, so "Ownership
+# type" in the delivered file is real, not a promise the CSV doesn't back up.
+ENTITY_OWNER = re.compile(
+    r"\bLLC\b|\bL\.L\.C\.\b|\bINC\b|\bINCORPORATED\b|\bCORP\b|\bCORPORATION\b|"
+    r"\bCOMPANY\b|\bTRUST\b|\bTRUSTEE\b|\bTRUSTEES\b|\bPARTNERSHIP\b|\bLP\b|"
+    r"\bL\.P\.\b|\bPROPERTIES\b|\bPROPERTY\b|\bPROPCO\b|\bHOLDINGS\b|\bGROUP\b|"
+    r"\bASSOC\b|\bASSOCIATION\b|\bASSET\b|\bASSETS\b|\bINVESTMENT\b|"
+    r"\bINVESTMENTS\b|\bENTERPRISE\b|\bENTERPRISES\b|\bCHURCH\b|\bMINISTRIES\b|"
+    r"\bMINISTRY\b|\bBANK\b|\bMORTGAGE\b|\bFOUNDATION\b|\bSFR\b|\bBORROWER\b|"
+    r"\bREIT\b|\bFUND\b|\bHOA\b|\bHOMEOWNERS\b|\bCONDOMINIUM\b|\bDEVELOPMENT\b|"
+    r"\bDEVELOPMENTS\b|\bDEVELOPER\b|\bREALTY\b|\bRENTALS\b|\bLEASING\b",
+    re.I,
+)
+
+
+def ownership_type(owner: str) -> str:
+    return "entity" if ENTITY_OWNER.search(owner or "") else "individual"
+
 MARKETS: dict[str, dict[str, Any]] = {
     "mecklenburg-nc": {
         "display": "Mecklenburg County NC",
@@ -328,6 +347,7 @@ def qualifies(row: dict[str, str], cfg: dict[str, Any]) -> tuple[bool, dict[str,
         "land_use_code": field_value(row, cfg, "land_use"),
         "vacant_signal": vacant_text,
         "parcel_pid": field_value(row, cfg, "parcel"),
+        "ownership_type": ownership_type(owner),
     }
 
 
@@ -347,7 +367,7 @@ def write_outputs(market: str, rows: list[dict[str, Any]], total: int, cfg: dict
     cols = [
         "rank", "score", "owner_name", "property_address", "municipality", "mail_city",
         "mail_state", "mail_zip", "total_acreage", "land_value", "total_value",
-        "is_absentee_owner", "vacant_signal", "building_value", "year_built",
+        "is_absentee_owner", "ownership_type", "vacant_signal", "building_value", "year_built",
         "heated_sqft", "land_use_code", "parcel_pid", "lane", "county", "state",
     ]
     with full.open("w", newline="", encoding="utf-8") as f:
@@ -367,6 +387,13 @@ def write_outputs(market: str, rows: list[dict[str, Any]], total: int, cfg: dict
             writer.writerow([idx] + [out.get(c, "") for c in cols[1:]])
     absentee = sum(1 for row in rows if row["is_absentee_owner"] == "yes")
     oos = sum(1 for row in rows if clean(row["mail_state"]).upper() not in ("", cfg["state"]))
+    individual = sum(1 for row in rows if row["ownership_type"] == "individual")
+    entity = len(rows) - individual
+    absentee_individual = sum(1 for row in rows if row["is_absentee_owner"] == "yes" and row["ownership_type"] == "individual")
+    absentee_entity = absentee - absentee_individual
+    mail_ok = sum(1 for row in rows if clean(row["mail_city"]) and clean(row["mail_state"]) and clean(row["mail_zip"]))
+    land_values = [row["land_value"] for row in rows if row["land_value"] > 0]
+    acreages = [row["total_acreage"] for row in rows if row["total_acreage"] > 0]
     payload = {
         "lane": "verified_vacant_land",
         "market": market,
@@ -376,6 +403,18 @@ def write_outputs(market: str, rows: list[dict[str, Any]], total: int, cfg: dict
         "verified_vacant": len(rows),
         "absentee": absentee,
         "out_of_state": oos,
+        "individual_owned": individual,
+        "entity_owned": entity,
+        "absentee_individual": absentee_individual,
+        "absentee_entity": absentee_entity,
+        "mailing_coverage_pct": round(mail_ok / len(rows) * 100, 1) if rows else 0,
+        "combined_land_value": round(sum(land_values), 2),
+        "avg_land_value": round(sum(land_values) / len(land_values), 2) if land_values else 0,
+        "median_land_value": sorted(land_values)[len(land_values) // 2] if land_values else 0,
+        "max_land_value": max(land_values) if land_values else 0,
+        "total_acreage_sum": round(sum(acreages), 2),
+        "avg_acreage": round(sum(acreages) / len(acreages), 3) if acreages else 0,
+        "median_acreage": sorted(acreages)[len(acreages) // 2] if acreages else 0,
         "exported": len(top),
         "outputs": {"full": str(full), "preview": str(preview), "meta": str(meta)},
         "verification_criteria": [
