@@ -66,7 +66,7 @@ When information conflicts, trust in this order:
 1. **Direct verification right now** (SSH output, file content, count query, curl response)
 2. **`/CLAUDE.md`** at repo root (LeadCurate state, voice, tier system, customer flow)
 3. **This file** (universal agent behaviors)
-4. **Active handoff docs** (`docs/codex-handoff-*.md`, `docs/THE-PLAN.md`)
+4. **`docs/CURRENT-HANDOFF.md`** — the single current-state file, edited in place. Also `docs/THE-PLAN.md` for phase strategy. Dated `docs/codex-handoff-*.md` files are archived in `docs/codex-handoff-archive/` — history only, never current state.
 5. **Memory files / older docs** — useful for context, NOT for state claims
 
 If memory says X and SSH says Y, Y wins. Update the memory.

@@ -148,7 +148,7 @@ Fit, quality, accuracy, freshness, urgency, exclusivity. Match customers to the 
 | Agent | Role |
 |---|---|
 | **Claude (orchestrator)** | Strategy, code, brand, sync this file |
-| **Codex** | VPS infrastructure, security, scrapers — reads `docs/codex-handoff-*.md` |
+| **Codex** | VPS infrastructure, security, scrapers — reads `docs/CURRENT-HANDOFF.md` (not dated handoff files, those are archived) |
 | **Hermes (Danny)** | 24/7 ops — runs scrapers, monitors Conference Room, executes activity_feed tasks |
 | **Derrick** | Business decisions, pricing, sales |
 
@@ -162,9 +162,9 @@ Event types: conf:role | conf:done | conf:status | conf:blocker | conf:urgent
 
 ---
 
-## 8. Active Codex handoff
+## 8. Current handoff — single source of truth
 
-`docs/codex-handoff-2026-06-25.md`. Priority: (1) Supabase security fixes (2) Conference Room watcher fix (3) ~~n8n docker install~~ SKIPPED, Hostinger one-click handling (4) Intake auto-reply Edge Function (5) Tier plumbing (6) Domain swap (7) Lead Scout.
+`docs/CURRENT-HANDOFF.md`. This file is edited in place, not recreated — always current, never a stale date to guess at. Read it every session alongside `docs/AGENT-OPERATING-RULES.md`. Dated `docs/codex-handoff-*.md` files are archived in `docs/codex-handoff-archive/` for history only; don't treat them as active.
 
 ---
 

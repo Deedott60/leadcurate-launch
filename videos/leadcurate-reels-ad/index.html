@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --cream: #faf7f2;
+        --emerald: #15803d;
+        --emerald-dark: #14532d;
+        --navy: #0f172a;
+        --slate: #475569;
+        --line: #e2dccf;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1920px; overflow: hidden;
+        background: var(--navy);
+        font-family: "Inter", sans-serif;
+      }
+      .clip { position: absolute; inset: 0; width: 1080px; height: 1920px; overflow: hidden; }
+
+      /* SCENE 1 — real footage, cropped/scaled to fill vertical canvas */
+      .s1 { background: var(--navy); display: flex; align-items: center; justify-content: center; }
+      #real-video {
+        width: 1080px;
+        height: 1920px;
+        object-fit: cover;
+        object-position: top center;
+      }
+      .overlay-top {
+        position: absolute; top: 0; left: 0; right: 0;
+        height: 320px;
+        background: linear-gradient(180deg, rgba(15,23,42,0.72) 0%, rgba(15,23,42,0) 100%);
+        z-index: 5; pointer-events: none;
+      }
+      .caption-top {
+        position: absolute; top: 70px; left: 0; right: 0; text-align: center;
+        z-index: 6;
+        font-family: "Playfair Display", serif; font-weight: 700; font-style: italic;
+        font-size: 46px; color: var(--cream); letter-spacing: -0.01em;
+        text-shadow: 0 2px 18px rgba(0,0,0,0.35);
+      }
+      .caption-mid {
+        position: absolute; bottom: 130px; left: 0; right: 0; text-align: center;
+        z-index: 6; padding: 0 60px;
+        font-family: "Playfair Display", serif; font-weight: 600;
+        font-size: 40px; color: var(--cream); line-height: 1.25;
+        text-shadow: 0 2px 18px rgba(0,0,0,0.45);
+      }
+      .caption-mid .accent { color: #6ee7a0; font-style: italic; font-weight: 700; }
+      .overlay-bottom {
+        position: absolute; bottom: 0; left: 0; right: 0; height: 280px;
+        background: linear-gradient(0deg, rgba(15,23,42,0.78) 0%, rgba(15,23,42,0) 100%);
+        z-index: 5; pointer-events: none;
+      }
+
+      /* SCENE 2 — brand close card */
+      .s2 { background: var(--cream); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 80px; }
+      .close-mark {
+        width: 170px; height: 170px; border-radius: 28px;
+        background: var(--emerald); color: var(--cream);
+        display: flex; align-items: center; justify-content: center;
+        font-family: "Playfair Display", serif; font-weight: 700;
+        font-size: 122px; letter-spacing: -0.04em;
+        box-shadow: 0 30px 80px rgba(20,83,45,0.20); margin-bottom: 44px;
+      }
+      .close-name {
+        font-family: "Playfair Display", serif; font-weight: 700;
+        font-size: 76px; color: var(--navy); letter-spacing: -0.02em; margin-bottom: 50px;
+      }
+      .close-tag {
+        font-family: "Playfair Display", serif; font-weight: 600; font-style: italic;
+        font-size: 50px; line-height: 1.25; text-align: center;
+        color: var(--slate); max-width: 800px;
+      }
+      .close-tag .accent { color: var(--emerald); font-weight: 700; font-style: italic; }
+      .close-url {
+        position: absolute; bottom: 110px; left: 0; right: 0; text-align: center;
+        font-family: "JetBrains Mono", monospace; font-size: 26px;
+        letter-spacing: 0.26em; text-transform: uppercase;
+        color: var(--emerald); font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="19.5"
+      data-width="1080"
+      data-height="1920"
+    >
+      <!-- SCENE 1 — real footage (0-15) -->
+      <div id="scene1" class="clip s1">
+        <video
+          id="real-video"
+          src="assets/real_footage/clean_trim.mp4"
+          data-start="0"
+          data-duration="15"
+          muted
+          playsinline
+        ></video>
+        <div class="overlay-top"></div>
+        <div id="cap-top" class="caption-top">This is the real product.</div>
+        <div id="cap-mid" class="caption-mid">
+          Every list arrives <span class="accent">like this.</span> Nothing staged.
+        </div>
+        <div class="overlay-bottom"></div>
+      </div>
+
+      <!-- SCENE 2 — brand close (15-19.5) -->
+      <div id="scene2" class="clip s2" data-start="15" data-duration="4.5" data-track-index="1">
+        <div id="s2-mark" class="close-mark">L</div>
+        <div id="s2-name" class="close-name">LeadCurate</div>
+        <div id="s2-tag" class="close-tag">
+          Built for <span class="accent">your</span> market.<br/>Not everyone's.
+        </div>
+        <div id="s2-url" class="close-url">leadcurate.com</div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true, defaults: { ease: "power3.out", overwrite: "auto" } });
+
+      // Scene 1 captions — light, not intrusive, real footage is the star
+      tl.from("#cap-top", { opacity: 0, y: -16, duration: 0.8 }, 0.4);
+      tl.to("#cap-top", { opacity: 0, duration: 0.6 }, 3.4);
+
+      tl.from("#cap-mid", { opacity: 0, y: 16, duration: 0.8 }, 9.5);
+      tl.to("#cap-mid", { opacity: 0, duration: 0.5 }, 14.4);
+      tl.set("#cap-mid", { opacity: 0 }, 15.0);
+
+      // Scene 2 — close card
+      tl.from("#s2-mark", { scale: 0.6, opacity: 0, duration: 0.8, ease: "expo.out" }, 15.2);
+      tl.from("#s2-name", { y: 30, opacity: 0, duration: 0.7 }, 15.7);
+      tl.from("#s2-tag", { y: 20, opacity: 0, duration: 0.8 }, 16.2);
+      tl.from("#s2-url", { opacity: 0, duration: 0.6 }, 17.3);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

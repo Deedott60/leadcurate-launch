@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --cream: #faf7f2;
+        --emerald: #15803d;
+        --emerald-dark: #14532d;
+        --navy: #0f172a;
+        --slate: #475569;
+        --line: #e2dccf;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1350px; overflow: hidden;
+        background: var(--cream);
+        font-family: "Inter", sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .clip { position: absolute; inset: 0; width: 1080px; height: 1350px; overflow: hidden; background: var(--cream); }
+      .eyebrow {
+        font-family: "Inter", sans-serif; font-weight: 600;
+        font-size: 22px; letter-spacing: 0.22em; text-transform: uppercase;
+        color: var(--emerald);
+      }
+      .headline {
+        font-family: "Playfair Display", serif; font-weight: 700;
+        letter-spacing: -0.02em; color: var(--navy);
+      }
+      .body-text {
+        font-family: "Inter", sans-serif; font-weight: 400;
+        color: var(--slate); line-height: 1.55;
+      }
+
+      /* SLIDE 1 — hook, real stat cards */
+      .s1 { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 80px; }
+      .s1 .eyebrow { align-self: flex-start; margin-bottom: 26px; }
+      .s1 .headline { font-size: 66px; line-height: 1.12; align-self: flex-start; margin-bottom: 60px; }
+      .s1 img { width: 920px; border-radius: 20px; border: 1px solid var(--line); box-shadow: 0 30px 70px rgba(15,23,42,0.10); }
+      .s1 .footer-tag {
+        margin-top: 64px; font-family: "Playfair Display", serif; font-style: italic; font-weight: 600;
+        font-size: 34px; color: var(--emerald); align-self: flex-start;
+      }
+
+      /* SLIDE 2 — real chart, education caption */
+      .s2 { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 80px; }
+      .s2 .eyebrow { align-self: flex-start; margin-bottom: 26px; }
+      .s2 .headline { font-size: 58px; line-height: 1.15; align-self: flex-start; margin-bottom: 52px; max-width: 880px; }
+      .s2 img { width: 920px; border-radius: 20px; border: 1px solid var(--line); box-shadow: 0 30px 70px rgba(15,23,42,0.10); }
+      .s2 .body-text { font-size: 32px; align-self: flex-start; margin-top: 52px; max-width: 900px; }
+
+      /* SLIDE 3 — real table + CTA screenshot */
+      .s3 { display: flex; flex-direction: column; align-items: center; padding: 90px 80px; }
+      .s3 .eyebrow { align-self: flex-start; margin-bottom: 22px; }
+      .s3 .headline { font-size: 50px; line-height: 1.15; align-self: flex-start; margin-bottom: 36px; max-width: 880px; }
+      .s3 img { width: 920px; border-radius: 20px; border: 1px solid var(--line); box-shadow: 0 30px 70px rgba(15,23,42,0.10); }
+
+      /* SLIDE 4 — differentiator, text-only */
+      .s4 { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 100px; }
+      .s4 .eyebrow { margin-bottom: 32px; }
+      .s4 .headline { font-size: 78px; line-height: 1.14; text-align: center; }
+      .s4 .headline .accent { color: var(--emerald); font-style: italic; }
+      .s4 .sub { margin-top: 44px; font-size: 30px; text-align: center; max-width: 760px; }
+
+      /* SLIDE 5 — soft CTA + logo close */
+      .s5 { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 100px; }
+      .s5 .close-mark {
+        width: 150px; height: 150px; border-radius: 26px;
+        background: var(--emerald); color: var(--cream);
+        display: flex; align-items: center; justify-content: center;
+        font-family: "Playfair Display", serif; font-weight: 700;
+        font-size: 106px; letter-spacing: -0.04em;
+        box-shadow: 0 24px 60px rgba(20,83,45,0.18); margin-bottom: 40px;
+      }
+      .s5 .close-name {
+        font-family: "Playfair Display", serif; font-weight: 700;
+        font-size: 62px; color: var(--navy); margin-bottom: 44px; letter-spacing: -0.02em;
+      }
+      .s5 .cta-question {
+        font-family: "Playfair Display", serif; font-weight: 600; font-style: italic;
+        font-size: 46px; text-align: center; color: var(--navy); line-height: 1.3; margin-bottom: 40px; max-width: 800px;
+      }
+      .s5 .url-pill {
+        background: var(--navy); color: var(--cream);
+        padding: 20px 44px; border-radius: 999px;
+        font-family: "Inter", sans-serif; font-weight: 600; font-size: 26px;
+        letter-spacing: 0.04em;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="5"
+      data-width="1080"
+      data-height="1350"
+    >
+      <!-- SLIDE 1 -->
+      <div id="scene-1" class="clip s1" data-start="0" data-duration="0.99" data-track-index="1">
+        <div class="eyebrow">Wake County, NC · This Week's Scan</div>
+        <div class="headline">What a curated list<br/>actually looks like.</div>
+        <img src="assets/crops/slide1_stats.png" alt="Real audit stat cards" />
+        <div class="footer-tag">Real numbers. Real file. No filler.</div>
+      </div>
+
+      <!-- SLIDE 2 -->
+      <div id="scene-2" class="clip s2" data-start="1" data-duration="0.99" data-track-index="1">
+        <div class="eyebrow">How We Score It</div>
+        <div class="headline">Not every record<br/>deserves the same call.</div>
+        <img src="assets/crops/slide2_chart.png" alt="Real signal density chart" />
+        <div class="body-text">HOT means the debt is heavy or the years behind add up. Absentee means the owner isn't local. We rank before you dial — you don't sort a spreadsheet to find the deal.</div>
+      </div>
+
+      <!-- SLIDE 3 -->
+      <div id="scene-3" class="clip s3" data-start="2" data-duration="0.99" data-track-index="1">
+        <div class="eyebrow">Before You Reserve</div>
+        <div class="headline">This is the actual file preview<br/>every prospect sees.</div>
+        <img src="assets/crops/slide3_table_cta.png" alt="Real redacted sample table and reserve CTA" />
+      </div>
+
+      <!-- SLIDE 4 -->
+      <div id="scene-4" class="clip s4" data-start="3" data-duration="0.99" data-track-index="1">
+        <div class="eyebrow">Why It's Different</div>
+        <div class="headline">Capped to <span class="accent">one buyer</span><br/>per market.</div>
+        <div class="sub">Not sold twice. Not sold to the wholesaler down the street. Once it's reserved, it's yours.</div>
+      </div>
+
+      <!-- SLIDE 5 -->
+      <div id="scene-5" class="clip s5" data-start="4" data-duration="0.99" data-track-index="1">
+        <div class="close-mark">L</div>
+        <div class="close-name">LeadCurate</div>
+        <div class="cta-question">What county are you working right now?</div>
+        <div class="url-pill">leadcurate.com/intake</div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
