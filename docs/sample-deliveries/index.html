@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex" />
-<title>LeadCurate — Sample Deliveries</title>
+<title>LeadCurate · Sample Deliveries</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
 <style>
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded',function(){
     chip.addEventListener('click',function(e){
       e.preventDefault(); e.stopPropagation();
       var url=new URL(a.getAttribute('href'),window.location.href).href;
-      navigator.clipboard.writeText(url).then(function(){ chip.textContent='✓ Copied — paste in your DM'; setTimeout(function(){chip.textContent='🔗 Copy link';},2000); });
+      navigator.clipboard.writeText(url).then(function(){ chip.textContent='✓ Copied, paste in your DM'; setTimeout(function(){chip.textContent='🔗 Copy link';},2000); });
     });
     card.appendChild(chip);
   });
@@ -70,11 +70,29 @@ document.addEventListener('DOMContentLoaded',function(){
 
   <span class="eyebrow">Discovery Snapshots</span>
   <h1>Sample deliveries.</h1>
-  <p class="lede">Real lists, real markets, sample previews — what an actual LeadCurate delivery looks like in your inbox. Owner names and street numbers redacted; full unredacted files ship with purchase.</p>
+  <p class="lede">Real lists, real markets, sample previews. What an actual LeadCurate delivery looks like in your inbox. Owner names and street numbers redacted; full unredacted files ship with purchase.</p>
 
   <div class="hr"></div>
 
   <div class="grid">
+
+    <!-- Verified Vacant Land - Chattanooga -->
+    <a href="chattanooga-verified-vacant-2026-07-08/" style="text-decoration:none;color:inherit;">
+      <div class="card card-multi">
+        <div>
+          <div class="card-tag live">🔥 New · Verified Vacant Land</div>
+          <h2>Chattanooga, TN</h2>
+          <div class="card-loc">Hamilton County · Six-Check Verified Vacant</div>
+          <p class="card-meta">168,952 county parcels reviewed, only 21,654 pass verification as genuinely vacant, buildable land. Priority segment of 2,298 absentee owners with affordable land called out first.</p>
+          <div class="card-stats">
+            <span><strong>21,654</strong> verified vacant</span>
+            <span><strong>2,729</strong> absentee</span>
+            <span><strong>2,298</strong> priority</span>
+          </div>
+        </div>
+        <span class="card-link">View audit</span>
+      </div>
+    </a>
 
     <!-- Verified Vacant Land -->
     <a href="charlotte-verified-vacant-2026-07-07/" style="text-decoration:none;color:inherit;">
@@ -83,7 +101,7 @@ document.addEventListener('DOMContentLoaded',function(){
           <div class="card-tag live">🔥 New · Verified Vacant Land</div>
           <h2>Charlotte, NC</h2>
           <div class="card-loc">Mecklenburg County · Six-Check Verified Vacant</div>
-          <p class="card-meta">82% of the county's "vacant" extract is HOA ponds, improved lots, and slivers. Every parcel here passed six independent vacancy checks — real dirt, real owners.</p>
+          <p class="card-meta">82% of the county's "vacant" extract is HOA ponds, improved lots, and slivers. Every parcel here passed six independent vacancy checks. Real dirt, real owners.</p>
           <div class="card-stats">
             <span><strong>4,222</strong> verified vacant</span>
             <span><strong>1,373</strong> absentee</span>
@@ -119,7 +137,7 @@ document.addEventListener('DOMContentLoaded',function(){
           <div class="card-tag live">🔥 New · For Restoration Contractors</div>
           <h2>New York City</h2>
           <div class="card-loc">All 5 Boroughs · Active DOB Violations</div>
-          <p class="card-meta">2.47M citywide DOB records processed down to 54,513 buildings with open violations that legally require repair work — facade, hazardous, boiler, structural.</p>
+          <p class="card-meta">2.47M citywide DOB records processed down to 54,513 buildings with open violations that legally require repair work: facade, hazardous, boiler, structural.</p>
           <div class="card-stats">
             <span><strong>184K</strong> active violations</span>
             <span><strong>5,111</strong> facade/FISP</span>
@@ -172,7 +190,7 @@ document.addEventListener('DOMContentLoaded',function(){
         <div>
           <div class="card-tag live">🆕 Newest</div>
           <h2>Atlanta NW, GA</h2>
-          <div class="card-loc">Cobb County · Tax Delinquent — June 2026</div>
+          <div class="card-loc">Cobb County · Tax Delinquent, June 2026</div>
           <p class="card-meta">5,678 delinquent parcels covering $10.66M in unpaid taxes. Heavy LLC concentration on commercial corridors.</p>
           <div class="card-stats">
             <span><strong>5,678</strong> rows</span>
