@@ -26,6 +26,14 @@ Our answer: every Verified Vacant Land record is checked against the county's **
 
 **This is internal doctrine, not customer-facing copy.** Customer-facing material (audits, sample deliveries, sales messages) should describe the *outcome* — "you're not wasting outreach on land that's already gone or was never really vacant" — never the specific checks or scoring logic. That process is the moat; don't let it end up in something a prospect can copy-paste into their own script. See `docs/CURRENT-HANDOFF.md` for the active work generalizing this to new counties.
 
+## Email template discipline — ONE template, no exceptions
+
+`supabase/functions/send-delivery/index.ts` is the only email-sending code for LeadCurate. It renders every lane (debt, vacant land, asset locator, contractor cuts, anything future) through the SAME `renderSample`/`renderDelivery` functions, which build their content generically from `deriveNumbers()`/`recordValue()`/`genericSampleTable()` — never from a lane-specific hardcoded branch or a second render function.
+
+**Why this rule exists:** on 2026-06-30 a good, richer template (stat cards, "By the numbers," "Working notes") was built and verified with real test sends for Wake County — then never committed. Every session after that (Claude, Codex, and Claude again on 2026-07-08) built its own one-off version from scratch, because nothing forced reuse of what already worked. The result: every customer-facing email looked different, which is exactly the kind of thing that makes a business look unprofessional and amateur.
+
+**If a new lane needs a new field type** (e.g. something that isn't owner/address/value/acreage), extend `recordValue()` and `deriveNumbers()` to recognize the new field — do not write a new `render*` function. If you think you need a second render function, you're about to repeat the mistake; stop and extend the generic one instead.
+
 ## Scraping / data-pull playbook discipline
 
 `docs/playbooks/county-data-pull.md` and `docs/playbooks/js-blocker-bypass.md` are the ONLY canonical scraping references. They live in this git repo specifically so Codex and Danny/Hermes can both read AND write them — a prior version lived only in a local Claude Code skill folder on Derrick's Windows machine, which neither Codex nor Danny could ever reach, so nothing learned ever got passed forward and every county got re-solved from scratch. Don't repeat that.
