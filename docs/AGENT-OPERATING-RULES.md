@@ -12,6 +12,20 @@
 - **Old notes ≠ current state.** Task lists, memory files, prior commits, and skill files can be stale. Re-verify before acting.
 - **Don't double down on stale claims.** If the operator pushes back, assume they're right and verify the system — don't defend the stale note.
 
+## Sync discipline — no decision stays in one session
+
+- **The moment Derrick decides something (pricing, strategy, product differentiation, a new rule), it goes into a durable file AND gets posted to the Conference Room in the same session — not "next time," not "if asked."** Derrick should never have to repeat a decision to a different agent.
+- Strategy/product doctrine goes in this file or `/CLAUDE.md`. One-off task orders go in a `docs/codex-handoff-*.md` + `conf:role` post. Both, if it's a decision other agents need to act on AND remember long-term.
+- Before ending any session where a decision was made, ask: "Does Codex know this? Does Danny know this? Is it written down anywhere they'll actually read?" If no to any of those, fix it before stopping.
+
+## Product doctrine — Vacant Land differentiation
+
+The competitive problem: static vacant-land lists (what most resellers and SMS-campaign data vendors sell) get built once and never rechecked. By the time a buyer acts on a record, a meaningful share of it is stale — already built on, already under contract, or was never actually vacant (a bad flag in the source file, or land carrying an improvement the list didn't catch).
+
+Our answer: every Verified Vacant Land record is checked against the county's **current** parcel file before it ships — not a one-time scrape. The verification process (`scripts/leadcurate/process_verified_vacant.py`) runs multiple live checks (vacancy flag, land-vs-building value ratio, year built, heated area, owner, acreage) so a "vacant" record is actually vacant and actually buildable. Absentee owners get flagged specifically, since they're the ones structurally more likely to sell rather than build or hold.
+
+**This is internal doctrine, not customer-facing copy.** Customer-facing material (audits, sample deliveries, sales messages) should describe the *outcome* — "you're not wasting outreach on land that's already gone or was never really vacant" — never the specific checks or scoring logic. That process is the moat; don't let it end up in something a prospect can copy-paste into their own script. See `docs/codex-handoff-2026-07-07.md` item 3 for the active work generalizing this to new counties.
+
 ## Communication discipline
 
 - **Match response shape to question shape.** A two-word question gets a two-word answer. Don't add sections/headers/summaries to simple questions.
