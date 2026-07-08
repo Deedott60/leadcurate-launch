@@ -139,22 +139,13 @@ function differentiatorsBlock(p: any) {
   return `<h2 style="font-family:Georgia,serif;font-size:18px;color:#0f172a;margin:0 0 10px;">Why this beats a purchased list</h2>${boxedRows([rows])}`;
 }
 
-// Derives the "value" column label + value from whichever field is present on a record,
-// so the same table renderer works for a debt lane (owed) or a vacant-land lane (land_value) etc.
-function recordValue(r: any): [string, string] {
-  if (r.owed !== undefined) return ["Owed", money(r.owed)];
-  if (r.land_value !== undefined) return ["Land Value", money(r.land_value)];
-  if (r.value !== undefined || r.property_value !== undefined || r.total_value !== undefined) return ["Value", money(r.value ?? r.property_value ?? r.total_value)];
-  return ["Value", "N/A"];
-}
-
 function badge(label: string, bg: string, fg: string) {
   return `<span style="display:inline-block;background:${bg};color:${fg};font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:3px 8px;border-radius:999px;">${esc(label)}</span>`;
 }
 
 // Matches the real, previously-proven table design: green header row, owner name
 // with an ABSENTEE badge inline when flagged, a colored STATUS pill per row.
-// Works for any lane because it reads whatever fields recordValue()/status find.
+// Works for any lane because it reads whatever fields extraColumns()/status find.
 function recordStatus(r: any): [string, string, string] {
   if (r.motivation === "HOT" || r.status === "HOT") return ["HOT", "#fee2e2", "#991b1b"];
   if (r.motivation === "WARM" || r.status === "WARM") return ["WARM", "#fef3c7", "#b45309"];
@@ -162,19 +153,35 @@ function recordStatus(r: any): [string, string, string] {
   return ["ACTIVE", "#dff4e8", "#15803d"];
 }
 
+// Builds up to three optional numeric columns from whatever fields are present,
+// instead of just one primary + one secondary. A debt lane with owed/equity/years
+// gets all three columns like the proven Wake County design; a vacant-land lane
+// with land_value/acreage gets those two instead. Never hardcoded to one lane.
+function extraColumns(sample: any[]): { label: string; get: (r: any) => string; align: "right" }[] {
+  if (!sample.length) return [];
+  const first = sample[0];
+  const cols: { label: string; get: (r: any) => string; align: "right" }[] = [];
+  if (first.owed !== undefined) cols.push({ label: "Owed", get: (r) => money(r.owed), align: "right" });
+  if (first.land_value !== undefined) cols.push({ label: "Land Value", get: (r) => money(r.land_value), align: "right" });
+  if (first.value !== undefined || first.property_value !== undefined || first.total_value !== undefined) cols.push({ label: "Value", get: (r) => money(r.value ?? r.property_value ?? r.total_value), align: "right" });
+  if (first.equity !== undefined) cols.push({ label: "Equity", get: (r) => money(r.equity), align: "right" });
+  if (first.years !== undefined) cols.push({ label: "Yrs", get: (r) => String(r.years ?? ""), align: "right" });
+  if (first.acreage !== undefined) cols.push({ label: "Acreage", get: (r) => `${Number(r.acreage).toLocaleString()} ac`, align: "right" });
+  return cols.length ? cols : [{ label: "Value", get: () => "N/A", align: "right" }];
+}
+
 function genericSampleTable(sample: any[] = [], redact = false, limit = 8) {
-  const secondaryLabel = sample.length && sample[0].acreage !== undefined ? "Acreage" : (sample.length && sample[0].equity !== undefined ? "Equity" : null);
+  const cols = extraColumns(sample);
   const rows = sample.slice(0, limit).map((r, i) => {
     const owner = r.owner ?? r.owner_name ?? "";
     const address = r.address ?? r.property_address ?? "";
-    const [, value] = recordValue(r);
-    const secondary = r.acreage !== undefined ? `${Number(r.acreage).toLocaleString()} ac` : (r.equity !== undefined ? money(r.equity) : "");
     const [statusLabel, statusBg, statusFg] = recordStatus(r);
     const ownerCell = `${esc(redact ? redactName(owner) : owner)}${r.is_absentee_owner === "yes" || r.absentee ? `<br>${badge("Absentee", "#dbeafe", "#1d4ed8")}` : ""}`;
-    return `<tr><td style="border-bottom:1px solid #e2dccf;padding:10px 8px;color:#94a3b8;font-size:12px;">${i + 1}</td><td style="border-bottom:1px solid #e2dccf;padding:10px 8px;font-weight:700;">${ownerCell}</td><td style="border-bottom:1px solid #e2dccf;padding:10px 8px;">${esc(redact ? redactAddress(address) : address)}</td><td style="border-bottom:1px solid #e2dccf;padding:10px 8px;text-align:right;font-weight:700;">${esc(value)}</td>${secondaryLabel ? `<td style="border-bottom:1px solid #e2dccf;padding:10px 8px;text-align:right;color:#15803d;font-weight:700;">${esc(secondary)}</td>` : ""}<td style="border-bottom:1px solid #e2dccf;padding:10px 8px;text-align:center;">${badge(statusLabel, statusBg, statusFg)}</td></tr>`;
+    const colCells = cols.map((c) => `<td style="border-bottom:1px solid #e2dccf;padding:10px 8px;text-align:right;font-weight:700;">${esc(c.get(r))}</td>`).join("");
+    return `<tr><td style="border-bottom:1px solid #e2dccf;padding:10px 8px;color:#94a3b8;font-size:12px;">${i + 1}</td><td style="border-bottom:1px solid #e2dccf;padding:10px 8px;font-weight:700;">${ownerCell}</td><td style="border-bottom:1px solid #e2dccf;padding:10px 8px;">${esc(redact ? redactAddress(address) : address)}</td>${colCells}<td style="border-bottom:1px solid #e2dccf;padding:10px 8px;text-align:center;">${badge(statusLabel, statusBg, statusFg)}</td></tr>`;
   }).join("");
-  const valueLabel = sample.length ? recordValue(sample[0])[0] : "Value";
-  return `<table width="100%" style="border-collapse:collapse;margin-top:12px;font-size:13px;"><tr style="background:#15803d;color:#ffffff;"><th align="left" style="padding:10px 8px;font-size:11px;text-transform:uppercase;">#</th><th align="left" style="padding:10px 8px;font-size:11px;text-transform:uppercase;">Owner</th><th align="left" style="padding:10px 8px;font-size:11px;text-transform:uppercase;">Address</th><th align="right" style="padding:10px 8px;font-size:11px;text-transform:uppercase;">${esc(valueLabel)}</th>${secondaryLabel ? `<th align="right" style="padding:10px 8px;font-size:11px;text-transform:uppercase;">${esc(secondaryLabel)}</th>` : ""}<th align="center" style="padding:10px 8px;font-size:11px;text-transform:uppercase;">Status</th></tr>${rows}</table>`;
+  const headCells = cols.map((c) => `<th align="right" style="padding:10px 8px;font-size:11px;text-transform:uppercase;">${esc(c.label)}</th>`).join("");
+  return `<table width="100%" style="border-collapse:collapse;margin-top:12px;font-size:13px;"><tr style="background:#15803d;color:#ffffff;"><th align="left" style="padding:10px 8px;font-size:11px;text-transform:uppercase;">#</th><th align="left" style="padding:10px 8px;font-size:11px;text-transform:uppercase;">Owner</th><th align="left" style="padding:10px 8px;font-size:11px;text-transform:uppercase;">Address</th>${headCells}<th align="center" style="padding:10px 8px;font-size:11px;text-transform:uppercase;">Status</th></tr>${rows}</table>`;
 }
 
 // Builds the "By the numbers" block generically from whatever the caller passed in
