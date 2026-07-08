@@ -176,7 +176,7 @@ Pending: Facebook account credentials, X account credentials, domain email, audi
 
 ## 10. What Hermes specifically helps with for LeadCurate
 
-1. Pulling fresh data from county sources — see `leadcurate-county-data-pull` skill
+1. Pulling fresh data from county sources — see `docs/playbooks/county-data-pull.md` and `docs/playbooks/js-blocker-bypass.md` in the repo (append what you learn there, not anywhere else)
 2. Running snapshot processors — pattern: process raw → normalize → score → tier-classify → write CSV + meta.json
 3. Running the tier classifier on a market: `python3 /opt/leadcurate/scripts/tier_classifier.py <snapshot.csv>`
 4. Watching for new intake submissions and pinging Claude with priority info

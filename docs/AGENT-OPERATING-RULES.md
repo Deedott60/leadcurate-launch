@@ -24,7 +24,13 @@ The competitive problem: static vacant-land lists (what most resellers and SMS-c
 
 Our answer: every Verified Vacant Land record is checked against the county's **current** parcel file before it ships — not a one-time scrape. The verification process (`scripts/leadcurate/process_verified_vacant.py`) runs multiple live checks (vacancy flag, land-vs-building value ratio, year built, heated area, owner, acreage) so a "vacant" record is actually vacant and actually buildable. Absentee owners get flagged specifically, since they're the ones structurally more likely to sell rather than build or hold.
 
-**This is internal doctrine, not customer-facing copy.** Customer-facing material (audits, sample deliveries, sales messages) should describe the *outcome* — "you're not wasting outreach on land that's already gone or was never really vacant" — never the specific checks or scoring logic. That process is the moat; don't let it end up in something a prospect can copy-paste into their own script. See `docs/codex-handoff-2026-07-07.md` item 3 for the active work generalizing this to new counties.
+**This is internal doctrine, not customer-facing copy.** Customer-facing material (audits, sample deliveries, sales messages) should describe the *outcome* — "you're not wasting outreach on land that's already gone or was never really vacant" — never the specific checks or scoring logic. That process is the moat; don't let it end up in something a prospect can copy-paste into their own script. See `docs/CURRENT-HANDOFF.md` for the active work generalizing this to new counties.
+
+## Scraping / data-pull playbook discipline
+
+`docs/playbooks/county-data-pull.md` and `docs/playbooks/js-blocker-bypass.md` are the ONLY canonical scraping references. They live in this git repo specifically so Codex and Danny/Hermes can both read AND write them — a prior version lived only in a local Claude Code skill folder on Derrick's Windows machine, which neither Codex nor Danny could ever reach, so nothing learned ever got passed forward and every county got re-solved from scratch. Don't repeat that.
+
+**Every time you crack a new county source or fix a broken URL, append it to `docs/playbooks/county-data-pull.md` (or the JS-blocker one, if that's the fix), commit, and push — before ending the session.** This is not optional and not "if you remember." A solved county that isn't written down is a county that gets re-solved at full cost next time, in tokens and in Derrick's patience.
 
 ## Communication discipline
 
