@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>LeadCurate · Massachusetts Statewide Territory Audit</title>
+<meta name="description" content="Massachusetts statewide investor audit: 2.55M parcels, all 14 counties, 351 municipalities ranked." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#1e293b;--muted:#64748b;--cream:#faf7f2;--stone:#f5f1eb;--dark:#0f172a;--emerald:#15803d;--emerald-2:#22c55e;--soft:#dff4e8;--gold:#b45309;--crimson:#991b1b;--crimson-soft:#fee2e2;--line:rgba(30,41,59,.12)}
+  *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6}.container{width:min(1040px,calc(100% - 40px));margin:0 auto}
+  header{padding:30px 0 22px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.55)}.row{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}.logo{font-family:"Playfair Display",serif;font-size:28px;font-weight:700;color:var(--dark)}.logo span{color:var(--emerald)}.meta{font-size:13px;color:var(--muted)}
+  .badge{display:inline-flex;background:var(--soft);color:var(--emerald);border-radius:999px;padding:8px 14px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  section{padding:38px 0;border-top:1px solid var(--line)}section.cover{border-top:0;padding:52px 0 34px}h1,h2{font-family:"Playfair Display",serif;letter-spacing:-.03em;color:var(--dark);line-height:1.08}h1{font-size:clamp(32px,5vw,50px);margin:12px 0 16px;max-width:920px}h2{font-size:clamp(22px,2.6vw,30px);margin:0 0 12px}h3{font-size:19px;font-weight:700;margin:0 0 8px;color:var(--dark)}h4{font-size:12px;color:var(--emerald);letter-spacing:.14em;text-transform:uppercase;margin:0 0 8px}.lead{font-size:18px;max-width:780px;color:#334155}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:18px}.metric{background:white;border:1px solid var(--line);border-radius:14px;padding:16px}.label{font-size:11px;color:var(--muted);font-weight:800;letter-spacing:.08em;text-transform:uppercase}.value{font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--dark);margin-top:4px}.note{font-size:12px;color:var(--muted);margin-top:4px}
+  .metric.priority{background:var(--dark);border-color:var(--dark)}.metric.priority .label{color:#86efac}.metric.priority .value{color:white}.metric.priority .note{color:#94a3b8}
+  .market-hero{background:var(--dark);color:white;border-radius:16px;padding:24px 26px;margin-top:20px}
+  .market-hero h3{color:white;font-family:"Playfair Display",serif;font-size:24px;margin:0 0 6px}
+  .market-hero p{color:#cbd5e1;margin:0;font-size:14px;max-width:720px}
+  .market-block{background:white;border:1px solid var(--line);border-radius:16px;padding:26px;margin-top:14px}
+  .market-block h3{font-family:"Playfair Display",serif;font-size:20px;color:var(--dark);margin:0 0 6px}
+  table{width:100%;border-collapse:collapse;background:white;font-size:14px;margin-top:12px}th,td{padding:11px 13px;border-bottom:1px solid var(--line);text-align:left}th{background:var(--stone);font-size:11px;text-transform:uppercase;letter-spacing:.06em}td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+  .callout{background:var(--dark);color:white;border-radius:16px;padding:24px;margin-top:18px}.callout h3{margin:0 0 8px;font-size:20px;color:white}.callout p{margin:0;color:#cbd5e1}.callout strong{color:var(--emerald-2)}
+  .lane-tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:var(--soft);color:var(--emerald);margin-bottom:10px}
+  .checklist{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:16px}
+  .check{display:flex;align-items:center;gap:10px;background:white;border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:14px;font-weight:700;color:var(--dark)}
+  .check .dot{width:22px;height:22px;border-radius:999px;background:var(--soft);color:var(--emerald);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+  .insights{display:grid;gap:12px;margin-top:16px}
+  .insight{background:white;border-left:4px solid var(--emerald);border-radius:0 12px 12px 0;padding:16px 20px;font-size:14px;color:#334155}
+  .insight strong{color:var(--dark)}
+  .unavailable{background:var(--stone);border:1px dashed var(--line);border-radius:12px;padding:16px 18px;font-size:13px;color:var(--muted);margin-top:14px}
+  .winner{border:2px solid var(--emerald);position:relative}
+  .winner-tag{position:absolute;top:-12px;left:22px;background:var(--emerald);color:white;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:999px}
+  footer{padding:30px 0 48px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+  @media(max-width:640px){.value{font-size:22px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="container row">
+    <div><div class="logo">Lead<span>Curate</span>.</div><div class="meta">Massachusetts · Statewide Territory Audit · 2026-07-15</div></div>
+    <div class="badge">All 14 counties scanned</div>
+  </div>
+</header>
+
+<section class="container" style="padding-top:24px;padding-bottom:0;border-top:none;">
+  <h4>Executive summary</h4>
+  <table>
+    <tbody>
+      <tr><td>Prepared for</td><td>DeShawn Bunch</td></tr>
+      <tr><td>Territory</td><td>Massachusetts, statewide: all 14 counties, all 351 municipalities</td></tr>
+      <tr><td>Report date</td><td>2026-07-15</td></tr>
+      <tr><td>Parcels analyzed</td><td>2,558,583 unique parcels from the state's standardized assessor parcel database</td></tr>
+      <tr><td>Recommended market</td><td>Worcester County, with Springfield as the value alternative (analysis below)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="cover container">
+  <h4>Massachusetts, your home state</h4>
+  <h1>We didn't ask where to look. We scanned all 2.55 million parcels in the state and let the data pick your market.</h1>
+  <p class="lead">Every parcel in every one of Massachusetts's 351 municipalities, run through your exact criteria: long-tenure landlords, industrial and multifamily with off-market signals, out-of-state owners, and verified vacant land. Then ranked, county by county and city by city. This is what territory selection looks like when it's done from data instead of guesswork.</p>
+  <div class="metrics">
+    <div class="metric priority"><div class="label">Tired landlords statewide</div><div class="value">436,244</div><div class="note">held 10+ years, non-owner-occupied · median hold 20.5 years</div></div>
+    <div class="metric"><div class="label">Industrial + multifamily distress</div><div class="value">54,443</div><div class="note">23,476 industrial · 30,967 multifamily</div></div>
+    <div class="metric"><div class="label">Out-of-state owners</div><div class="value">115,764</div><div class="note">median value $545,600</div></div>
+    <div class="metric"><div class="label">Verified vacant land</div><div class="value">60,876</div><div class="note">median land value $33,300</div></div>
+  </div>
+</section>
+
+<section class="container">
+  <h4>The three-county showdown</h4>
+  <h2>Where should your money actually go? Three finalists emerged from the scan.</h2>
+  <p style="max-width:780px;color:#334155;">The full ranking covers every county and municipality. These three tell the story, and the numbers below are computed straight from the parcel database, not estimated.</p>
+
+  <div class="market-block" style="margin-top:26px;">
+    <span class="lane-tag">The Volume King</span>
+    <h3>Middlesex County: the biggest bench in the state, at the steepest prices.</h3>
+    <p style="color:#334155;">113,527 opportunity parcels, more than any other county. 90,965 tired landlords, 46,003 of whom have held 20+ years. 11,041 industrial/multifamily distress properties, also the state's largest. But the price of admission is real: median out-of-state-owned property runs $682,500, and median distressed industrial/multifamily runs $1,243,400. Boston-metro pricing compresses margins on every deal.</p>
+  </div>
+
+  <div class="market-block winner" style="margin-top:26px;">
+    <span class="winner-tag">Our pick for you</span>
+    <span class="lane-tag">The Sweet Spot</span>
+    <h3>Worcester County: second-deepest distress bench, at half the price.</h3>
+    <p style="color:#334155;">63,386 opportunity parcels across 320,059 total. 8,192 industrial/multifamily distress properties, second in the state and the highest concentration of any large county at 256 per 10,000 parcels. 8,710 verified vacant parcels, also second statewide. 42,761 tired landlords, 23,696 at 20+ years. And the medians are where the deal math works: $284,300 for out-of-state-owned, $27,900 for vacant land, $408,900 for tired-landlord properties, $578,750 for distressed industrial/multifamily. Roughly half of Middlesex on every line, with real volume behind it.</p>
+    <table>
+      <thead><tr><th>Measure</th><th class="num">Worcester</th><th class="num">Middlesex</th></tr></thead>
+      <tbody>
+        <tr><td>Industrial/multifamily distress properties</td><td class="num">8,192</td><td class="num">11,041</td></tr>
+        <tr><td>Distress concentration (per 10,000 parcels)</td><td class="num">256</td><td class="num">210</td></tr>
+        <tr><td>Median distressed industrial/multifamily value</td><td class="num">$578,750</td><td class="num">$1,243,400</td></tr>
+        <tr><td>Median out-of-state-owned value</td><td class="num">$284,300</td><td class="num">$682,500</td></tr>
+        <tr><td>Verified vacant parcels</td><td class="num">8,710</td><td class="num">8,000</td></tr>
+        <tr><td>Tired landlords at 20+ years</td><td class="num">23,696</td><td class="num">46,003</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="market-block" style="margin-top:26px;">
+    <span class="lane-tag">The Value Play</span>
+    <h3>Springfield: the highest opportunity density of any city in Massachusetts.</h3>
+    <p style="color:#334155;">One city, 44,332 parcels, and 25,174 of them qualify against your criteria: 5,679 opportunities per 10,000 parcels, the highest concentration in the state. 21,880 tired landlords, and a remarkable 14,803 of them have held 20+ years. Median tired-landlord property: $266,900. If you want maximum motivated-owner density per dollar of marketing spend, this is the city the data points to.</p>
+  </div>
+</section>
+
+<section class="container">
+  <h4>The full county ranking</h4>
+  <h2>All 14 counties, ranked by opportunity parcels against your lanes.</h2>
+  <table>
+    <thead><tr><th>#</th><th>County</th><th class="num">Opportunity parcels</th><th class="num">Tired landlords 20+ yrs</th><th class="num">Ind/MF distress</th><th class="num">Median OOS value</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Middlesex</td><td class="num">113,527</td><td class="num">46,003</td><td class="num">11,041</td><td class="num">$682,500</td></tr>
+      <tr><td>2</td><td>Barnstable (Cape Cod)</td><td class="num">68,415</td><td class="num">25,008</td><td class="num">1,299</td><td class="num">$680,900</td></tr>
+      <tr><td>3</td><td>Essex</td><td class="num">65,651</td><td class="num">26,028</td><td class="num">5,817</td><td class="num">$556,300</td></tr>
+      <tr><td style="color:var(--emerald);font-weight:800;">4</td><td style="color:var(--emerald);font-weight:800;">Worcester</td><td class="num" style="color:var(--emerald);">63,386</td><td class="num" style="color:var(--emerald);">23,696</td><td class="num" style="color:var(--emerald);">8,192</td><td class="num" style="color:var(--emerald);">$284,300</td></tr>
+      <tr><td>5</td><td>Suffolk (Boston)</td><td class="num">52,424</td><td class="num">19,408</td><td class="num">7,030</td><td class="num">$658,300</td></tr>
+      <tr><td>6</td><td>Hampden (Springfield)</td><td class="num">45,558</td><td class="num">22,234</td><td class="num">3,888</td><td class="num">$244,400</td></tr>
+      <tr><td>7</td><td>Norfolk</td><td class="num">41,805</td><td class="num">16,210</td><td class="num">4,676</td><td class="num">$619,800</td></tr>
+      <tr><td>8</td><td>Bristol</td><td class="num">38,606</td><td class="num">13,885</td><td class="num">5,838</td><td class="num">$397,250</td></tr>
+      <tr><td>9</td><td>Plymouth</td><td class="num">35,286</td><td class="num">13,456</td><td class="num">3,247</td><td class="num">$455,000</td></tr>
+      <tr><td>10</td><td>Berkshire</td><td class="num">28,907</td><td class="num">6,413</td><td class="num">1,634</td><td class="num">$275,300</td></tr>
+      <tr><td>11</td><td>Franklin</td><td class="num">15,419</td><td class="num">4,291</td><td class="num">1,089</td><td class="num">$82,300</td></tr>
+      <tr><td>12</td><td>Hampshire</td><td class="num">14,098</td><td class="num">4,781</td><td class="num">1,181</td><td class="num">$236,200</td></tr>
+      <tr><td>13</td><td>Dukes (Martha's Vineyard)</td><td class="num">11,144</td><td class="num">3,558</td><td class="num">77</td><td class="num">$1,448,850</td></tr>
+      <tr><td>14</td><td>Nantucket</td><td class="num">6,472</td><td class="num">1,569</td><td class="num">75</td><td class="num">$3,452,100</td></tr>
+    </tbody>
+  </table>
+  <p style="max-width:780px;margin-top:14px;color:#334155;">The delivered file drills below county level: the same measures exist for every one of the 351 municipalities, so a cut can be as tight as one city or as wide as a region.</p>
+</section>
+
+<section class="container">
+  <h4>Statewide lane detail</h4>
+  <h2>Your lanes across the whole state, before any geographic cut.</h2>
+
+  <div class="market-block">
+    <span class="lane-tag">Tired Landlords</span>
+    <h3>436,244 non-owner-occupied properties held 10+ years. Median hold: 20.5 years.</h3>
+    <p style="color:#334155;">Massachusetts is a long-tenure state, and the median owner in this file has held since roughly 2005, before the last two price cycles. 37,395 of these owners live outside Massachusetts entirely. Median property value $541,400 statewide, but as the county table shows, the affordable end concentrates in Worcester, Hampden, and Bristol counties.</p>
+  </div>
+
+  <div class="market-block">
+    <span class="lane-tag">Industrial / Multifamily Distress</span>
+    <h3>54,443 industrial and multifamily properties carrying an off-market signal.</h3>
+    <p style="color:#334155;">23,476 industrial and 30,967 multifamily parcels where the owner is absentee or has held 10+ years. Median value $777,000 statewide, median hold 13 years, 7,529 owned from out of state.</p>
+  </div>
+
+  <div class="market-block">
+    <span class="lane-tag">Out-of-State Owners</span>
+    <h3>115,764 Massachusetts properties owned from another state.</h3>
+    <p style="color:#334155;">Median value $545,600, median hold 11.3 years. Cape Cod (Barnstable County) alone carries 24,880 of them, second-home country, a different conversation than the urban investor product but real volume if that lane ever interests you.</p>
+  </div>
+
+  <div class="market-block">
+    <span class="lane-tag">Verified Vacant Land</span>
+    <h3>60,876 parcels verified as genuinely vacant. Median land value $33,300.</h3>
+    <p style="color:#334155;">Same verification standard as every market we run: no hidden building value, classification supports vacant, usable acreage, an owner who can sell. 8,745 are owned from out of state, and the median owner has held 15 years.</p>
+  </div>
+
+  <div class="unavailable">Pre-foreclosure and tax-lien records in Massachusetts run through the Registry of Deeds, Land Court, and municipal tax-title processes rather than the statewide assessor database this scan was built from. Once your target county is locked, those get sourced for that county specifically and scoped per order. Everything above is verified and deliverable today.</div>
+</section>
+
+<section class="container">
+  <h4>Quality summary</h4>
+  <h2>What "verified" means before it reaches you.</h2>
+  <div class="checklist">
+    <div class="check"><div class="dot">&#10003;</div> 2,558,583 unique parcels, zero duplicates</div>
+    <div class="check"><div class="dot">&#10003;</div> Official statewide standardized assessor data</div>
+    <div class="check"><div class="dot">&#10003;</div> Every stat computed from the delivered file</div>
+    <div class="check"><div class="dot">&#10003;</div> County and city rollups included</div>
+    <div class="check"><div class="dot">&#10003;</div> Delivery-ready formatting</div>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Executive insights</h4>
+  <h2>What the numbers actually say about your home state.</h2>
+  <div class="insights">
+    <div class="insight"><strong>Worcester is the price-to-depth winner.</strong> It carries the state's highest big-county concentration of distressed industrial/multifamily (256 per 10,000 parcels) at medians roughly half of the Boston metro. Volume without the margin squeeze.</div>
+    <div class="insight"><strong>Springfield is the density anomaly.</strong> One in three parcels in the entire city held 20+ years by a non-occupant owner is not a normal market condition. Marketing dollars go further there than anywhere else in the state.</div>
+    <div class="insight"><strong>The 20-year cohort is enormous.</strong> Statewide median hold in the tired-landlord file is 20.5 years, meaning half of 436,244 owners predate the 2008 crash entirely. That cohort has equity, fatigue, and no memory of current pricing, the exact profile that sells off-market.</div>
+    <div class="insight"><strong>Middlesex is where you go second, not first.</strong> The bench is deepest but the entry prices demand bigger capital per deal. Win in Worcester or Springfield, then scale up.</div>
+  </div>
+</section>
+
+<section class="container">
+  <div class="callout">
+    <h3>What's next</h3>
+    <p>If Worcester or Springfield is where you want to dig in, shoot us a message and we'll cut the county-level file to your spec, and scope the Registry pre-foreclosure add-on for that county at the same time.</p>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Source</h4>
+  <h2>Built from the official statewide database.</h2>
+  <p>Source: Massachusetts statewide standardized assessor parcel database (MassGIS), current release, all 351 municipalities. The customer delivery file is not posted publicly; this page is the preview audit only.</p>
+</section>
+
+<footer>
+  <div class="container">
+    <strong>LeadCurate</strong> · Curated county property data · hello@leadcurate.com
+  </div>
+</footer>
+</body>
+</html>

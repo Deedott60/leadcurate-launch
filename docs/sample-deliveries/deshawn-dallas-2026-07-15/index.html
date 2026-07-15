@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>LeadCurate · Dallas County TX Territory Audit</title>
+<meta name="description" content="Dallas County TX investor audit built from the current county appraisal roll." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#1e293b;--muted:#64748b;--cream:#faf7f2;--stone:#f5f1eb;--dark:#0f172a;--emerald:#15803d;--emerald-2:#22c55e;--soft:#dff4e8;--gold:#b45309;--crimson:#991b1b;--crimson-soft:#fee2e2;--line:rgba(30,41,59,.12)}
+  *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6}.container{width:min(1040px,calc(100% - 40px));margin:0 auto}
+  header{padding:30px 0 22px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.55)}.row{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}.logo{font-family:"Playfair Display",serif;font-size:28px;font-weight:700;color:var(--dark)}.logo span{color:var(--emerald)}.meta{font-size:13px;color:var(--muted)}
+  .badge{display:inline-flex;background:var(--soft);color:var(--emerald);border-radius:999px;padding:8px 14px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  section{padding:38px 0;border-top:1px solid var(--line)}section.cover{border-top:0;padding:52px 0 34px}h1,h2{font-family:"Playfair Display",serif;letter-spacing:-.03em;color:var(--dark);line-height:1.08}h1{font-size:clamp(32px,5vw,50px);margin:12px 0 16px;max-width:900px}h2{font-size:clamp(22px,2.6vw,30px);margin:0 0 12px}h3{font-size:19px;font-weight:700;margin:0 0 8px;color:var(--dark)}h4{font-size:12px;color:var(--emerald);letter-spacing:.14em;text-transform:uppercase;margin:0 0 8px}.lead{font-size:18px;max-width:760px;color:#334155}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:18px}.metric{background:white;border:1px solid var(--line);border-radius:14px;padding:16px}.label{font-size:11px;color:var(--muted);font-weight:800;letter-spacing:.08em;text-transform:uppercase}.value{font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--dark);margin-top:4px}.note{font-size:12px;color:var(--muted);margin-top:4px}
+  .metric.priority{background:var(--dark);border-color:var(--dark)}.metric.priority .label{color:#86efac}.metric.priority .value{color:white}.metric.priority .note{color:#94a3b8}
+  .market-block{background:white;border:1px solid var(--line);border-radius:16px;padding:26px;margin-top:14px}
+  .market-block h3{font-family:"Playfair Display",serif;font-size:20px;color:var(--dark);margin:0 0 6px}
+  table{width:100%;border-collapse:collapse;background:white;font-size:14px;margin-top:12px}th,td{padding:11px 13px;border-bottom:1px solid var(--line);text-align:left}th{background:var(--stone);font-size:11px;text-transform:uppercase;letter-spacing:.06em}td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+  .callout{background:var(--dark);color:white;border-radius:16px;padding:24px;margin-top:18px}.callout h3{margin:0 0 8px;font-size:20px;color:white}.callout p{margin:0;color:#cbd5e1}
+  .lane-tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:var(--soft);color:var(--emerald);margin-bottom:10px}
+  .checklist{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:16px}
+  .check{display:flex;align-items:center;gap:10px;background:white;border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:14px;font-weight:700;color:var(--dark)}
+  .check .dot{width:22px;height:22px;border-radius:999px;background:var(--soft);color:var(--emerald);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+  .insights{display:grid;gap:12px;margin-top:16px}
+  .insight{background:white;border-left:4px solid var(--emerald);border-radius:0 12px 12px 0;padding:16px 20px;font-size:14px;color:#334155}
+  .insight strong{color:var(--dark)}
+  .unavailable{background:var(--stone);border:1px dashed var(--line);border-radius:12px;padding:16px 18px;font-size:13px;color:var(--muted);margin-top:14px}
+  .steps{display:grid;gap:14px;margin-top:16px}
+  .step{display:grid;grid-template-columns:40px 1fr;gap:16px;background:white;border:1px solid var(--line);border-radius:14px;padding:18px}
+  .step .num{width:40px;height:40px;border-radius:999px;background:var(--soft);color:var(--emerald);font-family:"Playfair Display",serif;font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center}
+  .step h3{margin:0 0 4px}
+  .step p{margin:0;color:#334155;font-size:14px}
+  footer{padding:30px 0 48px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+  @media(max-width:640px){.value{font-size:22px}.step{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="container row">
+    <div><div class="logo">Lead<span>Curate</span>.</div><div class="meta">Dallas County TX · Investor Territory Audit · 2026-07-15</div></div>
+    <div class="badge">Current county roll</div>
+  </div>
+</header>
+
+<section class="container" style="padding-top:24px;padding-bottom:0;border-top:none;">
+  <h4>Executive summary</h4>
+  <table>
+    <tbody>
+      <tr><td>Prepared for</td><td>DeShawn Bunch</td></tr>
+      <tr><td>Territory</td><td>Dallas County, Texas</td></tr>
+      <tr><td>Report date</td><td>2026-07-15</td></tr>
+      <tr><td>County parcels reviewed</td><td>756,508 (full 2025 certified appraisal roll, 161 data fields per record)</td></tr>
+      <tr><td>Lanes verified and ready</td><td>Tired Landlords, Industrial/Multifamily Distress, Out-of-State Owners, Verified Vacant Land</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="cover container">
+  <h4>Dallas County, Texas</h4>
+  <h1>42,092 landlords have held Dallas County property for 10 or more years without living in it.</h1>
+  <p class="lead">This audit was built from Dallas County's current certified appraisal roll, all 756,508 parcels, not a resold list. Every record below cleared verification before it counted: deduplicated to one row per parcel, cross-checked against the county's own ownership and value fields.</p>
+  <div class="metrics">
+    <div class="metric priority"><div class="label">Tired landlords</div><div class="value">42,092</div><div class="note">held 10+ years, owner does not live at the property</div></div>
+    <div class="metric"><div class="label">Industrial + multifamily distress</div><div class="value">18,504</div><div class="note">off-market signal properties</div></div>
+    <div class="metric"><div class="label">Out-of-state owners</div><div class="value">31,794</div><div class="note">mailing address outside Texas</div></div>
+    <div class="metric"><div class="label">Verified vacant land</div><div class="value">36,870</div><div class="note">genuinely vacant, buildable</div></div>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Your lanes, broken down</h4>
+  <h2>Four of your six lanes are verified and ready in Dallas today.</h2>
+
+  <div class="market-block">
+    <span class="lane-tag">Tired Landlords</span>
+    <h3>42,092 non-owner-occupied properties held 10+ years. Median hold: 16.8 years.</h3>
+    <p style="color:#334155;">These are owners who bought when prices were a fraction of today's and have been collecting rent or sitting on the asset ever since. Median property value in this segment is $246,055. 6,128 of these owners live outside Texas entirely, and 4,722 of the properties are multifamily. The top of this file reaches institutional scale, including a 324-unit apartment property valued at $231M, held by a long-tenure non-occupant owner.</p>
+  </div>
+
+  <div class="market-block">
+    <span class="lane-tag">Industrial / Multifamily Distress</span>
+    <h3>18,504 industrial and multifamily properties carrying an off-market signal.</h3>
+    <p style="color:#334155;">16,182 multifamily and 2,322 industrial parcels where the owner either does not occupy the property or has held it 10+ years, the two conditions that precede quiet, off-market sales. Median value $358,820, median hold 11.5 years, and 13,593 of these owners are absentee. This is your core lane, and Dallas has real depth in it.</p>
+  </div>
+
+  <div class="market-block">
+    <span class="lane-tag">Out-of-State Owners</span>
+    <h3>31,794 Dallas County properties owned from another state.</h3>
+    <p style="color:#334155;">Median value $292,205. Notably, the median hold here is only 6.4 years, meaning much of this segment bought recently at higher prices. Cross-referencing this against the tired-landlord file (long tenure) separates motivated legacy owners from recent institutional buyers, and your delivered file carries the fields to do exactly that.</p>
+  </div>
+
+  <div class="market-block">
+    <span class="lane-tag">Verified Vacant Land</span>
+    <h3>36,870 parcels verified as genuinely vacant. Median land value $75,600.</h3>
+    <p style="color:#334155;">Every parcel cleared the same verification standard we run in every market: no hidden building value, county classification supports vacant, real usable acreage, an owner who can actually sell. 23,300 of these are absentee-owned, and 1,441 are industrially zoned vacant land, a direct play for your industrial interest.</p>
+  </div>
+
+  <div class="unavailable">Pre-foreclosure and tax-delinquent lists are not published inside the county appraisal roll this audit was built from. Both are sourced separately in Texas (trustee sale postings and tax office records) and get scoped per order rather than promised here. Everything above is verified and deliverable today.</div>
+</section>
+
+<section class="container">
+  <h4>How to work this territory</h4>
+  <h2>Three passes, in order.</h2>
+  <div class="steps">
+    <div class="step"><div class="num">1</div><div><h3>Industrial/multifamily distress crossed with long tenure</h3><p>Your stated focus, and Dallas's deepest differentiated cut: 18,504 properties, 13,593 with absentee owners. Owners of income property they no longer live near, held a decade or more, are the highest-probability off-market conversations in this county.</p></div></div>
+    <div class="step"><div class="num">2</div><div><h3>Tired landlords, 20+ year segment first</h3><p>The 16.8-year median means roughly half this file has held even longer. Deepest equity, most fatigue, least attachment to current market pricing.</p></div></div>
+    <div class="step"><div class="num">3</div><div><h3>Vacant land, absentee-owned</h3><p>23,300 absentee-owned vacant parcels at a $75,600 median is volume most operators never see cut this way. Works as a steady direct mail pipeline behind the urgent lanes.</p></div></div>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Quality summary</h4>
+  <h2>What "verified" means before it reaches you.</h2>
+  <div class="checklist">
+    <div class="check"><div class="dot">&#10003;</div> One row per parcel, zero duplicates</div>
+    <div class="check"><div class="dot">&#10003;</div> 161 county fields carried per record</div>
+    <div class="check"><div class="dot">&#10003;</div> Current certified roll, not a resold snapshot</div>
+    <div class="check"><div class="dot">&#10003;</div> Every stat computed from the delivered file</div>
+    <div class="check"><div class="dot">&#10003;</div> Delivery-ready formatting</div>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Executive insights</h4>
+  <h2>What the numbers actually say.</h2>
+  <div class="insights">
+    <div class="insight"><strong>Dallas is a multifamily off-market machine.</strong> 16,182 of the 18,504 distress-signal properties are multifamily. If your crew can execute on small and mid-size apartment product, this county's bench is deep.</div>
+    <div class="insight"><strong>Tenure separates the sellers from the holders.</strong> The out-of-state file skews recent (6.4-year median hold) while the tired-landlord file skews legacy (16.8 years). The overlap, out-of-state AND long-tenure, is the sharpest list in the delivery: 6,128 owners.</div>
+    <div class="insight"><strong>Vacant land here is not scraps.</strong> A $75,600 median land value across 36,870 verified parcels means this is buildable, sellable dirt, and 63% of it is absentee-owned.</div>
+  </div>
+</section>
+
+<section class="container">
+  <div class="callout">
+    <h3>What's next</h3>
+    <p>If Dallas is where you want to start, shoot us a message and we'll customize the cut: value band, area, hold length, property class, your call.</p>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Source</h4>
+  <h2>Built from the official county roll.</h2>
+  <p>Source: Dallas Central Appraisal District, 2025 certified real property appraisal roll, current file. The customer delivery file is not posted publicly; this page is the preview audit only.</p>
+</section>
+
+<footer>
+  <div class="container">
+    <strong>LeadCurate</strong> · Curated county property data · hello@leadcurate.com
+  </div>
+</footer>
+</body>
+</html>

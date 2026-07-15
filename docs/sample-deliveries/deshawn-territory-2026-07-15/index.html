@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>LeadCurate · DeShawn Bunch, Territory Audits</title>
+<meta name="description" content="Three-territory investor audit set: Massachusetts statewide, Dallas County TX, Cook County IL." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#1e293b;--muted:#64748b;--cream:#faf7f2;--stone:#f5f1eb;--dark:#0f172a;--emerald:#15803d;--emerald-2:#22c55e;--soft:#dff4e8;--gold:#b45309;--line:rgba(30,41,59,.12)}
+  *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6}.container{width:min(1040px,calc(100% - 40px));margin:0 auto}
+  header{padding:30px 0 22px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.55)}.row{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}.logo{font-family:"Playfair Display",serif;font-size:28px;font-weight:700;color:var(--dark)}.logo span{color:var(--emerald)}.meta{font-size:13px;color:var(--muted)}
+  .badge{display:inline-flex;background:var(--soft);color:var(--emerald);border-radius:999px;padding:8px 14px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  section{padding:38px 0;border-top:1px solid var(--line)}section.cover{border-top:0;padding:52px 0 34px}h1,h2{font-family:"Playfair Display",serif;letter-spacing:-.03em;color:var(--dark);line-height:1.08}h1{font-size:clamp(32px,5vw,50px);margin:12px 0 16px;max-width:920px}h2{font-size:clamp(22px,2.6vw,30px);margin:0 0 12px}h3{font-size:19px;font-weight:700;margin:0 0 8px;color:var(--dark)}h4{font-size:12px;color:var(--emerald);letter-spacing:.14em;text-transform:uppercase;margin:0 0 8px}.lead{font-size:18px;max-width:780px;color:#334155}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:18px}.metric{background:white;border:1px solid var(--line);border-radius:14px;padding:16px}.label{font-size:11px;color:var(--muted);font-weight:800;letter-spacing:.08em;text-transform:uppercase}.value{font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--dark);margin-top:4px}.note{font-size:12px;color:var(--muted);margin-top:4px}
+  .metric.priority{background:var(--dark);border-color:var(--dark)}.metric.priority .label{color:#86efac}.metric.priority .value{color:white}.metric.priority .note{color:#94a3b8}
+  table{width:100%;border-collapse:collapse;background:white;font-size:14px;margin-top:12px}th,td{padding:11px 13px;border-bottom:1px solid var(--line);text-align:left}th{background:var(--stone);font-size:11px;text-transform:uppercase;letter-spacing:.06em}td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:20px}
+  .card{background:white;border:1px solid var(--line);border-radius:16px;padding:26px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .15s,box-shadow .15s;text-decoration:none;color:inherit}
+  .card:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(15,23,42,.08)}
+  .card h3{font-family:"Playfair Display",serif;font-size:23px;margin:0 0 4px}
+  .card .loc{font-size:12px;color:var(--muted);margin-bottom:12px}
+  .card p{font-size:14px;color:#334155;margin:0 0 14px}
+  .card .stats{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:16px}
+  .card .stats strong{color:var(--dark);font-size:15px;display:block}
+  .card .open{color:var(--emerald);font-weight:800;font-size:14px}
+  .card .open::after{content:" \2192"}
+  .card.rec{border:2px solid var(--emerald);position:relative}
+  .rec-tag{position:absolute;top:-12px;left:22px;background:var(--emerald);color:white;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:999px}
+  .callout{background:var(--dark);color:white;border-radius:16px;padding:24px;margin-top:18px}.callout h3{margin:0 0 8px;font-size:20px;color:white}.callout p{margin:0;color:#cbd5e1}
+  footer{padding:30px 0 48px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+  @media(max-width:640px){.value{font-size:22px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="container row">
+    <div><div class="logo">Lead<span>Curate</span>.</div><div class="meta">Prepared for DeShawn Bunch · Three-Territory Audit Set · 2026-07-15</div></div>
+    <div class="badge">Current county records</div>
+  </div>
+</header>
+
+<section class="container" style="padding-top:24px;padding-bottom:0;border-top:none;">
+  <h4>Executive summary</h4>
+  <table>
+    <tbody>
+      <tr><td>Prepared for</td><td>DeShawn Bunch</td></tr>
+      <tr><td>Territories</td><td>Massachusetts (statewide), Dallas County TX, Cook County IL</td></tr>
+      <tr><td>Report date</td><td>2026-07-15</td></tr>
+      <tr><td>Total parcels analyzed</td><td>5,178,621 across the three territories</td></tr>
+      <tr><td>Your lanes</td><td>Tired landlords (10-20+ yr holds), distressed off-market industrial and multifamily, out-of-state owners, vacant land, plus pre-foreclosure and tax-lien scoping per market</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="cover container">
+  <h4>DeShawn's territory audits</h4>
+  <h1>You gave us three markets and six lanes. We ran 5.2 million parcels through your exact criteria.</h1>
+  <p class="lead">Every property in Dallas County, every parcel in all 351 Massachusetts municipalities, and the full 1.86 million-parcel Cook County universe, each verified, deduplicated, and cut against what you actually buy. Below is the door into each territory. Each audit breaks the market down the way we break down every territory we sell: real numbers, computed from the files themselves, gaps stated plainly.</p>
+  <div class="metrics">
+    <div class="metric priority"><div class="label">Parcels analyzed</div><div class="value">5,178,621</div><div class="note">across your three territories</div></div>
+    <div class="metric"><div class="label">Tired landlords found</div><div class="value">563,116</div><div class="note">held 10+ years, non-owner-occupied</div></div>
+    <div class="metric"><div class="label">Industrial + multifamily distress</div><div class="value">251,813</div><div class="note">your core lane, all three markets</div></div>
+    <div class="metric"><div class="label">Out-of-state owners</div><div class="value">209,117</div><div class="note">across all three territories</div></div>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Your three territories</h4>
+  <h2>Open each audit. Each one stands on its own.</h2>
+  <div class="cards">
+
+    <a class="card rec" href="../deshawn-massachusetts-2026-07-15/">
+      <div>
+        <span class="rec-tag">Home state · full scan</span>
+        <h3>Massachusetts</h3>
+        <div class="loc">Statewide · all 14 counties · 351 municipalities</div>
+        <p>We didn't ask where to look. We scanned the whole state and let the data pick your market: Worcester County wins on depth-to-price, with Springfield as the density anomaly you should see.</p>
+        <div class="stats">
+          <span><strong>2,558,583</strong> parcels scanned</span>
+          <span><strong>436,244</strong> tired landlords</span>
+          <span><strong>54,443</strong> ind/MF distress</span>
+        </div>
+      </div>
+      <span class="open">Open the Massachusetts audit</span>
+    </a>
+
+    <a class="card" href="../deshawn-dallas-2026-07-15/">
+      <div>
+        <span class="badge" style="margin-bottom:10px;">Texas</span>
+        <h3>Dallas County</h3>
+        <div class="loc">Full 2025 certified appraisal roll · 161 fields per record</div>
+        <p>42,092 landlords holding 10+ years without living at the property, and a 36,870-parcel verified vacant land bench at a $75,600 median.</p>
+        <div class="stats">
+          <span><strong>756,508</strong> parcels reviewed</span>
+          <span><strong>18,504</strong> ind/MF distress</span>
+          <span><strong>31,794</strong> out-of-state</span>
+        </div>
+      </div>
+      <span class="open">Open the Dallas audit</span>
+    </a>
+
+    <a class="card" href="../deshawn-cook-county-2026-07-15/">
+      <div>
+        <span class="badge" style="margin-bottom:10px;">Illinois</span>
+        <h3>Cook County</h3>
+        <div class="loc">Chicago + all suburbs · 309 fields per record</div>
+        <p>The multifamily capital of your three territories: 178,866 industrial and multifamily properties carrying an off-market signal, more than your other two markets combined.</p>
+        <div class="stats">
+          <span><strong>1,863,530</strong> parcels reviewed</span>
+          <span><strong>178,866</strong> ind/MF distress</span>
+          <span><strong>84,780</strong> tired landlords</span>
+        </div>
+      </div>
+      <span class="open">Open the Cook County audit</span>
+    </a>
+
+  </div>
+</section>
+
+<section class="container">
+  <h4>How the three fit together</h4>
+  <h2>A reading order, if you want one.</h2>
+  <p style="max-width:780px;color:#334155;">Start with Massachusetts, it's home turf and the statewide scan answers the "where" question with data instead of opinion. Dallas is the balanced second market: real depth in every one of your lanes at workable price points. Cook County is the volume play, the deepest multifamily bench of the three by a wide margin, with Illinois's assessed-value quirk explained plainly inside. Each audit ends with what's genuinely available today versus what gets sourced per order, so nothing here is a promise we can't back.</p>
+</section>
+
+<section class="container">
+  <div class="callout">
+    <h3>What's next</h3>
+    <p>Look through all three. If you're ready to move on a territory, shoot us a message and we'll cut the file to your spec and get your first delivery moving.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <strong>LeadCurate</strong> · Curated county property data · hello@leadcurate.com
+  </div>
+</footer>
+</body>
+</html>

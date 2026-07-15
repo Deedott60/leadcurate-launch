@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>LeadCurate · Cook County IL Territory Audit</title>
+<meta name="description" content="Cook County IL (Chicago) investor audit built from the current county assessment universe." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#1e293b;--muted:#64748b;--cream:#faf7f2;--stone:#f5f1eb;--dark:#0f172a;--emerald:#15803d;--emerald-2:#22c55e;--soft:#dff4e8;--gold:#b45309;--crimson:#991b1b;--crimson-soft:#fee2e2;--line:rgba(30,41,59,.12)}
+  *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6}.container{width:min(1040px,calc(100% - 40px));margin:0 auto}
+  header{padding:30px 0 22px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.55)}.row{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}.logo{font-family:"Playfair Display",serif;font-size:28px;font-weight:700;color:var(--dark)}.logo span{color:var(--emerald)}.meta{font-size:13px;color:var(--muted)}
+  .badge{display:inline-flex;background:var(--soft);color:var(--emerald);border-radius:999px;padding:8px 14px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  section{padding:38px 0;border-top:1px solid var(--line)}section.cover{border-top:0;padding:52px 0 34px}h1,h2{font-family:"Playfair Display",serif;letter-spacing:-.03em;color:var(--dark);line-height:1.08}h1{font-size:clamp(32px,5vw,50px);margin:12px 0 16px;max-width:900px}h2{font-size:clamp(22px,2.6vw,30px);margin:0 0 12px}h3{font-size:19px;font-weight:700;margin:0 0 8px;color:var(--dark)}h4{font-size:12px;color:var(--emerald);letter-spacing:.14em;text-transform:uppercase;margin:0 0 8px}.lead{font-size:18px;max-width:760px;color:#334155}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:18px}.metric{background:white;border:1px solid var(--line);border-radius:14px;padding:16px}.label{font-size:11px;color:var(--muted);font-weight:800;letter-spacing:.08em;text-transform:uppercase}.value{font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--dark);margin-top:4px}.note{font-size:12px;color:var(--muted);margin-top:4px}
+  .metric.priority{background:var(--dark);border-color:var(--dark)}.metric.priority .label{color:#86efac}.metric.priority .value{color:white}.metric.priority .note{color:#94a3b8}
+  .market-block{background:white;border:1px solid var(--line);border-radius:16px;padding:26px;margin-top:14px}
+  .market-block h3{font-family:"Playfair Display",serif;font-size:20px;color:var(--dark);margin:0 0 6px}
+  table{width:100%;border-collapse:collapse;background:white;font-size:14px;margin-top:12px}th,td{padding:11px 13px;border-bottom:1px solid var(--line);text-align:left}th{background:var(--stone);font-size:11px;text-transform:uppercase;letter-spacing:.06em}td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+  .callout{background:var(--dark);color:white;border-radius:16px;padding:24px;margin-top:18px}.callout h3{margin:0 0 8px;font-size:20px;color:white}.callout p{margin:0;color:#cbd5e1}
+  .lane-tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:var(--soft);color:var(--emerald);margin-bottom:10px}
+  .checklist{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:16px}
+  .check{display:flex;align-items:center;gap:10px;background:white;border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:14px;font-weight:700;color:var(--dark)}
+  .check .dot{width:22px;height:22px;border-radius:999px;background:var(--soft);color:var(--emerald);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+  .insights{display:grid;gap:12px;margin-top:16px}
+  .insight{background:white;border-left:4px solid var(--emerald);border-radius:0 12px 12px 0;padding:16px 20px;font-size:14px;color:#334155}
+  .insight strong{color:var(--dark)}
+  .unavailable{background:var(--stone);border:1px dashed var(--line);border-radius:12px;padding:16px 18px;font-size:13px;color:var(--muted);margin-top:14px}
+  footer{padding:30px 0 48px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+  @media(max-width:640px){.value{font-size:22px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="container row">
+    <div><div class="logo">Lead<span>Curate</span>.</div><div class="meta">Cook County IL (Chicago) · Investor Territory Audit · 2026-07-15</div></div>
+    <div class="badge">Current county universe</div>
+  </div>
+</header>
+
+<section class="container" style="padding-top:24px;padding-bottom:0;border-top:none;">
+  <h4>Executive summary</h4>
+  <table>
+    <tbody>
+      <tr><td>Prepared for</td><td>DeShawn Bunch</td></tr>
+      <tr><td>Territory</td><td>Cook County, Illinois (Chicago and all suburbs)</td></tr>
+      <tr><td>Report date</td><td>2026-07-15</td></tr>
+      <tr><td>County parcels reviewed</td><td>1,863,530 current parcels, 309 data fields per record</td></tr>
+      <tr><td>Lanes verified and ready</td><td>Industrial/Multifamily Distress, Tired Landlords, Out-of-State Owners, Verified Vacant Land</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="cover container">
+  <h4>Cook County, Illinois</h4>
+  <h1>178,866 industrial and multifamily properties in Chicagoland carry an off-market signal. That's not a typo.</h1>
+  <p class="lead">Cook County is the multifamily capital of your three territories. This audit was built from the county's current assessment universe, all 1.86 million parcels with 309 fields per record, the richest single dataset of your three markets. Deduplicated to one row per parcel, every stat computed from the file itself.</p>
+  <div class="metrics">
+    <div class="metric priority"><div class="label">Industrial + multifamily distress</div><div class="value">178,866</div><div class="note">the deepest bench of your three territories</div></div>
+    <div class="metric"><div class="label">Tired landlords</div><div class="value">84,780</div><div class="note">held 10+ years, non-owner-occupied · median 17.2 years</div></div>
+    <div class="metric"><div class="label">Out-of-state owners</div><div class="value">61,559</div><div class="note">mailing address outside Illinois</div></div>
+    <div class="metric"><div class="label">Verified vacant land</div><div class="value">2,918</div><div class="note">thin in this source, explained below</div></div>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Reading Cook County values correctly</h4>
+  <h2>One thing to know before the numbers: Illinois reports assessed value, not market value.</h2>
+  <p style="max-width:760px;color:#334155;">Cook County's files carry the county's assessed values, which by Illinois's classification system are a statutory fraction of what a property would actually trade for. So when a median below reads $52,000, that is the assessment figure, not the street price, and actual market values run several times higher. We report the county's own numbers rather than inflating them with estimates. Your delivered file carries the assessment class per parcel so market value can be reasoned per property class.</p>
+</section>
+
+<section class="container">
+  <h4>Your lanes, broken down</h4>
+  <h2>Four lanes verified and ready in Cook County today.</h2>
+
+  <div class="market-block">
+    <span class="lane-tag">Industrial / Multifamily Distress</span>
+    <h3>178,866 properties: 155,636 multifamily and 23,230 industrial, each carrying an off-market signal.</h3>
+    <p style="color:#334155;">Chicago's housing stock is built on two-to-six-unit multifamily buildings, and 166,681 of these properties have owners who don't occupy them. Median assessed value $52,000, median hold 9.8 years, 8,735 owned from out of state. For an investor focused on industrial and multifamily, this is the largest single hunting ground across all three of your territories, by a wide margin.</p>
+  </div>
+
+  <div class="market-block">
+    <span class="lane-tag">Tired Landlords</span>
+    <h3>84,780 non-owner-occupied properties held 10+ years. Median hold: 17.2 years.</h3>
+    <p style="color:#334155;">16,196 of these are multifamily. Median assessed value $30,178. The median owner here bought around 2009, at the bottom of the crash, meaning this cohort is sitting on the largest equity gains in the county's recent history.</p>
+  </div>
+
+  <div class="market-block">
+    <span class="lane-tag">Out-of-State Owners</span>
+    <h3>61,559 Cook County properties owned from outside Illinois.</h3>
+    <p style="color:#334155;">Median hold 6.7 years, so like Dallas, this file skews toward recent buyers. The sharpest cut is the overlap: out-of-state AND long tenure, 2,702 owners, which your delivered file isolates directly.</p>
+  </div>
+
+  <div class="market-block">
+    <span class="lane-tag">Verified Vacant Land</span>
+    <h3>2,918 parcels verified vacant under our standard. Honest note: this undercounts Chicago.</h3>
+    <p style="color:#334155;">Cook County's assessment file classifies vacant land narrowly, and our verification only counts what the data can prove. The real vacant inventory in Chicago (including city-owned lots and side lots) lives in separate city datasets that can be added per order. We'd rather show you 2,918 real ones than 30,000 maybes.</p>
+  </div>
+
+  <div class="unavailable">Two of your lanes have a data-access reality in Cook County we won't paper over: the county's public tax-sale catalog is inactive (its last full list is from 2016), and the public recorder foreclosure feed stopped updating in 2015. Current tax-delinquency and foreclosure data exist but sit with the Treasurer and court systems rather than open data, and get sourced per order through those channels. Everything above is verified and deliverable today.</div>
+</section>
+
+<section class="container">
+  <h4>How to work this territory</h4>
+  <h2>Where Cook County fits in your three-market play.</h2>
+  <p style="max-width:760px;color:#334155;">Cook is your volume market for the multifamily thesis: more distress-signal income property than Dallas and Massachusetts combined. The working order that fits the data: start with the 2,702 out-of-state long-tenure overlap (smallest, sharpest list), expand into multifamily distress filtered to your target townships, and use the tired-landlord file as the steady direct-mail base underneath.</p>
+</section>
+
+<section class="container">
+  <h4>Quality summary</h4>
+  <h2>What "verified" means before it reaches you.</h2>
+  <div class="checklist">
+    <div class="check"><div class="dot">&#10003;</div> One row per parcel, zero duplicates</div>
+    <div class="check"><div class="dot">&#10003;</div> 309 county fields carried per record</div>
+    <div class="check"><div class="dot">&#10003;</div> Current assessment universe, not a resold snapshot</div>
+    <div class="check"><div class="dot">&#10003;</div> Every stat computed from the delivered file</div>
+    <div class="check"><div class="dot">&#10003;</div> Data gaps stated plainly, never padded</div>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Executive insights</h4>
+  <h2>What the numbers actually say.</h2>
+  <div class="insights">
+    <div class="insight"><strong>Chicago is your multifamily volume play.</strong> 155,636 multifamily properties with off-market signals is a bench no other market on your list approaches. Even a narrow township-level cut leaves thousands of targets.</div>
+    <div class="insight"><strong>The 2009 cohort is the story in the tired-landlord file.</strong> A 17.2-year median hold puts the typical owner's purchase at the bottom of the last crash. Maximum equity, maximum distance from current pricing.</div>
+    <div class="insight"><strong>The richest records of your three markets.</strong> 309 fields per parcel, including geographic coordinates on every record, which most county files don't carry. Cuts by township, neighborhood code, or assessment class are all native here.</div>
+  </div>
+</section>
+
+<section class="container">
+  <div class="callout">
+    <h3>What's next</h3>
+    <p>If Chicago is in your first wave, shoot us a message and we'll cut the multifamily distress file to your target townships and scope the Treasurer delinquency add-on.</p>
+  </div>
+</section>
+
+<section class="container">
+  <h4>Source</h4>
+  <h2>Built from the official county universe.</h2>
+  <p>Source: Cook County Assessor current assessment universe via the county's open data platform. The customer delivery file is not posted publicly; this page is the preview audit only.</p>
+</section>
+
+<footer>
+  <div class="container">
+    <strong>LeadCurate</strong> · Curated county property data · hello@leadcurate.com
+  </div>
+</footer>
+</body>
+</html>
