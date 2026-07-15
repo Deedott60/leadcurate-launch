@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>LeadCurate | DeShawn's Private Territory Operating System</title>
+<meta name="description" content="A private three-market operating system built around DeShawn Bunch's six acquisition lanes." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<style>
+  :root {
+    --ink: #17202a;
+    --muted: #667085;
+    --line: #d9dee7;
+    --surface: #ffffff;
+    --wash: #f3f5f7;
+    --dark: #13261f;
+    --green: #177245;
+    --green-soft: #e4f2ea;
+    --blue: #1f5f8b;
+    --blue-soft: #e5f0f8;
+    --amber: #9a5b13;
+    --amber-soft: #fff1d6;
+    --red: #9d3d3d;
+    --red-soft: #f9e8e8;
+    --shadow: 0 10px 28px rgba(23, 32, 42, .08);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--wash); color: var(--ink); font-family: Inter, system-ui, sans-serif; line-height: 1.5; }
+  button, input { font: inherit; }
+  button { cursor: pointer; }
+  .shell { min-height: 100vh; display: grid; grid-template-columns: 248px minmax(0, 1fr); }
+  .sidebar { position: sticky; top: 0; height: 100vh; padding: 24px 18px; background: var(--dark); color: white; display: flex; flex-direction: column; }
+  .brand { font-family: "Source Serif 4", serif; font-size: 24px; font-weight: 700; letter-spacing: 0; }
+  .brand span { color: #62d391; }
+  .prepared { margin-top: 6px; color: #abc0b7; font-size: 12px; }
+  .nav { margin-top: 32px; display: grid; gap: 6px; }
+  .nav button { width: 100%; min-height: 42px; border: 0; border-radius: 6px; background: transparent; color: #b9c9c2; display: flex; align-items: center; gap: 10px; padding: 0 12px; text-align: left; font-weight: 700; }
+  .nav button:hover, .nav button.active { background: rgba(255,255,255,.1); color: white; }
+  .nav svg { width: 18px; height: 18px; flex: 0 0 18px; }
+  .side-note { margin-top: auto; padding: 14px; border: 1px solid rgba(255,255,255,.16); border-radius: 6px; color: #c8d5d0; font-size: 12px; }
+  .side-note strong { display: block; color: white; margin-bottom: 5px; }
+  main { min-width: 0; }
+  .topbar { min-height: 70px; padding: 14px 28px; background: rgba(255,255,255,.94); border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 16px; position: sticky; top: 0; z-index: 10; }
+  .topbar h1 { margin: 0; font-family: "Source Serif 4", serif; font-size: 22px; letter-spacing: 0; line-height: 1.15; }
+  .topbar p { margin: 3px 0 0; color: var(--muted); font-size: 12px; }
+  .status { display: inline-flex; align-items: center; gap: 7px; color: var(--green); font-size: 12px; font-weight: 800; white-space: nowrap; }
+  .status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #25a45b; box-shadow: 0 0 0 4px var(--green-soft); }
+  .content { width: min(1220px, calc(100% - 48px)); margin: 0 auto; padding: 28px 0 64px; }
+  .view { display: none; }
+  .view.active { display: block; }
+  .eyebrow { color: var(--green); font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .section-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin: 0 0 14px; }
+  .section-head h2, .section-head h3 { margin: 4px 0 0; font-family: "Source Serif 4", serif; letter-spacing: 0; line-height: 1.1; }
+  .section-head h2 { font-size: 30px; }
+  .section-head h3 { font-size: 23px; }
+  .section-head p { max-width: 620px; margin: 0; color: var(--muted); font-size: 13px; }
+  .band { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); overflow: hidden; }
+  .summary { display: grid; grid-template-columns: 1.35fr 1fr; margin-bottom: 24px; }
+  .summary-copy { padding: 30px; background: var(--dark); color: white; }
+  .summary-copy .eyebrow { color: #80dea8; }
+  .summary-copy h2 { margin: 8px 0 12px; max-width: 680px; font-family: "Source Serif 4", serif; font-size: clamp(28px, 4vw, 45px); line-height: 1.02; letter-spacing: 0; }
+  .summary-copy p { max-width: 700px; margin: 0; color: #c8d5d0; font-size: 15px; }
+  .summary-side { padding: 24px; display: grid; align-content: center; gap: 14px; }
+  .summary-stat { display: grid; grid-template-columns: 92px 1fr; gap: 14px; align-items: baseline; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .summary-stat:last-child { border-bottom: 0; padding-bottom: 0; }
+  .summary-stat strong { font-size: 24px; letter-spacing: 0; }
+  .summary-stat span { color: var(--muted); font-size: 12px; }
+  .queue { margin: 24px 0; }
+  .queue-list { display: grid; }
+  .queue-row { display: grid; grid-template-columns: 44px 180px minmax(160px, .75fr) minmax(260px, 1.2fr) 112px; gap: 14px; align-items: center; padding: 16px 18px; border-top: 1px solid var(--line); }
+  .queue-row:first-child { border-top: 0; }
+  .rank { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--dark); color: white; font-weight: 800; }
+  .queue-market strong, .queue-target strong { display: block; font-size: 14px; }
+  .queue-market span, .queue-target span, .queue-why { color: var(--muted); font-size: 12px; }
+  .pill { justify-self: end; display: inline-flex; align-items: center; justify-content: center; min-height: 28px; padding: 0 10px; border-radius: 999px; font-size: 11px; font-weight: 800; white-space: nowrap; }
+  .pill.ready { background: var(--green-soft); color: var(--green); }
+  .pill.refresh { background: var(--amber-soft); color: var(--amber); }
+  .workspace { margin-top: 24px; padding: 22px; }
+  .controls { display: grid; grid-template-columns: minmax(260px, .85fr) minmax(320px, 1.15fr); gap: 20px; margin-bottom: 20px; }
+  .control-label { margin-bottom: 7px; color: var(--muted); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+  .segments { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .segments button { min-height: 42px; padding: 8px; border: 0; border-left: 1px solid var(--line); background: white; color: var(--muted); font-size: 12px; font-weight: 800; }
+  .segments button:first-child { border-left: 0; }
+  .segments button.active { background: var(--dark); color: white; }
+  .lane-select { width: 100%; min-height: 42px; padding: 0 12px; border: 1px solid var(--line); border-radius: 6px; background: white; color: var(--ink); font-weight: 700; }
+  .lane-output { display: grid; grid-template-columns: .85fr 1.15fr; border-top: 1px solid var(--line); }
+  .pool { padding: 24px; background: var(--wash); }
+  .pool .number { margin: 7px 0 3px; font-size: clamp(38px, 5vw, 58px); font-weight: 800; letter-spacing: 0; line-height: 1; }
+  .pool .caption { color: var(--muted); font-size: 13px; }
+  .pool .signal { margin-top: 18px; padding: 12px; border-left: 3px solid var(--green); background: white; font-size: 13px; }
+  .play { padding: 24px; }
+  .play h3 { margin: 0 0 8px; font-family: "Source Serif 4", serif; font-size: 24px; letter-spacing: 0; }
+  .play p { margin: 0 0 18px; color: #475467; font-size: 14px; }
+  .steps { display: grid; gap: 10px; }
+  .step { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; font-size: 13px; }
+  .step b { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--blue-soft); color: var(--blue); font-size: 11px; }
+  .batch { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line); }
+  .batch-row { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 12px; }
+  input[type="range"] { width: 100%; accent-color: var(--green); }
+  .batch-output { margin-top: 7px; color: var(--ink); font-weight: 800; }
+  .matrix-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; background: white; font-size: 13px; }
+  th, td { padding: 13px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+  th { background: #eef1f4; color: #475467; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+  td strong { display: block; color: var(--ink); }
+  td span { color: var(--muted); font-size: 11px; }
+  .state { display: inline-flex; min-height: 24px; align-items: center; padding: 0 8px; border-radius: 999px; font-size: 10px; font-weight: 800; }
+  .state.live { color: var(--green); background: var(--green-soft); }
+  .state.scope { color: var(--amber); background: var(--amber-soft); }
+  .market-grid, .advantage-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .market-card, .advantage { padding: 20px; }
+  .market-card h3, .advantage h3 { margin: 7px 0 8px; font-size: 18px; letter-spacing: 0; }
+  .market-card p, .advantage p { margin: 0; color: var(--muted); font-size: 13px; }
+  .market-card ul { margin: 14px 0 0; padding-left: 18px; color: #475467; font-size: 12px; }
+  .market-card li { margin: 7px 0; }
+  .process { display: grid; grid-template-columns: repeat(7, 1fr); border: 1px solid var(--line); border-radius: 8px; background: white; overflow: hidden; }
+  .process-step { min-height: 150px; padding: 16px; border-left: 1px solid var(--line); }
+  .process-step:first-child { border-left: 0; }
+  .process-step svg { width: 21px; height: 21px; color: var(--green); }
+  .process-step strong { display: block; margin: 14px 0 5px; font-size: 13px; }
+  .process-step span { color: var(--muted); font-size: 11px; }
+  .truth { display: grid; grid-template-columns: 1fr 1fr; margin-top: 24px; }
+  .truth > div { padding: 24px; }
+  .truth > div:first-child { background: var(--dark); color: white; }
+  .truth h3 { margin: 0 0 12px; font-family: "Source Serif 4", serif; font-size: 23px; letter-spacing: 0; }
+  .truth p { margin: 0; color: inherit; opacity: .84; font-size: 13px; }
+  .truth ul { margin: 14px 0 0; padding-left: 18px; font-size: 13px; }
+  .truth li { margin: 8px 0; }
+  .deliverable { display: grid; grid-template-columns: .8fr 1.2fr; }
+  .deliverable > div { padding: 26px; }
+  .deliverable .left { background: var(--blue); color: white; }
+  .deliverable h2 { margin: 6px 0 12px; font-family: "Source Serif 4", serif; font-size: 30px; line-height: 1.08; letter-spacing: 0; }
+  .deliverable p { margin: 0; color: inherit; opacity: .86; font-size: 13px; }
+  .artifact-list { display: grid; gap: 12px; }
+  .artifact { display: grid; grid-template-columns: 34px 1fr; gap: 12px; }
+  .artifact svg { width: 22px; height: 22px; color: var(--green); }
+  .artifact strong { display: block; font-size: 13px; }
+  .artifact span { color: var(--muted); font-size: 12px; }
+  .fine-print { margin-top: 20px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 6px; background: white; color: var(--muted); font-size: 12px; }
+  footer { padding: 22px 0; color: var(--muted); font-size: 11px; text-align: center; }
+  .mobile-nav { display: none; }
+  @media (max-width: 1040px) {
+    .shell { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .mobile-nav { display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; left: 10px; right: 10px; bottom: 10px; z-index: 20; padding: 6px; border: 1px solid var(--line); border-radius: 8px; background: rgba(255,255,255,.97); box-shadow: var(--shadow); }
+    .mobile-nav button { min-height: 46px; border: 0; background: transparent; color: var(--muted); display: grid; place-items: center; gap: 2px; font-size: 9px; font-weight: 800; }
+    .mobile-nav button.active { color: var(--green); }
+    .mobile-nav svg { width: 18px; height: 18px; }
+    .content { padding-bottom: 94px; }
+    .process { grid-template-columns: repeat(4, 1fr); }
+    .process-step:nth-child(5) { border-left: 0; border-top: 1px solid var(--line); }
+    .process-step:nth-child(n+6) { border-top: 1px solid var(--line); }
+  }
+  @media (max-width: 760px) {
+    .topbar { padding: 13px 18px; }
+    .topbar h1 { font-size: 18px; }
+    .status { display: none; }
+    .content { width: min(100% - 24px, 1220px); padding-top: 16px; }
+    .summary, .lane-output, .truth, .deliverable { grid-template-columns: 1fr; }
+    .summary-copy { padding: 24px 20px; }
+    .summary-copy h2 { font-size: 32px; }
+    .summary-side { padding: 20px; }
+    .queue-row { grid-template-columns: 38px 1fr auto; gap: 10px; }
+    .queue-target, .queue-why { grid-column: 2 / -1; }
+    .pill { grid-column: 3; grid-row: 1; }
+    .controls { grid-template-columns: 1fr; }
+    .workspace { padding: 16px; }
+    .market-grid, .advantage-grid { grid-template-columns: 1fr; }
+    .process { grid-template-columns: repeat(2, 1fr); }
+    .process-step:nth-child(odd) { border-left: 0; }
+    .process-step:nth-child(n+3) { border-top: 1px solid var(--line); }
+    .section-head { display: block; }
+    .section-head p { margin-top: 8px; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">Lead<span>Curate</span>.</div>
+    <div class="prepared">Private territory system for DeShawn Bunch</div>
+    <nav class="nav" aria-label="Primary">
+      <button class="active" data-view="command"><i data-lucide="layout-dashboard"></i>Command center</button>
+      <button data-view="markets"><i data-lucide="map"></i>Market map</button>
+      <button data-view="system"><i data-lucide="workflow"></i>The operating system</button>
+      <button data-view="delivery"><i data-lucide="package-check"></i>Delivery standard</button>
+    </nav>
+    <div class="side-note"><strong>Private review copy</strong>This page is not indexed and is not linked from the public LeadCurate site.</div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div><h1>Private Territory Operating System</h1><p>Three markets. Six acquisition lanes. One repeatable process.</p></div>
+      <div class="status">System map current as of July 15, 2026</div>
+    </header>
+
+    <div class="content">
+      <section id="command" class="view active">
+        <div class="summary band">
+          <div class="summary-copy">
+            <div class="eyebrow">What was built for you</div>
+            <h2>This is not three lists. It is the system that decides where to hunt, who to contact, and what to work first.</h2>
+            <p>Your six lanes are wired across Massachusetts, Dallas County, and Cook County. The system preserves the county record, crosses the signals that matter, isolates the best first campaign, and keeps the source trail needed to verify every parcel.</p>
+          </div>
+          <div class="summary-side">
+            <div class="summary-stat"><strong>5.18M</strong><span>unique parcels analyzed across the three territories</span></div>
+            <div class="summary-stat"><strong>6</strong><span>buying lanes held to one consistent delivery standard</span></div>
+            <div class="summary-stat"><strong>3</strong><span>reusable market configurations, ready to rerun as sources update</span></div>
+          </div>
+        </div>
+
+        <div class="queue">
+          <div class="section-head"><div><div class="eyebrow">Recommended first campaigns</div><h3>Start narrow. Prove response. Expand from signal, not volume.</h3></div><p>These are the strongest verified crosses already present in the data. They are smaller than the broad lane files by design.</p></div>
+          <div class="band queue-list">
+            <div class="queue-row"><div class="rank">1</div><div class="queue-market"><strong>Dallas County</strong><span>Industrial and multifamily</span></div><div class="queue-target"><strong>4,722 properties</strong><span>long tenure plus multifamily</span></div><div class="queue-why">Closest match to your core lane. It removes newer institutional buyers and brings legacy income-property owners to the top.</div><span class="pill refresh">Refresh first</span></div>
+            <div class="queue-row"><div class="rank">2</div><div class="queue-market"><strong>Cook County</strong><span>Out-of-state owners</span></div><div class="queue-target"><strong>2,702 properties</strong><span>out of state plus 10+ years</span></div><div class="queue-why">The smallest high-intent Cook cut. Work this before opening the 178,866-property income-property universe.</div><span class="pill ready">Ready</span></div>
+            <div class="queue-row"><div class="rank">3</div><div class="queue-market"><strong>Worcester County</strong><span>Massachusetts home market</span></div><div class="queue-target"><strong>8,192 properties</strong><span>industrial and multifamily distress</span></div><div class="queue-why">Second-deepest bench in the state with stronger price room than Middlesex. This is the price-to-depth winner.</div><span class="pill ready">Ready</span></div>
+            <div class="queue-row"><div class="rank">4</div><div class="queue-market"><strong>Springfield</strong><span>Long-tenure owners</span></div><div class="queue-target"><strong>14,803 properties</strong><span>non-occupant owners at 20+ years</span></div><div class="queue-why">The highest opportunity density found in the statewide scan. Use as the lower-cost Massachusetts expansion play.</div><span class="pill ready">Ready</span></div>
+          </div>
+        </div>
+
+        <div class="workspace band">
+          <div class="section-head"><div><div class="eyebrow">Campaign planner</div><h3>Choose a market and one of your lanes.</h3></div><p>The planner shows the real pool, the sharper signal inside it, and the first working order.</p></div>
+          <div class="controls">
+            <div><div class="control-label">Market</div><div class="segments" id="marketSegments"><button class="active" data-market="dallas">Dallas</button><button data-market="massachusetts">Massachusetts</button><button data-market="cook">Cook County</button></div></div>
+            <div><label class="control-label" for="laneSelect">Acquisition lane</label><select class="lane-select" id="laneSelect"><option value="tired">Tired landlords, 10 to 20+ years</option><option value="income">Distressed industrial and multifamily</option><option value="outstate">Out-of-state owners</option><option value="vacant">Verified vacant land</option><option value="preforeclosure">Pre-foreclosure</option><option value="tax">Tax lien and delinquent</option></select></div>
+          </div>
+          <div class="lane-output">
+            <div class="pool"><div class="eyebrow" id="poolStatus">Deliverable now</div><div class="number" id="poolNumber">42,092</div><div class="caption" id="poolCaption">qualified tired-landlord parcels in Dallas County</div><div class="signal" id="poolSignal"><strong>Sharper cross:</strong> 15,861 have 20+ years of tenure. 6,128 are also owned outside Texas.</div></div>
+            <div class="play"><h3 id="playTitle">Lead with tenure, not the landlord label.</h3><p id="playWhy">The broad category is common. The defensible advantage is separating legacy owners from recent buyers and keeping the official parcel record attached.</p><div class="steps" id="playSteps"></div><div class="batch"><div class="batch-row"><span>Planned contacts per campaign</span><strong id="batchSizeLabel">250</strong></div><input id="batchSize" type="range" min="100" max="1000" step="50" value="250" aria-label="Contacts per campaign" /><div class="batch-output" id="batchOutput">Start with 250 records. Keep the remaining pool behind the first response test.</div></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="markets" class="view">
+        <div class="section-head"><div><div class="eyebrow">Market and lane map</div><h2>One view of what is ready, what is strongest, and what needs a dedicated source.</h2></div><p>A truthful operating system shows both capability and source limits. It does not turn an unavailable public record into a fake count.</p></div>
+        <div class="band matrix-wrap">
+          <table>
+            <thead><tr><th>Market</th><th>Parcel universe</th><th>Tired landlords</th><th>Industrial / multifamily</th><th>Out of state</th><th>Vacant land</th><th>Pre-foreclosure</th><th>Tax lien</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Dallas County, TX</strong><span>Certified roll in current audit</span></td><td><strong>756,508</strong></td><td><strong>42,092</strong><span>15,861 at 20+ years</span></td><td><strong>18,504</strong><span>4,722 long-tenure multifamily</span></td><td><strong>31,794</strong><span>6,128 also long tenure</span></td><td><strong>36,870</strong><span>23,300 absentee owned</span></td><td><span class="state scope">Source per order</span></td><td><span class="state scope">Source per order</span></td></tr>
+              <tr><td><strong>Massachusetts</strong><span>All 351 municipalities</span></td><td><strong>2,558,583</strong></td><td><strong>436,244</strong><span>20.5-year median hold</span></td><td><strong>54,443</strong><span>Worcester has 8,192</span></td><td><strong>115,764</strong><span>37,395 also tired landlords</span></td><td><strong>60,876</strong><span>Worcester has 8,710</span></td><td><span class="state scope">County source next</span></td><td><span class="state scope">Municipal source next</span></td></tr>
+              <tr><td><strong>Cook County, IL</strong><span>Chicago plus suburbs</span></td><td><strong>1,863,530</strong></td><td><strong>84,780</strong><span>32,655 at 20+ years</span></td><td><strong>178,866</strong><span>largest income-property bench</span></td><td><strong>61,559</strong><span>2,702 also long tenure</span></td><td><strong>2,918</strong><span>specialist lane</span></td><td><span class="state scope">Source per order</span></td><td><span class="state scope">Source per order</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section-head" style="margin-top:26px"><div><div class="eyebrow">Territory roles</div><h3>Each market has a different job in the portfolio.</h3></div></div>
+        <div class="market-grid">
+          <div class="market-card band"><div class="eyebrow">Balanced attack</div><h3>Dallas County</h3><p>The broadest mix of workable lanes at middle-market values.</p><ul><li>Start with long-tenure multifamily.</li><li>Use 6,128 out-of-state legacy owners as the second campaign.</li><li>Keep 23,300 absentee vacant parcels as a steady land pipeline.</li></ul></div>
+          <div class="market-card band"><div class="eyebrow">Home-state edge</div><h3>Massachusetts</h3><p>The state scan solves where to focus before money is spent.</p><ul><li>Worcester is the price-to-depth winner.</li><li>Springfield is the high-density value play.</li><li>Middlesex is a later expansion market, not the first spend.</li></ul></div>
+          <div class="market-card band"><div class="eyebrow">Income-property volume</div><h3>Cook County</h3><p>The deepest industrial and multifamily bench of the three.</p><ul><li>Open with the 2,702 out-of-state long-tenure owners.</li><li>Expand by ZIP, township, property class, and tenure.</li><li>Do not market to all 178,866 records at once.</li></ul></div>
+        </div>
+      </section>
+
+      <section id="system" class="view">
+        <div class="section-head"><div><div class="eyebrow">The operating system</div><h2>The advantage is the chain, not a secret county website.</h2></div><p>Other investors can work these markets. The difference is having a repeatable machine that turns changing public records into a private, prioritized buying queue.</p></div>
+        <div class="process">
+          <div class="process-step"><i data-lucide="database"></i><strong>1. Source</strong><span>Go to the official county or state record, not a recycled reseller list.</span></div>
+          <div class="process-step"><i data-lucide="combine"></i><strong>2. Normalize</strong><span>Preserve useful source fields and standardize parcels across different systems.</span></div>
+          <div class="process-step"><i data-lucide="copy-check"></i><strong>3. Deduplicate</strong><span>One row per parcel so counts and campaign size are real.</span></div>
+          <div class="process-step"><i data-lucide="git-compare-arrows"></i><strong>4. Cross signals</strong><span>Tenure plus absentee. Property type plus an off-market signal.</span></div>
+          <div class="process-step"><i data-lucide="list-filter"></i><strong>5. Prioritize</strong><span>Move the smallest, strongest cut to the front of the working order.</span></div>
+          <div class="process-step"><i data-lucide="badge-check"></i><strong>6. Verify</strong><span>Keep parcel identifiers and source context attached for official lookup.</span></div>
+          <div class="process-step"><i data-lucide="refresh-cw"></i><strong>7. Rerun</strong><span>Use the saved market configuration when the public source changes.</span></div>
+        </div>
+
+        <div class="section-head" style="margin-top:28px"><div><div class="eyebrow">Why an experienced operator should care</div><h3>This removes work he already knows is expensive.</h3></div></div>
+        <div class="advantage-grid">
+          <div class="advantage band"><div class="eyebrow">Less list waste</div><h3>Do not pay to contact the wrong version of the owner pool.</h3><p>A 10-year landlord and a recent institutional buyer may look identical in a generic absentee list. The tenure cross separates them.</p></div>
+          <div class="advantage band"><div class="eyebrow">Better territory choice</div><h3>Decide where to spend before buying or marketing a file.</h3><p>The Massachusetts scan compared all 351 municipalities and surfaced Worcester and Springfield from the data itself.</p></div>
+          <div class="advantage band"><div class="eyebrow">Reusable intelligence</div><h3>The second campaign starts from what the first campaign taught us.</h3><p>The buy box can tighten by class, tenure, ZIP, value band, ownership location, and response. The market does not need to be rebuilt from scratch.</p></div>
+        </div>
+
+        <div class="truth band">
+          <div><h3>What can be private to DeShawn</h3><p>His buy-box definitions, ranked cuts, delivered files, working order, refresh schedule, and response-informed refinements can be maintained as his private operating layer.</p><ul><li>His exact lane combinations</li><li>His campaign batches and exclusions</li><li>His learned response patterns</li><li>His delivered records and update history</li></ul></div>
+          <div><h3>What exclusivity actually means</h3><p>The public records are not exclusive, and no honest provider should pretend they are. Geographic or lane exclusivity is a commercial term that must be written into an agreement and priced separately.</p><ul><li>Standard service: private deliverables, no market lockout</li><li>Protected service: defined county, lane, and time window</li><li>Full exclusivity: higher retainer because LeadCurate turns away other work</li></ul></div>
+        </div>
+      </section>
+
+      <section id="delivery" class="view">
+        <div class="deliverable band">
+          <div class="left"><div class="eyebrow" style="color:#b8e3f7">Delivery standard</div><h2>The file is only one layer of the product.</h2><p>Every delivery should tell him what is in the pool, which cut to work first, how the records were formed, what can be verified, and what source limitations remain.</p></div>
+          <div><div class="artifact-list">
+            <div class="artifact"><i data-lucide="file-spreadsheet"></i><div><strong>Full working CSV</strong><span>One row per parcel with the useful official fields the source exposes.</span></div></div>
+            <div class="artifact"><i data-lucide="scan-eye"></i><div><strong>Redacted preview</strong><span>A safe review sample that proves structure without exposing the paid file.</span></div></div>
+            <div class="artifact"><i data-lucide="braces"></i><div><strong>Machine-checked metadata</strong><span>Counts and summary statistics computed from the file that ships.</span></div></div>
+            <div class="artifact"><i data-lucide="fingerprint"></i><div><strong>Parcel-level verification</strong><span>Official parcel identifiers remain in the paid file for county or state lookup.</span></div></div>
+            <div class="artifact"><i data-lucide="route"></i><div><strong>Working order</strong><span>The first campaign, expansion path, and source caveats are delivered with the records.</span></div></div>
+            <div class="artifact"><i data-lucide="settings-2"></i><div><strong>Saved market configuration</strong><span>The next pull reruns the same logic instead of becoming another one-off research job.</span></div></div>
+          </div></div>
+        </div>
+        <div class="fine-print"><strong>Important boundary:</strong> phone numbers, email addresses, and skip-traced contact data are not part of the county parcel source. Pre-foreclosure and tax-lien records also require dedicated local sources in these markets. LeadCurate scopes those honestly instead of labeling assessor data as something it is not.</div>
+      </section>
+
+      <footer>LeadCurate | Private review copy for Derrick | hello@leadcurate.com</footer>
+    </div>
+  </main>
+</div>
+
+<nav class="mobile-nav" aria-label="Mobile navigation">
+  <button class="active" data-view="command"><i data-lucide="layout-dashboard"></i><span>Command</span></button>
+  <button data-view="markets"><i data-lucide="map"></i><span>Markets</span></button>
+  <button data-view="system"><i data-lucide="workflow"></i><span>System</span></button>
+  <button data-view="delivery"><i data-lucide="package-check"></i><span>Delivery</span></button>
+</nav>
+
+<script>
+const laneData = {
+  dallas: {
+    tired: { status: 'Deliverable after source refresh', count: 42092, caption: 'qualified tired-landlord parcels in Dallas County', signal: '<strong>Sharper cross:</strong> 15,861 have 20+ years of tenure. 6,128 are also owned outside Texas.', title: 'Lead with tenure, not the landlord label.', why: 'The broad category is common. The defensible advantage is separating legacy owners from recent buyers and keeping the official parcel record attached.', steps: ['Run the 20+ year cohort first.', 'Split local and out-of-state ownership into different messages.', 'Expand into the remaining 10 to 19 year owners only after response is measured.'] },
+    income: { status: 'Deliverable after source refresh', count: 18504, caption: 'industrial and multifamily properties carrying an off-market signal', signal: '<strong>Sharper cross:</strong> 4,722 multifamily properties are also in the tired-landlord file.', title: 'This is the Dallas core lane.', why: 'Property type alone creates noise. The long-tenure cross puts owners with equity and a longer holding history ahead of recent acquisitions.', steps: ['Start with the 4,722 long-tenure multifamily properties.', 'Then rank the remaining pool by absentee status and hold length.', 'Break expansion batches by ZIP and property class.'] },
+    outstate: { status: 'Deliverable after source refresh', count: 31794, caption: 'Dallas County properties owned outside Texas', signal: '<strong>Sharper cross:</strong> 6,128 are also long-tenure landlords.', title: 'Separate legacy owners from recent buyers.', why: 'The out-of-state file skews newer. Tenure prevents recent institutional owners from consuming the first campaign.', steps: ['Work the 6,128 long-tenure overlap first.', 'Separate individual and entity ownership.', 'Use the broader out-of-state pool as a later expansion list.'] },
+    vacant: { status: 'Deliverable after source refresh', count: 36870, caption: 'verified vacant parcels in Dallas County', signal: '<strong>Sharper cross:</strong> 23,300 are absentee owned. 1,441 are industrially zoned vacant parcels.', title: 'Use land as the steady second engine.', why: 'The absentee cut reduces outreach to owners who appear more likely to build or hold locally.', steps: ['Start with absentee-owned industrial land.', 'Then work absentee land inside the preferred value and acreage band.', 'Keep the remaining verified pool behind the response test.'] },
+    preforeclosure: { status: 'Dedicated local source required', count: null, caption: 'no assessor-only count is being represented as pre-foreclosure', signal: '<strong>Source rule:</strong> scope a current foreclosure source before a count is promised.', title: 'Treat this as a source job, not a label.', why: 'The appraisal roll cannot prove an active foreclosure event. This lane becomes deliverable only after a current event source is acquired and joined by parcel.', steps: ['Select the current county foreclosure source.', 'Normalize case and parcel identifiers.', 'Cross the event file with ownership, value, and property class.'] },
+    tax: { status: 'Dedicated local source required', count: null, caption: 'no assessor-only count is being represented as tax delinquent', signal: '<strong>Source rule:</strong> obtain the current delinquent or tax-sale file before producing this lane.', title: 'Build from the tax event first.', why: 'A parcel roll is property context. It is not evidence of delinquency by itself.', steps: ['Acquire the current official tax event source.', 'Join it to the Dallas parcel universe.', 'Prioritize by property type, tenure, and absentee status.'] }
+  },
+  massachusetts: {
+    tired: { status: 'Deliverable now', count: 436244, caption: 'statewide tired-landlord parcels across 351 municipalities', signal: '<strong>Best geographic cuts:</strong> Worcester has 42,761. Springfield has 14,803 at 20+ years.', title: 'Use the statewide scan to choose the battlefield.', why: 'The value is not sending all 436,244 records. It is knowing Worcester offers depth while Springfield offers the highest opportunity density.', steps: ['Open with Worcester 20+ year owners.', 'Use Springfield as the lower-value density play.', 'Hold Middlesex for a later, higher-cost expansion.'] },
+    income: { status: 'Deliverable now', count: 54443, caption: 'industrial and multifamily parcels carrying an off-market signal statewide', signal: '<strong>Best geographic cut:</strong> Worcester has 8,192 at medians roughly half of the Boston metro.', title: 'Worcester is the price-to-depth winner.', why: 'It holds the second-deepest income-property bench and the strongest concentration among large counties without Middlesex pricing.', steps: ['Start in Worcester County.', 'Split industrial and multifamily into separate working batches.', 'Rank each batch by absentee status and hold length.'] },
+    outstate: { status: 'Deliverable now', count: 115764, caption: 'Massachusetts parcels owned from another state', signal: '<strong>Sharper cross:</strong> 37,395 are also tired landlords. Worcester median value is $284,300.', title: 'Do not confuse second-home volume with the investor lane.', why: 'Barnstable carries heavy out-of-state volume, but Worcester is a better fit for the stated industrial, multifamily, and value strategy.', steps: ['Open with Worcester long-tenure out-of-state owners.', 'Keep Cape Cod separate from the core investor message.', 'Expand by value band and property class.'] },
+    vacant: { status: 'Deliverable now', count: 60876, caption: 'verified vacant parcels statewide', signal: '<strong>Best geographic cut:</strong> Worcester has 8,710 with a $27,900 median land value.', title: 'Worcester keeps both volume and workable land values.', why: 'The statewide layer lets the land lane follow the same territory decision as the income-property lanes.', steps: ['Start with Worcester absentee-owned land.', 'Set the preferred acreage and value band.', 'Use the statewide pool to compare the next county before expanding.'] },
+    preforeclosure: { status: 'County source required', count: null, caption: 'Registry of Deeds and court sources must be scoped after the county is chosen', signal: '<strong>Next source decision:</strong> Worcester is the first county to scope.', title: 'The statewide assessor layer chose the county. Now source the event.', why: 'Massachusetts foreclosure records are not a single statewide parcel flag inside MassGIS.', steps: ['Scope Worcester Registry of Deeds foreclosure records.', 'Normalize the case or instrument to parcel records.', 'Cross the event with the saved Worcester buy box.'] },
+    tax: { status: 'Municipal source required', count: null, caption: 'tax-title records are handled through local processes', signal: '<strong>Next source decision:</strong> begin with the selected Worcester municipalities.', title: 'Municipal process comes after territory selection.', why: 'The state parcel layer provides ownership and value context, not a current tax-title event universe.', steps: ['Choose the first Worcester municipalities.', 'Acquire the current tax-title or taking source.', 'Join to parcel, ownership, tenure, and use fields.'] }
+  },
+  cook: {
+    tired: { status: 'Deliverable now', count: 84780, caption: 'Cook County tired-landlord parcels', signal: '<strong>Sharper cross:</strong> 32,655 have 20+ years of tenure.', title: 'The 20+ year cohort is the first Cook file.', why: 'A 17.2-year median hold points to legacy ownership and accumulated equity. That is more useful than a generic non-owner-occupied label.', steps: ['Work the 32,655 at 20+ years first.', 'Split by multifamily class and township.', 'Expand to 10 to 19 years only after the first campaign.'] },
+    income: { status: 'Deliverable now', count: 178866, caption: 'industrial and multifamily properties carrying an off-market signal', signal: '<strong>Market role:</strong> this is the largest income-property bench across the three territories.', title: 'Cook is the volume market, not the one-list blast.', why: 'The full pool is too large to be a working queue. The system exists to narrow it by class, ZIP, township, tenure, and ownership location.', steps: ['Begin with out-of-state plus long tenure.', 'Choose target townships and two-to-six-unit classes.', 'Open new ZIP batches only when the first segment is worked.'] },
+    outstate: { status: 'Deliverable now', count: 61559, caption: 'Cook County properties owned outside Illinois', signal: '<strong>Sharper cross:</strong> 2,702 are also long-tenure owners.', title: 'This is the cleanest Cook opening campaign.', why: 'The 2,702-record overlap is small enough to work and specific enough to justify a tailored owner conversation.', steps: ['Start with all 2,702 long-tenure out-of-state owners.', 'Split income property from other classes.', 'Expand into the remaining out-of-state pool by township.'] },
+    vacant: { status: 'Deliverable now', count: 2918, caption: 'verified vacant parcels in Cook County', signal: '<strong>Market role:</strong> a specialist lane, not the reason to enter Cook.', title: 'Keep vacant land focused and secondary.', why: 'Cook is strongest for income property. Vacant land should be worked only where location, class, and value context support the specific strategy.', steps: ['Set the acceptable township and land-use class.', 'Review value coverage before value-based outreach.', 'Keep this separate from the core multifamily campaign.'] },
+    preforeclosure: { status: 'Dedicated local source required', count: null, caption: 'the parcel universe does not prove an active foreclosure event', signal: '<strong>Source rule:</strong> acquire a current Cook foreclosure event source before counting.', title: 'Join the event to the parcel universe.', why: 'The system has the property context ready, but an active foreclosure needs its own current source.', steps: ['Select the current Cook foreclosure source.', 'Normalize PIN and case identifiers.', 'Cross with class, tenure, ownership location, and sale history.'] },
+    tax: { status: 'Dedicated local source required', count: null, caption: 'the parcel universe does not prove current tax delinquency', signal: '<strong>Source rule:</strong> acquire the current tax sale or delinquency source before counting.', title: 'Use the tax event as the trigger.', why: 'Assessor and parcel records provide context, not proof that taxes are currently delinquent.', steps: ['Acquire the current county tax event source.', 'Join by the official 14-digit PIN.', 'Rank by property class, tenure, and owner location.'] }
+  }
+};
+
+let activeMarket = 'dallas';
+let activeLane = 'tired';
+const format = value => value == null ? 'Scoped' : value.toLocaleString('en-US');
+
+function renderLane() {
+  const data = laneData[activeMarket][activeLane];
+  document.getElementById('poolStatus').textContent = data.status;
+  document.getElementById('poolNumber').textContent = format(data.count);
+  document.getElementById('poolCaption').textContent = data.caption;
+  document.getElementById('poolSignal').innerHTML = data.signal;
+  document.getElementById('playTitle').textContent = data.title;
+  document.getElementById('playWhy').textContent = data.why;
+  document.getElementById('playSteps').innerHTML = data.steps.map((step, i) => `<div class="step"><b>${i + 1}</b><span>${step}</span></div>`).join('');
+  renderBatch();
+}
+
+function renderBatch() {
+  const size = Number(document.getElementById('batchSize').value);
+  const count = laneData[activeMarket][activeLane].count;
+  document.getElementById('batchSizeLabel').textContent = size.toLocaleString('en-US');
+  document.getElementById('batchOutput').textContent = count == null
+    ? `Set the first campaign at ${size.toLocaleString('en-US')} records after the dedicated source is verified.`
+    : `Start with ${Math.min(size, count).toLocaleString('en-US')} records. This pool supports ${Math.ceil(count / size).toLocaleString('en-US')} controlled campaign batches at that size.`;
+}
+
+document.querySelectorAll('[data-view]').forEach(button => button.addEventListener('click', () => {
+  const view = button.dataset.view;
+  document.querySelectorAll('.view').forEach(section => section.classList.toggle('active', section.id === view));
+  document.querySelectorAll('[data-view]').forEach(item => item.classList.toggle('active', item.dataset.view === view));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}));
+
+document.querySelectorAll('#marketSegments button').forEach(button => button.addEventListener('click', () => {
+  activeMarket = button.dataset.market;
+  document.querySelectorAll('#marketSegments button').forEach(item => item.classList.toggle('active', item === button));
+  renderLane();
+}));
+
+document.getElementById('laneSelect').addEventListener('change', event => { activeLane = event.target.value; renderLane(); });
+document.getElementById('batchSize').addEventListener('input', renderBatch);
+lucide.createIcons();
+renderLane();
+</script>
+</body>
+</html>

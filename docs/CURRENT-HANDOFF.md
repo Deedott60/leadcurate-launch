@@ -6,13 +6,15 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-07-15 by Codex (DeShawn Dallas, Massachusetts, and Cook data fulfillment completed)
+Last updated: 2026-07-15 by Codex (DeShawn private territory operating-system page completed)
 
 ---
 
 ## Recently closed -- DeShawn fulfillment
 
 0. **All four DeShawn audit pages built and live (Claude 2026-07-15).** Cover page `docs/sample-deliveries/deshawn-territory-2026-07-15/` links the three market audits (`deshawn-massachusetts-...`, `deshawn-dallas-...`, `deshawn-cook-county-...`). Every stat traced to the verified meta.json files, math node-checked, zero em dashes, noindex, not on the public hub. MA page recommends Worcester County with Springfield as the value play, from the real rollup. Review email to Derrick next; NOTHING goes to the buyer without his explicit go. Codex resolved the preview leak on 2026-07-15: source owner, address, coordinate, parcel ID, PIN, and account columns are now redacted in all three markets' row-level preview CSVs; full paid files retain the identifiers needed for official verification.
+
+0a. **DeShawn's private territory operating-system page built (Codex 2026-07-15).** `docs/sample-deliveries/deshawn-operating-system-2026-07-15/` is a separate noindex command center and does not alter Claude's four audit pages. It frames the product for an experienced operator as territory selection + official-source normalization + dedupe + differentiated signal crosses + campaign order + parcel verification + reusable refresh configs, not as three CSV lists. The interactive planner covers all three markets and all six requested lanes, shows unavailable event-source lanes honestly, and distinguishes private client logic from contractual geographic exclusivity. Verified in Playwright at 1440x1000 and 390x844; planner interaction passed. Customer positioning rule going forward: for experienced buyers, lead with the repeatable operating system and first campaign decision, then use the broad lane counts as proof. NOTHING goes to DeShawn without Derrick's explicit go.
 
 1. **COMPLETE: DeShawn Bunch — live prospect, 3 new markets, 6 lanes (completed 2026-07-15).** Real warm buyer: experienced investor (20+ properties bought/sold, has a crew), hour-long phone call done, Derrick promised personalized territory audits. Contact: `dbunch@debonairelites.com` (in the `prospects` table, status `engaged`). Emails to him require Derrick's explicit go, review copy to Derrick first, always.
 
