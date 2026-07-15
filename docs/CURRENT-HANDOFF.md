@@ -12,6 +12,8 @@ Last updated: 2026-07-15 by Codex (DeShawn Dallas, Massachusetts, and Cook data 
 
 ## Recently closed -- DeShawn fulfillment
 
+0. **All four DeShawn audit pages built and live (Claude 2026-07-15).** Cover page `docs/sample-deliveries/deshawn-territory-2026-07-15/` links the three market audits (`deshawn-massachusetts-...`, `deshawn-dallas-...`, `deshawn-cook-county-...`). Every stat traced to the verified meta.json files, math node-checked, zero em dashes, noindex, not on the public hub. MA page recommends Worcester County with Springfield as the value play, from the real rollup. Review email to Derrick next; NOTHING goes to the buyer without his explicit go. Codex resolved the preview leak on 2026-07-15: source owner, address, coordinate, parcel ID, PIN, and account columns are now redacted in all three markets' row-level preview CSVs; full paid files retain the identifiers needed for official verification.
+
 1. **COMPLETE: DeShawn Bunch — live prospect, 3 new markets, 6 lanes (completed 2026-07-15).** Real warm buyer: experienced investor (20+ properties bought/sold, has a crew), hour-long phone call done, Derrick promised personalized territory audits. Contact: `dbunch@debonairelites.com` (in the `prospects` table, status `engaged`). Emails to him require Derrick's explicit go, review copy to Derrick first, always.
 
    **His exact ask (verbatim from his message):** markets are "Massachusetts, Chicago, Dallas Texas"; lanes are "all pre-foreclosures, tax lien, tired landlords who have held properties 10-20 minimum, distressed off-market industrial and multi family, out of state owners, vacant land."

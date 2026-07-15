@@ -368,7 +368,25 @@ def redact(row: dict[str, Any]) -> dict[str, Any]:
     result["lc_property_address"] = re.sub(r"^\d+", "###", address)
     for key in list(result):
         upper = key.upper()
-        if upper.startswith("OWNER_") or upper in {"ACCOUNT_NUM", "GIS_PARCEL_ID", "INFO_GIS_PARCEL_ID"}:
+        exact_identifiers = {
+            "ACCOUNT_NUM", "GIS_PARCEL_ID", "INFO_GIS_PARCEL_ID", "LC_PARCEL_KEY",
+            "MAP_PAR_ID", "LOC_ID", "PROP_ID", "PARCEL_KEY", "U_PIN", "U_PIN10",
+            "OBJECTID", "GLOBALID", "ROW_ID", "ADDR_ROW_ID", "SALE_ROW_ID",
+        }
+        sensitive_fragments = (
+            "OWNER", "MAIL_ADDRESS", "OWN_ADDR", "OWN_CITY", "OWN_STATE", "OWN_ZIP",
+            "PROPERTY_ADDRESS", "PROP_ADDRESS", "SITE_ADDR", "FULL_STREET", "FULL_STR",
+            "STREET_NUM", "ADDR_NUM", "UNIT_ID", "LEGAL", "PHONE", "SALE_DOCUMENT",
+        )
+        coordinate_fields = {"U_LON", "U_LAT", "U_X_3435", "U_Y_3435", "LON", "LAT", "X_3435", "Y_3435"}
+        if (
+            upper not in {"LC_OWNER_NAME", "LC_PROPERTY_ADDRESS", "LC_MAILING_ADDRESS"}
+            and (
+                upper in exact_identifiers
+                or upper in coordinate_fields
+                or any(fragment in upper for fragment in sensitive_fragments)
+            )
+        ):
             result[key] = "REDACTED"
     return result
 
