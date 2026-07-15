@@ -175,9 +175,13 @@ Update this whenever you discover, refresh, or fix a county URL. **Backfill stat
 
 - **Tarrant TX (Fort Worth) — Tier 3 weekly zip**: `https://www.tarrantcountytx.gov/content/dam/main/tax/tax-rolls/2026/TaxRoll{YYYYMMDD}.zip` — created weekly on Fridays, available the following Monday. Contains `Master.dat` + `Rec.DAT` fixed-width files. Working method: save as `/opt/leadcurate/raw_imports/tarrant-tx/<date>/tax-roll.zip`, then run `scripts/leadcurate/extract_tarrant_tx.py --zip <zip> --output-dir /opt/leadcurate/raw_imports/tarrant-tx/<date> --limit 10000`. Extractor joins account IDs from `Rec.DAT` receivables to owner/address rows in `Master.dat` and writes `tax-roll-extracted.csv`.
 - **Dallas TX — Tier 3 DCAD ViewPDFs.aspx**:
+  - Current 2025 comma-delimited appraisal package: `https://www.dallascad.org/ViewPDFs.aspx?type=3&id=%5C%5CDCAD.ORG%5CWEB%5CWEBDATA%5CWEBFORMS%5CDATA%20PRODUCTS%5CDCAD2025_CURRENT.ZIP`
   - Real Property Roll 2025: `https://www.dallascad.org/ViewPDFs.aspx?type=3&id=%5C%5CDCAD.ORG%5CWEB%5CWEBDATA%5CWEBFORMS%5CDATA%20PRODUCTS%5C2025_REAL_PROPERTY_CERT_APPR_ROLL.zip` (118 MB → 2.4 GB uncompressed)
   - Parcel 2025: `https://www.dallascad.org/ViewPDFs.aspx?type=3&id=%5C%5CDCAD.ORG%5CWEB%5CWEBDATA%5CWEBFORMS%5CGIS%20PRODUCTS%5CPARCEL2025.zip`
-  - Pattern uses URL-encoded Windows UNC path. Replace year in URL for older rolls.
+  - Discovery method used 2026-07-15: opened the official DCAD data-products page saved with the original Dallas raw pull and followed its live `DCAD2025_CURRENT.ZIP` ViewPDFs link. The comma-delimited package is richer than the certified fixed-width roll and contains account, owner, address, appraisal, land, residential, commercial, multi-owner, and exemption tables.
+  - Working method: download as `/opt/leadcurate/raw_imports/dallas-tx/<date>/DCAD2025_CURRENT.ZIP`, run `scripts/leadcurate/extract_dallas_tx.py` to join the tables into one row per account, then run `scripts/leadcurate/process_investor_lanes.py --market dallas-tx` for the reusable six-lane output contract.
+  - Verified 2026-07-15: 756,508 real-property accounts, 756,508 unique canonical parcels, 140 source columns, zero duplicate parcels. DCAD appraisal data supports tired-landlord, industrial/multifamily distress, out-of-state-owner, and verified-vacant cuts. It does not expose current foreclosure dockets or unpaid-tax balances, so those two lane triples are explicitly marked unavailable.
+  - Pattern uses a URL-encoded Windows UNC path. Replace the year in the URL for older rolls.
 - **Harris TX (Houston) — BLOCKED**: HCAD bulk zips at `http://pdata.hcad.org/data/cama/2026/Real_acct_owner.zip` return HTTP 200 with HTML redirect page (56 KB) instead of actual zip. The pdata page is JS-rendered. **Chrome MCP escalation required.** Codebook: `https://hcad.org/assets/uploads/pdf/pdataCodebook.pdf` lists the expected filenames.
 
 ### GA
@@ -204,6 +208,26 @@ Update this whenever you discover, refresh, or fix a county URL. **Backfill stat
   - Key fields: `RE`, `LNAME`, `LOC_ST_NO`, `LOC_ST_DIR`, `LOC_ST_NAM`, `LOC_ST_TYP`, `LOC_ST_UNI`, `LOC_CITY`, `LOC_ZIP`, `ACRES`.
 
 ### Other states
+
+- **Massachusetts statewide -- Tier 1 official MassGIS ArcGIS REST**:
+  - Standardized property-tax parcels: `https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/Massachusetts_Property_Tax_Parcels/FeatureServer/0`
+  - Official municipality/county crosswalk: `https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/Massachusetts_Municipalities/FeatureServer/1`
+  - Discovery method used 2026-07-15: located the MassGIS standardized statewide property-tax parcel product, inspected the live ArcGIS layer metadata to verify its owner, mailing, use-code, value, lot-size, sale, building, and unit fields, then joined `TOWN_ID` to the official 351-municipality layer for county names and FIPS codes.
+  - Working method: run `scripts/leadcurate/pull_massgis_statewide.py` using non-overlapping `OBJECTID` ranges, then `scripts/leadcurate/process_investor_lanes.py --market massachusetts-statewide` and `scripts/leadcurate/build_statewide_lane_rollup.py`. The range pull avoids ArcGIS offset rescans and deduplicates on municipality plus parcel identifier.
+  - Verified 2026-07-15: fetched all 2,558,878 source rows, retained 2,558,583 unique parcels after collapsing 295 duplicates, and matched all 351 municipalities. Supported lane counts: 436,244 tired landlords; 54,443 industrial/multifamily distress; 115,764 out-of-state owners; 60,876 verified-vacant parcels. Rollups contain 14 counties and 351 municipalities, with every count computed from the canonical file.
+  - Statewide limitation: the assessor layer does not contain municipal tax-title balances or current foreclosure/Land Court events. Source those lanes county by county only after the density rollup identifies the target county.
+- **Cook County IL (Chicago) -- Tier 2 official Cook County Socrata**:
+  - Current parcel universe: `https://datacatalog.cookcountyil.gov/resource/pabr-t5kh.csv`
+  - Current parcel/owner addresses: `https://datacatalog.cookcountyil.gov/resource/3723-97qp.csv`
+  - Current assessed values: `https://datacatalog.cookcountyil.gov/resource/uzyt-m557.csv`
+  - Current single/multifamily characteristics: `https://datacatalog.cookcountyil.gov/resource/x54s-btds.csv`
+  - Parcel sales: `https://datacatalog.cookcountyil.gov/resource/wvhk-k5uv.csv`
+  - Latest commercial valuation fields: `https://datacatalog.cookcountyil.gov/resource/csik-bsws.csv`
+  - Official 2021 parcel geometry used only for acreage: `https://datacatalog.cookcountyil.gov/resource/77tz-riq7.csv` with SoQL `area(the_geom)`.
+  - Discovery method used 2026-07-15: searched the official Cook County Data Catalog, inspected each dataset's API metadata and live maximum tax year, verified 2026 current parcel/address/value/characteristic coverage, and followed the Assessor's official class-code reference linked from the dataset metadata. The pull retains all published fields, aggregates improvement cards, and keeps the latest recorded sale per PIN.
+  - Working method: run `scripts/leadcurate/pull_cook_il.py`, which saves compressed raw snapshots and joins them into one row per zero-padded 14-digit PIN, then run `scripts/leadcurate/process_investor_lanes.py --market cook-il`.
+  - Verified 2026-07-15: 1,863,530 current parcels, 309 canonical source fields, and zero duplicate PINs. The current-universe guard removed 85,509 historical/enrichment-only PINs before export. Supported lane counts: 84,780 tired landlords; 178,866 industrial/multifamily distress; 61,559 out-of-state owners; 2,918 verified-vacant parcels. All lane meta counts match the full CSVs.
+  - Current-source limitation: public catalog tax-sale dataset `55ju-2fs9` is inactive/stale (2016), and public foreclosure dataset `4f2q-h3b7` ends in March 2015. Do not sell either as current Cook data; emit explicit unavailable lane metadata instead.
 
 - **Maricopa AZ (Phoenix) — Tier 1 ArcGIS + ArcGIS Online items**: data sales page at `https://www.mcassessor.maricopa.gov/page/data_sales/` links 17 datasets. **Master files come from ArcGIS Online item API** (binary zip):
   - Secured Master: `https://www.arcgis.com/sharing/rest/content/items/936bbba512bf4c368618cc6e79e64668/data` (108 MB → 483 MB, contains BK100-BK500 text files)

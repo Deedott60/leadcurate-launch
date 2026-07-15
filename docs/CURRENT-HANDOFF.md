@@ -6,13 +6,13 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-07-10 by Claude (DeShawn Bunch job added as top priority)
+Last updated: 2026-07-15 by Codex (DeShawn Dallas, Massachusetts, and Cook data fulfillment completed)
 
 ---
 
-## Open now
+## Recently closed -- DeShawn fulfillment
 
-1. **PRIORITY: DeShawn Bunch — live prospect, 3 new markets, 6 lanes (2026-07-10).** Real warm buyer: experienced investor (20+ properties bought/sold, has a crew), hour-long phone call done, Derrick promised personalized territory audits. This outranks everything else below. Contact: `dbunch@debonairelites.com` (in the `prospects` table, status `engaged`). Emails to him require Derrick's explicit go, review copy to Derrick first, always.
+1. **COMPLETE: DeShawn Bunch — live prospect, 3 new markets, 6 lanes (completed 2026-07-15).** Real warm buyer: experienced investor (20+ properties bought/sold, has a crew), hour-long phone call done, Derrick promised personalized territory audits. Contact: `dbunch@debonairelites.com` (in the `prospects` table, status `engaged`). Emails to him require Derrick's explicit go, review copy to Derrick first, always.
 
    **His exact ask (verbatim from his message):** markets are "Massachusetts, Chicago, Dallas Texas"; lanes are "all pre-foreclosures, tax lien, tired landlords who have held properties 10-20 minimum, distressed off-market industrial and multi family, out of state owners, vacant land."
 
@@ -47,6 +47,10 @@ Last updated: 2026-07-10 by Claude (DeShawn Bunch job added as top priority)
    - **Differentiated cuts**: the lane crosses are the moat — tenure x absentee, industrial/multifamily x distress, not just raw category dumps anyone can download.
    - **Reusable, not one-off**: every script written for this job gets a per-market config (MARKETS-dict pattern), so the next customer's markets run through the same pipeline with a config entry, not a rewrite. The MA statewide rollup script especially — that becomes a permanent product capability (state-level market selection), not a DeShawn special.
    - **Accurate and orderly**: stats in meta.json must be computed from the same file that ships. No hand-typed numbers anywhere.
+
+   **Completion proof (Codex 2026-07-15):** Dallas canonical has 756,508 unique parcels and 140 source fields; supported lane counts are 42,092 tired landlords, 18,504 industrial/multifamily distress, 31,794 out-of-state owners, and 36,870 verified-vacant parcels. Massachusetts fetched 2,558,878 statewide rows and retained 2,558,583 unique parcels; supported lane counts are 436,244, 54,443, 115,764, and 60,876 respectively, with a 14-county and 351-municipality density rollup. Cook canonical has 1,863,530 current parcels and 309 source fields; supported lane counts are 84,780, 178,866, 61,559, and 2,918. All supported full files have zero duplicate parcels and file-matched metadata. Pre-foreclosure and tax-delinquent triples contain explicit source-limit reasons wherever current public data was unavailable. Outputs are under `/opt/leadcurate/processed/{dallas-tx,massachusetts-statewide,cook-il}/2026-07-15/`; source methods are in `docs/playbooks/county-data-pull.md`.
+
+## Open now
 
 2. **Regional comparison pulls - Walker GA blocker only.** Bradley County TN and Marion County TN are complete through the same `process_verified_vacant.py` pipeline. Walker County GA is not complete: official qPublic is Cloudflare-blocked from the VPS and the reachable public ArcGIS layer lacks land value, building value, appraisal value, building count, and vacant/improved status. Do not fabricate a Walker comparison number. Next valid paths are browser access to qPublic, a bulk assessor export, or a public-records request.
 4. **Backfill `ownership_type` - Forsyth NC blocker only.** Mecklenburg, Wake, Guilford, Fulton, and Marion IN have been rerun and now include `ownership_type`. Forsyth NC is not rerun because the current `parcels-hosted.csv` source has total value and improvement signals but does not expose separate land value and building/improvement value fields required by the six-check verified-vacant processor. Do not force it through by fabricating land/building values; find a better Forsyth parcel/value source first.
