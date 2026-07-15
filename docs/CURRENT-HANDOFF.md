@@ -6,11 +6,32 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-07-08 by Codex
+Last updated: 2026-07-10 by Claude (DeShawn Bunch job added as top priority)
 
 ---
 
 ## Open now
+
+1. **PRIORITY: DeShawn Bunch — live prospect, 3 new markets, 6 lanes (2026-07-10).** Real warm buyer: experienced investor (20+ properties bought/sold, has a crew), hour-long phone call done, Derrick promised personalized territory audits. This outranks everything else below.
+
+   **His exact ask (verbatim from his message):** markets are "Massachusetts, Chicago, Dallas Texas"; lanes are "all pre-foreclosures, tax lien, tired landlords who have held properties 10-20 minimum, distressed off-market industrial and multi family, out of state owners, vacant land."
+
+   **Verified inventory (checked live on VPS 2026-07-10):**
+   - **Dallas TX**: raw data EXISTS at `/opt/leadcurate/raw_imports/dallas-tx/2026-06-19/` (`parcel2025.zip` 104MB + `2025-real-property-cert-roll.zip` 123MB, per the DCAD URLs already in the playbook). NEVER processed — no `/opt/leadcurate/processed/dallas-tx/` exists. Start here, it's the fastest win.
+   - **Chicago = Cook County IL**: nothing on the VPS. Fresh pull. Cook County has strong open-data infrastructure (county Socrata portal + Assessor datasets) — probe playbook Tier 2 first.
+   - **Massachusetts**: nothing on the VPS, and it's a whole state. MassGIS publishes a standardized statewide Level 3 parcel layer — start there for the parcel base. Derrick is asking DeShawn which metro to focus (likely Boston/Suffolk or Worcester); don't over-invest in one county until that lands, but the statewide parcel pull is safe to start.
+
+   **Per market, Codex builds (in this order):**
+   1. Pull raw per playbook tiers. APPEND every working URL/method to `docs/playbooks/county-data-pull.md` before session end (hard rule).
+   2. Process each of the 6 lanes that the source data can genuinely support. Lane mapping to existing tooling:
+      - **Vacant land** → `process_verified_vacant.py` (register each market in the `MARKETS` dict, Hamilton TN config as template; six-check + ownership_type + years_owned already built in)
+      - **Out-of-state owners** → absentee flag, same pattern as everywhere (mail_state != property state)
+      - **Tax lien/delinquent** → standard tax-delinquent lane (Guilford/Wake pattern)
+      - **Pre-foreclosure** → Jefferson KY pattern (court/docket filings) where the county exposes them
+      - **Tired landlords (10-20+ yr hold)** → years_owned tenure filter on sale dates; this is a NEW lane cut but the tenure computation already exists in the vacant processor — generalize it, don't rebuild it
+      - **Distressed off-market industrial + multifamily** → property-type/land-use-code filter (industrial + multifamily classes) crossed with distress signals (delinquency, code violations, absentee). NEW cut. If a source can't support it honestly, say so in meta rather than fabricating.
+   3. For every lane that processes successfully: emit the standard triple (full CSV + preview CSV + meta.json) so the sellable list ships same-day when payment confirms.
+   4. Report `conf:done` per market with file paths + record counts. Do NOT touch customer-facing audit pages or emails — Claude builds those from your meta.json outputs (email template v13 is LOCKED, see section below).
 
 2. **Regional comparison pulls - Walker GA blocker only.** Bradley County TN and Marion County TN are complete through the same `process_verified_vacant.py` pipeline. Walker County GA is not complete: official qPublic is Cloudflare-blocked from the VPS and the reachable public ArcGIS layer lacks land value, building value, appraisal value, building count, and vacant/improved status. Do not fabricate a Walker comparison number. Next valid paths are browser access to qPublic, a bulk assessor export, or a public-records request.
 4. **Backfill `ownership_type` - Forsyth NC blocker only.** Mecklenburg, Wake, Guilford, Fulton, and Marion IN have been rerun and now include `ownership_type`. Forsyth NC is not rerun because the current `parcels-hosted.csv` source has total value and improvement signals but does not expose separate land value and building/improvement value fields required by the six-check verified-vacant processor. Do not force it through by fabricating land/building values; find a better Forsyth parcel/value source first.
