@@ -12,7 +12,7 @@ Last updated: 2026-07-10 by Claude (DeShawn Bunch job added as top priority)
 
 ## Open now
 
-1. **PRIORITY: DeShawn Bunch — live prospect, 3 new markets, 6 lanes (2026-07-10).** Real warm buyer: experienced investor (20+ properties bought/sold, has a crew), hour-long phone call done, Derrick promised personalized territory audits. This outranks everything else below.
+1. **PRIORITY: DeShawn Bunch — live prospect, 3 new markets, 6 lanes (2026-07-10).** Real warm buyer: experienced investor (20+ properties bought/sold, has a crew), hour-long phone call done, Derrick promised personalized territory audits. This outranks everything else below. Contact: `dbunch@debonairelites.com` (in the `prospects` table, status `engaged`). Emails to him require Derrick's explicit go, review copy to Derrick first, always.
 
    **His exact ask (verbatim from his message):** markets are "Massachusetts, Chicago, Dallas Texas"; lanes are "all pre-foreclosures, tax lien, tired landlords who have held properties 10-20 minimum, distressed off-market industrial and multi family, out of state owners, vacant land."
 
