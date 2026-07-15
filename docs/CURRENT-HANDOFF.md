@@ -19,7 +19,13 @@ Last updated: 2026-07-10 by Claude (DeShawn Bunch job added as top priority)
    **Verified inventory (checked live on VPS 2026-07-10):**
    - **Dallas TX**: raw data EXISTS at `/opt/leadcurate/raw_imports/dallas-tx/2026-06-19/` (`parcel2025.zip` 104MB + `2025-real-property-cert-roll.zip` 123MB, per the DCAD URLs already in the playbook). NEVER processed — no `/opt/leadcurate/processed/dallas-tx/` exists. Start here, it's the fastest win.
    - **Chicago = Cook County IL**: nothing on the VPS. Fresh pull. Cook County has strong open-data infrastructure (county Socrata portal + Assessor datasets) — probe playbook Tier 2 first.
-   - **Massachusetts**: nothing on the VPS, and it's a whole state. MassGIS publishes a standardized statewide Level 3 parcel layer — start there for the parcel base. Derrick is asking DeShawn which metro to focus (likely Boston/Suffolk or Worcester); don't over-invest in one county until that lands, but the statewide parcel pull is safe to start.
+   - **Massachusetts — WE pick the market, that's the product (decided by Derrick 2026-07-10).** Do NOT wait on the buyer to name a metro. The play: pull the statewide MassGIS standardized parcel layer (Level 3, covers all 351 municipalities), then compute a per-county (and top-city) lane-density rollup so the data itself tells us the best Massachusetts market for HIS specific lanes. MassGIS standardized parcels typically carry owner name, owner mailing address, use code, assessed land/building/total values, and last-sale date/price — VERIFY the actual field names on pull, don't assume. The rollup Codex outputs (a ranking meta/CSV, per county and per major city):
+     - absentee/out-of-state owner count (mail state != MA)
+     - vacant land candidates (six-check where fields allow)
+     - 10-20+ year tenure owner count (last-sale date)
+     - industrial + multifamily parcel counts by use code, crossed with absentee/tenure as the distress proxy
+     - median values per segment
+     Claude turns that ranking into the "we analyzed the whole state and here's YOUR market" analysis on the audit page. This is the blow-him-away deliverable: nobody hands a wholesaler a 351-municipality scan. Pre-foreclosure and tax-title lanes in MA go through Registry of Deeds / Land Court and municipal tax-title processes; scope what's actually pullable per the chosen county AFTER the rollup picks the market, and state honestly in meta what isn't available statewide.
 
    **Per market, Codex builds (in this order):**
    1. Pull raw per playbook tiers. APPEND every working URL/method to `docs/playbooks/county-data-pull.md` before session end (hard rule).
