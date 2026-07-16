@@ -31,6 +31,15 @@ MARKETS: dict[str, dict[str, Any]] = {
         "source_pattern": "dallas-tx/*/dallas-parcels-canonical.csv",
         "source_url": "https://www.dallascad.org/ViewPDFs.aspx?id=%5C%5CDCAD.ORG%5CWEB%5CWEBDATA%5CWEBFORMS%5CDATA+PRODUCTS%5CDCAD2026_CURRENT.ZIP&type=3",
         "source_data_as_of": "2026-07-14",
+        "source_retrieved_at": "2026-07-16",
+        "source_status": "2026 proposed values with current ownership from the official DCAD current-year package.",
+        "source_components": {
+            "appraisal_and_ownership": {
+                "data_year": 2026,
+                "status": "proposed_values_current_ownership",
+                "url": "https://www.dallascad.org/DataProducts.aspx",
+            },
+        },
         "fields": {
             "parcel": ["ACCOUNT_NUM"],
             "owner": ["OWNER_NAME1"],
@@ -75,6 +84,16 @@ MARKETS: dict[str, dict[str, Any]] = {
         "state": "MA",
         "source": RAW_ROOT / "massachusetts-statewide" / TODAY / "massgis-parcels-canonical.csv",
         "source_url": "https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/Massachusetts_Property_Tax_Parcels/FeatureServer/0",
+        "source_data_as_of": "2026-06-25T20:02:07Z",
+        "source_retrieved_at": "2026-07-15",
+        "source_status": "Current MassGIS statewide standardized parcel service; municipal assessor fiscal years vary by community.",
+        "source_components": {
+            "statewide_parcels": {
+                "last_edit_at": "2026-06-25T20:02:07Z",
+                "status": "current_arcgis_service",
+                "url": "https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/Massachusetts_Property_Tax_Parcels/FeatureServer/0",
+            },
+        },
         "fields": {
             "parcel": ["LC_PARCEL_KEY"],
             "owner": ["OWNER1"],
@@ -121,6 +140,18 @@ MARKETS: dict[str, dict[str, Any]] = {
         "state": "IL",
         "source": RAW_ROOT / "cook-il" / TODAY / "cook-parcels-canonical.csv",
         "source_url": "https://datacatalog.cookcountyil.gov/resource/pabr-t5kh.csv",
+        "source_data_as_of": "2026 parcel universe, owner/address, assessed values, improvements, and sales; 2025 commercial details; 2021 parcel geometry.",
+        "source_retrieved_at": "2026-07-15",
+        "source_status": "Current 2026 parcel and ownership targeting joined to the latest available official commercial and parcel-geometry components.",
+        "source_components": {
+            "parcel_universe": {"data_year": 2026, "url": "https://datacatalog.cookcountyil.gov/resource/pabr-t5kh.csv"},
+            "owner_and_address": {"data_year": 2026, "url": "https://datacatalog.cookcountyil.gov/resource/3723-97qp.csv"},
+            "assessed_values": {"data_year": 2026, "url": "https://datacatalog.cookcountyil.gov/resource/uzyt-m557.csv"},
+            "improvements": {"data_year": 2026, "url": "https://datacatalog.cookcountyil.gov/resource/x54s-btds.csv"},
+            "sales": {"latest_recorded_sale_through": "2026-05-28", "url": "https://datacatalog.cookcountyil.gov/resource/wvhk-k5uv.csv"},
+            "commercial_details": {"data_year": 2025, "url": "https://datacatalog.cookcountyil.gov/resource/csik-bsws.csv"},
+            "parcel_geometry": {"data_year": 2021, "url": "https://datacatalog.cookcountyil.gov/resource/77tz-riq7.csv"},
+        },
         "fields": {
             "parcel": ["parcel_key"],
             "owner": ["ADDR_OWNER_ADDRESS_NAME", "ADDR_MAIL_ADDRESS_NAME"],
@@ -188,6 +219,10 @@ PUBLIC_OWNER = re.compile(
 
 def clean(value: object) -> str:
     return str(value or "").strip()
+
+
+def source_snapshot_date(source: Path) -> str | None:
+    return next((part for part in reversed(source.parts) if re.fullmatch(r"\d{4}-\d{2}-\d{2}", part)), None)
 
 
 def first(row: dict[str, str], fields: list[str]) -> str:
@@ -495,6 +530,9 @@ def process(market: str, source: Path, output_dir: Path, preview_count: int) -> 
             "source_file": str(source),
             "source_url": cfg["source_url"],
             "source_data_as_of": cfg.get("source_data_as_of"),
+            "source_retrieved_at": source_snapshot_date(source) or cfg.get("source_retrieved_at"),
+            "source_status": cfg.get("source_status"),
+            "source_components": cfg.get("source_components", {}),
             "source_rows": source_rows,
             "unique_source_parcels": len(seen),
             "source_duplicate_rows_removed": duplicate_source_rows,
