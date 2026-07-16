@@ -29,6 +29,7 @@ LANES = {
     "out_of_state": "out-of-state-owners/wayne-mi-out-of-state-owners-{date}.csv",
     "vacant_land": "verified-vacant-land/wayne-mi-verified-vacant-land-{date}.csv",
     "tax_foreclosure": "tax-delinquent/wayne-mi-tax-delinquent-{date}.csv",
+    "pre_foreclosure": "pre-foreclosure/wayne-mi-pre-foreclosure-{date}.csv",
 }
 
 
@@ -127,7 +128,7 @@ def build(canonical: Path, processed_dir: Path, blight_path: Path, output: Path)
 
     overlap: dict[str, object] = {}
     property_lanes = ("tired_landlords", "commercial", "out_of_state", "vacant_land")
-    measured_lanes = (*property_lanes, "tax_foreclosure")
+    measured_lanes = (*property_lanes, "tax_foreclosure", "pre_foreclosure")
     for scope in scopes:
         property_membership: Counter[str] = Counter()
         measured_membership: Counter[str] = Counter()
@@ -147,13 +148,14 @@ def build(canonical: Path, processed_dir: Path, blight_path: Path, output: Path)
                 "matching_3_or_more": sum(count >= 3 for count in property_membership.values()),
                 "matching_all_4": sum(count == 4 for count in property_membership.values()),
             },
-            "five_measured_lanes_including_tax_snapshot": {
+            "six_measured_lanes_including_live_tax_and_pre_foreclosure": {
                 "total_qualifications": sum(measured_membership.values()),
                 "unique_parcels": len(measured_membership),
                 "matching_2_or_more": sum(count >= 2 for count in measured_membership.values()),
                 "matching_3_or_more": sum(count >= 3 for count in measured_membership.values()),
                 "matching_4_or_more": sum(count >= 4 for count in measured_membership.values()),
-                "matching_all_5": sum(count == 5 for count in measured_membership.values()),
+                "matching_5_or_more": sum(count >= 5 for count in measured_membership.values()),
+                "matching_all_6": sum(count == 6 for count in measured_membership.values()),
             },
         }
 
@@ -162,6 +164,7 @@ def build(canonical: Path, processed_dir: Path, blight_path: Path, output: Path)
     out_of_state: dict[str, object] = {}
     vacant: dict[str, object] = {}
     tax: dict[str, object] = {}
+    pre_foreclosure: dict[str, object] = {}
     for scope in scopes:
         tired_scoped = [row for row in lane_rows["tired_landlords"] if in_scope(municipality(row), scope)]
         tenure = Counter(clean(row.get("lc_tenure_band")) for row in tired_scoped)
@@ -215,9 +218,49 @@ def build(canonical: Path, processed_dir: Path, blight_path: Path, output: Path)
         }
 
         tax_scoped = [row for row in lane_rows["tax_foreclosure"] if in_scope(municipality(row), scope)]
+        tax_balances = [
+            item
+            for row in tax_scoped
+            if (item := number(row.get("live_total_amount_due"))) is not None and item > 0
+        ]
+        tax_statuses = Counter(
+            status.rsplit(":", 1)[-1].strip()
+            for row in tax_scoped
+            for status in clean(row.get("live_tax_statuses")).split(";")
+            if status.strip()
+        )
         tax[scope] = {
             "records": len(tax_scoped),
             "municipalities": Counter(municipality(row) for row in tax_scoped).most_common(),
+            "total_live_amount_due": round(sum(tax_balances), 2),
+            "median_live_amount_due": median(tax_balances, 2),
+            "amount_coverage_records": len(tax_balances),
+            "live_statuses": tax_statuses.most_common(),
+            "data_valid_as_of": sorted(
+                {clean(row.get("live_tax_data_as_of")) for row in tax_scoped}
+                - {""}
+            ),
+        }
+
+        pre_scoped = [
+            row for row in lane_rows["pre_foreclosure"] if in_scope(municipality(row), scope)
+        ]
+        pre_amounts = [
+            item
+            for row in pre_scoped
+            if (item := number(row.get("preforeclosure_amount_claimed_due"))) is not None
+            and item > 0
+        ]
+        pre_sale_dates = sorted(
+            {clean(row.get("preforeclosure_sale_date")) for row in pre_scoped} - {""}
+        )
+        pre_foreclosure[scope] = {
+            "records": len(pre_scoped),
+            "municipalities": Counter(municipality(row) for row in pre_scoped).most_common(),
+            "scheduled_sale_date_from": pre_sale_dates[0] if pre_sale_dates else None,
+            "scheduled_sale_date_through": pre_sale_dates[-1] if pre_sale_dates else None,
+            "amount_claimed_due_coverage_records": len(pre_amounts),
+            "median_amount_claimed_due": median(pre_amounts, 2),
         }
 
     downriver_places: dict[str, object] = {}
@@ -274,15 +317,8 @@ def build(canonical: Path, processed_dir: Path, blight_path: Path, output: Path)
         "commercial": commercial,
         "out_of_state": out_of_state,
         "vacant_land": vacant,
-        "tax_foreclosure_publication_snapshot": tax,
-        "pre_foreclosure": {
-            "status": "fresh_at_delivery",
-            "records": None,
-            "reason": (
-                "The Wayne County Sheriff states that it has no property information before a sale. "
-                "Current legal notices must be checked and matched at delivery."
-            ),
-        },
+        "live_tax_delinquency": tax,
+        "current_pre_foreclosure": pre_foreclosure,
         "seventh_lane_detroit_blight_pressure": blight,
         "downriver_core_municipalities": downriver_places,
         "verification": {

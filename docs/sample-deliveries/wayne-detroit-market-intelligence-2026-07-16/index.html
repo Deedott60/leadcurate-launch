@@ -79,7 +79,6 @@
   .fresh-row span { color: var(--muted); font-size: 12px; }
   .fresh-state { display: inline-flex; width: fit-content; min-height: 28px; padding: 0 10px; align-items: center; border-radius: 999px; font-size: 10px; font-weight: 800; }
   .fresh-state.current { background: var(--green-soft); color: var(--green); }
-  .fresh-state.snapshot { background: var(--amber-soft); color: var(--amber); }
   .history { padding: 14px 20px 18px; border-top: 1px solid var(--line); background: #eef1f4; color: var(--muted); font-size: 11px; }
   .history strong { color: var(--ink); }
   .table-wrap { overflow-x: auto; }
@@ -241,12 +240,12 @@
       <div class="eyebrow">Wayne County acquisition intelligence</div>
       <h1>Detroit depth. Downriver opportunity.</h1>
       <p class="hero-copy">This review covers Wayne County with Detroit broken out, the same six acquisition categories used in the latest LeadCurate intelligence review, and one additional evidence-backed lane. The strongest nearby test is a Taylor-led Downriver Core where the property signals sit inside a real resident and shopping economy.</p>
-      <div class="hero-note"><i data-lucide="shield-check"></i><span>Every displayed parcel count comes from official county or City of Detroit data. Unsupported or time-sensitive legal status is labeled instead of estimated.</span></div>
+      <div class="hero-note"><i data-lucide="shield-check"></i><span>Every displayed parcel count comes from current government records or current statutory foreclosure notices. Time-sensitive status is dated and verified instead of estimated.</span></div>
     </div>
     <div class="hero-stats">
       <div class="hero-stat"><strong>820,726</strong><span>unique official property records reviewed</span></div>
-      <div class="hero-stat"><strong>145,063</strong><span>different parcels across five currently measured lanes</span></div>
-      <div class="hero-stat"><strong>113,003</strong><span>different measured parcels in Detroit</span></div>
+      <div class="hero-stat"><strong>137,360</strong><span>different parcels across all six requested lanes</span></div>
+      <div class="hero-stat"><strong>106,568</strong><span>different six-lane parcels in Detroit</span></div>
       <div class="hero-stat"><strong>82,746</strong><span>private-owner Detroit blight-pressure parcels in the seventh lane</span></div>
     </div>
   </div>
@@ -264,11 +263,11 @@
     <div class="wrap">
       <div class="section-head"><div><div class="eyebrow">Executive summary</div><h2>Keep Detroit as the scale market. Test Downriver as the overlooked market.</h2></div><p>Detroit carries the deepest ownership, legal, and municipal-pressure signals. The Taylor-led Downriver Core provides a smaller but practical second campaign where 180,256 people live and nearly $3.95 billion in annual retail sales proves the area functions as more than an industrial corridor.</p></div>
       <div class="panel answer-grid">
-        <div class="answer"><div class="number">1</div><h3>Detroit is the main acquisition engine.</h3><p>Detroit contains 113,003 different parcels across the four current property lanes plus the official 2026 tax-foreclosure publication snapshot. It also supports the strongest seventh lane.</p><span class="target">30,812 tax-snapshot parcels and 82,746 blight-pressure parcels</span></div>
-        <div class="answer"><div class="number">2</div><h3>Start the nearby test in Taylor.</h3><p>Taylor has the largest non-Detroit opportunity pool in the selected resident-and-retail cluster. Its mix includes industrial ownership pressure, out-of-state owners, verified vacant land, and tax-foreclosure records.</p><span class="target">1,973 unique property-lane parcels, plus 360 tax-snapshot parcels</span></div>
-        <div class="answer"><div class="number">3</div><h3>Expand through a five-city Downriver Core.</h3><p>Taylor, Lincoln Park, Southgate, Allen Park, and Wyandotte form a connected campaign area with residents, shopping, housing, and 4,786 different measured parcels.</p><span class="target">75,524 official parcels reviewed across the five cities</span></div>
+        <div class="answer"><div class="number">1</div><h3>Detroit is the main acquisition engine.</h3><p>Detroit contains 106,568 different parcels across all six requested lanes. It also supports the strongest seventh lane.</p><span class="target">20,920 live tax-balance parcels, 139 current pre-foreclosures, and 82,746 blight-pressure parcels</span></div>
+        <div class="answer"><div class="number">2</div><h3>Start the nearby test in Taylor.</h3><p>Taylor has the largest non-Detroit opportunity pool in the selected resident-and-retail cluster. Its mix includes industrial ownership pressure, out-of-state owners, verified vacant land, 223 live tax-balance parcels, and 14 current pre-foreclosures.</p><span class="target">1,973 unique property-lane parcels, plus current tax and foreclosure events</span></div>
+        <div class="answer"><div class="number">3</div><h3>Expand through a five-city Downriver Core.</h3><p>Taylor, Lincoln Park, Southgate, Allen Park, and Wyandotte form a connected campaign area with residents, shopping, housing, and 4,558 different six-lane parcels.</p><span class="target">75,524 official parcels reviewed across the five cities</span></div>
       </div>
-      <div class="proof"><strong>How to read the countywide number:</strong> 172,479 total lane qualifications consolidate to 145,063 different parcels because one parcel can match several reasons. Each parcel appears once in the working database with every verified lane attached.</div>
+      <div class="proof"><strong>How to read the countywide number:</strong> 161,104 total lane qualifications consolidate to 137,360 different parcels because one parcel can match several reasons. Each parcel appears once in the working database with every verified lane attached.</div>
     </div>
   </section>
 
@@ -278,16 +277,17 @@
       <div class="panel freshness">
         <div class="fresh-row"><strong>Detroit property records</strong><span>Last edited July 15, 2026</span><span>Current owner, taxpayer mailing address, classification, use, assessment, sale, acreage, and building fields.</span><span class="fresh-state current">Daily city service</span></div>
         <div class="fresh-row"><strong>Outer Wayne property records</strong><span>Created June 4, 2026</span><span>Official 2026 post-March-Board-of-Review assessment, owner, mailing, class, value, and parcel package.</span><span class="fresh-state current">Current 2026 roll</span></div>
-        <div class="fresh-row"><strong>Tax foreclosure</strong><span>Published December 9 and 16, 2025</span><span>Official notice of parcels subject to foreclosure in 2026 for unpaid 2023-and-prior taxes.</span><span class="fresh-state snapshot">Publication snapshot</span></div>
+        <div class="fresh-row"><strong>Current tax balance</strong><span>Valid as of July 15, 2026</span><span>All 36,327 publication candidates checked through the Treasurer. Only the 24,663 parcels with a positive live balance remain.</span><span class="fresh-state current">Business-day lookup</span></div>
+        <div class="fresh-row"><strong>Current pre-foreclosure</strong><span>Notices checked July 16, 2026</span><span>263 current statutory notices resolved to 289 unique parcels with scheduled sale dates from July 21 through September 24, 2026.</span><span class="fresh-state current">Upcoming sales only</span></div>
         <div class="fresh-row"><strong>Detroit blight tickets</strong><span>Last edited July 16, 2026</span><span>Responsible dispositions with a positive balance and parcel ID, aggregated to one property record.</span><span class="fresh-state current">Daily city service</span></div>
-        <div class="history"><strong>Quality note:</strong> the tax PDF warns that a parcel paid or resolved after the November 2025 source snapshot may still appear. A live Treasurer balance check is required at delivery. The annual outer-Wayne bulk file does not provide enough historical transfer coverage to verify a 10-year ownership lane there. That category is shown as unavailable for Downriver instead of using an inferred age.</div>
+        <div class="history"><strong>Quality note:</strong> the live Treasurer check removed 11,664 publication candidates that did not return a positive current balance. Returned balance years span 2009 through 2025, but every included amount is current as of July 15, 2026. The annual outer-Wayne bulk file does not provide enough historical transfer coverage to verify a 10-year ownership lane there, so no Downriver tenure count is inferred.</div>
       </div>
     </div>
   </section>
 
   <section id="verification">
     <div class="wrap">
-      <div class="section-head"><div><div class="eyebrow">Verification status</div><h2>What is pulled, verified, time-sensitive, or unavailable.</h2></div><p>This is the exact status of the underlying delivery files. A verified lane has a full parcel file, file-matched metadata, an official source date, one row per parcel, and zero duplicate parcel IDs.</p></div>
+      <div class="section-head"><div><div class="eyebrow">Verification status</div><h2>What is pulled, verified, and time-sensitive.</h2></div><p>This is the exact status of the underlying delivery files. A verified lane has a full parcel file, file-matched metadata, an official source date, one row per parcel, and zero duplicate parcel IDs.</p></div>
       <div class="panel table-wrap">
         <table>
           <thead><tr><th>Lane</th><th>Status</th><th>Actual file result</th><th>What still changes</th></tr></thead>
@@ -296,30 +296,30 @@
             <tr><td><strong>Office, industrial, multifamily</strong></td><td><span class="fresh-state current">Verified</span></td><td><strong>29,516 parcels</strong><small>Full county file, metadata matched, zero duplicates</small></td><td>Ownership and property facts refresh when the government source changes.</td></tr>
             <tr><td><strong>Out-of-state owners</strong></td><td><span class="fresh-state current">Verified</span></td><td><strong>24,912 parcels</strong><small>Full county file, metadata matched, zero duplicates</small></td><td>Owner mailing addresses can change in later government releases.</td></tr>
             <tr><td><strong>Verified vacant land</strong></td><td><span class="fresh-state current">Verified</span></td><td><strong>37,940 parcels</strong><small>Full county file, metadata matched, zero duplicates</small></td><td>Vacant status is rerun before delivery because construction and classifications change.</td></tr>
-            <tr><td><strong>Tax delinquency or foreclosure</strong></td><td><span class="fresh-state snapshot">Verified snapshot</span></td><td><strong>36,327 parcels</strong><small>Official 2026 publication matched to current parcels, zero duplicates</small></td><td>Live Treasurer balance verification is required because paid parcels may remain in the publication.</td></tr>
-            <tr><td><strong>Pre-foreclosure</strong></td><td><span class="fresh-state snapshot">Unavailable now</span></td><td><strong>No count published</strong><small>No current unrestricted official bulk source verified</small></td><td>Current legal notices must be found and matched before this lane can be sold as complete.</td></tr>
+            <tr><td><strong>Tax delinquency or foreclosure</strong></td><td><span class="fresh-state current">Verified live</span></td><td><strong>24,663 parcels</strong><small>36,327 candidates checked, zero failures, zero duplicates</small></td><td>The exact Treasurer status is preserved, including delinquent, forfeited, subject-to-foreclosure, and payment-plan statuses. Refresh before delivery.</td></tr>
+            <tr><td><strong>Pre-foreclosure</strong></td><td><span class="fresh-state current">Verified current</span></td><td><strong>289 parcels</strong><small>263 notices matched, zero unmatched notices, zero duplicates</small></td><td>Sale dates can be postponed, canceled, cured, or affected by bankruptcy. Refresh before delivery.</td></tr>
             <tr><td><strong>Detroit blight pressure</strong></td><td><span class="fresh-state current">Verified seventh lane</span></td><td><strong>82,746 parcels</strong><small>Full parcel-linked file, metadata matched, zero duplicates</small></td><td>The daily city source can add payments, tickets, and collection changes.</td></tr>
           </tbody>
         </table>
       </div>
-      <div class="proof"><strong>Bundle verification:</strong> the seven lane directories contain 255,225 full-file rows. Five lanes are verified, one is a verified official publication snapshot, one is unavailable, and no lane failed its file audit. Total duplicate parcel IDs inside the final lane files: zero.</div>
+      <div class="proof"><strong>Bundle verification:</strong> the seven lane directories contain 243,850 full-file rows. All seven lanes are verified, no lane is snapshot-only or unavailable, and no lane failed its file audit. Total duplicate parcel IDs inside the final lane files: zero.</div>
     </div>
   </section>
 
   <section id="categories">
     <div class="wrap">
-      <div class="section-head"><div><div class="eyebrow">All six requested categories</div><h2>The Wayne County opportunity, with Detroit and Downriver separated.</h2></div><p>Five lanes have an official measurable source in this review. Current pre-foreclosure notices must be checked at delivery because the Wayne County Sheriff states that it has no property information before a sale.</p></div>
+      <div class="section-head"><div><div class="eyebrow">All six requested categories</div><h2>The Wayne County opportunity, with Detroit and Downriver separated.</h2></div><p>All six lanes now have a current measurable source. Property facts come from government records, tax balances come from the live Treasurer lookup, and pre-foreclosures come from current statutory sale notices.</p></div>
       <div class="panel table-wrap">
         <table>
           <thead><tr><th>Territory</th><th>Tired landlords 10+ years</th><th>Office, industrial, multifamily</th><th>Out of state</th><th>Verified vacant</th><th>Pre-foreclosure</th><th>Tax delinquency</th></tr></thead>
           <tbody>
-            <tr><td><strong>Wayne County</strong><small>820,726 unique parcels reviewed</small></td><td><strong>43,784</strong><small>24,889 held 20+ years</small></td><td><strong>29,516</strong><small>1,580 office, 12,744 industrial, 15,192 multifamily</small></td><td><strong>24,912</strong><small>Florida and California lead owner mailing states</small></td><td><strong>37,940</strong><small>35,178 absentee owned</small></td><td><span class="scoped">Fresh legal-notice check at delivery</span></td><td><strong>36,327</strong><small>official 2026 publication snapshot</small></td></tr>
-            <tr><td><strong>Detroit</strong><small>377,830 unique current parcels</small></td><td><strong>43,784</strong><small>current Detroit transfer history supports the 10-year test</small></td><td><strong>22,245</strong><small>1,532 office, 6,096 industrial, 14,617 multifamily</small></td><td><strong>16,250</strong><small>Florida has 3,448 and California has 2,806</small></td><td><strong>23,442</strong><small>21,413 absentee owned</small></td><td><span class="scoped">Fresh legal-notice check at delivery</span></td><td><strong>30,812</strong><small>official 2026 publication snapshot</small></td></tr>
-            <tr><td><strong>Downriver Core</strong><small>Taylor, Lincoln Park, Southgate, Allen Park, Wyandotte</small></td><td><span class="scoped">Not verified from the annual bulk file</span></td><td><strong>897</strong><small>industrial ownership-pressure records</small></td><td><strong>1,569</strong><small>California and New Jersey lead</small></td><td><strong>1,956</strong><small>1,918 absentee owned</small></td><td><span class="scoped">Fresh legal-notice check at delivery</span></td><td><strong>909</strong><small>official 2026 publication snapshot</small></td></tr>
+            <tr><td><strong>Wayne County</strong><small>820,726 unique parcels reviewed</small></td><td><strong>43,784</strong><small>24,889 held 20+ years</small></td><td><strong>29,516</strong><small>1,580 office, 12,744 industrial, 15,192 multifamily</small></td><td><strong>24,912</strong><small>Florida and California lead owner mailing states</small></td><td><strong>37,940</strong><small>35,178 absentee owned</small></td><td><strong>289</strong><small>current scheduled-sale parcels</small></td><td><strong>24,663</strong><small>positive live Treasurer balance</small></td></tr>
+            <tr><td><strong>Detroit</strong><small>377,830 unique current parcels</small></td><td><strong>43,784</strong><small>current Detroit transfer history supports the 10-year test</small></td><td><strong>22,245</strong><small>1,532 office, 6,096 industrial, 14,617 multifamily</small></td><td><strong>16,250</strong><small>Florida has 3,448 and California has 2,806</small></td><td><strong>23,442</strong><small>21,413 absentee owned</small></td><td><strong>139</strong><small>current scheduled-sale parcels</small></td><td><strong>20,920</strong><small>positive live Treasurer balance</small></td></tr>
+            <tr><td><strong>Downriver Core</strong><small>Taylor, Lincoln Park, Southgate, Allen Park, Wyandotte</small></td><td><span class="scoped">Not verified from the annual bulk file</span></td><td><strong>897</strong><small>industrial ownership-pressure records</small></td><td><strong>1,569</strong><small>California and New Jersey lead</small></td><td><strong>1,956</strong><small>1,918 absentee owned</small></td><td><strong>28</strong><small>current scheduled-sale parcels</small></td><td><strong>609</strong><small>positive live Treasurer balance</small></td></tr>
           </tbody>
         </table>
       </div>
-      <div class="proof"><strong>Legal-status boundary:</strong> the tax count is a real official publication count, not a claim that every balance remains unpaid today. Pre-foreclosure has no displayed count because no verified unrestricted official bulk list was found. Both legal lanes receive a parcel-level current check before delivery.</div>
+      <div class="proof"><strong>Current event evidence:</strong> the 24,663 tax parcels carry $147.24 million in live county balances, with a $3,727 median per parcel. The 289 pre-foreclosure parcels come from upcoming statutory notices with sale dates from July 21 through September 24. Both lanes are refreshed before delivery.</div>
 
       <div class="subhead"><h3>Tired landlords: the confirmed Detroit tenure pool</h3><p>All 43,784 confirmed 10-year non-occupant records are in Detroit because the city's current service carries usable historical sale dates.</p></div>
       <div class="panel tenure-grid">
@@ -338,11 +338,11 @@
       <div class="subhead"><h3>Official value comparison by category</h3><p>Values are government assessment figures. They are not asking prices, appraisals, or guaranteed market values.</p></div>
       <div class="panel table-wrap">
         <table>
-          <thead><tr><th>Territory</th><th>Tired owners</th><th>Office, industrial, multifamily</th><th>Out of state</th><th>Verified vacant</th><th>Tax snapshot</th></tr></thead>
+          <thead><tr><th>Territory</th><th>Tired owners</th><th>Office, industrial, multifamily</th><th>Out of state</th><th>Verified vacant</th><th>Live tax-balance lane</th></tr></thead>
           <tbody>
-            <tr><td><strong>Wayne County</strong></td><td><strong>$33,400</strong><small>100% coverage</small></td><td><strong>$54,800</strong><small>92.7% coverage</small></td><td><strong>$40,100</strong><small>96.0% coverage</small></td><td><strong>$3,700</strong><small>100% coverage</small></td><td><strong>$31,600</strong><small>97.9% coverage</small></td></tr>
-            <tr><td><strong>Detroit</strong></td><td><strong>$33,400</strong><small>100% coverage</small></td><td><strong>$46,600</strong><small>92.1% coverage</small></td><td><strong>$31,500</strong><small>97.2% coverage</small></td><td><strong>$1,500</strong><small>100% coverage</small></td><td><strong>$28,200</strong><small>97.7% coverage</small></td></tr>
-            <tr><td><strong>Downriver Core</strong></td><td><span class="scoped">Not verified</span></td><td><strong>$231,800</strong><small>94.0% coverage</small></td><td><strong>$83,400</strong><small>87.5% coverage</small></td><td><strong>$10,100</strong><small>100% coverage</small></td><td><strong>$75,300</strong><small>99.1% coverage</small></td></tr>
+            <tr><td><strong>Wayne County</strong></td><td><strong>$33,400</strong><small>100% coverage</small></td><td><strong>$54,800</strong><small>92.7% coverage</small></td><td><strong>$40,100</strong><small>96.0% coverage</small></td><td><strong>$3,700</strong><small>100% coverage</small></td><td><strong>$33,700</strong><small>99.7% coverage</small></td></tr>
+            <tr><td><strong>Detroit</strong></td><td><strong>$33,400</strong><small>100% coverage</small></td><td><strong>$46,600</strong><small>92.1% coverage</small></td><td><strong>$31,500</strong><small>97.2% coverage</small></td><td><strong>$1,500</strong><small>100% coverage</small></td><td><strong>$30,800</strong><small>99.7% coverage</small></td></tr>
+            <tr><td><strong>Downriver Core</strong></td><td><span class="scoped">Not verified</span></td><td><strong>$231,800</strong><small>94.0% coverage</small></td><td><strong>$83,400</strong><small>87.5% coverage</small></td><td><strong>$10,100</strong><small>100% coverage</small></td><td><strong>$77,350</strong><small>99.8% coverage</small></td></tr>
           </tbody>
         </table>
       </div>
@@ -367,7 +367,7 @@
     <div class="wrap">
       <div class="section-head"><div><div class="eyebrow">What a paid record contains</div><h2>The list is usable because the facts stay attached to the property.</h2></div><p>The customer-facing report does not expose owner rows. A delivery retains the official verification key and every source field needed to filter, verify, and prepare outreach.</p></div>
       <div class="panel record-anatomy">
-        <div class="record-intro"><div class="eyebrow" style="color:#bfe5f7">Record anatomy</div><h3>One property. Every verified reason.</h3><p>A parcel that matches vacant land, out-of-state ownership, and the tax publication is delivered once with all three flags. The source date and status remain visible.</p></div>
+        <div class="record-intro"><div class="eyebrow" style="color:#bfe5f7">Record anatomy</div><h3>One property. Every verified reason.</h3><p>A parcel that matches vacant land, out-of-state ownership, and a live tax balance is delivered once with all three flags. The source date and exact status remain visible.</p></div>
         <div class="record-fields">
           <div class="field"><strong>Property location</strong><span>Street, city, state, ZIP, municipality, and acreage where published</span></div>
           <div class="field"><strong>Owner and mailing</strong><span>Current owner name, care-of field, mailing street, city, state, ZIP, and country</span></div>
@@ -380,9 +380,9 @@
 
       <div class="subhead"><h3>Overlap proves where the strongest records are</h3><p>The full territory remains available. Multi-signal records simply determine campaign order.</p></div>
       <div class="panel overlap-grid">
-        <div class="overlap"><strong>145,063</strong><span>different Wayne parcels across four property lanes plus the tax snapshot</span></div>
-        <div class="overlap"><strong>25,243</strong><span>Wayne parcels matching at least two of those five measured lanes</span></div>
-        <div class="overlap"><strong>2,113</strong><span>Wayne parcels matching at least three measured lanes</span></div>
+        <div class="overlap"><strong>137,360</strong><span>different Wayne parcels across all six requested lanes</span></div>
+        <div class="overlap"><strong>21,990</strong><span>Wayne parcels matching at least two of the six lanes</span></div>
+        <div class="overlap"><strong>1,709</strong><span>Wayne parcels matching at least three of the six lanes</span></div>
         <div class="overlap"><strong>0</strong><span>unexplained duplicate parcel rows in the verified lane files</span></div>
       </div>
     </div>
@@ -394,11 +394,11 @@
       <div class="market-stack">
         <article class="panel market">
           <div class="market-side downriver"><div class="role">First campaign</div><h3>Taylor</h3><p>Largest practical non-Detroit opportunity pool in the resident-and-shopping test area.</p></div>
-          <div class="market-main"><h3>Start where industrial, vacant, owner-location, and tax signals overlap.</h3><p>Taylor contributes 1,973 different parcels across the current property lanes. It leads the cluster in multi-signal records and verified vacant land, then adds 360 parcels from the official 2026 tax-foreclosure publication snapshot.</p><div class="market-metrics"><div class="market-metric"><strong>1,973</strong><span>unique property-lane parcels</span></div><div class="market-metric"><strong>261</strong><span>multi-signal property parcels</span></div><div class="market-metric"><strong>1,146</strong><span>verified vacant parcels</span></div><div class="market-metric"><strong>360</strong><span>tax-snapshot parcels</span></div></div><div class="sequence"><strong>Working order:</strong> Taylor multi-signal records first. Taylor tax-snapshot records after live balance verification. Then Wyandotte's dense multi-signal pool and Lincoln Park's tax-snapshot volume.</div></div>
+          <div class="market-main"><h3>Start where industrial, vacant, owner-location, and current event signals overlap.</h3><p>Taylor contributes 1,973 different parcels across the current property lanes. It leads the cluster in multi-signal records and verified vacant land, then adds 223 parcels with a live tax balance and 14 current pre-foreclosures.</p><div class="market-metrics"><div class="market-metric"><strong>1,973</strong><span>unique property-lane parcels</span></div><div class="market-metric"><strong>261</strong><span>multi-signal property parcels</span></div><div class="market-metric"><strong>1,146</strong><span>verified vacant parcels</span></div><div class="market-metric"><strong>223</strong><span>live tax-balance parcels</span></div></div><div class="sequence"><strong>Working order:</strong> Taylor multi-signal records first, followed by its 14 upcoming foreclosure parcels and live tax-balance records. Then work Wyandotte's dense multi-signal pool and Lincoln Park's current tax volume.</div></div>
         </article>
       </div>
 
-      <div class="subhead"><h3>Five-city opportunity comparison</h3><p>Property-lane counts exclude the tax snapshot so the comparison does not mix a current property signal with a time-sensitive legal publication.</p></div>
+      <div class="subhead"><h3>Five-city opportunity comparison</h3><p>Property-lane counts exclude tax and pre-foreclosure events so the stable ownership comparison remains separate from time-sensitive status.</p></div>
       <div class="panel direction-grid">
         <div class="chart"><h3>Different qualifying parcels</h3><div class="bar-list">
           <div><div class="bar-label"><strong>Taylor</strong><span>1,973</span></div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></div>
@@ -493,7 +493,7 @@
         <div class="database-main">
           <div class="database-list">
             <div class="database-item"><i data-lucide="rows-3"></i><div><strong>One parcel, one row</strong><span>Every verified reason stays attached without duplicate delivery rows.</span></div></div>
-            <div class="database-item"><i data-lucide="flag"></i><div><strong>All lane flags preserved</strong><span>Ownership, property, tax snapshot, pre-foreclosure status when verified, and blight pressure.</span></div></div>
+            <div class="database-item"><i data-lucide="flag"></i><div><strong>All lane flags preserved</strong><span>Ownership, property, live tax status, current pre-foreclosure notices, and blight pressure.</span></div></div>
             <div class="database-item"><i data-lucide="map-pinned"></i><div><strong>Detroit and municipality breakout</strong><span>Filter the full county, Detroit, Downriver, or an individual city.</span></div></div>
             <div class="database-item"><i data-lucide="badge-check"></i><div><strong>Official verification keys</strong><span>Parcel ID and source status provide a direct path back to the government record.</span></div></div>
             <div class="database-item"><i data-lucide="history"></i><div><strong>Freshness stored with the data</strong><span>Each component keeps its update date, retrieval date, and status limitation.</span></div></div>
@@ -508,7 +508,7 @@
   <section>
     <div class="wrap">
       <div class="panel next"><div><div class="eyebrow" style="color:var(--green)">What comes next</div><h2>This is the market review. Delivery structure comes next.</h2><p>The report establishes the real countywide depth, the Detroit breakout, the Downriver test market, and the seventh municipal-pressure lane. A paid build can preserve the complete qualifying universe, refresh the time-sensitive legal components, and organize campaign order without imposing an artificial record cap.</p></div><a class="contact" href="mailto:hello@leadcurate.com?subject=Wayne%20County%20Territory%20Intelligence">Discuss delivery options</a></div>
-      <div class="sources"><strong>Official property and legal sources:</strong> <a href="https://www.waynecountymi.gov/Government/Departments/Management-Budget/Assessment-Equalization/Annual-Assessment-Data">Wayne County assessment data</a> | <a href="https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/parcel_file_current/FeatureServer/0">Detroit current parcels</a> | <a href="https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/tentative_assessment_roll_2026/FeatureServer/0">Detroit 2026 assessment</a> | <a href="https://www.waynecountymi.gov/Government/Elected-Officials/Treasurer/Property-Tax-Information/Forfeited-Property-List-with-Interested-Parties">Wayne 2026 tax-foreclosure publication</a> | <a href="https://www.sheriffconnect.com/court-services/">Wayne County Sheriff sales context</a> | <a href="https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/blight_tickets/FeatureServer/0">Detroit blight tickets</a>.</div>
+      <div class="sources"><strong>Official property and legal sources:</strong> <a href="https://www.waynecountymi.gov/Government/Departments/Management-Budget/Assessment-Equalization/Annual-Assessment-Data">Wayne County assessment data</a> | <a href="https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/parcel_file_current/FeatureServer/0">Detroit current parcels</a> | <a href="https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/tentative_assessment_roll_2026/FeatureServer/0">Detroit 2026 assessment</a> | <a href="https://devpta.waynecountymi.gov/">Wayne live tax lookup</a> | <a href="https://www.sheriffconnect.com/court-services/">Wayne County Sheriff sales context</a> | <a href="https://www.legalnews.com/Home/PublicNotices">Current statutory foreclosure notices</a> | <a href="https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/blight_tickets/FeatureServer/0">Detroit blight tickets</a>.</div>
       <div class="sources"><strong>Resident and retail sources:</strong> <a href="https://www.census.gov/quickfacts/fact/table/taylorcitymichigan/PST045225">Taylor QuickFacts</a> | <a href="https://www.census.gov/quickfacts/fact/table/southgatecitymichigan/PST045225">Southgate QuickFacts</a> | <a href="https://www.census.gov/quickfacts/fact/table/lincolnparkcitymichigan/PST045225">Lincoln Park QuickFacts</a> | <a href="https://www.census.gov/quickfacts/fact/table/allenparkcitymichigan/POP060220">Allen Park QuickFacts</a> | <a href="https://www.census.gov/quickfacts/fact/table/wyandottecitymichigan/PST045225">Wyandotte QuickFacts</a>. Census values use the latest comparable figures shown on July 16, 2026: 2025 population estimates and 2022 retail sales.</div>
     </div>
   </section>
