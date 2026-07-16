@@ -52,6 +52,7 @@ MARKETS: dict[str, dict[str, Any]] = {
             "property_city": ["PROPERTY_CITY"],
             "property_zip": ["PROPERTY_ZIPCODE"],
             "sale_date": ["DEED_TXFR_DATE"],
+            "sale_price": [],
             "land_value": ["LAND_VAL"],
             "building_value": ["IMPR_VAL"],
             "other_value": [],
@@ -106,6 +107,7 @@ MARKETS: dict[str, dict[str, Any]] = {
             "property_city": ["CITY"],
             "property_zip": ["ZIP"],
             "sale_date": ["LS_DATE"],
+            "sale_price": ["LS_PRICE"],
             "land_value": ["LAND_VAL"],
             "building_value": ["BLDG_VAL"],
             "other_value": ["OTHER_VAL"],
@@ -164,6 +166,7 @@ MARKETS: dict[str, dict[str, Any]] = {
             "property_city": ["ADDR_PROP_ADDRESS_CITY_NAME", "U_COOK_MUNICIPALITY_NAME"],
             "property_zip": ["ADDR_PROP_ADDRESS_ZIPCODE_1", "U_ZIP_CODE"],
             "sale_date": ["SALE_SALE_DATE"],
+            "sale_price": ["SALE_SALE_PRICE"],
             "land_value": ["VAL_BOARD_LAND", "VAL_CERTIFIED_LAND", "VAL_MAILED_LAND"],
             "building_value": ["VAL_BOARD_BLDG", "VAL_CERTIFIED_BLDG", "VAL_MAILED_BLDG"],
             "other_value": [],
@@ -307,6 +310,8 @@ def derive(row: dict[str, str], cfg: dict[str, Any]) -> dict[str, Any]:
         acres /= 43560.0
     year = number(first(row, f["year_built"]))
     area = number(first(row, f["living_area"]))
+    units = number(first(row, f["units"]))
+    sale_price = number(first(row, f.get("sale_price", [])))
     use_code = joined(row, f["use_code"]).upper()
     use_desc = joined(row, f["use_desc"]).upper()
     office_desc = joined(row, f.get("office_desc", [])).upper()
@@ -342,6 +347,25 @@ def derive(row: dict[str, str], cfg: dict[str, Any]) -> dict[str, Any]:
         and acres >= 0.1
         and vacant_signal
     )
+    unavailable: list[str] = []
+    if not mail_street:
+        unavailable.append("Owner mailing address")
+    if total <= 0:
+        unavailable.append("Assessed value")
+    if tenure is None:
+        unavailable.append("Last sale date and ownership duration")
+    if sale_price <= 0:
+        unavailable.append("Sale price")
+    if acres <= 0:
+        unavailable.append("Acreage")
+    if not use_code and not use_desc and not office_desc:
+        unavailable.append("Property type")
+    if not is_vacant and year <= 0:
+        unavailable.append("Year built")
+    if not is_vacant and area <= 0:
+        unavailable.append("Building area")
+    if segment == "multifamily" and units <= 0:
+        unavailable.append("Unit count")
     return {
         "lc_parcel_id": first(row, f["parcel"]),
         "lc_owner_name": owner,
@@ -363,6 +387,7 @@ def derive(row: dict[str, str], cfg: dict[str, Any]) -> dict[str, Any]:
         "lc_acreage": round(acres, 4),
         "lc_homestead": "yes" if homestead else "no" if homestead_known else "unknown",
         "lc_verified_vacant": "yes" if is_vacant else "no",
+        "Information Not Available": "; ".join(unavailable) if unavailable else "None among the core facts checked",
     }
 
 
@@ -446,14 +471,14 @@ def process(market: str, source: Path, output_dir: Path, preview_count: int) -> 
             "lc_county", "lc_municipality", "lc_mail_state", "lc_is_absentee", "lc_is_out_of_state", "lc_years_owned",
             "lc_tenure_band", "lc_property_segment", "lc_is_residential", "lc_land_value",
             "lc_building_value", "lc_other_value", "lc_total_value", "lc_acreage", "lc_homestead",
-            "lc_verified_vacant", "lc_lane",
+            "lc_verified_vacant", "Information Not Available", "lc_lane",
         ]
         fields = source_fields + derived_fields
         handles: dict[str, Any] = {}
         writers: dict[str, csv.DictWriter] = {}
         previews: dict[str, list[dict[str, Any]]] = {lane: [] for lane in LANES}
         stats: dict[str, dict[str, Any]] = {
-            lane: {"count": 0, "values": [], "tenures": [], "absentee": 0, "out_of_state": 0, "segments": {"office": 0, "industrial": 0, "multifamily": 0}}
+            lane: {"count": 0, "values": [], "tenures": [], "absentee": 0, "out_of_state": 0, "segments": {"office": 0, "industrial": 0, "multifamily": 0}, "availability": {}}
             for lane in LANES
         }
         paths: dict[str, dict[str, str]] = {}
@@ -501,6 +526,9 @@ def process(market: str, source: Path, output_dir: Path, preview_count: int) -> 
                 s["out_of_state"] += d["lc_is_out_of_state"] == "yes"
                 if d["lc_property_segment"] in s["segments"]:
                     s["segments"][d["lc_property_segment"]] += 1
+                for label in d["Information Not Available"].split("; "):
+                    if label != "None among the core facts checked":
+                        s["availability"][label] = s["availability"].get(label, 0) + 1
                 if len(previews[lane]) < preview_count:
                     previews[lane].append(redact(out))
 
@@ -544,6 +572,7 @@ def process(market: str, source: Path, output_dir: Path, preview_count: int) -> 
             "industrial_records": s["segments"]["industrial"],
             "multifamily_records": s["segments"]["multifamily"],
             "office_records": s["segments"]["office"],
+            "information_not_available_counts": s["availability"],
             "median_total_value": median(s["values"]) if s["values"] else None,
             "median_years_owned": median(s["tenures"]) if s["tenures"] else None,
             "unavailable_reason": unsupported_reason,
