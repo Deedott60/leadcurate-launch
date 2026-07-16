@@ -81,6 +81,42 @@
   .history { padding: 14px 20px 18px; border-top: 1px solid var(--line); background: #eef1f4; color: var(--muted); font-size: 11px; }
   .history strong { color: var(--ink); }
   .lane-wrap { overflow-x: auto; }
+  .depth-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .depth-item { min-height: 176px; padding: 22px; border-left: 1px solid var(--line); }
+  .depth-item:first-child { border-left: 0; }
+  .depth-item .depth-market { color: var(--green); font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+  .depth-item strong { display: block; margin: 8px 0 7px; font-size: 28px; line-height: 1; }
+  .depth-item p { margin: 0; color: var(--muted); font-size: 12px; }
+  .record-anatomy { display: grid; grid-template-columns: .82fr 1.18fr; margin-top: 18px; }
+  .record-intro { padding: 25px; background: var(--blue); color: white; }
+  .record-intro h3 { margin: 8px 0 10px; font-size: 22px; }
+  .record-intro p { margin: 0; color: #d4e5ef; font-size: 12px; }
+  .record-fields { display: grid; grid-template-columns: repeat(2, 1fr); }
+  .field { min-height: 94px; padding: 15px 17px; border-left: 1px solid var(--line); border-top: 1px solid var(--line); }
+  .field:nth-child(-n+2) { border-top: 0; }
+  .field:nth-child(odd) { border-left: 0; }
+  .field strong { display: block; font-size: 12px; }
+  .field span { display: block; margin-top: 4px; color: var(--muted); font-size: 10px; }
+  .address-proof { margin-top: 18px; padding: 17px 19px; border-left: 4px solid var(--green); background: var(--green-soft); color: #255d42; font-size: 12px; }
+  .address-proof strong { color: var(--dark); }
+  .lane-detail { overflow-x: auto; }
+  .lane-detail td:first-child { min-width: 150px; }
+  .lane-detail td:nth-child(2) { min-width: 320px; }
+  .lane-detail td:nth-child(3) { min-width: 250px; }
+  .cross-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .cross { padding: 22px; border-left: 1px solid var(--line); }
+  .cross:first-child { border-left: 0; }
+  .cross .cross-market { color: var(--green); font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+  .cross h3 { margin: 9px 0 12px; font-size: 18px; }
+  .cross-signal { padding: 10px 0; border-top: 1px solid var(--line); }
+  .cross-signal strong { display: block; font-size: 16px; }
+  .cross-signal span { display: block; color: var(--muted); font-size: 10px; }
+  .priority-grid { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 18px; }
+  .priority { padding: 20px; border-left: 1px solid var(--line); }
+  .priority:first-child { border-left: 0; }
+  .priority b { color: var(--green); font-size: 10px; text-transform: uppercase; }
+  .priority strong { display: block; margin: 7px 0 5px; font-size: 14px; }
+  .priority span { display: block; color: var(--muted); font-size: 11px; }
   table { width: 100%; border-collapse: collapse; background: white; font-size: 13px; }
   th, td { padding: 13px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
   th { background: #eef1f4; color: #475467; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
@@ -125,6 +161,23 @@
   .speed-step strong { display: block; margin: 10px 0 6px; font-size: 13px; }
   .speed-step span { display: block; color: var(--muted); font-size: 11px; }
   .speed-note { padding: 16px 18px; border-top: 1px solid var(--line); background: var(--blue-soft); color: #355c75; font-size: 12px; }
+  .refresh-standard { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .refresh-item { min-height: 136px; padding: 18px; border-left: 1px solid var(--line); }
+  .refresh-item:first-child { border-left: 0; }
+  .refresh-item svg { width: 20px; height: 20px; color: var(--green); }
+  .refresh-item strong { display: block; margin: 12px 0 5px; font-size: 13px; }
+  .refresh-item span { display: block; color: var(--muted); font-size: 11px; }
+  .database { display: grid; grid-template-columns: .74fr 1.26fr; }
+  .database-side { padding: 30px; background: var(--dark); color: white; }
+  .database-side h2 { margin: 8px 0 12px; font-size: 35px; }
+  .database-side p { margin: 0; color: #c6d6cf; font-size: 13px; }
+  .database-main { padding: 27px; }
+  .database-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px 24px; }
+  .database-item { display: grid; grid-template-columns: 29px 1fr; gap: 10px; }
+  .database-item svg { width: 20px; height: 20px; color: var(--green); }
+  .database-item strong { display: block; font-size: 12px; }
+  .database-item span { display: block; margin-top: 2px; color: var(--muted); font-size: 10px; }
+  .database-note { margin-top: 20px; padding: 13px 15px; background: var(--wash); color: var(--muted); font-size: 11px; }
   .goal-grid { display: grid; grid-template-columns: 1fr 1fr; }
   .goal-side { padding: 28px; background: var(--blue); color: white; }
   .goal-side h2 { margin: 8px 0 12px; font-size: 34px; }
@@ -143,7 +196,7 @@
   .sources a { color: var(--blue); }
   footer { padding: 28px 0 44px; color: var(--muted); font-size: 11px; text-align: center; }
   @media (max-width: 820px) {
-    .hero, .section-head, .vacant, .goal-grid { grid-template-columns: 1fr; }
+    .hero, .section-head, .vacant, .goal-grid, .record-anatomy, .database { grid-template-columns: 1fr; }
     .hero { min-height: auto; gap: 28px; padding: 42px 0 54px; }
     .jump { grid-template-columns: repeat(2, 1fr); }
     .jump a:nth-child(3) { border-left: 0; border-top: 1px solid var(--line); }
@@ -157,6 +210,12 @@
     .speed { grid-template-columns: repeat(2, 1fr); }
     .speed-step:nth-child(odd) { border-left: 0; }
     .speed-step:nth-child(n+3) { border-top: 1px solid var(--line); }
+    .depth-grid, .cross-grid, .priority-grid { grid-template-columns: 1fr; }
+    .depth-item, .cross, .priority { border-left: 0; border-top: 1px solid var(--line); }
+    .depth-item:first-child, .cross:first-child, .priority:first-child { border-top: 0; }
+    .refresh-standard { grid-template-columns: repeat(2, 1fr); }
+    .refresh-item:nth-child(odd) { border-left: 0; }
+    .refresh-item:nth-child(n+3) { border-top: 1px solid var(--line); }
   }
   @media (max-width: 600px) {
     .wrap { width: min(100% - 24px, 1120px); }
@@ -177,6 +236,10 @@
     .market-metrics { grid-template-columns: 1fr; }
     .market-metric { border-left: 0; border-top: 1px solid var(--line); }
     .market-metric:first-child { border-top: 0; }
+    .record-fields, .database-list, .refresh-standard { grid-template-columns: 1fr; }
+    .field, .field:nth-child(odd), .refresh-item { border-left: 0; border-top: 1px solid var(--line); }
+    .field:first-child, .refresh-item:first-child { border-top: 0; }
+    .database-main { padding: 21px; }
     .next { grid-template-columns: 1fr; }
     .contact { width: 100%; }
   }
@@ -205,13 +268,13 @@
   <a href="#answer"><i data-lucide="compass"></i>Where to start</a>
   <a href="#freshness"><i data-lucide="calendar-clock"></i>Data freshness</a>
   <a href="#markets"><i data-lucide="map"></i>Market breakdown</a>
-  <a href="#direction"><i data-lucide="route"></i>Goal and direction</a>
+  <a href="#database"><i data-lucide="database"></i>Your territory database</a>
 </nav>
 
 <main>
   <section id="answer">
     <div class="wrap">
-      <div class="section-head"><div><div class="eyebrow">The answer first</div><h2>Three complete territories, intelligently organized.</h2></div><p>The product is the full qualifying universe across the supported lanes. LeadCurate proves its value by showing how that volume separates by market, property type, ownership location, tenure, and signal strength.</p></div>
+      <div class="section-head"><div><div class="eyebrow">Executive summary</div><h2>Three complete territories, intelligently organized.</h2></div><p>The product is the full qualifying universe across the supported lanes. LeadCurate proves its value by showing how that volume separates by market, property type, ownership location, tenure, and signal strength.</p></div>
       <div class="panel answer-grid">
         <div class="answer"><div class="number">1</div><h3>Massachusetts: a complete statewide opportunity map.</h3><p>All 351 municipalities remain available. Worcester and Springfield show where specific lane density and values are strongest inside the full state.</p><span class="target">Volume proof: 667,327 qualifications across four supported lanes</span></div>
         <div class="answer"><div class="number">2</div><h3>Dallas: a balanced full-county territory.</h3><p>Dallas supports all four parcel-based strategies at meaningful volume. The 4,722 long-tenure multifamily cross is a priority tier inside the complete county delivery.</p><span class="target">Volume proof: 129,260 qualifications across four supported lanes</span></div>
@@ -245,6 +308,68 @@
           </tbody>
         </table>
       </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">Inside the data</div><h2>This is property intelligence, not a names-and-addresses dump.</h2></div><p>The three sources expose different levels of depth, so the delivery preserves the strongest official fields available in each market and then adds a consistent decision layer across all three.</p></div>
+      <div class="panel depth-grid">
+        <div class="depth-item"><div class="depth-market">Dallas County</div><strong>Up to 161</strong><p>working fields per parcel, including official account and GIS identifiers, ownership, mailing, property class, value, improvement, land, and transfer-history detail.</p></div>
+        <div class="depth-item"><div class="depth-market">Massachusetts</div><strong>73</strong><p>standardized delivery fields across all 351 municipalities, including owner and mailing data, municipal parcel identifiers, use codes, assessed values, and sale history where reported.</p></div>
+        <div class="depth-item"><div class="depth-market">Cook County</div><strong>309</strong><p>official county source fields, including the 14-digit PIN, ownership, mailing, property class, township and neighborhood detail, physical characteristics, coordinates, and sale records.</p></div>
+      </div>
+
+      <div class="panel record-anatomy">
+        <div class="record-intro"><div class="eyebrow" style="color:#bfe5f7">What one row can tell you</div><h3>A parcel becomes a working acquisition record.</h3><p>The exact columns vary by public source, but the paid territory keeps the official facts that support ownership research, campaign segmentation, valuation context, and direct verification.</p></div>
+        <div class="record-fields">
+          <div class="field"><strong>Official verification</strong><span>Dallas account and GIS parcel ID, Massachusetts municipal parcel IDs, or Cook County PIN.</span></div>
+          <div class="field"><strong>Owner identity</strong><span>Owner name and individual or entity ownership type where the source supports classification.</span></div>
+          <div class="field"><strong>Two separate addresses</strong><span>Property location and owner mailing address, including mailing city, state, and ZIP.</span></div>
+          <div class="field"><strong>Value context</strong><span>Land, building, and total assessed values where published, with market-specific value caveats retained.</span></div>
+          <div class="field"><strong>Property use</strong><span>Official class or use code used to distinguish land, multifamily, industrial, and other property types.</span></div>
+          <div class="field"><strong>Ownership tenure</strong><span>Last sale date, sale price, and calculated years owned when valid history is available.</span></div>
+          <div class="field"><strong>Physical detail</strong><span>Lot size, acreage, building area, year built, and unit count where the market exposes them.</span></div>
+          <div class="field"><strong>Territory intelligence</strong><span>Lane flags, signal count, priority tier, geography, source date, and the reason the parcel ranked.</span></div>
+        </div>
+      </div>
+      <div class="address-proof"><strong>Out-of-state ownership is provable in the record:</strong> the property address and owner mailing address remain separate. A Texas parcel with an owner mailing state outside Texas is flagged out of state, and the paid row retains both addresses so the buyer can see exactly why it qualified. Preview pages conceal row-level identity; the purchased territory retains the official identifiers and available ownership fields.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">Lane-level deliverables</div><h2>Each lane carries the facts needed to work it.</h2></div><p>The same parcel can qualify for more than one lane. The final territory keeps every valid signal on one row so the buyer sees the complete ownership and property picture instead of receiving duplicate records in disconnected lists.</p></div>
+      <div class="panel lane-detail">
+        <table>
+          <thead><tr><th>Lane</th><th>Information available in the working record</th><th>What the intelligence adds</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Tired landlords</strong></td><td>Owner, property address, mailing address, official parcel ID, years owned, last sale date and price, assessed value, property use, and absentee or out-of-state status where supported.</td><td>Separates 10+ and 20+ year ownership, then marks the parcels carrying additional ownership-location or income-property signals.</td></tr>
+            <tr><td><strong>Industrial and multifamily</strong></td><td>Official use or class code, units where exposed, building area and year, land and improvement values, owner and mailing address, tenure, geography, and parcel ID.</td><td>Distinguishes the complete property-type bench from the higher-signal ownership and tenure crosses inside it.</td></tr>
+            <tr><td><strong>Out-of-state owners</strong></td><td>Property state compared with owner mailing state, plus both addresses, ownership type, tenure, value, property type, official identifier, and overlapping lane flags.</td><td>Shows which remote owners also carry long tenure, multifamily, industrial, or verified-vacant signals.</td></tr>
+            <tr><td><strong>Verified vacant land</strong></td><td>Owner and mailing data, property location, parcel ID, acreage or lot size, land and total value, use or class, tenure where available, and zoning only where the source exposes it.</td><td>Rechecks current official evidence and removes false-vacant, improved, or conflicting records before delivery.</td></tr>
+            <tr><td><strong>Pre-foreclosure</strong></td><td>Only an official local event source can support filing date, case or instrument number, status, and amount where published.</td><td>This lane is not inferred from parcel characteristics. It is joined to parcel, owner, value, and property data only after the event is officially verified.</td></tr>
+            <tr><td><strong>Tax lien or delinquency</strong></td><td>Only an official tax source can support tax year, balance, status, sale date, or certificate detail where published.</td><td>This lane remains separately scoped in all three markets rather than being fabricated from assessed-value or absentee data.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">Cross-reference intelligence</div><h2>The overlap shows where the strongest campaigns begin.</h2></div><p>Broad volume proves the size of the territory. Cross-referencing ownership, tenure, property type, and vacancy shows which records deserve the first call, first mail drop, or first BatchData enrichment without removing the rest of the market.</p></div>
+      <div class="panel cross-grid">
+        <div class="cross"><div class="cross-market">Dallas County</div><h3>Balanced signals across four lanes</h3><div class="cross-signal"><strong>4,722</strong><span>long-tenure multifamily parcels</span></div><div class="cross-signal"><strong>6,128</strong><span>out-of-state owners with long tenure</span></div><div class="cross-signal"><strong>23,300</strong><span>absentee-owned verified-vacant parcels</span></div></div>
+        <div class="cross"><div class="cross-market">Massachusetts</div><h3>Statewide depth with local precision</h3><div class="cross-signal"><strong>37,395</strong><span>tired owners who are also out of state</span></div><div class="cross-signal"><strong>7,529</strong><span>industrial or multifamily parcels with out-of-state owners</span></div><div class="cross-signal"><strong>8,745</strong><span>verified-vacant parcels with out-of-state owners</span></div></div>
+        <div class="cross"><div class="cross-market">Cook County</div><h3>Income-property scale with clear priority pockets</h3><div class="cross-signal"><strong>16,196</strong><span>tired owners with multifamily property</span></div><div class="cross-signal"><strong>2,702</strong><span>out-of-state owners with long tenure</span></div><div class="cross-signal"><strong>8,735</strong><span>industrial or multifamily parcels with out-of-state owners</span></div></div>
+      </div>
+      <div class="panel priority-grid">
+        <div class="priority"><b>Highest signal</b><strong>Multiple verified lane overlaps</strong><span>The row carries more than one meaningful acquisition signal and clearly states why it ranked.</span></div>
+        <div class="priority"><b>Strong lane</b><strong>Primary lane plus supporting facts</strong><span>A clear lane match supported by ownership, tenure, geography, value, or property-type detail.</span></div>
+        <div class="priority"><b>Full territory</b><strong>Every remaining qualified parcel</strong><span>Still part of the purchased territory, fully searchable and available when campaign capacity expands.</span></div>
+      </div>
+      <div class="address-proof"><strong>The ranking system does not shrink the product.</strong> Every delivered row can carry its lane flags, number of matched signals, priority tier, and plain-English reason for ranking. The exact internal weighting remains LeadCurate intellectual property, while the result stays transparent and usable to the buyer.</div>
     </div>
   </section>
 
@@ -283,8 +408,27 @@
     <div class="wrap">
       <div class="section-head"><div><div class="eyebrow">Refresh speed</div><h2>How quickly can new data reach your lanes?</h2></div><p>The market mappings and lane logic already exist. That means a newly published supported parcel file does not require rebuilding the research process from the beginning.</p></div>
       <div class="panel">
-        <div class="speed"><div class="speed-step"><b>01</b><strong>Acquire</strong><span>Retrieve the new official county or state source.</span></div><div class="speed-step"><b>02</b><strong>Normalize</strong><span>Apply the saved market mapping and preserve useful source fields.</span></div><div class="speed-step"><b>03</b><strong>Recompute</strong><span>Rebuild lane flags, tenure, ownership location, and signal crosses.</span></div><div class="speed-step"><b>04</b><strong>Verify</strong><span>Deduplicate by parcel and compare file counts with metadata.</span></div><div class="speed-step"><b>05</b><strong>Release</strong><span>Produce the audit update and the approved working file.</span></div></div>
+        <div class="refresh-standard"><div class="refresh-item"><i data-lucide="landmark"></i><strong>Official-source refresh</strong><span>The territory is tied to the newest supported county or state release, with its source date recorded.</span></div><div class="refresh-item"><i data-lucide="layers-3"></i><strong>All lanes rebuilt</strong><span>Tenure, owner location, property type, vacancy, and cross-lane signals are updated together.</span></div><div class="refresh-item"><i data-lucide="scan-search"></i><strong>One parcel, one row</strong><span>Duplicates are consolidated while every valid lane match remains visible on the property record.</span></div><div class="refresh-item"><i data-lucide="file-check-2"></i><strong>Release-checked totals</strong><span>Territory counts, field counts, and priority summaries are calculated from the file that ships.</span></div></div>
         <div class="speed-note"><strong>Current operating target:</strong> once a supported official parcel source is retrieved, the saved configuration can normally be rebuilt and manually checked within one business day. This is not a claim that every government source publishes daily. Pre-foreclosure and tax-lien timing is confirmed separately because those lanes depend on local event access.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="database">
+    <div class="wrap">
+      <div class="panel database">
+        <div class="database-side"><div class="eyebrow">The investment</div><h2>Your own private territory database.</h2><p>Not a one-time stack of generic CSVs. Your purchased markets become one organized working asset that can grow with your operation and be refreshed when the official public record changes.</p></div>
+        <div class="database-main">
+          <div class="database-list">
+            <div class="database-item"><i data-lucide="rows-3"></i><div><strong>One row per parcel</strong><span>Cross-lane duplicates are consolidated instead of making the territory look larger than it is.</span></div></div>
+            <div class="database-item"><i data-lucide="flag"></i><div><strong>Every lane preserved</strong><span>Tired, income-property, out-of-state, vacant, and future verified event flags stay attached.</span></div></div>
+            <div class="database-item"><i data-lucide="sliders-horizontal"></i><div><strong>Searchable and filterable</strong><span>Sort by market, ZIP, municipality, ownership, tenure, value, property use, size, and signal strength.</span></div></div>
+            <div class="database-item"><i data-lucide="badge-check"></i><div><strong>Official verification keys</strong><span>Account number, parcel ID, or PIN gives the buyer a direct path back to the government record.</span></div></div>
+            <div class="database-item"><i data-lucide="history"></i><div><strong>Refreshable territory history</strong><span>Source dates and rebuilt snapshots show when ownership, classification, or priority changed.</span></div></div>
+            <div class="database-item"><i data-lucide="file-output"></i><div><strong>Ready for the existing stack</strong><span>Deliverable in CSV or Excel and structured for BatchData or another contact platform.</span></div></div>
+          </div>
+          <div class="database-note"><strong>Clear boundary:</strong> LeadCurate supplies the property and ownership intelligence layer. Phone numbers and emails are not fabricated or resold. The territory can be exported into the buyer's chosen contact or skip-tracing platform after the property targets are organized.</div>
+        </div>
       </div>
     </div>
   </section>
