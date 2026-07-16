@@ -51,6 +51,7 @@ MARKETS: dict[str, dict[str, Any]] = {
             "acreage_units": [],
             "use_code": ["SPTD_CODE", "LAND_SPTD_CODES"],
             "use_desc": ["LAND_SPTD_DESCS", "P_BUS_TYP_CD", "BLDG_CLASS_CD"],
+            "office_desc": ["COM_PROPERTY_NAMES"],
             "division": ["DIVISION_CD"],
             "year_built": ["RES_MIN_YEAR_BUILT", "COM_MIN_YEAR_BUILT"],
             "living_area": ["RES_TOTAL_LIVING_SF", "COM_GROSS_BLDG_AREA"],
@@ -106,6 +107,7 @@ MARKETS: dict[str, dict[str, Any]] = {
         },
         "vacant_codes": {"130", "131", "132", "390", "391", "392", "440", "441", "442"},
         "multifamily_prefixes": ("11", "12"),
+        "office_codes": {"340", "341", "342"},
         "industrial_prefixes": ("4",),
         "residential_prefixes": ("1",),
         "homestead_available": False,
@@ -139,6 +141,7 @@ MARKETS: dict[str, dict[str, Any]] = {
             "acreage_units": [],
             "use_code": ["U_CLASS", "VAL_CLASS"],
             "use_desc": ["IMPR_CHAR_USE", "COMM_PROPERTY_TYPE_USE", "COMM_PROPERTY_NAME_DESCRIPTION"],
+            "office_desc": ["COMM_SUBCLASS2"],
             "division": [],
             "year_built": ["IMPR_LC_EARLIEST_YEAR_BUILT", "COMM_YEARBUILT"],
             "living_area": ["IMPR_LC_TOTAL_BUILDING_SQFT", "COMM_GROSS_BUILDING_AREA", "COMM_BLDGSF"],
@@ -271,6 +274,7 @@ def derive(row: dict[str, str], cfg: dict[str, Any]) -> dict[str, Any]:
     area = number(first(row, f["living_area"]))
     use_code = joined(row, f["use_code"]).upper()
     use_desc = joined(row, f["use_desc"]).upper()
+    office_desc = joined(row, f.get("office_desc", [])).upper()
     tenure = years_owned(first(row, f["sale_date"]))
     homestead_value = first(row, f["homestead"])
     homestead = number(homestead_value) > 0
@@ -284,8 +288,9 @@ def derive(row: dict[str, str], cfg: dict[str, Any]) -> dict[str, Any]:
     absentee = out_of_state or address_mismatch or bool(mail_zip and prop_zip and mail_zip != prop_zip)
     code_tokens = {token.strip() for token in re.split(r"[,;\s]+", use_code) if token.strip()}
     multifamily = bool(code_tokens & cfg.get("multifamily_codes", set())) or any(token.startswith(tuple(cfg.get("multifamily_prefixes", ()))) for token in code_tokens) or "MULTIFAMILY" in use_desc or "MULTI-FAMILY" in use_desc or "APARTMENT" in use_desc
+    office = bool(code_tokens & cfg.get("office_codes", set())) or any(token.startswith(tuple(cfg.get("office_prefixes", ()))) for token in code_tokens) or "OFFICE" in use_desc or "OFFICE" in office_desc
     industrial = bool(code_tokens & cfg.get("industrial_codes", set())) or any(token.startswith(tuple(cfg.get("industrial_prefixes", ()))) for token in code_tokens) or "INDUSTRIAL" in use_desc or "MANUFACTUR" in use_desc
-    segment = "multifamily" if multifamily else "industrial" if industrial else "other"
+    segment = "multifamily" if multifamily else "industrial" if industrial else "office" if office else "other"
     residential = any(token.startswith(tuple(cfg.get("residential_prefixes", ()))) for token in code_tokens)
     vacant_codes = cfg.get("vacant_codes", set())
     vacant_signal = bool(code_tokens & vacant_codes) if vacant_codes else "VACANT" in use_desc
@@ -346,7 +351,7 @@ def matches(lane: str, row: dict[str, str], d: dict[str, Any], cfg: dict[str, An
             )
         )
     if lane == "industrial-multifamily-distress":
-        return d["lc_property_segment"] in {"industrial", "multifamily"} and (
+        return d["lc_property_segment"] in {"office", "industrial", "multifamily"} and (
             d["lc_is_absentee"] == "yes"
             or (isinstance(d["lc_years_owned"], (int, float)) and d["lc_years_owned"] >= 10)
         )
@@ -380,11 +385,13 @@ def redact(row: dict[str, Any]) -> dict[str, Any]:
             "STREET_NUM", "ADDR_NUM", "UNIT_ID", "LEGAL", "PHONE", "SALE_DOCUMENT",
         )
         coordinate_fields = {"U_LON", "U_LAT", "U_X_3435", "U_Y_3435", "LON", "LAT", "X_3435", "Y_3435"}
+        source_identifier = bool(re.search(r"(?:^|_)(?:PIN(?:10)?|PARCEL_ID|ACCOUNT_NUM|LOC_ID|PROP_ID)$", upper))
         if (
             upper not in {"LC_OWNER_NAME", "LC_PROPERTY_ADDRESS", "LC_MAILING_ADDRESS"}
             and (
                 upper in exact_identifiers
                 or upper in coordinate_fields
+                or source_identifier
                 or any(fragment in upper for fragment in sensitive_fragments)
             )
         ):
@@ -411,7 +418,7 @@ def process(market: str, source: Path, output_dir: Path, preview_count: int) -> 
         writers: dict[str, csv.DictWriter] = {}
         previews: dict[str, list[dict[str, Any]]] = {lane: [] for lane in LANES}
         stats: dict[str, dict[str, Any]] = {
-            lane: {"count": 0, "values": [], "tenures": [], "absentee": 0, "out_of_state": 0, "segments": {"industrial": 0, "multifamily": 0}}
+            lane: {"count": 0, "values": [], "tenures": [], "absentee": 0, "out_of_state": 0, "segments": {"office": 0, "industrial": 0, "multifamily": 0}}
             for lane in LANES
         }
         paths: dict[str, dict[str, str]] = {}
@@ -498,6 +505,7 @@ def process(market: str, source: Path, output_dir: Path, preview_count: int) -> 
             "out_of_state_records": int(s["out_of_state"]),
             "industrial_records": s["segments"]["industrial"],
             "multifamily_records": s["segments"]["multifamily"],
+            "office_records": s["segments"]["office"],
             "median_total_value": median(s["values"]) if s["values"] else None,
             "median_years_owned": median(s["tenures"]) if s["tenures"] else None,
             "unavailable_reason": unsupported_reason,

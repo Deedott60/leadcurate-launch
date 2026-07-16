@@ -19,8 +19,9 @@ TODAY = date.today().isoformat()
 def blank_metrics() -> dict[str, Any]:
     return {
         "total_parcels": 0, "out_of_state": 0, "vacant": 0,
-        "tired_10_plus": 0, "tired_20_plus": 0, "industrial": 0,
+        "tired_10_plus": 0, "tired_20_plus": 0, "office": 0, "industrial": 0,
         "multifamily": 0, "industrial_multifamily_distress": 0,
+        "office_industrial_multifamily_distress": 0,
         "opportunity_parcels": 0, "values_out_of_state": [],
         "values_vacant": [], "values_tired": [], "values_distressed_asset": [],
     }
@@ -33,14 +34,18 @@ def add(metrics: dict[str, Any], d: dict[str, Any]) -> None:
     vacant = d["lc_verified_vacant"] == "yes"
     tenure = d["lc_years_owned"] if isinstance(d["lc_years_owned"], (int, float)) else None
     tired = bool(tenure is not None and tenure >= 10 and d["lc_is_absentee"] == "yes" and d["lc_is_residential"] == "yes" and d["lc_building_value"] > 0)
-    distressed_asset = d["lc_property_segment"] in {"industrial", "multifamily"} and (d["lc_is_absentee"] == "yes" or (tenure is not None and tenure >= 10))
+    ownership_distress = d["lc_is_absentee"] == "yes" or (tenure is not None and tenure >= 10)
+    industrial_multifamily_distress = d["lc_property_segment"] in {"industrial", "multifamily"} and ownership_distress
+    distressed_asset = d["lc_property_segment"] in {"office", "industrial", "multifamily"} and ownership_distress
     metrics["out_of_state"] += out_of_state
     metrics["vacant"] += vacant
     metrics["tired_10_plus"] += tired
     metrics["tired_20_plus"] += bool(tired and tenure is not None and tenure >= 20)
+    metrics["office"] += d["lc_property_segment"] == "office"
     metrics["industrial"] += d["lc_property_segment"] == "industrial"
     metrics["multifamily"] += d["lc_property_segment"] == "multifamily"
-    metrics["industrial_multifamily_distress"] += distressed_asset
+    metrics["industrial_multifamily_distress"] += industrial_multifamily_distress
+    metrics["office_industrial_multifamily_distress"] += distressed_asset
     metrics["opportunity_parcels"] += out_of_state or vacant or tired or distressed_asset
     if value > 0 and out_of_state:
         metrics["values_out_of_state"].append(value)
@@ -66,10 +71,12 @@ def finalize(name: str, level: str, metrics: dict[str, Any]) -> dict[str, Any]:
         "tired_landlords_10_plus": metrics["tired_10_plus"],
         "tired_landlords_20_plus": metrics["tired_20_plus"],
         "tired_per_10k": per_10k(metrics["tired_10_plus"]),
+        "office_parcels": metrics["office"],
         "industrial_parcels": metrics["industrial"],
         "multifamily_parcels": metrics["multifamily"],
         "industrial_multifamily_distress": metrics["industrial_multifamily_distress"],
-        "distressed_asset_per_10k": per_10k(metrics["industrial_multifamily_distress"]),
+        "office_industrial_multifamily_distress": metrics["office_industrial_multifamily_distress"],
+        "distressed_asset_per_10k": per_10k(metrics["office_industrial_multifamily_distress"]),
         "median_value_out_of_state": median(metrics["values_out_of_state"]) if metrics["values_out_of_state"] else None,
         "median_value_vacant": median(metrics["values_vacant"]) if metrics["values_vacant"] else None,
         "median_value_tired": median(metrics["values_tired"]) if metrics["values_tired"] else None,
