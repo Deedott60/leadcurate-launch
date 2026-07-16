@@ -28,8 +28,9 @@ MARKETS: dict[str, dict[str, Any]] = {
     "dallas-tx": {
         "display": "Dallas County TX",
         "state": "TX",
-        "source": RAW_ROOT / "dallas-tx" / "2026-06-19" / "dallas-parcels-canonical.csv",
-        "source_url": "https://www.dallascad.org/ViewPDFs.aspx?type=3&id=%5C%5CDCAD.ORG%5CWEB%5CWEBDATA%5CWEBFORMS%5CDATA%20PRODUCTS%5CDCAD2025_CURRENT.ZIP",
+        "source_pattern": "dallas-tx/*/dallas-parcels-canonical.csv",
+        "source_url": "https://www.dallascad.org/ViewPDFs.aspx?id=%5C%5CDCAD.ORG%5CWEB%5CWEBDATA%5CWEBFORMS%5CDATA+PRODUCTS%5CDCAD2026_CURRENT.ZIP&type=3",
+        "source_data_as_of": "2026-07-14",
         "fields": {
             "parcel": ["ACCOUNT_NUM"],
             "owner": ["OWNER_NAME1"],
@@ -486,6 +487,7 @@ def process(market: str, source: Path, output_dir: Path, preview_count: int) -> 
             "status": "unavailable_from_current_source" if unsupported_reason else "verified",
             "source_file": str(source),
             "source_url": cfg["source_url"],
+            "source_data_as_of": cfg.get("source_data_as_of"),
             "source_rows": source_rows,
             "unique_source_parcels": len(seen),
             "source_duplicate_rows_removed": duplicate_source_rows,
@@ -520,7 +522,15 @@ def main() -> int:
     parser.add_argument("--preview", type=int, default=25)
     args = parser.parse_args()
     cfg = MARKETS[args.market]
-    source = args.source or cfg["source"]
+    if args.source:
+        source = args.source
+    elif cfg.get("source_pattern"):
+        candidates = sorted(RAW_ROOT.glob(cfg["source_pattern"]), reverse=True)
+        if not candidates:
+            parser.error(f"No source matched {RAW_ROOT / cfg['source_pattern']}")
+        source = candidates[0]
+    else:
+        source = cfg["source"]
     output = args.output_dir or PROCESSED_ROOT / args.market / TODAY
     result = process(args.market, source, output, args.preview)
     print(json.dumps(result, indent=2))

@@ -58,7 +58,7 @@ MARKET_REGISTRY: dict[str, dict[str, Any]] = {
     "allen-in": {"display": "Allen County IN", "raw_dir": RAW_ROOT / "allen-in", "raw_pattern": "2025-delinquent-property.xlsx", "lane_patterns": {"default": ["2025-delinquent-property.xlsx"], "tax-delinquent": ["2025-delinquent-property.xlsx"]}, "default_city": "Fort Wayne", "state": "IN"},
     "charleston-sc": {"display": "Charleston County SC", "raw_dir": RAW_ROOT / "charleston-sc", "raw_pattern": "*Tax-Sale-Listing.pdf", "lane_patterns": {"default": ["*Tax-Sale-Listing.pdf"], "tax-delinquent": ["*Tax-Sale-Listing.pdf"]}, "default_city": "Charleston", "state": "SC"},
     "greenville-sc": {"display": "Greenville County SC", "raw_dir": RAW_ROOT / "greenville-sc", "raw_pattern": "tax-sale-info.pdf", "lane_patterns": {"default": ["tax-sale-info.pdf", "tax-sale-app.html"], "tax-delinquent": ["tax-sale-info.pdf", "tax-sale-app.html"]}, "default_city": "Greenville", "state": "SC"},
-    "dallas-tx": {"display": "Dallas County TX", "raw_dir": RAW_ROOT / "dallas-tx", "raw_pattern": "2025-real-property-cert-roll.zip", "lane_patterns": {"default": ["2025-real-property-cert-roll.zip", "parcel2025.zip"], "tax-delinquent": ["2025-real-property-cert-roll.zip"], "vacant-land": ["parcel2025.zip"]}, "default_city": "Dallas", "state": "TX"},
+    "dallas-tx": {"display": "Dallas County TX", "raw_dir": RAW_ROOT / "dallas-tx", "raw_pattern": "dallas-parcels-canonical.csv", "lane_patterns": {"default": ["dallas-parcels-canonical.csv"], "absentee": ["dallas-parcels-canonical.csv"], "high-equity": ["dallas-parcels-canonical.csv"], "individual-homeowner": ["dallas-parcels-canonical.csv"], "entity-owned": ["dallas-parcels-canonical.csv"], "vacant-land": ["dallas-parcels-canonical.csv"]}, "default_city": "Dallas", "state": "TX"},
     "erie-ny": {"display": "Erie County NY", "raw_dir": RAW_ROOT / "erie-ny", "raw_pattern": "*.pdf", "lane_patterns": {"default": ["*.pdf"], "tax-delinquent": ["*delinquent*.pdf", "*.pdf"], "pre-foreclosure": ["*foreclosure*.pdf", "*.pdf"]}, "default_city": "Buffalo", "state": "NY"},
     "fayette-ky": {"display": "Fayette County KY", "raw_dir": RAW_ROOT / "fayette-ky", "raw_pattern": "parcel.csv", "lane_patterns": {"default": ["parcel.csv"], "vacant-land": ["vacant-land-2010.csv"], "individual-homeowner": ["parcel.csv"]}, "default_city": "Lexington", "state": "KY"},
     "nyc": {"display": "New York City NY", "raw_dir": RAW_ROOT / "nyc", "raw_pattern": "tax-lien.csv", "lane_patterns": {"default": ["tax-lien.csv"], "tax-delinquent": ["tax-lien.csv", "hpd-tax-delinquency.csv"], "liens": ["tax-lien.csv"], "code-violations": ["dob-violations.csv"]}, "default_city": "New York", "state": "NY"},
@@ -198,7 +198,7 @@ def normalize_record(raw: dict[str, Any], cfg: dict[str, Any], lane_label: str, 
             raw,
             "owner", "owner_name", "Owner Name", "OWNER_NAME", "OWNERNME1",
             "FULLOWNERNAME", "CURRENTOWNERNAME1", "parcel_owner", "mail_name",
-            "Pay Yr Owner Of Record", "Customer_Name", "fullname",
+            "Pay Yr Owner Of Record", "Customer_Name", "fullname", "OWNER_NAME1",
         )
         or join_present(raw.get("Owner_FirstName"), raw.get("Owner_LastName"))
         or join_present(raw.get("ownerfirstname"), raw.get("ownerlastname"))
@@ -211,21 +211,22 @@ def normalize_record(raw: dict[str, Any], cfg: dict[str, Any], lane_label: str, 
     if not (parcel or account):
         return None
     total_owed = money(first_present(raw, "total_owed", "Total Owed", "TOTAL_DUE_AMOUNT", "delinquent_amount", "total_due", "BILL_DUE_AMT", "score", "Delinquent Amt", "Delinquent Amt ", "CitationAmount", "final_citation_amount", "Sale_Price", "Water Debt Only"))
-    value = money(first_present(raw, "value", "Property Value", "PROP_ASSESS_VALUE", "TOT_APPR", "APPRAISED_VALUE", "CAMAPARCELID", "mkt_val", "Total_Value", "TOTALVALUE", "tax_market_total", "certified_tax_total", "totalvalue", "Total Value"))
+    value = money(first_present(raw, "value", "Property Value", "PROP_ASSESS_VALUE", "TOT_APPR", "APPRAISED_VALUE", "CAMAPARCELID", "mkt_val", "Total_Value", "TOTALVALUE", "tax_market_total", "certified_tax_total", "totalvalue", "Total Value", "TOT_VAL"))
     source_signal_lanes = {"pre-foreclosure", "code-violations", "liens", "probate", "individual-homeowner", "entity-owned", "absentee"}
     if value <= 0 and total_owed <= 0 and lane not in source_signal_lanes:
         return None
     years = int(money(first_present(raw, "years", "Years Behind", "tax_years", "Cycle") or 1)) or 1
-    prop_zip = clean(first_present(raw, "Property ZIP", "SITEZIP", "ZIPCODE", "site_zip", "Zip_Code", "parcel_zip", "Zip", "zip", "Zip Code"))
-    mail_zip = clean(first_present(raw, "Mailing ZIP", "MAIL_ZIP", "PSTLZIP5", "OWNERZIP", "mail_zip", "Zip_Code", "mail_zip", "zipcode"))
+    prop_zip = clean(first_present(raw, "Property ZIP", "SITEZIP", "ZIPCODE", "site_zip", "Zip_Code", "parcel_zip", "Zip", "zip", "Zip Code", "PROPERTY_ZIPCODE"))
+    mail_zip = clean(first_present(raw, "Mailing ZIP", "MAIL_ZIP", "PSTLZIP5", "OWNERZIP", "mail_zip", "Zip_Code", "mail_zip", "zipcode", "OWNER_ZIPCODE"))
     absentee = "Yes" if (mail_zip and prop_zip and mail_zip[:5] != prop_zip[:5]) or clean(raw.get("absentee")).upper() in ("Y", "YES", "TRUE") else "No"
     address = clean(
         first_present(raw, "address", "Property Address", "SITEADDRESS", "site_addr", "PROPERTYADDRESS", "Location", "parcel_addr", "FullAddress", "PartialAddress", "Property_Address", "ADDRESS", "FULL_ADDRESS")
+        or join_present(raw.get("STREET_NUM"), raw.get("STREET_HALF_NUM"), raw.get("FULL_STREET_NAME"), raw.get("UNIT_ID"))
         or join_present(raw.get("House_Nr"), raw.get("Dir"), raw.get("Street_Name"), raw.get("St_Type"), raw.get("Post_Dir"))
         or join_present(raw.get("Street Number"), raw.get("Street Name"))
         or join_present(raw.get("House Number"), raw.get("Street Name"))
     )
-    city = clean(first_present(raw, "city", "Property City", "SITECITY", "site_city", "CITY", "parcel_city", "municipality") or cfg.get("default_city"))
+    city = clean(first_present(raw, "city", "Property City", "SITECITY", "site_city", "CITY", "parcel_city", "municipality", "PROPERTY_CITY") or cfg.get("default_city"))
     equity = max(0.0, value - total_owed)
     rec = {
         "Account ID": account,
@@ -235,15 +236,15 @@ def normalize_record(raw: dict[str, Any], cfg: dict[str, Any], lane_label: str, 
         "Property Address": address.title(),
         "Property City": city.title(),
         "Property ZIP": prop_zip,
-        "Mailing Street": clean(first_present(raw, "Mailing Street", "MAIL_ADDR1", "PSTLADDRESS", "OWNERADDRESS", "mail_address_1", "mail_addr_street", "Mailing_Address", "mailaddr1", "addr1")).title(),
-        "Mailing City": clean(first_present(raw, "Mailing City", "MAIL_CITY", "PSTLCITY", "OWNERCITY", "mail_city", "city")).title(),
-        "Mailing State": clean(first_present(raw, "Mailing State", "MAIL_STATE", "PSTLSTATE", "OWNERSTATE", "mail_state", "state")),
+        "Mailing Street": clean(first_present(raw, "Mailing Street", "MAIL_ADDR1", "PSTLADDRESS", "OWNERADDRESS", "mail_address_1", "mail_addr_street", "Mailing_Address", "mailaddr1", "addr1", "OWNER_ADDRESS_LINE3", "OWNER_ADDRESS_LINE1")).title(),
+        "Mailing City": clean(first_present(raw, "Mailing City", "MAIL_CITY", "PSTLCITY", "OWNERCITY", "mail_city", "city", "OWNER_CITY")).title(),
+        "Mailing State": clean(first_present(raw, "Mailing State", "MAIL_STATE", "PSTLSTATE", "OWNERSTATE", "mail_state", "state", "OWNER_STATE")),
         "Mailing ZIP": mail_zip,
         "Absentee Owner": absentee,
-        "Acres": round(money(first_present(raw, "Acres", "PROP_SIZE", "ACREAGE", "Total_Acreage", "parcel_acreage", "totalac", "PVA_ACRE")), 2),
+        "Acres": round(money(first_present(raw, "Acres", "PROP_SIZE", "ACREAGE", "Total_Acreage", "parcel_acreage", "totalac", "PVA_ACRE", "LAND_ACRES_CALC")), 2),
         "Property Value": round(value, 2),
-        "Building Value": round(money(first_present(raw, "Building Value", "IMPR_APPR", "Building_Value", "bld_val", "Building_Value", "certified_tax_building", "netbldgvalue")), 2),
-        "Land Value": round(money(first_present(raw, "Land Value", "LNDVALUE", "Land_Value", "land_val", "certified_tax_land", "landvalue")), 2),
+        "Building Value": round(money(first_present(raw, "Building Value", "IMPR_APPR", "Building_Value", "bld_val", "Building_Value", "certified_tax_building", "netbldgvalue", "IMPR_VAL")), 2),
+        "Land Value": round(money(first_present(raw, "Land Value", "LNDVALUE", "Land_Value", "land_val", "certified_tax_land", "landvalue", "LAND_VAL")), 2),
         "Years Behind": years,
         "Total Owed": round(total_owed, 2),
         "Estimated Equity": round(equity, 2),
@@ -350,6 +351,17 @@ def parse_generic_csv(path: Path, cfg: dict[str, Any], lane: str) -> list[dict[s
     return [r for r in (normalize_record(row, cfg, label, lane) for row in read_csv(path)) if r]
 
 
+def parse_dallas_tx(path: Path, cfg: dict[str, Any], lane: str) -> list[dict[str, Any]]:
+    label = LANE_LABELS.get(lane, "Tax Delinquent")
+    records: list[dict[str, Any]] = []
+    with path.open(newline="", encoding="utf-8-sig", errors="replace") as handle:
+        for row in csv.DictReader(handle):
+            normalized = normalize_record(row, cfg, label, lane)
+            if normalized:
+                records.append(normalized)
+    return records
+
+
 def parse_generic_xlsx(path: Path, cfg: dict[str, Any], lane: str) -> list[dict[str, Any]]:
     label = LANE_LABELS.get(lane, "Tax Delinquent")
     return [r for r in (normalize_record(row, cfg, label, lane) for row in read_xlsx_dicts(path)) if r]
@@ -360,9 +372,16 @@ PARSERS: dict[str, Callable[[Path, dict[str, Any], str], list[dict[str, Any]]]] 
     "guilford-nc": parse_guilford_nc,
 }
 
+FULL_FILE_PARSERS: dict[str, Callable[[Path, dict[str, Any], str], list[dict[str, Any]]]] = {
+    "dallas-tx": parse_dallas_tx,
+}
+
 
 def load_records(market: str, lane: str) -> tuple[Path, list[dict[str, Any]]]:
     cfg = MARKET_REGISTRY[market]
+    if market in FULL_FILE_PARSERS:
+        src = latest_file(market, lane)
+        return src, FULL_FILE_PARSERS[market](src, cfg, lane)
     if market in PARSERS and lane == "tax-delinquent":
         src = latest_file(market, lane)
         return src, PARSERS[market](src, cfg, lane)

@@ -11,10 +11,10 @@ from typing import Iterable
 
 
 DEFAULT_ARCHIVE = Path(
-    "/opt/leadcurate/raw_imports/dallas-tx/2026-06-19/DCAD2025_CURRENT.ZIP"
+    "/opt/leadcurate/raw_imports/dallas-tx/2026-07-16/DCAD2026_CURRENT.ZIP"
 )
 DEFAULT_OUTPUT = Path(
-    "/opt/leadcurate/raw_imports/dallas-tx/2026-06-19/dallas-parcels-canonical.csv"
+    "/opt/leadcurate/raw_imports/dallas-tx/2026-07-16/dallas-parcels-canonical.csv"
 )
 
 
@@ -34,13 +34,15 @@ def load_zip_csv(
     columns: list[str] | None = None,
     primary_key: str | None = None,
     where_divisions: set[str] | None = None,
+    optional_columns: set[str] | None = None,
 ) -> tuple[list[str], int]:
     with archive.open(member) as raw:
         text = (line.decode("latin1", "replace") for line in raw)
         reader = csv.DictReader(text)
         source_columns = [clean(c) for c in (reader.fieldnames or [])]
         selected = columns or source_columns
-        missing = [c for c in selected if c not in source_columns]
+        optional_columns = optional_columns or set()
+        missing = [c for c in selected if c not in source_columns and c not in optional_columns]
         if missing:
             raise ValueError(f"{member} is missing expected columns: {missing}")
         defs = [f"{q(c)} TEXT" for c in selected]
@@ -243,7 +245,12 @@ def extract(archive_path: Path, output_path: Path, sqlite_path: Path) -> dict[st
             "TAX_DEFERRED_DESC", "HS_PCT", "CAPPED_HS_AMT", "CIRCUIT_BK_FLG",
         ]
         _, source_counts["APPLIED_STD_EXEMPT.CSV"] = load_zip_csv(
-            conn, archive, "APPLIED_STD_EXEMPT.CSV", "std_exempt_raw", columns=exempt_cols
+            conn,
+            archive,
+            "APPLIED_STD_EXEMPT.CSV",
+            "std_exempt_raw",
+            columns=exempt_cols,
+            optional_columns={"CIRCUIT_BK_FLG"},
         )
         make_aggregate(
             conn,
