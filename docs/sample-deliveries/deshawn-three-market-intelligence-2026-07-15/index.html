@@ -117,6 +117,29 @@
   .priority b { color: var(--green); font-size: 10px; text-transform: uppercase; }
   .priority strong { display: block; margin: 7px 0 5px; font-size: 14px; }
   .priority span { display: block; color: var(--muted); font-size: 11px; }
+  .direction-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .direction-market { padding: 23px; border-left: 1px solid var(--line); }
+  .direction-market:first-child { border-left: 0; }
+  .direction-market h3 { margin: 5px 0 4px; font-size: 19px; }
+  .direction-market > p { min-height: 54px; margin: 0 0 17px; color: var(--muted); font-size: 11px; }
+  .bar-list { display: grid; gap: 12px; }
+  .bar-label { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 4px; font-size: 10px; }
+  .bar-label strong { font-size: 11px; }
+  .bar-label span { color: var(--muted); }
+  .bar-track { height: 8px; overflow: hidden; background: #e6eaf0; }
+  .bar-fill { height: 100%; background: var(--green); }
+  .direction-market.dallas-bars .bar-fill { background: var(--blue); }
+  .direction-market.cook-bars .bar-fill { background: var(--rust); }
+  .value-pick { margin-top: 18px; padding: 13px 14px; border-left: 3px solid var(--green); background: var(--wash); font-size: 11px; }
+  .value-pick strong { display: block; margin-bottom: 3px; color: var(--ink); }
+  .direction-note { padding: 15px 20px; border-top: 1px solid var(--line); background: var(--blue-soft); color: #355c75; font-size: 11px; }
+  .capital-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .capital-signal { padding: 23px; border-left: 1px solid var(--line); }
+  .capital-signal:first-child { border-left: 0; }
+  .capital-signal .signal-place { color: var(--green); font-size: 10px; font-weight: 800; text-transform: uppercase; }
+  .capital-signal strong { display: block; margin: 8px 0 6px; font-size: 20px; line-height: 1.2; }
+  .capital-signal p { margin: 0; color: var(--muted); font-size: 11px; }
+  .capital-signal a { display: inline-block; margin-top: 10px; color: var(--blue); font-size: 10px; font-weight: 800; }
   table { width: 100%; border-collapse: collapse; background: white; font-size: 13px; }
   th, td { padding: 13px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
   th { background: #eef1f4; color: #475467; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
@@ -210,9 +233,9 @@
     .speed { grid-template-columns: repeat(2, 1fr); }
     .speed-step:nth-child(odd) { border-left: 0; }
     .speed-step:nth-child(n+3) { border-top: 1px solid var(--line); }
-    .depth-grid, .cross-grid, .priority-grid { grid-template-columns: 1fr; }
-    .depth-item, .cross, .priority { border-left: 0; border-top: 1px solid var(--line); }
-    .depth-item:first-child, .cross:first-child, .priority:first-child { border-top: 0; }
+    .depth-grid, .cross-grid, .priority-grid, .direction-grid, .capital-grid { grid-template-columns: 1fr; }
+    .depth-item, .cross, .priority, .direction-market, .capital-signal { border-left: 0; border-top: 1px solid var(--line); }
+    .depth-item:first-child, .cross:first-child, .priority:first-child, .direction-market:first-child, .capital-signal:first-child { border-top: 0; }
     .refresh-standard { grid-template-columns: repeat(2, 1fr); }
     .refresh-item:nth-child(odd) { border-left: 0; }
     .refresh-item:nth-child(n+3) { border-top: 1px solid var(--line); }
@@ -374,6 +397,61 @@
       </div>
       <div class="address-proof"><strong>Category overlap is already measured.</strong> Across the three markets, 111,197 properties match at least two measured categories and 2,768 match three. Those are stronger targets, but each remains one property in the final territory database.</div>
       <div class="address-proof"><strong>The work order does not shrink the product.</strong> These labels help decide where to begin. They never remove a qualifying property from the purchased territory.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">Where the evidence says to start</div><h2>The strongest starting pockets inside each territory.</h2></div><p>These rankings come from the actual property files prepared for this territory. Each number below is a different property matching at least two of the four ownership and property categories already measured. Foreclosure and delinquent-tax matches will be added after a fresh check.</p></div>
+      <div class="panel">
+        <div class="direction-grid">
+          <div class="direction-market dallas-bars">
+            <div class="eyebrow" style="color:var(--blue)">Dallas County ZIPs</div><h3>Most properties matching several categories</h3><p>ZIP 75231 stands out as the lower-value starting point among the four leading ZIPs while still carrying nearly the same number of several-category properties as the leader.</p>
+            <div class="bar-list">
+              <div><div class="bar-label"><strong>75206</strong><span>516 properties</span></div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></div>
+              <div><div class="bar-label"><strong>75104</strong><span>499 properties</span></div><div class="bar-track"><div class="bar-fill" style="width:96.7%"></div></div></div>
+              <div><div class="bar-label"><strong>75231</strong><span>482 properties</span></div><div class="bar-track"><div class="bar-fill" style="width:93.4%"></div></div></div>
+              <div><div class="bar-label"><strong>75254</strong><span>481 properties</span></div><div class="bar-track"><div class="bar-fill" style="width:93.2%"></div></div></div>
+            </div>
+            <div class="value-pick"><strong>Value starting point: 75231</strong>482 properties match several categories, 36.0% of the qualifying properties in the ZIP. Median current official value: $123,740.</div>
+          </div>
+          <div class="direction-market">
+            <div class="eyebrow">Massachusetts counties</div><h3>Scale and overlooked value</h3><p>Barnstable leads in properties matching several categories. Berkshire offers a different angle: high concentration and a much lower median official value than the other leading counties.</p>
+            <div class="bar-list">
+              <div><div class="bar-label"><strong>Barnstable</strong><span>12,090 properties</span></div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></div>
+              <div><div class="bar-label"><strong>Middlesex</strong><span>9,149 properties</span></div><div class="bar-track"><div class="bar-fill" style="width:75.7%"></div></div></div>
+              <div><div class="bar-label"><strong>Suffolk</strong><span>7,302 properties</span></div><div class="bar-track"><div class="bar-fill" style="width:60.4%"></div></div></div>
+              <div><div class="bar-label"><strong>Berkshire</strong><span>6,797 properties</span></div><div class="bar-track"><div class="bar-fill" style="width:56.2%"></div></div></div>
+              <div><div class="bar-label"><strong>Worcester</strong><span>5,442 properties</span></div><div class="bar-track"><div class="bar-fill" style="width:45%"></div></div></div>
+            </div>
+            <div class="value-pick"><strong>Overlooked value test: Berkshire County</strong>6,797 properties match several categories, equal to 25.0% of its qualifying pool. Median official value: $203,600.</div>
+          </div>
+          <div class="direction-market cook-bars">
+            <div class="eyebrow" style="color:var(--rust)">Cook County ZIPs</div><h3>Dense starting pockets</h3><p>60623 carries the strongest measured combination of volume and concentration. The next four ZIPs provide immediate follow-on campaigns without leaving the full county.</p>
+            <div class="bar-list">
+              <div><div class="bar-label"><strong>60623</strong><span>1,895 properties</span></div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></div>
+              <div><div class="bar-label"><strong>60651</strong><span>1,378 properties</span></div><div class="bar-track"><div class="bar-fill" style="width:72.7%"></div></div></div>
+              <div><div class="bar-label"><strong>60622</strong><span>1,303 properties</span></div><div class="bar-track"><div class="bar-fill" style="width:68.8%"></div></div></div>
+              <div><div class="bar-label"><strong>60647</strong><span>1,221 properties</span></div><div class="bar-track"><div class="bar-fill" style="width:64.4%"></div></div></div>
+              <div><div class="bar-label"><strong>60402</strong><span>1,084 properties</span></div><div class="bar-track"><div class="bar-fill" style="width:57.2%"></div></div></div>
+            </div>
+            <div class="value-pick"><strong>High-volume start: 60623</strong>1,895 properties match several categories, 22.1% of the qualifying properties in the ZIP. Median official assessed value: $24,000.</div>
+          </div>
+        </div>
+        <div class="direction-note"><strong>Important:</strong> Dallas and Massachusetts values are current official property values. Cook figures are official assessed values, not asking prices or market prices. These comparisons organize outreach; they do not claim that a property will sell or appreciate.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">Market direction beyond the property list</div><h2>Outside money and job movement show where activity is building.</h2></div><p>Property records show who and what to target. These official announcements add a separate view of where employers, government, and developers are committing resources. They are supporting evidence, not promises about any individual property.</p></div>
+      <div class="panel capital-grid">
+        <div class="capital-signal"><div class="signal-place">Dallas</div><strong>$480 million minimum investment and 5,000 jobs</strong><p>Dallas approved a NorthEnd project requiring at least $390 million in real-property improvements and $90 million in business-property improvements. Goldman Sachs says the 5,000-person campus is expected to finish in late 2027.</p><a href="https://www.dallasecodev.org/m/newsflash/home/detail/1154">Dallas Economic Development source</a></div>
+        <div class="capital-signal"><div class="signal-place">South Chicago, Cook County</div><strong>$1.09 billion company commitment plus a $500 million state campus</strong><p>Illinois reports a minimum $1.09 billion PsiQuantum investment and at least 154 full-time jobs at the quantum campus. The state separately committed $500 million to build the campus, and the project broke ground in 2025.</p><a href="https://dceo.illinois.gov/news/press-release.30472.html">State investment source</a> | <a href="https://cmap.illinois.gov/news-updates/illinois-quantum-park-groundbreaking-chicagoland/">2025 groundbreaking source</a></div>
+        <div class="capital-signal"><div class="signal-place">Massachusetts outside Boston</div><strong>Barnstable, Worcester, and Springfield all added jobs</strong><p>From April 2025 to April 2026, the state's local labor report shows Barnstable up 4.1%, Worcester up 0.4%, and Springfield up 0.3%. That supports testing the same non-Boston areas already highlighted by the property data.</p><a href="https://www.mass.gov/news/unemployment-and-job-estimates-in-local-labor-markets-for-april-2026">Massachusetts labor source</a></div>
+      </div>
+      <div class="address-proof"><strong>How to use this bonus intelligence:</strong> use committed investment and job movement to decide where to test campaigns first, then make the actual owner decision from parcel-level facts. Economic development does not prove appreciation, distress, or seller motivation.</div>
     </div>
   </section>
 

@@ -232,6 +232,26 @@ Update this whenever you discover, refresh, or fix a county URL. **Backfill stat
   - Current pre-foreclosure source: `https://app.cookcountyclerkofcourt.org/case-search/`, the official Clerk of the Circuit Court case search. Mortgage foreclosures are filed in the Chancery Division's Mortgage Foreclosure Section. Current cases must be matched back to the property PIN or address; the public Recorder dataset `4f2q-h3b7` ends in March 2015 and must not be sold as current.
   - Current delinquent-tax source: `https://www.cookcountytreasurer.com/annualtaxsale.aspx`. The Treasurer states that the next Annual Tax Sale is anticipated in December 2026 and provides current PIN-level eligibility searches. Full electronic delinquency lists are sold through the county's tax-sale site; source cost requires Derrick's approval and should be included in fulfillment pricing. The old public catalog dataset `55ju-2fs9` is stale and must not be used.
 
+### Supporting market-direction sources
+
+These sources support a buyer's territory-ordering decision. They do not replace parcel, court, or tax evidence and must never be used to label an individual property distressed or likely to appreciate.
+
+- **Dallas NorthEnd / Goldman Sachs campus**:
+  - City of Dallas Economic Development: `https://www.dallasecodev.org/m/newsflash/home/detail/1154`
+  - Goldman Sachs project release: `https://www.goldmansachs.com/pressroom/press-releases/2023/goldman-sachs-breaks-ground-on-dallas-campus-at-northend`
+  - Verified facts used 2026-07-16: minimum $390 million in real-property improvements, $90 million in business-property improvements, 5,000 permanent jobs created or retained, and late-2027 expected construction completion.
+  - Discovery method: searched the official City of Dallas economic-development archive, matched the project to the company's official release, and reconciled the investment, employment, location, and completion claims before use.
+- **South Chicago Illinois Quantum and Microelectronics Park**:
+  - State commitment announcement: `https://dceo.illinois.gov/news/press-release.30472.html`
+  - 2025 groundbreaking confirmation: `https://cmap.illinois.gov/news-updates/illinois-quantum-park-groundbreaking-chicagoland/`
+  - Current site/status context: `https://epa.illinois.gov/topics/community-relations/sites/iqmp.html`
+  - Verified facts used 2026-07-16: minimum $1.09 billion PsiQuantum company investment, at least 154 full-time jobs, separate $500 million Illinois campus commitment, and 2025 groundbreaking.
+  - Discovery method: searched State of Illinois economic-development releases, confirmed the project stage through the Chicago Metropolitan Agency for Planning, and checked the Illinois EPA project page for current site context.
+- **Massachusetts local job direction**:
+  - Official April 2026 local labor report: `https://www.mass.gov/news/unemployment-and-job-estimates-in-local-labor-markets-for-april-2026`
+  - Verified facts used 2026-07-16: April 2025 to April 2026 job gains of 4.1% in Barnstable, 0.4% in Worcester, and 0.3% in Springfield.
+  - Discovery method: searched current Mass.gov labor and economic-development releases and used the state's own year-over-year local labor-market comparison. This is a labor-direction signal, not a capital-investment claim.
+
 - **Maricopa AZ (Phoenix) — Tier 1 ArcGIS + ArcGIS Online items**: data sales page at `https://www.mcassessor.maricopa.gov/page/data_sales/` links 17 datasets. **Master files come from ArcGIS Online item API** (binary zip):
   - Secured Master: `https://www.arcgis.com/sharing/rest/content/items/936bbba512bf4c368618cc6e79e64668/data` (108 MB → 483 MB, contains BK100-BK500 text files)
   - Residential Master: `https://www.arcgis.com/sharing/rest/content/items/e22983d41d91490d90965544b718a120/data` (58 MB → 364 MB)
