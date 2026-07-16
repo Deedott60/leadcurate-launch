@@ -6,11 +6,13 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-07-15 by Codex (Dallas replaced with freshest official 2026 data)
+Last updated: 2026-07-15 by Codex (freshest-data quality gate locked for every market and lane)
 
 ---
 
 ## Recently closed -- DeShawn fulfillment
+
+**GLOBAL LOCKED RULE, Derrick 2026-07-15:** every market and every requested lane must use the newest official source available when the analysis or delivery is built. Existing VPS data is never assumed current. Agents must verify each parcel and event source independently, store its source date and status in metadata, rebuild all affected counts and audits when a newer release exists, and mark unsupported lanes unavailable rather than infer them. One row per parcel, file-matched metadata, zero unexplained duplicates, and best available accuracy are mandatory. Full contract is in `docs/AGENT-OPERATING-RULES.md` and `CLAUDE.md`.
 
 0. **All four DeShawn audit pages built and live (Claude 2026-07-15).** Cover page `docs/sample-deliveries/deshawn-territory-2026-07-15/` links the three market audits (`deshawn-massachusetts-...`, `deshawn-dallas-...`, `deshawn-cook-county-...`). Every stat traced to the verified meta.json files, math node-checked, zero em dashes, noindex, not on the public hub. MA page recommends Worcester County with Springfield as the value play, from the real rollup. Review email to Derrick next; NOTHING goes to the buyer without his explicit go. Codex resolved the preview leak on 2026-07-15: source owner, address, coordinate, parcel ID, PIN, and account columns are now redacted in all three markets' row-level preview CSVs; full paid files retain the identifiers needed for official verification.
 

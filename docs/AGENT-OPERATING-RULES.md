@@ -18,6 +18,17 @@
 - Strategy/product doctrine goes in this file or `/CLAUDE.md`. One-off task orders go in a `docs/codex-handoff-*.md` + `conf:role` post. Both, if it's a decision other agents need to act on AND remember long-term.
 - Before ending any session where a decision was made, ask: "Does Codex know this? Does Danny know this? Is it written down anywhere they'll actually read?" If no to any of those, fix it before stopping.
 
+## Data freshness and quality gate — LOCKED 2026-07-15
+
+LeadCurate competes on accuracy and quality. **Every market and every requested lane must use the newest official source available when the analysis or customer delivery is built.** A file already sitting on the VPS is a cache, not proof that it is current.
+
+- Before processing any market or lane, check the live official source in the current session and identify its newest release. Do this separately for parcel, ownership, value, tax, foreclosure, probate, permit, violation, auction, and other event sources because their update schedules differ.
+- Record the exact source URL, source-data date, retrieval date, and whether values or statuses are proposed, preliminary, current, supplemental, or certified in the output metadata.
+- If a newer official file exists, pull it and rebuild the canonical data, every affected lane, all overlap counts, metadata, audits, and customer-facing totals. Never keep old numbers and merely change the date label.
+- An older official release may be used only when no newer source exists or the newest source is genuinely inaccessible. State the exact age and limitation before delivery; post a blocker when the age would undermine the customer's use case.
+- Never infer an event lane from unrelated parcel characteristics. If the current official source does not prove tax delinquency, foreclosure, probate, a violation, or another event, mark that lane unavailable instead of fabricating it.
+- Final acceptance requires one row per parcel, zero unexplained duplicates, metadata counts computed from the file that ships, and a source date visible to the operator. Accuracy outranks speed, convenience, and previously completed work.
+
 ## Product doctrine — Vacant Land differentiation
 
 The competitive problem: static vacant-land lists (what most resellers and SMS-campaign data vendors sell) get built once and never rechecked. By the time a buyer acts on a record, a meaningful share of it is stale — already built on, already under contract, or was never actually vacant (a bad flag in the source file, or land carrying an improvement the list didn't catch).
@@ -100,6 +111,7 @@ Past mistakes that should not repeat:
 | Claimed "Hermes brain offline" from stale task list (2026-06-23) | Damaged trust, wasted credits | SSH-verify Hermes status before claiming offline |
 | Quoted "14.2M records" without re-counting (2026-06-23) | Misrepresented actual ~80M | Re-count when number is load-bearing |
 | Said "people post fresh requests on forums" without proof (2026-06-23) | Oversold an unproven Lead Scout hypothesis | If WebSearch only returns old results, say so — don't dress as fresh |
+| Built Dallas analysis from a 2025 file while an official 2026 source was available (2026-07-15) | Produced stale customer-facing counts and damaged trust | Check the live official source for every market and lane before processing; an existing VPS file is not freshness proof |
 | Static "Reply A/B/C" buttons that weren't clickable | Wasted a build cycle | Real form inputs, not decorative divs |
 | `hermes send` instead of `hermes chat` in watcher | Tasks logged but never executed | Read the CLI usage before scripting it |
 

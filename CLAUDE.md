@@ -36,6 +36,10 @@ LeadCurate sells **curated motivated-seller property data** to real-estate whole
 
 **Differentiators:** velocity scoring (when motivation peaks, not just whether distress exists), capped buyer access per market (1–3 seats so records stay warm), branded delivery.
 
+### Freshest-data quality contract — LOCKED 2026-07-15
+
+Every LeadCurate market and every requested lane must be built from the newest official source available at analysis or delivery time. Existing VPS files are not assumed current. Each parcel, ownership, value, tax, foreclosure, probate, permit, violation, auction, and other event source is checked independently because update schedules differ. Source URL, source-data date, retrieval date, and proposed/preliminary/certified status belong in metadata. A newer release requires rebuilding all affected lanes, cross-lane totals, audits, and customer-facing numbers. If current official evidence cannot prove a lane, mark it unavailable. Never substitute an old file silently and never fabricate a signal. Final delivery requires one row per parcel, file-matched metadata, and zero unexplained duplicates. Accuracy and best available quality outrank speed.
+
 **Direct competitors:** PropStream, BatchLeads, ListSource, DealMachine, PropertyRadar.
 
 **Operator:** Derrick McDonald (NOT Daniel, NOT Derek, NOT Ella). Solo. LeadCurate LLC, registered in NC, Mecklenburg County.
