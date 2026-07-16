@@ -208,6 +208,25 @@ Update this whenever you discover, refresh, or fix a county URL. **Backfill stat
   - Notes: this source is the ArcGIS parcel layer registered in `scrape_dispatcher.py` for Jacksonville/Duval individual-homeowner pulls. It exposes parcel ID, owner, location address parts, city, ZIP, and acreage.
   - Key fields: `RE`, `LNAME`, `LOC_ST_NO`, `LOC_ST_DIR`, `LOC_ST_NAM`, `LOC_ST_TYP`, `LOC_ST_UNI`, `LOC_CITY`, `LOC_ZIP`, `ACRES`.
 
+### MI
+
+- **Wayne County MI with Detroit breakout -- Tier 1 official county bulk plus City of Detroit ArcGIS**:
+  - Wayne County annual assessment page: `https://www.waynecountymi.gov/Government/Departments/Management-Budget/Assessment-Equalization/Annual-Assessment-Data`
+  - 2026 county package: `https://www.waynecountymi.gov/files/assets/mainsite/v/1/management-amp-budget/documents/2026-wayne-county-assessments-names-addresses-legal.zip`
+  - Detroit current parcels: `https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/parcel_file_current/FeatureServer/0`
+  - Detroit 2026 tentative assessment: `https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/tentative_assessment_roll_2026/FeatureServer/0`
+  - Detroit blight tickets: `https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/blight_tickets/FeatureServer/0`
+  - Official 2026 tax-foreclosure page: `https://www.waynecountymi.gov/Government/Elected-Officials/Treasurer/Property-Tax-Information/Forfeited-Property-List-with-Interested-Parties`
+  - Official 2026 tax-foreclosure PDF: `https://www.waynecountymi.gov/files/assets/mainsite/v/1/treasurer/property-amp-taxes/documents/2026_wayne_county_delinquent_tax_liens.pdf`
+  - Sheriff mortgage-sale context: `https://www.sheriffconnect.com/court-services/`
+  - Discovery method used 2026-07-16: inspected the official county annual-data page and package URL, then used Playwright because Wayne's Akamai layer blocks direct scripted downloads. The archive's `VALUES.TXT`, `NAMES.TXT`, and `LEGALS.TXT` use the published BS&A fixed-width export layout at `https://www.bsasoftware.com/Portals/0/Support/Legacy%20Application/Assessing-Equalization/exp_gen.pdf`. Detroit's official ArcGIS services were inspected for current row counts, field definitions, edit timestamps, and paginated query support. The official tax page exposed the 2026 publication PDF, which was parsed with Ghostscript and matched to current parcel keys.
+  - Working method: run `scripts/leadcurate/pull_wayne_mi.py` for the Akamai-protected assessment ZIP and tax PDF; run `build_wayne_mi_canonical.py` to stream and join the fixed-width package; run `pull_detroit_open_data.py` for current Detroit parcels, the 2026 assessment, and filtered blight tickets; run `build_wayne_mi_hybrid.py` to replace annual Detroit rows with the fresher city feed; then run `process_investor_lanes.py --market wayne-mi`, `process_wayne_mi_tax_foreclosure.py`, `process_detroit_blight_pressure.py`, and `build_wayne_mi_intelligence.py`.
+  - Verified 2026-07-16: the hybrid universe contains 820,726 unique parcels, including 377,830 unique Detroit parcels and 442,896 outer-Wayne parcels. The four property lanes contain 43,784 tired landlords, 29,516 office/industrial/multifamily opportunities, 24,912 out-of-state-owner parcels, and 37,940 verified-vacant parcels. The official 2026 tax publication matched 36,327 parcels. Every full lane file has one row per parcel and zero duplicates.
+  - Detroit vacant-field rule: `total_square_footage` in the current Detroit parcel service is parcel area, not building floor area. Use `total_floor_area` for the building-area check. Treating lot square footage as a building suppresses valid vacant parcels.
+  - Legal-source rule: the tax PDF is a November 2025 publication snapshot for parcels subject to foreclosure in 2026. It warns that paid or resolved parcels can remain, so verify the live Treasurer balance at delivery. The Sheriff says it has no property information before a mortgage sale; do not publish a pre-foreclosure count without a current legal-notice source.
+  - Tenure rule: Detroit's current service supports historical sale-date analysis. The outer-Wayne annual bulk file's populated transfer dates are overwhelmingly recent, so it does not support a verified 10-year tired-landlord cut outside Detroit. Mark that scope unavailable instead of inferring tenure.
+  - Seventh lane: filter Detroit blight tickets to `amt_balance_due > 0 AND disposition LIKE 'Responsible%' AND parcel_id IS NOT NULL`, aggregate to one parcel, match to the current parcel universe, and exclude public owners. Verified output is 82,746 private-owner parcels with zero duplicates. A blight balance is not a tax balance, equity figure, or proof of seller intent.
+
 ### Other states
 
 - **Massachusetts statewide -- Tier 1 official MassGIS ArcGIS REST**:

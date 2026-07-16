@@ -6,9 +6,23 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-07-16 by Codex (DeShawn full category analytics added to the sendable brief)
+Last updated: 2026-07-16 by Codex (Wayne County, Detroit, and Downriver intelligence review complete)
 
 ---
+
+## Recently closed -- Wayne County and Detroit intelligence
+
+0. **Wayne County MI intelligence review complete (Codex 2026-07-16).** Built the private noindex report at `docs/sample-deliveries/wayne-detroit-market-intelligence-2026-07-16/` using the latest DeShawn brief as the depth and presentation standard. It covers all six requested categories, breaks Detroit out from Wayne County, recommends a Taylor-led Downriver Core as the nearby overlooked market, proves that the five-city cluster has 180,256 residents and $3.948 billion in 2022 retail sales from Census QuickFacts, and identifies Detroit blight pressure as the evidence-backed seventh lane. No email was sent.
+
+   **Verified parcel foundation:** Wayne's official 2026 post-March-Board-of-Review fixed-width package was pulled through Playwright because Akamai blocks direct scripted downloads. It was parsed with the published BS&A layout and combined with the fresher Detroit daily parcel service. The final hybrid universe has 820,726 unique parcels: 377,830 Detroit and 442,896 outer Wayne. The hybrid builder removed 32 duplicate Detroit service objects by parcel key. All final lane files have one row per parcel and zero unexplained duplicates.
+
+   **Current lane counts:** 43,784 tired landlords with confirmed 10+ year Detroit tenure; 29,516 office, industrial, and multifamily ownership-pressure records; 24,912 out-of-state-owner parcels; 37,940 verified-vacant parcels; and 36,327 parcel matches from the official 2026 tax-foreclosure publication snapshot. The five measured lanes consolidate to 145,063 unique Wayne parcels, including 113,003 in Detroit. The annual outer-Wayne roll does not provide enough historical transfer coverage for a verified 10-year tenure cut, so Downriver tired-landlord counts are explicitly unavailable rather than inferred. Current pre-foreclosure notices remain a fresh-at-delivery legal check because the Wayne Sheriff says it has no property details before sale.
+
+   **Downriver finding:** the recommended practical test cluster is Taylor, Lincoln Park, Southgate, Allen Park, and Wyandotte. It contains 75,524 official parcel records and 4,786 unique parcels across the four current property lanes plus the tax snapshot. Taylor leads with 1,973 unique property-lane parcels, 261 multi-signal property parcels, 1,146 verified-vacant parcels, and 360 tax-snapshot parcels.
+
+   **Seventh lane:** the daily Detroit blight service was filtered to responsible dispositions with a positive balance and parcel ID, aggregated, matched to current parcels, and stripped of public-owner records. Final output: 82,746 unique private-owner parcels, $120,012,135.71 total positive balance due, 52,218 parcels with collection status, 38,589 parcels with at least three tickets, and zero duplicate parcel rows. This is municipal-pressure evidence, not tax debt, equity, or proof of seller intent.
+
+   **Reusable tooling and QA:** added Wayne Playwright pull, BS&A parser, Detroit ArcGIS pull, hybrid builder, official tax-PDF matcher, Detroit blight aggregator, and exact intelligence-rollup scripts under `scripts/leadcurate/`. Corrected the Wayne vacant mapping so Detroit lot square footage is not treated as building floor area. The report passed Playwright at 1440 by 1000 and 390 by 844 with no page overflow, zero console errors or warnings, working section navigation, and zero customer-facing em or en dashes. Source methods and limitations are documented in `docs/playbooks/county-data-pull.md`.
 
 ## Recently closed -- DeShawn fulfillment
 

@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>LeadCurate | Wayne County and Detroit Territory Intelligence</title>
+<meta name="description" content="A private acquisition intelligence review for Wayne County, Detroit, and the Downriver Core." />
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<style>
+  :root {
+    --ink: #17202a;
+    --muted: #667085;
+    --line: #d8dee7;
+    --paper: #ffffff;
+    --wash: #f3f5f7;
+    --dark: #10261d;
+    --green: #177245;
+    --green-soft: #e4f2ea;
+    --blue: #225f87;
+    --blue-soft: #e6f0f7;
+    --amber: #9a5b13;
+    --amber-soft: #fff1d6;
+    --rust: #9a453b;
+    --rust-soft: #fae9e6;
+    --shadow: 0 12px 30px rgba(23, 32, 42, .08);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--wash); color: var(--ink); font-family: Inter, system-ui, sans-serif; line-height: 1.55; }
+  a { color: inherit; }
+  .wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+  .top { background: var(--dark); color: white; }
+  .topbar { min-height: 72px; display: flex; justify-content: space-between; align-items: center; gap: 18px; border-bottom: 1px solid rgba(255,255,255,.15); }
+  .brand { font-family: "Source Serif 4", serif; font-size: 25px; font-weight: 700; }
+  .brand span { color: #61d391; }
+  .prepared { color: #b8cbc3; font-size: 12px; text-align: right; }
+  .hero { min-height: 520px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 42px; align-items: center; padding: 54px 0 62px; }
+  .eyebrow { color: #5fd08f; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  h1, h2 { font-family: "Source Serif 4", serif; letter-spacing: 0; line-height: 1.05; }
+  h1 { max-width: 760px; margin: 10px 0 18px; font-size: clamp(38px, 6vw, 66px); }
+  .hero-copy { max-width: 740px; margin: 0; color: #cad8d2; font-size: 17px; }
+  .hero-note { margin-top: 22px; display: flex; gap: 9px; align-items: flex-start; color: #aebfb8; font-size: 12px; }
+  .hero-note svg { width: 18px; height: 18px; flex: 0 0 18px; color: #61d391; }
+  .hero-stats { display: grid; border: 1px solid rgba(255,255,255,.18); border-radius: 8px; overflow: hidden; }
+  .hero-stat { padding: 18px; border-top: 1px solid rgba(255,255,255,.16); background: rgba(255,255,255,.05); }
+  .hero-stat:first-child { border-top: 0; }
+  .hero-stat strong { display: block; font-size: 29px; line-height: 1; }
+  .hero-stat span { display: block; margin-top: 6px; color: #b8cbc3; font-size: 11px; }
+  .jump { margin-top: -24px; position: relative; z-index: 2; display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: white; box-shadow: var(--shadow); }
+  .jump a { min-height: 62px; padding: 14px 16px; display: flex; align-items: center; justify-content: center; gap: 8px; border-left: 1px solid var(--line); color: var(--muted); text-decoration: none; font-size: 12px; font-weight: 800; text-align: center; }
+  .jump a:first-child { border-left: 0; }
+  .jump a:hover { color: var(--green); background: var(--green-soft); }
+  .jump svg { width: 17px; height: 17px; flex: 0 0 17px; }
+  section { padding: 58px 0; }
+  section + section { border-top: 1px solid var(--line); }
+  .section-head { display: grid; grid-template-columns: .8fr 1.2fr; gap: 30px; margin-bottom: 24px; align-items: end; }
+  .section-head .eyebrow { color: var(--green); }
+  .section-head h2 { margin: 7px 0 0; font-size: clamp(29px, 4vw, 44px); }
+  .section-head p { margin: 0; color: var(--muted); font-size: 14px; }
+  .panel { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); overflow: hidden; }
+  .answer-grid, .three-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .answer, .metric-card { padding: 24px; border-left: 1px solid var(--line); }
+  .answer:first-child, .metric-card:first-child { border-left: 0; }
+  .number { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 50%; background: var(--dark); color: white; font-size: 12px; font-weight: 800; }
+  .answer h3 { margin: 16px 0 8px; font-size: 19px; }
+  .answer p, .metric-card p { margin: 0; color: var(--muted); font-size: 13px; }
+  .answer .target { display: block; margin-top: 13px; color: var(--green); font-size: 12px; font-weight: 800; }
+  .proof { margin-top: 18px; padding: 17px 19px; border-left: 4px solid var(--green); background: var(--green-soft); color: #255d42; font-size: 12px; }
+  .proof strong { color: var(--dark); }
+  .freshness { display: grid; }
+  .fresh-row { display: grid; grid-template-columns: 190px 190px 1fr 160px; gap: 16px; align-items: center; padding: 18px 20px; border-top: 1px solid var(--line); }
+  .fresh-row:first-child { border-top: 0; }
+  .fresh-row strong { font-size: 14px; }
+  .fresh-row span { color: var(--muted); font-size: 12px; }
+  .fresh-state { display: inline-flex; width: fit-content; min-height: 28px; padding: 0 10px; align-items: center; border-radius: 999px; font-size: 10px; font-weight: 800; }
+  .fresh-state.current { background: var(--green-soft); color: var(--green); }
+  .fresh-state.snapshot { background: var(--amber-soft); color: var(--amber); }
+  .history { padding: 14px 20px 18px; border-top: 1px solid var(--line); background: #eef1f4; color: var(--muted); font-size: 11px; }
+  .history strong { color: var(--ink); }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  th { padding: 14px 16px; background: #eef1f4; color: var(--muted); font-size: 10px; text-align: left; text-transform: uppercase; }
+  td { padding: 16px; border-top: 1px solid var(--line); vertical-align: top; font-size: 12px; }
+  td strong { display: block; font-size: 15px; }
+  td small { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; }
+  .scoped { display: inline-block; max-width: 190px; color: var(--amber); font-size: 10px; font-weight: 700; }
+  .subhead { margin: 30px 0 12px; }
+  .subhead h3 { margin: 0 0 4px; font-size: 20px; }
+  .subhead p { margin: 0; color: var(--muted); font-size: 11px; }
+  .tenure-grid, .type-grid, .state-grid, .vacant-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .tenure, .type, .state, .vacant { padding: 21px; border-left: 1px solid var(--line); }
+  .tenure:first-child, .type:first-child, .state:first-child, .vacant:first-child { border-left: 0; }
+  .tenure h3, .type h3, .state h3, .vacant h3 { margin: 5px 0 12px; font-size: 18px; }
+  .tenure p { min-height: 48px; margin: 0 0 14px; color: var(--muted); font-size: 10px; }
+  .tenure-total { display: block; margin-bottom: 10px; font-size: 25px; line-height: 1; }
+  .stack { height: 12px; display: flex; overflow: hidden; background: #e6eaf0; }
+  .stack span:first-child { background: var(--blue); }
+  .stack span:last-child { background: var(--green); }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .split strong { display: block; font-size: 14px; }
+  .split span { color: var(--muted); font-size: 9px; }
+  .stat-row { padding: 9px 0; border-top: 1px solid var(--line); }
+  .stat-row strong { display: block; font-size: 15px; }
+  .stat-row span { display: block; color: var(--muted); font-size: 9px; }
+  .state-row { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 11px; }
+  .state-row span { color: var(--muted); }
+  .record-anatomy { display: grid; grid-template-columns: .82fr 1.18fr; }
+  .record-intro { padding: 25px; background: var(--blue); color: white; }
+  .record-intro h3 { margin: 8px 0 10px; font-size: 22px; }
+  .record-intro p { margin: 0; color: #d4e5ef; font-size: 12px; }
+  .record-fields { display: grid; grid-template-columns: repeat(2, 1fr); }
+  .field { min-height: 94px; padding: 15px 17px; border-left: 1px solid var(--line); border-top: 1px solid var(--line); }
+  .field:nth-child(-n+2) { border-top: 0; }
+  .field:nth-child(odd) { border-left: 0; }
+  .field strong { display: block; font-size: 12px; }
+  .field span { display: block; margin-top: 4px; color: var(--muted); font-size: 10px; }
+  .overlap-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .overlap { padding: 23px; border-left: 1px solid var(--line); }
+  .overlap:first-child { border-left: 0; }
+  .overlap strong { display: block; font-size: 27px; line-height: 1; }
+  .overlap span { display: block; margin-top: 8px; color: var(--muted); font-size: 10px; }
+  .market-stack { display: grid; gap: 18px; }
+  .market { display: grid; grid-template-columns: 285px 1fr; }
+  .market-side { padding: 26px; color: white; background: var(--dark); }
+  .market-side.detroit { background: var(--blue); }
+  .market-side.downriver { background: var(--green); }
+  .market-side.blight { background: var(--rust); }
+  .market-side .role { color: rgba(255,255,255,.72); font-size: 10px; font-weight: 800; text-transform: uppercase; }
+  .market-side h3 { margin: 8px 0; font-size: 27px; }
+  .market-side p { margin: 0; color: rgba(255,255,255,.78); font-size: 11px; }
+  .market-main { padding: 26px; }
+  .market-main > h3 { margin: 0 0 8px; font-size: 20px; }
+  .market-main > p { margin: 0; color: var(--muted); font-size: 12px; }
+  .market-metrics { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 20px; border: 1px solid var(--line); }
+  .market-metric { padding: 14px; border-left: 1px solid var(--line); }
+  .market-metric:first-child { border-left: 0; }
+  .market-metric strong { display: block; font-size: 18px; }
+  .market-metric span { color: var(--muted); font-size: 9px; }
+  .sequence { margin-top: 16px; padding: 13px 14px; border-left: 3px solid var(--green); background: var(--wash); font-size: 11px; }
+  .bar-list { display: grid; gap: 13px; }
+  .bar-label { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 5px; font-size: 10px; }
+  .bar-label span { color: var(--muted); }
+  .bar-track { height: 9px; overflow: hidden; background: #e6eaf0; }
+  .bar-fill { height: 100%; background: var(--green); }
+  .bar-fill.blue { background: var(--blue); }
+  .bar-fill.rust { background: var(--rust); }
+  .direction-grid { display: grid; grid-template-columns: 1.15fr .85fr; }
+  .chart { padding: 24px; }
+  .chart h3 { margin: 0 0 18px; font-size: 19px; }
+  .chart + .chart { border-left: 1px solid var(--line); }
+  .resident-grid { display: grid; grid-template-columns: .9fr 1.1fr; }
+  .resident-lead { padding: 28px; background: var(--dark); color: white; }
+  .resident-lead strong { display: block; font-size: 35px; line-height: 1; }
+  .resident-lead span { display: block; margin-top: 6px; color: #b8cbc3; font-size: 11px; }
+  .resident-lead p { margin: 20px 0 0; color: #cad8d2; font-size: 12px; }
+  .resident-facts { display: grid; grid-template-columns: 1fr 1fr; }
+  .resident-fact { padding: 18px; border-left: 1px solid var(--line); border-top: 1px solid var(--line); }
+  .resident-fact:nth-child(-n+2) { border-top: 0; }
+  .resident-fact strong { display: block; font-size: 15px; }
+  .resident-fact span { color: var(--muted); font-size: 9px; }
+  .capital-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .capital { padding: 23px; border-left: 1px solid var(--line); }
+  .capital:first-child { border-left: 0; }
+  .capital .place { color: var(--green); font-size: 10px; font-weight: 800; text-transform: uppercase; }
+  .capital strong { display: block; margin: 9px 0; font-size: 17px; }
+  .capital p { margin: 0; color: var(--muted); font-size: 11px; }
+  .capital a { display: inline-block; margin-top: 12px; color: var(--blue); font-size: 10px; font-weight: 700; }
+  .database { display: grid; grid-template-columns: .72fr 1.28fr; }
+  .database-side { padding: 30px; background: var(--dark); color: white; }
+  .database-side h2 { margin: 8px 0 12px; font-size: 34px; }
+  .database-side p { margin: 0; color: #cad8d2; font-size: 12px; }
+  .database-main { padding: 28px; }
+  .database-list { display: grid; grid-template-columns: repeat(2, 1fr); }
+  .database-item { display: flex; gap: 11px; padding: 15px; border-left: 1px solid var(--line); border-top: 1px solid var(--line); }
+  .database-item:nth-child(-n+2) { border-top: 0; }
+  .database-item:nth-child(odd) { border-left: 0; }
+  .database-item svg { width: 19px; height: 19px; color: var(--green); flex: 0 0 19px; }
+  .database-item strong { display: block; font-size: 11px; }
+  .database-item span { display: block; margin-top: 3px; color: var(--muted); font-size: 9px; }
+  .database-note { margin-top: 17px; padding: 14px; background: var(--blue-soft); color: #355c75; font-size: 10px; }
+  .next { padding: 27px; display: grid; grid-template-columns: 1fr auto; gap: 30px; align-items: center; }
+  .next h2 { margin: 7px 0 10px; font-size: 33px; }
+  .next p { margin: 0; color: var(--muted); font-size: 12px; }
+  .contact { min-height: 46px; padding: 0 18px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; background: var(--green); color: white; text-decoration: none; font-size: 12px; font-weight: 800; }
+  .sources { margin-top: 18px; color: var(--muted); font-size: 10px; }
+  .sources a { color: var(--blue); }
+  footer { padding: 28px 0 44px; color: var(--muted); font-size: 11px; text-align: center; }
+  @media (max-width: 820px) {
+    .hero { grid-template-columns: 1fr; }
+    .jump { grid-template-columns: repeat(2, 1fr); }
+    .jump a:nth-child(3) { border-left: 0; border-top: 1px solid var(--line); }
+    .jump a:nth-child(4) { border-top: 1px solid var(--line); }
+    .section-head, .answer-grid, .three-grid, .tenure-grid, .type-grid, .state-grid, .vacant-grid, .capital-grid, .direction-grid, .resident-grid, .database { grid-template-columns: 1fr; }
+    .answer, .metric-card, .tenure, .type, .state, .vacant, .capital { border-left: 0; border-top: 1px solid var(--line); }
+    .answer:first-child, .metric-card:first-child, .tenure:first-child, .type:first-child, .state:first-child, .vacant:first-child, .capital:first-child { border-top: 0; }
+    .fresh-row { grid-template-columns: 1fr; gap: 5px; }
+    .overlap-grid { grid-template-columns: repeat(2, 1fr); }
+    .overlap:nth-child(3) { border-left: 0; border-top: 1px solid var(--line); }
+    .overlap:nth-child(4) { border-top: 1px solid var(--line); }
+    .market { grid-template-columns: 1fr; }
+    .market-metrics { grid-template-columns: repeat(2, 1fr); }
+    .market-metric:nth-child(3) { border-left: 0; border-top: 1px solid var(--line); }
+    .market-metric:nth-child(4) { border-top: 1px solid var(--line); }
+    .chart + .chart { border-left: 0; border-top: 1px solid var(--line); }
+  }
+  @media (max-width: 540px) {
+    .wrap { width: min(100% - 24px, 1120px); }
+    .topbar { align-items: flex-start; padding: 17px 0; }
+    .brand { font-size: 22px; }
+    .prepared { max-width: 180px; }
+    .hero { min-height: 0; padding: 42px 0 58px; }
+    h1 { font-size: 39px; }
+    .hero-copy { font-size: 15px; }
+    section { padding: 44px 0; }
+    .jump { margin-top: -18px; }
+    .record-anatomy { grid-template-columns: 1fr; }
+    .record-fields, .resident-facts, .database-list { grid-template-columns: 1fr; }
+    .field, .field:nth-child(odd), .resident-fact, .database-item, .database-item:nth-child(odd) { border-left: 0; border-top: 1px solid var(--line); }
+    .field:first-child, .resident-fact:first-child, .database-item:first-child { border-top: 0; }
+    .overlap-grid { grid-template-columns: 1fr; }
+    .overlap, .overlap:nth-child(3), .overlap:nth-child(4) { border-left: 0; border-top: 1px solid var(--line); }
+    .overlap:first-child { border-top: 0; }
+    .market-metrics { grid-template-columns: 1fr; }
+    .market-metric, .market-metric:nth-child(3), .market-metric:nth-child(4) { border-left: 0; border-top: 1px solid var(--line); }
+    .market-metric:first-child { border-top: 0; }
+    .next { grid-template-columns: 1fr; }
+    .contact { width: 100%; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap topbar"><div class="brand">Lead<span>Curate</span>.</div><div class="prepared">Private territory intelligence review<br>July 16, 2026</div></div>
+  <div class="wrap hero">
+    <div>
+      <div class="eyebrow">Wayne County acquisition intelligence</div>
+      <h1>Detroit depth. Downriver opportunity.</h1>
+      <p class="hero-copy">This review covers Wayne County with Detroit broken out, the same six acquisition categories used in the latest LeadCurate intelligence review, and one additional evidence-backed lane. The strongest nearby test is a Taylor-led Downriver Core where the property signals sit inside a real resident and shopping economy.</p>
+      <div class="hero-note"><i data-lucide="shield-check"></i><span>Every displayed parcel count comes from official county or City of Detroit data. Unsupported or time-sensitive legal status is labeled instead of estimated.</span></div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong>820,726</strong><span>unique official property records reviewed</span></div>
+      <div class="hero-stat"><strong>145,063</strong><span>different parcels across five currently measured lanes</span></div>
+      <div class="hero-stat"><strong>113,003</strong><span>different measured parcels in Detroit</span></div>
+      <div class="hero-stat"><strong>82,746</strong><span>private-owner Detroit blight-pressure parcels in the seventh lane</span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="wrap jump" aria-label="Report sections">
+  <a href="#answer"><i data-lucide="compass"></i>Where to start</a>
+  <a href="#categories"><i data-lucide="bar-chart-3"></i>All six categories</a>
+  <a href="#downriver"><i data-lucide="map"></i>Downriver opportunity</a>
+  <a href="#seventh"><i data-lucide="badge-alert"></i>Seventh lane</a>
+</nav>
+
+<main>
+  <section id="answer">
+    <div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">Executive summary</div><h2>Keep Detroit as the scale market. Test Downriver as the overlooked market.</h2></div><p>Detroit carries the deepest ownership, legal, and municipal-pressure signals. The Taylor-led Downriver Core provides a smaller but practical second campaign where 180,256 people live and nearly $3.95 billion in annual retail sales proves the area functions as more than an industrial corridor.</p></div>
+      <div class="panel answer-grid">
+        <div class="answer"><div class="number">1</div><h3>Detroit is the main acquisition engine.</h3><p>Detroit contains 113,003 different parcels across the four current property lanes plus the official 2026 tax-foreclosure publication snapshot. It also supports the strongest seventh lane.</p><span class="target">30,812 tax-snapshot parcels and 82,746 blight-pressure parcels</span></div>
+        <div class="answer"><div class="number">2</div><h3>Start the nearby test in Taylor.</h3><p>Taylor has the largest non-Detroit opportunity pool in the selected resident-and-retail cluster. Its mix includes industrial ownership pressure, out-of-state owners, verified vacant land, and tax-foreclosure records.</p><span class="target">1,973 unique property-lane parcels, plus 360 tax-snapshot parcels</span></div>
+        <div class="answer"><div class="number">3</div><h3>Expand through a five-city Downriver Core.</h3><p>Taylor, Lincoln Park, Southgate, Allen Park, and Wyandotte form a connected campaign area with residents, shopping, housing, and 4,786 different measured parcels.</p><span class="target">75,524 official parcels reviewed across the five cities</span></div>
+      </div>
+      <div class="proof"><strong>How to read the countywide number:</strong> 172,479 total lane qualifications consolidate to 145,063 different parcels because one parcel can match several reasons. Each parcel appears once in the working database with every verified lane attached.</div>
+    </div>
+  </section>
+
+  <section id="freshness">
+    <div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">Data freshness</div><h2>The newest available official sources drive the review.</h2></div><p>Detroit uses its daily parcel and blight services. The surrounding municipalities use Wayne County's 2026 post-review assessment package. Legal and tax sources are treated separately because their status can change faster than assessment records.</p></div>
+      <div class="panel freshness">
+        <div class="fresh-row"><strong>Detroit property records</strong><span>Last edited July 15, 2026</span><span>Current owner, taxpayer mailing address, classification, use, assessment, sale, acreage, and building fields.</span><span class="fresh-state current">Daily city service</span></div>
+        <div class="fresh-row"><strong>Outer Wayne property records</strong><span>Created June 4, 2026</span><span>Official 2026 post-March-Board-of-Review assessment, owner, mailing, class, value, and parcel package.</span><span class="fresh-state current">Current 2026 roll</span></div>
+        <div class="fresh-row"><strong>Tax foreclosure</strong><span>Published December 9 and 16, 2025</span><span>Official notice of parcels subject to foreclosure in 2026 for unpaid 2023-and-prior taxes.</span><span class="fresh-state snapshot">Publication snapshot</span></div>
+        <div class="fresh-row"><strong>Detroit blight tickets</strong><span>Last edited July 16, 2026</span><span>Responsible dispositions with a positive balance and parcel ID, aggregated to one property record.</span><span class="fresh-state current">Daily city service</span></div>
+        <div class="history"><strong>Quality note:</strong> the tax PDF warns that a parcel paid or resolved after the November 2025 source snapshot may still appear. A live Treasurer balance check is required at delivery. The annual outer-Wayne bulk file does not provide enough historical transfer coverage to verify a 10-year ownership lane there. That category is shown as unavailable for Downriver instead of using an inferred age.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="categories">
+    <div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">All six requested categories</div><h2>The Wayne County opportunity, with Detroit and Downriver separated.</h2></div><p>Five lanes have an official measurable source in this review. Current pre-foreclosure notices must be checked at delivery because the Wayne County Sheriff states that it has no property information before a sale.</p></div>
+      <div class="panel table-wrap">
+        <table>
+          <thead><tr><th>Territory</th><th>Tired landlords 10+ years</th><th>Office, industrial, multifamily</th><th>Out of state</th><th>Verified vacant</th><th>Pre-foreclosure</th><th>Tax delinquency</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Wayne County</strong><small>820,726 unique parcels reviewed</small></td><td><strong>43,784</strong><small>24,889 held 20+ years</small></td><td><strong>29,516</strong><small>1,580 office, 12,744 industrial, 15,192 multifamily</small></td><td><strong>24,912</strong><small>Florida and California lead owner mailing states</small></td><td><strong>37,940</strong><small>35,178 absentee owned</small></td><td><span class="scoped">Fresh legal-notice check at delivery</span></td><td><strong>36,327</strong><small>official 2026 publication snapshot</small></td></tr>
+            <tr><td><strong>Detroit</strong><small>377,830 unique current parcels</small></td><td><strong>43,784</strong><small>current Detroit transfer history supports the 10-year test</small></td><td><strong>22,245</strong><small>1,532 office, 6,096 industrial, 14,617 multifamily</small></td><td><strong>16,250</strong><small>Florida has 3,448 and California has 2,806</small></td><td><strong>23,442</strong><small>21,413 absentee owned</small></td><td><span class="scoped">Fresh legal-notice check at delivery</span></td><td><strong>30,812</strong><small>official 2026 publication snapshot</small></td></tr>
+            <tr><td><strong>Downriver Core</strong><small>Taylor, Lincoln Park, Southgate, Allen Park, Wyandotte</small></td><td><span class="scoped">Not verified from the annual bulk file</span></td><td><strong>897</strong><small>industrial ownership-pressure records</small></td><td><strong>1,569</strong><small>California and New Jersey lead</small></td><td><strong>1,956</strong><small>1,918 absentee owned</small></td><td><span class="scoped">Fresh legal-notice check at delivery</span></td><td><strong>909</strong><small>official 2026 publication snapshot</small></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="proof"><strong>Legal-status boundary:</strong> the tax count is a real official publication count, not a claim that every balance remains unpaid today. Pre-foreclosure has no displayed count because no verified unrestricted official bulk list was found. Both legal lanes receive a parcel-level current check before delivery.</div>
+
+      <div class="subhead"><h3>Tired landlords: the confirmed Detroit tenure pool</h3><p>All 43,784 confirmed 10-year non-occupant records are in Detroit because the city's current service carries usable historical sale dates.</p></div>
+      <div class="panel tenure-grid">
+        <div class="tenure"><div class="eyebrow" style="color:var(--blue)">Detroit tenure</div><h3>43,784 tired landlords</h3><p>Every record has at least 10 years of confirmed ownership, non-occupant ownership, and building value.</p><strong class="tenure-total">22.3 years</strong><div class="stack"><span style="width:43.2%"></span><span style="width:56.8%"></span></div><div class="split"><div><strong>18,895</strong><span>held 10 to 19 years</span></div><div><strong>24,889</strong><span>held 20+ years</span></div></div></div>
+        <div class="tenure"><div class="eyebrow">County coverage</div><h3>Detroit verified, outer Wayne held back</h3><p>The county roll exposes current ownership but historical transfer dates are overwhelmingly limited to recent transfers.</p><strong class="tenure-total">No inference</strong><div class="stat-row"><strong>18,498</strong><span>outer-Wayne rows with any transfer date, overwhelmingly 2025</span></div><div class="stat-row"><strong>0 fabricated</strong><span>10-year records added outside Detroit</span></div></div>
+        <div class="tenure"><div class="eyebrow" style="color:var(--rust)">Campaign use</div><h3>Work the 20+ year owners first</h3><p>The longer-duration group provides the strongest verified tenure signal without shrinking the complete lane.</p><strong class="tenure-total">24,889</strong><div class="stat-row"><strong>$33,400</strong><span>median official assessed value across the full tired-owner lane</span></div><div class="stat-row"><strong>100%</strong><span>usable official value coverage</span></div></div>
+      </div>
+
+      <div class="subhead"><h3>Office, industrial, and multifamily composition</h3><p>These counts use official classification and use codes plus non-occupant or long-ownership indicators.</p></div>
+      <div class="panel type-grid">
+        <div class="type"><div class="eyebrow">Wayne County</div><h3>29,516 opportunities</h3><div class="stat-row"><strong>1,580</strong><span>office</span></div><div class="stat-row"><strong>12,744</strong><span>industrial</span></div><div class="stat-row"><strong>15,192</strong><span>multifamily</span></div></div>
+        <div class="type"><div class="eyebrow" style="color:var(--blue)">Detroit</div><h3>22,245 opportunities</h3><div class="stat-row"><strong>1,532</strong><span>office</span></div><div class="stat-row"><strong>6,096</strong><span>industrial</span></div><div class="stat-row"><strong>14,617</strong><span>multifamily</span></div></div>
+        <div class="type"><div class="eyebrow" style="color:var(--rust)">Downriver Core</div><h3>897 opportunities</h3><div class="stat-row"><strong>897</strong><span>industrial properties with absentee or long-ownership evidence</span></div><div class="stat-row"><strong>215</strong><span>also owned from outside Michigan</span></div><div class="stat-row"><strong>$231,800</strong><span>median official assessed value where published</span></div></div>
+      </div>
+
+      <div class="subhead"><h3>Official value comparison by category</h3><p>Values are government assessment figures. They are not asking prices, appraisals, or guaranteed market values.</p></div>
+      <div class="panel table-wrap">
+        <table>
+          <thead><tr><th>Territory</th><th>Tired owners</th><th>Office, industrial, multifamily</th><th>Out of state</th><th>Verified vacant</th><th>Tax snapshot</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Wayne County</strong></td><td><strong>$33,400</strong><small>100% coverage</small></td><td><strong>$54,800</strong><small>92.7% coverage</small></td><td><strong>$40,100</strong><small>96.0% coverage</small></td><td><strong>$3,700</strong><small>100% coverage</small></td><td><strong>$31,600</strong><small>97.9% coverage</small></td></tr>
+            <tr><td><strong>Detroit</strong></td><td><strong>$33,400</strong><small>100% coverage</small></td><td><strong>$46,600</strong><small>92.1% coverage</small></td><td><strong>$31,500</strong><small>97.2% coverage</small></td><td><strong>$1,500</strong><small>100% coverage</small></td><td><strong>$28,200</strong><small>97.7% coverage</small></td></tr>
+            <tr><td><strong>Downriver Core</strong></td><td><span class="scoped">Not verified</span></td><td><strong>$231,800</strong><small>94.0% coverage</small></td><td><strong>$83,400</strong><small>87.5% coverage</small></td><td><strong>$10,100</strong><small>100% coverage</small></td><td><strong>$75,300</strong><small>99.1% coverage</small></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="subhead"><h3>Where out-of-state owners receive mail</h3><p>Counts represent properties, not unique owners.</p></div>
+      <div class="panel state-grid">
+        <div class="state"><div class="eyebrow">Wayne County</div><h3>24,912 properties</h3><div class="state-row"><strong>Florida</strong><span>4,451</span></div><div class="state-row"><strong>California</strong><span>4,192</span></div><div class="state-row"><strong>New York</strong><span>2,122</span></div><div class="state-row"><strong>Texas</strong><span>1,865</span></div><div class="state-row"><strong>Ohio</strong><span>1,666</span></div></div>
+        <div class="state"><div class="eyebrow" style="color:var(--blue)">Detroit</div><h3>16,250 properties</h3><div class="state-row"><strong>Florida</strong><span>3,448</span></div><div class="state-row"><strong>California</strong><span>2,806</span></div><div class="state-row"><strong>New York</strong><span>1,635</span></div><div class="state-row"><strong>Ohio</strong><span>993</span></div><div class="state-row"><strong>Texas</strong><span>980</span></div></div>
+        <div class="state"><div class="eyebrow" style="color:var(--rust)">Downriver Core</div><h3>1,569 properties</h3><div class="state-row"><strong>California</strong><span>226</span></div><div class="state-row"><strong>New Jersey</strong><span>221</span></div><div class="state-row"><strong>Florida</strong><span>157</span></div><div class="state-row"><strong>Texas</strong><span>145</span></div><div class="state-row"><strong>Illinois</strong><span>100</span></div></div>
+      </div>
+
+      <div class="subhead"><h3>Verified vacant land: value, ownership, and size</h3><p>Vacant means the current source shows a vacant class or use, land value, no building value, no year built, and no building floor area.</p></div>
+      <div class="panel vacant-grid">
+        <div class="vacant"><div class="eyebrow">Wayne County</div><h3>37,940 parcels</h3><div class="stat-row"><strong>35,178</strong><span>absentee owned</span></div><div class="stat-row"><strong>2,190</strong><span>owned outside Michigan</span></div><div class="stat-row"><strong>30,185</strong><span>below $25,000 official assessed value</span></div><div class="stat-row"><strong>0.13 acre</strong><span>median lot size</span></div></div>
+        <div class="vacant"><div class="eyebrow" style="color:var(--blue)">Detroit</div><h3>23,442 parcels</h3><div class="stat-row"><strong>21,413</strong><span>absentee owned</span></div><div class="stat-row"><strong>1,157</strong><span>owned outside Michigan</span></div><div class="stat-row"><strong>21,594</strong><span>below $25,000 official assessed value</span></div><div class="stat-row"><strong>$1,500</strong><span>median official assessed value</span></div></div>
+        <div class="vacant"><div class="eyebrow" style="color:var(--rust)">Downriver Core</div><h3>1,956 parcels</h3><div class="stat-row"><strong>1,918</strong><span>absentee owned</span></div><div class="stat-row"><strong>108</strong><span>owned outside Michigan</span></div><div class="stat-row"><strong>1,515</strong><span>below $25,000 official assessed value</span></div><div class="stat-row"><strong>0.20 acre</strong><span>median lot size</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="record">
+    <div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">What a paid record contains</div><h2>The list is usable because the facts stay attached to the property.</h2></div><p>The customer-facing report does not expose owner rows. A delivery retains the official verification key and every source field needed to filter, verify, and prepare outreach.</p></div>
+      <div class="panel record-anatomy">
+        <div class="record-intro"><div class="eyebrow" style="color:#bfe5f7">Record anatomy</div><h3>One property. Every verified reason.</h3><p>A parcel that matches vacant land, out-of-state ownership, and the tax publication is delivered once with all three flags. The source date and status remain visible.</p></div>
+        <div class="record-fields">
+          <div class="field"><strong>Property location</strong><span>Street, city, state, ZIP, municipality, and acreage where published</span></div>
+          <div class="field"><strong>Owner and mailing</strong><span>Current owner name, care-of field, mailing street, city, state, ZIP, and country</span></div>
+          <div class="field"><strong>Official verification key</strong><span>Wayne parcel ID, government unit, tax unit, map number, and source path</span></div>
+          <div class="field"><strong>Values and tax status</strong><span>Assessed, taxable, land, building, capped, and estimated true-cash fields where official</span></div>
+          <div class="field"><strong>Property use and physical detail</strong><span>Class, use code, building style, year built, building area, frontage, and depth where published</span></div>
+          <div class="field"><strong>Acquisition intelligence</strong><span>Absentee, owner state, years owned, property segment, vacant result, legal-source status, and all matching lanes</span></div>
+        </div>
+      </div>
+
+      <div class="subhead"><h3>Overlap proves where the strongest records are</h3><p>The full territory remains available. Multi-signal records simply determine campaign order.</p></div>
+      <div class="panel overlap-grid">
+        <div class="overlap"><strong>145,063</strong><span>different Wayne parcels across four property lanes plus the tax snapshot</span></div>
+        <div class="overlap"><strong>25,243</strong><span>Wayne parcels matching at least two of those five measured lanes</span></div>
+        <div class="overlap"><strong>2,113</strong><span>Wayne parcels matching at least three measured lanes</span></div>
+        <div class="overlap"><strong>0</strong><span>unexplained duplicate parcel rows in the verified lane files</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="downriver">
+    <div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">Diamond in the rough</div><h2>Taylor leads a real Downriver resident-and-retail market.</h2></div><p>This is not a pick based on cheap land alone. Taylor has the highest non-Detroit property-lane volume in the selected cluster, while the five-city core provides enough residents, retail, housing, and municipal variety to support repeat campaigns.</p></div>
+      <div class="market-stack">
+        <article class="panel market">
+          <div class="market-side downriver"><div class="role">First campaign</div><h3>Taylor</h3><p>Largest practical non-Detroit opportunity pool in the resident-and-shopping test area.</p></div>
+          <div class="market-main"><h3>Start where industrial, vacant, owner-location, and tax signals overlap.</h3><p>Taylor contributes 1,973 different parcels across the current property lanes. It leads the cluster in multi-signal records and verified vacant land, then adds 360 parcels from the official 2026 tax-foreclosure publication snapshot.</p><div class="market-metrics"><div class="market-metric"><strong>1,973</strong><span>unique property-lane parcels</span></div><div class="market-metric"><strong>261</strong><span>multi-signal property parcels</span></div><div class="market-metric"><strong>1,146</strong><span>verified vacant parcels</span></div><div class="market-metric"><strong>360</strong><span>tax-snapshot parcels</span></div></div><div class="sequence"><strong>Working order:</strong> Taylor multi-signal records first. Taylor tax-snapshot records after live balance verification. Then Wyandotte's dense multi-signal pool and Lincoln Park's tax-snapshot volume.</div></div>
+        </article>
+      </div>
+
+      <div class="subhead"><h3>Five-city opportunity comparison</h3><p>Property-lane counts exclude the tax snapshot so the comparison does not mix a current property signal with a time-sensitive legal publication.</p></div>
+      <div class="panel direction-grid">
+        <div class="chart"><h3>Different qualifying parcels</h3><div class="bar-list">
+          <div><div class="bar-label"><strong>Taylor</strong><span>1,973</span></div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></div>
+          <div><div class="bar-label"><strong>Lincoln Park</strong><span>611</span></div><div class="bar-track"><div class="bar-fill" style="width:31%"></div></div></div>
+          <div><div class="bar-label"><strong>Southgate</strong><span>546</span></div><div class="bar-track"><div class="bar-fill" style="width:27.7%"></div></div></div>
+          <div><div class="bar-label"><strong>Wyandotte</strong><span>442</span></div><div class="bar-track"><div class="bar-fill" style="width:22.4%"></div></div></div>
+          <div><div class="bar-label"><strong>Allen Park</strong><span>377</span></div><div class="bar-track"><div class="bar-fill" style="width:19.1%"></div></div></div>
+        </div></div>
+        <div class="chart"><h3>Multi-signal property parcels</h3><div class="bar-list">
+          <div><div class="bar-label"><strong>Taylor</strong><span>261</span></div><div class="bar-track"><div class="bar-fill blue" style="width:100%"></div></div></div>
+          <div><div class="bar-label"><strong>Wyandotte</strong><span>80</span></div><div class="bar-track"><div class="bar-fill blue" style="width:30.7%"></div></div></div>
+          <div><div class="bar-label"><strong>Allen Park</strong><span>46</span></div><div class="bar-track"><div class="bar-fill blue" style="width:17.6%"></div></div></div>
+          <div><div class="bar-label"><strong>Southgate</strong><span>26</span></div><div class="bar-track"><div class="bar-fill blue" style="width:10%"></div></div></div>
+          <div><div class="bar-label"><strong>Lincoln Park</strong><span>17</span></div><div class="bar-track"><div class="bar-fill blue" style="width:6.5%"></div></div></div>
+        </div></div>
+      </div>
+
+      <div class="subhead"><h3>Proof that people live and shop here</h3><p>Official Census QuickFacts provide the resident and retail test. The totals use 2025 population estimates and 2022 Economic Census retail sales, the latest comparable figures shown for all five cities.</p></div>
+      <div class="panel resident-grid">
+        <div class="resident-lead"><strong>180,256</strong><span>combined 2025 population estimate</span><strong style="margin-top:24px">$3.95B</strong><span>combined 2022 retail sales</span><p>Taylor supplies the property depth. Southgate supplies unusually strong retail activity per resident. Allen Park, Lincoln Park, and Wyandotte keep the campaign connected to established housing and daily commerce.</p></div>
+        <div class="resident-facts">
+          <div class="resident-fact"><strong>Taylor: 61,279 residents</strong><span>$1.710 billion retail sales</span></div>
+          <div class="resident-fact"><strong>Southgate: 28,931 residents</strong><span>$1.136 billion retail sales</span></div>
+          <div class="resident-fact"><strong>Lincoln Park: 38,529 residents</strong><span>$391.7 million retail sales</span></div>
+          <div class="resident-fact"><strong>Allen Park: 27,445 residents</strong><span>$526.3 million retail sales</span></div>
+          <div class="resident-fact"><strong>Wyandotte: 24,072 residents</strong><span>$184.1 million retail sales</span></div>
+          <div class="resident-fact"><strong>75,524 official parcels</strong><span>reviewed across the five-city core</span></div>
+        </div>
+      </div>
+      <div class="proof"><strong>What makes this the diamond-in-the-rough pick:</strong> Taylor is not the wealthiest city in Wayne County, and it is not presented as an appreciation guarantee. It wins this test because the official parcel data show the largest practical non-Detroit opportunity pool inside a connected cluster with verified resident and retail activity.</div>
+    </div>
+  </section>
+
+  <section id="seventh">
+    <div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">The evidence-backed seventh lane</div><h2>Detroit blight pressure adds a signal the six standard lanes miss.</h2></div><p>The City of Detroit publishes a daily blight-ticket service. Restricting it to responsible dispositions, positive balances, and parcel-linked records produces a current municipal-pressure lane that can be joined directly to ownership, mailing, value, and property facts.</p></div>
+      <div class="panel market">
+        <div class="market-side blight"><div class="role">Seventh lane</div><h3>Blight pressure</h3><p>Private-owner parcels with adjudicated responsible tickets and a positive outstanding balance.</p></div>
+        <div class="market-main"><h3>A current municipal-pressure signal with a direct parcel key.</h3><p>The source contains 348,501 qualifying ticket rows. After aggregation, public-owner exclusions, and current-parcel matching, the lane contains 82,746 unique private-owner parcels with no duplicate parcel rows.</p><div class="market-metrics"><div class="market-metric"><strong>82,746</strong><span>unique private-owner parcels</span></div><div class="market-metric"><strong>$120.0M</strong><span>total positive balance due</span></div><div class="market-metric"><strong>52,218</strong><span>parcels with collection status</span></div><div class="market-metric"><strong>38,589</strong><span>parcels with 3+ tickets</span></div></div><div class="sequence"><strong>Use it correctly:</strong> start with collection status, repeated tickets, and higher balances, then cross those parcels with the six requested categories. A blight balance is not a tax balance, equity figure, or proof that an owner will sell.</div></div>
+      </div>
+
+      <div class="subhead"><h3>Neighborhood concentration</h3><p>Counts are private-owner blight-pressure parcels, not claims about every property in the neighborhood.</p></div>
+      <div class="panel direction-grid">
+        <div class="chart"><h3>Largest parcel concentrations</h3><div class="bar-list">
+          <div><div class="bar-label"><strong>Warrendale</strong><span>3,279</span></div><div class="bar-track"><div class="bar-fill rust" style="width:100%"></div></div></div>
+          <div><div class="bar-label"><strong>Bethune Community</strong><span>1,765</span></div><div class="bar-track"><div class="bar-fill rust" style="width:53.8%"></div></div></div>
+          <div><div class="bar-label"><strong>Brightmoor</strong><span>1,705</span></div><div class="bar-track"><div class="bar-fill rust" style="width:52%"></div></div></div>
+          <div><div class="bar-label"><strong>Midwest</strong><span>1,703</span></div><div class="bar-track"><div class="bar-fill rust" style="width:51.9%"></div></div></div>
+          <div><div class="bar-label"><strong>Barton-McFarland</strong><span>1,683</span></div><div class="bar-track"><div class="bar-fill rust" style="width:51.3%"></div></div></div>
+        </div></div>
+        <div class="chart"><h3>Pressure depth</h3><div class="stat-row"><strong>$610</strong><span>median balance due per parcel</span></div><div class="stat-row"><strong>2 tickets</strong><span>median ticket count per parcel</span></div><div class="stat-row"><strong>4,109</strong><span>parcels with at least $5,000 due</span></div><div class="stat-row"><strong>0</strong><span>duplicate parcel rows after aggregation</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">Market direction beyond the parcel list</div><h2>Current investment supports activity, not a promise.</h2></div><p>These official 2026 announcements show active housing, neighborhood retail, and job investment. They help order research but do not prove appreciation or seller motivation for any parcel.</p></div>
+      <div class="panel capital-grid">
+        <div class="capital"><div class="place">Detroit fintech</div><strong>94 jobs and more than $1 million invested</strong><p>Michigan announced Aries' global headquarters in Detroit in May 2026, with 94 jobs and more than $1 million in capital investment.</p><a href="https://www.michiganbusiness.org/press-releases/2026/05/two-business-expansions-in-wayne-oakland-counties/">Michigan economic-development source</a></div>
+        <div class="capital"><div class="place">Brush Park</div><strong>$15.6 million mixed-use project under construction</strong><p>The Roma broke ground in May 2026 with 57 residential units and approximately 1,200 square feet of neighborhood-serving retail.</p><a href="https://detroitmi.gov/news/roma-breaks-ground-bringing-mixed-income-mixed-use-development-growing-detroit-corridor">City of Detroit source</a></div>
+        <div class="capital"><div class="place">Citywide housing</div><strong>1,000-home construction goal with faster permits</strong><p>Detroit announced same-day approvals for many renovations and a plan for pre-approved home designs tied to a four-year goal of 1,000 new single-family houses.</p><a href="https://detroitmi.gov/news/mayor-bseed-director-announce-sweeping-plan-fast-track-renovations-existing-homes-construction-new">City permit-reform source</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="database">
+    <div class="wrap">
+      <div class="panel database">
+        <div class="database-side"><div class="eyebrow">The working product</div><h2>One Wayne County territory database.</h2><p>The delivery is not seven separate piles. It is one row per parcel, with Detroit and municipality breakouts, every verified lane flag, source dates, and the government fields needed to verify the record.</p></div>
+        <div class="database-main">
+          <div class="database-list">
+            <div class="database-item"><i data-lucide="rows-3"></i><div><strong>One parcel, one row</strong><span>Every verified reason stays attached without duplicate delivery rows.</span></div></div>
+            <div class="database-item"><i data-lucide="flag"></i><div><strong>All lane flags preserved</strong><span>Ownership, property, tax snapshot, pre-foreclosure status when verified, and blight pressure.</span></div></div>
+            <div class="database-item"><i data-lucide="map-pinned"></i><div><strong>Detroit and municipality breakout</strong><span>Filter the full county, Detroit, Downriver, or an individual city.</span></div></div>
+            <div class="database-item"><i data-lucide="badge-check"></i><div><strong>Official verification keys</strong><span>Parcel ID and source status provide a direct path back to the government record.</span></div></div>
+            <div class="database-item"><i data-lucide="history"></i><div><strong>Freshness stored with the data</strong><span>Each component keeps its update date, retrieval date, and status limitation.</span></div></div>
+            <div class="database-item"><i data-lucide="file-output"></i><div><strong>Ready for campaign tools</strong><span>Delivered in Excel or another format that can move into the buyer's chosen contact platform.</span></div></div>
+          </div>
+          <div class="database-note"><strong>Clear boundary:</strong> LeadCurate supplies property and ownership intelligence. Phone numbers and emails are not fabricated or represented as government parcel data. Time-sensitive legal and tax status is checked again before delivery.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="panel next"><div><div class="eyebrow" style="color:var(--green)">What comes next</div><h2>This is the market review. Delivery structure comes next.</h2><p>The report establishes the real countywide depth, the Detroit breakout, the Downriver test market, and the seventh municipal-pressure lane. A paid build can preserve the complete qualifying universe, refresh the time-sensitive legal components, and organize campaign order without imposing an artificial record cap.</p></div><a class="contact" href="mailto:hello@leadcurate.com?subject=Wayne%20County%20Territory%20Intelligence">Discuss delivery options</a></div>
+      <div class="sources"><strong>Official property and legal sources:</strong> <a href="https://www.waynecountymi.gov/Government/Departments/Management-Budget/Assessment-Equalization/Annual-Assessment-Data">Wayne County assessment data</a> | <a href="https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/parcel_file_current/FeatureServer/0">Detroit current parcels</a> | <a href="https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/tentative_assessment_roll_2026/FeatureServer/0">Detroit 2026 assessment</a> | <a href="https://www.waynecountymi.gov/Government/Elected-Officials/Treasurer/Property-Tax-Information/Forfeited-Property-List-with-Interested-Parties">Wayne 2026 tax-foreclosure publication</a> | <a href="https://www.sheriffconnect.com/court-services/">Wayne County Sheriff sales context</a> | <a href="https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/blight_tickets/FeatureServer/0">Detroit blight tickets</a>.</div>
+      <div class="sources"><strong>Resident and retail sources:</strong> <a href="https://www.census.gov/quickfacts/fact/table/taylorcitymichigan/PST045225">Taylor QuickFacts</a> | <a href="https://www.census.gov/quickfacts/fact/table/southgatecitymichigan/PST045225">Southgate QuickFacts</a> | <a href="https://www.census.gov/quickfacts/fact/table/lincolnparkcitymichigan/PST045225">Lincoln Park QuickFacts</a> | <a href="https://www.census.gov/quickfacts/fact/table/allenparkcitymichigan/POP060220">Allen Park QuickFacts</a> | <a href="https://www.census.gov/quickfacts/fact/table/wyandottecitymichigan/PST045225">Wyandotte QuickFacts</a>. Census values use the latest comparable figures shown on July 16, 2026: 2025 population estimates and 2022 retail sales.</div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><strong>LeadCurate</strong> | Private acquisition intelligence | hello@leadcurate.com</div></footer>
+<script>lucide.createIcons();</script>
+</body>
+</html>

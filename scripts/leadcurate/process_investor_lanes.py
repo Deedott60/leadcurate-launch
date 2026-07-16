@@ -25,6 +25,75 @@ LANES = (
 )
 
 MARKETS: dict[str, dict[str, Any]] = {
+    "wayne-mi": {
+        "display": "Wayne County MI with Detroit breakout",
+        "state": "MI",
+        "source_pattern": "wayne-mi/*/wayne-mi-current-hybrid.csv",
+        "source_url": "https://www.waynecountymi.gov/Government/Departments/Management-Budget/Assessment-Equalization/Annual-Assessment-Data",
+        "source_data_as_of": "Wayne County 2026 post-March-Board-of-Review roll created 2026-06-04; Detroit current parcels edited 2026-07-15",
+        "source_retrieved_at": "2026-07-16",
+        "source_status": "Current hybrid parcel universe: City of Detroit daily parcel feed plus the official Wayne County 2026 annual roll for all other municipalities.",
+        "source_components": {
+            "outer_wayne_assessment": {
+                "data_year": 2026,
+                "created_at": "2026-06-04",
+                "status": "post_march_board_of_review",
+                "url": "https://www.waynecountymi.gov/Government/Departments/Management-Budget/Assessment-Equalization/Annual-Assessment-Data",
+            },
+            "detroit_current_parcels": {
+                "last_edit_at": "2026-07-15T20:35:17.567Z",
+                "status": "daily_current_parcel_service",
+                "url": "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/parcel_file_current/FeatureServer/0",
+            },
+            "detroit_2026_assessment": {
+                "last_edit_at": "2026-03-17T14:51:04.733Z",
+                "status": "2026_tentative_assessment_roll",
+                "url": "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/tentative_assessment_roll_2026/FeatureServer/0",
+            },
+        },
+        "fields": {
+            "parcel": ["parcel_id"],
+            "owner": ["owner_name"],
+            "mail_street": ["owner_street"],
+            "mail_compare_street": ["owner_street"],
+            "mail_city": ["owner_city"],
+            "mail_state": ["owner_state"],
+            "mail_zip": ["owner_zip"],
+            "property_street": ["property_street"],
+            "property_city": ["municipality"],
+            "property_zip": ["property_zip"],
+            "sale_date": ["sale_date", "latest_transfer_date"],
+            "sale_price": ["sale_price"],
+            "land_value": ["land_assessment"],
+            "building_value": ["building_assessment"],
+            "other_value": [],
+            "total_value": ["assessed_value"],
+            "acreage": ["acreage"],
+            "acreage_units": [],
+            "use_code": ["property_class", "use_code"],
+            "use_desc": ["property_class_description", "use_code_description", "building_style"],
+            "office_desc": ["use_code_description", "building_style"],
+            "division": [],
+            "year_built": ["year_built"],
+            # Detroit's total_square_footage is parcel area, not building floor area.
+            "living_area": ["total_floor_area"],
+            "units": [],
+            "homestead": ["pre_pct"],
+            "county": [],
+            "municipality": ["municipality"],
+            "tax_delinquent": [],
+            "pre_foreclosure": [],
+        },
+        "vacant_codes": {"102", "202", "302", "402", "00003", "00004", "00005"},
+        "multifamily_codes": {"41210", "41220", "41230", "41240", "41250"},
+        "office_codes": {"22310", "22320", "22330", "22350", "22420", "33410"},
+        "industrial_prefixes": ("3",),
+        "residential_prefixes": ("4",),
+        "unsupported": {
+            "tax-delinquent": "The parcel roll itself does not prove delinquency. Wayne's separate official 2026 foreclosure publication is processed and joined by process_wayne_mi_tax_foreclosure.py.",
+            "pre-foreclosure": "Wayne County Sheriff conducts mortgage sales but states it has no property information before sale. A current notice-publication source must be checked at delivery.",
+        },
+    },
     "dallas-tx": {
         "display": "Dallas County TX",
         "state": "TX",
@@ -209,6 +278,7 @@ STATE_ALIASES = {
     "NORTH CAROLINA": "NC", "SOUTH CAROLINA": "SC", "OKLAHOMA": "OK",
     "LOUISIANA": "LA", "ARKANSAS": "AR", "NEW MEXICO": "NM", "ARIZONA": "AZ",
     "COLORADO": "CO", "MISSOURI": "MO", "VIRGINIA": "VA", "WASHINGTON": "WA",
+    "MICHIGAN": "MI",
 }
 
 PUBLIC_OWNER = re.compile(
@@ -261,7 +331,7 @@ def parsed_date(value: str) -> date | None:
             return parsed if parsed <= date.today() else None
         except ValueError:
             pass
-    for fmt in ("%m/%d/%Y", "%Y-%m-%d", "%Y%m%d", "%m-%d-%Y"):
+    for fmt in ("%m/%d/%Y", "%Y-%m-%d", "%Y%m%d", "%m%d%Y", "%m-%d-%Y"):
         try:
             parsed = datetime.strptime(text, fmt).date()
             return parsed if parsed <= date.today() else None
