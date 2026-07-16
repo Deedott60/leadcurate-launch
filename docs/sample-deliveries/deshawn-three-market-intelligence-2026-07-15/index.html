@@ -103,6 +103,48 @@
   .lane-detail td:first-child { min-width: 150px; }
   .lane-detail td:nth-child(2) { min-width: 320px; }
   .lane-detail td:nth-child(3) { min-width: 250px; }
+  .breakdown-wrap { overflow-x: auto; }
+  .breakdown-wrap td, .breakdown-wrap th { white-space: nowrap; }
+  .breakdown-wrap td:first-child { white-space: normal; min-width: 142px; }
+  .value-wrap th { white-space: normal; }
+  .value-wrap td:last-child { min-width: 260px; white-space: normal; }
+  .tenure-grid { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 18px; }
+  .tenure-market { padding: 21px; border-left: 1px solid var(--line); }
+  .tenure-market:first-child { border-left: 0; }
+  .tenure-market h3 { margin: 5px 0 3px; font-size: 18px; }
+  .tenure-market > p { margin: 0 0 15px; color: var(--muted); font-size: 10px; }
+  .tenure-total { display: block; margin-bottom: 10px; font-size: 24px; line-height: 1; }
+  .tenure-stack { height: 12px; display: flex; overflow: hidden; background: #e6eaf0; }
+  .tenure-10 { background: var(--blue); }
+  .tenure-20 { background: var(--green); }
+  .tenure-values { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .tenure-values strong { display: block; font-size: 14px; }
+  .tenure-values span { display: block; color: var(--muted); font-size: 9px; }
+  .subhead { margin: 30px 0 12px; }
+  .subhead h3 { margin: 0 0 4px; font-size: 20px; }
+  .subhead p { margin: 0; color: var(--muted); font-size: 11px; }
+  .state-grid, .type-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .state-market, .type-market { padding: 21px; border-left: 1px solid var(--line); }
+  .state-market:first-child, .type-market:first-child { border-left: 0; }
+  .state-market h3, .type-market h3 { margin: 5px 0 12px; font-size: 17px; }
+  .state-list { display: grid; }
+  .state-row { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 11px; }
+  .state-row span { color: var(--muted); }
+  .vacant-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .vacant-market { padding: 21px; border-left: 1px solid var(--line); }
+  .vacant-market:first-child { border-left: 0; }
+  .vacant-market h3 { margin: 5px 0 13px; font-size: 18px; }
+  .vacant-stat { padding: 8px 0; border-top: 1px solid var(--line); }
+  .vacant-stat strong { display: block; font-size: 15px; }
+  .vacant-stat span { display: block; color: var(--muted); font-size: 9px; }
+  .live-grid { display: grid; grid-template-columns: 1fr 1fr; margin-top: 18px; }
+  .live-lane { padding: 22px; border-left: 1px solid var(--line); }
+  .live-lane:first-child { border-left: 0; }
+  .live-lane h3 { margin: 6px 0 8px; font-size: 18px; }
+  .live-lane p { margin: 0; color: var(--muted); font-size: 11px; }
+  .live-source { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 10px; }
+  .live-source strong { display: block; }
+  .live-source span { color: var(--muted); }
   .cross-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
   .cross { padding: 22px; border-left: 1px solid var(--line); }
   .cross:first-child { border-left: 0; }
@@ -233,9 +275,9 @@
     .speed { grid-template-columns: repeat(2, 1fr); }
     .speed-step:nth-child(odd) { border-left: 0; }
     .speed-step:nth-child(n+3) { border-top: 1px solid var(--line); }
-    .depth-grid, .cross-grid, .priority-grid, .direction-grid, .capital-grid { grid-template-columns: 1fr; }
-    .depth-item, .cross, .priority, .direction-market, .capital-signal { border-left: 0; border-top: 1px solid var(--line); }
-    .depth-item:first-child, .cross:first-child, .priority:first-child, .direction-market:first-child, .capital-signal:first-child { border-top: 0; }
+    .depth-grid, .cross-grid, .priority-grid, .direction-grid, .capital-grid, .tenure-grid, .state-grid, .type-grid, .vacant-grid, .live-grid { grid-template-columns: 1fr; }
+    .depth-item, .cross, .priority, .direction-market, .capital-signal, .tenure-market, .state-market, .type-market, .vacant-market, .live-lane { border-left: 0; border-top: 1px solid var(--line); }
+    .depth-item:first-child, .cross:first-child, .priority:first-child, .direction-market:first-child, .capital-signal:first-child, .tenure-market:first-child, .state-market:first-child, .type-market:first-child, .vacant-market:first-child, .live-lane:first-child { border-top: 0; }
     .refresh-standard { grid-template-columns: repeat(2, 1fr); }
     .refresh-item:nth-child(odd) { border-left: 0; }
     .refresh-item:nth-child(n+3) { border-top: 1px solid var(--line); }
@@ -289,7 +331,7 @@
 
 <nav class="wrap jump" aria-label="Report sections">
   <a href="#answer"><i data-lucide="compass"></i>Where to start</a>
-  <a href="#freshness"><i data-lucide="calendar-clock"></i>Data freshness</a>
+  <a href="#full-breakdown"><i data-lucide="bar-chart-3"></i>Full category numbers</a>
   <a href="#markets"><i data-lucide="map"></i>Market breakdown</a>
   <a href="#database"><i data-lucide="database"></i>Your territory database</a>
 </nav>
@@ -333,6 +375,72 @@
         </table>
       </div>
       <div class="address-proof"><strong>Why the last two categories do not show an old count:</strong> a foreclosure filing can be dismissed and a delinquent tax bill can be paid. LeadCurate does not sell yesterday's legal status as if it were current. Those records are counted after the newest official check and then attached to the owner, address, value, property type, and other facts already in the territory database.</div>
+    </div>
+  </section>
+
+  <section id="full-breakdown">
+    <div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">Complete category breakdown</div><h2>The full measured numbers behind each market.</h2></div><p>This is the complete current breakdown for tired owners, office, industrial, multifamily, out-of-state ownership, and verified vacant land. The numbers come from the property files prepared for this territory, with one property counted once inside each category.</p></div>
+
+      <div class="panel breakdown-wrap">
+        <table>
+          <thead><tr><th>Market</th><th>Tired: 10 to 19 years</th><th>Tired: 20+ years</th><th>Office</th><th>Industrial</th><th>Multifamily</th><th>Out of state</th><th>Verified vacant</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Dallas County</strong><small>Current 2026 property records</small></td><td><strong>24,445</strong></td><td><strong>14,678</strong></td><td><strong>6,208</strong></td><td><strong>2,232</strong></td><td><strong>15,868</strong></td><td><strong>32,382</strong></td><td><strong>36,386</strong></td></tr>
+            <tr><td><strong>Massachusetts</strong><small>All 14 counties</small></td><td><strong>182,893</strong></td><td><strong>184,335</strong></td><td><strong>5,475</strong></td><td><strong>23,369</strong></td><td><strong>30,758</strong></td><td><strong>115,764</strong></td><td><strong>60,876</strong></td></tr>
+            <tr><td><strong>Cook County</strong><small>Chicago plus suburban municipalities</small></td><td><strong>52,145</strong></td><td><strong>32,655</strong></td><td><strong>2,202</strong></td><td><strong>23,231</strong></td><td><strong>155,642</strong></td><td><strong>61,559</strong></td><td><strong>2,918</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="address-proof"><strong>How the commercial numbers work:</strong> office, industrial, and multifamily are the exact property-type composition inside the broader 24,308 Dallas, 59,602 Massachusetts, and 181,075 Cook County opportunity pools. The commercial category uses long ownership or non-occupant ownership as the supported targeting indicator. A court filing or tax problem is attached only when a separate current legal record proves it.</div>
+
+      <div class="subhead"><h3>How long the tired-owner pool has been held</h3><p>This is the requested 10-year minimum split into 10 to 19 years and 20 years or more.</p></div>
+      <div class="panel tenure-grid">
+        <div class="tenure-market"><div class="eyebrow" style="color:var(--blue)">Dallas County</div><h3>Tired-owner pool</h3><p>Every property below has a non-occupant owner and at least 10 years of confirmed ownership.</p><strong class="tenure-total">39,123</strong><div class="tenure-stack"><span class="tenure-10" style="width:62.5%"></span><span class="tenure-20" style="width:37.5%"></span></div><div class="tenure-values"><div><strong>24,445</strong><span>held 10 to 19 years</span></div><div><strong>14,678</strong><span>held 20+ years</span></div></div></div>
+        <div class="tenure-market"><div class="eyebrow">Massachusetts</div><h3>Tired-owner pool</h3><p>The statewide file is nearly evenly divided between the two ownership-duration groups.</p><strong class="tenure-total">367,228</strong><div class="tenure-stack"><span class="tenure-10" style="width:49.8%"></span><span class="tenure-20" style="width:50.2%"></span></div><div class="tenure-values"><div><strong>182,893</strong><span>held 10 to 19 years</span></div><div><strong>184,335</strong><span>held 20+ years</span></div></div></div>
+        <div class="tenure-market"><div class="eyebrow" style="color:var(--rust)">Cook County</div><h3>Tired-owner pool</h3><p>The confirmed tenure pool keeps both the 10-year entry point and the stronger 20-year group visible.</p><strong class="tenure-total">84,800</strong><div class="tenure-stack"><span class="tenure-10" style="width:61.5%"></span><span class="tenure-20" style="width:38.5%"></span></div><div class="tenure-values"><div><strong>52,145</strong><span>held 10 to 19 years</span></div><div><strong>32,655</strong><span>held 20+ years</span></div></div></div>
+      </div>
+
+      <div class="subhead"><h3>Office, industrial, and multifamily composition</h3><p>These are the exact property types inside the ownership-distress opportunity pool for each market.</p></div>
+      <div class="panel type-grid">
+        <div class="type-market"><div class="eyebrow" style="color:var(--blue)">Dallas County</div><h3>24,308 total opportunities</h3><div class="vacant-stat"><strong>6,208</strong><span>office properties</span></div><div class="vacant-stat"><strong>2,232</strong><span>industrial properties</span></div><div class="vacant-stat"><strong>15,868</strong><span>multifamily properties</span></div></div>
+        <div class="type-market"><div class="eyebrow">Massachusetts</div><h3>59,602 total opportunities</h3><div class="vacant-stat"><strong>5,475</strong><span>office properties</span></div><div class="vacant-stat"><strong>23,369</strong><span>industrial properties</span></div><div class="vacant-stat"><strong>30,758</strong><span>multifamily properties</span></div></div>
+        <div class="type-market"><div class="eyebrow" style="color:var(--rust)">Cook County</div><h3>181,075 total opportunities</h3><div class="vacant-stat"><strong>2,202</strong><span>office properties</span></div><div class="vacant-stat"><strong>23,231</strong><span>industrial properties</span></div><div class="vacant-stat"><strong>155,642</strong><span>multifamily properties</span></div></div>
+      </div>
+
+      <div class="subhead"><h3>Official value comparison by category</h3><p>These are median official property values among records where the government source publishes a usable value. They are not asking prices or guaranteed market values.</p></div>
+      <div class="panel breakdown-wrap value-wrap">
+        <table>
+          <thead><tr><th>Market</th><th>Tired owners</th><th>Office / industrial / multifamily</th><th>Out-of-state owners</th><th>Verified vacant</th><th>Coverage note</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Dallas County</strong></td><td><strong>$246,710</strong></td><td><strong>$475,000</strong></td><td><strong>$293,555</strong></td><td><strong>$80,000</strong></td><td>Current official values on 100% of these records.</td></tr>
+            <tr><td><strong>Massachusetts</strong></td><td><strong>$537,600</strong></td><td><strong>$784,600</strong></td><td><strong>$545,600</strong></td><td><strong>$33,300</strong></td><td>Complete or nearly complete value coverage; out-of-state coverage is 99.3%.</td></tr>
+            <tr><td><strong>Cook County</strong></td><td><strong>$30,180</strong></td><td><strong>$52,000</strong></td><td><strong>$28,990</strong></td><td><strong>$8,844</strong></td><td>Assessed values, not market values. Coverage is 100% tired, 38.4% commercial, 26.0% out of state, and 100% vacant.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="address-proof"><strong>What the value comparison says:</strong> Dallas verified vacant land sits well below the county's other measured categories. Massachusetts vacant land has the lowest statewide median of the four measured categories. Cook values should be used only to sort inside Cook County because the county reports assessed figures and coverage varies by category.</div>
+
+      <div class="subhead"><h3>Where the out-of-state owners receive mail</h3><p>These are the largest owner mailing-state clusters inside each full out-of-state ownership category. The counts represent properties, not unique people.</p></div>
+      <div class="panel state-grid">
+        <div class="state-market"><div class="eyebrow" style="color:var(--blue)">Dallas County</div><h3>32,382 out-of-state-owned properties</h3><div class="state-list"><div class="state-row"><strong>California</strong><span>8,795</span></div><div class="state-row"><strong>Arizona</strong><span>2,837</span></div><div class="state-row"><strong>Florida</strong><span>1,963</span></div><div class="state-row"><strong>Georgia</strong><span>1,919</span></div><div class="state-row"><strong>New York</strong><span>1,903</span></div></div></div>
+        <div class="state-market"><div class="eyebrow">Massachusetts</div><h3>115,764 out-of-state-owned properties</h3><div class="state-list"><div class="state-row"><strong>New York</strong><span>17,354</span></div><div class="state-row"><strong>Florida</strong><span>16,247</span></div><div class="state-row"><strong>Connecticut</strong><span>15,680</span></div><div class="state-row"><strong>New Hampshire</strong><span>10,329</span></div><div class="state-row"><strong>California</strong><span>7,602</span></div></div></div>
+        <div class="state-market"><div class="eyebrow" style="color:var(--rust)">Cook County</div><h3>61,559 out-of-state-owned properties</h3><div class="state-list"><div class="state-row"><strong>California</strong><span>8,168</span></div><div class="state-row"><strong>Texas</strong><span>6,165</span></div><div class="state-row"><strong>Florida</strong><span>5,873</span></div><div class="state-row"><strong>Indiana</strong><span>5,613</span></div><div class="state-row"><strong>Georgia</strong><span>3,548</span></div></div></div>
+      </div>
+
+      <div class="subhead"><h3>Verified vacant land: price, ownership, and size</h3><p>The full vacant-land category remains available. These facts show how to divide it into campaigns without limiting the delivery.</p></div>
+      <div class="panel vacant-grid">
+        <div class="vacant-market"><div class="eyebrow" style="color:var(--blue)">Dallas County</div><h3>36,386 verified-vacant properties</h3><div class="vacant-stat"><strong>22,698</strong><span>absentee owned</span></div><div class="vacant-stat"><strong>2,836</strong><span>owned from outside Texas</span></div><div class="vacant-stat"><strong>21,247</strong><span>below $100,000 official value</span></div><div class="vacant-stat"><strong>0.28 acre</strong><span>median parcel size</span></div></div>
+        <div class="vacant-market"><div class="eyebrow">Massachusetts</div><h3>60,876 verified-vacant properties</h3><div class="vacant-stat"><strong>59,934</strong><span>absentee owned</span></div><div class="vacant-stat"><strong>8,745</strong><span>owned from outside Massachusetts</span></div><div class="vacant-stat"><strong>45,808</strong><span>below $100,000 official value</span></div><div class="vacant-stat"><strong>0.72 acre</strong><span>median parcel size</span></div></div>
+        <div class="vacant-market"><div class="eyebrow" style="color:var(--rust)">Cook County</div><h3>2,918 verified-vacant properties</h3><div class="vacant-stat"><strong>2,656</strong><span>absentee owned</span></div><div class="vacant-stat"><strong>203</strong><span>owned from outside Illinois</span></div><div class="vacant-stat"><strong>2,737</strong><span>below $100,000 official assessed value</span></div><div class="vacant-stat"><strong>0.20 acre</strong><span>median parcel size</span></div></div>
+      </div>
+
+      <div class="subhead"><h3>The two live legal categories are part of the delivery</h3><p>Their final numbers are computed from the newest official filing or tax record available when the territory is prepared. A numeric total is not frozen early because these events can be dismissed, cured, paid, or newly filed.</p></div>
+      <div class="panel live-grid">
+        <div class="live-lane"><div class="eyebrow">Pre-foreclosure</div><h3>Current filings matched to the property database</h3><p>The final territory summary will show the live count by market, filing date, current status, lender or plaintiff, sale date where published, and every ownership or property category that also applies.</p><div class="live-source"><strong>Official paths</strong><span>Dallas County foreclosure notices; Massachusetts Land Court filings and case detail; Cook County Circuit Court mortgage-foreclosure cases.</span></div></div>
+        <div class="live-lane"><div class="eyebrow">Tax lien or delinquency</div><h3>Current tax events matched to the property database</h3><p>The final territory summary will show the live count by market, tax year, balance, sale eligibility or sale date where published, current status, and every ownership or property category that also applies.</p><div class="live-source"><strong>Official paths</strong><span>Dallas sheriff tax-sale and tax-foreclosure records; Massachusetts Land Court and municipal tax-title records; Cook County Treasurer delinquency and tax-sale records.</span></div></div>
+      </div>
+      <div class="address-proof"><strong>Plain answer on the last two counts:</strong> they are not being left out. They are counted from the live event sources when the territory is prepared, then added to the same one-property-per-record database. Showing a number before that pull would make the audit look complete while risking stale legal status.</div>
     </div>
   </section>
 
