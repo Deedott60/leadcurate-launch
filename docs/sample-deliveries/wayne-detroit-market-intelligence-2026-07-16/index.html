@@ -285,6 +285,27 @@
     </div>
   </section>
 
+  <section id="verification">
+    <div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">Verification status</div><h2>What is pulled, verified, time-sensitive, or unavailable.</h2></div><p>This is the exact status of the underlying delivery files. A verified lane has a full parcel file, file-matched metadata, an official source date, one row per parcel, and zero duplicate parcel IDs.</p></div>
+      <div class="panel table-wrap">
+        <table>
+          <thead><tr><th>Lane</th><th>Status</th><th>Actual file result</th><th>What still changes</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Tired landlords</strong></td><td><span class="fresh-state current">Verified</span></td><td><strong>43,784 parcels</strong><small>Full Detroit parcel file, metadata matched, zero duplicates</small></td><td>Outer Wayne lacks sufficient historical transfer coverage, so no outer-Wayne tenure count is inferred.</td></tr>
+            <tr><td><strong>Office, industrial, multifamily</strong></td><td><span class="fresh-state current">Verified</span></td><td><strong>29,516 parcels</strong><small>Full county file, metadata matched, zero duplicates</small></td><td>Ownership and property facts refresh when the government source changes.</td></tr>
+            <tr><td><strong>Out-of-state owners</strong></td><td><span class="fresh-state current">Verified</span></td><td><strong>24,912 parcels</strong><small>Full county file, metadata matched, zero duplicates</small></td><td>Owner mailing addresses can change in later government releases.</td></tr>
+            <tr><td><strong>Verified vacant land</strong></td><td><span class="fresh-state current">Verified</span></td><td><strong>37,940 parcels</strong><small>Full county file, metadata matched, zero duplicates</small></td><td>Vacant status is rerun before delivery because construction and classifications change.</td></tr>
+            <tr><td><strong>Tax delinquency or foreclosure</strong></td><td><span class="fresh-state snapshot">Verified snapshot</span></td><td><strong>36,327 parcels</strong><small>Official 2026 publication matched to current parcels, zero duplicates</small></td><td>Live Treasurer balance verification is required because paid parcels may remain in the publication.</td></tr>
+            <tr><td><strong>Pre-foreclosure</strong></td><td><span class="fresh-state snapshot">Unavailable now</span></td><td><strong>No count published</strong><small>No current unrestricted official bulk source verified</small></td><td>Current legal notices must be found and matched before this lane can be sold as complete.</td></tr>
+            <tr><td><strong>Detroit blight pressure</strong></td><td><span class="fresh-state current">Verified seventh lane</span></td><td><strong>82,746 parcels</strong><small>Full parcel-linked file, metadata matched, zero duplicates</small></td><td>The daily city source can add payments, tickets, and collection changes.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="proof"><strong>Bundle verification:</strong> the seven lane directories contain 255,225 full-file rows. Five lanes are verified, one is a verified official publication snapshot, one is unavailable, and no lane failed its file audit. Total duplicate parcel IDs inside the final lane files: zero.</div>
+    </div>
+  </section>
+
   <section id="categories">
     <div class="wrap">
       <div class="section-head"><div><div class="eyebrow">All six requested categories</div><h2>The Wayne County opportunity, with Detroit and Downriver separated.</h2></div><p>Five lanes have an official measurable source in this review. Current pre-foreclosure notices must be checked at delivery because the Wayne County Sheriff states that it has no property information before a sale.</p></div>
@@ -407,6 +428,27 @@
           <div class="resident-fact"><strong>75,524 official parcels</strong><span>reviewed across the five-city core</span></div>
         </div>
       </div>
+      <div class="subhead"><h3>Property-market viability screen</h3><p>This separate test prevents a cheap or distressed area from being recommended when it lacks an established housing base or recent transfer activity. It uses the official parcel roll, not listing-site estimates.</p></div>
+      <div class="panel overlap-grid">
+        <div class="overlap"><strong>66,316</strong><span>improved residential parcels across the five cities</span></div>
+        <div class="overlap"><strong>2,670</strong><span>improved residential transfers dated 2025 or later</span></div>
+        <div class="overlap"><strong>82.0%</strong><span>of improved residential parcels with a positive PRE or homestead proxy</span></div>
+        <div class="overlap"><strong>$91,500</strong><span>median official residential assessed value across the cluster</span></div>
+      </div>
+      <div class="subhead"><h3>Recent property activity by city</h3><p>PRE is Michigan's Principal Residence Exemption and is used here only as an owner-occupancy proxy. The assessed values are official government figures, not sale prices.</p></div>
+      <div class="panel table-wrap">
+        <table>
+          <thead><tr><th>City</th><th>Improved residential parcels</th><th>2025+ residential transfers</th><th>PRE proxy</th><th>Median official assessment</th><th>Census owner-occupied rate</th><th>Census median owner value</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Taylor</strong></td><td><strong>20,472</strong></td><td><strong>832</strong><small>40.6 per 1,000 residential parcels</small></td><td><strong>79.9%</strong></td><td><strong>$89,900</strong></td><td><strong>66.7%</strong></td><td><strong>$152,600</strong></td></tr>
+            <tr><td><strong>Lincoln Park</strong></td><td><strong>14,214</strong></td><td><strong>636</strong><small>44.7 per 1,000 residential parcels</small></td><td><strong>75.3%</strong></td><td><strong>$75,200</strong></td><td><strong>68.8%</strong></td><td><strong>$131,000</strong></td></tr>
+            <tr><td><strong>Southgate</strong></td><td><strong>10,132</strong></td><td><strong>393</strong><small>38.8 per 1,000 residential parcels</small></td><td><strong>88.1%</strong></td><td><strong>$95,500</strong></td><td><strong>67.2%</strong></td><td><strong>$173,600</strong></td></tr>
+            <tr><td><strong>Allen Park</strong></td><td><strong>11,528</strong></td><td><strong>429</strong><small>37.2 per 1,000 residential parcels</small></td><td><strong>88.5%</strong></td><td><strong>$104,900</strong></td><td><strong>87.3%</strong></td><td><strong>$183,700</strong></td></tr>
+            <tr><td><strong>Wyandotte</strong></td><td><strong>9,970</strong></td><td><strong>380</strong><small>38.1 per 1,000 residential parcels</small></td><td><strong>81.8%</strong></td><td><strong>$95,100</strong></td><td><strong>73.7%</strong></td><td><strong>$166,900</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="proof"><strong>Viability result:</strong> all five cities pass the reusable screen for residential depth, recent recorded transfers, PRE or homestead presence, and an established assessed-value base. The cluster also contains 3,055 total parcel transfers dated 2025 or later. This proves an active property base; it does not guarantee a resale, appreciation, or a specific buyer.</div>
       <div class="proof"><strong>What makes this the diamond-in-the-rough pick:</strong> Taylor is not the wealthiest city in Wayne County, and it is not presented as an appreciation guarantee. It wins this test because the official parcel data show the largest practical non-Detroit opportunity pool inside a connected cluster with verified resident and retail activity.</div>
     </div>
   </section>
