@@ -6,9 +6,28 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-07-16 by Codex (Wayne live tax and current pre-foreclosure lanes complete)
+Last updated: 2026-07-16 by Claude (DeShawn deal status + remaining work recorded after Derrick's call)
 
 ---
+
+## Open now -- DeShawn deal (LIVE, quoted, waiting on his decision)
+
+**Deal status (Derrick's call, 2026-07-16):** Derrick quoted **$2,500** (setup for the 3-market territory database). DeShawn said he has to **talk to his wife** and would need a **payment plan**. Deal is warm and open, not closed, not dead. Contact: `dbunch@debonairelites.com`, `prospects` table status updated. Payment plan terms are DERRICK'S decision; suggested split when he sets them: 2x $1,250 or 3x $850 (total $2,550 with a small plan premium), monthly refresh fee starts after final installment or from month one, Derrick picks.
+
+**Remaining work, split by owner:**
+
+*Claude (customer-facing, do before anything ships to DeShawn):*
+1. Restyle the validated brief (`docs/sample-deliveries/deshawn-three-market-intelligence-2026-07-15/`) into the locked LeadCurate brand look (cream/navy/emerald, Playfair+Inter) — visuals ONLY, zero number/word changes, re-verify digits after. URL stays the same.
+2. Retire Claude's four stale DeShawn pages (`deshawn-territory-…`, `deshawn-massachusetts-…`, `deshawn-dallas-…`, `deshawn-cook-county-…` all dated 2026-07-15) — they carry PRE-FIX numbers (MA tired 436,244 vs corrected 367,228) and contradict the brief. git rm, push, confirm 404.
+3. Review email to Derrick (send-delivery mode=sample, audit_url = the brief), then to DeShawn only on Derrick's explicit go.
+4. Derrick's private call card (verified numbers + scripts) lives at the Claude artifact link recorded in the session handoff; numbers all match the brief.
+
+*Codex (so delivery ships same-day when DeShawn pays):*
+5. **Delivery packaging script**: from the verified 2026-07-16 triples, produce the actual customer bundle — full-territory export per market (download-link scale, ~952K rows total) PLUS dial-ready Excel working segments (e.g. Worcester office/industrial/multifamily absentee-only; Dallas ZIP 75231 multi-category; Cook ZIP 60623 multi-category). One row per parcel, every category label attached, redaction NOT applied (paid product). Store under `/opt/leadcurate/deliveries/deshawn/` with a manifest.
+6. **Payment plan rails**: once Derrick sets terms, prep the split payments through the existing `payment-confirmation` function (works today as N manual confirmations or N Stripe Payment Links; no schema change needed — confirm and document the exact flow, do not rebuild the payment system).
+7. At delivery time (post-payment): run the fresh pre-foreclosure + tax pulls for the three markets per the brief's freshness promise, match to the database, include in the bundle.
+
+**Verified-accurate facts to not re-litigate:** the brief's numbers are validated (2026-07-16 metas, zero duplicates, vacant six-check-plus filter confirmed, absentee address-normalization fix in). Full verification record in the 2026-07-16 session handoff.
 
 ## Recently closed -- Wayne County and Detroit intelligence
 
