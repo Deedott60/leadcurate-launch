@@ -39,8 +39,8 @@ function barRow(label: string, value: number, max: number, suffix = "") {
 // reliable way to center an email body is an outer 100%-wide table with
 // align="center" (HTML attribute, not CSS) wrapping a fixed-width inner table.
 function shell(eyebrow: string, title: string, greetingName: string, greetingLine: string, body: string) {
-  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#faf7f2;padding:32px 16px;font-family:Arial,sans-serif;"><tr><td align="center">
-<table role="presentation" width="640" cellpadding="0" cellspacing="0" align="center" style="max-width:640px;width:100%;background:#ffffff;border:1px solid #e2dccf;border-radius:14px;overflow:hidden;">
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;table-layout:fixed;background:#faf7f2;font-family:Arial,sans-serif;"><tr><td align="center" style="padding:32px 16px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" align="center" style="max-width:640px;width:100%;background:#ffffff;border:1px solid #e2dccf;border-radius:14px;overflow:hidden;">
 <tr><td style="padding:28px 32px 8px;">
   <table role="presentation" cellpadding="0" cellspacing="0"><tr>
     <td style="width:36px;height:36px;background:#15803d;border-radius:8px;text-align:center;vertical-align:middle;"><span style="color:#fff;font-family:Georgia,serif;font-weight:700;font-size:20px;">L</span></td>
@@ -254,6 +254,27 @@ function renderComparison(p: any) {
   return shell("Market Comparison Audit", "Side by side", p.name, "Here is a side-by-side view of the counties you asked about.", body);
 }
 
+function renderInvoice(p: any) {
+  const amount = Number(p.amount_cents || 0) / 100;
+  const invoiceNumber = String(p.invoice_number || "");
+  const company = String(p.company || "");
+  const cashApp = String(p.cash_app || "");
+  const cashAppUrl = `https://cash.app/${encodeURIComponent(cashApp)}`;
+  const items = Array.isArray(p.items) ? p.items : [];
+  const itemRows = items.map((item: unknown) => `<tr><td style="padding:13px 16px;border-bottom:1px solid #e2dccf;font-size:14px;line-height:1.45;color:#334155;">${esc(item)}</td></tr>`);
+  const body = [
+    section(boxedRows([
+      `<tr><td style="padding:14px 16px;background:#f3eddf;font-size:12px;color:#475569;text-transform:uppercase;font-weight:800;letter-spacing:.1em;">Invoice <span style="display:block;margin-top:5px;font-size:16px;letter-spacing:0;text-transform:none;color:#0f172a;">${esc(invoiceNumber)}</span></td></tr>`,
+      `<tr><td style="padding:14px 16px;font-size:13px;line-height:1.6;color:#475569;">Bill to<br><strong style="color:#0f172a;">${esc(company)}</strong><br>${esc(p.name)}<br><br>Issued<br><strong style="color:#0f172a;">${esc(p.issue_date)}</strong></td></tr>`,
+    ])),
+    section(`<div style="padding:22px;background:#0f172a;border-radius:10px;"><div style="font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#86efac;">Amount due</div><div style="margin-top:6px;font-family:Georgia,serif;font-size:34px;font-weight:700;color:#ffffff;">$${amount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div><div style="margin-top:5px;font-size:13px;color:#cbd5e1;">Initial project payment. Due upon receipt.</div></div>`),
+    section(`<h2 style="font-family:Georgia,serif;font-size:18px;color:#0f172a;margin:0 0 8px;">White-label implementation package</h2>${boxedRows(itemRows)}`),
+    ctaSection("Pay with Cash App", cashAppUrl),
+    section(`<div style="padding:16px 18px;border:1px solid #bbf7d0;background:#f0fdf4;border-radius:10px;font-size:13px;line-height:1.6;color:#14532d;"><strong>Cash App: ${esc(cashApp)}</strong><br>Please include invoice ${esc(invoiceNumber)} in the payment note. Project setup begins after payment is received and confirmed.</div>`),
+  ].join("");
+  return shell("Project Invoice", "Your LeadCurate invoice is ready", p.name, `Thank you for choosing LeadCurate for ${company}. Your initial project payment is due upon receipt.`, body);
+}
+
 function adminKey() {
   const direct = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
   if (direct) return direct;
@@ -333,6 +354,10 @@ Deno.serve(async (req) => {
     if (mode === "comparison") {
       subject = "LeadCurate market comparison audit";
       html = renderComparison(p);
+    } else if (mode === "invoice") {
+      if (!p.company || !p.invoice_number || !p.amount_cents || !p.cash_app || !p.issue_date) return json({ ok: false, error: "invoice mode requires company, invoice_number, amount_cents, cash_app, and issue_date" }, 400);
+      subject = `LeadCurate invoice ${p.invoice_number}: ${p.company}`;
+      html = renderInvoice(p);
     } else if (mode === "sample") {
       subject = `LeadCurate sample audit: ${p.market}`;
       html = renderSample(p);
@@ -354,7 +379,7 @@ Deno.serve(async (req) => {
       return json({ ok: false, error: `Unknown mode ${mode}` }, 400);
     }
     await sendMail(p.to, subject, html, attachment);
-    await activity(mode === "delivery" ? "delivery:sent" : mode === "comparison" ? "comparison:sent" : "sample:sent", `${subject} sent`, `${p.name} <${p.to}>`);
+    await activity(mode === "delivery" ? "delivery:sent" : mode === "comparison" ? "comparison:sent" : mode === "invoice" ? "invoice:sent" : "sample:sent", `${subject} sent`, `${p.name} <${p.to}>`);
     return json({ ok: true, mode, sent: true });
   } catch (err) {
     await activity("conf:blocker", "send-delivery failed", String((err as Error)?.message ?? err));
