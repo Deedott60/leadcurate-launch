@@ -1,4 +1,5 @@
 const SB_URL = Deno.env.get("SUPABASE_URL") ?? "https://jdmlsraqioigbukspduo.supabase.co";
+const PUBLIC_WEBHOOK_URL = `${SB_URL}/functions/v1/twilio-dollar-webhook`;
 
 function adminKey() {
   const direct = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
@@ -58,7 +59,10 @@ Deno.serve(async (req) => {
     const [authToken, authorizedPhone] = await Promise.all([secret("TWILIO_AUTH_TOKEN"), secret("DOLLAR_LEADS_ALERT_PHONE")]);
     if (!authToken || !authorizedPhone) return xml("Dollar Leads texting is not configured yet.", 503);
     const form = new URLSearchParams(await req.text());
-    if (!await validTwilioSignature(req.url, form, req.headers.get("x-twilio-signature") ?? "", authToken)) return xml("Unauthorized", 401);
+    const signature = req.headers.get("x-twilio-signature") ?? "";
+    const validSignature = await validTwilioSignature(PUBLIC_WEBHOOK_URL, form, signature, authToken)
+      || (req.url !== PUBLIC_WEBHOOK_URL && await validTwilioSignature(req.url, form, signature, authToken));
+    if (!validSignature) return xml("Unauthorized", 401);
     if (normalizePhone(form.get("From") ?? "") !== normalizePhone(authorizedPhone)) return xml("This number is not authorized.", 403);
 
     const match = (form.get("Body") ?? "").toUpperCase().match(/\bPAID\s+(DL-[A-Z0-9]{4,32})\b/);
