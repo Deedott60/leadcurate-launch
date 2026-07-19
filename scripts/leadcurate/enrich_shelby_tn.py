@@ -6,6 +6,7 @@ import csv
 import json
 import re
 import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -210,19 +211,32 @@ def compact_before_after(before: dict[str, str], after: dict[str, str]) -> dict[
     }
 
 
-def enrich(input_path: Path, limit: int, sleep_seconds: float) -> dict[str, Any]:
+def enrich(input_path: Path, limit: int, sleep_seconds: float, workers: int = 1) -> dict[str, Any]:
     with input_path.open(newline="", encoding="utf-8-sig", errors="replace") as handle:
         rows = list(csv.DictReader(handle))
     selected = rows[:limit] if limit > 0 else rows
     enriched: list[dict[str, str]] = []
     before_after: list[dict[str, Any]] = []
-    for row in selected:
+    def run(row: dict[str, str]) -> dict[str, str]:
         out = enrich_row(row)
-        enriched.append(out)
-        if len(before_after) < 10:
-            before_after.append(compact_before_after(row, out))
         if sleep_seconds > 0:
             time.sleep(sleep_seconds)
+        return out
+
+    if workers > 1:
+        with ThreadPoolExecutor(max_workers=workers) as executor:
+            results = executor.map(run, selected)
+            paired = zip(selected, results)
+            for row, out in paired:
+                enriched.append(out)
+                if len(before_after) < 10:
+                    before_after.append(compact_before_after(row, out))
+    else:
+        for row in selected:
+            out = run(row)
+            enriched.append(out)
+            if len(before_after) < 10:
+                before_after.append(compact_before_after(row, out))
 
     out_dir = output_dir_for(input_path)
     date_part = out_dir.name
@@ -295,9 +309,12 @@ def main() -> int:
     parser.add_argument("--input", type=Path, default=None)
     parser.add_argument("--limit", type=int, default=10)
     parser.add_argument("--sleep", type=float, default=0.1)
+    parser.add_argument("--workers", type=int, default=1)
     args = parser.parse_args()
     input_path = args.input or latest_snapshot()
-    result = enrich(input_path, args.limit, args.sleep)
+    if args.workers < 1 or args.workers > 32:
+        parser.error("--workers must be between 1 and 32")
+    result = enrich(input_path, args.limit, args.sleep, args.workers)
     print(json.dumps(result, indent=2))
     return 0
 
