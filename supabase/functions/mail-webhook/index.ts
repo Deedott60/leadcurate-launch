@@ -59,6 +59,13 @@ function extractFrom(payload: MailPayload): string | null {
   return null;
 }
 
+function normalizeEmail(value: string): string {
+  const bracketed = value.match(/<([^<>\s]+@[^<>\s]+)>/);
+  if (bracketed) return bracketed[1].trim().toLowerCase();
+  const plain = value.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);
+  return (plain?.[0] ?? value).trim().toLowerCase();
+}
+
 function extractPreview(payload: MailPayload): string | null {
   const preview = readString(payload, [
     "preview",
@@ -135,8 +142,9 @@ Deno.serve(async (req) => {
   }
 
   const message = mailData(payload);
-  const fromAddr = extractFrom(message);
-  if (!fromAddr) return jsonResponse({ error: "Missing sender address" }, 400);
+  const rawFromAddr = extractFrom(message);
+  if (!rawFromAddr) return jsonResponse({ error: "Missing sender address" }, 400);
+  const fromAddr = normalizeEmail(rawFromAddr);
 
   const subject = readString(message, ["subject", "title"]);
   const preview = extractPreview(message);
@@ -177,6 +185,31 @@ Deno.serve(async (req) => {
       inbound_email_id: emailRow.id,
       activity_warning: "Inbound email recorded, but activity feed insert failed.",
     });
+  }
+
+  const { data: dollarOrder, error: orderLookupError } = await supabase
+    .from("intake_requests")
+    .select("id")
+    .eq("source", "dollar-leads-v1")
+    .ilike("email", fromAddr)
+    .limit(1)
+    .maybeSingle();
+
+  if (orderLookupError) console.error("Dollar Leads sender lookup failed", orderLookupError);
+  if (dollarOrder) {
+    const { error: hermesError } = await supabase.from("activity_feed").insert({
+      event_type: "mail:hermes",
+      source: "hostinger-mail",
+      title: `Dollar Leads customer email from ${fromAddr}`,
+      body: JSON.stringify({
+        inbound_email_id: emailRow.id,
+        from_addr: fromAddr,
+        subject: subject ?? "",
+        preview: preview ?? "",
+      }),
+      target: "hermes",
+    });
+    if (hermesError) console.error("Hermes mail routing failed", hermesError);
   }
 
   return jsonResponse({ ok: true, inbound_email_id: emailRow.id });

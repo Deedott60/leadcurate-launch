@@ -5,11 +5,13 @@ import json
 import os
 import subprocess
 import sys
+from datetime import datetime
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 
 SCRIPT_DIR = Path("/opt/leadcurate/scripts")
+REPO_SCRIPT_DIR = Path("/root/leadcurate-launch/scripts/leadcurate")
 ENV_PATH = Path("/opt/leadcurate/.env")
 HOST = os.environ.get("LEADCURATE_RUNNER_HOST", "172.18.0.1")
 PORT = int(os.environ.get("LEADCURATE_RUNNER_PORT", "8788"))
@@ -62,6 +64,32 @@ def task_command(payload: dict[str, Any]) -> list[str]:
         ]
         if payload.get("allow_scrape"):
             cmd.append("--allow-scrape")
+        return cmd
+    if task == "dollar_delivery":
+        cmd = [
+            sys.executable,
+            str(REPO_SCRIPT_DIR / "cut_dollar_pack.py"),
+            "--code",
+            str(payload["code"]),
+            "--market",
+            str(payload["market"]),
+            "--lane",
+            str(payload["lane"]),
+            "--batch-no",
+            str(int(payload["batch_no"])),
+            "--pack-size",
+            str(int(payload["pack_size"])),
+            "--cycle-slug",
+            str(payload.get("cycle_slug") or datetime.now().strftime("%Y-%m")),
+        ]
+        if payload.get("fresh"):
+            cmd.extend([
+                "--fresh",
+                "--fresh-verified-csv",
+                str(payload["fresh_verified_csv"]),
+                "--fresh-verified-meta",
+                str(payload["fresh_verified_meta"]),
+            ])
         return cmd
     if task == "ground_floor_seed":
         return [sys.executable, str(SCRIPT_DIR / "ground_floor_pipeline.py"), "seed-investments"]

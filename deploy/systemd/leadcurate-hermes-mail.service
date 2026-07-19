@@ -1,0 +1,17 @@
+[Unit]
+Description=LeadCurate guarded Hermes mail worker
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/leadcurate-launch
+ExecStart=/usr/bin/python3 /root/leadcurate-launch/scripts/leadcurate/hermes_mail_worker.py
+Restart=always
+RestartSec=10
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
