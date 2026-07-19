@@ -156,7 +156,7 @@ footer a{color:var(--bill);}
   <div class="wrap">
     <span class="eyebrow">On the board now</span>
     <h2>Numbered batches. Live seat counts.</h2>
-    <p class="sub">Every batch holds different records than the last. A batch sells a maximum of 3 seats and then retires. The whole board regenerates with the monthly county refresh, so nothing here is ever last year's list.</p>
+    <p class="sub">Every batch holds different records than the last. A batch sells a maximum of 3 seats and then retires. The whole board regenerates with the monthly county refresh, so this stays current, not last year's list.</p>
     <div class="drops" id="drops-board">
       <div class="drop"><p style="color:#8fa0ac;font-size:13px;">Loading this cycle's board...</p></div>
     </div>
@@ -196,7 +196,7 @@ footer a{color:var(--bill);}
     </div>
 
     <div class="promise">
-      <div class="pr-item"><b>Max 3 buyers per batch. Ever.</b><p>Your batch number is on your file. When the third seat sells, that batch retires from the store. Nobody else gets those records this cycle.</p></div>
+      <div class="pr-item"><b>Max 3 buyers per batch.</b><p>Your batch number is on your file. When the third seat sells, that batch retires from the store. Nobody else gets those records this cycle.</p></div>
       <div class="pr-item"><b>Batches don't overlap.</b><p>Batch 4 holds different properties than Batch 3. Two buyers in different batches are never working the same owners.</p></div>
       <div class="pr-item"><b>Refreshes monthly.</b><p>Every county reruns against current official records each cycle. The board regenerates, retired batches come back rebuilt, and the cycle date is printed on your file.</p></div>
       <div class="pr-item"><b>Straight from the county.</b><p>Built from official county records with the source and parcel numbers included, not from somebody else's resold export.</p></div>
@@ -214,7 +214,7 @@ footer a{color:var(--bill);}
       <details><summary>Is it scrubbed against the Do Not Call list?</summary><p>No. You are responsible for your own outreach compliance, including DNC and TCPA. We sell the data as compiled from public county records.</p></details>
       <details><summary>Will other people have my exact list?</summary><p>At most 2 other buyers, and that's the worst case. Each numbered batch sells a maximum of 3 seats and then retires for the cycle. Different batches never share records. Compare that to the big subscription tools, where thousands of users pull the identical list every day.</p></details>
       <details><summary>How fresh is it really?</summary><p>Every county reruns against current official records each monthly cycle, and the cycle date is printed on your file. Fresh Drops are pulled or re-checked the same week you order.</p></details>
-      <details><summary>Can I pick the category?</summary><p>Yes. Pick your county on the order form and every category we have batches open for shows up automatically, long-hold landlords, out-of-state owners, vacant land, tax debt, pre-foreclosure, or probate, whatever that county's board carries.</p></details>
+      <details><summary>Can I pick the category?</summary><p>Yes. Pick your county on the order form and every category we have batches open for shows up automatically, long-hold landlords, out-of-state owners, vacant land, tax debt, pre-foreclosure, or probate, whatever that county's board carries. If a county has more than one category open, you can also pick a mixed batch, a blend pulled from every open category in that county instead of committing to just one.</p></details>
       <details><summary>What if I need way more than 500 records?</summary><p>That's our parent company's lane. LeadCurate builds full custom territory databases for serious operators. Ask and we'll connect you.</p></details>
     </div>
   </div>
@@ -295,11 +295,13 @@ function buildLaneOptions(marketDisplay) {
   if (!lSel) return;
   const rows = INVENTORY.filter(r => r.market_display === marketDisplay);
   const lanes = [...new Map(rows.map(r => [r.lane, r])).values()];
+  const openCount = lanes.filter(l => l._open > 0).length;
   lSel.innerHTML = '<option value="">Pick a category</option>' +
     lanes.map(l => {
       const open = l._open || 0;
       return `<option ${open<=0?'disabled':''}>${l.lane_display}${open<=0?' (sold out this cycle)':''}</option>`;
     }).join('') +
+    (openCount > 1 ? '<option>Mixed batch, best of every open category</option>' : '') +
     '<option>Not sure, recommend one</option>';
 }
 document.getElementById('f-county').addEventListener('change', (e) => buildLaneOptions(e.target.value));
