@@ -100,6 +100,8 @@ The invoice deliberately calls the $1,000 an **initial project payment**. It doe
 - **Board now 7 markets:** added Massachusetts statewide (5 batches x 3 lanes from the FULL verified 2026-07-16 files, serves every pack size including Founders) and Fulton GA (Atlanta vacant, 250-row curated file, small packs only).
 - New "What's in every record" section marketing the field depth (owner name, property address, owner mailing address, parcel ID, values, tenure).
 
+**Order-alert automation LIVE (Claude 2026-07-19, tested end-to-end):** new edge function `dollar-leads-alert` + DB trigger `trg_dollar_leads_alert` on `intake_requests`. Every insert with source `dollar-leads-v1` automatically: (1) emails the BUYER an order confirmation with their DL- code and the exact Cash App payment button, (2) emails DERRICK a new-order alert with buyer/county/category/amount and the code to watch for in Cash App, (3) posts a conf:status breadcrumb to activity_feed. Verified with a live test insert (200, both mails sent, test row deleted). The human loop is now: Derrick sees payment in Cash App -> tells Claude/Codex the DL- code -> pack gets cut and sent. Codex's cutter closes the last manual gap.
+
 **CODEX PRIORITY ORDER for Dollar Leads (after Reggie commitments):**
 1. Regenerate FULL lane files for Mecklenburg NC from raw source (raw_imports has full parcels; vacant source ~23K rows, absentee source ~446K) and Shelby TN tax-sale, then cut real non-overlapping batches for ALL 5 counties and replace the placeholder/undersized dollar_batches rows.
 2. Build `scripts/leadcurate/cut_dollar_pack.py` per the spec above (single-category orders only).
