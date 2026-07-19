@@ -73,6 +73,30 @@ The invoice deliberately calls the $1,000 an **initial project payment**. It doe
 
 ## Open now -- Dollar Leads (NEW sister brand, launched 2026-07-18)
 
+**MASTER LANE CATALOG -- LOCKED BY DERRICK 2026-07-19:** Dollar Leads is not limited to the small subset originally loaded into `dollar_batches`. Every market must be audited against the full catalog below. The live store must show the complete market-specific category set backed by that market's newest official sources. Agents must build every supported lane, record the source and freshness, and mark a lane unavailable for that market only when the required official evidence genuinely cannot be obtained. Never substitute the same generic short menu for every market.
+
+1. Tax delinquent / live tax debt
+2. Recorded tax liens
+3. Tax sale / auction
+4. Pre-foreclosure / NOD / active foreclosure notices
+5. Probate / inherited / estate property
+6. Code violations
+7. Property liens (municipal, mechanic, judgment)
+8. Absentee owners
+9. Out-of-state owners
+10. Long-hold / tired landlords (10+ year ownership)
+11. High-equity / free-and-clear
+12. Individual / homeowner-owned
+13. Entity / LLC / investor-owned
+14. Verified vacant land
+15. Active permits / damage / repair / demolition
+16. Distressed office ownership
+17. Distressed industrial ownership
+18. Distressed multifamily ownership
+19. Blight-pressure properties
+
+The six-lane Dallas, Massachusetts, and Cook work is explicitly included in this catalog: pre-foreclosure, tax lien/delinquent, long-hold landlords, distressed office/industrial/multifamily, out-of-state owners, and vacant land. Office, industrial, and multifamily are separate buyer choices even when they originate from one verified combined source file. Tax debt, recorded tax lien, and tax sale are also separate when the official source supports those distinct statuses.
+
 **What it is:** Derrick's second income stream while high-ticket deals cook. Small packs of county data at $5/$15/$25 (+$10 Fresh Drop), sold self-serve with instant Cash App checkout ($DollarLeads) and same-day file delivery. Target: a few hundred dollars/day. Market research 2026-07-18 confirmed NOBODY sells fixed-price instant county+niche batch packs with source+pull-date provenance; the market is subscriptions vs $125+ minimums vs $250-400/lead PPL. Provenance transparency is the differentiator.
 
 **Live pieces (Claude, 2026-07-18):**

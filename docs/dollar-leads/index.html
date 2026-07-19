@@ -377,9 +377,25 @@ document.getElementById('f-county').addEventListener('change', (e) => buildLaneO
 async function loadInventory() {
   const board = document.getElementById('drops-board');
   try {
-    const { data, error } = await supabase.from('dollar_batches')
-      .select('market, market_display, lane, lane_display, cycle, seats_total, seats_sold, status')
-      .eq('status', 'live');
+    // Supabase/PostgREST caps a response at 1,000 rows. The live board has
+    // more than 2,000 real batches, so fetch every page before grouping by
+    // market. Without pagination the customer only sees the first 3 markets.
+    const data = [];
+    let error = null;
+    const pageSize = 1000;
+    for (let from = 0; ; from += pageSize) {
+      const result = await supabase.from('dollar_batches')
+        .select('market, market_display, lane, lane_display, cycle, seats_total, seats_sold, status')
+        .eq('status', 'live')
+        .range(from, from + pageSize - 1);
+      if (result.error) {
+        error = result.error;
+        break;
+      }
+      const page = result.data || [];
+      data.push(...page);
+      if (page.length < pageSize) break;
+    }
     if (error || !data || !data.length) {
       if (board) board.innerHTML = '<div class="drop"><p style="color:#8fa0ac;font-size:13px;">Board is refreshing, check back shortly or email hello@leadcurate.com.</p></div>';
       return;
