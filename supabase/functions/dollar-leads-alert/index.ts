@@ -143,7 +143,7 @@ Deno.serve(async (req) => {
       </div>`;
     await sendMail(ALERT_RECIPIENTS, `$${amount} incoming: ${code} | ${county} | ${lane}`, derrickHtml);
 
-    const smsSent = await sendSms(`$${amount} incoming: ${code}. ${county}, ${lane}. Buyer: ${email || name}. Check Cash App.`).catch(() => false);
+    const smsSent = await sendSms(`$${amount} incoming: ${code}. ${county}, ${lane}. Check Cash App. When it lands, reply PAID ${code}.`).catch(() => false);
 
     // 3. Conference Room breadcrumb
     await activity(`Dollar Leads order ${code}: ${pack} in ${county}`, `${name} (${email}) ordered ${lane}. Payment email sent to buyer. ${smsSent ? "Text alert sent." : "Text alert not configured."} Waiting on $${amount} Cash App payment with note ${code}.`);
