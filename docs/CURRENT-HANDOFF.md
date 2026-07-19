@@ -6,9 +6,38 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-07-16 by Claude (DeShawn deal status + remaining work recorded after Derrick's call)
+Last updated: 2026-07-18 by Codex (Reggie Adams white-label deal, real invoice, and unresolved scope recorded)
 
 ---
+
+## Open now -- Reggie Adams white-label deal (REAL CUSTOMER, invoice sent, awaiting payment)
+
+**Customer:** Reggie Adams, `mrreggieadams@gmail.com`, for **The 3 CCC'S Consulting Firm LLC**.
+
+**Verified payment state:** LeadCurate invoice `LC-2026-0718-001` was sent for a real **$1,000 initial project payment** from `hello@leadcurate.com` through the branded `send-delivery` invoice mode. Hostinger returned `ok=true`, `mode=invoice`, `sent=true`. Supabase order `69110f8b-422a-4bb9-a422-57d29c274a72` is `pending_payment`, provider `cash_app`, amount `100000` cents. There are zero payment rows. Do not mark it paid until Derrick confirms the money reached Cash App `$Derrick607`.
+
+**What the actual invoice promises:**
+- White-label consulting website and brand configuration.
+- White-label Property Decision Tool.
+- Detroit and Wayne County database integration.
+- Wake County database integration.
+- Initial deployment, configuration, quality assurance, and handoff.
+
+The invoice deliberately calls the $1,000 an **initial project payment**. It does not state a final project price, promise ten markets, or include permanent hosting and unlimited support.
+
+**Derrick's post-invoice phone update:** Reggie now wants the custom website, the full custom intake form, the white-label Property Decision Tool, and **ten markets**. Derrick reported a verbal payment structure of **$1,000 upfront plus $500 the following week**, with LeadCurate hosting the website and keeping it operational. The additional eight markets have not been named. Their lanes, source freshness, refresh cadence, delivery schedule, support limits, recurring hosting fee, and third-party costs are not agreed in writing.
+
+**Critical truth:** no Reggie-specific white-label site or Property Decision Tool implementation has started in the repo or on the VPS. The existing Wayne/Detroit intelligence report and reusable Wayne pipelines are foundations, not Reggie's finished product. Do not tell Reggie the ten-market system is built or included until scope and acceptance terms are written.
+
+**Commercial risk assessment, not a locked Derrick decision:** $1,500 total is materially under-scoped if it includes ten live/current market databases, a custom site, a custom decision tool, hosting, maintenance, and continuing data refreshes. The recommended structure discussed with Derrick was: treat $1,500 as Phase 1 for the site, intake, tool, Detroit/Wayne, Wake, deployment, and launch support; price the remaining eight markets as a separate expansion; charge a recurring hosting/data-maintenance plan; and license the white-label interface while LeadCurate retains its core scripts, source code, data pipeline, templates, and methods. Derrick has not locked the expansion or monthly prices yet, so Claude must not quote them as agreed terms.
+
+**Claude's next actions before customer-facing build promises:**
+1. Prepare a concise written scope/addendum that matches the invoice and separates Phase 1, eight-market expansion, and recurring hosting/data maintenance.
+2. Get Derrick's decisions on the eight additional markets, lanes per market, refresh frequency, launch timeline, monthly support fee, included support hours, third-party costs, cancellation terms, and IP/license boundary.
+3. Confirm Reggie's exact brand assets, preferred domain, website pages, intake questions, Property Decision Tool outputs, user access, and where form submissions route.
+4. Build only after Derrick approves that written scope. All customer-facing email uses `send-delivery` and goes to Derrick for review unless Derrick explicitly says send.
+
+**Codex work completed for this deal:** `send-delivery` v14 added the branded, mobile-safe `invoice` mode and was deployed. Commit `f3d2c21` is pushed to `main`. The new mode uses the locked LeadCurate cream/navy/emerald shell, signs as The LeadCurate Team, validates invoice fields, links to Cash App, records `invoice:sent`, and does not create a paid payment record.
 
 ## Open now -- DeShawn deal (LIVE, quoted, waiting on his decision)
 
@@ -120,12 +149,13 @@ Last updated: 2026-07-16 by Claude (DeShawn deal status + remaining work recorde
 
 ## Email template — LOCKED, read before touching send-delivery
 
-`supabase/functions/send-delivery/index.ts` is the ONLY email-sending code for LeadCurate, now at v13 (deployed 2026-07-08). Major rebuild happened today:
+`supabase/functions/send-delivery/index.ts` is the ONLY email-sending code for LeadCurate, now at v14 (invoice mode deployed 2026-07-18; generic sample/delivery rebuild locked 2026-07-08):
 - One generic renderer for every lane (`renderSample`/`renderDelivery`), content varies by data (`deriveNumbers`, `extraColumns`), never by a second code path.
 - Table now shows up to 3 numeric columns dynamically (Owed+Equity+Yrs for debt lanes, Land Value+Acreage for vacant land), with HOT/WARM/VACANT status pills and an Absentee badge, matching the originally-proven Wake County design.
 - Signs as **"The LeadCurate Team"**, never a personal name — decided 2026-07-08 so automated sends (Codex/Danny/workflows) don't attach Derrick's name to interactions he didn't personally have.
 - **Zero em dashes anywhere in customer-facing copy.** Grep for `—` before calling any customer-facing text done. This is a hard rule now, see `AGENT-OPERATING-RULES.md`.
 - If a new lane needs a field type the table doesn't handle, extend `extraColumns()`/`deriveNumbers()`. Do NOT write a new render function.
+- `mode=invoice` is now the canonical branded invoice path for real customer invoices. It uses the same LeadCurate shell, validates company/invoice/amount/payment fields, links to Cash App, and records `invoice:sent`. It does not mark an order paid.
 
 ## Vacant Land audit page — the reusable pattern
 
