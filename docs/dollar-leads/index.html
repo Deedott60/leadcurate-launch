@@ -299,7 +299,7 @@ footer a{color:var(--bill);}
         <textarea id="f-notes" name="notes" rows="2" placeholder="Optional"></textarea>
         <button type="submit" class="btn btn-green" style="width:100%;margin-top:20px;">Get my payment button</button>
         <div class="ok-msg" id="ok-msg">
-          <div style="font-size:15px;margin-bottom:8px;">Order locked in. One step left: pay and you're done.</div>
+          <div style="font-size:15px;margin-bottom:8px;">Inventory confirmed, your records are held. One step left: pay and you're done. We also emailed you this payment link so you can pay from your phone.</div>
           <a id="pay-btn" class="btn btn-green" href="#" target="_blank" rel="noopener" style="width:100%;">Pay <span id="pay-amt"></span> with Cash App</a>
           <div style="font-weight:600;font-size:12.5px;margin-top:10px;color:#2f4a3a;">Put your order code <b id="order-code"></b> in the payment note so we match it fast. You get the next open batch in your county and category, your batch number is printed on your file, and it lands in your inbox the same day, usually within a couple hours.</div>
         </div>
@@ -457,7 +457,8 @@ const form = document.getElementById('dl-form');
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const btn = form.querySelector('button[type=submit]');
-  btn.disabled = true; btn.textContent = 'Reserving...';
+  btn.disabled = true; btn.textContent = 'Checking inventory...';
+  const inventoryCheck = new Promise(r => setTimeout(r, 1800));
   const fd = new FormData(form);
   const lead = {
     name: fd.get('name') || '',
@@ -482,6 +483,7 @@ form.addEventListener('submit', async (e) => {
     if (error) console.warn(error);
   } catch (err) { console.warn(err); }
   if (ok) {
+    await inventoryCheck;
     document.getElementById('pay-amt').textContent = '$' + amt;
     document.getElementById('order-code').textContent = code;
     document.getElementById('pay-btn').href = 'https://cash.app/$Derrick607/' + amt;
