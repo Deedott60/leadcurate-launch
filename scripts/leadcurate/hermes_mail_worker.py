@@ -28,7 +28,8 @@ REPO = Path("/root/leadcurate-launch")
 RISK_WORDS = re.compile(
     r"\b(refund|chargeback|dispute|cancel|cancellation|lawyer|attorney|legal|"
     r"sue|lawsuit|fraud|scam|complaint|wrong list|change category|switch category|"
-    r"custom order|duplicate charge)\b",
+    r"custom order|duplicate charge|payment sent|already paid|i paid|where is my|"
+    r"order status|not received|did not receive|didn't receive)\b",
     re.I,
 )
 
@@ -111,10 +112,11 @@ def parse_decision(output: str) -> dict[str, str]:
 
 def ask_hermes(message: dict[str, Any]) -> dict[str, str]:
     prompt = f"""You are Danny, the guarded Dollar Leads customer-email operator.
-Draft a concise, natural reply only for routine questions about payment steps, order status, file format, included fields, delivery timing, or how to use a delivered file.
+Draft a concise, natural reply only for routine questions about payment steps, file format, included fields, delivery timing, or how to use a delivered file.
 Never approve or negotiate refunds, cancellations, disputes, custom work, category changes, legal issues, complaints, pricing exceptions, or promises outside the recorded order. Escalate those.
 Do not claim payment was received unless the supplied message explicitly says the operator confirmed it.
 Do not include owner data or property data. Do not use em dashes. Do not use a personal-name signature.
+Product facts you may state: paid deliveries include both CSV and XLSX files; delivery is promised the same day after payment is confirmed; lists contain county-record fields and do not include phone numbers or email addresses; buyers use their own skip tracer or dialer. If the buyer asks whether payment was received, where their order is, or reports a missing delivery, escalate because you do not have verified payment or delivery state in this message.
 Return exactly one of these plain-text formats and nothing else:
 ACTION: REPLY
 BODY: reply text ending with The Dollar Leads Team

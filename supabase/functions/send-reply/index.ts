@@ -3,7 +3,7 @@ const SB_URL = Deno.env.get("SUPABASE_URL") ?? "https://jdmlsraqioigbukspduo.sup
 const FROM_EMAIL = Deno.env.get("LEADCURATE_FROM_EMAIL") ?? "Dollar Leads <hello@leadcurate.com>";
 const MAIL_BASE = Deno.env.get("HOSTINGER_MAIL_BASE_URL") ?? "https://api.mail.hostinger.com";
 const JSON_HEADERS = { "Content-Type": "application/json" };
-const RISK = /\b(refund|chargeback|dispute|cancel|cancellation|lawyer|attorney|legal|sue|lawsuit|fraud|scam|complaint|wrong list|change category|switch category|custom order|duplicate charge)\b/i;
+const RISK = /\b(refund|chargeback|dispute|cancel|cancellation|lawyer|attorney|legal|sue|lawsuit|fraud|scam|complaint|wrong list|change category|switch category|custom order|duplicate charge|payment sent|already paid|i paid|where is my|order status|not received|did not receive|didn't receive)\b/i;
 
 function json(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: JSON_HEADERS });
