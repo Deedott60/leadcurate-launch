@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="icon" href="data:,">
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Dollar Leads · Real county data in small packs</title>
@@ -351,6 +352,17 @@ window.pickPack = (p) => { const el=document.getElementById('f-pack'); if(el) el
 // county or category (pre-foreclosure, probate, tax-debt, whatever) is a
 // database insert only, this page never needs a code change for it.
 let INVENTORY = [];
+let LIVE_BATCHES = [];
+
+const PACK_QUANTITIES = { 'Starter $5 (50 records)': 50, 'Work $15 (250 records)': 250, 'Full $25 (500 records)': 500, 'Fresh Scrub $20 (20 records)': 20, 'Founders Deal $50 (1,000 records)': 1000 };
+
+function canServePack(marketDisplay, laneDisplay, packLabel) {
+  const quantity = PACK_QUANTITIES[packLabel] || 0;
+  const rows = LIVE_BATCHES.filter(r => r.market_display === marketDisplay && (!laneDisplay || laneDisplay === 'Not sure, recommend one' || r.lane_display === laneDisplay));
+  if (!quantity) return false;
+  const availabilityField = quantity === 1000 ? 'can_1000' : quantity === 500 ? 'can_500' : quantity === 250 ? 'can_250' : quantity === 50 ? 'can_50' : 'can_20';
+  return rows.some(row => row[availabilityField] === true);
+}
 
 function scrollToOrder(market, lane) {
   const cSel = document.getElementById('f-county');
@@ -423,39 +435,18 @@ document.getElementById('f-county').addEventListener('change', (e) => buildLaneO
 async function loadInventory() {
   const board = document.getElementById('drops-board');
   try {
-    // Supabase/PostgREST caps a response at 1,000 rows. The live board has
-    // more than 2,000 real batches, so fetch every page before grouping by
-    // market. Without pagination the customer only sees the first 3 markets.
-    const data = [];
-    let error = null;
-    const pageSize = 1000;
-    for (let from = 0; ; from += pageSize) {
-      const result = await supabase.from('dollar_batches')
-        .select('market, market_display, lane, lane_display, cycle, seats_total, seats_sold, status')
-        .eq('status', 'live')
-        .range(from, from + pageSize - 1);
-      if (result.error) {
-        error = result.error;
-        break;
-      }
-      const page = result.data || [];
-      data.push(...page);
-      if (page.length < pageSize) break;
-    }
+    // One public-safe aggregate call keeps the board fast even when physical
+    // inventory contains tens of thousands of numbered batch rows.
+    const { data, error } = await supabase.rpc('get_dollar_inventory_summary');
+    LIVE_BATCHES = data;
     if (error || !data || !data.length) {
       if (board) board.innerHTML = '<div class="drop"><p style="color:#8fa0ac;font-size:13px;">Board is refreshing, check back shortly or email hello@leadcurate.com.</p></div>';
       return;
     }
 
-    // aggregate open seats per market+lane across all batches in that bucket
-    const agg = {};
-    for (const row of data) {
-      const key = row.market + '||' + row.lane;
-      const open = Math.max(0, (row.seats_total || 0) - (row.seats_sold || 0));
-      if (!agg[key]) agg[key] = { ...row, _open: 0, cycle: row.cycle };
-      agg[key]._open += open;
-    }
-    INVENTORY = Object.values(agg);
+    INVENTORY = data
+      .map(row => ({ ...row, _open: Number(row.open_seats || 0) }))
+      .sort((a, b) => a.market_display.localeCompare(b.market_display) || a.lane_display.localeCompare(b.lane_display));
 
     // populate county select
     const cSel = document.getElementById('f-county');
@@ -565,6 +556,12 @@ form.addEventListener('submit', async (e) => {
   };
   const amounts = { 'Starter $5 (50 records)': 5, 'Work $15 (250 records)': 15, 'Full $25 (500 records)': 25, 'Fresh Scrub $20 (20 records)': 20, 'Founders Deal $50 (1,000 records)': 50 };
   const amt = amounts[fd.get('pack')] || 0;
+  await inventoryCheck;
+  if (!canServePack(fd.get('county'), fd.get('lane'), fd.get('pack'))) {
+    btn.disabled = false; btn.textContent = 'Continue to payment';
+    alert('That category does not have a large enough unsold batch for this pack. Pick a smaller pack or another category.');
+    return;
+  }
   const code = 'DL-' + Date.now().toString(36).toUpperCase().slice(-5);
   lead.notes = code + ' | ' + lead.notes;
   let ok = false;
@@ -576,8 +573,7 @@ form.addEventListener('submit', async (e) => {
   if (ok) {
     await inventoryCheck;
     document.getElementById('pay-amt').textContent = '$' + amt;
-    const quantities = { 'Starter $5 (50 records)': 50, 'Work $15 (250 records)': 250, 'Full $25 (500 records)': 500, 'Fresh Scrub $20 (20 records)': 20, 'Founders Deal $50 (1,000 records)': 1000 };
-    document.getElementById('preview-count').textContent = (quantities[fd.get('pack')] || 0).toLocaleString();
+    document.getElementById('preview-count').textContent = (PACK_QUANTITIES[fd.get('pack')] || 0).toLocaleString();
     document.getElementById('preview-county').textContent = fd.get('county') || '';
     document.getElementById('preview-lane').textContent = fd.get('lane') || '';
     document.getElementById('order-code').textContent = code;

@@ -47,12 +47,12 @@ def lane_manifest(inventory: dict[str, Any], market: str, lane: str) -> dict[str
     return matches[0]
 
 
-def batch_manifest(lane: dict[str, Any], batch_no: int) -> dict[str, Any]:
+def batch_manifest(lane: dict[str, Any], batch_no: int, minimum_size: int = 1) -> dict[str, Any]:
     matches = [item for item in lane.get("batches", []) if int(item.get("batch_no", 0)) == batch_no]
     if len(matches) != 1:
         raise ValueError(f"batch {batch_no} is not present in real inventory")
-    if int(matches[0].get("size", 0)) != 500:
-        raise ValueError("batch is not a complete 500-record batch")
+    if int(matches[0].get("size", 0)) < minimum_size:
+        raise ValueError(f"batch has fewer than the required {minimum_size} records")
     return matches[0]
 
 
@@ -263,12 +263,12 @@ def main() -> int:
     inventory = load_inventory(args.batch_root, args.cycle_slug)
     lane = lane_manifest(inventory, args.market, args.lane)
     founder = args.pack_size == 1000
-    batches = [batch_manifest(lane, args.batch_no)]
+    batches = [batch_manifest(lane, args.batch_no, 500 if founder else args.pack_size)]
     if founder:
-        batches.append(batch_manifest(lane, args.batch_no + 1))
+        batches.append(batch_manifest(lane, args.batch_no + 1, 500))
     fields, batch_rows = read_rows(Path(batches[0]["file"]))
-    if len(batch_rows) != 500:
-        raise ValueError("batch file does not contain exactly 500 records")
+    if len(batch_rows) != int(batches[0]["size"]):
+        raise ValueError("batch file row count does not match its manifest size")
     if founder:
         second_fields, second_rows = read_rows(Path(batches[1]["file"]))
         if second_fields != fields or len(second_rows) != 500:
