@@ -244,7 +244,7 @@ def enrich(input_path: Path, limit: int, sleep_seconds: float, workers: int = 1)
     meta_path = out_dir / f"shelby-tn-tax-sale-{date_part}-enriched-meta.json"
     before_after_path = out_dir / f"shelby-tn-tax-sale-{date_part}-before-after.json"
     with out_path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=OUTPUT_FIELDS)
+        writer = csv.DictWriter(handle, fieldnames=OUTPUT_FIELDS, extrasaction="ignore")
         writer.writeheader()
         writer.writerows(enriched)
 
