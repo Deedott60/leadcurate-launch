@@ -300,6 +300,16 @@ Event types: `conf:role` (task), `conf:done` (completion), `conf:status` (progre
 
 ## 8. Active Codex handoff
 
+### Dollar Leads Telegram payment command (live)
+
+When Derrick sends a Telegram message matching `PAID DL-XXXXX`, treat it as his Cash App payment confirmation. Do not ask him to repeat it, do not use Twilio, and do not improvise fulfillment. Run exactly:
+
+```bash
+python3 /root/leadcurate-launch/scripts/leadcurate/confirm_dollar_paid.py --code DL-XXXXX
+```
+
+Replace `DL-XXXXX` with the exact uppercase order code Derrick sent. Report the script result back in the same Telegram chat. The script is idempotent: repeating the same code does not create a second job. The deterministic Dollar Leads worker handles inventory reservation, file cutting, Hostinger delivery, and delivery status after the job is queued.
+
 The current task list for Codex is at **`docs/codex-handoff-2026-06-25.md`**. Status as of 2026-06-27:
 1. Fix Supabase security warnings — ✅ **DONE** (get_advisors returns 0 lints, verified 2026-06-27)
 2. Fix Conference Room watcher (hermes send → execute) — ✅ **DONE** (conf:done 2026-06-27 19:53, e2e-verified, dashboard→Hermes channel live)

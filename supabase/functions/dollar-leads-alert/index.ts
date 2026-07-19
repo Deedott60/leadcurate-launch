@@ -1,7 +1,7 @@
 // Dollar Leads order alert v3: fires on every new dollar-leads-v1 intake row.
 // 1) emails the buyer their payment link, 2) alerts Derrick on personal +
 // company email and through Danny's Telegram gateway, 3) posts to the
-// Conference Room. Twilio SMS remains best-effort and never blocks the path.
+// Conference Room. Telegram is the live phone-notification path.
 
 const SB_URL = Deno.env.get("SUPABASE_URL") ?? "https://jdmlsraqioigbukspduo.supabase.co";
 const SB_KEY = Deno.env.get("SUPABASE_PUBLISHABLE_KEY") ?? Deno.env.get("SUPABASE_ANON_KEY") ?? "sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4";
@@ -48,28 +48,6 @@ async function sendMail(to: string[], subject: string, html: string) {
   const body = { to, displayName: "Dollar Leads", subject, html, text: html.replace(/<[^>]+>/g, " ") };
   const res = await fetch(`${HOSTINGER_MAIL_BASE_URL}/api/v1/mailboxes/${resource}/send`, { method: "POST", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(body) });
   if (res.status !== 204) throw new Error(`Hostinger Mail ${res.status}: ${await res.text()}`);
-}
-
-async function sendSms(body: string) {
-  const [sid, token, from, to] = await Promise.all([
-    secret("TWILIO_ACCOUNT_SID"),
-    secret("TWILIO_AUTH_TOKEN"),
-    secret("TWILIO_FROM_NUMBER"),
-    secret("DOLLAR_LEADS_ALERT_PHONE"),
-  ]);
-  if (!sid || !token || !from || !to) return false;
-
-  const form = new URLSearchParams({ From: from, To: to, Body: body });
-  const res = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${encodeURIComponent(sid)}/Messages.json`, {
-    method: "POST",
-    headers: {
-      Authorization: `Basic ${btoa(`${sid}:${token}`)}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: form,
-  });
-  if (!res.ok) throw new Error(`Twilio ${res.status}: ${await res.text()}`);
-  return true;
 }
 
 async function sendTelegram(body: string) {
@@ -159,14 +137,13 @@ Deno.serve(async (req) => {
       </div>`;
     await sendMail(ALERT_RECIPIENTS, `$${amount} incoming: ${code} | ${county} | ${lane}`, derrickHtml);
 
-    const operatorAlert = `DOLLAR LEADS ORDER\n$${amount} incoming: ${code}\n${county} | ${lane}\nBuyer: ${name} (${email || "no email"})\nCheck Cash App. When payment lands, text PAID ${code} to +1 737-258-3478.`;
+    const operatorAlert = `DOLLAR LEADS ORDER\n$${amount} incoming: ${code}\n${county} | ${lane}\nBuyer: ${name} (${email || "no email"})\nCheck Cash App. When payment lands, reply here: PAID ${code}`;
     const telegramSent = await sendTelegram(operatorAlert).catch(() => false);
-    const smsSent = await sendSms(`$${amount} incoming: ${code}. ${county}, ${lane}. Check Cash App. When it lands, reply PAID ${code}.`).catch(() => false);
 
     // 3. Conference Room breadcrumb
-    await activity(`Dollar Leads order ${code}: ${pack} in ${county}`, `${name} (${email}) ordered ${lane}. Payment email sent to buyer. ${telegramSent ? "Danny Telegram alert sent." : "Danny Telegram alert failed."} ${smsSent ? "SMS alert sent." : "Custom SMS unavailable."} Waiting on $${amount} Cash App payment with note ${code}.`);
+    await activity(`Dollar Leads order ${code}: ${pack} in ${county}`, `${name} (${email}) ordered ${lane}. Payment email sent to buyer. ${telegramSent ? "Danny Telegram alert sent." : "Danny Telegram alert failed."} Waiting on $${amount} Cash App payment with note ${code}.`);
 
-    return new Response(JSON.stringify({ ok: true, code, amount, buyerMailed, telegramSent, smsSent }), { headers: { "Content-Type": "application/json" } });
+    return new Response(JSON.stringify({ ok: true, code, amount, buyerMailed, telegramSent }), { headers: { "Content-Type": "application/json" } });
   } catch (e) {
     return new Response(JSON.stringify({ ok: false, error: String(e) }), { status: 500, headers: { "Content-Type": "application/json" } });
   }
