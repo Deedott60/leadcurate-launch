@@ -169,7 +169,7 @@ def build_meck_absentee(source: Path, output_date: str) -> dict[str, Any]:
     )
 
 
-SUFFIX = {"STREET": "ST", "AVENUE": "AV", "AVE": "AV", "DRIVE": "DR", "ROAD": "RD", "BOULEVARD": "BV", "BLVD": "BV", "LANE": "LN", "COURT": "CT", "CIRCLE": "CR", "PLACE": "PL", "PARKWAY": "PY", "PKWY": "PY", "TERRACE": "TR"}
+SUFFIX = {"STREET": "ST", "AVENUE": "AV", "AVE": "AV", "DRIVE": "DR", "ROAD": "RD", "BOULEVARD": "BV", "BLVD": "BV", "LANE": "LN", "COURT": "CT", "CIRCLE": "CR", "PLACE": "PL", "PARKWAY": "PY", "PKWY": "PY", "TERRACE": "TR", "HIGHWAY": "HW", "HWY": "HW", "TRAIL": "TL", "SQUARE": "SQ"}
 DIR = {"NORTH": "N", "SOUTH": "S", "EAST": "E", "WEST": "W"}
 
 
@@ -289,6 +289,7 @@ def build_vacant(market: str, source: Path, output_date: str, source_url: str, s
     payload = process_market(market, source, PROCESSED_ROOT / market / output_date, 10**9)
     meta_path = Path(payload["outputs"]["meta"])
     payload.update({
+        "source": str(source),
         "source_name": source_name, "source_url": source_url,
         "source_data_status": "current official public source retrieved for this cycle",
         "retrieved_at": output_date, "record_count": payload["exported"],
