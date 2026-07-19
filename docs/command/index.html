@@ -830,7 +830,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
           1. Buyer picks county + pack + category on the store and submits the form.<br>
           2. Order lands in <code>intake_requests</code> with source <code>dollar-leads-v1</code> and a DL- order code, so it shows in your Inbox here like any lead.<br>
           3. The page instantly shows them a Cash App button ($Derrick607) for the exact amount, with their order code for the payment note.<br>
-          4. You match the payment to the code, assign the NEXT OPEN BATCH from the <code>dollar_batches</code> table (bump its <code>seats_sold</code>), and send the file. Codex's pack-cutter script slices non-overlapping numbered batches with cycle + source stamped in the file.<br>
+          4. You match the payment to the code and run <code>scripts/leadcurate/cut_dollar_pack.py</code>. It reserves the next open real batch, writes stamped CSV and XLSX delivery files, and updates the manifest.<br>
           5. <b>Batch rules that protect us:</b> each batch = 500 unique records, max 3 seats, retires when full. Store shows live seat counts. Monthly refresh regenerates the board, so retired batches legitimately come back as new inventory. Old data never looks stale because everything is labeled by cycle only, never a day count, so a batch sold on cycle-day 20 reads identically to one sold on day 1.<br>
           6. Same-day delivery is the promise. Fresh Drop packs get re-checked against the county before sending.
         </p>
@@ -840,8 +840,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
         <div class="card-h"><span class="card-title">💰 Pack prices</span></div>
         <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
           Starter $5 = 50 records · Work $15 = 250 records · Full $25 = 500 records · Fresh Scrub $20 = 20 same-morning records (only visible on scrub days) · Founders Deal $50 = 1,000 records, first 20 buyers only.<br><br>
-          <b>Counties live (7):</b> Dallas TX, Wayne MI, Cook IL, Massachusetts statewide (all four can serve every pack size, MA's lanes are the full verified 2026-07-16 files), plus Mecklenburg NC, Shelby TN, Fulton GA.<br>
-          <b>Heads up on Meck/Shelby/Fulton:</b> their current files are the old curated cuts (Meck vacant 250 / absentee 100 / liens 100, Memphis tax-sale 200, Atlanta vacant 250), so until Codex regenerates full lanes from source, steer $25 Full Pack and Founders buyers in those counties to Dallas/Wayne/Cook/Massachusetts or offer a pack their lane can cover.
+          <b>Counties live (7):</b> Dallas TX, Wayne MI, Cook IL, Massachusetts statewide, Mecklenburg NC, Shelby TN, and Fulton GA.<br>
+          <b>Real July inventory:</b> 2,235 non-overlapping 500-record batches, totaling 1,117,500 reserved rows. Dallas 214; Wayne 211; Cook 608; Massachusetts 1,086; Mecklenburg 95; Shelby 4; Fulton 17. The former placeholder rows are retired.
         </p>
       </div>
 
@@ -856,8 +856,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div class="card mb16">
         <div class="card-h"><span class="card-title">🤖 Automation phases</span></div>
         <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          <b>Phase 1 (today, manual):</b> order lands in Inbox, Cash App payment arrives with DL- code, you match and send the file. Works now, no dependencies.<br>
-          <b>Phase 2 (Codex, this week):</b> pack-cutter script cuts the exact file per order in one command and bumps seats_sold. You still match payments by eye, but fulfillment becomes 30 seconds.<br>
+          <b>Phase 1 (live):</b> order lands in Inbox, buyer and operator emails send automatically, Cash App payment arrives with DL- code, and you match it by eye.<br>
+          <b>Phase 2 (built):</b> the one-command pack cutter reserves the exact real batch, writes CSV and XLSX files, and updates the delivery manifests. The VPS still needs its Supabase service credential before unattended production use.<br>
           <b>Phase 3 (later):</b> Stripe Payment Links per pack + webhook to an edge function that auto-emails the file on payment. Needs Derrick to create the Stripe products; the payment-confirmation function already exists as the base. Only worth wiring after real sales prove volume.
         </p>
       </div>
@@ -865,7 +865,16 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div class="card mb16">
         <div class="card-h"><span class="card-title">🗂️ Adding a county or category</span></div>
         <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          The store's board and order form both read live from the <code>dollar_batches</code> table, nothing is hardcoded on the page anymore. To open a new county or a new category (pre-foreclosure, probate, tax-debt, whatever the lane), Codex's pack-cutter script inserts new batch rows (market, market_display, lane, lane_display, batch_no, seats_total, cycle). The store picks it up automatically, no page edit needed. Categories currently seeded: long-hold landlords, out-of-state owners, vacant land, tax-debt (Wayne), multifamily (Cook). Pre-foreclosure and probate slot in the same way once Codex has verified lane files for them.
+          The store's board and order form both read live from the <code>dollar_batches</code> table, so a verified new county or category is a data load, not a page edit. Current lanes are market-specific: Dallas has long-hold, out-of-state owner, and vacant; Wayne has long-hold, vacant, and tax debt; Cook has long-hold, out-of-state owner, vacant, and multifamily; Massachusetts has long-hold, out-of-state owner, and vacant; Mecklenburg has vacant and high-value absentee; Shelby has tax sale; Fulton has vacant. Probate, inherited property, foreclosure, and lien lanes appear publicly only after their official-source files are verified and loaded.
+        </p>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">Record age, overlap, and alerts</span></div>
+        <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
+          <b>Age:</b> parcel and ownership lanes use the current official monthly source cycle. Tax-debt lanes require a positive live balance or status at pull. Future foreclosure or auction lanes must use active or upcoming official notices; probate starts with filings from the prior 180 days; inherited transfers start with the prior 12 months; lien and code lanes must be open or unresolved.<br><br>
+          <b>Overlap:</b> batches within one lane are disjoint. The same parcel may legitimately appear in different categories when it has multiple signals. Each normal numbered batch sells no more than three seats.<br><br>
+          <b>Alerts:</b> buyer and operator email alerts are live. Cash App has no payment webhook, so the operator still confirms the DL- code after seeing payment. Real SMS is ready in the alert function and activates when Twilio credentials are added; AT&amp;T email-to-text is discontinued and is not used.
         </p>
       </div>
 
