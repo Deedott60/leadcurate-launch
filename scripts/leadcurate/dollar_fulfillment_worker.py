@@ -18,6 +18,7 @@ ENV_PATH = Path("/opt/leadcurate/.env")
 REPO = Path("/root/leadcurate-launch")
 CONTROL_URL = "https://jdmlsraqioigbukspduo.supabase.co/functions/v1/dollar-fulfillment-control"
 DELIVERY_ROOT = Path("/opt/leadcurate/deliveries/dollar-leads")
+FRESH_ROOT = Path("/opt/leadcurate/dollar_fresh")
 
 
 def load_env() -> dict[str, str]:
@@ -55,8 +56,6 @@ def cut(job: dict[str, Any], batch_no: int) -> Path:
     final_dir = DELIVERY_ROOT / job["order_code"]
     if final_dir.exists() and (final_dir / "manifest.json").exists():
         return final_dir
-    if int(job["pack_size"]) == 20:
-        raise RuntimeError("Fresh Scrub requires a same-day verification artifact before automated fulfillment")
     cmd = [
         sys.executable,
         str(REPO / "scripts/leadcurate/cut_dollar_pack.py"),
@@ -68,6 +67,13 @@ def cut(job: dict[str, Any], batch_no: int) -> Path:
         "--cycle-slug", job["cycle_slug"],
         "--job-id", job["id"],
     ]
+    if int(job["pack_size"]) == 20:
+        fresh_dir = FRESH_ROOT / job["cycle_slug"] / job["market"] / job["lane"]
+        verified_csv = fresh_dir / "verified.csv"
+        verified_meta = fresh_dir / "meta.json"
+        if not verified_csv.exists() or not verified_meta.exists():
+            raise RuntimeError(f"Fresh Scrub verification artifacts are missing: {fresh_dir}")
+        cmd.extend(["--fresh", "--fresh-verified-csv", str(verified_csv), "--fresh-verified-meta", str(verified_meta)])
     proc = subprocess.run(cmd, cwd=REPO, env=ENV, text=True, capture_output=True, timeout=600)
     if proc.returncode != 0:
         raise RuntimeError(proc.stderr.strip() or proc.stdout.strip() or "cutter failed")
