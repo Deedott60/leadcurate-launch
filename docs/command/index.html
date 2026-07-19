@@ -857,7 +857,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
         <div class="card-h"><span class="card-title">🤖 Automation phases</span></div>
         <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
           <b>Phase 1 (live):</b> order lands in Inbox, buyer and operator emails send automatically, Cash App payment arrives with DL- code, and you match it by eye.<br>
-          <b>Phase 2 (built):</b> the one-command pack cutter reserves the exact real batch, writes CSV and XLSX files, and updates the delivery manifests. The VPS still needs its Supabase service credential before unattended production use.<br>
+          <b>Phase 2 (built and running):</b> Derrick's verified PAID text queues the job; the guarded VPS worker selects and reserves the real batch, writes CSV and XLSX files, attaches both through Hostinger, records delivery, and returns a Twilio confirmation. Twilio credentials and the number webhook are the only external plug.<br>
           <b>Phase 3 (later):</b> Stripe Payment Links per pack + webhook to an edge function that auto-emails the file on payment. Needs Derrick to create the Stripe products; the payment-confirmation function already exists as the base. Only worth wiring after real sales prove volume.
         </p>
       </div>
@@ -874,7 +874,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
         <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
           <b>Age:</b> parcel and ownership lanes use the current official monthly source cycle. Tax-debt lanes require a positive live balance or status at pull. Future foreclosure or auction lanes must use active or upcoming official notices; probate starts with filings from the prior 180 days; inherited transfers start with the prior 12 months; lien and code lanes must be open or unresolved.<br><br>
           <b>Overlap:</b> batches within one lane are disjoint. The same parcel may legitimately appear in different categories when it has multiple signals. Each normal numbered batch sells no more than three seats.<br><br>
-          <b>Alerts:</b> buyer and operator email alerts are live. Cash App has no payment webhook, so the operator still confirms the DL- code after seeing payment. Real SMS is ready in the alert function and activates when Twilio credentials are added; AT&amp;T email-to-text is discontinued and is not used.
+          <b>Alerts:</b> buyer and operator email alerts are live. Cash App has no payment webhook, so Derrick confirms the DL- code by replying <code>PAID DL-XXXXX</code> to the Twilio alert. The signed inbound webhook, guarded fulfillment queue, cutter, Hostinger attachment sender, delivery ledger, and completion SMS path are built. SMS activates when Twilio credentials are added and its incoming-message webhook is pointed at the deployed endpoint. AT&amp;T email-to-text is discontinued and is not used.
         </p>
       </div>
 
