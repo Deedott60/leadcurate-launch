@@ -71,6 +71,19 @@ The invoice deliberately calls the $1,000 an **initial project payment**. It doe
 
 **Verified-accurate facts to not re-litigate:** the brief's numbers are validated (2026-07-16 metas, zero duplicates, vacant six-check-plus filter confirmed, absentee address-normalization fix in). Full verification record in the 2026-07-16 session handoff.
 
+## Open now -- Dollar Leads (NEW sister brand, launched 2026-07-18)
+
+**What it is:** Derrick's second income stream while high-ticket deals cook. Small packs of county data at $5/$15/$25 (+$10 Fresh Drop), sold self-serve with instant Cash App checkout ($Derrick607) and same-day file delivery. Target: a few hundred dollars/day. Market research 2026-07-18 confirmed NOBODY sells fixed-price instant county+niche batch packs with source+pull-date provenance; the market is subscriptions vs $125+ minimums vs $250-400/lead PPL. Provenance transparency is the differentiator.
+
+**Live pieces (Claude, 2026-07-18):**
+- Store: `docs/dollar-leads/index.html` (staging at leadcurate.com/dollar-leads/ until its own domain is wired; page is fully self-contained + portable). Orders insert into `intake_requests` with source `dollar-leads-v1` and a `DL-XXXXX` order code prefixed in notes; the existing trigger routes them to the dashboard inbox. After submit the buyer instantly gets a cash.app/$Derrick607/{amount} button with their code for the payment note.
+- Command center: new "Dollar Leads" page under Growth nav in `docs/command/index.html` with store link, order-flow walkthrough, pack prices, and the daily $300 operating plan.
+- Counties on the board v1: Dallas TX, Wayne MI (live tax balances angle), Cook IL. Weekly rotation, capped drops.
+
+**CODEX TASK -- pack-cutter script (next priority after Reggie work):** build `scripts/leadcurate/cut_dollar_pack.py`: inputs = market, lane, pack size (15/50/250/500), optional ZIP filter; output = CSV/XLSX slice from the newest processed lane triple with a header block stamping county source name, official source URL, pull date, record count, and DL- order code; one row per parcel; full owner+address+parcel fields (paid product, NOT redacted); random-sample or top-of-lane selection flag; log each cut to a manifest so the same records are not resold within a drop window. Store cuts under `/opt/leadcurate/deliveries/dollar-leads/{code}/`.
+
+**Rules that apply:** zero em dashes in anything the buyer sees (store page verified clean). No DNC/skip-trace claims (page states as-is public records, buyer owns compliance). Dollar Leads is deliberately the value tier; LeadCurate premium copy rules still apply to LeadCurate-branded pages, and the store upsell points big buyers back to LeadCurate custom territories.
+
 ## Recently closed -- Wayne County and Detroit intelligence
 
 0. **Wayne County MI intelligence review complete (Codex 2026-07-16).** Built the private noindex report at `docs/sample-deliveries/wayne-detroit-market-intelligence-2026-07-16/` using the latest DeShawn brief as the depth and presentation standard. It covers all six requested categories, breaks Detroit out from Wayne County, recommends a Taylor-led Downriver Core as the nearby overlooked market, proves that the five-city cluster has 180,256 residents and $3.948 billion in 2022 retail sales from Census QuickFacts, and identifies Detroit blight pressure as the evidence-backed seventh lane. No email was sent.

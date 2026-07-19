@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dollar Leads · Real county data in small packs</title>
+<meta name="description" content="Small packs of real county property data. Pulled straight from official records, dated, and delivered to your inbox. Packs start at $5." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --ink:#101418;
+  --paper:#ffffff;
+  --bill:#0d7a3f;
+  --bill-bright:#16a34a;
+  --bill-soft:#e7f6ec;
+  --gold:#eab308;
+  --slate:#5b6672;
+  --line:#e4e8ec;
+  --dark-card:#131a20;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:1060px;margin:0 auto;padding:0 20px;}
+
+/* top bar */
+.topbar{background:var(--ink);color:#fff;}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;min-height:64px;gap:14px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px;}
+.logo{font-family:'Archivo Black',sans-serif;font-size:22px;letter-spacing:-.01em;}
+.logo span{color:var(--bill-bright);}
+.sister{font-size:11px;color:#9aa7b1;text-align:right;line-height:1.35;}
+.sister b{color:#d7dee4;}
+
+/* hero */
+.hero{background:var(--ink);color:#fff;padding:46px 0 60px;}
+.stamp{display:inline-flex;align-items:center;gap:8px;border:1.5px dashed var(--bill-bright);color:var(--bill-bright);border-radius:6px;padding:6px 12px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:20px;}
+h1{font-family:'Archivo Black',sans-serif;font-size:clamp(34px,6vw,62px);line-height:1.02;letter-spacing:-.02em;max-width:820px;}
+h1 em{font-style:normal;color:var(--bill-bright);}
+.hero p.lede{margin-top:18px;font-size:18px;color:#c3ccd4;max-width:640px;}
+.hero-ctas{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:8px;font-weight:800;font-size:15px;text-decoration:none;cursor:pointer;border:none;}
+.btn-green{background:var(--bill-bright);color:#06220f;}
+.btn-green:hover{background:#22c55e;}
+.btn-ghost{background:transparent;color:#fff;border:1.5px solid #3a4650;}
+.btn-ghost:hover{border-color:#fff;}
+.hero-proof{display:flex;gap:26px;margin-top:36px;flex-wrap:wrap;}
+.proof{font-size:12px;color:#9aa7b1;}
+.proof strong{display:block;font-family:'Archivo Black',sans-serif;font-size:22px;color:#fff;letter-spacing:-.01em;}
+
+/* sections */
+section{padding:58px 0;}
+section+section{border-top:1px solid var(--line);}
+.eyebrow{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--bill);margin-bottom:10px;}
+h2{font-family:'Archivo Black',sans-serif;font-size:clamp(24px,3.6vw,38px);letter-spacing:-.015em;line-height:1.08;margin-bottom:12px;}
+.sub{color:var(--slate);font-size:16px;max-width:640px;}
+
+/* how it works */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:28px;}
+.step{border:1px solid var(--line);border-radius:12px;padding:22px;}
+.step b{display:flex;width:34px;height:34px;border-radius:999px;background:var(--bill-soft);color:var(--bill);align-items:center;justify-content:center;font-size:15px;margin-bottom:12px;}
+.step h3{font-size:16px;margin-bottom:6px;}
+.step p{font-size:13px;color:var(--slate);}
+
+/* drops */
+.drops{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:28px;}
+.drop{background:var(--dark-card);color:#fff;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:12px;}
+.drop .tag{align-self:flex-start;background:var(--bill-bright);color:#06220f;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:4px 10px;}
+.drop h3{font-family:'Archivo Black',sans-serif;font-size:21px;letter-spacing:-.01em;}
+.drop .pulled{font-size:11px;color:#8fa0ac;}
+.drop ul{list-style:none;display:grid;gap:7px;}
+.drop li{font-size:13px;color:#c3ccd4;padding-left:18px;position:relative;}
+.drop li::before{content:"";position:absolute;left:0;top:7px;width:8px;height:8px;border-radius:2px;background:var(--bill-bright);}
+.drop li b{color:#fff;}
+.drop .cta{margin-top:auto;}
+
+/* packs */
+.packs{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px;margin-top:28px;}
+.pack{border:1.5px solid var(--line);border-radius:14px;padding:24px 20px;display:flex;flex-direction:column;gap:8px;position:relative;}
+.pack.hot{border-color:var(--bill);box-shadow:0 6px 24px rgba(13,122,63,.12);}
+.pack .best{position:absolute;top:-11px;left:18px;background:var(--bill);color:#fff;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:3px 10px;}
+.pack .price{font-family:'Archivo Black',sans-serif;font-size:38px;letter-spacing:-.02em;}
+.pack .price span{font-size:15px;color:var(--slate);font-family:'Inter',sans-serif;font-weight:600;}
+.pack h3{font-size:15px;}
+.pack p{font-size:12.5px;color:var(--slate);flex-grow:1;}
+.pack .btn{margin-top:12px;}
+.pack.fresh{background:#fffbeb;border-color:var(--gold);}
+.pack.fresh .price{color:#92400e;}
+
+/* promise */
+.promise{background:var(--bill-soft);border-radius:16px;padding:30px;margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;}
+.pr-item b{display:block;font-size:14px;margin-bottom:4px;color:var(--bill);}
+.pr-item p{font-size:13px;color:#2f4a3a;}
+
+/* faq */
+.faq{display:grid;gap:10px;margin-top:26px;max-width:760px;}
+.faq details{border:1px solid var(--line);border-radius:10px;padding:16px 18px;}
+.faq summary{font-weight:700;font-size:15px;cursor:pointer;}
+.faq p{margin-top:10px;font-size:14px;color:var(--slate);}
+
+/* order */
+#order{background:var(--ink);color:#fff;}
+#order .sub{color:#c3ccd4;}
+.order-card{background:#fff;color:var(--ink);border-radius:16px;padding:32px;margin-top:28px;max-width:640px;}
+label{display:block;font-size:13px;font-weight:700;margin:16px 0 6px;}
+input,select,textarea{width:100%;border:1.5px solid var(--line);border-radius:8px;padding:12px 14px;font-size:15px;font-family:inherit;background:#fff;}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--bill);}
+.order-note{font-size:12px;color:var(--slate);margin-top:14px;}
+.ok-msg{display:none;background:var(--bill-soft);color:var(--bill);border-radius:10px;padding:16px;font-weight:700;font-size:14px;margin-top:16px;}
+
+footer{padding:28px 0 44px;font-size:12px;color:var(--slate);}
+footer a{color:var(--bill);}
+@media(max-width:640px){ .hero{padding:34px 0 44px;} section{padding:44px 0;} }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="logo">DOLLAR<span>LEADS</span></div>
+    <div class="sister">A <b>LeadCurate</b> company<br>Real county records, small packs</div>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="stamp">Every file stamped with its county source and pull date</div>
+    <h1>Real property leads. <em>A few dollars</em> at a time.</h1>
+    <p class="lede">The same county-sourced data big operators pay thousands for, sold in small packs anyone can afford. Pulled straight from official county records, dated, deduplicated, and sent to your inbox. No subscription. No minimums. No recycled junk.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-green" href="#packs">See pack prices</a>
+      <a class="btn btn-ghost" href="#drops">This week's counties</a>
+    </div>
+    <div class="hero-proof">
+      <div class="proof"><strong>5M+</strong>county records processed</div>
+      <div class="proof"><strong>47+</strong>counties in the vault</div>
+      <div class="proof"><strong>$5</strong>gets you started</div>
+    </div>
+  </div>
+</header>
+
+<section id="how">
+  <div class="wrap">
+    <span class="eyebrow">How it works</span>
+    <h2>Pick a county. Pick a pack. Work the list.</h2>
+    <div class="steps">
+      <div class="step"><b>1</b><h3>Pick county and pack</h3><p>Packs from $5. Every record has the owner, property address, mailing address, and why it made the list.</p></div>
+      <div class="step"><b>2</b><h3>Pay right here</h3><p>Order below and your Cash App payment button appears instantly. Pay in seconds.</p></div>
+      <div class="step"><b>3</b><h3>File hits your inbox</h3><p>Your file lands the same day, stamped with the county source, the pull date, and official parcel numbers you can verify yourself.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="drops">
+  <div class="wrap">
+    <span class="eyebrow">This week's drops</span>
+    <h2>Three counties on the board right now.</h2>
+    <p class="sub">Each drop is capped. When a county's packs sell through, it comes off the board until the next fresh pull.</p>
+    <div class="drops">
+      <div class="drop">
+        <span class="tag">Texas</span>
+        <h3>Dallas County</h3>
+        <div class="pulled">Built from the county's current 2026 records</div>
+        <ul>
+          <li><b>Long-hold landlords:</b> owners 10+ years in, not living at the property</li>
+          <li><b>Out-of-state owners:</b> Dallas property, owner mails elsewhere</li>
+          <li><b>Vacant land:</b> verified vacant, real acreage, sellable owners</li>
+        </ul>
+        <a class="btn btn-green cta" href="#order" onclick="pickCounty('Dallas County TX')">Grab a Dallas pack</a>
+      </div>
+      <div class="drop">
+        <span class="tag">Michigan</span>
+        <h3>Wayne County / Detroit</h3>
+        <div class="pulled">Tax balances checked against the county this month</div>
+        <ul>
+          <li><b>Live tax-debt owners:</b> confirmed current balances, not old lists</li>
+          <li><b>Long-hold landlords:</b> 10+ year Detroit holds, non-occupant</li>
+          <li><b>Vacant land:</b> verified vacant parcels across the county</li>
+        </ul>
+        <a class="btn btn-green cta" href="#order" onclick="pickCounty('Wayne County MI')">Grab a Wayne pack</a>
+      </div>
+      <div class="drop">
+        <span class="tag">Illinois</span>
+        <h3>Cook County / Chicago</h3>
+        <div class="pulled">Built from the county's current assessment universe</div>
+        <ul>
+          <li><b>Long-hold landlords:</b> tens of thousands of 10+ year holds</li>
+          <li><b>Multifamily owners:</b> the deepest small-apartment bench in the country</li>
+          <li><b>Out-of-state owners:</b> Chicago property, owner mails elsewhere</li>
+        </ul>
+        <a class="btn btn-green cta" href="#order" onclick="pickCounty('Cook County IL')">Grab a Cook pack</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="packs">
+  <div class="wrap">
+    <span class="eyebrow">Pack prices</span>
+    <h2>No subscription. No $125 minimum. Just packs.</h2>
+    <div class="packs">
+      <div class="pack">
+        <div class="price">$5</div>
+        <h3>Starter Pack · 50 records</h3>
+        <p>Try us for the price of lunch. 50 records from the county and category you pick.</p>
+        <a class="btn btn-green" href="#order" onclick="pickPack('Starter $5 (50 records)')">Reserve</a>
+      </div>
+      <div class="pack hot">
+        <span class="best">Most popular</span>
+        <div class="price">$15</div>
+        <h3>Work Pack · 250 records</h3>
+        <p>Enough to run a real texting or mail test on one category in one county.</p>
+        <a class="btn btn-green" href="#order" onclick="pickPack('Work $15 (250 records)')">Reserve</a>
+      </div>
+      <div class="pack">
+        <div class="price">$25</div>
+        <h3>Full Pack · 500 records</h3>
+        <p>A full working list. The best per-record deal on the board.</p>
+        <a class="btn btn-green" href="#order" onclick="pickPack('Full $25 (500 records)')">Reserve</a>
+      </div>
+      <div class="pack fresh">
+        <div class="price">$10</div>
+        <h3>Fresh Drop · 15 records</h3>
+        <p>Pulled or re-checked against county records the same week you buy. Smallest list, newest data.</p>
+        <a class="btn btn-green" href="#order" onclick="pickPack('Fresh Drop $10 (15 records)')">Reserve</a>
+      </div>
+    </div>
+
+    <div class="promise">
+      <div class="pr-item"><b>Dated, like milk.</b><p>Every file states the exact county source and the date we pulled it. If a vendor won't tell you that, ask yourself why.</p></div>
+      <div class="pr-item"><b>One row per property.</b><p>Deduplicated before it ships. You never pay for the same property twice in one file.</p></div>
+      <div class="pr-item"><b>Straight from the county.</b><p>We build from official county records, not from somebody else's resold export.</p></div>
+      <div class="pr-item"><b>Capped drops.</b><p>Each county drop sells a limited number of packs, so you are not texting the same list as 500 other people.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <span class="eyebrow">Straight answers</span>
+    <h2>What you get and what you don't.</h2>
+    <div class="faq">
+      <details><summary>What's in each record?</summary><p>Owner name, property address, owner mailing address, official parcel number, property type, county values where published, how long the owner has held it where the county shows it, and the reason it made the list.</p></details>
+      <details><summary>Is this skip traced?</summary><p>No. No phone numbers, no emails. This is county-record data you run through your own skip tracer or dialer. That keeps packs at these prices.</p></details>
+      <details><summary>Is it scrubbed against the Do Not Call list?</summary><p>No. You are responsible for your own outreach compliance, including DNC and TCPA. We sell the data as compiled from public county records.</p></details>
+      <details><summary>How fresh is it really?</summary><p>The pull date is printed on your file, so you never have to take our word for it. Fresh Drops are pulled or re-checked the same week you order.</p></details>
+      <details><summary>Can I pick the category?</summary><p>Yes. When you reserve, tell us which list you want from that county's board: long-hold landlords, out-of-state owners, tax-debt owners, or vacant land, wherever offered.</p></details>
+      <details><summary>What if I need way more than 500 records?</summary><p>That's our parent company's lane. LeadCurate builds full custom territory databases for serious operators. Ask and we'll connect you.</p></details>
+    </div>
+  </div>
+</section>
+
+<section id="order">
+  <div class="wrap">
+    <span class="eyebrow">Buy a pack</span>
+    <h2 style="color:#fff">Order here. Pay in seconds. File today.</h2>
+    <p class="sub">Fill this out and your payment button appears right here. Pay with Cash App and your file lands in your inbox the same day.</p>
+    <div class="order-card">
+      <form id="dl-form">
+        <label for="f-name">Your name</label>
+        <input id="f-name" name="name" required placeholder="First and last" />
+        <label for="f-email">Email (your file goes here)</label>
+        <input id="f-email" name="email" type="email" required placeholder="you@email.com" />
+        <label for="f-county">County</label>
+        <select id="f-county" name="county" required>
+          <option value="">Pick a county</option>
+          <option>Dallas County TX</option>
+          <option>Wayne County MI</option>
+          <option>Cook County IL</option>
+          <option>Another county (tell us below)</option>
+        </select>
+        <label for="f-pack">Pack</label>
+        <select id="f-pack" name="pack" required>
+          <option value="">Pick a pack</option>
+          <option>Starter $5 (50 records)</option>
+          <option>Work $15 (250 records)</option>
+          <option>Full $25 (500 records)</option>
+          <option>Fresh Drop $10 (15 records)</option>
+        </select>
+        <label for="f-lane">Which list?</label>
+        <select id="f-lane" name="lane" required>
+          <option value="">Pick a category</option>
+          <option>Long-hold landlords</option>
+          <option>Out-of-state owners</option>
+          <option>Tax-debt owners (Wayne)</option>
+          <option>Vacant land</option>
+          <option>Not sure, recommend one</option>
+        </select>
+        <label for="f-notes">Anything else? (ZIP codes, price range, other counties)</label>
+        <textarea id="f-notes" name="notes" rows="2" placeholder="Optional"></textarea>
+        <button type="submit" class="btn btn-green" style="width:100%;margin-top:20px;">Get my payment button</button>
+        <div class="ok-msg" id="ok-msg">
+          <div style="font-size:15px;margin-bottom:8px;">Order locked in. One step left: pay and you're done.</div>
+          <a id="pay-btn" class="btn btn-green" href="#" target="_blank" rel="noopener" style="width:100%;">Pay <span id="pay-amt"></span> with Cash App</a>
+          <div style="font-weight:600;font-size:12.5px;margin-top:10px;color:#2f4a3a;">Put your order code <b id="order-code"></b> in the payment note so we match it fast. Your file lands in your inbox the same day, usually within a couple hours.</div>
+        </div>
+        <p class="order-note">Questions first? Email <a href="mailto:hello@leadcurate.com">hello@leadcurate.com</a>.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <strong>Dollar Leads</strong>, a LeadCurate company · Data compiled from official county public records · No skip tracing, no DNC scrubbing, outreach compliance is the buyer's responsibility · <a href="mailto:hello@leadcurate.com">hello@leadcurate.com</a>
+  </div>
+</footer>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+const supabase = createClient('https://jdmlsraqioigbukspduo.supabase.co','sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4');
+
+window.pickCounty = (c) => { const el=document.getElementById('f-county'); if(el) el.value=c; };
+window.pickPack = (p) => { const el=document.getElementById('f-pack'); if(el) el.value=p; };
+
+const form = document.getElementById('dl-form');
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = form.querySelector('button[type=submit]');
+  btn.disabled = true; btn.textContent = 'Reserving...';
+  const fd = new FormData(form);
+  const lead = {
+    name: fd.get('name') || '',
+    email: fd.get('email') || '',
+    phone: '',
+    markets: [fd.get('county') || ''],
+    list_type: [fd.get('lane') || ''],
+    urgency: 'dollar-leads-pack',
+    volume: fd.get('pack') || '',
+    role: 'dollar-leads-buyer',
+    notes: 'DOLLAR LEADS ORDER | pack: ' + (fd.get('pack')||'') + ' | lane: ' + (fd.get('lane')||'') + ' | county: ' + (fd.get('county')||'') + ' | extra: ' + (fd.get('notes')||'none'),
+    source: 'dollar-leads-v1',
+  };
+  const amounts = { 'Starter $5 (50 records)': 5, 'Work $15 (250 records)': 15, 'Full $25 (500 records)': 25, 'Fresh Drop $10 (15 records)': 10 };
+  const amt = amounts[fd.get('pack')] || 0;
+  const code = 'DL-' + Date.now().toString(36).toUpperCase().slice(-5);
+  lead.notes = code + ' | ' + lead.notes;
+  let ok = false;
+  try {
+    const { error } = await supabase.from('intake_requests').insert([lead]).select();
+    ok = !error;
+    if (error) console.warn(error);
+  } catch (err) { console.warn(err); }
+  if (ok) {
+    document.getElementById('pay-amt').textContent = '$' + amt;
+    document.getElementById('order-code').textContent = code;
+    document.getElementById('pay-btn').href = 'https://cash.app/$Derrick607/' + amt;
+    document.getElementById('ok-msg').style.display = 'block';
+    btn.style.display = 'none';
+    document.getElementById('ok-msg').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } else {
+    btn.disabled = false; btn.textContent = 'Get my payment button';
+    alert('Something went wrong. Email hello@leadcurate.com and we will set you up directly.');
+  }
+});
+</script>
+
+</body>
+</html>

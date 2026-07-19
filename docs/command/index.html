@@ -359,6 +359,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
         <span class="icon">🛰️</span> Lead Scout
         <span class="badge" id="nb-scout">0</span>
       </div>
+      <div class="nav-item" data-page="dollarleads">
+        <span class="icon">💵</span> Dollar Leads
+      </div>
     </div>
     <div class="nav-divider"></div>
     <div class="nav-label">Send to prospects</div>
@@ -801,6 +804,54 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
         <div class="card-h"><span class="card-title">What is wired</span></div>
         <p style="color:var(--sl);font-size:14px;line-height:1.6;margin:0;">
           VPS watchers write to <code>scout_prospects</code>. Reddit and BiggerPockets are installed; Facebook waits for Derrick’s channel/group and login decision. Each row includes source URL, matched market/keyword, suggested DM, and status.
+        </p>
+      </div>
+    </div>
+
+    <!-- ── DOLLAR LEADS ─────────────────────── -->
+    <div id="page-dollarleads" class="page">
+      <div class="page-header">
+        <div class="page-title">Dollar Leads 💵</div>
+        <div class="page-sub">Sister brand. Small packs of county data at $5 to $25, instant Cash App checkout, same-day file delivery. Built to make a few hundred a day while the premium deals cook.</div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">🔗 The store</span></div>
+        <p style="color:var(--sl);font-size:14px;line-height:1.6;margin:0 0 12px;">
+          Live page (staging URL until its own domain is wired):<br>
+          <a href="https://leadcurate.com/dollar-leads/" target="_blank" style="color:var(--em-l);font-weight:700;">leadcurate.com/dollar-leads/</a>
+        </p>
+        <button class="btn btn-ghost btn-sm" onclick="navigator.clipboard.writeText('https://leadcurate.com/dollar-leads/');toast('Store link copied')">Copy store link</button>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">⚙️ How an order flows</span></div>
+        <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
+          1. Buyer picks county + pack + category on the store and submits the form.<br>
+          2. Order lands in <code>intake_requests</code> with source <code>dollar-leads-v1</code> and a DL- order code, so it shows in your Inbox here like any lead.<br>
+          3. The page instantly shows them a Cash App button ($Derrick607) for the exact amount, with their order code for the payment note.<br>
+          4. You see the Cash App payment, match the code, and send the file from the processed lane on the VPS (Codex is building the pack-cutter script that slices 50/250/500 records with source + pull date stamped in the file).<br>
+          5. Same-day delivery is the promise. Fresh Drop packs get re-checked against the county before sending.
+        </p>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">💰 Pack prices</span></div>
+        <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
+          Starter $5 = 50 records · Work $15 = 250 records · Full $25 = 500 records · Fresh Drop $10 = 15 same-week records.<br>
+          Counties on the board now: Dallas TX, Wayne MI (live tax balances), Cook IL. Rotate weekly, cap each drop so lists never oversaturate.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-h"><span class="card-title">📈 The daily plan</span></div>
+        <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
+          Target: $300/day = twelve $25 packs or twenty $15s.<br>
+          1. Morning: post the day's drop in one FB group (rotate your 4 groups, real numbers, no links in post, store link in DMs/comments).<br>
+          2. Reply to every comment with the store link.<br>
+          3. Fulfill orders as Cash App payments land, match DL- codes.<br>
+          4. Evening: mark the drop's sold count, tease tomorrow's county.<br>
+          Buyers who love a $25 pack are tomorrow's $2,500 territory customers. Upsell path is built into the store FAQ.
         </p>
       </div>
     </div>
