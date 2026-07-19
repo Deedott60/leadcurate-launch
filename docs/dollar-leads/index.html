@@ -108,6 +108,12 @@ input,select,textarea{width:100%;border:1.5px solid var(--line);border-radius:8p
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--bill);}
 .order-note{font-size:12px;color:var(--slate);margin-top:14px;}
 .ok-msg{display:none;background:var(--bill-soft);color:var(--bill);border-radius:10px;padding:16px;font-weight:700;font-size:14px;margin-top:16px;}
+.checkout-preview{background:#fff;border:1px solid #b9ddc6;border-radius:9px;padding:14px;margin:12px 0;color:var(--ink);font-weight:500;}
+.checkout-preview h3{font-size:15px;margin-bottom:4px;}
+.checkout-preview p{font-size:12px;color:var(--slate);margin-bottom:10px;}
+.masked-table{width:100%;border-collapse:collapse;font-size:11px;}
+.masked-table th,.masked-table td{text-align:left;padding:6px;border-bottom:1px solid var(--line);}
+.masked-table th{color:var(--slate);font-weight:700;}
 
 footer{padding:28px 0 44px;font-size:12px;color:var(--slate);}
 footer a{color:var(--bill);}
@@ -299,9 +305,23 @@ footer a{color:var(--bill);}
         <p id="lane-hint" style="display:none;font-size:12px;color:var(--slate);margin-top:6px;">One category per order keeps your batch clean. Want a second category from this county too? Submit this order, then come back and grab another pack for it.</p>
         <label for="f-notes">Anything else? (ZIP codes, price range, other counties)</label>
         <textarea id="f-notes" name="notes" rows="2" placeholder="Optional"></textarea>
-        <button type="submit" class="btn btn-green" style="width:100%;margin-top:20px;">Get my payment button</button>
+        <label style="display:flex;align-items:flex-start;gap:9px;font-weight:500;font-size:12px;color:var(--slate);"><input type="checkbox" required style="width:auto;margin-top:2px;"> <span>I understand this is public-record property data without skip-traced phones or emails, and I agree to the <a href="/terms.html" target="_blank">Terms</a> and <a href="/privacy.html" target="_blank">Privacy Policy</a>.</span></label>
+        <button type="submit" class="btn btn-green" style="width:100%;margin-top:20px;">Continue to payment</button>
         <div class="ok-msg" id="ok-msg">
-          <div style="font-size:15px;margin-bottom:8px;">Inventory confirmed, your records are held. One step left: pay and you're done. We also emailed you this payment link so you can pay from your phone.</div>
+          <div style="font-size:15px;margin-bottom:8px;">Inventory is available. Review your order, then pay to start fulfillment. We also emailed you this payment link.</div>
+          <div class="checkout-preview">
+            <h3><span id="preview-count"></span> records from <span id="preview-county"></span></h3>
+            <p><span id="preview-lane"></span> · Current official source cycle · CSV and Excel delivery</p>
+            <table class="masked-table" aria-label="Illustrative masked preview">
+              <thead><tr><th>Owner</th><th>Property</th><th>Mailing area</th></tr></thead>
+              <tbody>
+                <tr><td>J•••• S••••</td><td>12•• M••••• Rd</td><td>Raleigh, NC</td></tr>
+                <tr><td>M•••• L••••</td><td>8•• O•••• Ave</td><td>Tampa, FL</td></tr>
+                <tr><td>R•••• H••••</td><td>4•• P•••• Dr</td><td>Charlotte, NC</td></tr>
+              </tbody>
+            </table>
+            <p style="margin:8px 0 0;">Illustrative masked preview. Paid files include full county-record owner, address, parcel, and available property fields.</p>
+          </div>
           <a id="pay-btn" class="btn btn-green" href="#" target="_blank" rel="noopener" style="width:100%;">Pay <span id="pay-amt"></span> with Cash App</a>
           <div style="font-weight:600;font-size:12.5px;margin-top:10px;color:#2f4a3a;">Put your order code <b id="order-code"></b> in the payment note so we match it fast. You get the next open batch in your county and category, your batch number is printed on your file, and it lands in your inbox the same day, usually within a couple hours.</div>
         </div>
@@ -487,13 +507,17 @@ form.addEventListener('submit', async (e) => {
   if (ok) {
     await inventoryCheck;
     document.getElementById('pay-amt').textContent = '$' + amt;
+    const quantities = { 'Starter $5 (50 records)': 50, 'Work $15 (250 records)': 250, 'Full $25 (500 records)': 500, 'Fresh Scrub $20 (20 records)': 20, 'Founders Deal $50 (1,000 records)': 1000 };
+    document.getElementById('preview-count').textContent = (quantities[fd.get('pack')] || 0).toLocaleString();
+    document.getElementById('preview-county').textContent = fd.get('county') || '';
+    document.getElementById('preview-lane').textContent = fd.get('lane') || '';
     document.getElementById('order-code').textContent = code;
     document.getElementById('pay-btn').href = 'https://cash.app/$Derrick607/' + amt;
     document.getElementById('ok-msg').style.display = 'block';
     btn.style.display = 'none';
     document.getElementById('ok-msg').scrollIntoView({ behavior: 'smooth', block: 'center' });
   } else {
-    btn.disabled = false; btn.textContent = 'Get my payment button';
+    btn.disabled = false; btn.textContent = 'Continue to payment';
     alert('Something went wrong. Email hello@leadcurate.com and we will set you up directly.');
   }
 });

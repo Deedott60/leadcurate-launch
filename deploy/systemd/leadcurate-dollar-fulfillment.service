@@ -1,0 +1,17 @@
+[Unit]
+Description=LeadCurate Dollar Leads fulfillment worker
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/leadcurate-launch/scripts/leadcurate
+ExecStart=/usr/bin/python3 /root/leadcurate-launch/scripts/leadcurate/dollar_fulfillment_worker.py
+Restart=always
+RestartSec=10
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

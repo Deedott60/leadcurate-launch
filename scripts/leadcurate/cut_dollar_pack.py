@@ -24,6 +24,7 @@ from urllib import error, parse, request
 DEFAULT_BATCH_ROOT = Path("/opt/leadcurate/dollar_batches")
 DEFAULT_DELIVERY_ROOT = Path("/opt/leadcurate/deliveries/dollar-leads")
 PROJECT_URL = "https://jdmlsraqioigbukspduo.supabase.co"
+CONTROL_URL = f"{PROJECT_URL}/functions/v1/dollar-fulfillment-control"
 ALLOWED_SIZES = {15, 20, 50, 250, 500, 1000}
 CODE_RE = re.compile(r"^DL-[A-Z0-9]{4,32}$", re.I)
 
@@ -200,6 +201,32 @@ class SupabaseInventory:
         return result
 
 
+class FulfillmentControlInventory:
+    def __init__(self, url: str, token: str, job_id: str):
+        self.url = url
+        self.token = token
+        self.job_id = job_id
+
+    def reserve(self, batch_no: int) -> dict[str, Any]:
+        payload = json.dumps({"action": "reserve", "job_id": self.job_id, "batch_no": batch_no}).encode("utf-8")
+        req = request.Request(self.url, data=payload, method="POST", headers={"Content-Type": "application/json", "x-leadcurate-agent-token": self.token})
+        try:
+            with request.urlopen(req, timeout=45) as response:
+                result = json.loads(response.read())
+        except error.HTTPError as exc:
+            detail = exc.read().decode("utf-8", "replace")
+            raise RuntimeError(f"fulfillment reservation failed ({exc.code}): {detail}") from exc
+        if not result.get("ok") or not isinstance(result.get("reservation"), dict):
+            raise RuntimeError(f"invalid fulfillment reservation response: {result}")
+        return result["reservation"]
+
+    def reserve_seat(self, market: str, lane: str, batch_no: int, cycle: str) -> dict[str, Any]:
+        return self.reserve(batch_no)
+
+    def reserve_founders(self, market: str, lane: str, start_batch_no: int, cycle: str) -> dict[str, Any]:
+        return self.reserve(start_batch_no)
+
+
 def append_manifest(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a", encoding="utf-8") as handle:
@@ -220,6 +247,7 @@ def main() -> int:
     parser.add_argument("--fresh-verified-csv", type=Path)
     parser.add_argument("--fresh-verified-meta", type=Path)
     parser.add_argument("--dry-run", action="store_true", help="Write to the chosen delivery root without changing dollar_batches")
+    parser.add_argument("--job-id", help="Fulfillment job UUID for the guarded VPS reservation path")
     args = parser.parse_args()
 
     code = args.code.upper()
@@ -272,9 +300,13 @@ def main() -> int:
         seat = None
         if not args.dry_run:
             service_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
-            if not service_key:
-                raise RuntimeError("SUPABASE_SERVICE_ROLE_KEY is required unless --dry-run is used")
-            inventory_api = SupabaseInventory(os.environ.get("SUPABASE_URL", PROJECT_URL), service_key)
+            if service_key:
+                inventory_api: Any = SupabaseInventory(os.environ.get("SUPABASE_URL", PROJECT_URL), service_key)
+            else:
+                automation_token = os.environ.get("HOSTINGER_WEBHOOK_SECRET", "")
+                if not automation_token or not args.job_id:
+                    raise RuntimeError("SUPABASE_SERVICE_ROLE_KEY or HOSTINGER_WEBHOOK_SECRET plus --job-id is required unless --dry-run is used")
+                inventory_api = FulfillmentControlInventory(os.environ.get("DOLLAR_FULFILLMENT_CONTROL_URL", CONTROL_URL), automation_token, args.job_id)
             seat = inventory_api.reserve_founders(args.market, args.lane, args.batch_no, lane["pull_cycle"]) if founder else inventory_api.reserve_seat(args.market, args.lane, args.batch_no, lane["pull_cycle"])
         manifest = {
             "order_code": code, "market": args.market, "market_display": lane["market_display"],

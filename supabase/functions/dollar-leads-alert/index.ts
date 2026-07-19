@@ -107,7 +107,7 @@ Deno.serve(async (req) => {
             <span style="font-size:20px;font-weight:800;">DOLLAR<span style="color:#16a34a;">LEADS</span></span>
           </div>
           <div style="border:1px solid #e4e8ec;border-top:0;border-radius:0 0 10px 10px;padding:22px;">
-            <p style="font-size:16px;">Hey ${esc(name)}, inventory is confirmed and your records are held.</p>
+            <p style="font-size:16px;">Hey ${esc(name)}, inventory is available for your selected market and category.</p>
             <table style="width:100%;border-collapse:collapse;font-size:14px;">
               <tr><td style="padding:6px 0;color:#5b6672;">Order code</td><td style="padding:6px 0;font-weight:700;">${esc(code)}</td></tr>
               <tr><td style="padding:6px 0;color:#5b6672;">County</td><td style="padding:6px 0;font-weight:700;">${esc(county)}</td></tr>
