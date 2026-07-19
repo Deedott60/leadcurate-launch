@@ -97,15 +97,16 @@ def events(state: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def parse_decision(output: str) -> dict[str, str]:
-    candidates = re.findall(r"\{[^{}]*\}", output, flags=re.S)
-    for candidate in reversed(candidates):
-        try:
-            data = json.loads(candidate)
-        except json.JSONDecodeError:
-            continue
-        if data.get("action") in {"reply", "escalate"}:
-            return {str(k): str(v) for k, v in data.items()}
-    raise ValueError("Hermes did not return a valid reply/escalate JSON decision")
+    action_match = re.search(r"ACTION:\s*(REPLY|ESCALATE)\b", output, re.I)
+    if not action_match:
+        raise ValueError("Hermes did not return a valid REPLY/ESCALATE decision")
+    action = action_match.group(1).lower()
+    label = "BODY" if action == "reply" else "REASON"
+    content_match = re.search(rf"{label}:\s*(.+)", output, re.I | re.S)
+    if not content_match or not content_match.group(1).strip():
+        raise ValueError(f"Hermes returned {action} without {label.lower()} text")
+    key = "body" if action == "reply" else "reason"
+    return {"action": action, key: content_match.group(1).strip()}
 
 
 def ask_hermes(message: dict[str, Any]) -> dict[str, str]:
@@ -114,9 +115,13 @@ Draft a concise, natural reply only for routine questions about payment steps, o
 Never approve or negotiate refunds, cancellations, disputes, custom work, category changes, legal issues, complaints, pricing exceptions, or promises outside the recorded order. Escalate those.
 Do not claim payment was received unless the supplied message explicitly says the operator confirmed it.
 Do not include owner data or property data. Do not use em dashes. Do not use a personal-name signature.
-Return exactly one JSON object and nothing else:
-{{"action":"reply","body":"reply text ending with The Dollar Leads Team"}}
-or {{"action":"escalate","reason":"short reason"}}.
+Return exactly one of these plain-text formats and nothing else:
+ACTION: REPLY
+BODY: reply text ending with The Dollar Leads Team
+
+or:
+ACTION: ESCALATE
+REASON: short reason
 
 Inbound email:
 {json.dumps(message, ensure_ascii=False)}"""
