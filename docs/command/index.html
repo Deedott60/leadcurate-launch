@@ -839,9 +839,17 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div class="card mb16">
         <div class="card-h"><span class="card-title">💰 Pack prices</span></div>
         <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          Starter $5 = 50 records · Work $15 = 250 records · Full $25 = 500 records · Fresh Drop $5 = 15 same-week records (repriced from $10 on 2026-07-19, the per-record math looked like a trap next to the other packs).<br><br>
-          <b>Counties live:</b> Dallas TX, Wayne MI, Cook IL (placeholder 500-record batches), plus Mecklenburg NC and Shelby TN added 2026-07-19.<br>
-          <b>Heads up on Meck/Shelby:</b> their current files are the old curated cuts (vacant 250, absentee 100, city liens 100, Memphis tax-sale 200), so until Codex regenerates full lanes from source, steer $25 Full Pack buyers in those counties to Dallas/Wayne/Cook or downgrade them to a pack their lane can cover.
+          Starter $5 = 50 records · Work $15 = 250 records · Full $25 = 500 records · Fresh Scrub $20 = 20 same-morning records (only visible on scrub days) · Founders Deal $50 = 1,000 records, first 20 buyers only.<br><br>
+          <b>Counties live (7):</b> Dallas TX, Wayne MI, Cook IL, Massachusetts statewide (all four can serve every pack size, MA's lanes are the full verified 2026-07-16 files), plus Mecklenburg NC, Shelby TN, Fulton GA.<br>
+          <b>Heads up on Meck/Shelby/Fulton:</b> their current files are the old curated cuts (Meck vacant 250 / absentee 100 / liens 100, Memphis tax-sale 200, Atlanta vacant 250), so until Codex regenerates full lanes from source, steer $25 Full Pack and Founders buyers in those counties to Dallas/Wayne/Cook/Massachusetts or offer a pack their lane can cover.
+        </p>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">🔥 Founders Deal + Fresh Scrub controls</span></div>
+        <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
+          <b>Founders Deal (live):</b> first 20 buyers get 1,000 records for $50 with cycle exclusivity, in Dallas / Wayne / Cook / Massachusetts only (the deep boards). The store banner and countdown pull from <code>dollar_promos</code>. When a Founders payment lands, bump the counter: <code>update dollar_promos set slots_sold = slots_sold + 1 where name = 'founders-20';</code> The banner hides itself at zero. All 20 sold = $1,000.<br><br>
+          <b>Fresh Scrub ($20 for 20 same-morning records):</b> hidden by default. On a morning you or Codex actually re-scrub a county, flip it on: <code>update dollar_fresh_days set available = true, updated_at = now() where market_display = 'Dallas County TX';</code> Flip everything back off at night: <code>update dollar_fresh_days set available = false;</code> The card names which counties are scrubbed, so never flip a county that wasn't actually re-checked that morning.
         </p>
       </div>
 
