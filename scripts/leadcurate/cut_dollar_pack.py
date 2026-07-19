@@ -24,7 +24,7 @@ from urllib import error, parse, request
 DEFAULT_BATCH_ROOT = Path("/opt/leadcurate/dollar_batches")
 DEFAULT_DELIVERY_ROOT = Path("/opt/leadcurate/deliveries/dollar-leads")
 PROJECT_URL = "https://jdmlsraqioigbukspduo.supabase.co"
-ALLOWED_SIZES = {15, 20, 50, 250, 500}
+ALLOWED_SIZES = {15, 20, 50, 250, 500, 1000}
 CODE_RE = re.compile(r"^DL-[A-Z0-9]{4,32}$", re.I)
 
 
@@ -99,7 +99,7 @@ def apply_fresh_verification(
     return fields, ordered, meta
 
 
-def metadata_rows(code: str, lane: dict[str, Any], batch_no: int, count: int, fresh: bool, fresh_meta: dict[str, Any] | None) -> list[tuple[str, str]]:
+def metadata_rows(code: str, lane: dict[str, Any], batch_no: int | str, count: int, fresh: bool, fresh_meta: dict[str, Any] | None) -> list[tuple[str, str]]:
     source_name = clean(fresh_meta.get("source_name")) if fresh_meta else lane["source_name"]
     source_url = clean(fresh_meta.get("source_url")) if fresh_meta else lane["source_url"]
     return [
@@ -188,6 +188,17 @@ class SupabaseInventory:
             raise RuntimeError("batch seat changed concurrently; no seat was reserved")
         return updated[0]
 
+    def reserve_founders(self, market: str, lane: str, start_batch_no: int, cycle: str) -> dict[str, Any]:
+        result = self._call("POST", "rpc/reserve_dollar_founders_batches", {
+            "p_market": market,
+            "p_lane": lane,
+            "p_start_batch_no": start_batch_no,
+            "p_cycle": cycle,
+        })
+        if not isinstance(result, dict) or len(result.get("batches", [])) != 2:
+            raise RuntimeError("Founders reservation did not return two retired batches")
+        return result
+
 
 def append_manifest(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -223,10 +234,22 @@ def main() -> int:
 
     inventory = load_inventory(args.batch_root, args.cycle_slug)
     lane = lane_manifest(inventory, args.market, args.lane)
-    batch = batch_manifest(lane, args.batch_no)
-    fields, batch_rows = read_rows(Path(batch["file"]))
+    founder = args.pack_size == 1000
+    batches = [batch_manifest(lane, args.batch_no)]
+    if founder:
+        batches.append(batch_manifest(lane, args.batch_no + 1))
+    fields, batch_rows = read_rows(Path(batches[0]["file"]))
     if len(batch_rows) != 500:
         raise ValueError("batch file does not contain exactly 500 records")
+    if founder:
+        second_fields, second_rows = read_rows(Path(batches[1]["file"]))
+        if second_fields != fields or len(second_rows) != 500:
+            raise ValueError("second Founders batch is incomplete or has a different schema")
+        keys = lane["parcel_key_fields"]
+        first_keys = {parcel_key(row, keys) for row in batch_rows}
+        if first_keys.intersection(parcel_key(row, keys) for row in second_rows):
+            raise ValueError("Founders batches overlap")
+        batch_rows.extend(second_rows)
     fresh_meta = None
     if args.fresh:
         fields, batch_rows, fresh_meta = apply_fresh_verification(batch_rows, lane, args.fresh_verified_csv, args.fresh_verified_meta)
@@ -240,7 +263,8 @@ def main() -> int:
     args.delivery_root.mkdir(parents=True, exist_ok=True)
     pending = Path(tempfile.mkdtemp(prefix=f".{code}-pending-", dir=args.delivery_root))
     try:
-        meta_rows = metadata_rows(code, lane, args.batch_no, len(selected), args.fresh, fresh_meta)
+        batch_label = f"{args.batch_no}-{args.batch_no + 1}" if founder else args.batch_no
+        meta_rows = metadata_rows(code, lane, batch_label, len(selected), args.fresh, fresh_meta)
         csv_path = pending / f"{code}-{args.market}-{args.lane}-{args.pack_size}.csv"
         xlsx_path = pending / f"{code}-{args.market}-{args.lane}-{args.pack_size}.xlsx"
         write_csv(csv_path, meta_rows, fields, selected)
@@ -250,17 +274,22 @@ def main() -> int:
             service_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
             if not service_key:
                 raise RuntimeError("SUPABASE_SERVICE_ROLE_KEY is required unless --dry-run is used")
-            seat = SupabaseInventory(os.environ.get("SUPABASE_URL", PROJECT_URL), service_key).reserve_seat(args.market, args.lane, args.batch_no, lane["pull_cycle"])
+            inventory_api = SupabaseInventory(os.environ.get("SUPABASE_URL", PROJECT_URL), service_key)
+            seat = inventory_api.reserve_founders(args.market, args.lane, args.batch_no, lane["pull_cycle"]) if founder else inventory_api.reserve_seat(args.market, args.lane, args.batch_no, lane["pull_cycle"])
         manifest = {
             "order_code": code, "market": args.market, "market_display": lane["market_display"],
             "lane": args.lane, "lane_display": lane["lane_display"], "batch_no": args.batch_no,
+            "batch_nos": [args.batch_no, args.batch_no + 1] if founder else [args.batch_no],
             "pack_size": args.pack_size, "record_count": len(selected), "cycle": lane["pull_cycle"],
             "source_name": fresh_meta.get("source_name", lane["source_name"]) if fresh_meta else lane["source_name"],
             "source_url": fresh_meta.get("source_url", lane["source_url"]) if fresh_meta else lane["source_url"],
             "fresh_scrub": args.fresh, "fresh_verification": fresh_meta,
-            "batch_file": batch["file"], "batch_sha256": batch["sha256"],
+            "batch_file": batches[0]["file"], "batch_sha256": batches[0]["sha256"],
+            "batch_files": [batch["file"] for batch in batches],
+            "batch_sha256s": [batch["sha256"] for batch in batches],
             "csv": csv_path.name, "xlsx": xlsx_path.name,
-            "seat_after_cut": int(seat["seats_sold"]) if seat else None,
+            "seat_after_cut": int(seat["seats_sold"]) if seat and not founder else None,
+            "founders_slots_sold": int(seat["promo_slots_sold"]) if seat and founder else None,
             "dry_run": args.dry_run, "cut_at_utc": datetime.now(timezone.utc).isoformat(),
         }
         (pending / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
