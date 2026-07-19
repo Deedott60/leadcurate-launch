@@ -214,7 +214,7 @@ footer a{color:var(--bill);}
       <details><summary>Is it scrubbed against the Do Not Call list?</summary><p>No. You are responsible for your own outreach compliance, including DNC and TCPA. We sell the data as compiled from public county records.</p></details>
       <details><summary>Will other people have my exact list?</summary><p>At most 2 other buyers, and that's the worst case. Each numbered batch sells a maximum of 3 seats and then retires for the cycle. Different batches never share records. Compare that to the big subscription tools, where thousands of users pull the identical list every day.</p></details>
       <details><summary>How fresh is it really?</summary><p>Every county reruns against current official records each monthly cycle, and the cycle date is printed on your file. Fresh Drops are pulled or re-checked the same week you order.</p></details>
-      <details><summary>Can I pick the category?</summary><p>Yes. Pick your county on the order form and every category we have batches open for shows up automatically, long-hold landlords, out-of-state owners, vacant land, tax debt, pre-foreclosure, or probate, whatever that county's board carries. If a county has more than one category open, you can also pick a mixed batch, a blend pulled from every open category in that county instead of committing to just one.</p></details>
+      <details><summary>Can I pick the category?</summary><p>Yes. Pick your county on the order form and every category we have batches open for shows up automatically, long-hold landlords, out-of-state owners, vacant land, tax debt, pre-foreclosure, or probate, whatever that county's board carries. Each order is one category from one county, so your batch stays clean. Want two categories? Place two orders.</p></details>
       <details><summary>What if I need way more than 500 records?</summary><p>That's our parent company's lane. LeadCurate builds full custom territory databases for serious operators. Ask and we'll connect you.</p></details>
     </div>
   </div>
@@ -249,6 +249,7 @@ footer a{color:var(--bill);}
           <option value="">Pick a county first</option>
           <option>Not sure, recommend one</option>
         </select>
+        <p id="lane-hint" style="display:none;font-size:12px;color:var(--slate);margin-top:6px;">One category per order keeps your batch clean. Want a second category from this county too? Submit this order, then come back and grab another pack for it.</p>
         <label for="f-notes">Anything else? (ZIP codes, price range, other counties)</label>
         <textarea id="f-notes" name="notes" rows="2" placeholder="Optional"></textarea>
         <button type="submit" class="btn btn-green" style="width:100%;margin-top:20px;">Get my payment button</button>
@@ -295,14 +296,14 @@ function buildLaneOptions(marketDisplay) {
   if (!lSel) return;
   const rows = INVENTORY.filter(r => r.market_display === marketDisplay);
   const lanes = [...new Map(rows.map(r => [r.lane, r])).values()];
-  const openCount = lanes.filter(l => l._open > 0).length;
   lSel.innerHTML = '<option value="">Pick a category</option>' +
     lanes.map(l => {
       const open = l._open || 0;
       return `<option ${open<=0?'disabled':''}>${l.lane_display}${open<=0?' (sold out this cycle)':''}</option>`;
     }).join('') +
-    (openCount > 1 ? '<option>Mixed batch, best of every open category</option>' : '') +
     '<option>Not sure, recommend one</option>';
+  const hint = document.getElementById('lane-hint');
+  if (hint) hint.style.display = lanes.length > 1 ? 'block' : 'none';
 }
 document.getElementById('f-county').addEventListener('change', (e) => buildLaneOptions(e.target.value));
 
