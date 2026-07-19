@@ -94,6 +94,12 @@ The invoice deliberately calls the $1,000 an **initial project payment**. It doe
 - Added "Who this is for" section (new wholesalers, market testers, land buyers, agents).
 - Phase plan for automation is on the command center Dollar Leads page: Phase 1 manual (live now), Phase 2 Codex pack-cutter, Phase 3 Stripe links + webhook auto-delivery.
 
+**Final launch additions 2026-07-19 (Claude, commit `b78b602`):**
+- **Founders Deal:** first 20 buyers, 1,000 records for $50, cycle exclusivity (their records retire from sale), deep boards only (Dallas/Wayne/Cook/Massachusetts). Banner + live countdown read from new `dollar_promos` table (name `founders-20`); hides at zero. Fulfillment bumps `slots_sold`.
+- **Fresh Scrub replaced Fresh Drop:** $20 for 20 same-morning re-checked records. Card and order option ONLY render when a county is flagged in new `dollar_fresh_days` table (all false by default). Never flip a county that wasn't actually re-checked that morning. Exact SQL for both controls is on the command center Dollar Leads page.
+- **Board now 7 markets:** added Massachusetts statewide (5 batches x 3 lanes from the FULL verified 2026-07-16 files, serves every pack size including Founders) and Fulton GA (Atlanta vacant, 250-row curated file, small packs only).
+- New "What's in every record" section marketing the field depth (owner name, property address, owner mailing address, parcel ID, values, tenure).
+
 **CODEX PRIORITY ORDER for Dollar Leads (after Reggie commitments):**
 1. Regenerate FULL lane files for Mecklenburg NC from raw source (raw_imports has full parcels; vacant source ~23K rows, absentee source ~446K) and Shelby TN tax-sale, then cut real non-overlapping batches for ALL 5 counties and replace the placeholder/undersized dollar_batches rows.
 2. Build `scripts/leadcurate/cut_dollar_pack.py` per the spec above (single-category orders only).
