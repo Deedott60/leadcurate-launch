@@ -839,7 +839,18 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div class="card mb16">
         <div class="card-h"><span class="card-title">💰 Pack prices</span></div>
         <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          Starter $5 = 50 records · Work $15 = 250 records · Full $25 = 500 records · Fresh Drop $10 = 15 same-week records.
+          Starter $5 = 50 records · Work $15 = 250 records · Full $25 = 500 records · Fresh Drop $5 = 15 same-week records (repriced from $10 on 2026-07-19, the per-record math looked like a trap next to the other packs).<br><br>
+          <b>Counties live:</b> Dallas TX, Wayne MI, Cook IL (placeholder 500-record batches), plus Mecklenburg NC and Shelby TN added 2026-07-19.<br>
+          <b>Heads up on Meck/Shelby:</b> their current files are the old curated cuts (vacant 250, absentee 100, city liens 100, Memphis tax-sale 200), so until Codex regenerates full lanes from source, steer $25 Full Pack buyers in those counties to Dallas/Wayne/Cook or downgrade them to a pack their lane can cover.
+        </p>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">🤖 Automation phases</span></div>
+        <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
+          <b>Phase 1 (today, manual):</b> order lands in Inbox, Cash App payment arrives with DL- code, you match and send the file. Works now, no dependencies.<br>
+          <b>Phase 2 (Codex, this week):</b> pack-cutter script cuts the exact file per order in one command and bumps seats_sold. You still match payments by eye, but fulfillment becomes 30 seconds.<br>
+          <b>Phase 3 (later):</b> Stripe Payment Links per pack + webhook to an edge function that auto-emails the file on payment. Needs Derrick to create the Stripe products; the payment-confirmation function already exists as the base. Only worth wiring after real sales prove volume.
         </p>
       </div>
 

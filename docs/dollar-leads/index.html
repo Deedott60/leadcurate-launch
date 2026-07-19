@@ -188,10 +188,10 @@ footer a{color:var(--bill);}
         <a class="btn btn-green" href="#order" onclick="pickPack('Full $25 (500 records)')">Reserve</a>
       </div>
       <div class="pack fresh">
-        <div class="price">$10</div>
+        <div class="price">$5</div>
         <h3>Fresh Drop · 15 records</h3>
         <p>Pulled or re-checked against county records the same week you buy. Smallest list, newest data.</p>
-        <a class="btn btn-green" href="#order" onclick="pickPack('Fresh Drop $10 (15 records)')">Reserve</a>
+        <a class="btn btn-green" href="#order" onclick="pickPack('Fresh Drop $5 (15 records)')">Reserve</a>
       </div>
     </div>
 
@@ -200,6 +200,19 @@ footer a{color:var(--bill);}
       <div class="pr-item"><b>Batches don't overlap.</b><p>Batch 4 holds different properties than Batch 3. Two buyers in different batches are never working the same owners.</p></div>
       <div class="pr-item"><b>Refreshes monthly.</b><p>Every county reruns against current official records each cycle. The board regenerates, retired batches come back rebuilt, and the cycle date is printed on your file.</p></div>
       <div class="pr-item"><b>Straight from the county.</b><p>Built from official county records with the source and parcel numbers included, not from somebody else's resold export.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="who">
+  <div class="wrap">
+    <span class="eyebrow">Who this is for</span>
+    <h2>Built for the people doing the work, not the ones with a data budget.</h2>
+    <div class="steps">
+      <div class="step"><b>&#10003;</b><h3>New wholesalers</h3><p>Get a real list for your first texting or mail campaign without a $99 monthly subscription you'll forget to cancel.</p></div>
+      <div class="step"><b>&#10003;</b><h3>Operators testing a new market</h3><p>Prove a county works with a $15 pack before you commit real marketing dollars to it.</p></div>
+      <div class="step"><b>&#10003;</b><h3>Land buyers and flippers</h3><p>Verified vacant parcels with real owners and real acreage, in counties where the dirt actually trades.</p></div>
+      <div class="step"><b>&#10003;</b><h3>Agents and bird dogs</h3><p>A cheap, clean pipeline of owners worth a conversation, with the parcel number to prove every record.</p></div>
     </div>
   </div>
 </section>
@@ -242,7 +255,7 @@ footer a{color:var(--bill);}
           <option>Starter $5 (50 records)</option>
           <option>Work $15 (250 records)</option>
           <option>Full $25 (500 records)</option>
-          <option>Fresh Drop $10 (15 records)</option>
+          <option>Fresh Drop $5 (15 records)</option>
         </select>
         <label for="f-lane">Which list?</label>
         <select id="f-lane" name="lane" required>
@@ -383,7 +396,7 @@ form.addEventListener('submit', async (e) => {
     notes: 'DOLLAR LEADS ORDER | pack: ' + (fd.get('pack')||'') + ' | lane: ' + (fd.get('lane')||'') + ' | county: ' + (fd.get('county')||'') + ' | extra: ' + (fd.get('notes')||'none'),
     source: 'dollar-leads-v1',
   };
-  const amounts = { 'Starter $5 (50 records)': 5, 'Work $15 (250 records)': 15, 'Full $25 (500 records)': 25, 'Fresh Drop $10 (15 records)': 10 };
+  const amounts = { 'Starter $5 (50 records)': 5, 'Work $15 (250 records)': 15, 'Full $25 (500 records)': 25, 'Fresh Drop $5 (15 records)': 5 };
   const amt = amounts[fd.get('pack')] || 0;
   const code = 'DL-' + Date.now().toString(36).toUpperCase().slice(-5);
   lead.notes = code + ' | ' + lead.notes;
