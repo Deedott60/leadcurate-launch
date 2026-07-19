@@ -281,15 +281,19 @@ footer a{color:var(--bill);}
     <p class="sub">Fill this out and your payment button appears right here. Pay with Cash App and your file lands in your inbox the same day.</p>
     <div class="order-card">
       <form id="dl-form">
-        <label for="f-name">Your name</label>
-        <input id="f-name" name="name" required placeholder="First and last" />
-        <label for="f-email">Email (your file goes here)</label>
-        <input id="f-email" name="email" type="email" required placeholder="you@email.com" />
         <label for="f-county">County</label>
         <select id="f-county" name="county" required>
           <option value="">Pick a county</option>
           <option>Another county (tell us below)</option>
         </select>
+        <div id="market-menu" style="display:none;margin-top:10px;border:1.5px solid var(--bill);border-radius:10px;padding:14px;">
+          <div style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bill);margin-bottom:8px;">Available in <span id="mm-name"></span> right now</div>
+          <div id="mm-lanes" style="display:grid;gap:6px;"></div>
+        </div>
+        <label for="f-name">Your name</label>
+        <input id="f-name" name="name" required placeholder="First and last" />
+        <label for="f-email">Email (your file goes here)</label>
+        <input id="f-email" name="email" type="email" required placeholder="you@email.com" />
         <label for="f-pack">Pack</label>
         <select id="f-pack" name="pack" required>
           <option value="">Pick a pack</option>
@@ -352,11 +356,22 @@ function scrollToOrder(market, lane) {
   const cSel = document.getElementById('f-county');
   if (cSel) cSel.value = market;
   buildLaneOptions(market);
-  const lSel = document.getElementById('f-lane');
-  if (lSel && lane) lSel.value = lane;
+  if (lane) pickLane(lane);
   document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
 }
 window.scrollToOrder = scrollToOrder;
+
+const FOUNDERS_MARKETS = ['Dallas County TX', 'Wayne County MI', 'Cook County IL', 'Massachusetts (statewide)'];
+
+function pickLane(laneDisplay) {
+  const lSel = document.getElementById('f-lane');
+  if (lSel) lSel.value = laneDisplay;
+  document.querySelectorAll('#mm-lanes .mm-lane').forEach(el => {
+    el.style.background = el.dataset.lane === laneDisplay ? 'var(--bill-soft)' : '#fff';
+    el.style.borderColor = el.dataset.lane === laneDisplay ? 'var(--bill)' : 'var(--line)';
+  });
+}
+window.pickLane = pickLane;
 
 function buildLaneOptions(marketDisplay) {
   const lSel = document.getElementById('f-lane');
@@ -371,6 +386,37 @@ function buildLaneOptions(marketDisplay) {
     '<option>Not sure, recommend one</option>';
   const hint = document.getElementById('lane-hint');
   if (hint) hint.style.display = lanes.length > 1 ? 'block' : 'none';
+
+  // The visible market menu: every list this county has, tap to select
+  const menu = document.getElementById('market-menu');
+  const mmName = document.getElementById('mm-name');
+  const mmLanes = document.getElementById('mm-lanes');
+  if (menu && mmLanes) {
+    if (lanes.length) {
+      menu.style.display = 'block';
+      if (mmName) mmName.textContent = marketDisplay;
+      mmLanes.innerHTML = lanes.map(l => {
+        const open = l._open || 0;
+        const lEsc = l.lane_display.replace(/'/g, "\\'");
+        return open > 0
+          ? `<div class="mm-lane" data-lane="${l.lane_display}" onclick="pickLane('${lEsc}')" style="cursor:pointer;border:1.5px solid var(--line);border-radius:8px;padding:10px 12px;display:flex;justify-content:space-between;gap:10px;font-size:13px;background:#fff;"><b>${l.lane_display}</b><span style="color:var(--bill);font-weight:700;white-space:nowrap;">${open} seats · tap to pick</span></div>`
+          : `<div style="border:1.5px solid var(--line);border-radius:8px;padding:10px 12px;display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--slate);"><b>${l.lane_display}</b><span>sold out this cycle</span></div>`;
+      }).join('');
+    } else {
+      menu.style.display = 'none';
+    }
+  }
+
+  // Founders Deal only exists in the deep markets
+  const pSel = document.getElementById('f-pack');
+  if (pSel) {
+    const fOpt = [...pSel.options].find(o => o.text.startsWith('Founders'));
+    if (fOpt) {
+      const allowed = FOUNDERS_MARKETS.includes(marketDisplay);
+      fOpt.disabled = !allowed;
+      if (!allowed && pSel.value === fOpt.text) pSel.value = '';
+    }
+  }
 }
 document.getElementById('f-county').addEventListener('change', (e) => buildLaneOptions(e.target.value));
 
@@ -429,17 +475,24 @@ async function loadInventory() {
       (byMarket[r.market_display] = byMarket[r.market_display] || []).push(r);
     }
     if (board) {
-      board.innerHTML = Object.entries(byMarket).map(([mktDisplay, lanes]) => `
+      board.innerHTML = Object.entries(byMarket).map(([mktDisplay, lanes]) => {
+        const mEsc = mktDisplay.replace(/'/g, "\\'");
+        return `
         <div class="drop">
           <span class="tag">${mktDisplay}</span>
           <h3>${mktDisplay}</h3>
-          <div class="pulled">${lanes[0].cycle} cycle</div>
+          <div class="pulled">${lanes[0].cycle} cycle · ${lanes.filter(l=>l._open>0).length} lists available · tap one to order it</div>
           <ul>
-            ${lanes.map(l => `<li><b>${l.lane_display}:</b> <span style="color:${l._open>0?'#22c55e':'#f87171'};">${l._open>0 ? l._open + ' seat' + (l._open===1?'':'s') + ' open' : 'sold out this cycle'}</span></li>`).join('')}
+            ${lanes.map(l => {
+              const lEsc = l.lane_display.replace(/'/g, "\\'");
+              return l._open > 0
+                ? `<li style="cursor:pointer;" onclick="scrollToOrder('${mEsc}','${lEsc}')"><b style="text-decoration:underline;">${l.lane_display}</b> <span style="color:#22c55e;">${l._open} seat${l._open===1?'':'s'} open →</span></li>`
+                : `<li><b>${l.lane_display}</b> <span style="color:#f87171;">sold out this cycle</span></li>`;
+            }).join('')}
           </ul>
-          <a class="btn btn-green cta" href="#order" onclick="scrollToOrder('${mktDisplay.replace(/'/g,"\\'")}')">Grab a pack</a>
-        </div>
-      `).join('');
+          <a class="btn btn-green cta" href="#order" onclick="scrollToOrder('${mEsc}')">See ${mktDisplay.split(' ')[0]}'s full menu</a>
+        </div>`;
+      }).join('');
     }
   } catch (e) {
     console.warn(e);
