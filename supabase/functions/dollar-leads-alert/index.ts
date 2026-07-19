@@ -8,7 +8,7 @@ const SB_KEY = Deno.env.get("SUPABASE_PUBLISHABLE_KEY") ?? Deno.env.get("SUPABAS
 const FROM_EMAIL = Deno.env.get("LEADCURATE_FROM_EMAIL") ?? "LeadCurate <hello@leadcurate.com>";
 const HOSTINGER_MAIL_BASE_URL = Deno.env.get("HOSTINGER_MAIL_BASE_URL") ?? "https://api.mail.hostinger.com";
 const ALERT_RECIPIENTS = ["dmcdonald5649@gmail.com", "hello@leadcurate.com"];
-const CASHTAG = "Derrick607";
+const CASHTAG = "DollarLeads";
 
 const AMOUNTS: Record<string, number> = {
   "Starter $5 (50 records)": 5,

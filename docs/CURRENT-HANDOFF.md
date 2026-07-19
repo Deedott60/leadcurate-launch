@@ -73,10 +73,10 @@ The invoice deliberately calls the $1,000 an **initial project payment**. It doe
 
 ## Open now -- Dollar Leads (NEW sister brand, launched 2026-07-18)
 
-**What it is:** Derrick's second income stream while high-ticket deals cook. Small packs of county data at $5/$15/$25 (+$10 Fresh Drop), sold self-serve with instant Cash App checkout ($Derrick607) and same-day file delivery. Target: a few hundred dollars/day. Market research 2026-07-18 confirmed NOBODY sells fixed-price instant county+niche batch packs with source+pull-date provenance; the market is subscriptions vs $125+ minimums vs $250-400/lead PPL. Provenance transparency is the differentiator.
+**What it is:** Derrick's second income stream while high-ticket deals cook. Small packs of county data at $5/$15/$25 (+$10 Fresh Drop), sold self-serve with instant Cash App checkout ($DollarLeads) and same-day file delivery. Target: a few hundred dollars/day. Market research 2026-07-18 confirmed NOBODY sells fixed-price instant county+niche batch packs with source+pull-date provenance; the market is subscriptions vs $125+ minimums vs $250-400/lead PPL. Provenance transparency is the differentiator.
 
 **Live pieces (Claude, 2026-07-18):**
-- Store: `docs/dollar-leads/index.html` (staging at leadcurate.com/dollar-leads/ until its own domain is wired; page is fully self-contained + portable). Orders insert into `intake_requests` with source `dollar-leads-v1` and a `DL-XXXXX` order code prefixed in notes; the existing trigger routes them to the dashboard inbox. After submit the buyer instantly gets a cash.app/$Derrick607/{amount} button with their code for the payment note.
+- Store: `docs/dollar-leads/index.html` (staging at leadcurate.com/dollar-leads/ until its own domain is wired; page is fully self-contained + portable). Orders insert into `intake_requests` with source `dollar-leads-v1` and a `DL-XXXXX` order code prefixed in notes; the existing trigger routes them to the dashboard inbox. After submit the buyer instantly gets a cash.app/$DollarLeads/{amount} button with their code for the payment note.
 - Command center: new "Dollar Leads" page under Growth nav in `docs/command/index.html` with store link, order-flow walkthrough, pack prices, and the daily $300 operating plan.
 - Counties on the board v1: Dallas TX, Wayne MI (live tax balances angle), Cook IL. Weekly rotation, capped drops.
 

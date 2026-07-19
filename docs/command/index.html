@@ -829,7 +829,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
         <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
           1. Buyer picks county + pack + category on the store and submits the form.<br>
           2. Order lands in <code>intake_requests</code> with source <code>dollar-leads-v1</code> and a DL- order code, so it shows in your Inbox here like any lead.<br>
-          3. The page instantly shows them a Cash App button ($Derrick607) for the exact amount, with their order code for the payment note.<br>
+          3. The page instantly shows them a Cash App button ($DollarLeads) for the exact amount, with their order code for the payment note.<br>
           4. You match the payment to the code and run <code>scripts/leadcurate/cut_dollar_pack.py</code>. It reserves the next open real batch, writes stamped CSV and XLSX delivery files, and updates the manifest.<br>
           5. <b>Batch rules that protect us:</b> each batch = 500 unique records, max 3 seats, retires when full. Store shows live seat counts. Monthly refresh regenerates the board, so retired batches legitimately come back as new inventory. Old data never looks stale because everything is labeled by cycle only, never a day count, so a batch sold on cycle-day 20 reads identically to one sold on day 1.<br>
           6. Same-day delivery is the promise. Fresh Drop packs get re-checked against the county before sending.
