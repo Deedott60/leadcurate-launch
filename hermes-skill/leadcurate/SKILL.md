@@ -1,6 +1,6 @@
 ---
 name: leadcurate
-description: LeadCurate source of truth — current state, 5-tier product system (locked 2026-06-29, see /CLAUDE.md §3), brand voice rules, customer flow, agent roles. Read first whenever any task mentions LeadCurate, intake form, quotes, audits, tiers, county data, wholesaling, REI lead lists, or motivated seller data.
+description: LeadCurate and Dollar Leads source of truth, including DL- order codes and PAID payment confirmations, current state, product rules, customer flow, and agent roles. Read first whenever a task mentions LeadCurate, Dollar Leads, a DL-XXXXX code, payment confirmation, intake, quotes, county data, wholesaling, REI lead lists, or motivated seller data.
 metadata:
   type: project
   version: 2026-07-03-v5
