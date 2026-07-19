@@ -125,16 +125,16 @@ footer a{color:var(--bill);}
 
 <header class="hero">
   <div class="wrap">
-    <div class="stamp">Every file stamped with its county source and pull date</div>
-    <h1>Real property leads. <em>A few dollars</em> at a time.</h1>
-    <p class="lede">The same county-sourced data big operators pay thousands for, sold in small packs anyone can afford. Pulled straight from official county records, dated, deduplicated, and sent to your inbox. No subscription. No minimums. No recycled junk.</p>
+    <div class="stamp">Numbered batches · max 3 buyers each · then retired</div>
+    <h1>Your batch. <em>Not everybody's list.</em></h1>
+    <p class="lede">Stop texting the same recycled list as 500 other wholesalers. We cut county records into numbered batches, sell each batch to a maximum of 3 buyers, then retire it until the next monthly refresh. Packs start at $5. No subscription. No minimums.</p>
     <div class="hero-ctas">
       <a class="btn btn-green" href="#packs">See pack prices</a>
       <a class="btn btn-ghost" href="#drops">This week's counties</a>
     </div>
     <div class="hero-proof">
       <div class="proof"><strong>5M+</strong>county records processed</div>
-      <div class="proof"><strong>47+</strong>counties in the vault</div>
+      <div class="proof"><strong id="hero-seats">open</strong>batch seats open this cycle</div>
       <div class="proof"><strong>$5</strong>gets you started</div>
     </div>
   </div>
@@ -154,43 +154,11 @@ footer a{color:var(--bill);}
 
 <section id="drops">
   <div class="wrap">
-    <span class="eyebrow">This week's drops</span>
-    <h2>Three counties on the board right now.</h2>
-    <p class="sub">Each drop is capped. When a county's packs sell through, it comes off the board until the next fresh pull.</p>
-    <div class="drops">
-      <div class="drop">
-        <span class="tag">Texas</span>
-        <h3>Dallas County</h3>
-        <div class="pulled">Built from the county's current 2026 records</div>
-        <ul>
-          <li><b>Long-hold landlords:</b> owners 10+ years in, not living at the property</li>
-          <li><b>Out-of-state owners:</b> Dallas property, owner mails elsewhere</li>
-          <li><b>Vacant land:</b> verified vacant, real acreage, sellable owners</li>
-        </ul>
-        <a class="btn btn-green cta" href="#order" onclick="pickCounty('Dallas County TX')">Grab a Dallas pack</a>
-      </div>
-      <div class="drop">
-        <span class="tag">Michigan</span>
-        <h3>Wayne County / Detroit</h3>
-        <div class="pulled">Tax balances checked against the county this month</div>
-        <ul>
-          <li><b>Live tax-debt owners:</b> confirmed current balances, not old lists</li>
-          <li><b>Long-hold landlords:</b> 10+ year Detroit holds, non-occupant</li>
-          <li><b>Vacant land:</b> verified vacant parcels across the county</li>
-        </ul>
-        <a class="btn btn-green cta" href="#order" onclick="pickCounty('Wayne County MI')">Grab a Wayne pack</a>
-      </div>
-      <div class="drop">
-        <span class="tag">Illinois</span>
-        <h3>Cook County / Chicago</h3>
-        <div class="pulled">Built from the county's current assessment universe</div>
-        <ul>
-          <li><b>Long-hold landlords:</b> tens of thousands of 10+ year holds</li>
-          <li><b>Multifamily owners:</b> the deepest small-apartment bench in the country</li>
-          <li><b>Out-of-state owners:</b> Chicago property, owner mails elsewhere</li>
-        </ul>
-        <a class="btn btn-green cta" href="#order" onclick="pickCounty('Cook County IL')">Grab a Cook pack</a>
-      </div>
+    <span class="eyebrow">On the board now</span>
+    <h2>Numbered batches. Live seat counts.</h2>
+    <p class="sub">Every batch holds different records than the last. A batch sells a maximum of 3 seats and then retires. The whole board regenerates with the monthly county refresh, so nothing here is ever last year's list.</p>
+    <div class="drops" id="drops-board">
+      <div class="drop"><p style="color:#8fa0ac;font-size:13px;">Loading this cycle's board...</p></div>
     </div>
   </div>
 </section>
@@ -228,10 +196,10 @@ footer a{color:var(--bill);}
     </div>
 
     <div class="promise">
-      <div class="pr-item"><b>Dated, like milk.</b><p>Every file states the exact county source and the date we pulled it. If a vendor won't tell you that, ask yourself why.</p></div>
-      <div class="pr-item"><b>One row per property.</b><p>Deduplicated before it ships. You never pay for the same property twice in one file.</p></div>
-      <div class="pr-item"><b>Straight from the county.</b><p>We build from official county records, not from somebody else's resold export.</p></div>
-      <div class="pr-item"><b>Capped drops.</b><p>Each county drop sells a limited number of packs, so you are not texting the same list as 500 other people.</p></div>
+      <div class="pr-item"><b>Max 3 buyers per batch. Ever.</b><p>Your batch number is on your file. When the third seat sells, that batch retires from the store. Nobody else gets those records this cycle.</p></div>
+      <div class="pr-item"><b>Batches don't overlap.</b><p>Batch 4 holds different properties than Batch 3. Two buyers in different batches are never working the same owners.</p></div>
+      <div class="pr-item"><b>Refreshes monthly.</b><p>Every county reruns against current official records each cycle. The board regenerates, retired batches come back rebuilt, and the cycle date is printed on your file.</p></div>
+      <div class="pr-item"><b>Straight from the county.</b><p>Built from official county records with the source and parcel numbers included, not from somebody else's resold export.</p></div>
     </div>
   </div>
 </section>
@@ -244,8 +212,9 @@ footer a{color:var(--bill);}
       <details><summary>What's in each record?</summary><p>Owner name, property address, owner mailing address, official parcel number, property type, county values where published, how long the owner has held it where the county shows it, and the reason it made the list.</p></details>
       <details><summary>Is this skip traced?</summary><p>No. No phone numbers, no emails. This is county-record data you run through your own skip tracer or dialer. That keeps packs at these prices.</p></details>
       <details><summary>Is it scrubbed against the Do Not Call list?</summary><p>No. You are responsible for your own outreach compliance, including DNC and TCPA. We sell the data as compiled from public county records.</p></details>
-      <details><summary>How fresh is it really?</summary><p>The pull date is printed on your file, so you never have to take our word for it. Fresh Drops are pulled or re-checked the same week you order.</p></details>
-      <details><summary>Can I pick the category?</summary><p>Yes. When you reserve, tell us which list you want from that county's board: long-hold landlords, out-of-state owners, tax-debt owners, or vacant land, wherever offered.</p></details>
+      <details><summary>Will other people have my exact list?</summary><p>At most 2 other buyers, and that's the worst case. Each numbered batch sells a maximum of 3 seats and then retires for the cycle. Different batches never share records. Compare that to the big subscription tools, where thousands of users pull the identical list every day.</p></details>
+      <details><summary>How fresh is it really?</summary><p>Every county reruns against current official records each monthly cycle, and the cycle date is printed on your file. Fresh Drops are pulled or re-checked the same week you order.</p></details>
+      <details><summary>Can I pick the category?</summary><p>Yes. Pick your county on the order form and every category we have batches open for shows up automatically, long-hold landlords, out-of-state owners, vacant land, tax debt, pre-foreclosure, or probate, whatever that county's board carries.</p></details>
       <details><summary>What if I need way more than 500 records?</summary><p>That's our parent company's lane. LeadCurate builds full custom territory databases for serious operators. Ask and we'll connect you.</p></details>
     </div>
   </div>
@@ -265,9 +234,6 @@ footer a{color:var(--bill);}
         <label for="f-county">County</label>
         <select id="f-county" name="county" required>
           <option value="">Pick a county</option>
-          <option>Dallas County TX</option>
-          <option>Wayne County MI</option>
-          <option>Cook County IL</option>
           <option>Another county (tell us below)</option>
         </select>
         <label for="f-pack">Pack</label>
@@ -280,11 +246,7 @@ footer a{color:var(--bill);}
         </select>
         <label for="f-lane">Which list?</label>
         <select id="f-lane" name="lane" required>
-          <option value="">Pick a category</option>
-          <option>Long-hold landlords</option>
-          <option>Out-of-state owners</option>
-          <option>Tax-debt owners (Wayne)</option>
-          <option>Vacant land</option>
+          <option value="">Pick a county first</option>
           <option>Not sure, recommend one</option>
         </select>
         <label for="f-notes">Anything else? (ZIP codes, price range, other counties)</label>
@@ -293,7 +255,7 @@ footer a{color:var(--bill);}
         <div class="ok-msg" id="ok-msg">
           <div style="font-size:15px;margin-bottom:8px;">Order locked in. One step left: pay and you're done.</div>
           <a id="pay-btn" class="btn btn-green" href="#" target="_blank" rel="noopener" style="width:100%;">Pay <span id="pay-amt"></span> with Cash App</a>
-          <div style="font-weight:600;font-size:12.5px;margin-top:10px;color:#2f4a3a;">Put your order code <b id="order-code"></b> in the payment note so we match it fast. Your file lands in your inbox the same day, usually within a couple hours.</div>
+          <div style="font-weight:600;font-size:12.5px;margin-top:10px;color:#2f4a3a;">Put your order code <b id="order-code"></b> in the payment note so we match it fast. You get the next open batch in your county and category, your batch number is printed on your file, and it lands in your inbox the same day, usually within a couple hours.</div>
         </div>
         <p class="order-note">Questions first? Email <a href="mailto:hello@leadcurate.com">hello@leadcurate.com</a>.</p>
       </form>
@@ -311,8 +273,94 @@ footer a{color:var(--bill);}
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 const supabase = createClient('https://jdmlsraqioigbukspduo.supabase.co','sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4');
 
-window.pickCounty = (c) => { const el=document.getElementById('f-county'); if(el) el.value=c; };
 window.pickPack = (p) => { const el=document.getElementById('f-pack'); if(el) el.value=p; };
+
+// Everything below reads live from the dollar_batches table. Adding a new
+// county or category (pre-foreclosure, probate, tax-debt, whatever) is a
+// database insert only, this page never needs a code change for it.
+let INVENTORY = [];
+
+function scrollToOrder(market, lane) {
+  const cSel = document.getElementById('f-county');
+  if (cSel) cSel.value = market;
+  buildLaneOptions(market);
+  const lSel = document.getElementById('f-lane');
+  if (lSel && lane) lSel.value = lane;
+  document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+}
+window.scrollToOrder = scrollToOrder;
+
+function buildLaneOptions(marketDisplay) {
+  const lSel = document.getElementById('f-lane');
+  if (!lSel) return;
+  const rows = INVENTORY.filter(r => r.market_display === marketDisplay);
+  const lanes = [...new Map(rows.map(r => [r.lane, r])).values()];
+  lSel.innerHTML = '<option value="">Pick a category</option>' +
+    lanes.map(l => {
+      const open = l._open || 0;
+      return `<option ${open<=0?'disabled':''}>${l.lane_display}${open<=0?' (sold out this cycle)':''}</option>`;
+    }).join('') +
+    '<option>Not sure, recommend one</option>';
+}
+document.getElementById('f-county').addEventListener('change', (e) => buildLaneOptions(e.target.value));
+
+async function loadInventory() {
+  const board = document.getElementById('drops-board');
+  try {
+    const { data, error } = await supabase.from('dollar_batches')
+      .select('market, market_display, lane, lane_display, cycle, seats_total, seats_sold, status')
+      .eq('status', 'live');
+    if (error || !data || !data.length) {
+      if (board) board.innerHTML = '<div class="drop"><p style="color:#8fa0ac;font-size:13px;">Board is refreshing, check back shortly or email hello@leadcurate.com.</p></div>';
+      return;
+    }
+
+    // aggregate open seats per market+lane across all batches in that bucket
+    const agg = {};
+    for (const row of data) {
+      const key = row.market + '||' + row.lane;
+      const open = Math.max(0, (row.seats_total || 0) - (row.seats_sold || 0));
+      if (!agg[key]) agg[key] = { ...row, _open: 0, cycle: row.cycle };
+      agg[key]._open += open;
+    }
+    INVENTORY = Object.values(agg);
+
+    // populate county select
+    const cSel = document.getElementById('f-county');
+    const counties = [...new Map(INVENTORY.map(r => [r.market_display, r])).values()];
+    cSel.innerHTML = '<option value="">Pick a county</option>' +
+      counties.map(c => `<option>${c.market_display}</option>`).join('') +
+      '<option>Another county (tell us below)</option>';
+
+    // hero total
+    const total = INVENTORY.reduce((s, r) => s + r._open, 0);
+    const hero = document.getElementById('hero-seats');
+    if (hero) hero.textContent = total > 0 ? total.toLocaleString() : 'new drop coming';
+
+    // build board, grouped by county
+    const byMarket = {};
+    for (const r of INVENTORY) {
+      (byMarket[r.market_display] = byMarket[r.market_display] || []).push(r);
+    }
+    if (board) {
+      board.innerHTML = Object.entries(byMarket).map(([mktDisplay, lanes]) => `
+        <div class="drop">
+          <span class="tag">${mktDisplay}</span>
+          <h3>${mktDisplay}</h3>
+          <div class="pulled">${lanes[0].cycle} cycle</div>
+          <ul>
+            ${lanes.map(l => `<li><b>${l.lane_display}:</b> <span style="color:${l._open>0?'#22c55e':'#f87171'};">${l._open>0 ? l._open + ' seat' + (l._open===1?'':'s') + ' open' : 'sold out this cycle'}</span></li>`).join('')}
+          </ul>
+          <a class="btn btn-green cta" href="#order" onclick="scrollToOrder('${mktDisplay.replace(/'/g,"\\'")}')">Grab a pack</a>
+        </div>
+      `).join('');
+    }
+  } catch (e) {
+    console.warn(e);
+    if (board) board.innerHTML = '<div class="drop"><p style="color:#8fa0ac;font-size:13px;">Board is refreshing, check back shortly.</p></div>';
+  }
+}
+loadInventory();
 
 const form = document.getElementById('dl-form');
 form.addEventListener('submit', async (e) => {

@@ -830,16 +830,23 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
           1. Buyer picks county + pack + category on the store and submits the form.<br>
           2. Order lands in <code>intake_requests</code> with source <code>dollar-leads-v1</code> and a DL- order code, so it shows in your Inbox here like any lead.<br>
           3. The page instantly shows them a Cash App button ($Derrick607) for the exact amount, with their order code for the payment note.<br>
-          4. You see the Cash App payment, match the code, and send the file from the processed lane on the VPS (Codex is building the pack-cutter script that slices 50/250/500 records with source + pull date stamped in the file).<br>
-          5. Same-day delivery is the promise. Fresh Drop packs get re-checked against the county before sending.
+          4. You match the payment to the code, assign the NEXT OPEN BATCH from the <code>dollar_batches</code> table (bump its <code>seats_sold</code>), and send the file. Codex's pack-cutter script slices non-overlapping numbered batches with cycle + source stamped in the file.<br>
+          5. <b>Batch rules that protect us:</b> each batch = 500 unique records, max 3 seats, retires when full. Store shows live seat counts. Monthly refresh regenerates the board, so retired batches legitimately come back as new inventory. Old data never looks stale because everything is labeled by cycle only, never a day count, so a batch sold on cycle-day 20 reads identically to one sold on day 1.<br>
+          6. Same-day delivery is the promise. Fresh Drop packs get re-checked against the county before sending.
         </p>
       </div>
 
       <div class="card mb16">
         <div class="card-h"><span class="card-title">💰 Pack prices</span></div>
         <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          Starter $5 = 50 records · Work $15 = 250 records · Full $25 = 500 records · Fresh Drop $10 = 15 same-week records.<br>
-          Counties on the board now: Dallas TX, Wayne MI (live tax balances), Cook IL. Rotate weekly, cap each drop so lists never oversaturate.
+          Starter $5 = 50 records · Work $15 = 250 records · Full $25 = 500 records · Fresh Drop $10 = 15 same-week records.
+        </p>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">🗂️ Adding a county or category</span></div>
+        <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
+          The store's board and order form both read live from the <code>dollar_batches</code> table, nothing is hardcoded on the page anymore. To open a new county or a new category (pre-foreclosure, probate, tax-debt, whatever the lane), Codex's pack-cutter script inserts new batch rows (market, market_display, lane, lane_display, batch_no, seats_total, cycle). The store picks it up automatically, no page edit needed. Categories currently seeded: long-hold landlords, out-of-state owners, vacant land, tax-debt (Wayne), multifamily (Cook). Pre-foreclosure and probate slot in the same way once Codex has verified lane files for them.
         </p>
       </div>
 
