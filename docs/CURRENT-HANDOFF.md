@@ -87,6 +87,18 @@ The invoice deliberately calls the $1,000 an **initial project payment**. It doe
 
 **Decision 2026-07-19 (Derrick):** dropped the mixed-batch option. Every order is exactly one category from one county, keeps fulfillment and the batch ledger simple. A buyer who wants two categories places two separate orders. No mixed-batch logic needed in the cutter.
 
+**Launch pass 2026-07-19 (Claude, commit `516791a`) -- Derrick is launching TODAY; this is the first publicly pushed LeadCurate-family site:**
+- Board now carries 5 counties: Dallas TX / Wayne MI / Cook IL (placeholder 500-record batches) + Mecklenburg NC (Charlotte: verified vacant, high-value absentee, city liens) + Shelby TN (Memphis: tax-sale).
+- **Meck/Shelby honesty note:** their batches were seeded at the true sizes of the existing curated files (250/100/100/200 rows). They cannot serve a $25/500 Full Pack until regenerated from source.
+- Fresh Drop repriced $10 -> $5 (per-record value looked like a trap next to the other packs). Option label + Cash App amounts map updated together.
+- Added "Who this is for" section (new wholesalers, market testers, land buyers, agents).
+- Phase plan for automation is on the command center Dollar Leads page: Phase 1 manual (live now), Phase 2 Codex pack-cutter, Phase 3 Stripe links + webhook auto-delivery.
+
+**CODEX PRIORITY ORDER for Dollar Leads (after Reggie commitments):**
+1. Regenerate FULL lane files for Mecklenburg NC from raw source (raw_imports has full parcels; vacant source ~23K rows, absentee source ~446K) and Shelby TN tax-sale, then cut real non-overlapping batches for ALL 5 counties and replace the placeholder/undersized dollar_batches rows.
+2. Build `scripts/leadcurate/cut_dollar_pack.py` per the spec above (single-category orders only).
+3. Report back via conf:done with real batch counts per county/lane so Derrick knows exactly what the store can sell.
+
 **Rules that apply:** zero em dashes in anything the buyer sees (store page verified clean). No DNC/skip-trace claims (page states as-is public records, buyer owns compliance). Dollar Leads is deliberately the value tier; LeadCurate premium copy rules still apply to LeadCurate-branded pages, and the store upsell points big buyers back to LeadCurate custom territories. Freshness language is cycle-only everywhere, never a day count, since buyers avoid anything that reads older even by a day (Derrick's direct feedback 2026-07-19).
 
 **2026-07-19 rebuild (Claude, commits `31323d1`, `15feb09`):** the board and order form no longer hardcode counties/categories in the HTML. Both now read live from the `dollar_batches` Supabase table (public-read RLS) and render dynamically: picking a county auto-populates only the categories that county has open seats for, greys out sold-out ones, and offers a "Mixed batch, best of every open category" option when 2+ categories are open. **This means opening a new county or category going forward is a database insert only, never a page edit.** Removed all literal "ever" wording and any day-based freshness signal per Derrick's direct feedback. Confirmed added to the EXISTING LeadCurate dashboard (`docs/command/index.html`, Growth nav, 💵 Dollar Leads page), NOT a new dashboard.
