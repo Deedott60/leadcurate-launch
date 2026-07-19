@@ -1,7 +1,7 @@
 // Dollar Leads order alert v3: fires on every new dollar-leads-v1 intake row.
 // 1) emails the buyer their payment link, 2) alerts Derrick on personal +
-// company email and by SMS when Twilio secrets are configured, 3) posts to the
-// Conference Room. SMS is best-effort and never blocks the email path.
+// company email and through Danny's Telegram gateway, 3) posts to the
+// Conference Room. Twilio SMS remains best-effort and never blocks the path.
 
 const SB_URL = Deno.env.get("SUPABASE_URL") ?? "https://jdmlsraqioigbukspduo.supabase.co";
 const SB_KEY = Deno.env.get("SUPABASE_PUBLISHABLE_KEY") ?? Deno.env.get("SUPABASE_ANON_KEY") ?? "sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4";
@@ -69,6 +69,22 @@ async function sendSms(body: string) {
     body: form,
   });
   if (!res.ok) throw new Error(`Twilio ${res.status}: ${await res.text()}`);
+  return true;
+}
+
+async function sendTelegram(body: string) {
+  const [token, chatId] = await Promise.all([
+    secret("TELEGRAM_BOT_TOKEN"),
+    secret("TELEGRAM_HOME_CHANNEL"),
+  ]);
+  if (!token || !chatId) return false;
+
+  const res = await fetch(`https://api.telegram.org/bot${encodeURIComponent(token)}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chat_id: chatId, text: body }),
+  });
+  if (!res.ok) throw new Error(`Telegram ${res.status}: ${await res.text()}`);
   return true;
 }
 
@@ -143,12 +159,14 @@ Deno.serve(async (req) => {
       </div>`;
     await sendMail(ALERT_RECIPIENTS, `$${amount} incoming: ${code} | ${county} | ${lane}`, derrickHtml);
 
+    const operatorAlert = `DOLLAR LEADS ORDER\n$${amount} incoming: ${code}\n${county} | ${lane}\nBuyer: ${name} (${email || "no email"})\nCheck Cash App. When payment lands, text PAID ${code} to +1 737-258-3478.`;
+    const telegramSent = await sendTelegram(operatorAlert).catch(() => false);
     const smsSent = await sendSms(`$${amount} incoming: ${code}. ${county}, ${lane}. Check Cash App. When it lands, reply PAID ${code}.`).catch(() => false);
 
     // 3. Conference Room breadcrumb
-    await activity(`Dollar Leads order ${code}: ${pack} in ${county}`, `${name} (${email}) ordered ${lane}. Payment email sent to buyer. ${smsSent ? "Text alert sent." : "Text alert not configured."} Waiting on $${amount} Cash App payment with note ${code}.`);
+    await activity(`Dollar Leads order ${code}: ${pack} in ${county}`, `${name} (${email}) ordered ${lane}. Payment email sent to buyer. ${telegramSent ? "Danny Telegram alert sent." : "Danny Telegram alert failed."} ${smsSent ? "SMS alert sent." : "Custom SMS unavailable."} Waiting on $${amount} Cash App payment with note ${code}.`);
 
-    return new Response(JSON.stringify({ ok: true, code, amount, buyerMailed, smsSent }), { headers: { "Content-Type": "application/json" } });
+    return new Response(JSON.stringify({ ok: true, code, amount, buyerMailed, telegramSent, smsSent }), { headers: { "Content-Type": "application/json" } });
   } catch (e) {
     return new Response(JSON.stringify({ ok: false, error: String(e) }), { status: 500, headers: { "Content-Type": "application/json" } });
   }
