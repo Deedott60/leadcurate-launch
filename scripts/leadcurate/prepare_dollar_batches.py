@@ -44,7 +44,7 @@ SOURCES = [
 
 def parcel_key(row: dict[str, str], fields: list[str]) -> str:
     for field in fields:
-        value = "".join(str(row.get(field, "")).upper().split())
+        value = " ".join(str(row.get(field, "")).upper().split())
         if value:
             return value
     return ""

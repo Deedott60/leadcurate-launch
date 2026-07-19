@@ -67,7 +67,7 @@ def read_rows(path: Path) -> tuple[list[str], list[dict[str, str]]]:
 
 def parcel_key(row: dict[str, str], fields: list[str]) -> str:
     for field in fields:
-        value = "".join(clean(row.get(field)).upper().split())
+        value = clean(row.get(field)).upper()
         if value:
             return value
     return ""
