@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import gzip
 import json
 import os
 import re
@@ -56,13 +57,27 @@ def batch_manifest(lane: dict[str, Any], batch_no: int, minimum_size: int = 1) -
     return matches[0]
 
 
+def resolve_batch_path(path: Path) -> Path:
+    if path.exists():
+        return path
+    compressed = Path(f"{path}.gz")
+    if compressed.exists():
+        return compressed
+    raise FileNotFoundError(f"batch file not found: {path} or {compressed}")
+
+
 def read_rows(path: Path) -> tuple[list[str], list[dict[str, str]]]:
-    with path.open(newline="", encoding="utf-8-sig", errors="replace") as handle:
+    resolved = resolve_batch_path(path)
+    if resolved.suffix == ".gz":
+        handle = gzip.open(resolved, "rt", newline="", encoding="utf-8-sig", errors="replace")
+    else:
+        handle = resolved.open("rt", newline="", encoding="utf-8-sig", errors="replace")
+    with handle:
         reader = csv.DictReader(handle)
         fields = list(reader.fieldnames or [])
         rows = list(reader)
     if not fields:
-        raise ValueError(f"missing CSV header: {path}")
+        raise ValueError(f"missing CSV header: {resolved}")
     return fields, rows
 
 
@@ -266,11 +281,12 @@ def main() -> int:
     batches = [batch_manifest(lane, args.batch_no, 500 if founder else args.pack_size)]
     if founder:
         batches.append(batch_manifest(lane, args.batch_no + 1, 500))
-    fields, batch_rows = read_rows(Path(batches[0]["file"]))
+    resolved_batch_paths = [resolve_batch_path(Path(batch["file"])) for batch in batches]
+    fields, batch_rows = read_rows(resolved_batch_paths[0])
     if len(batch_rows) != int(batches[0]["size"]):
         raise ValueError("batch file row count does not match its manifest size")
     if founder:
-        second_fields, second_rows = read_rows(Path(batches[1]["file"]))
+        second_fields, second_rows = read_rows(resolved_batch_paths[1])
         if second_fields != fields or len(second_rows) != 500:
             raise ValueError("second Founders batch is incomplete or has a different schema")
         keys = lane["parcel_key_fields"]
@@ -316,8 +332,8 @@ def main() -> int:
             "source_name": fresh_meta.get("source_name", lane["source_name"]) if fresh_meta else lane["source_name"],
             "source_url": fresh_meta.get("source_url", lane["source_url"]) if fresh_meta else lane["source_url"],
             "fresh_scrub": args.fresh, "fresh_verification": fresh_meta,
-            "batch_file": batches[0]["file"], "batch_sha256": batches[0]["sha256"],
-            "batch_files": [batch["file"] for batch in batches],
+            "batch_file": str(resolved_batch_paths[0]), "batch_sha256": batches[0]["sha256"],
+            "batch_files": [str(path) for path in resolved_batch_paths],
             "batch_sha256s": [batch["sha256"] for batch in batches],
             "csv": csv_path.name, "xlsx": xlsx_path.name,
             "seat_after_cut": int(seat["seats_sold"]) if seat and not founder else None,
