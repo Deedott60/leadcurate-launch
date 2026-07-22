@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import gzip
 import hashlib
 import io
 import json
@@ -55,8 +56,8 @@ def main() -> int:
             path = Path(batch["file"])
             if not path.is_file():
                 raise FileNotFoundError(path)
-            raw = path.read_bytes()
-            actual_digest = hashlib.sha256(raw).hexdigest()
+            stored = path.read_bytes()
+            actual_digest = hashlib.sha256(stored).hexdigest()
             expected_digest = batch.get("sha256")
             if not expected_digest and args.backfill_missing_sha256:
                 batch["sha256"] = actual_digest
@@ -65,6 +66,10 @@ def main() -> int:
                 raise RuntimeError(f"{path}: manifest has no SHA-256")
             elif actual_digest != expected_digest:
                 raise RuntimeError(f"{path}: SHA-256 mismatch")
+            raw = gzip.decompress(stored) if path.suffix == ".gz" else stored
+            expected_content_digest = batch.get("content_sha256")
+            if expected_content_digest and hashlib.sha256(raw).hexdigest() != expected_content_digest:
+                raise RuntimeError(f"{path}: decompressed content SHA-256 mismatch")
             count = 0
             with io.StringIO(raw.decode("utf-8-sig", errors="replace"), newline="") as handle:
                 reader = csv.DictReader(handle)
