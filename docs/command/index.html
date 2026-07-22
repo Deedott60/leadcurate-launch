@@ -258,6 +258,21 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 .mb8{margin-bottom:8px;}
 .mb16{margin-bottom:16px;}
 
+/* WHITE-LABEL WORKSPACE */
+.wl-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+.wl-flow{display:grid;grid-template-columns:repeat(5,minmax(120px,1fr));gap:8px;overflow-x:auto;padding-bottom:4px;}
+.wl-stage{min-width:120px;border-left:3px solid var(--em);padding:10px 12px;background:var(--cream);}
+.wl-stage strong{display:block;font-size:13px;color:var(--dark);margin-bottom:4px;}
+.wl-stage span{display:block;font-size:11px;line-height:1.45;color:var(--sl);}
+.wl-checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 18px;}
+.wl-check{padding:10px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:18px 1fr;gap:8px;align-items:start;}
+.wl-check b{font-size:13px;color:var(--dark);}
+.wl-check small{display:block;font-size:11px;line-height:1.45;color:var(--sl);margin-top:2px;}
+.wl-check .yes{color:var(--em);font-weight:800;}
+.wl-check .no{color:var(--gold);font-weight:800;}
+.wl-contract{font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.7;background:var(--dark);color:#d1fae5;padding:14px;overflow-x:auto;white-space:pre;}
+@media(max-width:760px){.wl-grid,.wl-checks{grid-template-columns:1fr;}.wl-flow{grid-template-columns:repeat(5,150px);}}
+
 /* ── COMMAND PALETTE ─────────────────────── */
 #cmd-overlay{position:fixed;inset:0;background:rgba(15,23,42,0.7);z-index:500;display:none;align-items:flex-start;justify-content:center;padding-top:15vh;}
 #cmd-overlay.open{display:flex;}
@@ -333,6 +348,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
     <div class="nav-section">
       <div class="nav-item" data-page="workflow">
         <span class="icon">🔁</span> Workflow
+      </div>
+      <div class="nav-item" data-page="whitelabel">
+        <span class="icon">W</span> White-label workspace
       </div>
       <div class="nav-item" data-page="templates">
         <span class="icon">📋</span> Templates
@@ -660,6 +678,70 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
     </div>
 
     <!-- ── TEMPLATES ─────────────────────── -->
+    <div id="page-whitelabel" class="page">
+      <div class="page-header">
+        <div class="flex-row" style="justify-content:space-between;align-items:flex-start;">
+          <div><div class="page-title">White-label workspace</div><div class="page-sub">How the Property Decision Tool works now, and what connects it to a customer territory.</div></div>
+          <button class="btn btn-sm" onclick="window.open('https://property-decision-tool.mimiderrick.chatgpt.site','_blank')">Open tool</button>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat hi"><div class="v">Live</div><div class="l">Interface and calculators</div></div>
+        <div class="stat"><div class="v">CSV</div><div class="l">Import works now</div></div>
+        <div class="stat"><div class="v">Not yet</div><div class="l">VPS property API</div></div>
+        <div class="stat"><div class="v">Not yet</div><div class="l">Customer login and paging</div></div>
+      </div>
+      <div class="card">
+        <div class="card-h"><span class="card-title">One workspace, five connected views</span><span class="card-meta">The customer stays inside the tool</span></div>
+        <div class="wl-flow">
+          <div class="wl-stage"><strong>1. Search or browse</strong><span>Address, parcel, owner, market, category, price, or plain-language request.</span></div>
+          <div class="wl-stage"><strong>2. Results list</strong><span>Matching properties appear in the workspace. Selecting one changes the active record.</span></div>
+          <div class="wl-stage"><strong>3. Property record</strong><span>Owner, parcel, source fields, signals, values, and refresh date remain attached.</span></div>
+          <div class="wl-stage"><strong>4. Analyze or map</strong><span>Run deal calculations, review nearby records, or select the property on the map.</span></div>
+          <div class="wl-stage"><strong>5. Save or export</strong><span>Production saves notes and requests a server-built CSV/XLSX download.</span></div>
+        </div>
+      </div>
+      <div class="wl-grid">
+        <div class="card">
+          <div class="card-h"><span class="card-title">What works today</span><span class="badge b-paying">usable</span></div>
+          <div class="wl-checks">
+            <div class="wl-check"><span class="yes">OK</span><div><b>Browse and select records</b><small>Uses demonstration records or a CSV loaded into the browser.</small></div></div>
+            <div class="wl-check"><span class="yes">OK</span><div><b>Property detail and raw fields</b><small>Known fields are organized; unfamiliar source columns remain visible.</small></div></div>
+            <div class="wl-check"><span class="yes">OK</span><div><b>Deal analysis</b><small>Flip, rental, BRRRR, wholesale, MAO, ROI, and cash-flow calculations.</small></div></div>
+            <div class="wl-check"><span class="yes">OK</span><div><b>Map and field brief</b><small>MapLibre displays records that contain valid latitude and longitude.</small></div></div>
+            <div class="wl-check"><span class="yes">OK</span><div><b>Connector adapter</b><small>The server route exists and keeps the upstream API key out of the browser.</small></div></div>
+            <div class="wl-check"><span class="yes">OK</span><div><b>White-label preview</b><small>Customer name and accent color can be previewed in the current browser.</small></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-h"><span class="card-title">What production still needs</span><span class="badge b-sent">build required</span></div>
+          <div class="wl-checks">
+            <div class="wl-check"><span class="no">1</span><div><b>VPS property API</b><small>Search central normalized records without sending entire counties to the browser.</small></div></div>
+            <div class="wl-check"><span class="no">2</span><div><b>Login and territory permissions</b><small>Each customer sees only the markets assigned to their account.</small></div></div>
+            <div class="wl-check"><span class="no">3</span><div><b>Server pagination</b><small>The current tool requests 100 records and shows the best 12. Next/Previous is not built yet.</small></div></div>
+            <div class="wl-check"><span class="no">4</span><div><b>Persistent work</b><small>Saved searches, notes, statuses, assignments, and branding across devices.</small></div></div>
+            <div class="wl-check"><span class="no">5</span><div><b>Bulk export jobs</b><small>The VPS creates large files privately; the phone only receives a download link.</small></div></div>
+            <div class="wl-check"><span class="no">6</span><div><b>Map clustering</b><small>Large searches need grouped markers or viewport queries.</small></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h"><span class="card-title">What the 250 limit means</span><span class="card-meta">Page size, not database size</span></div>
+        <div class="row"><div class="row-body"><div class="row-name">Example: 8,420 matching properties</div><div class="row-detail">The VPS searches all authorized records. The API returns the first 100 or 250 plus a cursor for the next page. The customer opens a property, returns to the same list, switches to the map, or loads the next page without leaving the workspace. A bulk export can still contain all 8,420 authorized matches.</div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-h"><span class="card-title">Connection path</span><span class="card-meta">Secure server-to-server bridge</span></div>
+        <div class="wl-contract">Customer browser
+  -&gt; Property Decision Tool
+  -&gt; /api/connectors/search (API key stays on server)
+  -&gt; HTTPS VPS property API
+  -&gt; tenant and market permission check
+  -&gt; normalized parcel and signal records
+  &lt;- records + total + nextCursor</div>
+        <div class="row"><div class="row-body"><div class="row-name">The API is the correct connection</div><div class="row-detail">It lets the workspace query the VPS without exposing raw files, credentials, or another customer's markets. Search uses the latest verified database snapshot; county scraping and refresh happen separately.</div></div></div>
+      </div>
+    </div>
+
     <div id="page-templates" class="page">
       <div class="page-header">
         <div class="page-title">Templates</div>
@@ -1268,7 +1350,7 @@ function lsLoad(){
 function lsSave(){ localStorage.setItem(LS_KEY, JSON.stringify(PROSPECTS)); }
 
 // ─── NAV ──────────────────────────────────────────────────────
-const pages = ['hq','inbox','pipeline','messages','workflow','templates','conference','marketing','seo','scout','dollarleads','send-intake','send-quote','learn','tiers-ref','help'];
+const pages = ['hq','inbox','pipeline','messages','workflow','whitelabel','templates','conference','marketing','seo','scout','dollarleads','send-intake','send-quote','learn','tiers-ref','help'];
 window.nav = async function(id){
   pages.forEach(p=>{
     document.getElementById('page-'+p).classList.toggle('active',p===id);
