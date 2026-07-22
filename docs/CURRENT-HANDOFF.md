@@ -6,7 +6,7 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-07-18 by Codex (Reggie Adams white-label deal, real invoice, and unresolved scope recorded)
+Last updated: 2026-07-22 by Codex (VPS storage recovery, compressed Dollar Leads inventory, workspace architecture, and Reggie deal status)
 
 ---
 
