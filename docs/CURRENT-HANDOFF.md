@@ -10,13 +10,27 @@ Last updated: 2026-07-18 by Codex (Reggie Adams white-label deal, real invoice, 
 
 ---
 
-## Open now -- Reggie Adams white-label deal (REAL CUSTOMER, invoice sent, awaiting payment)
+## Open now -- Reggie Adams white-label discussion (invoice/deal currently dead)
 
 **Customer:** Reggie Adams, `mrreggieadams@gmail.com`, for **The 3 CCC'S Consulting Firm LLC**.
 
-**Verified payment state:** LeadCurate invoice `LC-2026-0718-001` was sent for a real **$1,000 initial project payment** from `hello@leadcurate.com` through the branded `send-delivery` invoice mode. Hostinger returned `ok=true`, `mode=invoice`, `sent=true`. Supabase order `69110f8b-422a-4bb9-a422-57d29c274a72` is `pending_payment`, provider `cash_app`, amount `100000` cents. There are zero payment rows. Do not mark it paid until Derrick confirms the money reached Cash App `$Derrick607`.
+**Current decision (Derrick, 2026-07-22):** the invoice/deal is dead for now. Do not treat Reggie as awaiting payment or build against the old verbal ten-market scope. Preserve the historical invoice/order record as unpaid history only. Any future Reggie deal requires a new written scope.
 
-**What the actual invoice promises:**
+## Closed 2026-07-22 -- VPS storage recovery without data loss
+
+Codex audited the live VPS after Hostinger warned about disk pressure. `/dev/sda1` was 96 GB total, 87 GB used, 9.1 GB free (91%). The growth was recent, not century-old records: `/opt/leadcurate/raw_imports` was 26 GB, `/opt/leadcurate/processed` 19 GB, and physical Dollar Leads sales batches 16 GB.
+
+The active July Dollar Leads inventory was losslessly converted from plain CSV batches to gzip batches. `scripts/leadcurate/compress_dollar_batches.py` verifies each original file against its existing SHA-256, writes gzip atomically, verifies the decompressed content against the same SHA-256, and only then removes the original. `cut_dollar_pack.py` now reads both `.csv` and `.csv.gz`; `verify_dollar_inventory.py` verifies stored gzip hash, decompressed-content hash, row count, and parcel overlap. The storefront was not changed because it reads Supabase inventory metadata, not physical batch files.
+
+**Proof:** 30,855 batches, 15,386,150 batched lane rows, and 90 lanes passed. Uncompressed bytes 16,931,862,135; compressed bytes 2,438,045,123; reclaimed 14,493,817,012 bytes. Full report: `/opt/leadcurate/dollar_batches/2026-07/storage-compression-verification.json`. Full post-conversion quality gate: `/opt/leadcurate/dollar_batches/2026-07/inventory-verification.json`, with physical files, SHA-256, row counts, and within-lane overlap all `pass`. Dollar Leads now uses 2.4 GB instead of 16 GB. Archived journals reclaimed another 807 MB; npm and apt caches were cleaned. Final disk state was 71 GB used, 25 GB free (74%). No raw county source, processed lane, website file, Supabase row, customer delivery, Playwright runtime, or active service was deleted.
+
+**Permanent storage rule:** raw official sources are evidence and are not deleted merely because an owner is an LLC, bank, or an old sale year. Exclusions belong in product filters, not destructive source cleanup. A parcel may appear in multiple lane files, so 15.4M batched lane rows are not 15.4M unique properties. Future cycles should remain compressed and retention should be managed by verified cycle/archive policy rather than accumulating uncompressed copies.
+
+**Property Decision Tool clarification:** the actual app is `C:\Users\lenovo\Documents\Leadcurate\property-decision-tool`. Its connector currently returns at most 250 records per API response and the UI requests 100; that is a page-size limit, not a total database limit. It can connect to a tenant-authorized VPS query API and page through millions of server-side records. Maps work when returned records contain coordinates. The browser must never load an entire county; bulk CSV/XLSX delivery is a separate server-side export job. Base parcels should be stored once, lane signals attached separately, and customer access separated by tenant/market permissions rather than duplicating a full database per customer.
+
+## Reggie historical scope (retain for context; no active deal)
+
+**What the actual invoice promised:**
 - White-label consulting website and brand configuration.
 - White-label Property Decision Tool.
 - Detroit and Wayne County database integration.
