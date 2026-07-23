@@ -310,14 +310,11 @@ python3 /root/leadcurate-launch/scripts/leadcurate/confirm_dollar_paid.py --code
 
 Replace `DL-XXXXX` with the exact uppercase order code Derrick sent. Report the script result back in the same Telegram chat. The script is idempotent: repeating the same code does not create a second job. The deterministic Dollar Leads worker handles inventory reservation, file cutting, Hostinger delivery, and delivery status after the job is queued.
 
-The current task list for Codex is at **`docs/codex-handoff-2026-06-25.md`**. Status as of 2026-06-27:
-1. Fix Supabase security warnings — ✅ **DONE** (get_advisors returns 0 lints, verified 2026-06-27)
-2. Fix Conference Room watcher (hermes send → execute) — ✅ **DONE** (conf:done 2026-06-27 19:53, e2e-verified, dashboard→Hermes channel live)
-3. ~~Install n8n via docker~~ — **SKIPPED**, n8n now LIVE via Hostinger one-click + wired (URL/key in /opt/leadcurate/.env)
-4. Build intake auto-reply Edge Function — ✅ **DONE** (deployed earlier; blocked on RESEND_API_KEY for real sends)
-5. Tier infrastructure plumbing — ✅ **DONE** (snapshot history, enrichers, auction scrapers on weekly cron)
-6. Domain swap — pending Derrick providing the domain (procuring leadcurate.com + hello@leadcurate.com)
-7. Lead Scout — plumbing built but NOT scheduled and blocked on Reddit/BP credentials (see §13)
+**Current state of the whole business lives in `docs/CURRENT-HANDOFF.md`** (repo at /root/leadcurate-launch, git pull first). That is the single source of truth, edited in place. The old dated `docs/codex-handoff-*.md` files are archived history only — do not read them for current priorities. For any task targeted at you, also check the Conference Room:
+
+```sql
+SELECT id, source, title, body, created_at FROM activity_feed WHERE target IN ('hermes','all') AND event_type LIKE 'conf:%' ORDER BY created_at DESC LIMIT 10;
+```
 
 ---
 
