@@ -6,6 +6,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Dollar Leads · Real county data in small packs</title>
 <meta name="description" content="Small packs of real county property data. Pulled straight from official records, dated, and delivered to your inbox. Packs start at $5." />
+<meta property="og:title" content="Dollar Leads · Real county property leads from $5" />
+<meta property="og:description" content="Pick your county, pick your category: tax debt, vacant land, long-hold landlords, out-of-state owners and more. Reserved files from official county records, delivered same day." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://leadcurate.com/dollar-leads/" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Dollar Leads · Real county property leads from $5" />
+<meta name="twitter:description" content="Reserved files from official county records. Pick your county and category, pay in seconds, file lands the same day." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -108,6 +115,8 @@ label{display:block;font-size:13px;font-weight:700;margin:16px 0 6px;}
 input,select,textarea{width:100%;border:1.5px solid var(--line);border-radius:8px;padding:12px 14px;font-size:15px;font-family:inherit;background:#fff;}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--bill);}
 .order-note{font-size:12px;color:var(--slate);margin-top:14px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;}
+@media(max-width:560px){.row2{grid-template-columns:1fr;}}
 .ok-msg{display:none;background:var(--bill-soft);color:var(--bill);border-radius:10px;padding:16px;font-weight:700;font-size:14px;margin-top:16px;}
 .checkout-preview{background:#fff;border:1px solid #b9ddc6;border-radius:9px;padding:14px;margin:12px 0;color:var(--ink);font-weight:500;}
 .checkout-preview h3{font-size:15px;margin-bottom:4px;}
@@ -169,7 +178,7 @@ footer a{color:var(--bill);}
     <span class="eyebrow">How it works</span>
     <h2>Pick a county. Pick a pack. Work the list.</h2>
     <div class="steps">
-      <div class="step"><b>1</b><h3>Pick county and pack</h3><p>Packs from $5. Every record has the owner, property address, mailing address, and why it made the list.</p></div>
+      <div class="step"><b>1</b><h3>Pick your county and category</h3><p>Tax debt, vacant land, long-hold landlords, out-of-state owners and more. Packs from $5. Every record has the owner, property address, mailing address, and why it made the list.</p></div>
       <div class="step"><b>2</b><h3>Pay right here</h3><p>Order below and your Cash App payment button appears instantly. Pay in seconds.</p></div>
       <div class="step"><b>3</b><h3>File hits your inbox</h3><p>Your file lands the same day, stamped with the county source, the pull date, and official parcel numbers you can verify yourself.</p></div>
     </div>
@@ -252,7 +261,7 @@ footer a{color:var(--bill);}
       <div class="step"><b>&#10003;</b><h3>New wholesalers</h3><p>Get a real list for your first texting or mail campaign without a $99 monthly subscription you'll forget to cancel.</p></div>
       <div class="step"><b>&#10003;</b><h3>Operators testing a new market</h3><p>Prove a county works with a $15 pack before you commit real marketing dollars to it.</p></div>
       <div class="step"><b>&#10003;</b><h3>Land buyers and flippers</h3><p>Verified vacant parcels with real owners and real acreage, in counties where the dirt actually trades.</p></div>
-      <div class="step"><b>&#10003;</b><h3>Agents and bird dogs</h3><p>A cheap, clean pipeline of owners worth a conversation, with the parcel number to prove every record.</p></div>
+      <div class="step"><b>&#10003;</b><h3>Agents and bird dogs</h3><p>A clean pipeline of owners worth a conversation, priced so you can keep it running every week, with the parcel number to prove every record.</p></div>
     </div>
   </div>
 </section>
@@ -265,6 +274,7 @@ footer a{color:var(--bill);}
       <details><summary>What's in each record?</summary><p>Owner name, property address, owner mailing address, official parcel number, property type, county values where published, how long the owner has held it where the county shows it, and the reason it made the list.</p></details>
       <details><summary>Is this skip traced?</summary><p>No. No phone numbers, no emails. This is county-record data you run through your own skip tracer or dialer. That keeps packs at these prices.</p></details>
       <details><summary>Is it scrubbed against the Do Not Call list?</summary><p>No. You are responsible for your own outreach compliance, including DNC and TCPA. We sell the data as compiled from public county records.</p></details>
+      <details><summary>Which records do I actually get? Is it luck of the draw?</summary><p>Not luck. Every county and category is split into numbered files, and paid orders are assigned the next file in line, in order. First buyers get the front of the inventory. Your file's number is printed on it, and once a file has been assigned its records are tracked so they are not handed out over and over. You are buying a reserved slice, not a raffle ticket.</p></details>
       <details><summary>Will other people have my exact list?</summary><p>No public recycled list. Each paid file is assigned from tracked inventory, and different files inside the same county and category do not share records.</p></details>
       <details><summary>How fresh is it really?</summary><p>Every county reruns against current official records each monthly cycle, and the cycle date is printed on your file. On days we run a same-morning scrub, a Fresh Scrub pack appears for the counties we scrubbed, and only on those days.</p></details>
       <details><summary>Can categories overlap?</summary><p>Files inside the same county and category do not share records. A property can still qualify for two different categories, such as long-hold and out-of-state owner, so separate category orders can contain the same parcel. That overlap is a real multi-signal match, not a duplicate inside either file.</p></details>
@@ -282,6 +292,7 @@ footer a{color:var(--bill);}
     <p class="sub">Fill this out and your payment button appears right here. Pay with Cash App and your file lands in your inbox the same day.</p>
     <div class="order-card">
       <form id="dl-form">
+        <div style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bill);">Step 1 · Your list</div>
         <label for="f-county">County</label>
         <select id="f-county" name="county" required>
           <option value="">Pick a county</option>
@@ -291,25 +302,28 @@ footer a{color:var(--bill);}
           <div style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bill);margin-bottom:8px;">Available in <span id="mm-name"></span> right now</div>
           <div id="mm-lanes" style="display:grid;gap:6px;"></div>
         </div>
-        <label for="f-name">Your name</label>
-        <input id="f-name" name="name" required placeholder="First and last" />
-        <label for="f-email">Email (your file goes here)</label>
-        <input id="f-email" name="email" type="email" required placeholder="you@email.com" />
-        <label for="f-pack">Pack</label>
+        <label for="f-lane">Category</label>
+        <select id="f-lane" name="lane" required>
+          <option value="">Pick a county first</option>
+          <option>Not sure, recommend one</option>
+        </select>
+        <p id="lane-hint" style="display:none;font-size:12px;color:var(--slate);margin-top:6px;">One category per order keeps your file clean. Want a second category from this county too? Submit this order, then come back and grab another pack for it.</p>
+        <label for="f-pack">Pack size</label>
         <select id="f-pack" name="pack" required>
           <option value="">Pick a pack</option>
           <option>Starter $5 (50 records)</option>
           <option>Work $15 (250 records)</option>
           <option>Full $25 (500 records)</option>
         </select>
-        <label for="f-lane">Which list?</label>
-        <select id="f-lane" name="lane" required>
-          <option value="">Pick a county first</option>
-          <option>Not sure, recommend one</option>
-        </select>
-        <p id="lane-hint" style="display:none;font-size:12px;color:var(--slate);margin-top:6px;">One category per order keeps your batch clean. Want a second category from this county too? Submit this order, then come back and grab another pack for it.</p>
-        <label for="f-notes">Anything else? (ZIP codes, price range, other counties)</label>
-        <textarea id="f-notes" name="notes" rows="2" placeholder="Optional"></textarea>
+        <div style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bill);margin-top:22px;">Step 2 · Where your file goes</div>
+        <div class="row2">
+          <div><label for="f-name">Your name</label>
+          <input id="f-name" name="name" required placeholder="First and last" /></div>
+          <div><label for="f-email">Email (your file goes here)</label>
+          <input id="f-email" name="email" type="email" required placeholder="you@email.com" /></div>
+        </div>
+        <label for="f-notes">Want a specific area or a county we don't show yet?</label>
+        <textarea id="f-notes" name="notes" rows="2" placeholder="Optional. Tell us the ZIP codes, city, or county you want. If we can build it, we will."></textarea>
         <label style="display:flex;align-items:flex-start;gap:9px;font-weight:500;font-size:12px;color:var(--slate);"><input type="checkbox" required style="width:auto;margin-top:2px;"> <span>I understand this is public-record property data without skip-traced phones or emails, and I agree to the <a href="/terms.html" target="_blank">Terms</a> and <a href="/privacy.html" target="_blank">Privacy Policy</a>.</span></label>
         <button type="submit" class="btn btn-green" style="width:100%;margin-top:20px;">Continue to payment</button>
         <div class="ok-msg" id="ok-msg">
