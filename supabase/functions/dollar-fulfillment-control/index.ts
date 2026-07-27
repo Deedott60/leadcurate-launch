@@ -55,14 +55,23 @@ async function confirmPaid(orderCode: string) {
   const intake = (await rest(`intake_requests?${intakeQuery}`))?.[0];
   if (!intake) throw new Error(`Order ${code} was not found`);
   const marketDisplay = Array.isArray(intake.markets) ? intake.markets[0] : intake.markets;
-  const laneDisplay = Array.isArray(intake.list_type) ? intake.list_type[0] : intake.list_type;
-  const batchQuery = new URLSearchParams({ market_display: `eq.${marketDisplay}`, lane_display: `eq.${laneDisplay}`, status: "eq.live", select: "market,lane,cycle", limit: "1" });
-  const batch = (await rest(`dollar_batches?${batchQuery}`))?.[0];
-  if (!batch) throw new Error(`No live inventory remains for ${code}`);
+  const requestedLaneDisplay = Array.isArray(intake.list_type) ? intake.list_type[0] : intake.list_type;
   const packSize = PACK_SIZES[intake.volume];
   if (!packSize) throw new Error(`Order ${code} has an unsupported pack size`);
+  const batchQuery = new URLSearchParams({ market_display: `eq.${marketDisplay}`, status: "eq.live", select: "market,lane,lane_display,cycle,batch_no,size,seats_total,seats_sold", order: "cycle,lane,batch_no" });
+  if (requestedLaneDisplay && requestedLaneDisplay !== "Not sure, recommend one") {
+    batchQuery.set("lane_display", `eq.${requestedLaneDisplay}`);
+  }
+  const rows = (await rest(`dollar_batches?${batchQuery}`)) ?? [];
+  let batch: any = null;
+  if (packSize === 1000) {
+    batch = rows.find((row: any) => Number(row.size) >= 500 && Number(row.seats_sold) === 0 && rows.some((next: any) => next.cycle === row.cycle && Number(next.batch_no) === Number(row.batch_no) + 1 && Number(next.size) >= 500 && Number(next.seats_sold) === 0));
+  } else {
+    batch = rows.find((row: any) => Number(row.size) >= packSize && Number(row.seats_sold) < Number(row.seats_total));
+  }
+  if (!batch) throw new Error(`No live ${packSize}-record inventory remains for ${code}`);
 
-  const inserted = await rest("dollar_fulfillment_jobs?on_conflict=order_code", { method: "POST", headers: { Prefer: "return=representation,resolution=ignore-duplicates" }, body: JSON.stringify({ order_code: code, intake_request_id: intake.id, customer_name: intake.name, customer_email: intake.email, market: batch.market, market_display: marketDisplay, lane: batch.lane, lane_display: laneDisplay, pack_label: intake.volume, pack_size: packSize, cycle: batch.cycle, cycle_slug: cycleSlug(batch.cycle) }) });
+  const inserted = await rest("dollar_fulfillment_jobs?on_conflict=order_code", { method: "POST", headers: { Prefer: "return=representation,resolution=ignore-duplicates" }, body: JSON.stringify({ order_code: code, intake_request_id: intake.id, customer_name: intake.name, customer_email: intake.email, market: batch.market, market_display: marketDisplay, lane: batch.lane, lane_display: batch.lane_display, pack_label: intake.volume, pack_size: packSize, cycle: batch.cycle, cycle_slug: cycleSlug(batch.cycle) }) });
   let queued = inserted?.[0];
   if (!queued) queued = (await rest(`dollar_fulfillment_jobs?order_code=eq.${encodeURIComponent(code)}&select=*&limit=1`))?.[0];
   if (!queued) throw new Error(`Could not queue ${code}`);
@@ -92,14 +101,14 @@ Deno.serve(async (req) => {
     if (p.action === "next_batch") {
       const current = await job(String(p.job_id));
       if (!current || current.status !== "processing") return json({ ok: false, error: "processing job not found" }, 404);
-      const query = new URLSearchParams({ market: `eq.${current.market}`, lane: `eq.${current.lane}`, cycle: `eq.${current.cycle}`, status: "eq.live", select: "batch_no,seats_sold,seats_total", order: "batch_no.asc" });
+      const query = new URLSearchParams({ market: `eq.${current.market}`, lane: `eq.${current.lane}`, cycle: `eq.${current.cycle}`, status: "eq.live", select: "batch_no,size,seats_sold,seats_total", order: "batch_no.asc" });
       const rows = await rest(`dollar_batches?${query}`) ?? [];
       let batchNo = 0;
       if (current.pack_size === 1000) {
-        const open = new Set(rows.filter((r: any) => Number(r.seats_sold) === 0).map((r: any) => Number(r.batch_no)));
+        const open = new Set(rows.filter((r: any) => Number(r.size) >= 500 && Number(r.seats_sold) === 0).map((r: any) => Number(r.batch_no)));
         batchNo = [...open].sort((a: number, b: number) => a - b).find((n: number) => open.has(n + 1)) ?? 0;
       } else {
-        batchNo = Number(rows.find((r: any) => Number(r.seats_sold) < Number(r.seats_total))?.batch_no ?? 0);
+        batchNo = Number(rows.find((r: any) => Number(r.size) >= Number(current.pack_size) && Number(r.seats_sold) < Number(r.seats_total))?.batch_no ?? 0);
       }
       if (!batchNo) return json({ ok: false, error: "no eligible batch remains" }, 409);
       return json({ ok: true, batch_no: batchNo });

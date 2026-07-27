@@ -29,6 +29,30 @@ LeadCurate competes on accuracy and quality. **Every market and every requested 
 - Never infer an event lane from unrelated parcel characteristics. If the current official source does not prove tax delinquency, foreclosure, probate, a violation, or another event, mark that lane unavailable instead of fabricating it.
 - Final acceptance requires one row per parcel, zero unexplained duplicates, metadata counts computed from the file that ships, and a source date visible to the operator. Accuracy outranks speed, convenience, and previously completed work.
 
+## Data quality gate — LOCKED 2026-07-24, applies to EVERY market and EVERY product
+
+**No lane data reaches a human, paying or not, until it passes `scripts/leadcurate/qa_lane_gate.py`.** This is universal: Dollar Leads packs, premium territory deliveries, white-label client instances (Reggie), sample pages, free social samples, audit pages, and every market ever scraped or processed from now on. Deployed at `/opt/leadcurate/scripts/qa_lane_gate.py`.
+
+```bash
+python3 /opt/leadcurate/scripts/qa_lane_gate.py --all
+python3 /opt/leadcurate/scripts/qa_lane_gate.py --root /opt/leadcurate/processed/wake-nc --all
+python3 /opt/leadcurate/scripts/qa_lane_gate.py --market wayne-mi --lane tired-landlords
+```
+
+Exit code 1 means the lane is not sellable and not deliverable. It measures:
+- **Owner-occupied contamination** in any absentee/landlord lane, ceiling 2%
+- **Institutional owners** (government, church, school, bank, authority) in wholesale lanes, ceiling 1%
+- **Front-of-file affordability**, ceiling 20% of the first 50 records above 10x the lane median, because a $5 pack receives the front of the file
+- **Core field coverage**, owner, property address, parcel ID, floor 95%
+
+**Why this rule exists:** on 2026-07-24 a pre-launch QA pass found `tired-landlords` was 84.9% owner-occupied in Mecklenburg, 71.0% in Cook, 35.4% in Massachusetts, 34.1% in Wayne. Real properties, wrong label, caused by exact-string comparison of property vs mailing address when counties format them differently (`14611 N C 73 HY` vs `14611 HIGHWAY 73`). Dallas was clean only because it retained `normalized_address()`. Nothing had sold yet, so no customer was harmed, but the store was hours from being promoted publicly. A rule alone would not have caught it; a measurement did.
+
+**Corollaries:**
+- Never mark a lane live, or hand a file to a client, on the basis that the pipeline "ran successfully." A clean run is not a clean product.
+- When a lane fails, hold it (`status` change), do not delete it. Data is expensive, labels are cheap to fix.
+- Report the measured number, not "fixed." "Mecklenburg tired-landlords now 1.4% owner-occupied" is proof. "Rebuilt the lane" is not.
+- Adding a new market is not done when the scrape finishes. It is done when the gate passes.
+
 ## Product doctrine — Vacant Land differentiation
 
 The competitive problem: static vacant-land lists (what most resellers and SMS-campaign data vendors sell) get built once and never rechecked. By the time a buyer acts on a record, a meaningful share of it is stale — already built on, already under contract, or was never actually vacant (a bad flag in the source file, or land carrying an improvement the list didn't catch).
