@@ -45,6 +45,7 @@ LANES = {
     "code-violations": "Code-violation properties",
     "property-liens": "Municipal / property liens",
     "absentee-owners": "Absentee owners",
+    "high-value-absentee": "High-value absentee owners",
     "out-of-state-owners": "Out-of-state owners",
     "tired-landlords": "Long-hold landlords",
     "high-equity": "High-equity / high-value proxy",
@@ -88,7 +89,10 @@ def source_for(market: str, lane: str, run_date: str) -> tuple[Path, dict[str, A
 
 
 def key_fields(fields: list[str]) -> list[str]:
-    preferred = ["lc_parcel_id", "parcel_id", "parcel_key", "ParcelID", "PARCELID", "ACCOUNT_NUM", "LC_PARCEL_KEY", "U_PIN", "PID"]
+    preferred = [
+        "lc_parcel_id", "parcel_id", "parcel_pid", "parcel_key", "ParcelID",
+        "PARCELID", "ACCOUNT_NUM", "LC_PARCEL_KEY", "U_PIN", "PID",
+    ]
     return [field for field in preferred if field in fields]
 
 

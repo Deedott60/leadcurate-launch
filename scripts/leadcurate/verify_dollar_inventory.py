@@ -36,11 +36,16 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--inventory", type=Path, required=True)
     parser.add_argument("--market", action="append")
+    parser.add_argument("--lane", action="append")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--backfill-missing-sha256", action="store_true")
     args = parser.parse_args()
     inventory = json.loads(args.inventory.read_text(encoding="utf-8"))
-    lanes = [item for item in inventory["lanes"] if not args.market or item["market"] in args.market]
+    lanes = [
+        item for item in inventory["lanes"]
+        if (not args.market or item["market"] in args.market)
+        and (not args.lane or item["lane"] in args.lane)
+    ]
     pairs = [(item["market"], item["lane"]) for item in lanes]
     if len(pairs) != len(set(pairs)):
         raise RuntimeError("inventory contains duplicate market/lane manifests")
@@ -103,6 +108,7 @@ def main() -> int:
     payload = {
         "verified_at_utc": datetime.now(timezone.utc).isoformat(),
         "inventory": str(args.inventory), "market_filter": args.market,
+        "lane_filter": args.lane,
         "lane_count": len(report_lanes), "batch_count": sum(row["batch_count"] for row in report_lanes),
         "batched_records": sum(row["batched_records"] for row in report_lanes),
         "checks": {"physical_files": "pass", "sha256": "pass", "row_counts": "pass", "within_lane_overlap": "pass"},

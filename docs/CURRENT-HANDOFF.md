@@ -6,7 +6,7 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-07-27 by Codex (Dollar Leads free-sample launch workflow added; no inventory refresh or storefront copy change)
+Last updated: 2026-07-27 by Codex (universal field-role, QA, and delivery gates added; current Dollar Leads inventory remains held)
 
 ---
 
@@ -91,6 +91,10 @@ The invoice deliberately calls the $1,000 an **initial project payment**. It doe
 
 A pre-launch QA pass on the live batch files found that absentee detection failed in most markets. Contaminated lanes are HELD OFFLINE, not deleted. Zero orders had been placed, so no customer received a defective file.
 
+**Operator clarification 2026-07-27:** Derrick is not asking anyone to refresh, expand, activate, or otherwise process the current Dollar Leads inventory now. The immediate goal is the shared LeadCurate process for future paying-client work. Existing Dollar Leads quality holds remain in place until Derrick explicitly asks for an inventory repair/release. Do not consume disk building replacement inventory speculatively.
+
+**Future processing contract now implemented:** `scripts/leadcurate/lane_quality.py` owns canonical address roles and institutional-owner detection; `process_investor_lanes.py` uses it when deriving lanes; `qa_lane_gate.py` streams large processed files without exhausting VPS memory; and `cut_dollar_pack.py` calls the gate before cutting any pack. Customer cuts begin with the standard 19-column delivery schema and retain source-specific extras afterward. The complete field-role and run-order rules are locked in `docs/AGENT-OPERATING-RULES.md`.
+
 **Measured owner-occupied contamination** (street-level key: house number + street name, city/state/ZIP stripped, 4 batches per lane):
 
 | Lane | Mecklenburg | Cook | Massachusetts | Wayne | Fulton | Shelby | Dallas |
@@ -99,7 +103,7 @@ A pre-launch QA pass on the live batch files found that absentee detection faile
 | absentee-owners | 80.1% | 41.0% | 23.4% | 12.8% | 35.2% | 0.0% clean | n/a |
 | out-of-state-owners | 0.8% | 0.1% | 0.1% | 0.1% | 0.2% | 0.0% | clean |
 
-**Root cause:** exact-string comparison of `lc_property_address` vs `lc_mailing_address`. Mecklenburg property addresses carry a duplicated city+state suffix (`15901 HENRY LN HUNTERSVILLE NC HUNTERSVILLE NC`) while mailing carries city+state+ZIP, and street types differ (`N C 73 HY` vs `NC HWY 73`). Dallas is clean because it retained `normalized_address()` from `scripts/leadcurate/process_investor_lanes.py` (~line 278); the 19-lane rebuild path does not apply it. **Out-of-state lanes compare state, not street, so they are clean everywhere and stay live.**
+**Root cause:** exact-string comparison of `lc_property_address` vs `lc_mailing_address`. Mecklenburg property addresses carry a duplicated city+state suffix (`15901 HENRY LN HUNTERSVILLE NC HUNTERSVILLE NC`) while mailing carries city+state+ZIP, and street types differ (`N C 73 HY` vs `NC HWY 73`). The shared canonical implementation now lives in `scripts/leadcurate/lane_quality.py`; current held inventory has not been rebuilt or released. **Out-of-state lanes compare verified mailing state and remain held/live according to their existing status.**
 
 **Current inventory status:**
 - `live` 19,758 batches, 70 market/lane combos, every market still shows 9 to 14 categories

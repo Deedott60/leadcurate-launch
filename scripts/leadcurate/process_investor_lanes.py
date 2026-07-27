@@ -10,6 +10,8 @@ from pathlib import Path
 from statistics import median
 from typing import Any
 
+from lane_quality import INSTITUTIONAL_OWNER, canonical_address_key, is_po_box
+
 
 TODAY = date.today().isoformat()
 RAW_ROOT = Path("/opt/leadcurate/raw_imports")
@@ -528,17 +530,6 @@ def years_owned(value: str) -> float | None:
     return round((date.today() - parsed).days / 365.25, 1) if parsed else None
 
 
-def normalized_address(value: str) -> str:
-    aliases = {
-        "NORTH": "N", "SOUTH": "S", "EAST": "E", "WEST": "W",
-        "STREET": "ST", "AVENUE": "AVE", "ROAD": "RD", "BOULEVARD": "BLVD",
-        "DRIVE": "DR", "LANE": "LN", "COURT": "CT", "PARKWAY": "PKWY",
-        "HIGHWAY": "HWY", "PLACE": "PL", "TERRACE": "TER", "CIRCLE": "CIR",
-    }
-    tokens = re.findall(r"[A-Z0-9]+", clean(value).upper())
-    return "".join(aliases.get(token, token) for token in tokens)
-
-
 def derive(row: dict[str, str], cfg: dict[str, Any]) -> dict[str, Any]:
     f = cfg["fields"]
     owner = joined(row, f["owner"]) if cfg.get("owner_joined") else first(row, f["owner"])
@@ -573,12 +564,17 @@ def derive(row: dict[str, str], cfg: dict[str, Any]) -> dict[str, Any]:
     homestead = number(homestead_value) > 0
     homestead_known = bool(homestead_value) if not cfg.get("homestead_available", True) else True
     out_of_state = bool(mail_state and mail_state != cfg["state"])
+    property_address_key = canonical_address_key(prop_street)
+    mailing_address_key = canonical_address_key(mail_compare_street)
     address_mismatch = bool(
-        mail_compare_street
-        and prop_street
-        and normalized_address(mail_compare_street) != normalized_address(prop_street)
+        is_po_box(mail_compare_street)
+        or (
+            property_address_key
+            and mailing_address_key
+            and property_address_key != mailing_address_key
+        )
     )
-    absentee = out_of_state or address_mismatch or bool(mail_zip and prop_zip and mail_zip != prop_zip)
+    absentee = out_of_state or address_mismatch
     code_tokens = {token.strip() for token in re.split(r"[,;\s]+", use_code) if token.strip()}
     multifamily = bool(code_tokens & cfg.get("multifamily_codes", set())) or any(token.startswith(tuple(cfg.get("multifamily_prefixes", ()))) for token in code_tokens) or "MULTIFAMILY" in use_desc or "MULTI-FAMILY" in use_desc or "APARTMENT" in use_desc or units >= 2
     office = bool(code_tokens & cfg.get("office_codes", set())) or any(token.startswith(tuple(cfg.get("office_prefixes", ()))) for token in code_tokens) or "OFFICE" in use_desc or "OFFICE" in office_desc
@@ -653,7 +649,12 @@ def derive(row: dict[str, str], cfg: dict[str, Any]) -> dict[str, Any]:
 def matches(lane: str, row: dict[str, str], d: dict[str, Any], cfg: dict[str, Any]) -> bool:
     if lane in cfg.get("unsupported", {}):
         return False
-    if not d["lc_parcel_id"] or not d["lc_owner_name"] or PUBLIC_OWNER.search(d["lc_owner_name"]):
+    if (
+        not d["lc_parcel_id"]
+        or not d["lc_owner_name"]
+        or PUBLIC_OWNER.search(d["lc_owner_name"])
+        or INSTITUTIONAL_OWNER.search(d["lc_owner_name"])
+    ):
         return False
     if lane == "absentee-owners":
         return d["lc_is_absentee"] == "yes"

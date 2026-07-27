@@ -26,6 +26,8 @@ import re
 import sys
 from pathlib import Path
 
+from lane_quality import INSTITUTIONAL_OWNER, canonical_address_key, is_po_box
+
 # Applies to EVERY LeadCurate data product, not just Dollar Leads: premium
 # territory deliveries, white-label client instances, sample deliveries, and
 # any new market. Point --root at whatever tree holds the lane files.
@@ -56,21 +58,6 @@ WHOLESALE_LANES = ABSENTEE_LANES | {
 MAX_OWNER_OCCUPIED_PCT = 2.0     # Dallas achieves 0.1%; 2% is the ceiling
 MAX_INSTITUTIONAL_PCT = 1.0
 MAX_FRONT_OUTLIER_PCT = 20.0     # of the first 50 records (a $5 pack)
-
-INSTITUTIONAL = re.compile(
-    r"\b(DEPT|DEPARTMENT|CITY OF|COUNTY OF|STATE OF|SCHOOL|CHURCH|DIOCESE|BISHOP"
-    r"|UNIVERSITY|COLLEGE|HOSPITAL|HEALTHCARE|AUTHORITY|COMMISSION|TRANSPORTATION"
-    r"|HOUSING AUTHORITY|MUNICIPAL|TOWN OF|VILLAGE OF|CEMETERY|FOUNDATION"
-    r"|MINISTR|BAPTIST|METHODIST|PRESBYTER|SYNAGOGUE|MOSQUE|REDEVELOPMENT"
-    r"|PARK DISTRICT|SANITAR|WATER DIST|FIRE DIST|LIBRARY)\b"
-)
-
-STREET_SUFFIXES = {
-    "ST", "STREET", "AVE", "AV", "AVENUE", "RD", "ROAD", "DR", "DRIVE",
-    "LN", "LANE", "CT", "COURT", "BLVD", "BOULEVARD", "HWY", "HY", "HIGHWAY",
-    "PL", "PLACE", "CIR", "CIRCLE", "WAY", "TER", "TERRACE", "PKWY", "PARKWAY",
-    "TRL", "TRAIL", "LOOP", "RUN", "PT", "POINT", "SQ", "SQUARE",
-}
 
 # Field names differ per market/lane; check every known alias.
 OWNER_FIELDS = ("lc_owner_name", "owner_name", "OWNER1", "Owner_LastName", "COMM_OWNER")
@@ -113,31 +100,7 @@ def first_value(row: dict, names: tuple) -> str:
     return ""
 
 
-def property_key(value: str) -> str:
-    """House number + first real street word. Immune to city/state/ZIP noise,
-    duplicated city suffixes, and STREET vs ST style differences."""
-    s = re.sub(r"[^A-Z0-9 ]", " ", (value or "").upper())
-    tokens = s.split()
-    if not tokens:
-        return ""
-    number = next((t for t in tokens if t.isdigit()), "")
-    if not number:
-        return ""
-    idx = tokens.index(number)
-    for token in tokens[idx + 1:]:
-        if token in ("N", "S", "E", "W"):
-            continue
-        if token in STREET_SUFFIXES or token.isdigit():
-            break
-        return f"{number}|{token}"
-    return f"{number}|"
-
-
-def is_po_box(value: str) -> bool:
-    return bool(re.search(r"\bP\s*\.?\s*O\.?\s*BOX\b|\bPOBOX\b", (value or "").upper()))
-
-
-def read_rows(lane_dir: Path, max_batches: int):
+def lane_files(lane_dir: Path, max_batches: int) -> list[str]:
     """Dollar Leads uses batch-00001.csv.gz; premium and white-label deliveries
     under /opt/leadcurate/processed use <market>-<lane>-<date>.csv. Support both,
     and never treat a preview or meta file as the deliverable."""
@@ -147,12 +110,15 @@ def read_rows(lane_dir: Path, max_batches: int):
             p for p in sorted(glob.glob(str(lane_dir / "*.csv*")))
             if "preview" not in os.path.basename(p) and "meta" not in os.path.basename(p)
         ][:max_batches]
-    rows = []
+    return files
+
+
+def iter_rows(files: list[str]):
+    """Yield rows without retaining multi-gigabyte processed files in memory."""
     for path in files:
         opener = gzip.open if path.endswith(".gz") else open
         with opener(path, "rt", encoding="utf-8", errors="replace") as handle:
-            rows.extend(list(csv.DictReader(handle)))
-    return rows, len(files)
+            yield from csv.DictReader(handle)
 
 
 def to_float(value: str):
@@ -162,21 +128,25 @@ def to_float(value: str):
         return 0.0
 
 
-def gate_lane(market: str, lane: str, max_batches: int = 6) -> dict:
-    lane_dir = CYCLE_ROOT / market / lane
+def gate_lane(
+    market: str,
+    lane: str,
+    max_batches: int = 6,
+    root: Path | None = None,
+) -> dict:
+    lane_dir = (root or CYCLE_ROOT) / market / lane
     result = {"market": market, "lane": lane, "passed": True, "failures": [], "warnings": {}}
 
     if not lane_dir.is_dir():
         result.update(passed=False, failures=["lane directory not found"])
         return result
 
-    rows, batch_count = read_rows(lane_dir, max_batches)
-    if not rows:
+    files = lane_files(lane_dir, max_batches)
+    if not files:
         result.update(passed=False, failures=["no readable batch rows"])
         return result
 
-    result["batches_sampled"] = batch_count
-    result["rows_sampled"] = len(rows)
+    result["batches_sampled"] = len(files)
 
     # 1. Core field coverage, counting split-column addresses as present
     def prop_addr(row):
@@ -185,44 +155,73 @@ def gate_lane(market: str, lane: str, max_batches: int = 6) -> dict:
     def mail_addr(row):
         return first_value(row, MAIL_FIELDS) or composite_value(row, MAIL_COMPOSITES)
 
-    for label, getter in (("owner", lambda r: first_value(r, OWNER_FIELDS)),
-                          ("property_address", prop_addr),
-                          ("parcel_id", lambda r: first_value(r, PARCEL_FIELDS))):
-        filled = sum(1 for r in rows if getter(r))
-        pct = round(filled / len(rows) * 100, 1)
+    row_count = 0
+    owner_filled = 0
+    prop_filled = 0
+    parcel_filled = 0
+    owner_same = 0
+    owner_comparable = 0
+    institutional_hits = 0
+    values = []
+    front_values = []
+
+    for row in iter_rows(files):
+        row_count += 1
+        owner = first_value(row, OWNER_FIELDS)
+        prop = prop_addr(row)
+        parcel = first_value(row, PARCEL_FIELDS)
+        mail = mail_addr(row)
+        owner_filled += bool(owner)
+        prop_filled += bool(prop)
+        parcel_filled += bool(parcel)
+
+        if lane in ABSENTEE_LANES:
+            if is_po_box(mail):
+                owner_comparable += 1
+            else:
+                p = canonical_address_key(prop)
+                m = canonical_address_key(mail)
+                if p and m:
+                    owner_comparable += 1
+                    owner_same += p == m
+
+        if lane in WHOLESALE_LANES and INSTITUTIONAL_OWNER.search(owner):
+            institutional_hits += 1
+
+        value = to_float(first_value(row, VALUE_FIELDS))
+        if value > 0:
+            values.append(value)
+            if row_count <= 50:
+                front_values.append(value)
+
+    if not row_count:
+        result.update(passed=False, failures=["no readable batch rows"])
+        return result
+
+    result["rows_sampled"] = row_count
+
+    for label, filled in (("owner", owner_filled),
+                          ("property_address", prop_filled),
+                          ("parcel_id", parcel_filled)):
+        pct = round(filled / row_count * 100, 1)
         result["warnings"][f"{label}_populated_pct"] = pct
         if pct < 95.0:
             result["passed"] = False
             result["failures"].append(f"{label} populated on only {pct}% of rows")
 
     # 2. Owner-occupancy, the defect that reached production
-    if lane in ABSENTEE_LANES:
-        same = comparable = 0
-        for row in rows:
-            mail_raw = mail_addr(row)
-            if is_po_box(mail_raw):
-                comparable += 1
-                continue
-            p = property_key(prop_addr(row))
-            m = property_key(mail_raw)
-            if not p or not m:
-                continue
-            comparable += 1
-            if p == m:
-                same += 1
-        if comparable:
-            pct = round(same / comparable * 100, 1)
-            result["warnings"]["owner_occupied_pct"] = pct
-            if pct > MAX_OWNER_OCCUPIED_PCT:
-                result["passed"] = False
-                result["failures"].append(
-                    f"{pct}% of rows are owner-occupied, ceiling is {MAX_OWNER_OCCUPIED_PCT}%"
-                )
+    if lane in ABSENTEE_LANES and owner_comparable:
+        pct = round(owner_same / owner_comparable * 100, 1)
+        result["warnings"]["owner_occupied_pct"] = pct
+        if pct > MAX_OWNER_OCCUPIED_PCT:
+            result["passed"] = False
+            result["failures"].append(
+                f"{pct}% of rows are owner-occupied, ceiling is {MAX_OWNER_OCCUPIED_PCT}%"
+            )
 
     # 3. Institutional owners in wholesale lanes
     if lane in WHOLESALE_LANES:
-        hits = sum(1 for r in rows if INSTITUTIONAL.search(first_value(r, OWNER_FIELDS).upper()))
-        pct = round(hits / len(rows) * 100, 1)
+        pct = round(institutional_hits / row_count * 100, 1)
         result["warnings"]["institutional_pct"] = pct
         if pct > MAX_INSTITUTIONAL_PCT:
             result["passed"] = False
@@ -231,16 +230,13 @@ def gate_lane(market: str, lane: str, max_batches: int = 6) -> dict:
             )
 
     # 4. Front-of-file affordability, what a $5 pack actually receives
-    values = [to_float(first_value(r, VALUE_FIELDS)) for r in rows]
-    usable = [v for v in values if v > 0]
-    if len(usable) >= 100:
-        usable_sorted = sorted(usable)
-        median = usable_sorted[len(usable_sorted) // 2]
+    if len(values) >= 100:
+        values.sort()
+        median = values[len(values) // 2]
         ceiling = median * 10
-        front = [v for v in values[:50] if v > 0]
-        if front:
-            outliers = sum(1 for v in front if v > ceiling)
-            pct = round(outliers / len(front) * 100, 1)
+        if front_values:
+            outliers = sum(1 for v in front_values if v > ceiling)
+            pct = round(outliers / len(front_values) * 100, 1)
             result["warnings"]["median_value"] = int(median)
             result["warnings"]["front50_outlier_pct"] = pct
             if pct > MAX_FRONT_OUTLIER_PCT:

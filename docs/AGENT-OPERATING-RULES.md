@@ -45,6 +45,22 @@ Exit code 1 means the lane is not sellable and not deliverable. It measures:
 - **Front-of-file affordability**, ceiling 20% of the first 50 records above 10x the lane median, because a $5 pack receives the front of the file
 - **Core field coverage**, owner, property address, parcel ID, floor 95%
 
+### Field-role contract -- LOCKED 2026-07-27
+
+- Property address, owner mailing address, owner name, parcel ID, property type, and event evidence are separate roles. A builder must map each role from the official source schema before filtering. Never substitute one role for another because a column is populated.
+- Absentee classification uses `scripts/leadcurate/lane_quality.py`. Compare the canonical property-address key with the canonical owner-mailing key, treat a PO Box mailing address as absentee, and treat a verified out-of-state mailing state as absentee. A ZIP mismatch by itself is not proof.
+- Event lanes require their own official event evidence. Ownership, value, property type, or address differences never prove tax debt, foreclosure, probate, a violation, a permit, or a lien.
+- Every customer cut begins with the same canonical 19 delivery columns. Source-specific fields follow that standard block; they never replace or reorder it.
+
+### Required run order for every future client job
+
+1. Map source columns to explicit roles and record source freshness/status.
+2. Build deduplicated lane files with one row per parcel.
+3. Run `qa_lane_gate.py` against the exact files that would ship.
+4. Stop and hold any failure. Repair and rerun until the measured gate passes.
+5. Cut the customer delivery through the canonical schema boundary.
+6. Release or send only after the operator explicitly approves that exact delivery.
+
 **Why this rule exists:** on 2026-07-24 a pre-launch QA pass found `tired-landlords` was 84.9% owner-occupied in Mecklenburg, 71.0% in Cook, 35.4% in Massachusetts, 34.1% in Wayne. Real properties, wrong label, caused by exact-string comparison of property vs mailing address when counties format them differently (`14611 N C 73 HY` vs `14611 HIGHWAY 73`). Dallas was clean only because it retained `normalized_address()`. Nothing had sold yet, so no customer was harmed, but the store was hours from being promoted publicly. A rule alone would not have caught it; a measurement did.
 
 **Corollaries:**
@@ -52,6 +68,7 @@ Exit code 1 means the lane is not sellable and not deliverable. It measures:
 - When a lane fails, hold it (`status` change), do not delete it. Data is expensive, labels are cheap to fix.
 - Report the measured number, not "fixed." "Mecklenburg tired-landlords now 1.4% owner-occupied" is proof. "Rebuilt the lane" is not.
 - Adding a new market is not done when the scrape finishes. It is done when the gate passes.
+- A prior passing report does not authorize a new build. The gate runs again against the exact current output.
 
 ## Product doctrine — Vacant Land differentiation
 
