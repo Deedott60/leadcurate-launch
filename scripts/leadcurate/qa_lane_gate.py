@@ -26,7 +26,11 @@ import re
 import sys
 from pathlib import Path
 
-CYCLE_ROOT = Path("/opt/leadcurate/dollar_batches/2026-07")
+# Applies to EVERY LeadCurate data product, not just Dollar Leads: premium
+# territory deliveries, white-label client instances, sample deliveries, and
+# any new market. Point --root at whatever tree holds the lane files.
+DEFAULT_ROOT = Path("/opt/leadcurate/dollar_batches/2026-07")
+CYCLE_ROOT = DEFAULT_ROOT  # rebound from --root at runtime
 csv.field_size_limit(2**31 - 1)
 
 # A lane whose whole premise is "the owner does not live there".
@@ -134,7 +138,15 @@ def is_po_box(value: str) -> bool:
 
 
 def read_rows(lane_dir: Path, max_batches: int):
+    """Dollar Leads uses batch-00001.csv.gz; premium and white-label deliveries
+    under /opt/leadcurate/processed use <market>-<lane>-<date>.csv. Support both,
+    and never treat a preview or meta file as the deliverable."""
     files = sorted(glob.glob(str(lane_dir / "batch-*.csv*")))[:max_batches]
+    if not files:
+        files = [
+            p for p in sorted(glob.glob(str(lane_dir / "*.csv*")))
+            if "preview" not in os.path.basename(p) and "meta" not in os.path.basename(p)
+        ][:max_batches]
     rows = []
     for path in files:
         opener = gzip.open if path.endswith(".gz") else open
@@ -247,13 +259,30 @@ def main() -> int:
     parser.add_argument("--all", action="store_true")
     parser.add_argument("--batches", type=int, default=6)
     parser.add_argument("--json", action="store_true")
+    parser.add_argument("--root", type=Path, default=DEFAULT_ROOT,
+                        help="Tree holding market/lane folders. Use "
+                             "/opt/leadcurate/processed/<market> style trees to gate "
+                             "premium and white-label deliveries, not just Dollar Leads.")
     args = parser.parse_args()
+
+    global CYCLE_ROOT
+    CYCLE_ROOT = args.root
+    if not CYCLE_ROOT.is_dir():
+        print(f"root not found: {CYCLE_ROOT}", file=sys.stderr)
+        return 1
 
     targets = []
     if args.all:
         for market_dir in sorted(p for p in CYCLE_ROOT.iterdir() if p.is_dir()):
-            for lane_dir in sorted(p for p in market_dir.iterdir() if p.is_dir()):
-                targets.append((market_dir.name, lane_dir.name))
+            for sub in sorted(p for p in market_dir.iterdir() if p.is_dir()):
+                # processed/<market>/<date>/<lane>: descend the date level so the
+                # premium and white-label trees gate the same as Dollar Leads.
+                nested = sorted(p for p in sub.iterdir() if p.is_dir())
+                if nested and not glob.glob(str(sub / "*.csv*")):
+                    for lane_dir in nested:
+                        targets.append((market_dir.name, f"{sub.name}/{lane_dir.name}"))
+                else:
+                    targets.append((market_dir.name, sub.name))
     elif args.market and args.lane:
         targets.append((args.market, args.lane))
     else:
