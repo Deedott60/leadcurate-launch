@@ -6,7 +6,7 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-07-22 by Codex (VPS storage recovery, compressed Dollar Leads inventory, workspace architecture, and Reggie deal status)
+Last updated: 2026-07-27 by Codex (Dollar Leads free-sample launch workflow added; no inventory refresh or storefront copy change)
 
 ---
 
@@ -86,6 +86,31 @@ The invoice deliberately calls the $1,000 an **initial project payment**. It doe
 **Verified-accurate facts to not re-litigate:** the brief's numbers are validated (2026-07-16 metas, zero duplicates, vacant six-check-plus filter confirmed, absentee address-normalization fix in). Full verification record in the 2026-07-16 session handoff.
 
 ## Open now -- Dollar Leads (NEW sister brand, launched 2026-07-18)
+
+### QUALITY HOLD 2026-07-24 (Claude) -- read before touching dollar_batches
+
+A pre-launch QA pass on the live batch files found that absentee detection failed in most markets. Contaminated lanes are HELD OFFLINE, not deleted. Zero orders had been placed, so no customer received a defective file.
+
+**Measured owner-occupied contamination** (street-level key: house number + street name, city/state/ZIP stripped, 4 batches per lane):
+
+| Lane | Mecklenburg | Cook | Massachusetts | Wayne | Fulton | Shelby | Dallas |
+|---|---|---|---|---|---|---|---|
+| tired-landlords | 84.9% | 71.0% | 35.4% | 34.1% | n/a | n/a | 0.1% clean |
+| absentee-owners | 80.1% | 41.0% | 23.4% | 12.8% | 35.2% | 0.0% clean | n/a |
+| out-of-state-owners | 0.8% | 0.1% | 0.1% | 0.1% | 0.2% | 0.0% | clean |
+
+**Root cause:** exact-string comparison of `lc_property_address` vs `lc_mailing_address`. Mecklenburg property addresses carry a duplicated city+state suffix (`15901 HENRY LN HUNTERSVILLE NC HUNTERSVILLE NC`) while mailing carries city+state+ZIP, and street types differ (`N C 73 HY` vs `NC HWY 73`). Dallas is clean because it retained `normalized_address()` from `scripts/leadcurate/process_investor_lanes.py` (~line 278); the 19-lane rebuild path does not apply it. **Out-of-state lanes compare state, not street, so they are clean everywhere and stay live.**
+
+**Current inventory status:**
+- `live` 19,758 batches, 70 market/lane combos, every market still shows 9 to 14 categories
+- `held-quality-owner-occupied` 7,819 batches (tired-landlords + absentee-owners in the 4 broken markets, Fulton absentee, Meck high-value-absentee)
+- `held-texas-pending-review` 3,278 Dallas batches, held at Derrick's request pending the Texas data-broker registration question. Dallas is the CLEANEST market in the system; restore with `update dollar_batches set status='live' where market='dallas-tx' and status='held-texas-pending-review';`
+
+**Two more customer-visible defects, spec sent to Codex:** (1) lanes are ordered by descending score, so Mecklenburg vacant land batch-00001 opens with $34.8M institutional parcels and the smallest packs get the least usable records, though the lane itself is sound at $96,200 median land value; (2) delivery schemas are inconsistent, 71 columns (Wayne) to 331 (Cook), with different field names per lane inside the same market.
+
+**Do not return a held lane to `live` until the measured owner-occupied rate is under 2% and reported in the Conference Room.** Full repair spec is in the 2026-07-24 conf:urgent targeted at codex.
+
+**Safe to promote right now:** vacant land, code violations, tax debt, liens, blight, out-of-state owners, and property-type lanes in all six live markets.
 
 **MINIMUM LANE STANDARD -- LOCKED BY DERRICK 2026-07-19, PERMANENT, APPLIES TO EVERY CURRENT AND FUTURE MARKET:** No market sits on the Dollar Leads board with a thin menu. For EVERY market on the board now and EVERY market added from now on, the responsible agent MUST: (1) audit the market against all 19 catalog lanes below; (2) build every lane the market's official sources support, including the derivable ownership lanes (absentee, out-of-state, long-hold, high-equity, individual, entity, office, industrial, multifamily, vacant) which come from the parcel roll we already pull for any market, AND the event lanes (tax debt, tax liens, tax sale, pre-foreclosure, probate, code violations, municipal liens, permits, blight) which require their own county-source pulls per the playbook; (3) record a per-lane status in the market's manifest: live, buildable-not-yet-built, or unavailable WITH the specific reason (e.g. "county publishes probate only on paper"); (4) a new market is not DONE until that 19-row audit exists. One-lane markets like Fulton and Shelby as of 2026-07-19 are explicitly out of compliance with this standard and must be brought up. Derrick's words: every county added for the rest of this business's life gets as many of these categories as it can possibly support.
 
@@ -174,6 +199,8 @@ Reusable tooling is in `scripts/leadcurate/build_dollar_source_lanes.py`, `scrip
 **Rules that apply:** zero em dashes in anything the buyer sees (store page verified clean). No DNC/skip-trace claims (page states as-is public records, buyer owns compliance). Dollar Leads is deliberately the value tier; LeadCurate premium copy rules still apply to LeadCurate-branded pages, and the store upsell points big buyers back to LeadCurate custom territories. Freshness language is cycle-only everywhere, never a day count, since buyers avoid anything that reads older even by a day (Derrick's direct feedback 2026-07-19).
 
 **2026-07-19 rebuild (Claude, commits `31323d1`, `15feb09`):** the board and order form no longer hardcode counties/categories in the HTML. Both now read live from the `dollar_batches` Supabase table (public-read RLS) and render dynamically: picking a county auto-populates only the available categories for that county and greys out sold-out ones. **This means opening a new county or category going forward is a database insert only, never a page edit.** Removed all literal "ever" wording and any day-based freshness signal per Derrick's direct feedback. Confirmed added to the EXISTING LeadCurate dashboard (`docs/command/index.html`, Growth nav, 💵 Dollar Leads page), NOT a new dashboard.
+
+**Free-sample Facebook launch workflow (Codex 2026-07-27, ready for operator approval):** use `docs/dollar-leads/free-sample-launch-workflow.md` and `scripts/leadcurate/dollar_free_sample_workflow.py`. This is for starting sales today without a source refresh and without changing the public Dollar Leads storefront. Derrick chooses two pilot market/category pairs; agents must not hardcode the pilot market choices. For each pilot market/category, reserve 23 unique free-sample batches from existing verified inventory only after explicit approval. The script plans with no changes by default; `reserve-pool` requires approval text `APPROVED FREE SAMPLE BATCH RESERVATION` and only takes fully unsold `dollar_batches` rows, setting `seats_sold = seats_total` so paid fulfillment cannot later use the same batch. Prospect assignment requires approval text `APPROVED FREE SAMPLE ASSIGNMENT`, drafts CSV/XLSX plus `email-subject.txt`, `email-draft.html`, and `email-draft.txt`, and logs to `/opt/leadcurate/deliveries/dollar-leads/free-samples/sample-ledger.jsonl`. No real email is sent by the script. A real email or batch release requires explicit Derrick approval for that exact action.
 
 **`dollar_batches` table schema (Supabase project jdmlsraqioigbukspduo):** `market`, `market_display`, `lane`, `lane_display`, `batch_no`, `size` (records per batch, default 500), `seats_total` (default 3), `seats_sold`, `cycle` (e.g. "July 2026"), `status` ('live' | retire when full). July 2026 live rows are real inventory backed by the filesystem manifests above. The original 70 seeded rows remain only as `retired-placeholder` history under cycle `July 2026 placeholder`.
 
