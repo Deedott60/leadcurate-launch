@@ -339,3 +339,29 @@ Tier 1 Hot Sheet $497 · Tier 2 Fresh Triggers $199/mo · Tier 3 Breaking Point 
 - ~1hr attorney review before first law-firm (Asset Locator) sale.
 - Ground Floor pricing lock, ad carousel pick, Private Market Engine strategy review.
 - **Geocoding go/no-go** (item 5 above) — real build, needs Derrick's sign-off before Codex starts.
+
+### QA GATE IS NOW MANDATORY (Claude 2026-07-24, commit d16b875)
+
+`scripts/leadcurate/qa_lane_gate.py` (deployed at `/opt/leadcurate/scripts/qa_lane_gate.py`) must be run before ANY lane is marked live, sold, or delivered to a white-label client, in every market, permanently.
+
+```bash
+python3 /opt/leadcurate/scripts/qa_lane_gate.py --all
+python3 /opt/leadcurate/scripts/qa_lane_gate.py --market wake-nc --lane tired-landlords
+```
+
+Exit 1 means do not sell that lane. It checks owner-occupied contamination (ceiling 2%), institutional owners in wholesale lanes (ceiling 1%), unaffordable outliers in the first 50 records where a $5 pack reads (ceiling 20% above 10x lane median), and core field coverage. It reassembles split-column addresses (Shelby `PAR_ADRNO`/`PAR_ADRSTR`/`PAR_ADRSUF`, Wayne `property_street`) so it does not report false holes.
+
+**Baseline 2026-07-24: 48 lanes pass, 42 fail.** That is the repair queue.
+
+### NC market truth for the Reggie white-label (verified 2026-07-24)
+
+| County | Metro | State |
+|---|---|---|
+| mecklenburg-nc | Charlotte | processed 2026-07-19 |
+| wake-nc | Raleigh | processed 2026-07-08, stale, refresh before delivery |
+| guilford-nc | Greensboro | processed 2026-07-08, stale, refresh before delivery |
+| forsyth-nc | Winston-Salem | scraped, NOT processed |
+| cabarrus-nc | Concord | scraped, NOT processed |
+| gaston-nc | Gastonia | scraped, NOT processed |
+
+All six major NC metros are already scraped. Three need a processing run. Reggie's white-label consumes the same verified lane files as Dollar Leads, so the pipeline repair fixes his product too. **Do not promise Reggie any lane that fails `qa_lane_gate.py`.** Wayne is processed 2026-07-19 but its tired-landlords lane measures 32.6% owner-occupied, so Wayne absentee lanes are not deliverable to him until repaired.
