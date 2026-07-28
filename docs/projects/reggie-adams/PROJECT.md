@@ -328,14 +328,42 @@ and terms are agreed. The staged config
 (`whitelabel-investor-site` → `config/clients/reggie-adams.config.ts`) is the thing that gets
 activated and pointed at from that slot.
 
-### RG-4 — Universal scraping/source rules (NOT Reggie-specific)
+### RG-4 — Universal source/scraping rules (NOT Reggie-specific) — **PRIORITY**
 
-This is the real reason the market question came up. Put it in `docs/AGENT-OPERATING-RULES.md`,
-not here: the county source and scraping rules must hold **in any market**, so the contamination
-class of bug (`lane_quality.py`, exact-string address comparison) cannot recur when a new county
-is added. Codify column-role mapping, the address-normalization requirement, institutional-owner
-detection, and the mandatory `qa_lane_gate.py` pass as market-agnostic rules. Any new market
-inherits them automatically.
+Derrick's call, 2026-07-28: **do this properly, it protects every market and every client, not
+just Reggie.** The contamination bug was not a Mecklenburg bug — it was a rule that only existed
+inside one script. Any new county we add today can reintroduce it.
+
+**Root cause to design against:** owner-occupancy was decided by *exact string comparison* of
+property address vs mailing address. Counties format the same address differently
+(`14611 N C 73 HY` vs `14611 HIGHWAY 73`), and Mecklenburg duplicates the city+state suffix. Result:
+84.9% owner-occupied inside a "tired landlords" lane. Out-of-state lanes were unaffected only
+because they compare mailing *state*, which is format-insensitive by luck, not by design.
+
+**Deliverable: a market-agnostic section in `docs/AGENT-OPERATING-RULES.md`** — the company-wide
+file, not this one — that every county inherits automatically:
+
+1. **Explicit column-role mapping.** Every source column maps to a declared role
+   (property_address, mailing_address, owner_name, mailing_state, …). No positional guessing, no
+   fuzzy header matching. An unmapped required role = the market is not processable, and it is
+   marked unavailable rather than inferred.
+2. **Address normalization is mandatory before any comparison.** Directionals, street-type
+   abbreviations, highway forms, punctuation, casing, and duplicated city/state suffixes all
+   normalize first. No lane may compare raw address strings, ever.
+3. **Institutional-owner detection** as a shared rule, not a per-script regex.
+4. **Occupancy is derived, never assumed**, and derived only through the canonical helper in
+   `scripts/leadcurate/lane_quality.py`. Any script that re-implements it is a defect.
+5. **`qa_lane_gate.py` runs on the exact shipping files.** Exit 1 = not sellable, not deliverable.
+   State the pass/fail threshold explicitly in the rules so it is not a judgment call.
+6. **New-market onboarding checklist** every county must pass before its data can be sold:
+   roles mapped → normalization applied → deduped one row per parcel → gate passed → lane marked
+   available. A market that has not cleared the checklist is **unavailable**, not "probably fine."
+7. **Regression fixtures.** Extend `test_lane_quality.py` with a fixture per known county format
+   quirk (the NC highway form and the Mecklenburg duplicated suffix at minimum), so a future
+   refactor cannot silently undo this.
+
+**Report the measured number** ("Mecklenburg tired-landlords now 1.4% owner-occupied"), never the
+word "rebuilt" on its own. Held lanes stay held until the gate passes and Derrick approves release.
 
 ### RG-5 — The project area is a COMMUNICATION surface, not a record
 
@@ -376,3 +404,55 @@ current state, open decisions, who owns what, what changed since last time, and 
 - Read §6 before touching anything customer-facing.
 - Report progress in the conference room, and update this file in place. **Do not create a second
   Reggie document.**
+
+---
+
+## 8. WHAT WE NEED FROM REGGIE (Derrick's conversation checklist)
+
+Nothing here is a price or a promise. It is the intake list — what we physically cannot build
+without. Safe to ask for in any conversation, before or after terms.
+
+### Must have before anything can be branded
+
+| Ask | Why we need it | Blocked without it |
+|---|---|---|
+| **Business name as it should appear publicly** | Entity on file is The 3 CCC'S Consulting Firm LLC; that may not be his brand | Every headline, email, and legal page |
+| **Logo** (SVG or high-res PNG) | Replaces `public/logo.svg` | Site looks unbranded |
+| **Brand colors** (or approval to pick) | Config `colors` block | Site ships in neutral defaults |
+| **Business phone** as it should display | Header, footer, schema | Contact paths |
+| **Business mailing address** | **Legally required** in email footers (CAN-SPAM) | Cannot send a single email |
+
+### Domain and email — the part that trips people up
+
+**Yes — if it is his website on his domain, the email is set up on his domain, and you need
+access to do it.** Ask for one of two things, his choice:
+
+- **Option A (easier for us):** he adds us to his domain registrar/DNS, or gives us the records to
+  publish. We handle it.
+- **Option B (he keeps control):** we send him the exact DNS records and he pastes them in.
+
+Either way we need **DNS access or a cooperative person on the other end**, because:
+
+1. **The domain itself** must point at his site.
+2. **Sending email as his brand** requires **SPF and DKIM records on his domain**. Without them,
+   his confirmation emails land in spam and the site looks broken. This is not optional and it is
+   the single most common launch delay.
+3. **Where leads get delivered** — the inbox he actually reads. Can be his existing Gmail; that is
+   a forwarding target, not a sending identity. **Sending as his domain and receiving at Gmail are
+   two different things** — do not let the conversation blur them.
+
+Ask him plainly: *"Do you already own the domain, and can you get into where it's managed?"* If he
+does not own one yet, that is a decision, not a blocker — it just has to happen before launch.
+
+### Needed before any data work
+
+| Ask | Note |
+|---|---|
+| **Which markets/territories he wants** | §2 — nobody has asked him. This is the open question. |
+| **What he does with the records** | Drives which categories fit. Do not offer a menu (§5.3). |
+| **How he wants records delivered** | Download link is what we build; confirm it works for him. |
+
+### Not needed from him
+
+Do not ask for anything payment-related beyond what terms require. **No agent asks Reggie for
+money, card details, or account access.** Payment conversation is Derrick's alone.
