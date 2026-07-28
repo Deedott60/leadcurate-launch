@@ -350,6 +350,25 @@ current state, open decisions, who owns what, what changed since last time, and 
 - Show last-updated and by-whom on each item, so Derrick can see instantly whether Claude and
   Codex are on the same page — the exact failure that prompted this work order.
 
+### Infrastructure constraints — verified 2026-07-28, read before building
+
+- **Supabase org `jrjtcapsqdfvnldhwyum` is on the FREE plan.** Free allows 2 active projects and
+  we are at the cap: `Dashboard/Form LeadCurate` (ACTIVE) and `rooted` (ACTIVE), with
+  `business-understanding-system` already INACTIVE. **Creating a new Supabase project per client
+  is not free and would force a paid plan.** Do not do it.
+- **White-label is multi-tenant by design.** `wl_clients` and `wl_seller_leads` already exist with
+  a client id. Every new client is a ROW, not a new database. Same pattern applies to the RG-1
+  project tables — `projects` holds many clients, Reggie is one row.
+- `supabase/migrations/001_wl_tables.sql` in the whitelabel repo is **read-only** (their AGENTS.md
+  rule 5). Do not modify or reapply it.
+- **Delivery email is Hostinger Agentic Mail**, via `scripts/leadcurate/send_dollar_delivery.py`
+  (`api.mail.hostinger.com`, creds in `/opt/leadcurate/.env`). **n8n is NOT wired for delivery** —
+  it is a placeholder card on the Workflow page. Resend is only the white-label site's own
+  lead-confirmation email. Do not assume any of these three are interchangeable.
+- **Never send a county-sized file through the browser or as an email attachment.** Build on the
+  VPS, return a signed download link (R-5). `build_delivery.py` and `verify_delivery_bundle.py`
+  already exist — reuse, do not rewrite.
+
 ### Rules for Codex on this work order
 
 - **Do not seed any market for Reggie.** `project_markets` starts empty. §2 is unknown.
