@@ -47,10 +47,27 @@ Exit code 1 means the lane is not sellable and not deliverable. It measures:
 
 ### Field-role contract -- LOCKED 2026-07-27
 
-- Property address, owner mailing address, owner name, parcel ID, property type, and event evidence are separate roles. A builder must map each role from the official source schema before filtering. Never substitute one role for another because a column is populated.
-- Absentee classification uses `scripts/leadcurate/lane_quality.py`. Compare the canonical property-address key with the canonical owner-mailing key, treat a PO Box mailing address as absentee, and treat a verified out-of-state mailing state as absentee. A ZIP mismatch by itself is not proof.
+- Every source column must map to a declared semantic role before filtering: property address, owner mailing address, owner name, mailing state, parcel ID, property type, value, and event evidence. Mappings use exact source-column names. Positional guessing, fuzzy header matching, and substituting one populated field for another are forbidden. If a required role is unmapped, the market or lane is unavailable.
+- Address normalization is mandatory before every property-versus-mailing comparison. Directionals, street suffixes, highway forms, punctuation, casing, unit markers, ZIP codes, and duplicated city/state suffixes must pass through `scripts/leadcurate/lane_quality.py`. Comparing raw address strings anywhere is a defect.
+- Institutional-owner detection is shared through `scripts/leadcurate/lane_quality.py`. Builders may not maintain a separate county-specific owner regex.
+- Occupancy and absentee status are derived only through `derive_occupancy_signals()` in `scripts/leadcurate/lane_quality.py`. A PO Box mailing address and a verified out-of-state mailing state are absentee signals. A ZIP mismatch by itself is not proof. Reimplementing occupancy logic in a market script is a defect.
 - Event lanes require their own official event evidence. Ownership, value, property type, or address differences never prove tax debt, foreclosure, probate, a violation, a permit, or a lien.
 - Every customer cut begins with the same canonical 19 delivery columns. Source-specific fields follow that standard block; they never replace or reorder it.
+
+### New-market onboarding checklist -- LOCKED 2026-07-28
+
+A county is unavailable until every applicable step passes:
+
+1. Record the newest official source URL, data date, retrieval date, and source status.
+2. Declare exact source-column mappings for every role required by each proposed lane.
+3. Process address and owner comparisons only through the shared quality helpers.
+4. Deduplicate to one row per parcel and explain every removed duplicate.
+5. Build each lane only from evidence that proves that lane.
+6. Run `qa_lane_gate.py` on the exact shipping files.
+7. Require owner-occupied contamination at or below 2%, institutional owners at or below 1%, front-of-file affordability failures at or below 20%, and core-field coverage at or above 95%.
+8. Mark the lane available only after the gate passes and the operator approves release.
+
+`scripts/leadcurate/test_lane_quality.py` permanently covers known source-format quirks, including the North Carolina highway form and Mecklenburg's duplicated locality suffix. A new county quirk gets a regression fixture before its parser is considered reusable.
 
 ### Required run order for every future client job
 

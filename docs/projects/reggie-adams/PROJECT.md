@@ -140,7 +140,9 @@ customer-ready. Time-sensitive lanes (tax, foreclosure) must refresh before deli
   **Not started.** Do not build the category picker until §5.3 is answered.
 - **C-3 — DRAFTED 2026-07-28, NOT SENT.** Commercial scope now lives in **§5 of this file**.
   It is blocked on Derrick, not on Claude. **Derrick approves before any of it reaches Reggie.**
-- **C-4 — DONE.** Reggie project page in the OS (`docs/command/index.html`), nav item + `#page-reggie`.
+- **C-4 — DONE, REPLACED BY RG-1/RG-2.** Reggie now lives in the Supabase-backed Projects
+  workspace in the OS (`docs/command/index.html`). The old hardcoded invoice-first view is hidden;
+  current project state comes from the project tables.
 
 **Blocked until Derrick decides** (detail in §5): market count, which data categories Reggie gets,
 additional-market pricing, monthly hosting/maintenance fee, included support hours, refresh
@@ -404,6 +406,21 @@ current state, open decisions, who owns what, what changed since last time, and 
 - Read §6 before touching anything customer-facing.
 - Report progress in the conference room, and update this file in place. **Do not create a second
   Reggie document.**
+
+---
+
+### Implementation status — 2026-07-28
+
+| Item | Status | Verified result |
+|---|---|---|
+| **RG-1** | **DONE** | Four multi-client project tables are live in Supabase. Reggie is one `planning` project row with NULL commercial basis, zero approved markets, six tracked items, and three assets. Historical order `69110f8b-422a-4bb9-a422-57d29c274a72` remains `pending_payment` and was not changed. |
+| **RG-2** | **DONE** | OS Projects view reads from Supabase and supports browser editing for projects, work items, markets, categories, assets, and statuses. Desktop and 390px phone layouts verified. |
+| **RG-3** | **DONE / WAITING ON REGGIE** | `Reggie landing page` is a `project_assets` row with no URL and status `waiting`. Nothing was invented or activated. |
+| **RG-4** | **DONE** | Universal exact-role mapping, shared occupancy derivation, institutional-owner detection, mandatory normalization, gate thresholds, and new-market checklist are locked in `docs/AGENT-OPERATING-RULES.md`; regression tests pass. Held market files remain held until separately rebuilt and measured. |
+| **RG-5** | **DONE** | Conference Room messages can be filed under a project; project changes and project status posts appear in both the project Activity tab and Conference Room with agent attribution and timestamps. |
+
+**Operating location:** LeadCurate OS → **Projects** → **Reggie Adams project**. This file remains
+the detailed source of truth; the OS is the live management and communication surface.
 
 ---
 

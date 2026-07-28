@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import re
+from collections.abc import Iterable, Mapping
+from dataclasses import dataclass
 
 
 INSTITUTIONAL_OWNER = re.compile(
@@ -12,7 +14,7 @@ INSTITUTIONAL_OWNER = re.compile(
     r"|COMMISSION|TRANSPORTATION|HOUSING AUTHORITY|MUNICIPAL|TOWN OF"
     r"|VILLAGE OF|CEMETERY|FOUNDATION|PARK DISTRICT|SANITAR|WATER DIST"
     r"|FIRE DIST|LIBRARY|BANK|CREDIT UNION|RAILROAD|RAILWAY|RAPID TRANSIT"
-    r"|HOMEOWNER|ASSOCIATION|ASSN|HOA)\b",
+    r"|HOMEOWNERS ASSOCIATION|ASSOCIATION|ASSN|HOA)\b",
     re.I,
 )
 
@@ -53,8 +55,45 @@ STATE_CODES = {
 }
 
 
+class RoleMappingError(ValueError):
+    """Raised when a source does not explicitly satisfy its declared field roles."""
+
+
+@dataclass(frozen=True)
+class OccupancySignals:
+    property_key: str
+    mailing_key: str
+    out_of_state: bool
+    address_mismatch: bool
+    absentee: bool
+
+
+def validate_role_mapping(
+    source_fields: Iterable[str],
+    role_map: Mapping[str, Iterable[str]],
+    required_roles: Iterable[str],
+) -> None:
+    """Require exact source-column assignments for every required semantic role."""
+    available = set(source_fields)
+    errors: list[str] = []
+    for role in required_roles:
+        mapped = [column for column in role_map.get(role, ()) if column]
+        if not mapped:
+            errors.append(f"{role}: no source column declared")
+            continue
+        missing = [column for column in mapped if column not in available]
+        if len(missing) == len(mapped):
+            errors.append(f"{role}: declared columns absent ({', '.join(missing)})")
+    if errors:
+        raise RoleMappingError("; ".join(errors))
+
+
 def is_po_box(value: str) -> bool:
     return bool(re.search(r"\bP\s*\.?\s*O\.?\s*BOX\b|\bPOBOX\b", value or "", re.I))
+
+
+def is_institutional_owner(value: str) -> bool:
+    return bool(INSTITUTIONAL_OWNER.search(value or ""))
 
 
 def canonical_address_key(value: str) -> str:
@@ -100,3 +139,33 @@ def canonical_address_key(value: str) -> str:
             break
 
     return "|".join([house_number, *street])
+
+
+def derive_occupancy_signals(
+    property_address: str,
+    mailing_address: str,
+    *,
+    property_state: str = "",
+    mailing_state: str = "",
+) -> OccupancySignals:
+    """Derive absentee signals only from normalized addresses and state roles."""
+    property_key = canonical_address_key(property_address)
+    mailing_key = canonical_address_key(mailing_address)
+    normalized_property_state = (property_state or "").strip().upper()
+    normalized_mailing_state = (mailing_state or "").strip().upper()
+    out_of_state = bool(
+        normalized_property_state
+        and normalized_mailing_state
+        and normalized_property_state != normalized_mailing_state
+    )
+    address_mismatch = bool(
+        is_po_box(mailing_address)
+        or (property_key and mailing_key and property_key != mailing_key)
+    )
+    return OccupancySignals(
+        property_key=property_key,
+        mailing_key=mailing_key,
+        out_of_state=out_of_state,
+        address_mismatch=address_mismatch,
+        absentee=out_of_state or address_mismatch,
+    )

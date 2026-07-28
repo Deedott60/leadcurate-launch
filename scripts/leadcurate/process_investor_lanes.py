@@ -10,7 +10,11 @@ from pathlib import Path
 from statistics import median
 from typing import Any
 
-from lane_quality import INSTITUTIONAL_OWNER, canonical_address_key, is_po_box
+from lane_quality import (
+    INSTITUTIONAL_OWNER,
+    derive_occupancy_signals,
+    validate_role_mapping,
+)
 
 
 TODAY = date.today().isoformat()
@@ -563,18 +567,15 @@ def derive(row: dict[str, str], cfg: dict[str, Any]) -> dict[str, Any]:
     homestead_value = first(row, f["homestead"])
     homestead = number(homestead_value) > 0
     homestead_known = bool(homestead_value) if not cfg.get("homestead_available", True) else True
-    out_of_state = bool(mail_state and mail_state != cfg["state"])
-    property_address_key = canonical_address_key(prop_street)
-    mailing_address_key = canonical_address_key(mail_compare_street)
-    address_mismatch = bool(
-        is_po_box(mail_compare_street)
-        or (
-            property_address_key
-            and mailing_address_key
-            and property_address_key != mailing_address_key
-        )
+    occupancy = derive_occupancy_signals(
+        prop_street,
+        mail_compare_street,
+        property_state=cfg["state"],
+        mailing_state=mail_state,
     )
-    absentee = out_of_state or address_mismatch
+    out_of_state = occupancy.out_of_state
+    address_mismatch = occupancy.address_mismatch
+    absentee = occupancy.absentee
     code_tokens = {token.strip() for token in re.split(r"[,;\s]+", use_code) if token.strip()}
     multifamily = bool(code_tokens & cfg.get("multifamily_codes", set())) or any(token.startswith(tuple(cfg.get("multifamily_prefixes", ()))) for token in code_tokens) or "MULTIFAMILY" in use_desc or "MULTI-FAMILY" in use_desc or "APARTMENT" in use_desc or units >= 2
     office = bool(code_tokens & cfg.get("office_codes", set())) or any(token.startswith(tuple(cfg.get("office_prefixes", ()))) for token in code_tokens) or "OFFICE" in use_desc or "OFFICE" in office_desc
@@ -742,6 +743,11 @@ def process(market: str, source: Path, output_dir: Path, preview_count: int) -> 
     with source.open(newline="", encoding="utf-8-sig", errors="replace") as handle:
         reader = csv.DictReader(handle)
         source_fields = reader.fieldnames or []
+        validate_role_mapping(
+            source_fields,
+            cfg["fields"],
+            ("parcel", "owner", "property_street"),
+        )
         derived_fields = [
             "lc_parcel_id", "lc_owner_name", "lc_property_address", "lc_mailing_address",
             "lc_county", "lc_municipality", "lc_mail_state", "lc_is_absentee", "lc_is_out_of_state", "lc_years_owned",
