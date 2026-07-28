@@ -273,6 +273,33 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 .wl-contract{font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.7;background:var(--dark);color:#d1fae5;padding:14px;overflow-x:auto;white-space:pre;}
 @media(max-width:760px){.wl-grid,.wl-checks{grid-template-columns:1fr;}.wl-flow{grid-template-columns:repeat(5,150px);}}
 
+/* PROJECTS */
+.project-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:16px;}
+.project-toolbar .f-select{width:auto;min-width:240px;flex:1;}
+.project-tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:18px;overflow-x:auto;}
+.project-tab{border:0;background:transparent;color:var(--sl);padding:10px 13px;font:600 12px/1 Inter,sans-serif;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;}
+.project-tab.active{color:var(--em-d);border-bottom-color:var(--em);}
+.project-panel{display:none;}
+.project-panel.active{display:block;}
+.project-section{padding:18px 0;border-bottom:1px solid var(--line);}
+.project-section:last-child{border-bottom:0;}
+.project-section-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+.project-section-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;}
+.project-form{display:none;background:var(--cream);border:1px solid var(--line);padding:14px;margin-bottom:14px;}
+.project-form.open{display:block;}
+.project-form-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px;}
+.project-list-row{display:grid;grid-template-columns:1fr auto;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);align-items:start;}
+.project-list-row:last-child{border-bottom:0;}
+.project-meta{font-family:'JetBrains Mono',monospace;color:var(--sl-l);font-size:10px;margin-top:5px;}
+.project-empty{padding:24px 12px;text-align:center;color:var(--sl);background:var(--cream);border:1px dashed var(--line);}
+.project-activity{border-left:2px solid var(--line);padding-left:14px;margin:12px 0;}
+@media(max-width:640px){
+  .project-toolbar .f-select{min-width:100%;width:100%;}
+  .project-toolbar .btn{flex:1;justify-content:center;}
+  .project-list-row{grid-template-columns:1fr;}
+  .project-list-row .row-actions{justify-content:flex-start;}
+}
+
 /* ── COMMAND PALETTE ─────────────────────── */
 #cmd-overlay{position:fixed;inset:0;background:rgba(15,23,42,0.7);z-index:500;display:none;align-items:flex-start;justify-content:center;padding-top:15vh;}
 #cmd-overlay.open{display:flex;}
@@ -353,7 +380,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
         <span class="icon">W</span> White-label workspace
       </div>
       <div class="nav-item" data-page="reggie">
-        <span class="icon">R</span> Reggie project
+        <span class="icon">P</span> Projects
       </div>
       <div class="nav-item" data-page="templates">
         <span class="icon">📋</span> Templates
@@ -747,66 +774,109 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 
     <!-- ── REGGIE PROJECT ─────────────────── -->
     <div id="page-reggie" class="page">
-      <div class="page-header">
-        <div class="flex-row" style="justify-content:space-between;align-items:flex-start;">
-          <div><div class="page-title">Reggie Adams project</div><div class="page-sub">The 3 CCC'S Consulting Firm LLC. Shared board for Derrick, Claude, Codex, and Danny.</div></div>
-          <button class="btn btn-sm" onclick="window.open('https://premier-demo.leadcurate.com','_blank')">Open demo site</button>
+      <div id="projects-workspace">
+        <div class="page-header">
+          <div class="page-title">Projects</div>
+          <div class="page-sub">One place for the client, work, decisions, markets, assets, and agent updates.</div>
         </div>
-      </div>
-      <div class="stats">
-        <div class="stat hot"><div class="v">Dead</div><div class="l">$1,000 invoice is void</div></div>
-        <div class="stat hi"><div class="v">Live</div><div class="l">Site and tool deployed</div></div>
-        <div class="stat hot"><div class="v">?</div><div class="l">Markets — not decided</div></div>
-        <div class="stat"><div class="v">Not yet</div><div class="l">Real data connected</div></div>
-      </div>
-      <div class="card">
-        <div class="card-h"><span class="card-title">Payment gate</span><span class="card-meta">Do not build past this without Derrick</span></div>
-        <div class="row"><div class="row-body"><div class="row-name">The $1,000 invoice is DEAD — there is no live deal</div><div class="row-detail">Invoice LC-2026-0718-001 is void as of 2026-07-28 and nothing has replaced it. No agreed price, scope, markets, or terms. Order row 69110f8b still reads pending_payment in the DB and needs voiding on Derrick's instruction — no agent changes it alone. When there is a payment it goes to the LeadCurate Cash App, not a personal tag. Do not quote, resend, or build against the old invoice.</div></div></div>
-      </div>
-      <div class="wl-grid">
-        <div class="card">
-          <div class="card-h"><span class="card-title">Built and verified</span><span class="badge b-paying">live</span></div>
-          <div class="wl-checks">
-            <div class="wl-check"><span class="yes">OK</span><div><b>White-label site</b><small>premier-demo.leadcurate.com. Renames to his brand from one config file.</small></div></div>
-            <div class="wl-check"><span class="yes">OK</span><div><b>Property Decision Tool</b><small>/tool. Search, records, map, comps, CSV import, four calculators, print report.</small></div></div>
-            <div class="wl-check"><span class="yes">OK</span><div><b>Wayne / Detroit data</b><small>Seven verified lanes on the VPS, processed 2026-07-19.</small></div></div>
-            <div class="wl-check"><span class="yes">OK</span><div><b>Mecklenburg NC data</b><small>Processed 2026-07-19.</small></div></div>
-            <div class="wl-check"><span class="yes">OK</span><div><b>His client config staged</b><small>Claude C-1. whitelabel-investor-site repo, config/clients/reggie-adams.config.ts. Inert until payment, nothing imports it, no wl_clients row created, every unknown is a PENDING marker.</small></div></div>
+        <div class="project-toolbar">
+          <select id="project-select" class="f-select" aria-label="Choose project"></select>
+          <button class="btn btn-ghost btn-sm" id="project-edit-btn">Edit project</button>
+          <button class="btn btn-sm" id="project-new-btn">+ New project</button>
+        </div>
+        <div id="project-editor" class="project-form">
+          <input type="hidden" id="project-edit-id"/>
+          <div class="f-grid">
+            <div class="f-field"><label class="f-label" for="project-name">Project name</label><input class="f-input" id="project-name"/></div>
+            <div class="f-field"><label class="f-label" for="project-client">Client name</label><input class="f-input" id="project-client"/></div>
+            <div class="f-field"><label class="f-label" for="project-entity">Company</label><input class="f-input" id="project-entity"/></div>
+            <div class="f-field"><label class="f-label" for="project-email">Email</label><input class="f-input" id="project-email" type="email"/></div>
+            <div class="f-field"><label class="f-label" for="project-status">Current status</label><select class="f-select" id="project-status"><option value="planning">Planning</option><option value="waiting">Waiting</option><option value="active">Active</option><option value="paused">Paused</option><option value="complete">Complete</option></select></div>
+            <div class="f-field"><label class="f-label" for="project-updated-by">Updated by</label><select class="f-select project-actor" id="project-updated-by"></select></div>
           </div>
+          <div class="f-field mb8"><label class="f-label" for="project-commercial">Current agreement</label><input class="f-input" id="project-commercial" placeholder="Leave blank until terms are agreed"/></div>
+          <div class="f-field"><label class="f-label" for="project-notes">Current summary</label><textarea class="f-textarea" id="project-notes"></textarea></div>
+          <div class="project-form-actions"><button class="btn btn-ghost btn-sm" type="button" data-close-form="project-editor">Cancel</button><button class="btn btn-sm" id="project-save-btn">Save project</button></div>
         </div>
-        <div class="card">
-          <div class="card-h"><span class="card-title">Still required</span><span class="badge b-sent">build</span></div>
-          <div class="wl-checks">
-            <div class="wl-check"><span class="no">1</span><div><b>VPS property search API</b><small>Codex R-1. The tool's connector already expects it; the server half is missing.</small></div></div>
-            <div class="wl-check"><span class="no">2</span><div><b>Wake NC rebuild</b><small>Codex R-2. Raw is current 07-18; processed is stale 07-08.</small></div></div>
-            <div class="wl-check"><span class="no">3</span><div><b>Guilford NC rebuild</b><small>Codex R-3. Processed 07-08.</small></div></div>
-            <div class="wl-check"><span class="no">4</span><div><b>Private workspace and login</b><small>Claude C-2. Market picker, download center, embedded tool. Do not build the category picker until Derrick answers PROJECT.md 5.3.</small></div></div>
+        <div id="project-heading"></div>
+        <div class="stats" id="project-stats"></div>
+        <div class="project-tabs" role="tablist" aria-label="Project views">
+          <button class="project-tab active" data-project-tab="overview">Overview</button>
+          <button class="project-tab" data-project-tab="work">Work</button>
+          <button class="project-tab" data-project-tab="markets">Markets</button>
+          <button class="project-tab" data-project-tab="assets">Assets</button>
+          <button class="project-tab" data-project-tab="activity">Activity</button>
+        </div>
+        <section class="project-panel active" id="project-panel-overview">
+          <div class="card">
+            <div class="project-section"><div class="project-section-h"><span class="project-section-title">Current picture</span><span id="project-last-updated" class="card-meta"></span></div><div id="project-summary"></div></div>
+            <div class="project-section"><div class="project-section-h"><span class="project-section-title">Needs your decision</span><button class="btn btn-ghost btn-sm" data-project-open-tab="work">Open work</button></div><div id="project-decisions"></div></div>
+            <div class="project-section"><div class="project-section-h"><span class="project-section-title">Latest updates</span><button class="btn btn-ghost btn-sm" data-project-open-tab="activity">Open activity</button></div><div id="project-overview-activity"></div></div>
           </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-h"><span class="card-title">Waiting on Derrick — blocks everything customer-facing</span><span class="badge b-sent">decide</span></div>
-        <div class="row"><div class="row-body"><div class="row-name">Which markets Reggie wants</div><div class="row-detail">Derrick has not asked him yet. There is NO market list for this project — not two, not four, not ten. Nothing gets configured or seeded until that conversation happens. PROJECT.md 2.</div></div></div>
-        <div class="row"><div class="row-body"><div class="row-name">Which data categories he gets</div><div class="row-detail">Not negotiated. Derrick may not offer tired landlords at all. No agent sends him a category list, an availability menu, or a record count before Derrick decides. PROJECT.md 5.3.</div></div></div>
-        <div class="row"><div class="row-body"><div class="row-name">The new commercial basis</div><div class="row-detail">The old invoice is dead and nothing replaced it. Price, structure, and what triggers start of work are all open. No agent proposes a number. PROJECT.md 5.1 and 5.2.</div></div></div>
-        <div class="row"><div class="row-body"><div class="row-name">His business name</div><div class="row-detail">Needed before the landing page and branded config can be activated. Entity on file is The 3 CCC'S Consulting Firm LLC; the public brand name is not confirmed.</div></div></div>
-        <div class="row"><div class="row-body"><div class="row-name">License, ownership, cancellation terms</div><div class="row-detail">Wording is drafted, none of it is agreed. PROJECT.md 5.7.</div></div></div>
-      </div>
-      <div class="card">
-        <div class="card-h"><span class="card-title">Markets we COULD serve (supply-side only)</span><span class="card-meta">Not a package. Not Reggie's list. He has not been asked.</span></div>
-        <div class="row"><div class="row-body"><div class="row-name">Wayne County / Detroit MI</div><div class="row-detail">His priority market. Seven verified lanes already processed.</div></div></div>
-        <div class="row"><div class="row-body"><div class="row-name">Mecklenburg NC (Charlotte)</div><div class="row-detail">Largest NC metro county. Processed and current.</div></div></div>
-        <div class="row"><div class="row-body"><div class="row-name">Wake NC (Raleigh)</div><div class="row-detail">Rebuild from the 2026-07-18 official inputs before delivery.</div></div></div>
-        <div class="row"><div class="row-body"><div class="row-name">Guilford NC (Greensboro and High Point)</div><div class="row-detail">Rebuild from newest official source before delivery.</div></div></div>
-        <div class="row"><div class="row-body"><div class="row-name">Disk check</div><div class="row-detail">96G volume, 25G free. Reggie's four markets land near 7 to 8G. Ten markets does not fit storage or refresh labor, which is why the package is four.</div></div></div>
-      </div>
-      <div class="card">
-        <div class="card-h"><span class="card-title">This page is TEMPORARY — Codex is replacing it</span><span class="card-meta">See PROJECT.md section 7</span></div>
-        <div class="row"><div class="row-body"><div class="row-name">Work order RG-1 to RG-5: make this a real, manageable project area</div><div class="row-detail">This card is hardcoded HTML that an agent has to hand-edit, which is why Claude and Codex kept drifting apart. Codex replaces it with a Supabase-backed Projects area Derrick manages himself: add markets as Reggie names them, record decisions, attach the landing page and assets, and post updates that land in the conference room. Reggie is the first project row, not a one-off page.</div></div></div>
-      </div>
-      <div class="card">
-        <div class="card-h"><span class="card-title">Full project file</span><span class="card-meta">Single source of truth</span></div>
-        <div class="row"><div class="row-body"><div class="row-name">docs/projects/reggie-adams/PROJECT.md</div><div class="row-detail">The ONLY Reggie file. Verified build state, market scope, data quality gate, distribution plan, Codex R-1 to R-5, Claude C-1 to C-4, the full commercial scope draft in section 5, and the hard rules. Every agent reads it before doing Reggie work. Do not spin off a second Reggie doc — if it is about Reggie it goes in there as a section.</div></div></div>
+        </section>
+        <section class="project-panel" id="project-panel-work">
+          <div class="card">
+            <div class="project-section-h"><span class="project-section-title">Tasks, decisions, blockers, and deliverables</span><button class="btn btn-sm" id="project-item-add">+ Add item</button></div>
+            <div id="project-item-form" class="project-form">
+              <input type="hidden" id="project-item-id"/>
+              <div class="f-grid">
+                <div class="f-field"><label class="f-label" for="project-item-kind">Type</label><select class="f-select" id="project-item-kind"><option value="task">Task</option><option value="decision">Decision</option><option value="blocker">Blocker</option><option value="deliverable">Deliverable</option></select></div>
+                <div class="f-field"><label class="f-label" for="project-item-title">Title</label><input class="f-input" id="project-item-title"/></div>
+                <div class="f-field"><label class="f-label" for="project-item-owner">Owner</label><select class="f-select project-actor" id="project-item-owner"></select></div>
+                <div class="f-field"><label class="f-label" for="project-item-status">Status</label><select class="f-select" id="project-item-status"><option value="open">Open</option><option value="in_progress">In progress</option><option value="waiting">Waiting</option><option value="complete">Complete</option><option value="held">Held</option></select></div>
+              </div>
+              <div class="f-field"><label class="f-label" for="project-item-detail">Details</label><textarea class="f-textarea" id="project-item-detail"></textarea></div>
+              <div class="project-form-actions"><button class="btn btn-ghost btn-sm" type="button" data-close-form="project-item-form">Cancel</button><button class="btn btn-sm" id="project-item-save">Save item</button></div>
+            </div>
+            <div id="project-items-list"></div>
+          </div>
+        </section>
+        <section class="project-panel" id="project-panel-markets">
+          <div class="card">
+            <div class="project-section-h"><div><span class="project-section-title">Approved markets</span><div class="card-meta">Starts empty. Add a market only after the client confirms it.</div></div><button class="btn btn-sm" id="project-market-add">+ Add market</button></div>
+            <div id="project-market-form" class="project-form">
+              <input type="hidden" id="project-market-id"/>
+              <div class="f-grid">
+                <div class="f-field"><label class="f-label" for="project-market-name">Market</label><input class="f-input" id="project-market-name" placeholder="County / city / state"/></div>
+                <div class="f-field"><label class="f-label" for="project-market-status">Status</label><select class="f-select" id="project-market-status"><option value="requested">Requested</option><option value="researching">Researching</option><option value="building">Building</option><option value="available">Available</option><option value="held">Held</option><option value="unavailable">Unavailable</option></select></div>
+                <div class="f-field"><label class="f-label" for="project-market-categories">Categories</label><input class="f-input" id="project-market-categories" placeholder="Comma-separated, or leave blank"/></div>
+                <div class="f-field"><label class="f-label" for="project-market-date">Source date</label><input class="f-input" id="project-market-date" type="date"/></div>
+              </div>
+              <div class="f-field"><label class="f-label" for="project-market-notes">Notes</label><textarea class="f-textarea" id="project-market-notes"></textarea></div>
+              <div class="project-form-actions"><button class="btn btn-ghost btn-sm" type="button" data-close-form="project-market-form">Cancel</button><button class="btn btn-sm" id="project-market-save">Save market</button></div>
+            </div>
+            <div id="project-markets-list"></div>
+          </div>
+        </section>
+        <section class="project-panel" id="project-panel-assets">
+          <div class="card">
+            <div class="project-section-h"><span class="project-section-title">Website, landing page, domain, logo, tool, and files</span><button class="btn btn-sm" id="project-asset-add">+ Add asset</button></div>
+            <div id="project-asset-form" class="project-form">
+              <input type="hidden" id="project-asset-id"/>
+              <div class="f-grid">
+                <div class="f-field"><label class="f-label" for="project-asset-kind">Type</label><select class="f-select" id="project-asset-kind"><option value="landing_page">Landing page</option><option value="domain">Domain</option><option value="logo">Logo</option><option value="config">Client setup</option><option value="tool_instance">Decision tool</option><option value="document">Document</option><option value="other">Other</option></select></div>
+                <div class="f-field"><label class="f-label" for="project-asset-label">Label</label><input class="f-input" id="project-asset-label"/></div>
+                <div class="f-field"><label class="f-label" for="project-asset-url">Link</label><input class="f-input" id="project-asset-url" type="url" placeholder="Leave blank while waiting"/></div>
+                <div class="f-field"><label class="f-label" for="project-asset-status">Status</label><select class="f-select" id="project-asset-status"><option value="waiting">Waiting</option><option value="prepared">Prepared</option><option value="demo">Demo</option><option value="active">Active</option><option value="blocked">Blocked</option></select></div>
+              </div>
+              <div class="f-field"><label class="f-label" for="project-asset-notes">Notes</label><textarea class="f-textarea" id="project-asset-notes"></textarea></div>
+              <div class="project-form-actions"><button class="btn btn-ghost btn-sm" type="button" data-close-form="project-asset-form">Cancel</button><button class="btn btn-sm" id="project-asset-save">Save asset</button></div>
+            </div>
+            <div id="project-assets-list"></div>
+          </div>
+        </section>
+        <section class="project-panel" id="project-panel-activity">
+          <div class="card">
+            <div class="project-section-h"><span class="project-section-title">Post a project update</span><span class="card-meta">Also appears in the Conference Room</span></div>
+            <div class="f-field mb8"><label class="f-label" for="project-update-body">Update</label><textarea class="f-textarea" id="project-update-body" placeholder="What changed, what is blocked, or what needs attention?"></textarea></div>
+            <div class="f-grid">
+              <div class="f-field"><label class="f-label" for="project-update-from">From</label><select class="f-select project-actor" id="project-update-from"></select></div>
+              <div class="f-field"><label class="f-label" for="project-update-target">Send to</label><select class="f-select" id="project-update-target"><option value="all">Everyone</option><option value="claude">Claude</option><option value="codex">Codex</option><option value="hermes">Danny</option><option value="derrick">Derrick</option></select></div>
+            </div>
+            <button class="btn btn-sm" id="project-update-save">Post update</button>
+            <div class="project-section"><div id="project-activity-list"></div></div>
+          </div>
+        </section>
       </div>
     </div>
 
@@ -844,6 +914,13 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
         <div class="f-field mb8">
           <div class="f-label">Message — what do you need done?</div>
           <textarea class="f-textarea" id="conf-body" placeholder="Tell them what to do. Claude will figure out if it needs to be split further." style="min-height:80px;"></textarea>
+        </div>
+
+        <div class="f-field mb8">
+          <label class="f-label" for="conf-project">File under a project</label>
+          <select class="f-select" id="conf-project">
+            <option value="">General Conference Room</option>
+          </select>
         </div>
 
         <!-- FROM — small, defaults to Derrick -->
@@ -1393,6 +1470,11 @@ let PROSPECTS = lsLoad();
 let MESSAGES  = [];
 let FEED      = [];
 let SCOUT     = [];
+let PROJECTS = [];
+let PROJECT_MARKETS = [];
+let PROJECT_ITEMS = [];
+let PROJECT_ASSETS = [];
+let ACTIVE_PROJECT_ID = null;
 
 // ─── UTILS ───────────────────────────────────────────────────
 const $   = (s,p=document) => p.querySelector(s);
@@ -1438,11 +1520,219 @@ window.nav = async function(id){
   if(id==='messages') renderMessages();
   if(id==='scout'){ await loadScout(); renderScout(); }
   if(id==='workflow'){ renderAgents(); renderFeed('wf-feed','wf-feed-count'); }
+  if(id==='reggie'){ await loadProjects(); renderProjects(); }
   if(id==='conference'){
     await markConferenceRead();
     renderConference();
   }
 };
+
+// ─── PROJECTS ────────────────────────────────────────────────
+const PROJECT_ACTORS = {
+  derrick:'Derrick', claude:'Claude', codex:'Codex', hermes:'Danny'
+};
+const projectStatusLabel = value => ({
+  planning:'Planning', waiting:'Waiting', active:'Active', paused:'Paused',
+  complete:'Complete', open:'Open', in_progress:'In progress', held:'Held',
+  requested:'Requested', researching:'Researching', building:'Building',
+  available:'Available', unavailable:'Unavailable', prepared:'Prepared',
+  demo:'Demo', blocked:'Blocked'
+}[value] || value || 'Unknown');
+const projectBadge = value => {
+  if(['complete','active','available'].includes(value)) return 'paying';
+  if(['blocked','held','unavailable'].includes(value)) return 'dead';
+  if(['waiting','paused','requested'].includes(value)) return 'sent';
+  return 'queued';
+};
+const activeProject = () => PROJECTS.find(p=>p.id===ACTIVE_PROJECT_ID) || PROJECTS[0] || null;
+const projectRows = rows => rows.filter(row=>row.project_id===ACTIVE_PROJECT_ID);
+
+async function loadProjects(){
+  if(!SYNC) return;
+  const [projects, markets, items, assets] = await Promise.all([
+    sb.from('projects').select('*').order('updated_at',{ascending:false}),
+    sb.from('project_markets').select('*').order('updated_at',{ascending:false}),
+    sb.from('project_items').select('*').order('updated_at',{ascending:false}),
+    sb.from('project_assets').select('*').order('updated_at',{ascending:false})
+  ]);
+  const error = projects.error || markets.error || items.error || assets.error;
+  if(error){ toast('Projects could not load: '+error.message); return; }
+  PROJECTS = projects.data || [];
+  PROJECT_MARKETS = markets.data || [];
+  PROJECT_ITEMS = items.data || [];
+  PROJECT_ASSETS = assets.data || [];
+  if(!ACTIVE_PROJECT_ID || !PROJECTS.some(p=>p.id===ACTIVE_PROJECT_ID)){
+    ACTIVE_PROJECT_ID = PROJECTS.find(p=>p.slug==='reggie-adams')?.id || PROJECTS[0]?.id || null;
+  }
+  syncProjectSelectors();
+}
+
+function syncProjectSelectors(){
+  const selected = ACTIVE_PROJECT_ID || '';
+  const options = PROJECTS.map(p=>`<option value="${p.id}" ${p.id===selected?'selected':''}>${esc(p.name)}</option>`).join('');
+  const selector = document.getElementById('project-select');
+  if(selector) selector.innerHTML = options || '<option value="">No projects yet</option>';
+  const conf = document.getElementById('conf-project');
+  if(conf){
+    const current = conf.value;
+    conf.innerHTML = '<option value="">General Conference Room</option>' + PROJECTS.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('');
+    if(PROJECTS.some(p=>p.id===current)) conf.value=current;
+  }
+  document.querySelectorAll('.project-actor').forEach(select=>{
+    const current = select.value;
+    select.innerHTML = Object.entries(PROJECT_ACTORS).map(([value,label])=>`<option value="${value}">${label}</option>`).join('');
+    select.value = current && PROJECT_ACTORS[current] ? current : (select.id==='project-item-owner'?'derrick':'derrick');
+  });
+}
+
+function activateProjectTab(tab){
+  document.querySelectorAll('.project-tab').forEach(button=>button.classList.toggle('active',button.dataset.projectTab===tab));
+  document.querySelectorAll('.project-panel').forEach(panel=>panel.classList.toggle('active',panel.id===`project-panel-${tab}`));
+}
+
+function renderProjectActivity(limit=null){
+  const events = FEED.filter(event=>event.project_id===ACTIVE_PROJECT_ID);
+  const visible = limit ? events.slice(0,limit) : events;
+  if(!visible.length) return '<div class="project-empty">No project updates yet. Post one from the Activity tab or file a Conference Room message under this project.</div>';
+  return visible.map(event=>`
+    <div class="project-activity">
+      <div class="row-name">${esc(event.title||'Project update')} <span class="badge b-${projectBadge((event.event_type||'').includes('done')?'complete':'planning')}">${esc((event.event_type||'status').replace('conf:',''))}</span></div>
+      ${event.body?`<div class="row-detail" style="white-space:pre-wrap;">${esc(event.body)}</div>`:''}
+      <div class="project-meta">${esc(PROJECT_ACTORS[event.source]||event.source||'System')} · ${fmt(event.created_at)}</div>
+    </div>`).join('');
+}
+
+function renderProjects(){
+  const project = activeProject();
+  syncProjectSelectors();
+  if(!project){
+    document.getElementById('project-heading').innerHTML='<div class="project-empty">No projects yet. Tap New project to create the first one.</div>';
+    document.getElementById('project-stats').innerHTML='';
+    return;
+  }
+  const items = projectRows(PROJECT_ITEMS);
+  const markets = projectRows(PROJECT_MARKETS);
+  const assets = projectRows(PROJECT_ASSETS);
+  const openItems = items.filter(item=>!['complete','closed'].includes(item.status));
+  const decisions = items.filter(item=>['decision','blocker'].includes(item.kind)&&!['complete','closed'].includes(item.status));
+  document.getElementById('project-heading').innerHTML=`
+    <div class="page-header">
+      <div class="flex-row"><div class="page-title">${esc(project.name)}</div><span class="badge b-${projectBadge(project.status)}">${esc(projectStatusLabel(project.status))}</span></div>
+      <div class="page-sub">${esc(project.client_entity||project.client_name)}${project.client_email?' · '+esc(project.client_email):''}</div>
+    </div>`;
+  document.getElementById('project-stats').innerHTML=`
+    <div class="stat hi"><div class="v">${esc(projectStatusLabel(project.status))}</div><div class="l">Current status</div></div>
+    <div class="stat"><div class="v">${openItems.length}</div><div class="l">Open items</div></div>
+    <div class="stat"><div class="v">${markets.length}</div><div class="l">Approved markets</div></div>
+    <div class="stat"><div class="v">${assets.length}</div><div class="l">Assets tracked</div></div>`;
+  document.getElementById('project-last-updated').textContent=`Updated ${fmt(project.updated_at)} by ${PROJECT_ACTORS[project.updated_by]||project.updated_by}`;
+  document.getElementById('project-summary').innerHTML=`
+    <div class="row-detail" style="font-size:14px;color:var(--dark);">${esc(project.notes||'No summary entered yet.')}</div>
+    <div class="row-detail"><strong>Current agreement:</strong> ${project.commercial_basis?esc(project.commercial_basis):'Not agreed yet'}</div>
+    <div class="row-detail"><strong>Markets:</strong> ${markets.length?markets.map(m=>esc(m.market)).join(', '):'None approved yet'}</div>`;
+  document.getElementById('project-decisions').innerHTML=decisions.length?decisions.map(item=>`
+    <div class="project-list-row"><div><div class="row-name">${esc(item.title)} <span class="badge b-${projectBadge(item.status)}">${esc(projectStatusLabel(item.status))}</span></div>${item.detail?`<div class="row-detail">${esc(item.detail)}</div>`:''}<div class="project-meta">${esc(PROJECT_ACTORS[item.owner]||item.owner)} · updated ${fmt(item.updated_at)} by ${esc(PROJECT_ACTORS[item.updated_by]||item.updated_by)}</div></div></div>`).join(''):'<div class="project-empty">No open decisions or blockers.</div>';
+  document.getElementById('project-overview-activity').innerHTML=renderProjectActivity(3);
+  document.getElementById('project-activity-list').innerHTML=renderProjectActivity();
+  renderProjectItems(items);
+  renderProjectMarkets(markets);
+  renderProjectAssets(assets);
+}
+
+function renderProjectItems(items){
+  const list=document.getElementById('project-items-list');
+  if(!items.length){ list.innerHTML='<div class="project-empty">No work items yet.</div>'; return; }
+  list.innerHTML=items.map(item=>`
+    <div class="project-list-row">
+      <div><div class="row-name">${esc(item.title)} <span class="tag">${esc(item.kind)}</span> <span class="badge b-${projectBadge(item.status)}">${esc(projectStatusLabel(item.status))}</span></div>${item.detail?`<div class="row-detail">${esc(item.detail)}</div>`:''}<div class="project-meta">Owner: ${esc(PROJECT_ACTORS[item.owner]||item.owner)} · updated ${fmt(item.updated_at)} by ${esc(PROJECT_ACTORS[item.updated_by]||item.updated_by)}</div></div>
+      <div class="row-actions"><button class="btn btn-ghost btn-sm" onclick="window.editProjectItem('${item.id}')">Edit</button><button class="btn btn-red btn-sm" onclick="window.deleteProjectRecord('project_items','${item.id}','${esc(item.title)}')">Remove</button></div>
+    </div>`).join('');
+}
+
+function renderProjectMarkets(markets){
+  const list=document.getElementById('project-markets-list');
+  if(!markets.length){ list.innerHTML='<div class="project-empty"><strong>No markets approved.</strong><br>Add one only after Reggie confirms what he wants.</div>'; return; }
+  list.innerHTML=markets.map(market=>`
+    <div class="project-list-row">
+      <div><div class="row-name">${esc(market.market)} <span class="badge b-${projectBadge(market.status)}">${esc(projectStatusLabel(market.status))}</span></div><div class="row-detail"><strong>Categories:</strong> ${market.categories?.length?market.categories.map(esc).join(', '):'Not decided'}</div>${market.notes?`<div class="row-detail">${esc(market.notes)}</div>`:''}<div class="project-meta">Source date: ${esc(market.source_date||'Not recorded')} · updated ${fmt(market.updated_at)} by ${esc(PROJECT_ACTORS[market.updated_by]||market.updated_by)}</div></div>
+      <div class="row-actions"><button class="btn btn-ghost btn-sm" onclick="window.editProjectMarket('${market.id}')">Edit</button><button class="btn btn-red btn-sm" onclick="window.deleteProjectRecord('project_markets','${market.id}','${esc(market.market)}')">Remove</button></div>
+    </div>`).join('');
+}
+
+function renderProjectAssets(assets){
+  const list=document.getElementById('project-assets-list');
+  if(!assets.length){ list.innerHTML='<div class="project-empty">No website, domain, logo, tool, or file assets tracked yet.</div>'; return; }
+  list.innerHTML=assets.map(asset=>`
+    <div class="project-list-row">
+      <div><div class="row-name">${esc(asset.label)} <span class="tag">${esc(asset.kind.replaceAll('_',' '))}</span> <span class="badge b-${projectBadge(asset.status)}">${esc(projectStatusLabel(asset.status))}</span></div>${asset.notes?`<div class="row-detail">${esc(asset.notes)}</div>`:''}${asset.url?`<div class="row-detail"><a href="${esc(asset.url)}" target="_blank" rel="noopener">Open link</a></div>`:'<div class="row-detail">No link yet</div>'}<div class="project-meta">Updated ${fmt(asset.updated_at)} by ${esc(PROJECT_ACTORS[asset.updated_by]||asset.updated_by)}</div></div>
+      <div class="row-actions"><button class="btn btn-ghost btn-sm" onclick="window.editProjectAsset('${asset.id}')">Edit</button><button class="btn btn-red btn-sm" onclick="window.deleteProjectRecord('project_assets','${asset.id}','${esc(asset.label)}')">Remove</button></div>
+    </div>`).join('');
+}
+
+async function logProjectChange(title, body){
+  await saveEvent('conf:status', title, body, 'derrick', 'all', ACTIVE_PROJECT_ID);
+}
+
+window.openProject = async id => {
+  ACTIVE_PROJECT_ID=id;
+  await nav('reggie');
+  renderProjects();
+};
+document.getElementById('project-select')?.addEventListener('change',event=>{ACTIVE_PROJECT_ID=event.target.value;renderProjects();});
+document.querySelectorAll('.project-tab').forEach(button=>button.addEventListener('click',()=>activateProjectTab(button.dataset.projectTab)));
+document.querySelectorAll('[data-project-open-tab]').forEach(button=>button.addEventListener('click',()=>activateProjectTab(button.dataset.projectOpenTab)));
+document.querySelectorAll('[data-close-form]').forEach(button=>button.addEventListener('click',()=>document.getElementById(button.dataset.closeForm)?.classList.remove('open')));
+
+document.getElementById('project-new-btn')?.addEventListener('click',()=>{
+  ['project-edit-id','project-name','project-client','project-entity','project-email','project-commercial','project-notes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('project-status').value='planning';
+  document.getElementById('project-editor').classList.add('open');
+});
+document.getElementById('project-edit-btn')?.addEventListener('click',()=>{
+  const p=activeProject(); if(!p)return;
+  document.getElementById('project-edit-id').value=p.id;
+  document.getElementById('project-name').value=p.name||'';
+  document.getElementById('project-client').value=p.client_name||'';
+  document.getElementById('project-entity').value=p.client_entity||'';
+  document.getElementById('project-email').value=p.client_email||'';
+  document.getElementById('project-status').value=p.status||'planning';
+  document.getElementById('project-commercial').value=p.commercial_basis||'';
+  document.getElementById('project-notes').value=p.notes||'';
+  document.getElementById('project-updated-by').value='derrick';
+  document.getElementById('project-editor').classList.add('open');
+});
+document.getElementById('project-save-btn')?.addEventListener('click',async()=>{
+  const id=document.getElementById('project-edit-id').value;
+  const name=document.getElementById('project-name').value.trim();
+  const client=document.getElementById('project-client').value.trim();
+  if(!name||!client)return toast('Project name and client name are required');
+  const payload={name,client_name:client,client_entity:document.getElementById('project-entity').value.trim()||null,client_email:document.getElementById('project-email').value.trim()||null,status:document.getElementById('project-status').value,commercial_basis:document.getElementById('project-commercial').value.trim()||null,notes:document.getElementById('project-notes').value.trim()||null,updated_by:document.getElementById('project-updated-by').value||'derrick'};
+  let result;
+  if(id) result=await sb.from('projects').update(payload).eq('id',id).select().single();
+  else result=await sb.from('projects').insert([{...payload,slug:name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'-'+Date.now().toString().slice(-5)}]).select().single();
+  if(result.error)return toast(result.error.message);
+  ACTIVE_PROJECT_ID=result.data.id;
+  document.getElementById('project-editor').classList.remove('open');
+  await loadProjects(); await logProjectChange('Project details updated',`${name} is now ${projectStatusLabel(payload.status)}.`); renderProjects(); toast('Project saved');
+});
+
+document.getElementById('project-item-add')?.addEventListener('click',()=>{
+  ['project-item-id','project-item-title','project-item-detail'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('project-item-kind').value='task';document.getElementById('project-item-owner').value='derrick';document.getElementById('project-item-status').value='open';document.getElementById('project-item-form').classList.add('open');
+});
+window.editProjectItem=id=>{const item=PROJECT_ITEMS.find(x=>x.id===id);if(!item)return;document.getElementById('project-item-id').value=item.id;document.getElementById('project-item-kind').value=item.kind;document.getElementById('project-item-title').value=item.title;document.getElementById('project-item-owner').value=item.owner;document.getElementById('project-item-status').value=item.status;document.getElementById('project-item-detail').value=item.detail||'';document.getElementById('project-item-form').classList.add('open');};
+document.getElementById('project-item-save')?.addEventListener('click',async()=>{const id=document.getElementById('project-item-id').value;const payload={project_id:ACTIVE_PROJECT_ID,kind:document.getElementById('project-item-kind').value,title:document.getElementById('project-item-title').value.trim(),detail:document.getElementById('project-item-detail').value.trim()||null,owner:document.getElementById('project-item-owner').value,status:document.getElementById('project-item-status').value,updated_by:'derrick'};if(!payload.title)return toast('Item title is required');const result=id?await sb.from('project_items').update(payload).eq('id',id):await sb.from('project_items').insert([payload]);if(result.error)return toast(result.error.message);document.getElementById('project-item-form').classList.remove('open');await loadProjects();await logProjectChange('Project work updated',`${payload.title}: ${projectStatusLabel(payload.status)}. Owner: ${PROJECT_ACTORS[payload.owner]}.`);renderProjects();toast('Item saved');});
+
+document.getElementById('project-market-add')?.addEventListener('click',()=>{['project-market-id','project-market-name','project-market-categories','project-market-date','project-market-notes'].forEach(id=>document.getElementById(id).value='');document.getElementById('project-market-status').value='requested';document.getElementById('project-market-form').classList.add('open');});
+window.editProjectMarket=id=>{const market=PROJECT_MARKETS.find(x=>x.id===id);if(!market)return;document.getElementById('project-market-id').value=market.id;document.getElementById('project-market-name').value=market.market;document.getElementById('project-market-status').value=market.status;document.getElementById('project-market-categories').value=(market.categories||[]).join(', ');document.getElementById('project-market-date').value=market.source_date||'';document.getElementById('project-market-notes').value=market.notes||'';document.getElementById('project-market-form').classList.add('open');};
+document.getElementById('project-market-save')?.addEventListener('click',async()=>{const id=document.getElementById('project-market-id').value;const market=document.getElementById('project-market-name').value.trim();if(!market)return toast('Market name is required');const payload={project_id:ACTIVE_PROJECT_ID,market,categories:document.getElementById('project-market-categories').value.split(',').map(x=>x.trim()).filter(Boolean)||null,status:document.getElementById('project-market-status').value,source_date:document.getElementById('project-market-date').value||null,notes:document.getElementById('project-market-notes').value.trim()||null,updated_by:'derrick'};const result=id?await sb.from('project_markets').update(payload).eq('id',id):await sb.from('project_markets').insert([payload]);if(result.error)return toast(result.error.message);document.getElementById('project-market-form').classList.remove('open');await loadProjects();await logProjectChange('Project market updated',`${market}: ${projectStatusLabel(payload.status)}. Categories: ${payload.categories.length?payload.categories.join(', '):'not decided'}.`);renderProjects();toast('Market saved');});
+
+document.getElementById('project-asset-add')?.addEventListener('click',()=>{['project-asset-id','project-asset-label','project-asset-url','project-asset-notes'].forEach(id=>document.getElementById(id).value='');document.getElementById('project-asset-kind').value='other';document.getElementById('project-asset-status').value='waiting';document.getElementById('project-asset-form').classList.add('open');});
+window.editProjectAsset=id=>{const asset=PROJECT_ASSETS.find(x=>x.id===id);if(!asset)return;document.getElementById('project-asset-id').value=asset.id;document.getElementById('project-asset-kind').value=asset.kind;document.getElementById('project-asset-label').value=asset.label;document.getElementById('project-asset-url').value=asset.url||'';document.getElementById('project-asset-status').value=asset.status;document.getElementById('project-asset-notes').value=asset.notes||'';document.getElementById('project-asset-form').classList.add('open');};
+document.getElementById('project-asset-save')?.addEventListener('click',async()=>{const id=document.getElementById('project-asset-id').value;const label=document.getElementById('project-asset-label').value.trim();if(!label)return toast('Asset label is required');const payload={project_id:ACTIVE_PROJECT_ID,kind:document.getElementById('project-asset-kind').value,label,url:document.getElementById('project-asset-url').value.trim()||null,status:document.getElementById('project-asset-status').value,notes:document.getElementById('project-asset-notes').value.trim()||null,updated_by:'derrick'};const result=id?await sb.from('project_assets').update(payload).eq('id',id):await sb.from('project_assets').insert([payload]);if(result.error)return toast(result.error.message);document.getElementById('project-asset-form').classList.remove('open');await loadProjects();await logProjectChange('Project asset updated',`${label}: ${projectStatusLabel(payload.status)}.`);renderProjects();toast('Asset saved');});
+
+window.deleteProjectRecord=async(table,id,label)=>{if(!confirm(`Remove ${label}?`))return;const result=await sb.from(table).delete().eq('id',id);if(result.error)return toast(result.error.message);await loadProjects();await logProjectChange('Project record removed',label);renderProjects();toast('Removed');};
+document.getElementById('project-update-save')?.addEventListener('click',async()=>{const body=document.getElementById('project-update-body').value.trim();if(!body)return toast('Write an update first');const title=body.split('\n')[0].slice(0,80);const ok=await saveEvent('conf:status',title,body,document.getElementById('project-update-from').value||'derrick',document.getElementById('project-update-target').value||'all',ACTIVE_PROJECT_ID);if(ok){document.getElementById('project-update-body').value='';renderProjects();toast('Project and Conference Room updated');}});
 
 // ─── CONFERENCE ROOM ─────────────────────────────────────────
 const CONF_LABELS = {
@@ -1471,6 +1761,7 @@ async function renderConference(){
     const icon = CONF_TYPE_ICONS[type] || '📌';
     const from = CONF_LABELS[m.source] || m.source || 'Unknown';
     const toLabel = m.target ? (CONF_LABELS[m.target]||m.target) : null;
+    const project = PROJECTS.find(p=>p.id===m.project_id);
     const badge = type==='done'?'paying':type==='blocker'?'dead':type==='question'?'quoted':'queued';
     return `<div class="row">
       <div class="row-body">
@@ -1478,6 +1769,7 @@ async function renderConference(){
           ${icon} <strong>${esc(from)}</strong>
           ${toLabel ? `<span style="color:var(--sl);font-weight:400;font-size:12px;"> → ${esc(toLabel)}</span>` : ''}
           <span class="badge b-${badge}">${type}</span>
+          ${project ? `<button class="tag" style="border:0;cursor:pointer;" onclick="window.openProject('${project.id}')">${esc(project.name)}</button>` : ''}
         </div>
         ${m.title?`<div class="row-detail" style="font-weight:600;color:var(--dark);margin-top:4px;">${esc(m.title)}</div>`:''}
         ${m.body?`<div class="row-detail" style="white-space:pre-wrap;margin-top:4px;">${esc(m.body)}</div>`:''}
@@ -1504,11 +1796,12 @@ document.getElementById('conf-post-btn')?.addEventListener('click', async () => 
   const target = document.getElementById('conf-target')?.value || 'claude';
   const from   = document.getElementById('conf-agent')?.value || 'derrick';
   const body   = document.getElementById('conf-body').value.trim();
+  const projectId = document.getElementById('conf-project')?.value || null;
   if(!body){ toast('Write a message first'); return; }
   const title  = body.split('\n')[0].slice(0, 80);
   const btn    = document.getElementById('conf-post-btn');
   btn.disabled = true; btn.textContent = 'Sending…';
-  const ok = await saveEvent('conf:question', title, body, from, target);
+  const ok = await saveEvent('conf:question', title, body, from, target, projectId);
   btn.disabled = false; btn.textContent = 'Send →';
   if(ok){
     document.getElementById('conf-body').value = '';
@@ -2116,8 +2409,8 @@ window.sendSampleAudit = async function(eventId){
   }
 };
 
-async function saveEvent(type, title, body, source='command-dashboard', target=null){
-  const ev = {event_type:type, title, body:body||null, source, target};
+async function saveEvent(type, title, body, source='command-dashboard', target=null, projectId=null){
+  const ev = {event_type:type, title, body:body||null, source, target, project_id:projectId};
   let saved = {...ev, id:'ev-'+Date.now(), created_at:new Date().toISOString()};
   if(SYNC){
     const {data,error}=await sb.from('activity_feed').insert([ev]).select().single();
@@ -2127,6 +2420,8 @@ async function saveEvent(type, title, body, source='command-dashboard', target=n
   if(!FEED.find(f=>f.id===saved.id)) FEED.unshift(saved);
   renderFeed('hq-feed','feed-count'); renderFeed('wf-feed','wf-feed-count');
   updateConferenceBadge();
+  renderConference();
+  if(projectId) renderProjects();
   return true;
 }
 
@@ -2411,7 +2706,7 @@ function subscribeRealtime(){
       if(!FEED.find(f=>f.id===payload.new.id)){
         FEED.unshift(payload.new);
         renderFeed('hq-feed','feed-count'); renderFeed('wf-feed','wf-feed-count');
-        updateConferenceBadge(); updateAgentDots();
+        updateConferenceBadge(); updateAgentDots(); renderConference(); renderProjects();
       }
     })
     .on('postgres_changes',{event:'INSERT',schema:'public',table:'scout_prospects'}, payload=>{
@@ -2420,7 +2715,11 @@ function subscribeRealtime(){
         renderScout(); updateStats();
         toast('🛰️ New scout prospect: '+(payload.new.market||payload.new.source||'lead'));
       }
-    });
+    })
+    .on('postgres_changes',{event:'*',schema:'public',table:'projects'}, async()=>{await loadProjects();renderProjects();})
+    .on('postgres_changes',{event:'*',schema:'public',table:'project_markets'}, async()=>{await loadProjects();renderProjects();})
+    .on('postgres_changes',{event:'*',schema:'public',table:'project_items'}, async()=>{await loadProjects();renderProjects();})
+    .on('postgres_changes',{event:'*',schema:'public',table:'project_assets'}, async()=>{await loadProjects();renderProjects();});
   channel.subscribe(status => {
     document.documentElement.dataset.realtimeStatus = status;
   });
@@ -2498,6 +2797,8 @@ async function init(){
     await loadMessages();
     await loadFeed();
     await loadScout();
+    await loadProjects();
+    renderProjects();
   }
   updateStats();
 }
@@ -2508,8 +2809,8 @@ setInterval(updateAgentDots, 30000);
 
 async function loadAll(){
   if(!SYNC) throw new Error('Dashboard is offline');
-  await Promise.all([loadProspects(), loadInbound(), loadMessages(), loadFeed(), loadScout()]);
-  renderInbox(); renderHQInbound(); renderKanban(); renderMessages(); renderConference(); renderScout(); updateStats();
+  await Promise.all([loadProspects(), loadInbound(), loadMessages(), loadFeed(), loadScout(), loadProjects()]);
+  renderInbox(); renderHQInbound(); renderKanban(); renderMessages(); renderConference(); renderScout(); renderProjects(); updateStats();
 }
 
 // ─── PULL TO REFRESH ─────────────────────────────────────────
