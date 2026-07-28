@@ -1,9 +1,9 @@
 # Proposed Statement of Work: Reggie Adams White-Label System
 
-**Status:** DRAFT FOR DERRICK REVIEW. NOT SENT. NOT CUSTOMER-APPROVED.  
-**Prepared for:** The 3 CCC'S Consulting Firm LLC  
-**Prepared by:** LeadCurate LLC  
-**Project contact:** Reggie Adams, `mrreggieadams@gmail.com`  
+**Status:** DRAFT FOR DERRICK REVIEW. NOT SENT. NOT CUSTOMER-APPROVED.
+**Prepared for:** The 3 CCC'S Consulting Firm LLC
+**Prepared by:** LeadCurate LLC
+**Project contact:** Reggie Adams, `mrreggieadams@gmail.com`
 **Prepared:** July 28, 2026
 
 > This draft does not revive or modify invoice `LC-2026-0718-001`. Derrick declared
@@ -173,4 +173,3 @@ This section is intentionally blank until Derrick approves the business terms.
 **LeadCurate approval:** __________________________________  **Date:** __________
 
 **Client acknowledgment:** _______________________________  **Date:** __________
-
