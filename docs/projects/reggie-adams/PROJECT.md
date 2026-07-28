@@ -1,7 +1,10 @@
 # Reggie Adams — White-Label Package (PROJECT SOURCE OF TRUTH)
 
 **Customer:** Reggie Adams · `mrreggieadams@gmail.com` · The 3 CCC'S Consulting Firm LLC
-**Status:** Invoice sent, NOT paid. Order `69110f8b-422a-4bb9-a422-57d29c274a72` = `pending_payment`, $1,000, Cash App, **zero payment rows** (verified 2026-07-19).
+**Status:** PAUSED. Derrick declared the old invoice/deal dead on 2026-07-22. Order
+`69110f8b-422a-4bb9-a422-57d29c274a72` remains unpaid history. Do not revive, change,
+resend, or mark it paid. Any future engagement requires a new written scope and new
+payment terms.
 **Owner of decisions:** Derrick. Agents do not quote prices or promise scope.
 
 > Every agent (Claude, Codex, Danny/Hermes) reads THIS file for Reggie work.
@@ -20,7 +23,8 @@
 | Tool: search, records, map, comps, CSV import, Flip/Rental/BRRRR/Wholesale, print report | **WORKS** | standalone Next app, systemd `premier-demo-tool`, port 3101 |
 | Tool connected to REAL property database | **NOT BUILT** | needs VPS search API (see §4) |
 | Customer login / private workspace | **NOT BUILT** | |
-| Reggie-specific config, domain, branding | **NOT STARTED** | waiting on payment + his assets |
+| Reggie-specific config | **PREPARED, INACTIVE** | `config/clients/reggie-adams.config.ts` on `whitelabel-investor-site` branch `codex/reggie-c1-prep`; no live import or deployment |
+| Reggie domain, final branding, production instance | **NOT STARTED** | waiting on a new approved scope, payment, and client assets |
 
 **Important repo note:** the built site lives in the **separate** `whitelabel-investor-site` repo
 (GitHub `Deedott60/whitelabel-investor-site`), not in `leadcurate-launch`. Earlier handoff text
@@ -112,9 +116,16 @@ customer-ready. Time-sensitive lanes (tax, foreclosure) must refresh before deli
 
 **Claude (customer-facing lane):**
 - **C-1** Reggie client config + branded site instance (name/domain/colors swap on payment).
+  **STARTED 2026-07-28:** inactive config prepared and type-checked on
+  `whitelabel-investor-site` branch `codex/reggie-c1-prep`, commit `4d582c9`.
+  Production activation remains blocked by the paused deal, payment, domain, phone,
+  logo, final palette, territory, mailing address, tool URL, and client database row.
 - **C-2** Private workspace shell: login, market/lane picker, download center, tool embedded.
 - **C-3** Written scope/addendum matching the invoice: Phase 1 four markets, expansion priced
   separately, recurring hosting/data fee, IP/license boundary. **Derrick approves before it goes out.**
+  **DRAFTED 2026-07-28:** `docs/projects/reggie-adams/SCOPE-ADDENDUM.md`.
+  It is explicitly not sent and does not revive the dead invoice. All undecided
+  commercial terms remain `TBD BY DERRICK`.
 - **C-4** Reggie project section in the OS (`docs/command/index.html`) so all four of us track state.
 
 **Blocked until Derrick decides:** additional-market pricing, monthly hosting/maintenance fee,
