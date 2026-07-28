@@ -21,6 +21,8 @@ from pathlib import Path
 from typing import Any
 from urllib import error, parse, request
 
+from qa_lane_gate import gate_lane
+
 
 DEFAULT_BATCH_ROOT = Path("/opt/leadcurate/dollar_batches")
 DEFAULT_DELIVERY_ROOT = Path("/opt/leadcurate/deliveries/dollar-leads")
@@ -28,6 +30,63 @@ PROJECT_URL = "https://jdmlsraqioigbukspduo.supabase.co"
 CONTROL_URL = f"{PROJECT_URL}/functions/v1/dollar-fulfillment-control"
 ALLOWED_SIZES = {15, 20, 50, 250, 500, 1000}
 CODE_RE = re.compile(r"^DL-[A-Z0-9]{4,32}$", re.I)
+STANDARD_DELIVERY_FIELDS = (
+    "owner_name",
+    "property_address",
+    "property_city",
+    "property_zip",
+    "mailing_address",
+    "mailing_city",
+    "mailing_state",
+    "mailing_zip",
+    "parcel_id",
+    "property_type",
+    "land_value",
+    "building_value",
+    "total_value",
+    "acreage",
+    "years_owned",
+    "category",
+    "county",
+    "source_name",
+    "source_cycle",
+)
+DELIVERY_ALIASES = {
+    "owner_name": ("owner_name", "lc_owner_name", "OWNER1", "OWNER", "COMM_OWNER"),
+    "property_address": (
+        "property_address", "lc_property_address", "SITE_ADDR",
+        "ADDR_PROP_ADDRESS_FULL", "Property_Address", "property_street",
+    ),
+    "property_city": ("property_city", "lc_municipality", "PROPERTY_CITY", "Municipality"),
+    "property_zip": ("property_zip", "PROPERTY_ZIPCODE", "PAR_ZIP", "ZIP"),
+    "mailing_address": (
+        "mailing_address", "lc_mailing_address", "Mailing_Address",
+        "ADDR_MAIL_ADDRESS_FULL", "OWN_ADDR", "owner_street",
+    ),
+    "mailing_city": ("mailing_city", "OWN_CITY", "OWNER_CITY", "owner_city"),
+    "mailing_state": ("mailing_state", "lc_mail_state", "OWN_STATE", "OWNER_STATE", "owner_state"),
+    "mailing_zip": ("mailing_zip", "OWN_ZIP", "OWNER_ZIPCODE", "owner_zip"),
+    "parcel_id": (
+        "parcel_id", "lc_parcel_id", "parcel_pid", "parcel_key",
+        "Tax_ID", "PID", "U_PIN", "ACCOUNT_NUM", "LC_PARCEL_KEY",
+    ),
+    "property_type": (
+        "property_type", "lc_property_segment", "Property_Use",
+        "use_code_description", "LANDUSE", "CLASS",
+    ),
+    "land_value": ("land_value", "lc_land_value", "Land_Value", "LAND_VAL", "VAL_MAILED_LAND"),
+    "building_value": (
+        "building_value", "lc_building_value", "Building_Value",
+        "IMPR_VAL", "VAL_MAILED_BLDG",
+    ),
+    "total_value": (
+        "total_value", "lc_total_value", "Total_Value",
+        "assessed_value", "TOT_VAL", "VAL_MAILED_TOT",
+    ),
+    "acreage": ("acreage", "lc_acreage", "Total_Acreage", "LAND_ACRES_CALC"),
+    "years_owned": ("years_owned", "lc_years_owned"),
+    "county": ("county", "lc_county", "COUNTY", "COUNTY_JURIS_DESC"),
+}
 
 
 def clean(value: Any) -> str:
@@ -87,6 +146,27 @@ def parcel_key(row: dict[str, str], fields: list[str]) -> str:
         if value:
             return value
     return ""
+
+
+def canonical_delivery(
+    fields: list[str],
+    rows: list[dict[str, str]],
+    lane: dict[str, Any],
+) -> tuple[list[str], list[dict[str, str]]]:
+    """Put the stable customer schema first and retain source extras afterward."""
+    output_fields = list(STANDARD_DELIVERY_FIELDS)
+    output_fields.extend(field for field in fields if field not in output_fields)
+    output_rows: list[dict[str, str]] = []
+    for row in rows:
+        output = dict(row)
+        for target, aliases in DELIVERY_ALIASES.items():
+            output[target] = next((clean(row.get(alias)) for alias in aliases if clean(row.get(alias))), "")
+        output["category"] = lane["lane_display"]
+        output["county"] = output["county"] or lane["market_display"]
+        output["source_name"] = clean(lane.get("source_name"))
+        output["source_cycle"] = clean(lane.get("pull_cycle"))
+        output_rows.append(output)
+    return output_fields, output_rows
 
 
 def apply_fresh_verification(
@@ -277,6 +357,16 @@ def main() -> int:
 
     inventory = load_inventory(args.batch_root, args.cycle_slug)
     lane = lane_manifest(inventory, args.market, args.lane)
+    quality = gate_lane(
+        args.market,
+        args.lane,
+        root=args.batch_root / args.cycle_slug,
+    )
+    if not quality["passed"]:
+        raise ValueError(
+            "lane failed the mandatory QA gate: "
+            + "; ".join(quality["failures"])
+        )
     founder = args.pack_size == 1000
     batches = [batch_manifest(lane, args.batch_no, 500 if founder else args.pack_size)]
     if founder:
@@ -300,6 +390,7 @@ def main() -> int:
     if len(batch_rows) < args.pack_size:
         raise ValueError(f"only {len(batch_rows)} eligible records remain after verification")
     selected = batch_rows[: args.pack_size]
+    fields, selected = canonical_delivery(fields, selected, lane)
 
     final_dir = args.delivery_root / code
     if final_dir.exists():
