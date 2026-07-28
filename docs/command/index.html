@@ -754,14 +754,14 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
         </div>
       </div>
       <div class="stats">
-        <div class="stat hot"><div class="v">Unpaid</div><div class="l">$1,000 invoice pending</div></div>
+        <div class="stat hot"><div class="v">Dead</div><div class="l">$1,000 invoice is void</div></div>
         <div class="stat hi"><div class="v">Live</div><div class="l">Site and tool deployed</div></div>
-        <div class="stat"><div class="v">4</div><div class="l">Markets in scope</div></div>
+        <div class="stat hot"><div class="v">?</div><div class="l">Markets — not decided</div></div>
         <div class="stat"><div class="v">Not yet</div><div class="l">Real data connected</div></div>
       </div>
       <div class="card">
         <div class="card-h"><span class="card-title">Payment gate</span><span class="card-meta">Do not build past this without Derrick</span></div>
-        <div class="row"><div class="row-body"><div class="row-name">Order 69110f8b · pending_payment · Cash App $Derrick607</div><div class="row-detail">Invoice LC-2026-0718-001 was sent. Zero payment rows exist. Do not mark paid, do not resend or edit the invoice, and do not promise ten markets, live data, or a connected workspace until Derrick confirms funds and approves written scope.</div></div></div>
+        <div class="row"><div class="row-body"><div class="row-name">The $1,000 invoice is DEAD — there is no live deal</div><div class="row-detail">Invoice LC-2026-0718-001 is void as of 2026-07-28 and nothing has replaced it. No agreed price, scope, markets, or terms. Order row 69110f8b still reads pending_payment in the DB and needs voiding on Derrick's instruction — no agent changes it alone. When there is a payment it goes to the LeadCurate Cash App, not a personal tag. Do not quote, resend, or build against the old invoice.</div></div></div>
       </div>
       <div class="wl-grid">
         <div class="card">
@@ -786,18 +786,23 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
       <div class="card">
         <div class="card-h"><span class="card-title">Waiting on Derrick — blocks everything customer-facing</span><span class="badge b-sent">decide</span></div>
-        <div class="row"><div class="row-body"><div class="row-name">How many markets</div><div class="row-detail">The invoice says Detroit/Wayne MI + Wake NC, which is two. The build plan says four. Both are in writing and they disagree. PROJECT.md 5.2.</div></div></div>
-        <div class="row"><div class="row-body"><div class="row-name">Which data categories he gets</div><div class="row-detail">Not negotiated with Reggie yet. Derrick may not offer tired landlords at all. No agent sends him a category list, an availability menu, or a record count before Derrick decides. PROJECT.md 5.3.</div></div></div>
-        <div class="row"><div class="row-body"><div class="row-name">Recurring fee</div><div class="row-detail">The $1,000 is an initial project payment. Nothing covers hosting, refresh, or support. If scope goes out silent on a monthly fee, silence becomes the deal. PROJECT.md 5.4.</div></div></div>
+        <div class="row"><div class="row-body"><div class="row-name">Which markets Reggie wants</div><div class="row-detail">Derrick has not asked him yet. There is NO market list for this project — not two, not four, not ten. Nothing gets configured or seeded until that conversation happens. PROJECT.md 2.</div></div></div>
+        <div class="row"><div class="row-body"><div class="row-name">Which data categories he gets</div><div class="row-detail">Not negotiated. Derrick may not offer tired landlords at all. No agent sends him a category list, an availability menu, or a record count before Derrick decides. PROJECT.md 5.3.</div></div></div>
+        <div class="row"><div class="row-body"><div class="row-name">The new commercial basis</div><div class="row-detail">The old invoice is dead and nothing replaced it. Price, structure, and what triggers start of work are all open. No agent proposes a number. PROJECT.md 5.1 and 5.2.</div></div></div>
+        <div class="row"><div class="row-body"><div class="row-name">His business name</div><div class="row-detail">Needed before the landing page and branded config can be activated. Entity on file is The 3 CCC'S Consulting Firm LLC; the public brand name is not confirmed.</div></div></div>
         <div class="row"><div class="row-body"><div class="row-name">License, ownership, cancellation terms</div><div class="row-detail">Wording is drafted, none of it is agreed. PROJECT.md 5.7.</div></div></div>
       </div>
       <div class="card">
-        <div class="card-h"><span class="card-title">Markets in scope</span><span class="card-meta">Ten was rejected. Two vs four is unresolved — see above.</span></div>
+        <div class="card-h"><span class="card-title">Markets we COULD serve (supply-side only)</span><span class="card-meta">Not a package. Not Reggie's list. He has not been asked.</span></div>
         <div class="row"><div class="row-body"><div class="row-name">Wayne County / Detroit MI</div><div class="row-detail">His priority market. Seven verified lanes already processed.</div></div></div>
         <div class="row"><div class="row-body"><div class="row-name">Mecklenburg NC (Charlotte)</div><div class="row-detail">Largest NC metro county. Processed and current.</div></div></div>
         <div class="row"><div class="row-body"><div class="row-name">Wake NC (Raleigh)</div><div class="row-detail">Rebuild from the 2026-07-18 official inputs before delivery.</div></div></div>
         <div class="row"><div class="row-body"><div class="row-name">Guilford NC (Greensboro and High Point)</div><div class="row-detail">Rebuild from newest official source before delivery.</div></div></div>
         <div class="row"><div class="row-body"><div class="row-name">Disk check</div><div class="row-detail">96G volume, 25G free. Reggie's four markets land near 7 to 8G. Ten markets does not fit storage or refresh labor, which is why the package is four.</div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-h"><span class="card-title">This page is TEMPORARY — Codex is replacing it</span><span class="card-meta">See PROJECT.md section 7</span></div>
+        <div class="row"><div class="row-body"><div class="row-name">Work order RG-1 to RG-5: make this a real, manageable project area</div><div class="row-detail">This card is hardcoded HTML that an agent has to hand-edit, which is why Claude and Codex kept drifting apart. Codex replaces it with a Supabase-backed Projects area Derrick manages himself: add markets as Reggie names them, record decisions, attach the landing page and assets, and post updates that land in the conference room. Reggie is the first project row, not a one-off page.</div></div></div>
       </div>
       <div class="card">
         <div class="card-h"><span class="card-title">Full project file</span><span class="card-meta">Single source of truth</span></div>

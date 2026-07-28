@@ -1,7 +1,12 @@
 # Reggie Adams — White-Label Package (PROJECT SOURCE OF TRUTH)
 
 **Customer:** Reggie Adams · `mrreggieadams@gmail.com` · The 3 CCC'S Consulting Firm LLC
-**Status:** Invoice sent, NOT paid. Order `69110f8b-422a-4bb9-a422-57d29c274a72` = `pending_payment`, $1,000, Cash App, **zero payment rows** (re-verified 2026-07-28).
+**Status:** **The $1,000 invoice `LC-2026-0718-001` is DEAD** (Derrick, 2026-07-28). It is not the
+commercial basis for this project. Terms have not been agreed. Order row
+`69110f8b-422a-4bb9-a422-57d29c274a72` still reads `pending_payment` in the DB and needs to be
+voided/closed on Derrick's instruction — **no agent changes that row on its own.**
+**Payment:** LeadCurate has its own Cash App. `[DERRICK: LeadCurate Cash App tag = ___ ]` — use
+that, not a personal tag. No agent fills this in from an old record.
 **Owner of decisions:** Derrick. Agents do not quote prices or promise scope.
 
 > **THIS IS THE ONLY FILE.** Every agent (Claude, Codex, Danny/Hermes) reads it for all Reggie
@@ -32,9 +37,16 @@
 saying "no implementation has started" predates that build. Both are true at different times;
 this table is current.
 
-## 2. Market scope (Derrick's decision — ten markets is OUT)
+## 2. Market scope — **UNKNOWN. NOT DECIDED.**
 
-Ten live markets does not fit disk, refresh labor, or the price. **Recommended package: four markets.**
+**Derrick has not asked Reggie which markets he wants.** Until that conversation happens there is
+no market list for this project. Not two, not four, not ten.
+
+Everything below is **supply-side capability only** — what we could serve if asked. It is not a
+package, not a recommendation to act on, and not a menu for Reggie. Ten live markets does not fit
+disk or refresh labor, so ten is out as a matter of capacity; that is the only settled fact here.
+
+`[DERRICK: markets Reggie actually wants = ___ ]`
 
 | Market | Why | Data on VPS today |
 |---|---|---|
@@ -140,27 +152,22 @@ cadence, cancellation terms, IP/license wording.
 > commercial decision **no agent may fill in** — not with a guess, not with a "typical" number,
 > not with a number from another deal.
 
-### 5.1 Reference facts (verified 2026-07-28, not assumed)
+### 5.1 There is no live commercial basis right now
 
-| Field | Value | Source |
-|---|---|---|
-| Entity | The 3 CCC'S Consulting Firm LLC | `orders.metadata.company` |
-| Invoice | `LC-2026-0718-001`, issued 2026-07-18 | `orders.metadata` |
-| Amount | $1,000.00 USD, `initial_project_payment` | `orders.amount_cents` = 100000 |
-| Method | Cash App `$Derrick607` | `orders.metadata.cash_app` |
-| Payment status | **`pending_payment` — unpaid, zero payment rows** | live check |
-| Market field on invoice | "Detroit/Wayne MI + Wake NC" | `orders.market` |
+The $1,000 invoice is **dead**. Nothing has replaced it. There is no agreed price, no agreed
+scope, no agreed market list, and no agreed terms with Reggie.
 
-The invoice states an amount, not a boundary. §5 is the boundary. Do not change or resend the
-invoice (rule 2 in §6).
+Historical record only, so nobody resurrects it by accident: order
+`69110f8b-422a-4bb9-a422-57d29c274a72`, invoice `LC-2026-0718-001` issued 2026-07-18,
+$1,000 `initial_project_payment`, market field "Detroit/Wayne MI + Wake NC". **All of it is
+superseded.** Do not quote, resend, or build against any of it.
 
-### 5.2 BLOCKER — market count contradiction
+`[DERRICK: new commercial basis = ___ ]`
 
-- The **invoice** (`orders.market`) says **Detroit/Wayne MI + Wake NC** — two markets.
-- **§2 above** recommends **four**: Wayne MI, Mecklenburg NC, Wake NC, Guilford NC.
+### 5.2 What the new deal is — `[DERRICK: ___ ]`
 
-Both are in writing and they disagree. `[DERRICK: two / four]` — this cannot go out with both
-readings alive.
+Price, structure (one-time / monthly / both), and what triggers start of work are all open.
+No agent proposes a number.
 
 ### 5.3 BLOCKER — which data categories Reggie gets is NOT decided
 
@@ -265,10 +272,88 @@ Proposed, none of it agreed:
 
 ## 6. Hard rules for this project
 
-1. Do not mark the order paid until Derrick confirms money in Cash App `$Derrick607`.
-2. Do not change or resend invoice `LC-2026-0718-001`.
+1. **The $1,000 invoice is dead.** Do not quote it, resend it, revive it, or build against it.
+   Payment, when there is one, goes to the **LeadCurate** Cash App (§ header blank), not a
+   personal tag. No agent marks anything paid.
+2. **No market list exists.** Never state, imply, or configure a market for Reggie until Derrick
+   says which ones he asked for.
 3. Do not tell Reggie ten markets, live data, or the connected workspace are included/built.
 4. Sample data stays in the tool until real market data is authorized and wired.
 5. Newest official source per LOCKED rule; mark unsupported lanes unavailable, never infer.
 6. No fabricated counts, testimonials, or track record anywhere customer-facing.
 7. All customer email goes through `send-delivery` and to Derrick for review unless he says send.
+
+---
+
+## 7. WORK ORDER FOR CODEX — make this project area real
+
+Derrick's requirement, in his words: *"I need to be able to manage his entire project."* The
+current Reggie page in the OS is **hardcoded HTML that Claude hand-edits.** That is the bug.
+The OS is a live Supabase-backed app; the Reggie area must be too.
+
+### RG-1 — Project tables (do this first)
+
+The OS already talks to Supabase directly (`docs/command/index.html`, anon key + `createClient`,
+tables `prospects`, `intake_requests`, `messages`, `activity_feed`, `scout_prospects`). Add
+project tables in the same style:
+
+- `projects` — id, name, client_name, client_entity, client_email, status, commercial_basis
+  (nullable — Reggie's is currently NULL because the invoice is dead), notes, created_at
+- `project_markets` — project_id, market, categories (nullable), status, source_date, notes.
+  **Starts EMPTY for Reggie.** Derrick adds rows as he learns what Reggie wants. Nothing seeds it.
+- `project_items` — project_id, kind (task | decision | blocker | deliverable), title, detail,
+  owner (derrick | claude | codex | hermes), status, created_at
+- `project_assets` — project_id, kind (landing_page | domain | logo | config | tool_instance),
+  label, url, status
+
+RLS consistent with the existing tables. Do not touch `001_wl_tables.sql`.
+
+### RG-2 — Replace the static Reggie page with a data-driven project view
+
+Same page slot (`#page-reggie`, nav `data-page="reggie"`), but every card reads from RG-1 and is
+**editable in the browser**: Derrick adds a market, flips a decision, marks a deliverable done,
+attaches the landing-page URL — no code edit, no agent. Generalize it as a Projects area that
+renders any row in `projects`, with Reggie as the first one, so the next client is a row and not
+another hand-written page.
+
+Must be manageable from the page: add/remove markets, add/edit categories per market, record a
+decision and who made it, attach assets (landing page, domain, logo, tool instance), post a
+status update that also lands in the conference room.
+
+### RG-3 — Landing page slot
+
+Reggie's landing page belongs **inside his project area**, as a `project_assets` row of kind
+`landing_page`, not as a hardcoded link. It stays empty until Derrick supplies the business name
+and terms are agreed. The staged config
+(`whitelabel-investor-site` → `config/clients/reggie-adams.config.ts`) is the thing that gets
+activated and pointed at from that slot.
+
+### RG-4 — Universal scraping/source rules (NOT Reggie-specific)
+
+This is the real reason the market question came up. Put it in `docs/AGENT-OPERATING-RULES.md`,
+not here: the county source and scraping rules must hold **in any market**, so the contamination
+class of bug (`lane_quality.py`, exact-string address comparison) cannot recur when a new county
+is added. Codify column-role mapping, the address-normalization requirement, institutional-owner
+detection, and the mandatory `qa_lane_gate.py` pass as market-agnostic rules. Any new market
+inherits them automatically.
+
+### RG-5 — The project area is a COMMUNICATION surface, not a record
+
+This is how Derrick keeps all of us connected. When he points Claude, Codex, or Hermes at the
+Reggie project area, that agent must be able to get fully caught up **from the page alone** —
+current state, open decisions, who owns what, what changed since last time, and what was said.
+
+- Wire `project_items` and project status updates into the **conference room** both ways: a
+  message can be filed against a project, and a project update shows in the conference log.
+- Every agent reports Reggie progress **into the project area**, not into a chat that Derrick has
+  to relay. If it only exists in one agent's session, it does not exist.
+- Show last-updated and by-whom on each item, so Derrick can see instantly whether Claude and
+  Codex are on the same page — the exact failure that prompted this work order.
+
+### Rules for Codex on this work order
+
+- **Do not seed any market for Reggie.** `project_markets` starts empty. §2 is unknown.
+- **Do not create or revive an invoice, price, or order row.** §5.1 — the $1,000 is dead.
+- Read §6 before touching anything customer-facing.
+- Report progress in the conference room, and update this file in place. **Do not create a second
+  Reggie document.**
