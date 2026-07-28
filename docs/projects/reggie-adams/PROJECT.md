@@ -45,6 +45,38 @@ Three of four already have raw data pulled. This is why four is realistic and te
 Dallas 6.3G, Harris 5.0G raw). If space tightens, archive Harris raw first — it has no processed
 output. Do not delete DeShawn market data while that deal is open.
 
+## 2b. DATA QUALITY GATE — affects two of Reggie's four markets
+
+Codex's pre-launch QA pass (2026-07-24 to 07-27) measured **owner-occupied contamination** in
+absentee-derived lanes. This hits Reggie's package directly.
+
+| Lane | Mecklenburg | Wayne | Notes |
+|---|---|---|---|
+| tired-landlords | **84.9% owner-occupied** | 34.1% | not sellable as-is |
+| absentee-owners | **80.1%** | 12.8% | not sellable as-is |
+| out-of-state-owners | 0.8% | 0.1% | **clean, sellable** |
+
+**Root cause:** exact-string comparison of property vs mailing address when counties format them
+differently (`14611 N C 73 HY` vs `14611 HIGHWAY 73`). Mecklenburg also duplicates the city+state
+suffix. Out-of-state lanes compare mailing *state*, so they were never affected.
+
+**Fix status:** the canonical implementation now lives in `scripts/leadcurate/lane_quality.py`
+(address roles + institutional-owner detection) and `process_investor_lanes.py` uses it.
+**The contaminated lanes have NOT been rebuilt or released.** They are HELD, not deleted.
+Zero customers ever received a defective file.
+
+**Mandatory before anything reaches Reggie:** `scripts/leadcurate/qa_lane_gate.py` must pass on the
+exact files that would ship. Exit code 1 = not sellable, not deliverable. Report the measured
+number ("Mecklenburg tired-landlords now 1.4% owner-occupied"), never "rebuilt."
+
+**Locked run order for this job** (`docs/AGENT-OPERATING-RULES.md`): map source columns to explicit
+roles → build deduped one-row-per-parcel lanes → run `qa_lane_gate.py` on the shipping files →
+hold and repair any failure → cut through the canonical 19-column schema → release only on
+Derrick's explicit approval.
+
+**Meeting-safe framing:** out-of-state-owner lanes are clean in all four markets today. Tired-landlord
+and absentee lanes need the rebuild + gate pass before they are promised or delivered.
+
 ## 3. Data distribution (how Reggie actually receives records)
 
 **Phase 1 (launch, buildable now):** private workspace page per market + lane. Customer picks
@@ -68,9 +100,12 @@ customer-ready. Time-sensitive lanes (tax, foreclosure) must refresh before deli
   tool's `PropertyRecord` shape (id, address, city, state, zip, apn, county, owner,
   propertyType, beds, baths, sqft, yearBuilt, lat, lng, askingPrice, arv, repairs, rent,
   soldPrice). Server-side pagination. Reads from existing processed lane files.
-- **R-2** Rebuild **Wake NC** from newest official inputs (`raw_imports/wake-nc/2026-07-18/`).
-  Do not ship from the 07-08 processed folder.
-- **R-3** Rebuild **Guilford NC** from newest official source.
+- **R-2** Rebuild **Wake NC** from newest official inputs (`raw_imports/wake-nc/2026-07-18/`)
+  through `lane_quality.py`. Do not ship from the 07-08 processed folder. Gate must pass.
+- **R-3** Rebuild **Guilford NC** from newest official source through `lane_quality.py`. Gate must pass.
+- **R-2b** Rebuild **Mecklenburg + Wayne** absentee and tired-landlord lanes through
+  `lane_quality.py` and pass `qa_lane_gate.py`. These are the contaminated lanes in §2b and are
+  currently HELD. Out-of-state lanes in both markets are clean and need no rebuild.
 - **R-4** Market/lane registry: one config listing Reggie's four markets, their available lanes,
   source dates, and refresh cadence, consumable by both the API and the workspace.
 - **R-5** Export job endpoint: build file on VPS, return signed download link, log to `deliveries`.
