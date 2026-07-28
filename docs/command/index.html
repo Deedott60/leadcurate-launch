@@ -771,6 +771,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
             <div class="wl-check"><span class="yes">OK</span><div><b>Property Decision Tool</b><small>/tool. Search, records, map, comps, CSV import, four calculators, print report.</small></div></div>
             <div class="wl-check"><span class="yes">OK</span><div><b>Wayne / Detroit data</b><small>Seven verified lanes on the VPS, processed 2026-07-19.</small></div></div>
             <div class="wl-check"><span class="yes">OK</span><div><b>Mecklenburg NC data</b><small>Processed 2026-07-19.</small></div></div>
+            <div class="wl-check"><span class="yes">OK</span><div><b>His client config staged</b><small>Claude C-1. whitelabel-investor-site repo, config/clients/reggie-adams.config.ts. Inert until payment, nothing imports it, no wl_clients row created, every unknown is a PENDING marker.</small></div></div>
           </div>
         </div>
         <div class="card">
@@ -779,13 +780,19 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
             <div class="wl-check"><span class="no">1</span><div><b>VPS property search API</b><small>Codex R-1. The tool's connector already expects it; the server half is missing.</small></div></div>
             <div class="wl-check"><span class="no">2</span><div><b>Wake NC rebuild</b><small>Codex R-2. Raw is current 07-18; processed is stale 07-08.</small></div></div>
             <div class="wl-check"><span class="no">3</span><div><b>Guilford NC rebuild</b><small>Codex R-3. Processed 07-08.</small></div></div>
-            <div class="wl-check"><span class="no">4</span><div><b>Private workspace and login</b><small>Claude C-2. Market picker, download center, embedded tool.</small></div></div>
-            <div class="wl-check"><span class="no">5</span><div><b>Written scope addendum</b><small>Claude C-3. Derrick approves before it reaches Reggie.</small></div></div>
+            <div class="wl-check"><span class="no">4</span><div><b>Private workspace and login</b><small>Claude C-2. Market picker, download center, embedded tool. Do not build the category picker until Derrick answers PROJECT.md 5.3.</small></div></div>
           </div>
         </div>
       </div>
       <div class="card">
-        <div class="card-h"><span class="card-title">Markets in scope</span><span class="card-meta">Ten was rejected. Four is the package.</span></div>
+        <div class="card-h"><span class="card-title">Waiting on Derrick — blocks everything customer-facing</span><span class="badge b-sent">decide</span></div>
+        <div class="row"><div class="row-body"><div class="row-name">How many markets</div><div class="row-detail">The invoice says Detroit/Wayne MI + Wake NC, which is two. The build plan says four. Both are in writing and they disagree. PROJECT.md 5.2.</div></div></div>
+        <div class="row"><div class="row-body"><div class="row-name">Which data categories he gets</div><div class="row-detail">Not negotiated with Reggie yet. Derrick may not offer tired landlords at all. No agent sends him a category list, an availability menu, or a record count before Derrick decides. PROJECT.md 5.3.</div></div></div>
+        <div class="row"><div class="row-body"><div class="row-name">Recurring fee</div><div class="row-detail">The $1,000 is an initial project payment. Nothing covers hosting, refresh, or support. If scope goes out silent on a monthly fee, silence becomes the deal. PROJECT.md 5.4.</div></div></div>
+        <div class="row"><div class="row-body"><div class="row-name">License, ownership, cancellation terms</div><div class="row-detail">Wording is drafted, none of it is agreed. PROJECT.md 5.7.</div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-h"><span class="card-title">Markets in scope</span><span class="card-meta">Ten was rejected. Two vs four is unresolved — see above.</span></div>
         <div class="row"><div class="row-body"><div class="row-name">Wayne County / Detroit MI</div><div class="row-detail">His priority market. Seven verified lanes already processed.</div></div></div>
         <div class="row"><div class="row-body"><div class="row-name">Mecklenburg NC (Charlotte)</div><div class="row-detail">Largest NC metro county. Processed and current.</div></div></div>
         <div class="row"><div class="row-body"><div class="row-name">Wake NC (Raleigh)</div><div class="row-detail">Rebuild from the 2026-07-18 official inputs before delivery.</div></div></div>
@@ -794,7 +801,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
       <div class="card">
         <div class="card-h"><span class="card-title">Full project file</span><span class="card-meta">Single source of truth</span></div>
-        <div class="row"><div class="row-body"><div class="row-name">docs/projects/reggie-adams/PROJECT.md</div><div class="row-detail">Verified build state, market scope, data distribution plan, Codex R-1 to R-5, Claude C-1 to C-4, and the hard rules. Every agent reads that file before doing Reggie work.</div></div></div>
+        <div class="row"><div class="row-body"><div class="row-name">docs/projects/reggie-adams/PROJECT.md</div><div class="row-detail">The ONLY Reggie file. Verified build state, market scope, data quality gate, distribution plan, Codex R-1 to R-5, Claude C-1 to C-4, the full commercial scope draft in section 5, and the hard rules. Every agent reads it before doing Reggie work. Do not spin off a second Reggie doc — if it is about Reggie it goes in there as a section.</div></div></div>
       </div>
     </div>
 
