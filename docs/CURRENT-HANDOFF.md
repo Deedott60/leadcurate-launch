@@ -18,6 +18,8 @@ Confidentiality and evidence limits remain locked. F&B Manager has no client nam
 
 The source of truth remains `C:\Users\lenovo\Documents\portfolio\template.html`. `scripts/build-portfolio.js` now performs the documented image-inline build. The generated Documents copy and offline Desktop copy must be rebuilt from that template together. The Command OS Career > Portfolio page mirrors the current thesis and privacy warning.
 
+Final language and layout pass completed 2026-07-29. All 34 prose paragraphs contain zero slash symbols, zero em dashes, and zero en dashes. Promotional contrast phrases such as "not a demo," "coat of paint," "no safety net," and "what it proves" were replaced with direct first-person descriptions. Desktop and mobile layouts pass with no page overflow or console warnings. The existing Rooted, wedding, and agent-system graphics were retained because each supports a specific project; no decorative graphics were added. Public hosting is still pending Derrick's choice of Sites, Vercel, or another target. The Claude artifact link cannot be treated as the final resume URL until anonymous access is verified.
+
 ## Open now -- Reggie Adams white-label discussion (invoice/deal currently dead)
 
 **Customer:** Reggie Adams, `mrreggieadams@gmail.com`, for **The 3 CCC'S Consulting Firm LLC**.
