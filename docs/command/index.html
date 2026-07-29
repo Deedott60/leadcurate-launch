@@ -936,6 +936,28 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
 
       <div class="card mb16">
+        <div class="card-h">
+          <span class="card-title">Figma cover letter</span>
+          <span style="font-size:10px;font-weight:700;color:var(--em);text-transform:uppercase;letter-spacing:.08em;">Customer Enablement Manager</span>
+        </div>
+        <div style="padding:14px 16px;display:grid;gap:12px;">
+          <div id="figma-cover-letter" style="border:1px solid var(--line);border-radius:10px;background:var(--cream);padding:16px;font-size:13px;color:var(--dark);line-height:1.7;white-space:pre-wrap;">Hello Figma Hiring Team,
+
+I am applying for the Customer Enablement Manager role because it sits where I do my best work: understanding customer goals, translating them into useful workflows, and helping people adopt tools that make their jobs easier.
+
+My background spans account management, customer relationships, product thinking, and hands-on execution. I have worked directly with customers, built operational systems from their needs, and turned ambiguous problems into products people can use. That experience taught me how to listen for the real goal, connect product capabilities to measurable value, explain complex ideas clearly, and coordinate across teams.
+
+Figma's mission and focus on thoughtful, tailored enablement are especially compelling to me. I would bring curiosity, strong relationship skills, and a practical focus on helping customers succeed.
+
+Thank you for your consideration.
+
+Derrick McDonald</div>
+          <button type="button" onclick="window.copyFigmaCoverLetter(this)"
+                  style="justify-self:start;border:0;background:var(--em);color:#fff;padding:10px 15px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">Copy cover letter</button>
+        </div>
+      </div>
+
+      <div class="card mb16">
         <div class="card-h"><span class="card-title">What is on it</span></div>
         <div style="padding:14px 16px;font-size:13px;color:var(--sl);line-height:1.7;">
           <div style="margin-bottom:10px;"><strong style="color:var(--dark);">Thesis</strong>: &ldquo;I turn customer problems into products that ship.&rdquo; Five production applications support a broader customer-to-product story. The original &ldquo;I&rsquo;m not an engineer. I ship anyway.&rdquo; line now appears in the infrastructure section.</div>
@@ -2621,6 +2643,10 @@ async function copyText(text, okMessage, button){
 }
 window.copyTpl = (i) => copyText(window._tpls[i].body, 'Copied');
 window.copyCareerLink = (url, message, button) => copyText(url, message, button);
+window.copyFigmaCoverLetter = (button) => {
+  const letter = document.getElementById('figma-cover-letter')?.textContent.trim() || '';
+  copyText(letter, 'Figma cover letter copied', button);
+};
 window.copyIntakeLink = (button) => copyText(INTAKE_URL, 'Intake link copied - paste anywhere', button);
 window.copyAuditLink = (button) => copyText(AUDIT_URL, 'Audit link copied - paste anywhere', button);
 window.shareAuditLink = async () => {
