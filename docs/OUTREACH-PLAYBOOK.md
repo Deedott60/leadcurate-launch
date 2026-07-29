@@ -25,7 +25,7 @@ Pin this in your notes. The dashboard has a 🔗 Copy intake link button in the 
 
 ## Where to find prospects
 
-The current manual Facebook campaign, checked groups, approved four-market offers, exact copy, and delivery gate are in [marketing/facebook-four-market-sample-campaign.md](marketing/facebook-four-market-sample-campaign.md). For that campaign, do not place the intake link in the public post. Ask for a comment or DM, qualify the person, and send the intake privately.
+The current manual Facebook campaign, checked groups, approved four-market categories, exact copy, and delivery gate are in [marketing/facebook-four-market-sample-campaign.md](marketing/facebook-four-market-sample-campaign.md). For that free-file campaign, do not use an intake link or sales pitch. Ask for one market and one category, then collect the delivery email privately.
 
 ### Tier 1 — High signal, low effort (start here)
 
