@@ -12,9 +12,9 @@ Last updated: 2026-07-29 by Codex (Facebook sample campaign added; current Dolla
 
 ## Ready now -- Facebook four-market sample campaign
 
-Command OS Marketing now contains a manual Facebook sample campaign for four current QA-passed lanes: Wayne MI tax-debt, Mecklenburg NC out-of-state owners, Fulton GA verified vacant land, and Shelby TN out-of-state owners. Texas and tired-landlord offers are excluded. Derrick can copy a profile post, copy a market-specific group post, copy the first Messenger reply, open each checked group, and log a respondent directly into the existing Pipeline.
+Command OS Marketing now contains a simple manual Facebook data-sharing campaign for four markets. Each market offers four current QA-passed categories, and the person chooses one. The campaign calls the vacant category simply "vacant." Texas and tired-landlord offers are excluded. Derrick can copy a profile post, copy a market-specific group post, copy the first Messenger reply, open each checked group, and log a respondent plus the selected category directly into the existing Pipeline.
 
-The campaign is deliberately limited to three 25-property test spots per market. Public posts contain no external link; the intake link is sent privately after a person replies. Every exact sample must be refreshed when needed, deduplicated by parcel, and pass `qa_lane_gate.py` before delivery. No post, group join, sample reservation, or delivery has been performed automatically. Canonical playbook: `docs/marketing/facebook-four-market-sample-campaign.md`.
+The campaign is limited to five 25-record files per market, twenty people total. Public posts contain no external link, pricing, package language, or sales pitch. The free-file conversation asks only for one market, one category, and a delivery email; no intake form is required. Every exact sample must be refreshed when needed, deduplicated by parcel, and pass `qa_lane_gate.py` before delivery. No post, group join, sample reservation, or delivery has been performed automatically. Canonical playbook: `docs/marketing/facebook-four-market-sample-campaign.md`.
 
 ## Recently closed -- Universal portfolio positioning
 
