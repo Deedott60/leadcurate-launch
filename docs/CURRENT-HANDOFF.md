@@ -6,9 +6,17 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-07-27 by Codex (universal field-role, QA, and delivery gates added; current Dollar Leads inventory remains held)
+Last updated: 2026-07-29 by Codex (portfolio positioning and build workflow updated; current Dollar Leads inventory remains held)
 
 ---
+
+## Recently closed -- Universal portfolio positioning
+
+Derrick decided the portfolio must remain reusable across employers rather than target one Figma opening. Codex preserved the existing editorial design and five-project order, changed the lead thesis to "I turn customer problems into products that ship," and reframed the supporting story around customer relationships, product judgment, and technical execution. The original "I am not an engineer by title. I ship anyway." line remains in the infrastructure section.
+
+Confidentiality and evidence limits remain locked. F&B Manager has no client name, screenshot, identifying scale detail, or unapproved interface detail. No customer, revenue, adoption, or time-saved metrics may be added unless Derrick has a real number he can defend.
+
+The source of truth remains `C:\Users\lenovo\Documents\portfolio\template.html`. `scripts/build-portfolio.js` now performs the documented image-inline build. The generated Documents copy and offline Desktop copy must be rebuilt from that template together. The Command OS Career > Portfolio page mirrors the current thesis and privacy warning.
 
 ## Open now -- Reggie Adams white-label discussion (invoice/deal currently dead)
 
