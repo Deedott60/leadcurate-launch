@@ -6,9 +6,15 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-07-29 by Codex (portfolio positioning and build workflow updated; current Dollar Leads inventory remains held)
+Last updated: 2026-07-29 by Codex (Facebook sample campaign added; current Dollar Leads inventory remains held)
 
 ---
+
+## Ready now -- Facebook four-market sample campaign
+
+Command OS Marketing now contains a manual Facebook sample campaign for four current QA-passed lanes: Wayne MI tax-debt, Mecklenburg NC out-of-state owners, Fulton GA verified vacant land, and Shelby TN out-of-state owners. Texas and tired-landlord offers are excluded. Derrick can copy a profile post, copy a market-specific group post, copy the first Messenger reply, open each checked group, and log a respondent directly into the existing Pipeline.
+
+The campaign is deliberately limited to three 25-property test spots per market. Public posts contain no external link; the intake link is sent privately after a person replies. Every exact sample must be refreshed when needed, deduplicated by parcel, and pass `qa_lane_gate.py` before delivery. No post, group join, sample reservation, or delivery has been performed automatically. Canonical playbook: `docs/marketing/facebook-four-market-sample-campaign.md`.
 
 ## Recently closed -- Universal portfolio positioning
 

@@ -300,6 +300,24 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
   .project-list-row .row-actions{justify-content:flex-start;}
 }
 
+/* FACEBOOK SAMPLE CAMPAIGN */
+.fb-campaign-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.fb-market{border:1px solid var(--line);padding:15px;background:var(--white);}
+.fb-market-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px;}
+.fb-market-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;}
+.fb-market-lane{font-size:12px;color:var(--em-d);font-weight:700;margin-bottom:6px;}
+.fb-market-meta{font-size:12px;color:var(--sl);line-height:1.5;}
+.fb-copy{white-space:pre-wrap;font-size:13px;line-height:1.65;background:var(--cream);border:1px solid var(--line);padding:14px;margin:10px 0;}
+.fb-safety{border-left:4px solid var(--gold);background:#fffbeb;padding:12px 14px;font-size:13px;line-height:1.55;}
+.fb-group-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);}
+.fb-group-row:last-child{border-bottom:0;}
+.fb-group-name{font-weight:700;font-size:13px;}
+.fb-group-meta{color:var(--sl);font-size:11px;margin-top:3px;}
+@media(max-width:700px){
+  .fb-campaign-grid{grid-template-columns:1fr;}
+  .fb-group-row{grid-template-columns:1fr;}
+}
+
 /* ── COMMAND PALETTE ─────────────────────── */
 #cmd-overlay{position:fixed;inset:0;background:rgba(15,23,42,0.7);z-index:500;display:none;align-items:flex-start;justify-content:center;padding-top:15vh;}
 #cmd-overlay.open{display:flex;}
@@ -1059,23 +1077,65 @@ Derrick McDonald</div>
       </div>
     </div>
 
-    <!-- ── MARKETING (placeholder for Phase 2) ─────────── -->
+    <!-- ── MARKETING ───────────────────────────────────── -->
     <div id="page-marketing" class="page">
       <div class="page-header">
         <div class="page-title">Marketing & Growth</div>
-        <div class="page-sub">Campaign tracking, email blasts, ad performance, social outreach metrics.</div>
+        <div class="page-sub">Run the Facebook sample campaign, capture replies, and move real prospects into Pipeline.</div>
       </div>
+
+      <div class="stats" id="fb-campaign-stats"></div>
+
       <div class="card mb16">
-        <div class="card-h"><span class="card-title">Phase 2 — coming online when you turn it on</span></div>
-        <p style="color:var(--sl);font-size:14px;line-height:1.6;">This panel will host campaign metrics + automation slots. Each card below is a placeholder for an integration you can flip on when revenue justifies it.</p>
+        <div class="card-h">
+          <span class="card-title">Four-market Facebook sample campaign</span>
+          <span class="badge b-queued">READY FOR DERRICK</span>
+        </div>
+        <div class="fb-safety">
+          <strong>Keep it safe:</strong> do not post a website link in the group post. Ask people to comment or DM first.
+          Send the intake form privately after they reply. Every sample is address/property data only, contains no
+          skip-traced phone or email, and must pass the fresh-source and QA checks before delivery.
+        </div>
+        <div class="fb-campaign-grid" id="fb-market-list" style="margin-top:14px;"></div>
       </div>
-      <div class="agent-grid">
-        <div class="agent-card"><div class="a-dot off"></div><div><div class="a-name">Email campaigns</div><div class="a-desc">Resend or Mailchimp for broadcast emails to your prospect + customer list. Templated, tracked open/click.</div></div></div>
-        <div class="agent-card"><div class="a-dot off"></div><div><div class="a-name">Mass SMS</div><div class="a-desc">Twilio for bulk SMS to opted-in contacts. Per-message cost (~$0.0075). Requires opt-in tracking.</div></div></div>
-        <div class="agent-card"><div class="a-dot off"></div><div><div class="a-name">Meta Ads</div><div class="a-desc">Facebook + Instagram ad performance, ROAS, audience overlap. Plug in Meta Business API.</div></div></div>
-        <div class="agent-card"><div class="a-dot off"></div><div><div class="a-name">Google Ads</div><div class="a-desc">Search + Display ad spend, CPC, conversion tracking via Google Ads API.</div></div></div>
-        <div class="agent-card"><div class="a-dot off"></div><div><div class="a-name">Social outreach log</div><div class="a-desc">Manually log FB groups joined, IG DMs sent, Reddit threads engaged. Track which channel converts.</div></div></div>
-        <div class="agent-card"><div class="a-dot off"></div><div><div class="a-name">Affiliate / referral</div><div class="a-desc">Track who referred which paying customer + credit them. Custom referral codes via Stripe metadata.</div></div></div>
+
+      <div class="card mb16">
+        <div class="card-h">
+          <span class="card-title">Post on your own profile</span>
+          <button class="btn btn-sm" onclick="window.copyFacebookProfilePost()">Copy post</button>
+        </div>
+        <div class="fb-copy" id="fb-profile-copy"></div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">Groups to use first</span><span class="card-meta">Checked July 29, 2026</span></div>
+        <div id="fb-groups-list"></div>
+        <div class="fb-safety" style="margin-top:14px;">
+          <strong>Do not post the giveaway in Raleigh Real Estate Investors.</strong> Its current rules say no
+          promotions, spam, or self-promotion without permission. Raleigh can be worked through helpful comments
+          and private conversations only unless an admin approves the post.
+        </div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">Log a Facebook reply</span><span class="card-meta">Saves directly to Pipeline</span></div>
+        <div class="f-grid">
+          <div class="f-field"><label class="f-label" for="fb-lead-name">Name or Facebook handle</label><input class="f-input" id="fb-lead-name"/></div>
+          <div class="f-field"><label class="f-label" for="fb-lead-contact">Profile, Messenger link, or contact</label><input class="f-input" id="fb-lead-contact"/></div>
+          <div class="f-field"><label class="f-label" for="fb-lead-market">Requested market</label><select class="f-select" id="fb-lead-market"></select></div>
+          <div class="f-field"><label class="f-label" for="fb-lead-strategy">Investor strategy</label><select class="f-select" id="fb-lead-strategy"><option value="not answered">Not answered yet</option><option value="wholesale">Wholesale</option><option value="buy and hold">Buy and hold</option><option value="vacant land">Vacant land</option><option value="flip">Flip</option><option value="commercial">Commercial</option><option value="other">Other</option></select></div>
+          <div class="f-field"><label class="f-label" for="fb-lead-group">Facebook group</label><input class="f-input" id="fb-lead-group" placeholder="Group name or your profile"/></div>
+          <div class="f-field"><label class="f-label" for="fb-lead-notes">What they asked for</label><input class="f-input" id="fb-lead-notes"/></div>
+        </div>
+        <button class="btn" id="fb-lead-save">Add reply to Pipeline</button>
+      </div>
+
+      <div class="card">
+        <div class="card-h"><span class="card-title">Reply flow</span></div>
+        <div class="row"><div class="row-body"><div class="row-name">1. Qualify the person</div><div class="row-detail">Ask which market, what they buy, and whether they have worked a public-record list before. Log the reply above.</div></div></div>
+        <div class="row"><div class="row-body"><div class="row-name">2. Send the intake privately</div><div class="row-detail">Use https://leadcurate.com/intake/ only after they reply. Do not drop the link into every public group post.</div></div></div>
+        <div class="row"><div class="row-body"><div class="row-name">3. Verify before giving data</div><div class="row-detail">Refresh the official source if needed, remove duplicate parcels, run the exact shipping file through qa_lane_gate.py, and hold any failure.</div></div></div>
+        <div class="row"><div class="row-body"><div class="row-name">4. Deliver 25 records and follow up</div><div class="row-detail">Send the free starter file only after approval. Ask what was useful, what was missing, and whether they want the full market.</div></div></div>
       </div>
     </div>
 
@@ -1618,6 +1678,7 @@ window.nav = async function(id){
   if(id==='scout'){ await loadScout(); renderScout(); }
   if(id==='workflow'){ renderAgents(); renderFeed('wf-feed','wf-feed-count'); }
   if(id==='reggie'){ await loadProjects(); renderProjects(); }
+  if(id==='marketing') renderMarketing();
   if(id==='conference'){
     await markConferenceRead();
     renderConference();
@@ -1830,6 +1891,168 @@ document.getElementById('project-asset-save')?.addEventListener('click',async()=
 
 window.deleteProjectRecord=async(table,id,label)=>{if(!confirm(`Remove ${label}?`))return;const result=await sb.from(table).delete().eq('id',id);if(result.error)return toast(result.error.message);await loadProjects();await logProjectChange('Project record removed',label);renderProjects();toast('Removed');};
 document.getElementById('project-update-save')?.addEventListener('click',async()=>{const body=document.getElementById('project-update-body').value.trim();if(!body)return toast('Write an update first');const title=body.split('\n')[0].slice(0,80);const ok=await saveEvent('conf:status',title,body,document.getElementById('project-update-from').value||'derrick',document.getElementById('project-update-target').value||'all',ACTIVE_PROJECT_ID);if(ok){document.getElementById('project-update-body').value='';renderProjects();toast('Project and Conference Room updated');}});
+
+// FACEBOOK SAMPLE CAMPAIGN
+const FB_CAMPAIGN_PREFIX = 'Facebook Sample Giveaway |';
+const FB_PROFILE_POST = `I've been cleaning and organizing public-record property data in four markets:
+
+• Detroit / Wayne County — live tax-debt owners
+• Charlotte / Mecklenburg County — out-of-state owners
+• Atlanta / Fulton County — verified vacant land
+• Memphis / Shelby County — out-of-state owners
+
+The records are organized by parcel, addresses are standardized, and duplicate parcels are removed.
+
+I'm opening 3 test spots in each market for active investors who will actually review a free 25-property starter sample and give honest feedback.
+
+This is address/property data only — no skip-traced phone numbers or emails, and no promise that a property will turn into a deal.
+
+Comment SAMPLE or DM me the market plus what you buy: wholesale, buy-and-hold, vacant land, flips, or commercial.`;
+
+const FB_OFFERS = [
+  {
+    slug:'wayne-mi',
+    market:'Detroit / Wayne County',
+    lane:'Live tax-debt owners',
+    keyword:'DETROIT',
+    group:'Metro Detroit Real Estate Investors, Contractors, Builders, Flippers',
+    groupUrl:'https://www.facebook.com/groups/1036455453903927/',
+    qa:'QA passed: 3,000 rows sampled · 0.8% institutional · 0.0% front-50 outliers'
+  },
+  {
+    slug:'mecklenburg-nc',
+    market:'Charlotte / Mecklenburg County',
+    lane:'Out-of-state owners',
+    keyword:'CHARLOTTE',
+    group:'Charlotte, NC Real Estate Investors',
+    groupUrl:'https://www.facebook.com/groups/1612137285724634/',
+    qa:'QA passed: 3,000 sampled · 0.7% owner-occupied · 0.3% institutional'
+  },
+  {
+    slug:'fulton-ga',
+    market:'Atlanta / Fulton County',
+    lane:'Verified vacant land',
+    keyword:'ATLANTA',
+    group:'Real Estate Investors Atlanta GA',
+    groupUrl:'https://www.facebook.com/groups/114197495951725/',
+    qa:'QA passed: 3,000 sampled · 0.6% institutional · 2.0% front-50 outliers'
+  },
+  {
+    slug:'shelby-tn',
+    market:'Memphis / Shelby County',
+    lane:'Out-of-state owners',
+    keyword:'MEMPHIS',
+    group:'Real Estate Investors Memphis Tennessee | RealEstateInvesting.com',
+    groupUrl:'https://www.facebook.com/groups/1930307087217775/',
+    qa:'QA passed: 3,000 sampled · 0.0% owner-occupied · 0.5% institutional'
+  }
+];
+
+const facebookMarketPost = offer => `${offer.market} investors — I just finished organizing a small batch of ${offer.lane.toLowerCase()} property records from public sources. Addresses are standardized, duplicate parcels are removed, and parcel/source fields are kept.
+
+I'm looking for 3 active investors in ${offer.market} who will actually review a free 25-property starter sample and tell me whether the organization is useful.
+
+This is address/property data only — no skip-traced phone numbers or emails, and no promise of deals.
+
+DM "${offer.keyword}" plus what you buy: wholesale, buy-and-hold, vacant land, flips, or commercial. I'll send a short intake privately.`;
+
+const facebookFirstReply = offer => `Thanks for reaching out. Before I assign a sample, what do you buy in ${offer.market} — wholesale, buy-and-hold, vacant land, flips, or commercial? And have you worked a public-record list before?`;
+const facebookCampaignLeads = () => PROSPECTS.filter(p=>(p.source||'').startsWith(FB_CAMPAIGN_PREFIX));
+
+function renderMarketing(){
+  const leads = facebookCampaignLeads();
+  const previews = leads.filter(p=>['preview','quoted','paying','delivered'].includes(p.status)).length;
+  const customers = leads.filter(p=>['paying','delivered'].includes(p.status)).length;
+  const claimed = Math.min(12, leads.length);
+  const stats = document.getElementById('fb-campaign-stats');
+  if(stats) stats.innerHTML=`
+    <div class="stat hi"><div class="v">${12-claimed}</div><div class="l">Test spots open</div></div>
+    <div class="stat"><div class="v">${leads.length}</div><div class="l">Facebook replies</div></div>
+    <div class="stat"><div class="v">${previews}</div><div class="l">Samples sent</div></div>
+    <div class="stat"><div class="v">${customers}</div><div class="l">Paying customers</div></div>`;
+
+  const marketList = document.getElementById('fb-market-list');
+  if(marketList) marketList.innerHTML=FB_OFFERS.map(offer=>{
+    const marketLeads = leads.filter(p=>(p.source||'').includes(`| ${offer.slug} |`));
+    const open = Math.max(0,3-marketLeads.length);
+    return `<div class="fb-market">
+      <div class="fb-market-head">
+        <div><div class="fb-market-name">${esc(offer.market)}</div><div class="fb-market-lane">${esc(offer.lane)}</div></div>
+        <span class="badge b-${open?'queued':'paying'}">${open} SPOTS OPEN</span>
+      </div>
+      <div class="fb-market-meta">${esc(offer.qa)}</div>
+      <div class="fb-market-meta"><strong>Checked group:</strong> ${esc(offer.group)}</div>
+      <div class="row-actions" style="margin-top:12px;">
+        <button class="btn btn-sm" onclick="window.copyFacebookMarketPost('${offer.slug}',this)">Copy group post</button>
+        <button class="btn btn-ghost btn-sm" onclick="window.copyFacebookFirstReply('${offer.slug}',this)">Copy first reply</button>
+        <a class="btn btn-ghost btn-sm" href="${offer.groupUrl}" target="_blank" rel="noopener">Open group</a>
+      </div>
+    </div>`;
+  }).join('');
+
+  const profile = document.getElementById('fb-profile-copy');
+  if(profile) profile.textContent=FB_PROFILE_POST;
+  const groups = document.getElementById('fb-groups-list');
+  if(groups) groups.innerHTML=FB_OFFERS.map(offer=>`
+    <div class="fb-group-row">
+      <div><div class="fb-group-name">${esc(offer.group)}</div><div class="fb-group-meta">${esc(offer.market)} · public group · no promotion ban displayed on About page when checked</div></div>
+      <a class="btn btn-ghost btn-sm" href="${offer.groupUrl}" target="_blank" rel="noopener">Open</a>
+    </div>`).join('');
+  const select = document.getElementById('fb-lead-market');
+  if(select){
+    const selected=select.value;
+    select.innerHTML=FB_OFFERS.map(offer=>`<option value="${offer.slug}">${esc(offer.market)} — ${esc(offer.lane)}</option>`).join('');
+    if(FB_OFFERS.some(offer=>offer.slug===selected)) select.value=selected;
+  }
+}
+
+window.copyFacebookProfilePost = button => copyText(FB_PROFILE_POST,'Profile post copied',button);
+window.copyFacebookMarketPost = (slug,button) => {
+  const offer=FB_OFFERS.find(item=>item.slug===slug);
+  if(offer) copyText(facebookMarketPost(offer),`${offer.market} post copied`,button);
+};
+window.copyFacebookFirstReply = (slug,button) => {
+  const offer=FB_OFFERS.find(item=>item.slug===slug);
+  if(offer) copyText(facebookFirstReply(offer),`${offer.market} reply copied`,button);
+};
+
+document.getElementById('fb-lead-save')?.addEventListener('click',async()=>{
+  const name=document.getElementById('fb-lead-name').value.trim();
+  const contact=document.getElementById('fb-lead-contact').value.trim();
+  const slug=document.getElementById('fb-lead-market').value;
+  const offer=FB_OFFERS.find(item=>item.slug===slug);
+  if(!name&&!contact) return toast('Add a name, handle, or contact');
+  if(!offer) return toast('Choose a market');
+  const group=document.getElementById('fb-lead-group').value.trim()||'Derrick Facebook profile';
+  const strategy=document.getElementById('fb-lead-strategy').value;
+  const request=document.getElementById('fb-lead-notes').value.trim();
+  const now=Date.now();
+  const local={
+    id:uid(), created_at:now, name, contact, channel:'dm',
+    source:`${FB_CAMPAIGN_PREFIX}${slug} | ${group}`,
+    notes:`Market: ${offer.market}. Lane: ${offer.lane}. Strategy: ${strategy}.${request?` Request: ${request}`:''}`,
+    status:'replied', sent_at:null, replied_at:now
+  };
+  PROSPECTS.unshift(local);
+  lsSave();
+  if(SYNC){
+    const {data,error}=await sb.from('prospects').insert([{
+      name:local.name,contact:local.contact,channel:local.channel,source:local.source,
+      notes:local.notes,status:local.status,replied_at:new Date(now).toISOString()
+    }]).select().single();
+    if(error){
+      PROSPECTS=PROSPECTS.filter(p=>p.id!==local.id);
+      lsSave();
+      return toast('Could not save reply: '+error.message,4500);
+    }
+    local.supabase_id=data.id;
+    lsSave();
+  }
+  ['fb-lead-name','fb-lead-contact','fb-lead-group','fb-lead-notes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fb-lead-strategy').value='not answered';
+  await saveEvent('prospect:facebook',`Facebook sample reply: ${name||contact}`,`${offer.market} · ${offer.lane} · ${strategy}`,'derrick','all');
+  renderMarketing(); renderKanban(); updateStats(); toast('Reply added to Pipeline');
+});
 
 // ─── CONFERENCE ROOM ─────────────────────────────────────────
 const CONF_LABELS = {
