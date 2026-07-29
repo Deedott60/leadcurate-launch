@@ -461,6 +461,14 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
     </div>
     <div class="nav-divider"></div>
 
+    <div class="nav-label">Career</div>
+    <div class="nav-section">
+      <div class="nav-item" data-page="portfolio">
+        <span class="icon">🛠️</span> Portfolio
+      </div>
+    </div>
+    <div class="nav-divider"></div>
+
     <div class="agent-strip">
       <div class="nav-label" style="margin-top:0;">Agents</div>
       <div class="agent-mini"><div class="dot" id="dot-claude-code"></div>Claude Code</div>
@@ -886,6 +894,59 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
         <div class="page-sub">Tap any block to copy. Replace [Name] and [market] with their details.</div>
       </div>
       <div id="templates-list"></div>
+    </div>
+
+    <!-- ── PORTFOLIO ───────────────────────── -->
+    <div id="page-portfolio" class="page">
+      <div class="page-header">
+        <div class="page-title">Portfolio</div>
+        <div class="page-sub">The public page you send with job applications. Positions you as an operator who ships production software &mdash; not a candidate who has only read about it.</div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">Open it</span></div>
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px;">
+          <a href="https://claude.ai/code/artifact/87165dbb-c869-4418-860e-b6191e7bb74d" target="_blank" rel="noopener"
+             style="display:inline-block;background:var(--em);color:#fff;padding:11px 16px;border-radius:8px;font-weight:700;text-decoration:none;text-align:center;">
+            Open the live portfolio &rarr;
+          </a>
+          <div style="font-size:12px;color:var(--sl-l);line-height:1.5;">
+            Private until shared from the page's own share menu. The link is permanent &mdash; it survives updates, so it is safe to put on an application.
+          </div>
+          <div style="font-size:12px;color:var(--sl);line-height:1.6;border-top:1px solid var(--line);padding-top:10px;">
+            <strong>Local copies</strong><br>
+            Desktop &rarr; <code>Derricks portfolio\index.html</code> &mdash; double-click to open offline<br>
+            Source &rarr; <code>Documents\portfolio\template.html</code> &mdash; edit this, then rebuild to inline the images
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">What is on it</span></div>
+        <div style="padding:14px 16px;font-size:13px;color:var(--sl);line-height:1.7;">
+          <div style="margin-bottom:10px;"><strong style="color:var(--dark);">Thesis</strong> &mdash; &ldquo;I&rsquo;m not an engineer. I ship anyway.&rdquo; Five apps in production, built by an account manager.</div>
+          <div style="display:grid;gap:8px;">
+            <div><span style="color:var(--em);font-weight:700;">F&amp;B Manager</span> &middot; confidential client, in field use &mdash; casino &amp; resort hospitality. Client and UI withheld.</div>
+            <div><span style="color:var(--em);font-weight:700;">Rooted</span> &middot; live &mdash; Next.js, Supabase, Anthropic API, Stripe, Web Push</div>
+            <div><span style="color:var(--em);font-weight:700;">LeadCurate OS</span> &middot; in production &mdash; shown as a 21-module inventory, no customer data</div>
+            <div><span style="color:var(--em);font-weight:700;">White-Label Investor Site</span> &middot; built &mdash; Next.js, MapLibre, Supabase</div>
+            <div><span style="color:var(--em);font-weight:700;">Derrick &amp; Miesha</span> &middot; live &mdash; self-hosted API on the VPS</div>
+          </div>
+          <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line);">
+            Plus an <strong style="color:var(--dark);">interactive agent diagram</strong> &mdash; Claude, Codex and Hermes coordinating through the activity feed &mdash; and an infrastructure section covering Ubuntu, Docker, n8n and Playwright.
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">Known gaps</span></div>
+        <div style="padding:14px 16px;font-size:13px;color:var(--sl);line-height:1.7;">
+          <div style="margin-bottom:8px;">&bull; <strong style="color:var(--dark);">Before sending the link:</strong> the artifact is <em>private by default</em>. Open it and use the page&rsquo;s share menu, or recruiters will hit a sign-in wall instead of the portfolio.</div>
+          <div style="margin-bottom:8px;">&bull; <strong style="color:var(--dark);">No real-estate client tool yet.</strong> Screen recordings exist but were shared as Gmail/Drive links, which cannot be reached from a local machine. Save them to disk and they can be added.</div>
+          <div style="margin-bottom:8px;">&bull; <strong style="color:var(--dark);">No outcome numbers.</strong> Nothing on the page says how many customers, how much revenue, or how much time was saved.</div>
+          <div>&bull; <strong style="color:var(--dark);">Blessing board cannot be screenshotted.</strong> Guest names are baked into a canvas render, so DOM scrubbing does not remove them from the pixels. Needs a placeholder-data mode on the site itself.</div>
+        </div>
+      </div>
     </div>
 
     <!-- ── CONFERENCE ROOM ─────────────────── -->
@@ -1507,7 +1568,7 @@ function lsLoad(){
 function lsSave(){ localStorage.setItem(LS_KEY, JSON.stringify(PROSPECTS)); }
 
 // ─── NAV ──────────────────────────────────────────────────────
-const pages = ['hq','inbox','pipeline','messages','workflow','whitelabel','reggie','templates','conference','marketing','seo','scout','dollarleads','send-intake','send-quote','learn','tiers-ref','help'];
+const pages = ['hq','inbox','pipeline','messages','workflow','whitelabel','reggie','templates','conference','marketing','seo','scout','dollarleads','send-intake','send-quote','learn','tiers-ref','help','portfolio'];
 window.nav = async function(id){
   pages.forEach(p=>{
     document.getElementById('page-'+p).classList.toggle('active',p===id);
