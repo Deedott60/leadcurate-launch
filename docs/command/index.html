@@ -464,7 +464,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
     <div class="nav-label">Career</div>
     <div class="nav-section">
       <div class="nav-item" data-page="portfolio">
-        <span class="icon">🛠️</span> Portfolio
+        <span class="icon">🛠️</span> Career links
       </div>
     </div>
     <div class="nav-divider"></div>
@@ -896,27 +896,41 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div id="templates-list"></div>
     </div>
 
-    <!-- ── PORTFOLIO ───────────────────────── -->
+    <!-- ── CAREER ──────────────────────────── -->
     <div id="page-portfolio" class="page">
       <div class="page-header">
-        <div class="page-title">Portfolio</div>
-        <div class="page-sub">The public page you send with job applications. Positions you across customer relationships, product judgment, and hands-on execution without tying the story to one role or company.</div>
+        <div class="page-title">Career</div>
+        <div class="page-sub">Your ready-to-share links for applications, résumés, recruiter messages, and professional profiles.</div>
       </div>
 
       <div class="card mb16">
-        <div class="card-h"><span class="card-title">Open it</span></div>
-        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px;">
-          <a href="https://leadcurate.com/portfolio/" target="_blank" rel="noopener"
-             style="display:inline-block;background:var(--em);color:#fff;padding:11px 16px;border-radius:8px;font-weight:700;text-decoration:none;text-align:center;">
-            Open the public portfolio &rarr;
-          </a>
-          <div style="font-size:12px;color:var(--sl-l);line-height:1.5;">
-            Public résumé link. Opens without a Claude or LeadCurate sign-in.
+        <div class="card-h"><span class="card-title">Application links</span></div>
+        <div style="padding:14px 16px;display:grid;gap:12px;">
+          <div style="border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;">
+            <div style="min-width:220px;flex:1;">
+              <div style="font-size:12px;font-weight:800;color:var(--dark);margin-bottom:4px;">Portfolio</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--sl);overflow-wrap:anywhere;">https://leadcurate.com/portfolio/</div>
+              <div style="font-size:11px;color:var(--sl-l);margin-top:5px;">Public link for applications and résumés. No sign-in required.</div>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <a href="https://leadcurate.com/portfolio/" target="_blank" rel="noopener"
+                 style="display:inline-block;border:1px solid var(--line);color:var(--dark);padding:9px 13px;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;">Open</a>
+              <button type="button" onclick="window.copyCareerLink('https://leadcurate.com/portfolio/','Portfolio link copied',this)"
+                      style="border:0;background:var(--em);color:#fff;padding:9px 13px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">Copy link</button>
+            </div>
           </div>
-          <div style="font-size:12px;color:var(--sl);line-height:1.6;border-top:1px solid var(--line);padding-top:10px;">
-            <strong>Local copies</strong><br>
-            Desktop &rarr; <code>Derricks portfolio\index.html</code> &mdash; double-click to open offline<br>
-            Source &rarr; <code>Documents\portfolio\template.html</code> &mdash; edit this, then rebuild to inline the images
+          <div style="border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;">
+            <div style="min-width:220px;flex:1;">
+              <div style="font-size:12px;font-weight:800;color:var(--dark);margin-bottom:4px;">LinkedIn</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--sl);overflow-wrap:anywhere;">linkedin.com/in/derrick-mcdonald-940999348</div>
+              <div style="font-size:11px;color:var(--sl-l);margin-top:5px;">Your public profile address for application forms and recruiter messages.</div>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <a href="https://www.linkedin.com/in/derrick-mcdonald-940999348/" target="_blank" rel="noopener"
+                 style="display:inline-block;border:1px solid var(--line);color:var(--dark);padding:9px 13px;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;">Open</a>
+              <button type="button" onclick="window.copyCareerLink('https://www.linkedin.com/in/derrick-mcdonald-940999348/','LinkedIn link copied',this)"
+                      style="border:0;background:var(--em);color:#fff;padding:9px 13px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">Copy link</button>
+            </div>
           </div>
         </div>
       </div>
@@ -941,7 +955,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div class="card mb16">
         <div class="card-h"><span class="card-title">Known gaps</span></div>
         <div style="padding:14px 16px;font-size:13px;color:var(--sl);line-height:1.7;">
-          <div style="margin-bottom:8px;">&bull; <strong style="color:var(--dark);">Public link confirmed.</strong> The GitHub Pages address opens the generated portfolio without a sign-in and is the résumé-safe URL.</div>
+          <div style="margin-bottom:8px;">&bull; <strong style="color:var(--dark);">Public link confirmed.</strong> The portfolio address opens without a sign-in and is safe to use on a résumé.</div>
           <div style="margin-bottom:8px;">&bull; <strong style="color:var(--dark);">No real-estate client tool yet.</strong> Screen recordings exist but were shared as Gmail/Drive links, which cannot be reached from a local machine. Save them to disk and they can be added.</div>
           <div style="margin-bottom:8px;">&bull; <strong style="color:var(--dark);">No invented outcome numbers.</strong> Add customer, revenue, adoption, or time-saved figures only when Derrick has a real number he can defend in an interview.</div>
           <div>&bull; <strong style="color:var(--dark);">Blessing board cannot be screenshotted.</strong> Guest names are baked into a canvas render, so DOM scrubbing does not remove them from the pixels. Needs a placeholder-data mode on the site itself.</div>
@@ -2606,6 +2620,7 @@ async function copyText(text, okMessage, button){
   }
 }
 window.copyTpl = (i) => copyText(window._tpls[i].body, 'Copied');
+window.copyCareerLink = (url, message, button) => copyText(url, message, button);
 window.copyIntakeLink = (button) => copyText(INTAKE_URL, 'Intake link copied - paste anywhere', button);
 window.copyAuditLink = (button) => copyText(AUDIT_URL, 'Audit link copied - paste anywhere', button);
 window.shareAuditLink = async () => {
