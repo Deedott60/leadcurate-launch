@@ -4,7 +4,7 @@ Status: ready for Derrick to post manually. Nothing is auto-posted, and no group
 
 ## Offer
 
-Share one 25-record address-only file with up to five people per market, twenty people total. Each person chooses one market and one category. The source is refreshed as needed and the exact shipping file must pass QA.
+The first goal is responses from about twenty people per market, eighty people total. Each person chooses one market and one category. Do not promise a file size or decide the exact list until Derrick brings the person's response back for review.
 
 | Market | Categories | First checked group |
 |---|---|---|
@@ -26,9 +26,9 @@ Hey everyone. I pulled some property data from four areas and separated it by ca
 - Atlanta / Fulton County: vacant, high equity, entity-owned, or multifamily
 - Memphis / Shelby County: out-of-state owners, entity-owned, multifamily, or industrial
 
-I'm sharing a 25-record file with up to 20 people who work in one of these areas.
+I'm looking for about 20 people in each market who would be interested in looking at some of the data.
 
-If you want one, comment or message me with the market and one category you want.
+If you're interested, comment or message me with the market and one category you want.
 
 ## Group Post Pattern
 
@@ -36,19 +36,19 @@ Use the market-specific copy in Command OS under Marketing. Do not put an extern
 
 First reply:
 
-> Got you. Which [market] category do you want, and what email should I send the 25-record file to?
+> Thanks. What kind of properties are you looking for in [market], and which category interests you most?
 
-Do not send an intake form for the free file.
+Do not send an intake form or promise a record count. Derrick brings the response back to Codex, then the exact list is decided from what the person actually needs.
 
 ## Delivery Gate
 
 1. Log the reply in Command OS Marketing. It appears in Pipeline at Replied.
-2. Confirm one requested market, one category, and the delivery email.
-3. Refresh the official source when the current source is no longer fresh enough for delivery.
-4. Build the exact 25-row sample, standardize addresses, and remove duplicate parcels.
-5. Run `qa_lane_gate.py` against the exact shipping file. Do not send a failed file.
-6. Deliver address/property data only. Do not claim phone, email, DNC, guaranteed motivation, or guaranteed deals.
-7. Follow up for useful feedback and ask whether the prospect wants a larger current batch.
+2. Bring the person's response back before promising a record count or file.
+3. Decide the useful category and list size from the person's actual request.
+4. Refresh the official source when the current source is no longer fresh enough for delivery.
+5. Build the agreed sample, standardize addresses, and remove duplicate parcels.
+6. Run `qa_lane_gate.py` against the exact shipping file. Do not send a failed file.
+7. Deliver address/property data only. Do not claim phone, email, DNC, guaranteed motivation, or guaranteed deals.
 
 ## QA Basis
 

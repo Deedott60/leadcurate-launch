@@ -1093,8 +1093,8 @@ Derrick McDonald</div>
         </div>
         <div class="fb-safety">
           <strong>Keep it simple:</strong> no website link, pricing, package language, or sales pitch in the post.
-          Ask each person to choose one market and one category. Send a 25-record file only after the exact data
-          passes the fresh-source and QA checks.
+          The only goal is to get responses. Ask each person to name one market and one category. Decide what
+          data to prepare only after Derrick brings their answer back for review.
         </div>
         <div class="fb-campaign-grid" id="fb-market-list" style="margin-top:14px;"></div>
       </div>
@@ -1133,8 +1133,8 @@ Derrick McDonald</div>
 
       <div class="card">
         <div class="card-h"><span class="card-title">Reply flow</span></div>
-        <div class="row"><div class="row-body"><div class="row-name">1. Get their choice</div><div class="row-detail">Ask for one market, one category, and the best email for the file. Log the reply above.</div></div></div>
-        <div class="row"><div class="row-body"><div class="row-name">2. Keep the first conversation simple</div><div class="row-detail">Do not send an intake form or sales pitch for the free file. Have a normal conversation and learn what kind of properties they work.</div></div></div>
+        <div class="row"><div class="row-body"><div class="row-name">1. Get their response</div><div class="row-detail">Ask for one market and one category. Log what they say above.</div></div></div>
+        <div class="row"><div class="row-body"><div class="row-name">2. Bring the answer back</div><div class="row-detail">Do not promise a file size or send an intake form. Tell Codex what the person asked for, then decide what list makes sense.</div></div></div>
         <div class="row"><div class="row-body"><div class="row-name">3. Verify before giving data</div><div class="row-detail">Refresh the official source if needed, remove duplicate parcels, run the exact shipping file through qa_lane_gate.py, and hold any failure.</div></div></div>
         <div class="row"><div class="row-body"><div class="row-name">4. Deliver 25 records and follow up</div><div class="row-detail">Send the free starter file only after approval. Ask what was useful, what was missing, and whether they want the full market.</div></div></div>
       </div>
@@ -1902,9 +1902,9 @@ const FB_PROFILE_POST = `Hey everyone. I pulled some property data from four are
 • Atlanta / Fulton County: vacant, high equity, entity-owned, or multifamily
 • Memphis / Shelby County: out-of-state owners, entity-owned, multifamily, or industrial
 
-I'm sharing a 25-record file with up to 20 people who work in one of these areas.
+I'm looking for about 20 people in each market who would be interested in looking at some of the data.
 
-If you want one, comment or message me with the market and one category you want.`;
+If you're interested, comment or message me with the market and one category you want.`;
 
 const FB_OFFERS = [
   {
@@ -1969,21 +1969,21 @@ const facebookMarketPost = offer => `Hey everyone. I pulled some property data f
 
 I cleaned up the addresses and parcel information and removed duplicate parcels.
 
-I'm sharing a 25-record file with five people who work this area.
+I'm looking for about 20 people in this area who would be interested in looking at some of the data.
 
-If you'd like one, comment or message me with the category you want.`;
+If you're interested, comment or message me with the category you want.`;
 
-const facebookFirstReply = offer => `Got you. Which ${offer.market} category do you want, and what email should I send the 25-record file to?`;
+const facebookFirstReply = offer => `Thanks. What kind of properties are you looking for in ${offer.market}, and which category interests you most?`;
 const facebookCampaignLeads = () => PROSPECTS.filter(p=>(p.source||'').startsWith(FB_CAMPAIGN_PREFIX));
 
 function renderMarketing(){
   const leads = facebookCampaignLeads();
   const previews = leads.filter(p=>['preview','quoted','paying','delivered'].includes(p.status)).length;
   const customers = leads.filter(p=>['paying','delivered'].includes(p.status)).length;
-  const claimed = Math.min(20, leads.length);
+  const claimed = Math.min(80, leads.length);
   const stats = document.getElementById('fb-campaign-stats');
   if(stats) stats.innerHTML=`
-    <div class="stat hi"><div class="v">${20-claimed}</div><div class="l">Files available</div></div>
+    <div class="stat hi"><div class="v">${80-claimed}</div><div class="l">Responses wanted</div></div>
     <div class="stat"><div class="v">${leads.length}</div><div class="l">Facebook replies</div></div>
     <div class="stat"><div class="v">${previews}</div><div class="l">Samples sent</div></div>
     <div class="stat"><div class="v">${customers}</div><div class="l">Paying customers</div></div>`;
@@ -1991,11 +1991,11 @@ function renderMarketing(){
   const marketList = document.getElementById('fb-market-list');
   if(marketList) marketList.innerHTML=FB_OFFERS.map(offer=>{
     const marketLeads = leads.filter(p=>(p.source||'').includes(`| ${offer.slug} |`));
-    const open = Math.max(0,5-marketLeads.length);
+    const open = Math.max(0,20-marketLeads.length);
     return `<div class="fb-market">
       <div class="fb-market-head">
         <div><div class="fb-market-name">${esc(offer.market)}</div><div class="fb-market-lane">${esc(offer.categories.map(item=>item.label).join(' · '))}</div></div>
-        <span class="badge b-${open?'queued':'paying'}">${open} FILES LEFT</span>
+        <span class="badge b-${open?'queued':'paying'}">${open} RESPONSES WANTED</span>
       </div>
       <div class="fb-market-meta">${esc(offer.qa)}</div>
       <div class="fb-market-meta"><strong>Checked group:</strong> ${esc(offer.group)}</div>
