@@ -6,9 +6,14 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-07-29 by Codex (Facebook sample campaign added; current Dollar Leads inventory remains held)
+Last updated: 2026-07-30 by Codex (Karter birthday link and Facebook sample campaign added; current Dollar Leads inventory remains held)
 
 ---
+
+## Recently closed -- Karter birthday link
+
+Command OS now includes a Family sidebar link to Karter's public 12th birthday
+site at `https://karters-ncaa-27.76-13-25-117.sslip.io`.
 
 ## Ready now -- Facebook four-market sample campaign
 
