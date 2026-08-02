@@ -405,6 +405,13 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
     </div>
     <div class="nav-divider"></div>
+    <div class="nav-label">Client hubs</div>
+    <div class="nav-section">
+      <div class="nav-item" data-page="reggie" data-project-slug="auto-plug">
+        <span class="icon">A</span> Auto Plug
+      </div>
+    </div>
+    <div class="nav-divider"></div>
     <div class="nav-label">Agent comms</div>
     <div class="nav-section">
       <div class="nav-item" data-page="conference">
@@ -844,6 +851,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
         <section class="project-panel active" id="project-panel-overview">
           <div class="card">
             <div class="project-section"><div class="project-section-h"><span class="project-section-title">Current picture</span><span id="project-last-updated" class="card-meta"></span></div><div id="project-summary"></div></div>
+            <div class="project-section"><div class="project-section-h"><span class="project-section-title">Launch links</span><button class="btn btn-ghost btn-sm" data-project-open-tab="assets">All assets</button></div><div id="project-quick-links" class="row-actions"></div></div>
             <div class="project-section"><div class="project-section-h"><span class="project-section-title">Needs your decision</span><button class="btn btn-ghost btn-sm" data-project-open-tab="work">Open work</button></div><div id="project-decisions"></div></div>
             <div class="project-section"><div class="project-section-h"><span class="project-section-title">Latest updates</span><button class="btn btn-ghost btn-sm" data-project-open-tab="activity">Open activity</button></div><div id="project-overview-activity"></div></div>
           </div>
@@ -1679,7 +1687,7 @@ window.nav = async function(id){
     document.getElementById('page-'+p).classList.toggle('active',p===id);
   });
   document.querySelectorAll('.nav-item').forEach(el=>{
-    el.classList.toggle('active', el.dataset.page===id);
+    el.classList.toggle('active', el.dataset.page===id && !el.dataset.projectSlug);
   });
   if(id==='inbox')  renderInbox();
   if(id==='pipeline') renderKanban();
@@ -1780,6 +1788,7 @@ function renderProjects(){
   const items = projectRows(PROJECT_ITEMS);
   const markets = projectRows(PROJECT_MARKETS);
   const assets = projectRows(PROJECT_ASSETS);
+  const linkedAssets = assets.filter(asset=>asset.url);
   const openItems = items.filter(item=>!['complete','closed'].includes(item.status));
   const decisions = items.filter(item=>['decision','blocker'].includes(item.kind)&&!['complete','closed'].includes(item.status));
   document.getElementById('project-heading').innerHTML=`
@@ -1797,6 +1806,7 @@ function renderProjects(){
     <div class="row-detail" style="font-size:14px;color:var(--dark);">${esc(project.notes||'No summary entered yet.')}</div>
     <div class="row-detail"><strong>Current agreement:</strong> ${project.commercial_basis?esc(project.commercial_basis):'Not agreed yet'}</div>
     <div class="row-detail"><strong>Markets:</strong> ${markets.length?markets.map(m=>esc(m.market)).join(', '):'None approved yet'}</div>`;
+  document.getElementById('project-quick-links').innerHTML=linkedAssets.length?linkedAssets.map(asset=>`<a class="btn btn-ghost btn-sm" href="${esc(asset.url)}" target="_blank" rel="noopener">${esc(asset.label)}</a>`).join(''):'<div class="project-empty">No project links have been added yet.</div>';
   document.getElementById('project-decisions').innerHTML=decisions.length?decisions.map(item=>`
     <div class="project-list-row"><div><div class="row-name">${esc(item.title)} <span class="badge b-${projectBadge(item.status)}">${esc(projectStatusLabel(item.status))}</span></div>${item.detail?`<div class="row-detail">${esc(item.detail)}</div>`:''}<div class="project-meta">${esc(PROJECT_ACTORS[item.owner]||item.owner)} · updated ${fmt(item.updated_at)} by ${esc(PROJECT_ACTORS[item.updated_by]||item.updated_by)}</div></div></div>`).join(''):'<div class="project-empty">No open decisions or blockers.</div>';
   document.getElementById('project-overview-activity').innerHTML=renderProjectActivity(3);
@@ -1818,7 +1828,8 @@ function renderProjectItems(items){
 
 function renderProjectMarkets(markets){
   const list=document.getElementById('project-markets-list');
-  if(!markets.length){ list.innerHTML='<div class="project-empty"><strong>No markets approved.</strong><br>Add one only after Reggie confirms what he wants.</div>'; return; }
+  const project=activeProject();
+  if(!markets.length){ list.innerHTML=`<div class="project-empty"><strong>No markets approved.</strong><br>Add one only after ${esc(project?.client_name||'the client')} confirms what they want.</div>`; return; }
   list.innerHTML=markets.map(market=>`
     <div class="project-list-row">
       <div><div class="row-name">${esc(market.market)} <span class="badge b-${projectBadge(market.status)}">${esc(projectStatusLabel(market.status))}</span></div><div class="row-detail"><strong>Categories:</strong> ${market.categories?.length?market.categories.map(esc).join(', '):'Not decided'}</div>${market.notes?`<div class="row-detail">${esc(market.notes)}</div>`:''}<div class="project-meta">Source date: ${esc(market.source_date||'Not recorded')} · updated ${fmt(market.updated_at)} by ${esc(PROJECT_ACTORS[market.updated_by]||market.updated_by)}</div></div>
@@ -1844,6 +1855,14 @@ window.openProject = async id => {
   ACTIVE_PROJECT_ID=id;
   await nav('reggie');
   renderProjects();
+};
+window.openProjectSlug = async slug => {
+  await nav('reggie');
+  const project = PROJECTS.find(item=>item.slug===slug);
+  if(!project){ toast('Project hub could not be found'); return; }
+  ACTIVE_PROJECT_ID=project.id;
+  renderProjects();
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.toggle('active',el.dataset.projectSlug===slug));
 };
 document.getElementById('project-select')?.addEventListener('change',event=>{ACTIVE_PROJECT_ID=event.target.value;renderProjects();});
 document.querySelectorAll('.project-tab').forEach(button=>button.addEventListener('click',()=>activateProjectTab(button.dataset.projectTab)));
@@ -2167,7 +2186,7 @@ document.getElementById('conf-post-btn')?.addEventListener('click', async () => 
   }
 });
 document.querySelectorAll('.nav-item[data-page]').forEach(el=>{
-  el.onclick = () => nav(el.dataset.page);
+  el.onclick = () => el.dataset.projectSlug ? window.openProjectSlug(el.dataset.projectSlug) : nav(el.dataset.page);
 });
 
 // ─── SYNC STATUS ─────────────────────────────────────────────

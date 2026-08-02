@@ -6,9 +6,25 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-07-30 by Codex (Karter birthday link and Facebook sample campaign added; current Dollar Leads inventory remains held)
+Last updated: 2026-08-02 by Codex (Auto Plug project hub and standalone Lot Drop dealer workflow added)
 
 ---
+
+## Recently closed -- Auto Plug hub and standalone Lot Drop
+
+Command OS now has a direct Auto Plug item under Client hubs. It opens the live Projects workspace for Mike Jefferies with verified links to the website, inventory, private Lot Drop intake, Mike's Facebook profile, and the master logo. The project record includes six assets and eight work items. Seven items remain open, including real inventory replacement, business details, permanent domain, channel targets, watermark policy, backups, and lead notifications.
+
+The Auto Plug website and Lot Drop are hosted on the LeadCurate VPS, not Vercel. The standalone dealer intake is `https://auto-plug.76-13-25-117.sslip.io/lot-drop`. It no longer displays the public website header, footer, navigation, or customer chat. The current access code is `AutoPlug-7K4P-92MX`; rotate it before broader sharing if needed. Mike can bookmark the URL or add it to his phone home screen. It is not yet a native downloadable app or installable PWA.
+
+Lot Drop uses Hermes only to read VIN characters from a VIN or door-label photo. The official NHTSA vPIC service supplies decoded vehicle specifications. Mike must still confirm mileage, condition, price, title status, color, description, and the photos. Up to twelve vehicle photos upload directly to persistent VPS storage, and the first photo becomes the listing cover. Hermes does not store or publish those photos. Current website photos remain clean and unwatermarked. Automated channel publishing and social watermark exports are not built; each destination needs a separate approved connection or a manual share workflow.
+
+Production URLs:
+- LeadCurate OS: `https://leadcurate.com/command/`
+- Auto Plug website: `https://auto-plug.76-13-25-117.sslip.io/`
+- Inventory: `https://auto-plug.76-13-25-117.sslip.io/inventory`
+- Lot Drop: `https://auto-plug.76-13-25-117.sslip.io/lot-drop`
+
+Verification on 2026-08-02: local Command OS loaded the Auto Plug record from production Supabase, showed five URL launch buttons, counted six assets and seven open items, passed a 390 by 844 phone check with no horizontal overflow, and produced no browser console warnings or errors. Auto Plug production website tests passed 31 of 31, lint passed, build passed, and the VPS service was active after deployment.
 
 ## Recently closed -- Karter birthday link
 
