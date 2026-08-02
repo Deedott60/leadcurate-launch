@@ -16,6 +16,10 @@ Command OS now has a direct Auto Plug item under Client hubs. It opens the live 
 
 The Auto Plug website and Lot Drop are hosted on the LeadCurate VPS, not Vercel. The standalone dealer intake is `https://auto-plug.76-13-25-117.sslip.io/lot-drop`. It no longer displays the public website header, footer, navigation, or customer chat. The current access code is `AutoPlug-7K4P-92MX`; rotate it before broader sharing if needed. Mike can bookmark the URL or add it to his phone home screen. It is not yet a native downloadable app or installable PWA.
 
+**Client demo domain decision (Derrick, 2026-08-02):** use LeadCurate-owned subdomains for client demos so previews look intentional and remain under LeadCurate's control. For Auto Plug, the recommended friendly preview hostname is `autoplug-demo.leadcurate.com` until Mike chooses his permanent business domain. This is the naming policy, not a claim that DNS is already configured. Continue using the verified sslip.io URL until the new DNS, nginx host, and HTTPS certificate have all been tested.
+
+**Exact Mike handoff:** send the Lot Drop URL and send the access code separately. On first use Mike enters the code; the private browser session lasts seven days. He can photograph the VIN or type it, confirm the decoded vehicle, enter price and vehicle-specific facts, attach up to twelve real photos, and publish. A price is required for the vehicle to appear publicly as available; without a price it remains a draft. The result screen returns the new listing link. Do not place the access code in the URL.
+
 Lot Drop uses Hermes only to read VIN characters from a VIN or door-label photo. The official NHTSA vPIC service supplies decoded vehicle specifications. Mike must still confirm mileage, condition, price, title status, color, description, and the photos. Up to twelve vehicle photos upload directly to persistent VPS storage, and the first photo becomes the listing cover. Hermes does not store or publish those photos. Current website photos remain clean and unwatermarked. Automated channel publishing and social watermark exports are not built; each destination needs a separate approved connection or a manual share workflow.
 
 Production URLs:
@@ -25,6 +29,8 @@ Production URLs:
 - Lot Drop: `https://auto-plug.76-13-25-117.sslip.io/lot-drop`
 
 Verification on 2026-08-02: local Command OS loaded the Auto Plug record from production Supabase, showed five URL launch buttons, counted six assets and seven open items, passed a 390 by 844 phone check with no horizontal overflow, and produced no browser console warnings or errors. Auto Plug production website tests passed 31 of 31, lint passed, build passed, and the VPS service was active after deployment.
+
+Post-deployment workflow verification on 2026-08-02: production Lot Drop authentication returned HTTP 200, manual VIN `1HGCM82633A004352` returned HTTP 200 and decoded to a 2003 Honda Accord EX-V6, and `auto-plug.service` remained active after rebuilding. No test vehicle was published. The access-code input was corrected to open a full text keyboard on phones. The Auto Plug repository now includes `CLAUDE.md` importing `docs/CLAUDE-HANDOFF.md`; Claude Code, Codex, and Hermes handoffs all point to the current VPS, storage, Lot Drop, and publishing facts. GitHub PR `Deedott60/auto-plug#1` merged these changes to main.
 
 ## Recently closed -- Karter birthday link
 
