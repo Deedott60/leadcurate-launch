@@ -6,7 +6,7 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-08-02 by Codex (Auto Plug project hub and standalone Lot Drop dealer workflow added)
+Last updated: 2026-08-03 by Codex (Auto Plug production asset failure repaired and pitch flow reverified)
 
 ---
 
@@ -41,6 +41,8 @@ Post-deployment workflow verification on 2026-08-02: production Lot Drop authent
 **Pixel hero and paid-feature clarification, 2026-08-03:** Auto Plug PR `Deedott60/auto-plug#5` lifts and enlarges Mike's unchanged cutout below the `sm` breakpoint so the mobile hero reads as one dealership composition; tablet and desktop remain unchanged. The two-column mobile vehicle grid is the approved density because three columns would compromise model names, prices, badges, and tap targets. Future paid Lot Drop scope is a dealer-controlled **Happy Customer** mode: after a sale, Mike takes the buyer photo, enters the approved review, and generates a proportional Auto Plug-watermarked social/site creative. It is not a customer-upload form or generic delivery gallery.
 
 **Real door-label OCR field confirmation, 2026-08-03:** Derrick photographed the VIN label on his own vehicle in Lot Drop and confirmed that the tool returned the correct make and model. This verifies one real phone-camera path through Hermes transcription, VIN validation, and NHTSA decode. No personal VIN, vehicle details, or photo are retained in this handoff. Continue broader glare, angle, and label QA before promising perfect OCR under every field condition.
+
+**Production storefront recovery and pitch-path verification, 2026-08-03:** The dashboard's stored Auto Plug URLs were correct, but the deployed Next.js standalone bundle was missing `.next/static` and `public`. The HTML route still returned 200 while browsers received a missing-chunk error and could show a blank or unstyled site. Production was repaired, `auto-plug.service` is active at commit `93c7c02`, and the home page, real header wordmark, and Lot Drop each return 200. A clean browser session loaded the complete storefront with no console errors. `npm run build` now copies both asset directories into standalone output automatically, preventing the same deployment failure. The live Lot Drop entry page shows `View my website` and `See the lot`; after a public publish, `View live listing` opens the newly created vehicle URL. Pitch flow: send Mike the Lot Drop URL and access code separately, have him scan or type the VIN, confirm decoded facts, enter price and mileage, attach real photos, leave private mode off, publish, then tap `View live listing` followed by `See the lot`. GitHub main and VPS are synchronized.
 
 ## Recently closed -- Karter birthday link
 
