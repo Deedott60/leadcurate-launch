@@ -38,6 +38,8 @@ Post-deployment workflow verification on 2026-08-02: production Lot Drop authent
 
 **Isolated Lot Drop proof completed, 2026-08-03:** Auto Plug PR `Deedott60/auto-plug#4` adds dealer-facing view, publish, take-off-site, and permanent delete controls plus a crawler-blocked sandbox mode. The disposable proof is `https://auto-plug-sandbox.76-13-25-117.sslip.io/lot-drop`, served by `auto-plug-sandbox.service` on port 3208 with its own inventory and media directories. A complete HTTPS acceptance test passed login, VIN decode, publish, inventory card, detail page, photo delivery, unpublish, republish, record deletion, and photo deletion. The sandbox ended empty and a checksum confirmed Mike's live inventory file did not change. Phone and desktop layouts passed without horizontal overflow or console errors. Send the sandbox access code separately; never put it in a URL or committed handoff.
 
+**Pixel hero and paid-feature clarification, 2026-08-03:** Auto Plug PR `Deedott60/auto-plug#5` lifts and enlarges Mike's unchanged cutout below the `sm` breakpoint so the mobile hero reads as one dealership composition; tablet and desktop remain unchanged. The two-column mobile vehicle grid is the approved density because three columns would compromise model names, prices, badges, and tap targets. Future paid Lot Drop scope is a dealer-controlled **Happy Customer** mode: after a sale, Mike takes the buyer photo, enters the approved review, and generates a proportional Auto Plug-watermarked social/site creative. It is not a customer-upload form or generic delivery gallery.
+
 ## Recently closed -- Karter birthday link
 
 Command OS now includes a Family sidebar link to Karter's public 12th birthday
