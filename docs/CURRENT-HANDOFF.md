@@ -6,7 +6,7 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-08-03 by Codex (Auto Plug production asset failure repaired and pitch flow reverified)
+Last updated: 2026-08-03 by Codex (Auto Plug moved to LeadCurate demo hostname)
 
 ---
 
@@ -14,9 +14,11 @@ Last updated: 2026-08-03 by Codex (Auto Plug production asset failure repaired a
 
 Command OS now has a direct Auto Plug item under Client hubs. It opens the live Projects workspace for Mike Jefferies with verified links to the website, inventory, private Lot Drop intake, Mike's Facebook profile, and the master logo. The project record includes six assets and eight work items. Seven items remain open, including real inventory replacement, business details, permanent domain, channel targets, watermark policy, backups, and lead notifications.
 
-The Auto Plug website and Lot Drop are hosted on the LeadCurate VPS, not Vercel. The standalone dealer intake is `https://auto-plug.76-13-25-117.sslip.io/lot-drop`. It no longer displays the public website header, footer, navigation, or customer chat. The access code is stored only in the VPS environment and must never be committed to a handoff or URL. Mike can bookmark the URL or add it to his phone home screen. It is not yet a native downloadable app or installable PWA.
+The Auto Plug website and Lot Drop are hosted on the LeadCurate VPS, not Vercel. The standalone dealer intake is `https://autoplug-demo.leadcurate.com/lot-drop`. It no longer displays the public website header, footer, navigation, or customer chat. The access code is stored only in the VPS environment and must never be committed to a handoff or URL. Mike can bookmark the URL or add it to his phone home screen. It is not yet a native downloadable app or installable PWA.
 
-**Client demo domain decision (Derrick, 2026-08-02):** use LeadCurate-owned subdomains for client demos so previews look intentional and remain under LeadCurate's control. For Auto Plug, the recommended friendly preview hostname is `autoplug-demo.leadcurate.com` until Mike chooses his permanent business domain. This is the naming policy, not a claim that DNS is already configured. Continue using the verified sslip.io URL until the new DNS, nginx host, and HTTPS certificate have all been tested.
+**Client demo domain live (2026-08-03):** `autoplug-demo.leadcurate.com` now resolves through Hostinger DNS to the LeadCurate VPS, has its own nginx host and Let's Encrypt certificate, and serves the website, inventory, and Lot Drop. The older sslip.io hostname remains a fallback. A LeadCurate-owned hostname gives Derrick a cleaner sales URL and control of routing; it does not create automation by itself. Email alerts, webhooks, and channel publishing still require explicit integration work and credentials.
+
+`HOSTINGER_API_KEY` is available to Claude Code as a Windows user environment variable and to VPS-side Hermes/operations in `/opt/leadcurate/.env`. The value is never committed or copied into handoffs. Rotate it after the 2026-08-03 setup because it was supplied in chat, then update both secret locations.
 
 **Exact Mike handoff:** send the Lot Drop URL and send the access code separately. On first use Mike enters the code; the private browser session lasts seven days. He can photograph the VIN or type it, confirm the decoded vehicle, enter price and vehicle-specific facts, attach up to twelve real photos, and publish. A price is required for the vehicle to appear publicly as available; without a price it remains a draft. The result screen returns the new listing link. Do not place the access code in the URL.
 
@@ -24,9 +26,9 @@ Lot Drop uses Hermes only to read VIN characters from a VIN or door-label photo.
 
 Production URLs:
 - LeadCurate OS: `https://leadcurate.com/command/`
-- Auto Plug website: `https://auto-plug.76-13-25-117.sslip.io/`
-- Inventory: `https://auto-plug.76-13-25-117.sslip.io/inventory`
-- Lot Drop: `https://auto-plug.76-13-25-117.sslip.io/lot-drop`
+- Auto Plug website: `https://autoplug-demo.leadcurate.com/`
+- Inventory: `https://autoplug-demo.leadcurate.com/inventory`
+- Lot Drop: `https://autoplug-demo.leadcurate.com/lot-drop`
 
 Verification on 2026-08-02: local Command OS loaded the Auto Plug record from production Supabase, showed five URL launch buttons, counted six assets and seven open items, passed a 390 by 844 phone check with no horizontal overflow, and produced no browser console warnings or errors. Auto Plug production website tests passed 31 of 31, lint passed, build passed, and the VPS service was active after deployment.
 
