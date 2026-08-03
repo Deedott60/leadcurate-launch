@@ -34,6 +34,8 @@ Post-deployment workflow verification on 2026-08-02: production Lot Drop authent
 
 **Private field-test safety added 2026-08-03:** Lot Drop now has a **Keep this vehicle private** option. It runs the complete VIN, information, and photo-storage workflow while keeping the record in draft. Drafts stay out of inventory, search, the sitemap, and public vehicle pages. Public publishing requires an explicit `publishMode=available` plus a price. Missing publish mode defaults to draft, which protects older forms already open on a phone during deployment. Auto Plug PR `Deedott60/auto-plug#2` merged the change, and the live VPS service was rebuilt and active.
 
+**First real phone field test and private preview, 2026-08-03:** Derrick saved a private 2020 Hyundai Palisade SEL draft from his phone with one photo. The stored image returned HTTP 200. The draft was absent from public inventory and the sitemap. Auto Plug PR `Deedott60/auto-plug#3` added a vehicle-scoped HMAC preview link that renders the real vehicle-page design with a private banner and `noindex`. Valid token returned HTTP 200; missing and incorrect tokens returned HTTP 404. The token contains no Lot Drop access code and grants no access to other drafts.
+
 ## Recently closed -- Karter birthday link
 
 Command OS now includes a Family sidebar link to Karter's public 12th birthday
