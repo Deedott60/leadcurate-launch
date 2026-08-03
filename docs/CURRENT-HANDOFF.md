@@ -36,6 +36,8 @@ Post-deployment workflow verification on 2026-08-02: production Lot Drop authent
 
 **Private field-test cleanup, 2026-08-03:** Derrick's personal vehicle record, VIN, and uploaded photo were permanently removed from `/opt/auto-plug-data` without retaining a backup. The vehicle, signed preview, and photo URLs all returned HTTP 404 after removal. Do not retain or repeat personal test-vehicle details in handoffs. Auto Plug PR `Deedott60/auto-plug#3` contains the vehicle-scoped signed-preview capability, but the honest product status is that the sales demonstration and operator workflow still need simplification before Derrick presents Lot Drop to Mike.
 
+**Isolated Lot Drop proof completed, 2026-08-03:** Auto Plug PR `Deedott60/auto-plug#4` adds dealer-facing view, publish, take-off-site, and permanent delete controls plus a crawler-blocked sandbox mode. The disposable proof is `https://auto-plug-sandbox.76-13-25-117.sslip.io/lot-drop`, served by `auto-plug-sandbox.service` on port 3208 with its own inventory and media directories. A complete HTTPS acceptance test passed login, VIN decode, publish, inventory card, detail page, photo delivery, unpublish, republish, record deletion, and photo deletion. The sandbox ended empty and a checksum confirmed Mike's live inventory file did not change. Phone and desktop layouts passed without horizontal overflow or console errors. Send the sandbox access code separately; never put it in a URL or committed handoff.
+
 ## Recently closed -- Karter birthday link
 
 Command OS now includes a Family sidebar link to Karter's public 12th birthday
