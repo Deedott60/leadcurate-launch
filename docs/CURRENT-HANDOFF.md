@@ -40,6 +40,8 @@ Post-deployment workflow verification on 2026-08-02: production Lot Drop authent
 
 **Pixel hero and paid-feature clarification, 2026-08-03:** Auto Plug PR `Deedott60/auto-plug#5` lifts and enlarges Mike's unchanged cutout below the `sm` breakpoint so the mobile hero reads as one dealership composition; tablet and desktop remain unchanged. The two-column mobile vehicle grid is the approved density because three columns would compromise model names, prices, badges, and tap targets. Future paid Lot Drop scope is a dealer-controlled **Happy Customer** mode: after a sale, Mike takes the buyer photo, enters the approved review, and generates a proportional Auto Plug-watermarked social/site creative. It is not a customer-upload form or generic delivery gallery.
 
+**Real door-label OCR field confirmation, 2026-08-03:** Derrick photographed the VIN label on his own vehicle in Lot Drop and confirmed that the tool returned the correct make and model. This verifies one real phone-camera path through Hermes transcription, VIN validation, and NHTSA decode. No personal VIN, vehicle details, or photo are retained in this handoff. Continue broader glare, angle, and label QA before promising perfect OCR under every field condition.
+
 ## Recently closed -- Karter birthday link
 
 Command OS now includes a Family sidebar link to Karter's public 12th birthday
