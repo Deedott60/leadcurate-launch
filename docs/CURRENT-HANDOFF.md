@@ -32,6 +32,8 @@ Verification on 2026-08-02: local Command OS loaded the Auto Plug record from pr
 
 Post-deployment workflow verification on 2026-08-02: production Lot Drop authentication returned HTTP 200, manual VIN `1HGCM82633A004352` returned HTTP 200 and decoded to a 2003 Honda Accord EX-V6, and `auto-plug.service` remained active after rebuilding. No test vehicle was published. The access-code input was corrected to open a full text keyboard on phones. The original code was removed from the current handoff and rotated after it appeared in Git history; the replacement returned HTTP 200 and the old value returned HTTP 401. The Auto Plug repository now includes `CLAUDE.md` importing `docs/CLAUDE-HANDOFF.md`; Claude Code, Codex, and Hermes handoffs all point to the current VPS, storage, Lot Drop, and publishing facts. GitHub PR `Deedott60/auto-plug#1` merged these changes to main.
 
+**Private field-test safety added 2026-08-03:** Lot Drop now has a **Keep this vehicle private** option. It runs the complete VIN, information, and photo-storage workflow while keeping the record in draft. Drafts stay out of inventory, search, the sitemap, and public vehicle pages. Public publishing requires an explicit `publishMode=available` plus a price. Missing publish mode defaults to draft, which protects older forms already open on a phone during deployment. Auto Plug PR `Deedott60/auto-plug#2` merged the change, and the live VPS service was rebuilt and active.
+
 ## Recently closed -- Karter birthday link
 
 Command OS now includes a Family sidebar link to Karter's public 12th birthday
