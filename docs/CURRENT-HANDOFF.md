@@ -10,6 +10,14 @@ Last updated: 2026-08-03 by Codex (Auto Plug moved to LeadCurate demo hostname)
 
 ---
 
+## Open now -- White-Label Dealer Commerce and Interactive Digital Keepsakes
+
+Derrick has ended the Mike/Auto Plug customer direction. Auto Plug `main` remains preserved as the working proof, but Mike is off the table. A verified GitHub branch, `white-label-template`, now carries the generic dealer-commerce direction and plan: `https://github.com/Deedott60/auto-plug/tree/white-label-template` at initial planning commit `2023482`. The generic product keeps the modern automotive e-commerce inventory, individual vehicle pages, and private VIN/photo-to-listing Lot Drop workflow. It must remove Auto Plug, Mike, Street Pulse, and Charlotte-specific public branding; client logo, palette, business facts, domain, leads, inventory, and storage become configuration. Generated hero images are proof-quality only until final imagery is cleared of OEM logos, recognizable trade dress, and licensing ambiguity.
+
+A separate Projects workspace record now tracks **White-Label Dealer Commerce** with three initial items and two GitHub assets. The planned commercial split is: dealer-owned domain for each white-label storefront; optional `auto.leadcurate.com` marketplace for opt-in multi-dealer inventory and LeadCurate-routed enquiries. Before using transaction-based sales commissions, verify North Carolina dealer/broker/referral rules. Initial monetization should favor setup, recurring management, marketplace placement, or written qualified-lead fees.
+
+A second Projects workspace record now tracks **Interactive Digital Keepsakes**. It productizes the proven interactive mechanics from the private Derrick/Miesha announcement and Karter birthday repositories without reusing their private names, photos, or child content: cinematic reveal, instant blessing/signature posting, signed-jersey glass, moderated messages, and downloadable keepsakes. This is a separate product/repository from dealer commerce. Initial work is a product landing page/intake, generic reusable event modules, and a realistic package/hosting policy. Dashboard project updates were posted to the Conference Room for all agents on 2026-08-07.
+
 ## Recently closed -- Auto Plug hub and standalone Lot Drop
 
 Command OS now has a direct Auto Plug item under Client hubs. It opens the live Projects workspace for Mike Jefferies with verified links to the website, inventory, private Lot Drop intake, Mike's Facebook profile, and the master logo. The project record includes six assets and eight work items. Seven items remain open, including real inventory replacement, business details, permanent domain, channel targets, watermark policy, backups, and lead notifications.
