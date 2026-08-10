@@ -372,6 +372,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
   <nav id="sidebar">
     <div class="nav-label" style="margin-top:0;">Command</div>
     <div class="nav-section">
+      <div class="nav-item" data-page="sites">
+        <span class="icon">🔗</span> My sites
+      </div>
       <div class="nav-item active" data-page="hq">
         <span class="icon">⚡</span> HQ
       </div>
@@ -400,7 +403,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div class="nav-item" data-page="whitelabel">
         <span class="icon">W</span> White-label workspace
       </div>
-      <div class="nav-item" data-page="reggie">
+      <div class="nav-item" data-page="projects">
         <span class="icon">P</span> Projects
       </div>
       <div class="nav-item" data-page="templates">
@@ -408,10 +411,19 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
     </div>
     <div class="nav-divider"></div>
-    <div class="nav-label">Client hubs</div>
+    <div class="nav-label">Project hubs</div>
     <div class="nav-section">
-      <div class="nav-item" data-page="reggie" data-project-slug="auto-plug">
+      <div class="nav-item" data-page="projects" data-project-slug="premier-whitelabel">
+        <span class="icon">P</span> Premier white-label
+      </div>
+      <div class="nav-item" data-page="projects" data-project-slug="interactive-digital-keepsakes">
+        <span class="icon">K</span> Digital Keepsakes
+      </div>
+      <div class="nav-item" data-page="projects" data-project-slug="auto-plug">
         <span class="icon">A</span> Auto Plug
+      </div>
+      <div class="nav-item" data-page="projects" data-project-slug="white-label-dealer-commerce">
+        <span class="icon">D</span> Dealer commerce
       </div>
     </div>
     <div class="nav-divider"></div>
@@ -510,6 +522,15 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 
   <!-- MAIN -->
   <main id="main">
+
+    <!-- ── MY SITES ──────────────────────────── -->
+    <div id="page-sites" class="page">
+      <div class="page-header">
+        <div class="page-title">My sites</div>
+        <div class="page-sub">Every live site and page, in one place. <b>Open</b> views it, <b>Copy</b> puts the link on your clipboard to paste anywhere.</div>
+      </div>
+      <div id="sites-list"></div>
+    </div>
 
     <!-- ── HQ ──────────────────────────── -->
     <div id="page-hq" class="page active">
@@ -808,8 +829,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
     </div>
 
-    <!-- ── REGGIE PROJECT ─────────────────── -->
-    <div id="page-reggie" class="page">
+    <!-- ── PROJECTS ─────────────────── -->
+    <div id="page-projects" class="page">
       <div id="projects-workspace">
         <div class="page-header">
           <div class="page-title">Projects</div>
@@ -1689,7 +1710,59 @@ function lsLoad(){
 function lsSave(){ localStorage.setItem(LS_KEY, JSON.stringify(PROSPECTS)); }
 
 // ─── NAV ──────────────────────────────────────────────────────
-const pages = ['hq','inbox','pipeline','messages','workflow','whitelabel','reggie','templates','conference','marketing','seo','scout','dollarleads','send-intake','send-quote','learn','tiers-ref','help','portfolio'];
+const pages = ['sites','hq','inbox','pipeline','messages','workflow','whitelabel','projects','templates','conference','marketing','seo','scout','dollarleads','send-intake','send-quote','learn','tiers-ref','help','portfolio'];
+
+// ─── MY SITES (static: always works, no sync needed) ──────────
+const MY_SITES = [
+  { group:'Interactive Digital Keepsakes', tag:'My own product', note:'Live on the VPS. Do not send the Vercel copy — it is stuck on an old deploy.', links:[
+    ['Main site','https://keepsakes.76-13-25-117.sslip.io/','Start here'],
+    ['Template — Elegant Announcement','https://keepsakes.76-13-25-117.sslip.io/experience/demo-announcement','Safe to share'],
+    ['Template — Celebration & Story','https://keepsakes.76-13-25-117.sslip.io/experience/demo-celebration','Safe to share'],
+    ['Template — Team & Achievement','https://keepsakes.76-13-25-117.sslip.io/experience/demo-team','Safe to share'],
+    ['Customer example — Derrick & Miesha','https://keepsakes.76-13-25-117.sslip.io/customer-stories/derrick-miesha','Real work'],
+    ['Customer example — Karter','https://keepsakes.76-13-25-117.sslip.io/customer-stories/karter','Real work'],
+    ['Operator console','https://keepsakes.76-13-25-117.sslip.io/operator','PRIVATE — do not share']
+  ]},
+  { group:'Premier — real estate / consultation', tag:'White-label', note:'Rebrands to any client from one config file. Formerly the Reggie project.', links:[
+    ['Main site','https://premier-demo.leadcurate.com/','Start here'],
+    ['Seller landing page','https://premier-demo.leadcurate.com/sell',''],
+    ['Consultation / investor services','https://premier-demo.leadcurate.com/investors',''],
+    ['Deal Analyzer','https://premier-demo.leadcurate.com/analyzer',''],
+    ['Property Decision Tool','https://premier-demo.leadcurate.com/tool','The working tool'],
+    ['Tool explainer page','https://premier-demo.leadcurate.com/property-decision-tool',''],
+    ['Outreach transparency / opt-out','https://premier-demo.leadcurate.com/why-contacted','']
+  ]},
+  { group:'Dealer commerce', tag:'White-label', note:'Auto Plug is the built example. Mike is off the table; this is the reusable dealer product.', links:[
+    ['Dealer site','https://autoplug-demo.leadcurate.com/','Start here'],
+    ['Vehicle inventory','https://autoplug-demo.leadcurate.com/inventory',''],
+    ['Lot Drop (VIN photo → live page)','https://autoplug-demo.leadcurate.com/lot-drop','The tool']
+  ]},
+  { group:'LeadCurate', tag:'Mine', note:'', links:[
+    ['Portfolio','https://leadcurate.com/portfolio/',''],
+    ['This dashboard','https://leadcurate.com/command/','']
+  ]}
+];
+
+function renderSites(){
+  const el = document.getElementById('sites-list');
+  if(!el) return;
+  el.innerHTML = MY_SITES.map(section=>`
+    <div class="card" style="margin-bottom:18px;">
+      <div class="project-section-h"><span class="project-section-title">${esc(section.group)} <span class="tag">${esc(section.tag)}</span></span></div>
+      ${section.note?`<div class="row-detail" style="margin:0 0 10px;">${esc(section.note)}</div>`:''}
+      ${section.links.map(([label,url,hint])=>`
+        <div class="project-list-row">
+          <div>
+            <div class="row-name">${esc(label)}${hint?` <span class="badge b-${hint.includes('PRIVATE')?'dead':'queued'}">${esc(hint)}</span>`:''}</div>
+            <div class="row-detail" style="opacity:.55;word-break:break-all;">${esc(url)}</div>
+          </div>
+          <div class="row-actions">
+            <a class="btn btn-ghost btn-sm" href="${esc(url)}" target="_blank" rel="noopener">Open</a>
+            <button class="btn btn-sm" onclick="window.copyAssetLink('${esc(url)}',this)">🔗 Copy</button>
+          </div>
+        </div>`).join('')}
+    </div>`).join('');
+}
 window.nav = async function(id){
   pages.forEach(p=>{
     document.getElementById('page-'+p).classList.toggle('active',p===id);
@@ -1702,7 +1775,8 @@ window.nav = async function(id){
   if(id==='messages') renderMessages();
   if(id==='scout'){ await loadScout(); renderScout(); }
   if(id==='workflow'){ renderAgents(); renderFeed('wf-feed','wf-feed-count'); }
-  if(id==='reggie'){ await loadProjects(); renderProjects(); }
+  if(id==='sites'){ renderSites(); }
+  if(id==='projects'){ await loadProjects(); renderProjects(); }
   if(id==='marketing') renderMarketing();
   if(id==='conference'){
     await markConferenceRead();
@@ -1745,7 +1819,7 @@ async function loadProjects(){
   PROJECT_ITEMS = items.data || [];
   PROJECT_ASSETS = assets.data || [];
   if(!ACTIVE_PROJECT_ID || !PROJECTS.some(p=>p.id===ACTIVE_PROJECT_ID)){
-    ACTIVE_PROJECT_ID = PROJECTS.find(p=>p.slug==='reggie-adams')?.id || PROJECTS[0]?.id || null;
+    ACTIVE_PROJECT_ID = PROJECTS.find(p=>p.slug==='premier-whitelabel')?.id || PROJECTS[0]?.id || null;
   }
   syncProjectSelectors();
 }
@@ -1850,8 +1924,8 @@ function renderProjectAssets(assets){
   if(!assets.length){ list.innerHTML='<div class="project-empty">No website, domain, logo, tool, or file assets tracked yet.</div>'; return; }
   list.innerHTML=assets.map(asset=>`
     <div class="project-list-row">
-      <div><div class="row-name">${esc(asset.label)} <span class="tag">${esc(asset.kind.replaceAll('_',' '))}</span> <span class="badge b-${projectBadge(asset.status)}">${esc(projectStatusLabel(asset.status))}</span></div>${asset.notes?`<div class="row-detail">${esc(asset.notes)}</div>`:''}${asset.url?`<div class="row-detail"><a href="${esc(asset.url)}" target="_blank" rel="noopener">Open link</a></div>`:'<div class="row-detail">No link yet</div>'}<div class="project-meta">Updated ${fmt(asset.updated_at)} by ${esc(PROJECT_ACTORS[asset.updated_by]||asset.updated_by)}</div></div>
-      <div class="row-actions"><button class="btn btn-ghost btn-sm" onclick="window.editProjectAsset('${asset.id}')">Edit</button><button class="btn btn-red btn-sm" onclick="window.deleteProjectRecord('project_assets','${asset.id}','${esc(asset.label)}')">Remove</button></div>
+      <div><div class="row-name">${esc(asset.label)} <span class="tag">${esc(asset.kind.replaceAll('_',' '))}</span> <span class="badge b-${projectBadge(asset.status)}">${esc(projectStatusLabel(asset.status))}</span></div>${asset.notes?`<div class="row-detail">${esc(asset.notes)}</div>`:''}${asset.url?`<div class="row-detail"><a href="${esc(asset.url)}" target="_blank" rel="noopener">Open link</a> <span style="opacity:.55;word-break:break-all;">${esc(asset.url)}</span></div>`:'<div class="row-detail">No link yet</div>'}<div class="project-meta">Updated ${fmt(asset.updated_at)} by ${esc(PROJECT_ACTORS[asset.updated_by]||asset.updated_by)}</div></div>
+      <div class="row-actions">${asset.url?`<button class="btn btn-sm" onclick="window.copyAssetLink('${esc(asset.url)}',this)">🔗 Copy</button>`:''}<button class="btn btn-ghost btn-sm" onclick="window.editProjectAsset('${asset.id}')">Edit</button><button class="btn btn-red btn-sm" onclick="window.deleteProjectRecord('project_assets','${asset.id}','${esc(asset.label)}')">Remove</button></div>
     </div>`).join('');
 }
 
@@ -1861,11 +1935,11 @@ async function logProjectChange(title, body){
 
 window.openProject = async id => {
   ACTIVE_PROJECT_ID=id;
-  await nav('reggie');
+  await nav('projects');
   renderProjects();
 };
 window.openProjectSlug = async slug => {
-  await nav('reggie');
+  await nav('projects');
   const project = PROJECTS.find(item=>item.slug===slug);
   if(!project){ toast('Project hub could not be found'); return; }
   ACTIVE_PROJECT_ID=project.id;
@@ -2930,6 +3004,7 @@ async function copyText(text, okMessage, button){
 }
 window.copyTpl = (i) => copyText(window._tpls[i].body, 'Copied');
 window.copyCareerLink = (url, message, button) => copyText(url, message, button);
+window.copyAssetLink = (url, button) => copyText(url, 'Link copied - paste anywhere', button);
 window.copyFigmaCoverLetter = (button) => {
   const letter = document.getElementById('figma-cover-letter')?.textContent.trim() || '';
   copyText(letter, 'Figma cover letter copied', button);
