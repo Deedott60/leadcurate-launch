@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Derrick McDonald | Customer, Product and Operations</title>
-<meta name="description" content="Derrick McDonald turns customer problems into products that ship, combining account management, product judgment, and hands-on technical execution.">
+<title>Derrick McDonald | Customer, Product, Creative and Operations</title>
+<meta name="description" content="Derrick McDonald turns customer problems into products that ship through customer strategy, product judgment, creative direction, and hands-on technical execution.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Derrick McDonald | Customer, Product and Operations">
-<meta property="og:description" content="Customer leader, product operator, and builder of live software and interactive digital experiences.">
+<meta property="og:title" content="Derrick McDonald | Customer, Product, Creative and Operations">
+<meta property="og:description" content="Customer strategist, product operator, and builder of live software, creative systems, and interactive digital experiences.">
 <style>
   :root {
     --ink:#14151A; --ink-2:#35363F; --muted:#6B6B76; --hairline:#D8D6D0;
@@ -183,6 +183,25 @@
   .creative-tile.portrait figcaption { padding:0 .1rem .1rem; }
   .case-links { display:flex; flex-wrap:wrap; gap:.75rem 1.5rem; align-items:baseline; }
 
+  .technical-proof { margin:1.5rem 0 .25rem; }
+  .technical-proof-title {
+    font-family:var(--font-mono); font-size:var(--s-1); letter-spacing:.1em;
+    text-transform:uppercase; color:var(--muted); margin:0 0 .75rem; font-weight:400;
+  }
+  .technical-grid {
+    display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1px;
+    background:var(--hairline); border:1px solid var(--hairline);
+  }
+  .technical-cell { background:var(--paper); padding:1rem 1.05rem; }
+  .technical-cell span {
+    display:block; width:max-content; margin-bottom:.55rem; padding:.2rem .42rem;
+    font-family:var(--font-mono); font-size:.64rem; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--live); background:var(--live-wash); border:1px solid currentColor;
+  }
+  .technical-cell span.planned { color:var(--accent); background:var(--accent-wash); }
+  .technical-cell h4 { margin:0 0 .3rem; font-family:var(--font-display); font-size:1rem; line-height:1.2; }
+  .technical-cell p { margin:0; color:var(--ink-2); font-size:.9rem; line-height:1.5; }
+
   @media (max-width:640px) {
     .creative-proof { grid-template-columns:1fr; }
     .creative-tile.wide { grid-column:auto; }
@@ -231,37 +250,72 @@
   .visit:hover { color:var(--ink); }
   .verified { font-family:var(--font-mono); font-size:.7rem; color:var(--muted); margin-top:.85rem; display:block; }
 
-  /* agent diagram */
+  /* operating system diagram */
   .agentwrap { margin-top:1.75rem; }
-  .stage {
-    position:relative; border:1px solid var(--hairline); background:var(--paper-2);
-    padding:clamp(1rem,3vw,1.75rem); overflow:hidden;
+  .ops-stage {
+    --ops-blue:#8EA2FF; --ops-green:#65E1B4; --ops-gold:#F3C66B; --ops-ink:#F5F6FB;
+    position:relative; overflow:hidden; border:1px solid #303643; color:var(--ops-ink);
+    background:radial-gradient(circle at 73% 20%,rgba(64,86,158,.28),transparent 34%),#10131A;
+    box-shadow:var(--shadow);
   }
-  .stage svg { display:block; width:100%; height:auto; }
-  .lane { stroke:var(--hairline); stroke-width:1.5; fill:none; }
-  .lane-hot { stroke:var(--accent); stroke-width:2; fill:none; opacity:.55; }
-  .pulse { fill:var(--accent); }
-  .hub-ring { fill:none; stroke:var(--accent); stroke-width:1.5; opacity:.4; }
-  .hubbox { fill:var(--paper); stroke:var(--accent); stroke-width:1.5; }
-  .nodebox { fill:var(--paper); stroke:var(--hairline); stroke-width:1.5; cursor:pointer; transition:stroke .18s ease, fill .18s ease; }
-  .agentnode:hover .nodebox, .agentnode:focus-visible .nodebox, .agentnode.on .nodebox { stroke:var(--accent); fill:var(--accent-wash); }
-  .agentnode { cursor:pointer; }
-  .agentnode:focus-visible { outline:none; }
-  .agentnode:focus-visible .nodebox { outline:2px solid var(--accent); outline-offset:3px; }
-  .nlabel { font-family:var(--font-display); font-weight:700; font-size:14px; fill:var(--ink); }
-  .nrole  { font-family:var(--font-mono); font-size:9.5px; letter-spacing:.09em; fill:var(--muted); text-transform:uppercase; }
-  .hublabel { font-family:var(--font-mono); font-size:10.5px; letter-spacing:.1em; fill:var(--accent); }
-  .hubsub { font-family:var(--font-mono); font-size:9px; fill:var(--muted); }
+  .ops-stage::before {
+    content:""; position:absolute; inset:0; pointer-events:none; opacity:.22;
+    background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+    background-size:36px 36px;
+  }
+  .ops-head {
+    position:relative; display:flex; align-items:flex-start; justify-content:space-between; gap:1.25rem;
+    padding:1.25rem clamp(1rem,3vw,1.5rem); border-bottom:1px solid #303643;
+  }
+  .ops-kicker { margin:0 0 .32rem; font-family:var(--font-mono); color:var(--ops-blue); font-size:.69rem; letter-spacing:.12em; text-transform:uppercase; }
+  .ops-head h3 { margin:0; font-family:var(--font-display); font-size:clamp(1.3rem,3vw,1.85rem); line-height:1.08; letter-spacing:-.02em; }
+  .ops-status { display:flex; align-items:center; gap:.45rem; color:#B8C0D0; font-family:var(--font-mono); font-size:.65rem; letter-spacing:.08em; text-transform:uppercase; white-space:nowrap; }
+  .ops-status::before { content:""; width:.5rem; height:.5rem; border-radius:50%; background:var(--ops-green); box-shadow:0 0 0 5px rgba(101,225,180,.1); }
 
-  .readout {
-    display:grid; grid-template-columns:auto 1fr; gap:.6rem 1rem; align-items:start;
-    border:1px solid var(--hairline); border-top:0; background:var(--paper);
-    padding:1rem clamp(1rem,3vw,1.75rem);
+  .route { position:relative; display:grid; grid-template-columns:repeat(5,1fr); padding:1.2rem clamp(1rem,3vw,1.5rem) 1.1rem; border-bottom:1px solid #303643; }
+  .route::before { content:""; position:absolute; left:9%; right:9%; top:2rem; height:1px; background:#3B4250; }
+  .route-step { position:relative; z-index:1; text-align:center; color:#8E96A6; font-family:var(--font-mono); font-size:.62rem; letter-spacing:.08em; text-transform:uppercase; transition:color .25s ease; }
+  .route-step::before { content:""; display:block; width:.58rem; height:.58rem; margin:0 auto .55rem; border-radius:50%; background:#303643; border:2px solid #10131A; box-shadow:0 0 0 1px #475061; transition:background .25s ease,box-shadow .25s ease; }
+  .route-step.on { color:var(--ops-ink); }
+  .route-step.on::before { background:var(--ops-blue); box-shadow:0 0 0 1px var(--ops-blue),0 0 18px rgba(142,162,255,.75); }
+  .task-packet { position:absolute; z-index:2; top:1.68rem; left:8%; width:2.6rem; height:.62rem; border-radius:999px; background:linear-gradient(90deg,transparent,var(--ops-blue),#FFF); box-shadow:0 0 16px rgba(142,162,255,.55); animation:packet 9s linear infinite; pointer-events:none; }
+  @keyframes packet { from { transform:translateX(0); opacity:0; } 8% { opacity:1; } 92% { opacity:1; } to { transform:translateX(clamp(240px,58vw,650px)); opacity:0; } }
+
+  .ops-core { position:relative; display:grid; grid-template-columns:minmax(150px,.8fr) minmax(220px,1.2fr) minmax(160px,.9fr); gap:1px; background:#303643; border-bottom:1px solid #303643; }
+  .ops-node { position:relative; z-index:1; background:rgba(16,19,26,.97); padding:1.1rem; min-height:148px; }
+  .ops-node-label { display:block; margin-bottom:.6rem; color:#8790A1; font-family:var(--font-mono); font-size:.61rem; letter-spacing:.1em; text-transform:uppercase; }
+  .ops-node strong { display:block; margin-bottom:.35rem; font-family:var(--font-display); font-size:1.08rem; line-height:1.15; }
+  .ops-node p { margin:0; color:#B8C0D0; font-size:.86rem; line-height:1.45; }
+  .queue-node { background:rgba(24,29,40,.98); }
+  .queue-title { display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+  .queue-count { color:var(--ops-green); font-family:var(--font-mono); font-size:.62rem; letter-spacing:.08em; text-transform:uppercase; }
+  .live-task { margin-top:.8rem; padding:.7rem .75rem; border-left:2px solid var(--ops-blue); background:#10131A; color:#DCE1EC; font-family:var(--font-mono); font-size:.7rem; line-height:1.45; min-height:3.5rem; }
+  .live-task b { color:var(--ops-blue); font-weight:600; }
+
+  .agent-grid { position:relative; display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:#303643; border-bottom:1px solid #303643; }
+  .agent-card {
+    appearance:none; border:0; border-bottom:3px solid transparent; text-align:left; cursor:pointer;
+    background:#151922; color:var(--ops-ink); padding:1rem; min-width:0; transition:background .2s ease,border-color .2s ease,transform .2s ease;
   }
-  .readout-key {
-    font-family:var(--font-mono); font-size:var(--s-1); letter-spacing:.08em;
-    text-transform:uppercase; color:var(--accent); white-space:nowrap; padding-top:.15rem;
-  }
+  .agent-card:hover,.agent-card:focus-visible,.agent-card.on { background:#1D2330; border-bottom-color:var(--ops-blue); }
+  .agent-card:focus-visible { outline:2px solid var(--ops-blue); outline-offset:-3px; }
+  .agent-top { display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin-bottom:.7rem; }
+  .agent-id { display:grid; place-items:center; width:1.75rem; height:1.75rem; border:1px solid #4A5364; color:var(--ops-blue); font-family:var(--font-mono); font-size:.72rem; }
+  .agent-state { color:#7E8797; font-family:var(--font-mono); font-size:.56rem; letter-spacing:.08em; text-transform:uppercase; }
+  .agent-card.on .agent-state { color:var(--ops-green); }
+  .agent-card strong { display:block; font-family:var(--font-display); font-size:1rem; margin-bottom:.2rem; }
+  .agent-card p { margin:0; color:#AEB6C5; font-size:.77rem; line-height:1.4; }
+
+  .output-head { padding:1rem clamp(1rem,3vw,1.5rem) .65rem; color:#8790A1; font-family:var(--font-mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; }
+  .output-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:#303643; }
+  .output-card { background:#151922; padding:.9rem; min-height:105px; transition:background .2s ease,box-shadow .2s ease; }
+  .output-card.on { background:#202737; box-shadow:inset 0 3px 0 var(--ops-gold); }
+  .output-card span { display:block; margin-bottom:.45rem; color:var(--ops-gold); font-family:var(--font-mono); font-size:.56rem; letter-spacing:.08em; text-transform:uppercase; }
+  .output-card strong { display:block; margin-bottom:.25rem; font-family:var(--font-display); font-size:.9rem; line-height:1.15; }
+  .output-card p { margin:0; color:#9FA8B8; font-size:.72rem; line-height:1.38; }
+
+  .readout { display:grid; grid-template-columns:minmax(150px,.35fr) 1fr; gap:.75rem 1rem; align-items:start; border:1px solid var(--hairline); border-top:0; background:var(--paper); padding:1rem clamp(1rem,3vw,1.5rem); }
+  .readout-key { font-family:var(--font-mono); font-size:var(--s-1); letter-spacing:.08em; text-transform:uppercase; color:var(--accent); padding-top:.12rem; }
   .readout-val { margin:0; color:var(--ink-2); font-size:.97rem; }
   .hint { font-family:var(--font-mono); font-size:.7rem; color:var(--muted); margin:.65rem 0 0; }
 
@@ -277,14 +331,15 @@
   }
   .infra-cell p { margin:0; font-size:.95rem; color:var(--ink-2); line-height:1.5; }
 
-  /* arguments */
-  .args { display:flex; flex-direction:column; gap:1.75rem; margin:0; padding:0; }
-  .arg { max-width:var(--measure); }
+  /* contribution areas */
+  .args { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1px; margin:0; padding:1px; background:var(--hairline); }
+  .arg { max-width:none; padding:1.15rem; background:var(--paper); }
   .arg h3 {
     font-family:var(--font-display); font-weight:800; font-size:var(--s1);
     letter-spacing:-.015em; margin:0 0 .4rem; color:var(--ink);
   }
   .arg p { margin:0; color:var(--ink-2); }
+  .arg-label { display:block; margin-top:.8rem; font-family:var(--font-mono); font-size:.66rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); }
 
   /* contact */
   .contact { padding:clamp(2rem,4vw,3rem) 0 clamp(2.5rem,5vw,3.5rem); }
@@ -309,7 +364,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .rise { animation:none; }
-    .pulse { display:none; }
+    .task-packet { display:none; }
     * { transition:none !important; }
   }
 
@@ -319,8 +374,17 @@
     .block-rail { position:static; }
     .readout { grid-template-columns:1fr; gap:.3rem; }
     .agentwrap { min-width:0; max-width:100%; }
-    .agentwrap .stage { width:100%; max-width:100%; overflow-x:auto; }
-    .agentwrap .stage svg { width:700px; max-width:none; }
+    .ops-head { align-items:flex-start; }
+    .ops-status { white-space:normal; justify-content:flex-end; text-align:right; }
+    .route { overflow:hidden; padding-inline:.55rem; }
+    .route-step { font-size:.5rem; letter-spacing:.04em; }
+    .ops-core { grid-template-columns:1fr; }
+    .ops-node { min-height:0; }
+    .agent-grid { grid-template-columns:1fr; }
+    .agent-card { border-bottom:0; border-left:3px solid transparent; }
+    .agent-card:hover,.agent-card:focus-visible,.agent-card.on { border-left-color:var(--ops-blue); border-bottom-color:transparent; }
+    .output-grid { grid-template-columns:repeat(2,1fr); }
+    .technical-grid,.args { grid-template-columns:1fr; }
   }
 </style>
 </head>
@@ -336,7 +400,7 @@
 
     <h1 class="thesis rise">I turn customer problems into products that <span class="hit">ship.</span></h1>
 
-    <p class="standfirst rise d1">I spent most of my career managing client relationships. Over the last two years, I also learned to design, build, deploy, and run the software behind those conversations.</p>
+    <p class="standfirst rise d1">I spent most of my career managing client relationships. Now I combine that experience with product strategy, creative direction, marketing systems, and hands-on technical delivery.</p>
 
     <div class="proof rise d2">
       <div class="proof-cell">
@@ -352,8 +416,8 @@
         <span class="proof-label">AI agents running<br>in coordination</span>
       </div>
       <div class="proof-cell">
-        <span class="proof-num">3</span>
-        <span class="proof-label">Strengths across customer,<br>product and systems</span>
+        <span class="proof-num">4</span>
+        <span class="proof-label">Disciplines across customer,<br>product, creative and systems</span>
       </div>
     </div>
   </header>
@@ -363,7 +427,7 @@
     <div class="prose">
       <p>I start by asking what the person using the product is trying to do, where the current process breaks, and what a useful result would look like.</p>
       <p>The work below includes a management platform used by a hospitality client, a live consumer subscription app, a B2B data platform, a configurable website product, and an interactive event-page business built from two finished customer experiences.</p>
-      <p>I can work directly with a customer, write clear requirements, make product decisions, and stay involved after launch.</p>
+      <p>I can work directly with a customer, turn the signal into research and requirements, shape the product and creative direction, and stay involved through launch and iteration.</p>
     </div>
   </section>
 
@@ -509,6 +573,31 @@
             <span class="proves-label">Why it matters</span>
             <p>I started with two one-off customer experiences, identified the mechanics people responded to, and turned them into a repeatable product. I defined the template system, intake and approval flow, live participation rules, exports, pricing, and the public sales experience.</p>
           </div>
+          <div class="technical-proof">
+            <h4 class="technical-proof-title">Technical product system</h4>
+            <div class="technical-grid">
+              <div class="technical-cell">
+                <span>Shipped</span>
+                <h4>Responsive product and story routes</h4>
+                <p>A live Next.js and React product site, two approved customer stories, mobile layouts, media handling, and VPS delivery.</p>
+              </div>
+              <div class="technical-cell">
+                <span>Shipped</span>
+                <h4>Browser-led reveal experiences</h4>
+                <p>Motion, video, story sections, guest-message surfaces, and downloadable visual results presented as one connected experience.</p>
+              </div>
+              <div class="technical-cell">
+                <span class="planned">Designed</span>
+                <h4>Reusable configuration and approvals</h4>
+                <p>Typed customer content, template families, private previews, human QA, approval gates, publishing, and hosting extensions.</p>
+              </div>
+              <div class="technical-cell">
+                <span class="planned">Designed</span>
+                <h4>Live participation and controls</h4>
+                <p>Immediate guest updates, shared device sync, moderation, deletion, privacy boundaries, and customer-specific exports.</p>
+              </div>
+            </div>
+          </div>
           <div class="case-links">
             <a class="visit" href="https://keepsakes.76-13-25-117.sslip.io/" target="_blank" rel="noopener noreferrer">Open the live product &rarr;</a>
             <a class="visit" href="https://keepsakes.76-13-25-117.sslip.io/customer-stories/derrick-miesha" target="_blank" rel="noopener noreferrer">View the marriage experience &rarr;</a>
@@ -541,68 +630,83 @@
   </section>
 
   <section class="block">
-    <div class="block-rail"><h2 class="block-title">Three agents,<br>one queue</h2></div>
+    <div class="block-rail"><h2 class="block-title">How the work<br>moves</h2></div>
     <div>
       <div class="prose">
-        <p>I use three AI agents from two vendors. They coordinate through a shared Postgres table, so decisions and completed work do not disappear when one session ends.</p>
-        <p>A task goes into an agent's queue. The agent completes it and posts back with a commit reference or other evidence of what changed. <strong>One of the agents runs on my server around the clock.</strong></p>
+        <p>I direct three specialist AI agents through a shared operating system. Customer context, decisions, tasks, and proof of completion stay visible across the work instead of disappearing when one session ends.</p>
+        <p>The same system can move from a customer problem to market research, product design, campaign materials, technical delivery, and follow-through. <strong>One agent remains active on my server for scheduled and long-running work.</strong></p>
       </div>
 
       <div class="agentwrap">
-        <div class="stage">
-          <svg viewBox="0 0 760 340" role="img" aria-label="Diagram: an operator and three AI agents connected to a shared Postgres activity feed queue.">
-            <defs>
-              <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-                <path d="M0,0 L10,5 L0,10 z" fill="var(--hairline)"/>
-              </marker>
-            </defs>
+        <div class="ops-stage" aria-label="Animated operating system showing how a customer signal becomes research, product design, campaign work, and technical delivery.">
+          <div class="ops-head">
+            <div>
+              <p class="ops-kicker">Live operating loop</p>
+              <h3>Customer signal to verified output</h3>
+            </div>
+            <div class="ops-status">Shared queue connected</div>
+          </div>
 
-            <!-- lanes -->
-            <path id="l1" class="lane" d="M170,80 C300,80 300,150 358,163" marker-end="url(#ar)"/>
-            <path id="l2" class="lane" d="M170,260 C300,260 300,190 358,177" marker-end="url(#ar)"/>
-            <path id="l3" class="lane" d="M590,80 C470,80 470,150 402,163" marker-end="url(#ar)"/>
-            <path id="l4" class="lane" d="M590,260 C470,260 470,190 402,177" marker-end="url(#ar)"/>
+          <div class="route" aria-label="Listen, research, design, build, launch and learn">
+            <span class="task-packet" aria-hidden="true"></span>
+            <div class="route-step on">Listen</div>
+            <div class="route-step">Research</div>
+            <div class="route-step">Design</div>
+            <div class="route-step">Build</div>
+            <div class="route-step">Launch + learn</div>
+          </div>
 
-            <!-- hub -->
-            <circle class="hub-ring" cx="380" cy="170" r="58"/>
-            <circle class="hub-ring" cx="380" cy="170" r="74" opacity=".18"/>
-            <rect class="hubbox" x="322" y="146" width="116" height="48" rx="3"/>
-            <text class="hublabel" x="380" y="166" text-anchor="middle">activity_feed</text>
-            <text class="hubsub" x="380" y="182" text-anchor="middle">Postgres queue</text>
+          <div class="ops-core">
+            <div class="ops-node">
+              <span class="ops-node-label">Direction</span>
+              <strong>Derrick, operator</strong>
+              <p>Sets the customer goal, chooses the direction, reviews the work, and makes the final call.</p>
+            </div>
+            <div class="ops-node queue-node">
+              <div class="queue-title">
+                <span class="ops-node-label" style="margin:0;">Shared operating queue</span>
+                <span class="queue-count">Context retained</span>
+              </div>
+              <div class="live-task" id="live-task"><b>DISCOVERY</b><br>Turn the customer conversation into a clear product brief.</div>
+            </div>
+            <div class="ops-node">
+              <span class="ops-node-label">Proof</span>
+              <strong>Delivered and checked</strong>
+              <p>Every completed task returns with a file, link, commit, test result, or other evidence.</p>
+            </div>
+          </div>
 
-            <!-- nodes -->
-            <g class="agentnode on" data-key="operator" tabindex="0" role="button" aria-label="Operator: Derrick McDonald">
-              <rect class="nodebox" x="30" y="56" width="140" height="48" rx="3"/>
-              <text class="nlabel" x="46" y="78">Derrick</text>
-              <text class="nrole" x="46" y="93">Operator</text>
-            </g>
+          <div class="agent-grid" aria-label="Select an agent to see its contribution">
+            <button class="agent-card on" type="button" data-key="claude" data-outputs="market product creative">
+              <span class="agent-top"><span class="agent-id">CL</span><span class="agent-state">Working</span></span>
+              <strong>Claude</strong>
+              <p>Product thinking, creative direction, copy, coordination, and turning a broad goal into directed work.</p>
+            </button>
+            <button class="agent-card" type="button" data-key="codex" data-outputs="product operations creative">
+              <span class="agent-top"><span class="agent-id">CX</span><span class="agent-state">Ready</span></span>
+              <strong>Codex</strong>
+              <p>Application code, integrations, security, responsive QA, deployment, and technical verification.</p>
+            </button>
+            <button class="agent-card" type="button" data-key="hermes" data-outputs="market operations">
+              <span class="agent-top"><span class="agent-id">HM</span><span class="agent-state">Ready</span></span>
+              <strong>Hermes</strong>
+              <p>Persistent research, scheduled jobs, monitoring, data collection, and long-running VPS operations.</p>
+            </button>
+          </div>
 
-            <g class="agentnode" data-key="claude" tabindex="0" role="button" aria-label="Claude: orchestrator">
-              <rect class="nodebox" x="30" y="236" width="140" height="48" rx="3"/>
-              <text class="nlabel" x="46" y="258">Claude</text>
-              <text class="nrole" x="46" y="273">Orchestrator</text>
-            </g>
-
-            <g class="agentnode" data-key="codex" tabindex="0" role="button" aria-label="Codex: engineering">
-              <rect class="nodebox" x="590" y="56" width="140" height="48" rx="3"/>
-              <text class="nlabel" x="606" y="78">Codex</text>
-              <text class="nrole" x="606" y="93">Engineering</text>
-            </g>
-
-            <g class="agentnode" data-key="hermes" tabindex="0" role="button" aria-label="Hermes, also called Danny: 24/7 operations on the VPS">
-              <rect class="nodebox" x="590" y="236" width="140" height="48" rx="3"/>
-              <text class="nlabel" x="606" y="258">Hermes</text>
-              <text class="nrole" x="606" y="273">24/7 ops &middot; on VPS</text>
-            </g>
-
-            <g id="pulses"></g>
-          </svg>
+          <div class="output-head">Work the system can produce</div>
+          <div class="output-grid">
+            <div class="output-card on" data-output="market"><span>01</span><strong>Market intelligence</strong><p>Customer, competitor, segment, and opportunity research.</p></div>
+            <div class="output-card on" data-output="product"><span>02</span><strong>Product design</strong><p>Requirements, flows, prototypes, QA, and launch decisions.</p></div>
+            <div class="output-card on" data-output="creative"><span>03</span><strong>Campaign + content</strong><p>Positioning, visual direction, interactive media, and launch assets.</p></div>
+            <div class="output-card" data-output="operations"><span>04</span><strong>Production systems</strong><p>Code, automation, deployment, monitoring, and handoffs.</p></div>
+          </div>
         </div>
         <div class="readout">
-          <span class="readout-key" id="rk">Derrick</span>
-          <p class="readout-val" id="rv">I decide what matters and post it once. Decisions are written to the queue so the next agent starts with the same information.</p>
+          <span class="readout-key" id="rk">Claude &middot; direction</span>
+          <p class="readout-val" id="rv">Turns the customer goal into product direction, messaging, creative briefs, and coordinated tasks that the build and operations agents can execute.</p>
         </div>
-        <p class="hint">Select an agent to see its role.</p>
+        <p class="hint">Select an agent. The highlighted lanes show where it contributes.</p>
       </div>
     </div>
   </section>
@@ -644,19 +748,27 @@
   </section>
 
   <section class="block">
-    <div class="block-rail"><h2 class="block-title">What I bring</h2></div>
+    <div class="block-rail"><h2 class="block-title">Where I<br>contribute</h2></div>
     <div class="args">
       <div class="arg">
-        <h3>I start with the customer</h3>
-        <p>My professional background is client relations and account management. I listen for the goal behind the request, make the next step clear, and keep the relationship steady when the work gets complicated.</p>
+        <h3>Customer enablement</h3>
+        <p>I listen for the real goal, turn it into a useful workflow, explain complex choices clearly, and keep the relationship steady through adoption.</p>
+        <span class="arg-label">Customer success &middot; Enablement &middot; Account strategy</span>
       </div>
       <div class="arg">
-        <h3>I turn ambiguity into a working product</h3>
-        <p>I can move from a loosely defined problem to requirements, workflows, a shipped experience, and the operating system around it. The projects above are evidence of that full path.</p>
+        <h3>Product operations</h3>
+        <p>I turn an unclear request into requirements, priorities, workflows, QA, a shipped experience, and the operating process around it.</p>
+        <span class="arg-label">Product ops &middot; Digital production &middot; Program coordination</span>
       </div>
       <div class="arg">
-        <h3>I can work across the technical handoff</h3>
-        <p>Auth, databases, deploys, rate limits, and why the bill went up are not abstract topics to me. I can work directly with technical teams and explain the tradeoffs clearly to the people depending on the result.</p>
+        <h3>Creative technology</h3>
+        <p>I shape visual direction and build interactive stories, motion-led web experiences, campaign assets, and reusable presentation systems.</p>
+        <span class="arg-label">Creative technologist &middot; Interactive producer &middot; Visual content</span>
+      </div>
+      <div class="arg">
+        <h3>Marketing systems</h3>
+        <p>I connect customer research, positioning, content, automation, and performance feedback so a launch has both a message and a working delivery system.</p>
+        <span class="arg-label">Marketing ops &middot; Campaign systems &middot; Growth support</span>
       </div>
     </div>
   </section>
@@ -675,15 +787,27 @@
 <script>
 (function () {
   var COPY = {
-    operator: ['Derrick', 'I decide what matters and post it once. Decisions are written to the queue so the next agent starts with the same information.'],
-    claude:   ['Claude \u00B7 Orchestrator', 'Strategy, application code, brand, and the operator console. Breaks work into tasks, posts them to the other agents\u2019 queues, and keeps the written record in sync so nothing has to be repeated.'],
-    codex:    ['Codex \u00B7 Engineering', 'Infrastructure and security. Server hardening, the scrapers that pull county records, and the API endpoints behind the platform. Picks up tasks from the queue and reports back with a commit reference.'],
-    hermes:   ['Hermes \u00B7 24/7 operations', 'Runs on my own VPS and does not stop when I close the laptop. Executes scheduled scraper runs and queue tasks around the clock, then posts results back to the feed with proof of what it did.']
+    claude: ['Claude \u00B7 direction', 'Turns the customer goal into product direction, messaging, creative briefs, and coordinated tasks that the build and operations agents can execute.'],
+    codex: ['Codex \u00B7 build + verify', 'Builds the product, integrations, security boundaries, responsive behavior, and deployment path. It also checks the result and reports back with concrete evidence.'],
+    hermes: ['Hermes \u00B7 persistent operations', 'Runs on my VPS for research, monitoring, scheduled collection, and long-running tasks. It keeps working when the laptop is closed and returns results to the shared queue.']
   };
 
-  var nodes = Array.prototype.slice.call(document.querySelectorAll('.agentnode'));
+  var TASKS = [
+    ['DISCOVERY', 'Turn the customer conversation into a clear product brief.'],
+    ['MARKET', 'Compare the audience, alternatives, price signals, and strongest entry point.'],
+    ['CREATIVE', 'Translate the offer into a visual direction, story, and campaign asset plan.'],
+    ['BUILD', 'Implement the experience, verify mobile behavior, and prepare the release.'],
+    ['LEARN', 'Capture feedback, operating evidence, and the next best improvement.']
+  ];
+
+  var nodes = Array.prototype.slice.call(document.querySelectorAll('.agent-card'));
+  var outputs = Array.prototype.slice.call(document.querySelectorAll('.output-card'));
+  var routeSteps = Array.prototype.slice.call(document.querySelectorAll('.route-step'));
   var rk = document.getElementById('rk');
   var rv = document.getElementById('rv');
+  var liveTask = document.getElementById('live-task');
+  var activeAgent = 0;
+  var activeStep = 0;
 
   function select(el) {
     var key = el.getAttribute('data-key');
@@ -691,6 +815,15 @@
     if (!c) return;
     nodes.forEach(function (n) { n.classList.remove('on'); });
     el.classList.add('on');
+    nodes.forEach(function (n) {
+      var state = n.querySelector('.agent-state');
+      if (state) state.textContent = n === el ? 'Working' : 'Ready';
+    });
+    var owned = (el.getAttribute('data-outputs') || '').split(' ');
+    outputs.forEach(function (output) {
+      output.classList.toggle('on', owned.indexOf(output.getAttribute('data-output')) > -1);
+    });
+    activeAgent = Math.max(0, nodes.indexOf(el));
     rk.textContent = c[0];
     rv.textContent = c[1];
   }
@@ -702,7 +835,6 @@
     });
   });
 
-  // Ambient task pulses travelling along the lanes toward the queue.
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var reelVideo = document.querySelector('.feature-reel video');
   if (reduce && reelVideo) {
@@ -712,36 +844,17 @@
   }
   if (reduce) return;
 
-  var svgns = 'http://www.w3.org/2000/svg';
-  var group = document.getElementById('pulses');
-  var laneIds = ['l1', 'l2', 'l3', 'l4'];
+  window.setInterval(function () {
+    activeStep = (activeStep + 1) % TASKS.length;
+    routeSteps.forEach(function (step, index) { step.classList.toggle('on', index === activeStep); });
+    if (liveTask) liveTask.innerHTML = '<b>' + TASKS[activeStep][0] + '</b><br>' + TASKS[activeStep][1];
+  }, 2400);
 
-  laneIds.forEach(function (id, i) {
-    var path = document.getElementById(id);
-    if (!path || !path.getTotalLength) return;
-    var len = path.getTotalLength();
-
-    var dot = document.createElementNS(svgns, 'circle');
-    dot.setAttribute('r', '3.5');
-    dot.setAttribute('class', 'pulse');
-    dot.setAttribute('opacity', '0');
-    group.appendChild(dot);
-
-    var period = 3400 + i * 900;
-    var offset = i * 850;
-
-    function frame(now) {
-      var t = ((now + offset) % period) / period;
-      var p = path.getPointAtLength(t * len);
-      dot.setAttribute('cx', p.x);
-      dot.setAttribute('cy', p.y);
-      // fade in and out at the ends so dots don't pop
-      var a = t < 0.12 ? t / 0.12 : (t > 0.88 ? (1 - t) / 0.12 : 1);
-      dot.setAttribute('opacity', String(Math.max(0, Math.min(1, a)) * 0.85));
-      requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
-  });
+  window.setInterval(function () {
+    if (!nodes.length) return;
+    activeAgent = (activeAgent + 1) % nodes.length;
+    select(nodes[activeAgent]);
+  }, 6200);
 })();
 </script>
 </body>
