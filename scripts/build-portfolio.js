@@ -16,8 +16,6 @@ const shotsDir = path.resolve(valueAfter("--shots") || path.join(path.dirname(so
 
 const assets = {
   IMG_ROOTED: "rooted-desktop.jpg",
-  IMG_ANN: "ann-reveal.jpg",
-  IMG_LETTER: "ann-letter.jpg",
 };
 
 function dataUri(filePath) {
