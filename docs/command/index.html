@@ -419,6 +419,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div class="nav-item" data-page="projects" data-project-slug="interactive-digital-keepsakes">
         <span class="icon">K</span> Digital Keepsakes
       </div>
+      <a class="nav-item" href="https://keepsakes.76-13-25-117.sslip.io/operator" target="_blank" rel="noopener" data-external="true">
+        <span class="icon">O</span> Keepsake Operator
+      </a>
       <div class="nav-item" data-page="projects" data-project-slug="auto-plug">
         <span class="icon">A</span> Auto Plug
       </div>
@@ -1710,15 +1713,12 @@ function lsLoad(){
 function lsSave(){ localStorage.setItem(LS_KEY, JSON.stringify(PROSPECTS)); }
 
 // ─── NAV ──────────────────────────────────────────────────────
-const pages = ['sites','hq','inbox','pipeline','messages','workflow','whitelabel','projects','templates','conference','marketing','seo','scout','dollarleads','send-intake','send-quote','learn','tiers-ref','help','portfolio'];
+const pages = ['sites','hq','inbox','pipeline','messages','workflow','whitelabel','projects','templates','conference','marketing','seo','scout','dollarleads','estate-delivery','send-intake','send-quote','learn','tiers-ref','help','portfolio'];
 
 // ─── MY SITES (static: always works, no sync needed) ──────────
 const MY_SITES = [
-  { group:'Interactive Digital Keepsakes', tag:'My own product', note:'Live on the VPS. Do not send the Vercel copy — it is stuck on an old deploy.', links:[
+  { group:'Interactive Digital Keepsakes', tag:'My own product', note:'Use the live sales site, approved customer stories, and the private operator workspace. Do not send the old Vercel deploy.', links:[
     ['Main site','https://keepsakes.76-13-25-117.sslip.io/','Start here'],
-    ['Template — Elegant Announcement','https://keepsakes.76-13-25-117.sslip.io/experience/demo-announcement','Safe to share'],
-    ['Template — Celebration & Story','https://keepsakes.76-13-25-117.sslip.io/experience/demo-celebration','Safe to share'],
-    ['Template — Team & Achievement','https://keepsakes.76-13-25-117.sslip.io/experience/demo-team','Safe to share'],
     ['Customer example — Derrick & Miesha','https://keepsakes.76-13-25-117.sslip.io/customer-stories/derrick-miesha','Real work'],
     ['Customer example — Karter','https://keepsakes.76-13-25-117.sslip.io/customer-stories/karter','Real work'],
     ['Operator console','https://keepsakes.76-13-25-117.sslip.io/operator','PRIVATE — do not share']
