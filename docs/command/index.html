@@ -428,6 +428,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div class="nav-item" data-page="projects" data-project-slug="white-label-dealer-commerce">
         <span class="icon">D</span> Dealer commerce
       </div>
+      <div class="nav-item" data-page="estate-delivery">
+        <span class="icon">E</span> Estate delivery
+      </div>
     </div>
     <div class="nav-divider"></div>
     <div class="nav-label">Agent comms</div>
@@ -1331,6 +1334,50 @@ Derrick McDonald</div>
       </div>
     </div>
 
+    <div id="page-estate-delivery" class="page">
+      <div class="page-header">
+        <div class="page-title">Estate delivery</div>
+        <div class="page-sub">Small-item delivery and estate liquidation relationship tracker.</div>
+      </div>
+
+      <div class="stats">
+        <div class="stat hi"><div class="v">F2F</div><div class="l">Warm contact</div></div>
+        <div class="stat"><div class="v">Sat</div><div class="l">Meet at 1:30-ish</div></div>
+        <div class="stat"><div class="v">Small</div><div class="l">Delivery only</div></div>
+        <div class="stat"><div class="v">Pilot</div><div class="l">Learn the lane</div></div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h">
+          <span class="card-title">Current door in</span>
+          <span class="badge b-paying">ACTIVE</span>
+        </div>
+        <div class="row">
+          <div class="row-body">
+            <div class="row-name">F2F Estate Sales - Doc Reedy</div>
+            <div class="row-detail">Email sent from hello@leadcurate.com. Stop by the Saturday sale around 1:30-ish, introduce yourself, and keep it easy. Main offer for now: smaller buyer deliveries after estate sales.</div>
+            <div class="row-time">Phone: 704-724-3288 · Email: f2festatesales@gmail.com · Site: f2festatesales.com</div>
+          </div>
+          <div class="row-actions">
+            <button class="btn btn-ghost btn-sm" onclick="window.open('https://f2festatesales.com/','_blank')">Open site</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">Offer boundary</span></div>
+        <div class="row"><div class="row-body"><div class="row-name">Yes</div><div class="row-detail">Boxed lots, tools, lamps, decor, electronics, and small furniture that fits safely in the Palisade.</div></div></div>
+        <div class="row"><div class="row-body"><div class="row-name">No</div><div class="row-detail">No full moving, junk removal, heavy furniture moving, auction services, or house cleanout positioning.</div></div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-h"><span class="card-title">Saturday note</span></div>
+        <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
+          Best question if the moment is right: "How would you want smaller delivery referrals handled so it does not create extra work for you?"
+        </p>
+      </div>
+    </div>
+
     <div id="page-send-intake" class="page">
       <div class="page-header">
         <div class="page-title">Send intake link</div>
@@ -1713,7 +1760,7 @@ function lsLoad(){
 function lsSave(){ localStorage.setItem(LS_KEY, JSON.stringify(PROSPECTS)); }
 
 // ─── NAV ──────────────────────────────────────────────────────
-const pages = ['sites','hq','inbox','pipeline','messages','workflow','whitelabel','projects','templates','conference','marketing','seo','scout','dollarleads','estate-delivery','send-intake','send-quote','learn','tiers-ref','help','portfolio'];
+const pages = ['sites','hq','inbox','pipeline','messages','workflow','whitelabel','projects','templates','conference','marketing','seo','scout','dollarleads','send-intake','send-quote','learn','tiers-ref','help','portfolio'];
 
 // ─── MY SITES (static: always works, no sync needed) ──────────
 const MY_SITES = [
