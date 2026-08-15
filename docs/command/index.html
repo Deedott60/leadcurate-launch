@@ -1381,12 +1381,23 @@ Derrick McDonald</div>
         <div class="row">
           <div class="row-body">
             <div class="row-name">1-Click EstateSales.NET Bulk CSV Export</div>
-            <div class="row-detail">Located in the Estate Drop Catalog toolbar. Generates the exact CSV file needed for EstateSales.NET bulk upload so Doc never enters items twice.</div>
-            <div class="row-time">Tool Bar Button inside http://localhost:3000/lot-drop</div>
+            <div class="row-detail">Direct 1-click export URL. Generates and downloads the exact bulk CSV file formatted for EstateSales.NET's import wizard.</div>
+            <div class="row-time">Direct Download: http://localhost:3000/api/lot-drop/export/estatesales-net</div>
           </div>
           <div class="row-actions">
-            <button class="btn btn-sm" onclick="window.open('http://localhost:3000/lot-drop','_blank')">Open Tool</button>
-            <button class="btn btn-ghost btn-sm" onclick="window.copyAssetLink('http://localhost:3000/lot-drop',this)">🔗 Copy</button>
+            <button class="btn btn-sm" onclick="window.open('http://localhost:3000/api/lot-drop/export/estatesales-net','_blank')">Download CSV</button>
+            <button class="btn btn-ghost btn-sm" onclick="window.copyAssetLink('http://localhost:3000/api/lot-drop/export/estatesales-net',this)">🔗 Copy</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-body">
+            <div class="row-name">Full Inventory Spreadsheet (Excel / Google Sheets)</div>
+            <div class="row-detail">Direct 1-click download of all catalog fields (lots, tag prices, rooms, second-look flags, dimensions).</div>
+            <div class="row-time">Direct Download: http://localhost:3000/api/lot-drop/export/inventory</div>
+          </div>
+          <div class="row-actions">
+            <button class="btn btn-sm" onclick="window.open('http://localhost:3000/api/lot-drop/export/inventory','_blank')">Download CSV</button>
+            <button class="btn btn-ghost btn-sm" onclick="window.copyAssetLink('http://localhost:3000/api/lot-drop/export/inventory',this)">🔗 Copy</button>
           </div>
         </div>
       </div>
@@ -1873,7 +1884,8 @@ const MY_SITES = [
   { group:'F2F Estate Sales & Estate Drop', tag:'Doc Reedy / Companion Marketplace', note:'Doc Reedy\'s on-site liquidation companion catalog, mobile photo intake tool, and 1-click EstateSales.NET CSV bulk export.', links:[
     ['Live Marketplace & Catalog','http://localhost:3000','Companion Site'],
     ['Estate Drop Intake Portal','http://localhost:3000/lot-drop','Private Staff Tool'],
-    ['1-Click EstateSales.NET CSV Export','http://localhost:3000/lot-drop','Catalog Toolbar']
+    ['1-Click EstateSales.NET CSV Export','http://localhost:3000/api/lot-drop/export/estatesales-net','Direct CSV Export'],
+    ['Full Spreadsheet CSV Export','http://localhost:3000/api/lot-drop/export/inventory','Spreadsheet CSV']
   ]},
   { group:'LeadCurate Delivery & Dispatch', tag:'Derrick McDonald / Mine', note:'White-glove small-item courier delivery for estate sale and auction buyers in Greater Charlotte.', links:[
     ['Customer Booking Portal','http://localhost:3001','Live Booking'],
