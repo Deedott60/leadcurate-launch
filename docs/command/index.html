@@ -519,6 +519,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div class="nav-label" style="margin-top:0;">Agents</div>
       <div class="agent-mini"><div class="dot" id="dot-claude-code"></div>Claude Code</div>
       <div class="agent-mini"><div class="dot" id="dot-codex"></div>Codex</div>
+      <div class="agent-mini"><div class="dot" id="dot-anti-gravity"></div>Google Anti-Gravity</div>
       <div class="agent-mini"><div class="dot" id="dot-hermes"></div>Hermes (Danny)</div>
       <div class="agent-mini"><div class="dot" id="dot-sb"></div>Supabase</div>
       <div class="agent-mini"><div class="dot" id="dot-twilio"></div>Twilio / SMS</div>
@@ -935,7 +936,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
             <div class="f-field mb8"><label class="f-label" for="project-update-body">Update</label><textarea class="f-textarea" id="project-update-body" placeholder="What changed, what is blocked, or what needs attention?"></textarea></div>
             <div class="f-grid">
               <div class="f-field"><label class="f-label" for="project-update-from">From</label><select class="f-select project-actor" id="project-update-from"></select></div>
-              <div class="f-field"><label class="f-label" for="project-update-target">Send to</label><select class="f-select" id="project-update-target"><option value="all">Everyone</option><option value="claude">Claude</option><option value="codex">Codex</option><option value="hermes">Danny</option><option value="derrick">Derrick</option></select></div>
+              <div class="f-field"><label class="f-label" for="project-update-target">Send to</label><select class="f-select" id="project-update-target"><option value="all">Everyone</option><option value="claude">Claude</option><option value="codex">Codex</option><option value="anti-gravity">Google Anti-Gravity</option><option value="hermes">Danny</option><option value="derrick">Derrick</option></select></div>
             </div>
             <button class="btn btn-sm" id="project-update-save">Post update</button>
             <div class="project-section"><div id="project-activity-list"></div></div>
@@ -1072,6 +1073,7 @@ Derrick McDonald</div>
           <select class="f-select" id="conf-target" style="font-size:15px;font-weight:600;border-color:var(--em);">
             <option value="claude">🧠 Claude — strategy, writing, data, orchestration</option>
             <option value="codex">🤖 Codex — code fixes, security, debugging</option>
+            <option value="anti-gravity">🛰️ Google Anti-Gravity — fallback agent, repo/VPS orchestration, keepsakes handoff</option>
             <option value="hermes">⚙️ Hermes (Danny) — VPS tasks, data pulls, cron</option>
             <option value="all">📢 Everyone — broadcast to all agents</option>
           </select>
@@ -1096,6 +1098,7 @@ Derrick McDonald</div>
             <option value="derrick" selected>Derrick</option>
             <option value="claude">Claude</option>
             <option value="codex">Codex</option>
+            <option value="anti-gravity">Google Anti-Gravity</option>
             <option value="hermes">Hermes</option>
             <option value="system">System</option>
           </select>
@@ -1117,6 +1120,7 @@ Derrick McDonald</div>
               <option value="">All agents</option>
               <option value="claude-code">Claude Code</option>
               <option value="codex">Codex</option>
+              <option value="anti-gravity">Google Anti-Gravity</option>
               <option value="hermes">Hermes</option>
               <option value="derrick">Derrick</option>
               <option value="system">System</option>
@@ -1833,7 +1837,7 @@ window.nav = async function(id){
 
 // ─── PROJECTS ────────────────────────────────────────────────
 const PROJECT_ACTORS = {
-  derrick:'Derrick', claude:'Claude', codex:'Codex', hermes:'Danny'
+  derrick:'Derrick', claude:'Claude', codex:'Codex', 'anti-gravity':'Google Anti-Gravity', hermes:'Danny'
 };
 const projectStatusLabel = value => ({
   planning:'Planning', waiting:'Waiting', active:'Active', paused:'Paused',
@@ -2242,6 +2246,7 @@ document.getElementById('fb-lead-save')?.addEventListener('click',async()=>{
 // ─── CONFERENCE ROOM ─────────────────────────────────────────
 const CONF_LABELS = {
   'claude-code':'Claude Code', codex:'Codex',
+  'anti-gravity':'Google Anti-Gravity',
   hermes:'Hermes', derrick:'Derrick', system:'System'
 };
 const CONF_TYPE_ICONS = {
@@ -2289,6 +2294,7 @@ document.getElementById('conf-filter')?.addEventListener('change', renderConfere
 const pingLabels = {
   claude: 'Claude via GitHub Issue (seen next session)',
   codex: 'Codex via GitHub Issue (immediate)',
+  'anti-gravity': 'Google Anti-Gravity via dashboard handoff. Open local repo, then use VPS SSH if needed',
   hermes: 'Hermes (Danny) via VPS watcher (every 2 min)',
   all: 'Everyone — GitHub Issue + VPS watcher'
 };
@@ -2334,7 +2340,7 @@ function setSync(state){
 // Heartbeat: agent dot is green only if that source posted to activity_feed
 // within the last 10 minutes. Otherwise gray. No phantom "always on" tiles.
 function updateAgentDots(){
-  const sources = ['claude-code','codex','hermes'];
+  const sources = ['claude-code','codex','anti-gravity','hermes'];
   const cutoff = Date.now() - 10*60*1000;
   const lastSeen = {};
   (FEED||[]).forEach(f=>{
@@ -2964,6 +2970,7 @@ document.getElementById('wf-ev-save').onclick = async () => {
 const AGENTS = [
   {id:'claude-code', name:'Claude Code',           desc:'Dev workstation agent. Edits the dashboard, runs migrations, ships commits.', action:'', actionLabel:''},
   {id:'codex',       name:'Codex',                 desc:'Security / debugging / IT agent. Awaiting API restore — see Workflow doc.', action:'', actionLabel:'Configure'},
+  {id:'anti-gravity', name:'Google Anti-Gravity',  desc:'Fallback local agent for keepsakes repo/VPS orchestration when Codex or Claude Code limits are unavailable. Point it at the keepsakes repo and Conference Room handoff.', action:'', actionLabel:'Open handoff'},
   {id:'hermes',      name:'Hermes (Danny)',        desc:'VPS-resident cron + recurring tasks. Awaiting cheaper-model fallback config.', action:'', actionLabel:'Configure'},
   {id:'sb',          name:'Supabase',              desc:'',                  action:'', actionLabel:''},
   {id:'twilio',      name:'Twilio / SMS',          desc:'Configure webhook → POST to Supabase Edge Function → messages table.', action:'', actionLabel:'Setup'},

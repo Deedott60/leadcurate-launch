@@ -6,9 +6,13 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-08-03 by Codex (Auto Plug moved to LeadCurate demo hostname)
+Last updated: 2026-08-15 by Codex (Anti-Gravity keepsakes orchestration handoff posted)
 
 ---
+
+## Open now -- Estate delivery pilot
+
+Derrick is testing a small-item estate sale delivery and estate liquidation relationship lane under LeadCurate. This is not a moving company, junk removal company, auction company, or real estate brokerage direction. The immediate entry point is F2F Estate Sales in Mount Holly: Doc Reedy spoke with Derrick, asked him to email contact information, and invited him to stop by the Saturday sale around 1:30-ish. The current offer is small buyer deliveries only: boxed lots, tools, lamps, decor, electronics, and small furniture that fits safely in Derrick's Palisade. Command OS has a compact Estate delivery page for this pilot.
 
 ## Open now -- White-Label Dealer Commerce and Interactive Digital Keepsakes
 
@@ -19,6 +23,8 @@ A separate Projects workspace record now tracks **White-Label Dealer Commerce** 
 A second Projects workspace record now tracks **Interactive Digital Keepsakes**. It productizes the proven interactive mechanics from the private Derrick/Miesha announcement and Karter birthday repositories without reusing their private names, photos, or child content: cinematic reveal, instant blessing/signature posting, signed-jersey glass, moderated messages, and downloadable keepsakes. This is a separate product/repository from dealer commerce. Initial work is a product landing page/intake, generic reusable event modules, and a realistic package/hosting policy. Dashboard project updates were posted to the Conference Room for all agents on 2026-08-07.
 
 **Keepsakes operator cleanup, 2026-08-13:** Command OS now links directly to the private Keepsake Operator and no longer advertises the rejected CSS-only Elegant, Celebration, or Team demo routes. The approved public paths are the main product site and the Derrick/Miesha and Karter customer-story pages. Six synthetic intake records used for QA remain preserved as archived records but are hidden from the active operator queue. The operator now includes a six-step workflow map and plainly separates automatic system actions, Derrick's approval responsibilities, Danny's optional original-art task, and Codex's assigned code or event-configuration work.
+
+**Anti-Gravity keepsakes orchestration handoff, 2026-08-15:** Codex posted a full Conference Room update targeted to `all` with `activity_feed.id = 445fa94a-87ab-4ddb-b510-4781b43804ef`. Google Anti-Gravity should be pointed at `C:\Users\lenovo\Documents\Codex\2026-08-13\interactive-digital-keepsakes`, read that repo's `docs/HANDOFF.md` and `AGENTS.md`, and use VPS SSH alias `leadcurate-vps` for `/opt/keepsakes` if it needs to coordinate with Danny/Hermes. Verified runtime state: commits `ba909e6` and `d26bf2a` are deployed, `efa00f2` is a pushed docs handoff, the public keepsakes site and operator route return 200, and services `keepsakes` and `keepsakes-artwork` are active. Actual wired work: public intake and operator-created drafts now pass through the shared preview composer, the composer creates the private preview configuration and artwork brief, and the operator artwork bridge can start Hermes artwork jobs and save job IDs. Remaining build target: finish the approved-draft orchestration worker so a customer submission or Derrick approval assembles the private preview, routes/polls Hermes artwork, attaches assets, updates dashboard status, and produces a preview-ready link without Derrick rebuilding a one-off manually. Do not claim the product is fully hands-off until that worker is tested with one basic order and one consultation order.
 
 ## Recently closed -- Auto Plug hub and standalone Lot Drop
 
