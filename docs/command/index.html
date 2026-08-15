@@ -425,11 +425,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div class="nav-item" data-page="projects" data-project-slug="auto-plug">
         <span class="icon">A</span> Auto Plug
       </div>
-      <div class="nav-item" data-page="projects" data-project-slug="white-label-dealer-commerce">
-        <span class="icon">D</span> Dealer commerce
+      <div class="nav-item" data-page="projects" data-project-slug="f2f-estate-sales">
+        <span class="icon">🏛️</span> F2F Estate Sales (Doc Reedy)
       </div>
       <div class="nav-item" data-page="estate-delivery">
-        <span class="icon">E</span> Estate delivery
+        <span class="icon">🚚</span> Estate delivery (LeadCurate)
       </div>
     </div>
     <div class="nav-divider"></div>
@@ -1340,45 +1340,68 @@ Derrick McDonald</div>
 
     <div id="page-estate-delivery" class="page">
       <div class="page-header">
-        <div class="page-title">Estate delivery</div>
-        <div class="page-sub">Small-item delivery and estate liquidation relationship tracker.</div>
+        <div class="page-title">LeadCurate Delivery & Dispatch</div>
+        <div class="page-sub">Derrick McDonald's white-glove small-item courier service and estate liquidation delivery hub.</div>
       </div>
 
       <div class="stats">
-        <div class="stat hi"><div class="v">F2F</div><div class="l">Warm contact</div></div>
-        <div class="stat"><div class="v">Sat</div><div class="l">Meet at 1:30-ish</div></div>
-        <div class="stat"><div class="v">Small</div><div class="l">Delivery only</div></div>
-        <div class="stat"><div class="v">Pilot</div><div class="l">Learn the lane</div></div>
+        <div class="stat hi"><div class="v">$35 / $45</div><div class="l">Flat Rate (Metro/Outer)</div></div>
+        <div class="stat"><div class="v">Live</div><div class="l">Booking & Driver Cockpit</div></div>
+        <div class="stat"><div class="v">GPS</div><div class="l">Real-Time Customer Tracking</div></div>
+        <div class="stat"><div class="v">F2F</div><div class="l">Doc Reedy Referral Partner</div></div>
       </div>
 
       <div class="card mb16">
         <div class="card-h">
-          <span class="card-title">Current door in</span>
-          <span class="badge b-paying">ACTIVE</span>
+          <span class="card-title">Active Delivery Tools & Portals</span>
+          <span class="badge b-paying">LIVE APPS</span>
         </div>
         <div class="row">
           <div class="row-body">
-            <div class="row-name">F2F Estate Sales - Doc Reedy</div>
-            <div class="row-detail">Email sent from hello@leadcurate.com. Stop by the Saturday sale around 1:30-ish, introduce yourself, and keep it easy. Main offer for now: smaller buyer deliveries after estate sales.</div>
-            <div class="row-time">Phone: 704-724-3288 · Email: f2festatesales@gmail.com · Site: f2festatesales.com</div>
+            <div class="row-name">Customer Booking & Scheduling Portal</div>
+            <div class="row-detail">Where buyers schedule item pickups, select drop-off windows, enter estate/lot info, and get flat-rate pricing.</div>
+            <div class="row-time">Local: http://localhost:3001 · Production Ready: delivery.leadcurate.com</div>
           </div>
           <div class="row-actions">
-            <button class="btn btn-ghost btn-sm" onclick="window.open('https://f2festatesales.com/','_blank')">Open site</button>
+            <button class="btn btn-sm" onclick="window.open('http://localhost:3001','_blank')">Open</button>
+            <button class="btn btn-ghost btn-sm" onclick="window.copyAssetLink('http://localhost:3001',this)">🔗 Copy</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-body">
+            <div class="row-name">Derrick's Driver & Dispatch Cockpit</div>
+            <div class="row-detail">1-tap mobile status updates (En Route, Items Loaded, 15 Mins Away, Delivered), HTML5 live GPS location sharing, and auto-SMS generation.</div>
+            <div class="row-time">Local: http://localhost:3001/driver · Standalone Code: leadcurate-delivery</div>
+          </div>
+          <div class="row-actions">
+            <button class="btn btn-sm" onclick="window.open('http://localhost:3001/driver','_blank')">Open</button>
+            <button class="btn btn-ghost btn-sm" onclick="window.copyAssetLink('http://localhost:3001/driver',this)">🔗 Copy</button>
           </div>
         </div>
       </div>
 
       <div class="card mb16">
-        <div class="card-h"><span class="card-title">Offer boundary</span></div>
-        <div class="row"><div class="row-body"><div class="row-name">Yes</div><div class="row-detail">Boxed lots, tools, lamps, decor, electronics, and small furniture that fits safely in the Palisade.</div></div></div>
-        <div class="row"><div class="row-body"><div class="row-name">No</div><div class="row-detail">No full moving, junk removal, heavy furniture moving, auction services, or house cleanout positioning.</div></div></div>
+        <div class="card-h">
+          <span class="card-title">F2F Estate Sales Partnership (Doc Reedy)</span>
+          <span class="badge b-contacted">REFERRAL PARTNER</span>
+        </div>
+        <div class="row">
+          <div class="row-body">
+            <div class="row-name">Doc Reedy — F2F Estate Sales</div>
+            <div class="row-detail">Met regarding small-item delivery referrals for estate sale buyers. Postponed auction to next weekend gives opportunity to introduce the Estate Drop intake tool and companion marketplace while securing delivery referrals.</div>
+            <div class="row-time">Phone: 704-724-3288 · Email: f2festatesales@gmail.com · Site: f2festatesales.com</div>
+          </div>
+          <div class="row-actions">
+            <button class="btn btn-sm" onclick="window.open('https://f2festatesales.com/','_blank')">Open F2F Site</button>
+            <button class="btn btn-ghost btn-sm" onclick="window.copyAssetLink('https://f2festatesales.com/',this)">🔗 Copy</button>
+          </div>
+        </div>
       </div>
 
-      <div class="card">
-        <div class="card-h"><span class="card-title">Saturday note</span></div>
-        <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          Best question if the moment is right: "How would you want smaller delivery referrals handled so it does not create extra work for you?"
-        </p>
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">Offer Boundary & Fleet Specs</span></div>
+        <div class="row"><div class="row-body"><div class="row-name">Yes (White-Glove Courier)</div><div class="row-detail">Boxed lots, lamps, fine art, framed prints, porcelain, sterling silver, vintage electronics, and accent furniture that fits safely in the Palisade with moving blankets and corner pads.</div></div></div>
+        <div class="row"><div class="row-body"><div class="row-name">No</div><div class="row-detail">No whole-house moving, junk removal, multi-man heavy furniture hoisting, or junk cleanout positioning.</div></div></div>
       </div>
     </div>
 
@@ -1768,6 +1791,16 @@ const pages = ['sites','hq','inbox','pipeline','messages','workflow','whitelabel
 
 // ─── MY SITES (static: always works, no sync needed) ──────────
 const MY_SITES = [
+  { group:'F2F Estate Sales & Estate Drop', tag:'Doc Reedy / Companion Marketplace', note:'Doc Reedy\'s on-site liquidation companion catalog, mobile photo intake tool, and 1-click EstateSales.NET CSV bulk export.', links:[
+    ['Live Marketplace & Catalog','http://localhost:3000','Companion Site'],
+    ['Estate Drop Intake Portal','http://localhost:3000/lot-drop','Private Staff Tool'],
+    ['1-Click EstateSales.NET CSV Export','http://localhost:3000/lot-drop','Catalog Toolbar']
+  ]},
+  { group:'LeadCurate Delivery & Dispatch', tag:'Derrick McDonald / Mine', note:'White-glove small-item courier delivery for estate sale and auction buyers in Greater Charlotte.', links:[
+    ['Customer Booking Portal','http://localhost:3001','Live Booking'],
+    ['Driver Dispatch Cockpit','http://localhost:3001/driver','Private Driver Mode'],
+    ['Sample Live Tracking Page','http://localhost:3001/track/LC-7731','Live GPS Demo']
+  ]},
   { group:'Interactive Digital Keepsakes', tag:'My own product', note:'Use the live sales site, approved customer stories, and the private operator workspace. Do not send the old Vercel deploy.', links:[
     ['Main site','https://keepsakes.76-13-25-117.sslip.io/','Start here'],
     ['Customer example — Derrick & Miesha','https://keepsakes.76-13-25-117.sslip.io/customer-stories/derrick-miesha','Real work'],
