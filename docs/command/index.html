@@ -425,7 +425,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div class="nav-item" data-page="projects" data-project-slug="auto-plug">
         <span class="icon">A</span> Auto Plug
       </div>
-      <div class="nav-item" data-page="projects" data-project-slug="f2f-estate-sales">
+      <div class="nav-item" data-page="f2f-estate-sales">
         <span class="icon">🏛️</span> F2F Estate Sales (Doc Reedy)
       </div>
       <div class="nav-item" data-page="estate-delivery">
@@ -1338,6 +1338,85 @@ Derrick McDonald</div>
       </div>
     </div>
 
+    <div id="page-f2f-estate-sales" class="page">
+      <div class="page-header">
+        <div class="page-title">F2F Estate Sales (Doc Reedy)</div>
+        <div class="page-sub">Doc Reedy's on-site liquidation companion marketplace, mobile photo intake tool, and EstateSales.NET export.</div>
+      </div>
+
+      <div class="stats">
+        <div class="stat hi"><div class="v">Doc Reedy</div><div class="l">F2F Estate Sales LLC</div></div>
+        <div class="stat"><div class="v">Estate Drop</div><div class="l">Mobile AI Photo Intake</div></div>
+        <div class="stat"><div class="v">1-Click</div><div class="l">EstateSales.NET CSV Export</div></div>
+        <div class="stat"><div class="v">Charlotte</div><div class="l">Greater Metro NC</div></div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h">
+          <span class="card-title">Doc Reedy's Platform Tools & Portals</span>
+          <span class="badge b-paying">LIVE APPS</span>
+        </div>
+        <div class="row">
+          <div class="row-body">
+            <div class="row-name">Live Marketplace Storefront & Buyer Catalog</div>
+            <div class="row-detail">Doc's customer-facing estate sale catalog with photo zoom, room filtering, tag prices, and buyer wishlist bookmarks. Friday pricing protection active.</div>
+            <div class="row-time">Local: http://localhost:3000 · Codebase: scratch/f2f-estate-sales</div>
+          </div>
+          <div class="row-actions">
+            <button class="btn btn-sm" onclick="window.open('http://localhost:3000','_blank')">Open</button>
+            <button class="btn btn-ghost btn-sm" onclick="window.copyAssetLink('http://localhost:3000',this)">🔗 Copy</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-body">
+            <div class="row-name">Estate Drop — Mobile Intake Tool (Staff PIN: 7731)</div>
+            <div class="row-detail">Walk through the house, snap photos of items &rarr; AI Vision drafts title, room, category, condition, dimensions, and estimated price in seconds.</div>
+            <div class="row-time">Local: http://localhost:3000/lot-drop</div>
+          </div>
+          <div class="row-actions">
+            <button class="btn btn-sm" onclick="window.open('http://localhost:3000/lot-drop','_blank')">Open</button>
+            <button class="btn btn-ghost btn-sm" onclick="window.copyAssetLink('http://localhost:3000/lot-drop',this)">🔗 Copy</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-body">
+            <div class="row-name">1-Click EstateSales.NET Bulk CSV Export</div>
+            <div class="row-detail">Located in the Estate Drop Catalog toolbar. Generates the exact CSV file needed for EstateSales.NET bulk upload so Doc never enters items twice.</div>
+            <div class="row-time">Tool Bar Button inside http://localhost:3000/lot-drop</div>
+          </div>
+          <div class="row-actions">
+            <button class="btn btn-sm" onclick="window.open('http://localhost:3000/lot-drop','_blank')">Open Tool</button>
+            <button class="btn btn-ghost btn-sm" onclick="window.copyAssetLink('http://localhost:3000/lot-drop',this)">🔗 Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h">
+          <span class="card-title">Doc Reedy — Client & Partner Details</span>
+          <span class="badge b-contacted">PARTNER</span>
+        </div>
+        <div class="row">
+          <div class="row-body">
+            <div class="row-name">Contact Information</div>
+            <div class="row-detail">Owner: Doc Reedy · Company: F2F Estate Sales LLC · Phone: 704-724-3288 · Email: f2festatesales@gmail.com · Current Site: f2festatesales.com</div>
+          </div>
+          <div class="row-actions">
+            <button class="btn btn-sm" onclick="window.open('https://f2festatesales.com/','_blank')">Open F2F Site</button>
+            <button class="btn btn-ghost btn-sm" onclick="window.copyAssetLink('https://f2festatesales.com/',this)">🔗 Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb16">
+        <div class="card-h"><span class="card-title">Pitch & Discovery Strategy</span></div>
+        <div class="row"><div class="row-body"><div class="row-name">1. Cataloging Bottleneck Fix</div><div class="row-detail">Doc doesn't lack buyers; he lacks time to catalog 300+ items before Friday sale days. Estate Drop solves this with 1-tap AI drafting.</div></div></div>
+        <div class="row"><div class="row-body"><div class="row-name">2. No Double Work</div><div class="row-detail">1-click export sends all photos and lot data straight into EstateSales.NET with zero extra data-entry.</div></div></div>
+        <div class="row"><div class="row-body"><div class="row-name">3. Friday Price Protection</div><div class="row-detail">Saturday (25% off) and Sunday (50% off) markdown schedules are hidden from public view to protect Friday full-price sales.</div></div></div>
+        <div class="row"><div class="row-body"><div class="row-name">4. Delivery Partnership</div><div class="row-detail">Doc can refer buyers who need small items (art, lamps, porcelain, vintage) delivered to Derrick McDonald's LeadCurate Delivery service.</div></div></div>
+      </div>
+    </div>
+
     <div id="page-estate-delivery" class="page">
       <div class="page-header">
         <div class="page-title">LeadCurate Delivery & Dispatch</div>
@@ -1787,7 +1866,7 @@ function lsLoad(){
 function lsSave(){ localStorage.setItem(LS_KEY, JSON.stringify(PROSPECTS)); }
 
 // ─── NAV ──────────────────────────────────────────────────────
-const pages = ['sites','hq','inbox','pipeline','messages','workflow','whitelabel','projects','templates','conference','marketing','seo','scout','dollarleads','estate-delivery','send-intake','send-quote','learn','tiers-ref','help','portfolio'];
+const pages = ['sites','hq','inbox','pipeline','messages','workflow','whitelabel','projects','templates','conference','marketing','seo','scout','dollarleads','estate-delivery','f2f-estate-sales','send-intake','send-quote','learn','tiers-ref','help','portfolio'];
 
 // ─── MY SITES (static: always works, no sync needed) ──────────
 const MY_SITES = [
