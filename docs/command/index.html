@@ -422,9 +422,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <a class="nav-item" href="https://keepsakes.76-13-25-117.sslip.io/operator" target="_blank" rel="noopener" data-external="true">
         <span class="icon">O</span> Keepsake Operator
       </a>
-      <div class="nav-item" data-page="projects" data-project-slug="auto-plug">
-        <span class="icon">A</span> Auto Plug
-      </div>
       <div class="nav-item" data-page="f2f-estate-sales">
         <span class="icon">🏛️</span> F2F Estate Sales (Doc Reedy)
       </div>
@@ -1341,24 +1338,24 @@ Derrick McDonald</div>
     <div id="page-f2f-estate-sales" class="page">
       <div class="page-header">
         <div class="page-title">F2F Estate Sales (Doc Reedy)</div>
-        <div class="page-sub">Doc Reedy's on-site liquidation companion marketplace, mobile photo intake tool, and EstateSales.NET export.</div>
+        <div class="page-sub">Doc Reedy's on-site liquidation companion marketplace and mobile Estate Drop intake tool.</div>
       </div>
 
       <div class="stats">
         <div class="stat hi"><div class="v">Doc Reedy</div><div class="l">F2F Estate Sales LLC</div></div>
         <div class="stat"><div class="v">Estate Drop</div><div class="l">Mobile AI Photo Intake</div></div>
-        <div class="stat"><div class="v">1-Click</div><div class="l">EstateSales.NET CSV Export</div></div>
+        <div class="stat"><div class="v">EstateSales.NET</div><div class="l">Export Button inside Intake</div></div>
         <div class="stat"><div class="v">Charlotte</div><div class="l">Greater Metro NC</div></div>
       </div>
 
       <div class="card mb16">
         <div class="card-h">
-          <span class="card-title">Doc Reedy's Platform Tools & Portals</span>
+          <span class="card-title">Doc Reedy's Live Platforms</span>
           <span class="badge b-paying">LIVE APPS</span>
         </div>
         <div class="row">
           <div class="row-body">
-            <div class="row-name">Live Marketplace Storefront & Buyer Catalog</div>
+            <div class="row-name">1. Live Marketplace Storefront & Catalog</div>
             <div class="row-detail">Doc's customer-facing estate sale catalog with photo zoom, room filtering, tag prices, and buyer wishlist bookmarks. Friday pricing protection active.</div>
             <div class="row-time">Local: http://localhost:3000 · Codebase: scratch/f2f-estate-sales</div>
           </div>
@@ -1369,35 +1366,13 @@ Derrick McDonald</div>
         </div>
         <div class="row">
           <div class="row-body">
-            <div class="row-name">Estate Drop — Mobile Intake Tool (Staff PIN: 7731)</div>
-            <div class="row-detail">Walk through the house, snap photos of items &rarr; AI Vision drafts title, room, category, condition, dimensions, and estimated price in seconds.</div>
+            <div class="row-name">2. Estate Drop — Mobile Intake Tool (Staff PIN: 7731)</div>
+            <div class="row-detail">Walk through the house, snap photos &rarr; AI Vision drafts title, room, category, condition, dimensions, and estimated price. Includes the 1-click EstateSales.NET export button right on the page.</div>
             <div class="row-time">Local: http://localhost:3000/lot-drop</div>
           </div>
           <div class="row-actions">
             <button class="btn btn-sm" onclick="window.open('http://localhost:3000/lot-drop','_blank')">Open</button>
             <button class="btn btn-ghost btn-sm" onclick="window.copyAssetLink('http://localhost:3000/lot-drop',this)">🔗 Copy</button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="row-body">
-            <div class="row-name">1-Click EstateSales.NET Bulk CSV Export</div>
-            <div class="row-detail">Direct 1-click export URL. Generates and downloads the exact bulk CSV file formatted for EstateSales.NET's import wizard.</div>
-            <div class="row-time">Direct Download: http://localhost:3000/api/lot-drop/export/estatesales-net</div>
-          </div>
-          <div class="row-actions">
-            <button class="btn btn-sm" onclick="window.open('http://localhost:3000/api/lot-drop/export/estatesales-net','_blank')">Download CSV</button>
-            <button class="btn btn-ghost btn-sm" onclick="window.copyAssetLink('http://localhost:3000/api/lot-drop/export/estatesales-net',this)">🔗 Copy</button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="row-body">
-            <div class="row-name">Full Inventory Spreadsheet (Excel / Google Sheets)</div>
-            <div class="row-detail">Direct 1-click download of all catalog fields (lots, tag prices, rooms, second-look flags, dimensions).</div>
-            <div class="row-time">Direct Download: http://localhost:3000/api/lot-drop/export/inventory</div>
-          </div>
-          <div class="row-actions">
-            <button class="btn btn-sm" onclick="window.open('http://localhost:3000/api/lot-drop/export/inventory','_blank')">Download CSV</button>
-            <button class="btn btn-ghost btn-sm" onclick="window.copyAssetLink('http://localhost:3000/api/lot-drop/export/inventory',this)">🔗 Copy</button>
           </div>
         </div>
       </div>
@@ -1881,11 +1856,9 @@ const pages = ['sites','hq','inbox','pipeline','messages','workflow','whitelabel
 
 // ─── MY SITES (static: always works, no sync needed) ──────────
 const MY_SITES = [
-  { group:'F2F Estate Sales & Estate Drop', tag:'Doc Reedy / Companion Marketplace', note:'Doc Reedy\'s on-site liquidation companion catalog, mobile photo intake tool, and 1-click EstateSales.NET CSV bulk export.', links:[
+  { group:'F2F Estate Sales & Estate Drop', tag:'Doc Reedy / Companion Marketplace', note:'Doc Reedy\'s on-site liquidation companion catalog and mobile photo intake tool.', links:[
     ['Live Marketplace & Catalog','http://localhost:3000','Companion Site'],
-    ['Estate Drop Intake Portal','http://localhost:3000/lot-drop','Private Staff Tool'],
-    ['1-Click EstateSales.NET CSV Export','http://localhost:3000/api/lot-drop/export/estatesales-net','Direct CSV Export'],
-    ['Full Spreadsheet CSV Export','http://localhost:3000/api/lot-drop/export/inventory','Spreadsheet CSV']
+    ['Estate Drop Intake Portal','http://localhost:3000/lot-drop','Private Staff Tool']
   ]},
   { group:'LeadCurate Delivery & Dispatch', tag:'Derrick McDonald / Mine', note:'White-glove small-item courier delivery for estate sale and auction buyers in Greater Charlotte.', links:[
     ['Customer Booking Portal','http://localhost:3001','Live Booking'],
@@ -1907,11 +1880,7 @@ const MY_SITES = [
     ['Tool explainer page','https://premier-demo.leadcurate.com/property-decision-tool',''],
     ['Outreach transparency / opt-out','https://premier-demo.leadcurate.com/why-contacted','']
   ]},
-  { group:'Dealer commerce', tag:'White-label', note:'Auto Plug is the built example. Mike is off the table; this is the reusable dealer product.', links:[
-    ['Dealer site','https://autoplug-demo.leadcurate.com/','Start here'],
-    ['Vehicle inventory','https://autoplug-demo.leadcurate.com/inventory',''],
-    ['Lot Drop (VIN photo → live page)','https://autoplug-demo.leadcurate.com/lot-drop','The tool']
-  ]},
+
   { group:'LeadCurate', tag:'Mine', note:'', links:[
     ['Portfolio','https://leadcurate.com/portfolio/',''],
     ['This dashboard','https://leadcurate.com/command/','']
