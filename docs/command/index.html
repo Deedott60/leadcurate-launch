@@ -1335,7 +1335,7 @@ Derrick McDonald</div>
       </div>
     </div>
 
-        <div id="page-f2f-estate-sales" class="page">
+            <div id="page-f2f-estate-sales" class="page">
       <div class="page-header">
         <div class="page-title">F2F Estate Sales (Doc Reedy)</div>
         <div class="page-sub">Doc Reedy's on-site liquidation companion marketplace and mobile Estate Drop intake tool.</div>
@@ -1376,8 +1376,9 @@ Derrick McDonald</div>
           </div>
         </div>
       </div>
+    </div>
 
-        <div id="page-estate-delivery" class="page">
+    <div id="page-estate-delivery" class="page">
       <div class="page-header">
         <div class="page-title">LeadCurate Delivery & Dispatch</div>
         <div class="page-sub">Derrick McDonald's white-glove small-item courier service and estate liquidation delivery hub.</div>
@@ -1882,7 +1883,8 @@ function renderSites(){
 }
 window.nav = async function(id){
   pages.forEach(p=>{
-    document.getElementById('page-'+p).classList.toggle('active',p===id);
+    const el = document.getElementById('page-'+p);
+    if(el) el.classList.toggle('active',p===id);
   });
   document.querySelectorAll('.nav-item').forEach(el=>{
     el.classList.toggle('active', el.dataset.page===id && !el.dataset.projectSlug);
