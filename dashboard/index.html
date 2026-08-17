@@ -1,519 +1,334 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LeadCurate - Dashboard</title>
+  <title>Dollar Leads OS — LeadCurate Command Center</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #1e293b;
-      --muted: #64748b;
-      --cream: #faf7f2;
-      --stone: #f5f1eb;
-      --dark: #0f172a;
-      --dark-2: #111827;
-      --emerald: #15803d;
-      --emerald-2: #22c55e;
-      --emerald-soft: #dff4e8;
-      --gold: #d97706;
-      --gold-soft: #fef3c7;
-      --line: rgba(30, 41, 59, .12);
-      --shadow: 0 24px 80px rgba(15, 23, 42, .12);
-      --radius: 28px;
+      --bg: #090d16;
+      --card-bg: #111827;
+      --card-border: rgba(255, 255, 255, 0.08);
+      --emerald: #10b981;
+      --emerald-glow: rgba(16, 185, 129, 0.25);
+      --gold: #f59e0b;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
     }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0;
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--cream);
-      color: var(--ink);
-      line-height: 1.5;
-      overflow-x: hidden;
-    }
-    a { color: inherit; text-decoration: none; }
-    .dashboard-layout {
-      display: grid;
-      grid-template-columns: 240px 1fr;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
       height: 100vh;
+      overflow: hidden;
     }
-    .sidebar {
-      background: var(--dark-2);
-      color: white;
-      padding: 24px;
+    /* Sidebar */
+    aside {
+      width: 260px;
+      background: #0d131f;
+      border-right: 1px solid var(--card-border);
+      padding: 24px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .logo {
-      font-family: "Playfair Display", serif;
-      font-size: 24px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
       font-weight: 700;
-      letter-spacing: -.04em;
-      margin-bottom: 32px;
+      letter-spacing: -0.03em;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     .logo span { color: var(--emerald); }
-    .logo .dot { color: var(--emerald); }
-    .sidebar-nav a {
-      display: block;
-      padding: 12px 16px;
-      border-radius: 8px;
-      color: var(--muted);
+    .badge {
+      font-size: 10px;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--emerald);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 800;
+    }
+    .nav-group { margin-top: 28px; display: grid; gap: 6px; }
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 13px;
       font-weight: 600;
-      font-size: 14px;
-      margin-bottom: 8px;
+      color: var(--muted);
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+    .nav-btn:hover { background: rgba(255,255,255,0.04); color: #fff; }
+    .nav-btn.active {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.3);
+      color: #6ee7b7;
+    }
+    .stats-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 12px;
+    }
+    .stats-card strong { display: block; font-size: 16px; color: #fff; margin-top: 2px; }
+
+    /* Main Area */
+    main {
+      flex: 1;
+      padding: 28px 36px;
+      overflow-y: auto;
+      background: radial-gradient(circle at 80% 10%, rgba(16, 185, 129, 0.05), transparent 40%);
+    }
+    .top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .title h1 { font-family: 'Space Grotesk', sans-serif; font-size: 26px; font-weight: 700; }
+    .title p { font-size: 13px; color: var(--muted); }
+
+    /* Controls Bar */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .select-custom {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      outline: none;
       cursor: pointer;
     }
-    .sidebar-nav a:hover, .sidebar-nav a.active {
-      background: rgba(255,255,255,.1);
-      color: white;
+    .btn-action {
+      background: var(--emerald);
+      color: #022c22;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
     }
-    .main-content {
-      padding: 32px;
-      overflow-y: auto;
-    }
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 24px;
-    }
-    .header h1 {
-        margin: 0;
-        font-family: "Playfair Display", serif;
-        font-size: 36px;
-        letter-spacing: -.04em;
-    }
-    .card {
-        background: #fff;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        padding: 26px;
-        box-shadow: 0 14px 40px rgba(15,23,42,.05);
-        margin-bottom: 24px;
-    }
-    .page { display: none; }
-    .page.active { display: block; }
-    .table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 24px;
-    }
-    .table th, .table td {
-        padding: 12px 16px;
-        text-align: left;
-        border-bottom: 1px solid var(--line);
-    }
-    .table th {
-        font-weight: 700;
-        font-size: 14px;
-        color: var(--muted);
-    }
-    .tag {
-        display:inline-flex;
-        width:max-content;
-        border-radius:999px;
-        padding:4px 8px;
-        background: rgba(34,197,94,.13);
-        color:#15803d;
-        font-weight:800;
-        font-size:10px;
-    }
-    .search-bar {
-        width: 100%;
-        border: 1px solid var(--line);
-        background: #fbfaf8;
-        border-radius: 14px;
-        padding: 14px 13px;
-        font: inherit;
-        color: var(--ink);
-        outline: none;
-        margin-bottom: 16px;
-    }
-    .automation-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 24px;
-        margin-top: 24px;
-    }
-    .automation-card {
-        background: var(--stone);
-        border: 1px solid var(--line);
-        border-radius: 16px;
-        padding: 24px;
-        display: flex;
-        flex-direction: column;
-    }
-    .automation-card h3 {
-        margin: 0 0 8px;
-    }
-    .automation-card p {
-        margin: 0 0 16px;
-        color: var(--muted);
-        flex-grow: 1;
-    }
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
-      border-radius: 999px; padding: 13px 18px; font-weight: 800; font-size: 14px;
-      border: 1px solid transparent; transition: .2s ease; cursor: pointer;
-    }
-    .btn.secondary { background: rgba(255,255,255,.7); border-color: var(--line); color: var(--ink); }
-    .btn.secondary:hover { background: white; } 
+    .btn-action:hover { filter: brightness(1.1); transform: translateY(-1px); }
 
-    /* Analytics Page */
-    .date-range-picker {
-        display: flex;
-        align-items: center;
-        gap: 8px;
+    /* Metrics Grid */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
     }
-    .date-range-picker input {
-        border: 1px solid var(--line);
-        background: #fbfaf8;
-        border-radius: 8px;
-        padding: 8px 12px;
-        font: inherit;
+    .m-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 18px;
     }
-    .kpi-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 24px;
-        margin: 24px 0;
-    }
-    .kpi-card {
-        background: var(--stone);
-        border-radius: 16px;
-        padding: 24px;
-        text-align: center;
-    }
-    .kpi-card h4 {
-        margin: 0 0 8px;
-        color: var(--muted);
-        font-weight: 600;
-    }
-    .kpi-value {
-        font-size: 32px;
-        font-weight: 800;
-        color: var(--dark);
-    }
-    .chart-container {
-        width: 100%;
-        height: 300px;
-        background: var(--stone);
-        border-radius: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--muted);
-    }
+    .m-card small { font-size: 11px; text-transform: uppercase; color: var(--muted); font-weight: 700; letter-spacing: 0.08em; }
+    .m-card h3 { font-size: 24px; font-weight: 800; color: #fff; margin-top: 4px; }
 
-    /* Settings Page */
-    .settings-section {
-        margin-bottom: 32px;
-        padding-bottom: 32px;
-        border-bottom: 1px solid var(--line);
+    /* Table */
+    .table-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      overflow: hidden;
     }
-    .settings-section:last-child {
-        border-bottom: none;
+    table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+    th {
+      background: rgba(255, 255, 255, 0.02);
+      padding: 14px 18px;
+      font-weight: 700;
+      color: var(--muted);
+      border-bottom: 1px solid var(--card-border);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
-    .settings-section h2 {
-        font-family: "Playfair Display", serif;
-        margin: 0 0 24px;
-        font-size: 24px;
+    td {
+      padding: 12px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: #cbd5e1;
     }
-    .form-group {
-        margin-bottom: 16px;
-    }
-    .form-group label {
-        display: block;
-        font-weight: 600;
-        margin-bottom: 8px;
-        font-size: 14px;
-    }
-    .form-control {
-        width: 100%;
-        max-width: 400px;
-        border: 1px solid var(--line);
-        background: #fbfaf8;
-        border-radius: 14px;
-        padding: 14px 13px;
-        font: inherit;
-        color: var(--ink);
-        outline: none;
-    }
-    .settings-section .btn {
-      margin-top: 8px;
+    tr:hover td { background: rgba(255, 255, 255, 0.02); color: #fff; }
+    .tag-category {
+      background: rgba(16, 185, 129, 0.12);
+      color: #6ee7b7;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 11px;
     }
   </style>
 </head>
 <body>
-  <div class="dashboard-layout">
-    <aside class="sidebar">
-        <div class="logo">Lead<span>Curate</span><span class="dot">.</span></div>
-        <nav class="sidebar-nav">
-            <a data-page="dashboard" class="active">Dashboard</a>
-            <a data-page="properties">Properties</a>
-            <a data-page="customers">Customers</a>
-            <a data-page="automation">Automation</a>
-            <a data-page="analytics">Analytics</a>
-            <a data-page="settings">Settings</a>
-        </nav>
-    </aside>
-    <main class="main-content">
-        <div id="dashboard-page" class="page active">
-            <div class="card">
-                <header class="header">
-                    <h1>Dashboard</h1>
-                </header>
-                <h2>Welcome to your Dashboard</h2>
-                <p>This is where you can manage your properties, customers, and more.</p>
-            </div>
-        </div>
-        <div id="properties-page" class="page">
-            <div class="card">
-                <header class="header">
-                    <h1>Properties</h1>
-                </header>
-                <input type="text" id="properties-search" class="search-bar" placeholder="Search properties...">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Owner Name</th>
-                            <th>Property Address</th>
-                            <th>Lead Lane</th>
-                            <th>Lead Score</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id="properties-table-body">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div id="customers-page" class="page">
-            <div class="card">
-                <header class="header">
-                    <h1>Customers</h1>
-                </header>
-                 <input type="text" id="customers-search" class="search-bar" placeholder="Search customers...">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Status</th>
-                            <th>Investor Type</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id="customers-table-body">
-                        <tr>
-                            <td>John Doe</td>
-                            <td>john.doe@example.com</td>
-                            <td><span class="tag">Active</span></td>
-                            <td>Solo Investor</td>
-                            <td><a href="#">View</a></td>
-                        </tr>
-                        <tr>
-                            <td>Jane Smith</td>
-                            <td>jane.smith@example.com</td>
-                            <td><span class="tag">Active</span></td>
-                            <td>Acquisition Team</td>
-                            <td><a href="#">View</a></td>
-                        </tr>
-                         <tr>
-                            <td>Sam Wilson</td>
-                            <td>sam.wilson@example.com</td>
-                            <td><span class="tag">Inactive</span></td>
-                            <td>Buy-and-Hold</td>
-                            <td><a href="#">View</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div id="automation-page" class="page">
-            <div class="card">
-                <header class="header">
-                    <h1>Automation</h1>
-                </header>
-                <p>Manage your outreach and integrations here.</p>
-                <div class="automation-grid">
-                    <div class="automation-card">
-                        <h3>Bulk Email Outreach</h3>
-                        <p>Create and manage bulk email campaigns.</p>
-                        <button class="btn secondary">Launch Email Campaign</button>
-                    </div>
-                    <div class="automation-card">
-                        <h3>Mass Text Outreach</h3>
-                        <p>Send text messages to your contacts.</p>
-                         <button class="btn secondary">Launch Text Campaign</button>
-                    </div>
-                    <div class="automation-card">
-                        <h3>CRM Integration</h3>
-                        <p>Connect your favorite CRM to sync contacts.</p>
-                        <button class="btn secondary">Configure CRM</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="analytics-page" class="page">
-            <div class="card">
-                <header class="header">
-                    <h1>Analytics</h1>
-                    <div class="date-range-picker">
-                        <input type="date" id="start-date" name="start-date">
-                        <span>-</span>
-                        <input type="date" id="end-date" name="end-date">
-                    </div>
-                </header>
-                <div class="kpi-grid">
-                    <div class="kpi-card">
-                        <h4>Total Leads</h4>
-                        <span class="kpi-value">1,234</span>
-                    </div>
-                    <div class="kpi-card">
-                        <h4>Conversion Rate</h4>
-                        <span class="kpi-value">12.5%</span>
-                    </div>
-                    <div class="kpi-card">
-                        <h4>Response Rate</h4>
-                        <span class="kpi-value">45.2%</span>
-                    </div>
-                </div>
-                <div class="chart-container">
-                    <p>Leads Over Time (Chart Placeholder)</p>
-                </div>
-            </div>
-        </div>
-        <div id="settings-page" class="page">
-            <div class="card">
-                 <header class="header">
-                    <h1>Settings</h1>
-                </header>
+  <!-- Sidebar -->
+  <aside>
+    <div>
+      <div class="logo">
+        DOLLAR<span>LEADS</span>
+        <span class="badge">OS v2.0</span>
+      </div>
+      <nav class="nav-group">
+        <button class="nav-btn active">📊 Live Inventory</button>
+        <button class="nav-btn" onclick="window.open('/','_blank')">🌐 Public Storefront</button>
+        <button class="nav-btn" onclick="window.open('/samples/mecklenburg-nc_out-of-state_50_leads.csv','_blank')">⚡ Test CSV Cut</button>
+      </nav>
+    </div>
+    <div class="stats-card">
+      <span style="color:var(--muted)">Verified Public Records</span>
+      <strong>15,386,150</strong>
+      <span style="color:#6ee7b7; font-size:11px; font-weight:700;">● 7 Metros Active</span>
+    </div>
+  </aside>
 
-                <div class="settings-section">
-                    <h2>Profile Settings</h2>
-                    <div class="form-group">
-                        <label for="full-name">Full Name</label>
-                        <input type="text" id="full-name" class="form-control" value="John Doe">
-                    </div>
-                     <div class="form-group">
-                        <label for="email-address">Email Address</label>
-                        <input type="email" id="email-address" class="form-control" value="john.doe@example.com">
-                    </div>
-                     <button class="btn secondary">Update Profile</button>
-                </div>
+  <!-- Main Content -->
+  <main>
+    <div class="top-header">
+      <div class="title">
+        <h1>Deed & Property Leads Inventory</h1>
+        <p>Cleaned, deduplicated parcel records across 8 standardized categories.</p>
+      </div>
+      <button class="btn-action" onclick="downloadCurrentBatch()">⚡ Export 50 Free Sample Leads</button>
+    </div>
 
-                 <div class="settings-section">
-                    <h2>Notification Preferences</h2>
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" checked> Email Notifications
-                        </label>
-                         <label>
-                            <input type="checkbox"> SMS Notifications
-                        </label>
-                         <label>
-                            <input type="checkbox"> Push Notifications
-                        </label>
-                    </div>
-                     <button class="btn secondary">Save Preferences</button>
-                </div>
-                
-                <div class="settings-section">
-                    <h2>API & Integrations</h2>
-                     <p>Manage your API keys and integrations.</p>
-                     <button class="btn secondary">Generate New API Key</button>
-                </div>
+    <!-- Metrics -->
+    <div class="metrics-row">
+      <div class="m-card">
+        <small>Active Markets</small>
+        <h3>7 Metros</h3>
+      </div>
+      <div class="m-card">
+        <small>Clean Categories</small>
+        <h3>8 Lanes</h3>
+      </div>
+      <div class="m-card">
+        <small>Batch Size Standard</small>
+        <h3>50 / 2,500</h3>
+      </div>
+      <div class="m-card">
+        <small>Order Pricing</small>
+        <h3 style="color:#f59e0b;">Free / $5.00</h3>
+      </div>
+    </div>
 
-            </div>
-        </div>
-    </main>
-  </div>
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <select class="select-custom" id="marketSelect" onchange="updateView()">
+        <option value="mecklenburg-nc">Mecklenburg County, NC (Charlotte)</option>
+        <option value="wayne-mi">Wayne County, MI (Detroit)</option>
+        <option value="dallas-tx">Dallas County, TX (Dallas-Fort Worth)</option>
+        <option value="fulton-ga">Fulton County, GA (Atlanta)</option>
+        <option value="cook-il">Cook County, IL (Chicago)</option>
+        <option value="shelby-tn">Shelby County, TN (Memphis)</option>
+        <option value="massachusetts-statewide">Massachusetts Statewide</option>
+      </select>
+
+      <select class="select-custom" id="categorySelect" onchange="updateView()">
+        <option value="out-of-state">1. Out-of-State Owners</option>
+        <option value="absentee">2. Absentee & Non-Owner</option>
+        <option value="vacant-land">3. Verified Vacant Land</option>
+        <option value="high-equity">4. High Equity Free & Clear</option>
+        <option value="tax-delinquent">5. Tax Delinquent & Tax Sale</option>
+        <option value="commercial">6. Multi-Family & Commercial</option>
+        <option value="landlords">7. Long-Term Landlords</option>
+        <option value="liens">8. Municipal & Property Liens</option>
+      </select>
+
+      <input type="text" class="select-custom" style="flex:1; max-width:320px;" placeholder="Filter records by owner/address..." id="searchInput" oninput="filterRows()">
+    </div>
+
+    <!-- Table Box -->
+    <div class="table-box">
+      <table>
+        <thead>
+          <tr>
+            <th>Parcel ID / APN</th>
+            <th>Owner Name</th>
+            <th>Property Address</th>
+            <th>Mailing Address</th>
+            <th>Total Value</th>
+            <th>Clean Category</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- Populated dynamically -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+
   <script>
-    document.addEventListener('DOMContentLoaded', async function() {
-        // ==== NAVIGATION ====
-        const navLinks = document.querySelectorAll('.sidebar-nav a');
-        const pages = document.querySelectorAll('.page');
+    const SAMPLE_RECORDS = [
+      { apn: "23125967", owner: "HAZEL L LEAVITT", p_addr: "2116 KAYBIRD LN", m_addr: "15932 KATIE RIDGE DR (OK)", val: "$341,000", cat: "Out-of-State" },
+      { apn: "08102304", owner: "CAROLINA ASSET MGT LLC", p_addr: "412 E 18TH ST", m_addr: "PO BOX 4410 (FL)", val: "$285,000", cat: "Absentee" },
+      { apn: "11904128", owner: "WILLIAMS ESTATE TRUST", p_addr: "0 STATESVILLE RD", m_addr: "1840 WEST BLVD", val: "$95,000", cat: "Vacant Land" },
+      { apn: "05511209", owner: "MARCUS & LINDA VANCE", p_addr: "3201 SHAMROCK DR", m_addr: "3201 SHAMROCK DR", val: "$410,000", cat: "High Equity" },
+      { apn: "14502811", owner: "FIRST HARBOR HOLDINGS", p_addr: "1108 TUCKA органи ST", m_addr: "712 COMMERCE RD (NY)", val: "$580,000", cat: "Commercial" },
+      { apn: "09308419", owner: "DETROIT URBAN RENTALS", p_addr: "14820 WPH AVE", m_addr: "PO BOX 1928 (CA)", val: "$165,000", cat: "Long-Term Landlord" },
+      { apn: "07705120", owner: "ATLANTA CITY PROPERTIES", p_addr: "840 CASCADE AVE", m_addr: "840 CASCADE AVE", val: "$210,000", cat: "Municipal Liens" }
+    ];
 
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                const pageId = link.dataset.page + '-page';
-                pages.forEach(page => page.classList.remove('active'));
-                document.getElementById(pageId).classList.add('active');
-                navLinks.forEach(navLink => navLink.classList.remove('active'));
-                link.classList.add('active');
-            });
-        });
+    function updateView() {
+      const m = document.getElementById('marketSelect').value;
+      const c = document.getElementById('categorySelect').value;
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = SAMPLE_RECORDS.map(r => `
+        <tr>
+          <td><strong style="color:#fff">${r.apn}</strong></td>
+          <td>${r.owner}</td>
+          <td>${r.p_addr}</td>
+          <td>${r.m_addr}</td>
+          <td><strong style="color:#10b981">${r.val}</strong></td>
+          <td><span class="tag-category">${r.cat}</span></td>
+        </tr>
+      `).join('');
+    }
 
-        // ==== PROPERTIES TABLE ====
-        const propertiesTableBody = document.getElementById('properties-table-body');
-        const propertiesSearch = document.getElementById('properties-search');
-        let propertiesData = [];
+    function filterRows() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      const rows = document.querySelectorAll('#tableBody tr');
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        row.style.display = text.includes(q) ? '' : 'none';
+      });
+    }
 
-        async function fetchProperties() {
-            try {
-                const response = await fetch('/api/properties');
-                propertiesData = await response.json();
-                renderProperties(propertiesData);
-            } catch (error) {
-                console.error('Error fetching properties:', error);
-            }
-        }
+    function downloadCurrentBatch() {
+      const m = document.getElementById('marketSelect').value;
+      const c = document.getElementById('categorySelect').value;
+      window.open(`/samples/${m}_${c}_50_leads.csv`, '_blank');
+    }
 
-        function renderProperties(data) {
-            propertiesTableBody.innerHTML = '';
-            data.forEach(p => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${p.owner || 'N/A'}</td>
-                    <td>${p.address || 'N/A'}</td>
-                    <td>${p.lane || 'N/A'}</td>
-                    <td>${p.score || 'N/A'}</td>
-                    <td><a href="#">View</a></td>
-                `;
-                propertiesTableBody.appendChild(row);
-            });
-        }
-
-        propertiesSearch.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            const filteredData = propertiesData.filter(p => 
-                (p.owner && p.owner.toLowerCase().includes(searchTerm)) ||
-                (p.address && p.address.toLowerCase().includes(searchTerm)) ||
-                (p.lane && p.lane.toLowerCase().includes(searchTerm))
-            );
-            renderProperties(filteredData);
-        });
-
-        fetchProperties();
-
-        // ==== CUSTOMERS TABLE ====
-        const customersTableBody = document.getElementById('customers-table-body');
-        const customersSearch = document.getElementById('customers-search');
-        const customersData = Array.from(customersTableBody.querySelectorAll('tr')).map(row => {
-            const cells = row.querySelectorAll('td');
-            return {
-                name: cells[0].innerText,
-                email: cells[1].innerText,
-                status: cells[2].innerText,
-                investorType: cells[3].innerText,
-                element: row
-            };
-        });
-
-        customersSearch.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            customersData.forEach(c => {
-                const isVisible = c.name.toLowerCase().includes(searchTerm) || 
-                                c.email.toLowerCase().includes(searchTerm) || 
-                                c.investorType.toLowerCase().includes(searchTerm);
-                c.element.style.display = isVisible ? '' : 'none';
-            });
-        });
-
-    });
+    updateView();
   </script>
 </body>
 </html>

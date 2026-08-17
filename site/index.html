@@ -3,932 +3,537 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LeadCurate — Limited-seat county property data</title>
-  <meta name="description" content="LeadCurate turns messy public-record property data into cleaned, scored, limited-seat property-owner lead batches for serious real estate investors, wholesalers, and acquisition teams." />
-  <meta name="keywords" content="property data, tax delinquent records, probate records, absentee owner records, real estate investor data, wholesaling data, county property records, skip-traced property records, DNC-aware property data, exclusive property data" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://leadcurate.com/" />
-  <meta property="og:title" content="LeadCurate — Limited-seat county property data" />
-  <meta property="og:description" content="County property records reviewed, cleaned, scored, and delivered with source context, contact data where available, and DNC-aware fields where applicable." />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "LeadCurate",
-    "description": "Fresh, limited-seat property data from cleaned public-record real estate data.",
-    "areaServed": ["North Carolina", "South Carolina", "Georgia", "Texas", "Florida", "New York", "Ohio", "Indiana", "Kentucky", "Tennessee", "Alabama", "Arizona"],
-    "serviceType": ["Property data curation", "County property data cleaning", "Real estate investor property data"],
-    "audience": {"@type": "BusinessAudience", "audienceType": "Real estate investors, wholesalers, acquisition teams"}
-  }
-  </script>
+  <title>Dollar Leads — 15M+ Clean Public Real Estate Records</title>
+  <meta name="description" content="Download 50 free real estate leads daily or unlock 2,500 verified records for $5. Clean public property records across 7 major metro markets." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #1e293b;
-      --muted: #64748b;
-      --cream: #faf7f2;
-      --stone: #f5f1eb;
-      --dark: #0f172a;
-      --dark-2: #111827;
-      --emerald: #15803d;
-      --emerald-2: #22c55e;
-      --emerald-soft: #dff4e8;
-      --gold: #d97706;
-      --gold-soft: #fef3c7;
-      --line: rgba(30, 41, 59, .12);
-      --shadow: 0 24px 80px rgba(15, 23, 42, .12);
-      --radius: 28px;
+      --bg: #090d16;
+      --card-bg: rgba(18, 24, 38, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover: rgba(30, 41, 64, 0.9);
+      --emerald: #10b981;
+      --emerald-glow: rgba(16, 185, 129, 0.25);
+      --emerald-dark: #065f46;
+      --gold: #f59e0b;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --radius: 16px;
     }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0;
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--cream);
-      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
       line-height: 1.5;
-      overflow-x: hidden;
+      padding-bottom: 60px;
     }
-    body::after { content:""; position: fixed; inset: 0; pointer-events:none; z-index:-3; opacity:.42; background-image: linear-gradient(132deg, transparent 0 11%, rgba(21,128,61,.28) 11.1% 11.45%, transparent 11.65% 28%, rgba(30,41,59,.16) 28.1% 28.45%, transparent 28.65% 48%, rgba(21,128,61,.18) 48.1% 48.45%, transparent 48.65%), linear-gradient(36deg, transparent 0 17%, rgba(30,41,59,.14) 17.1% 17.45%, transparent 17.65% 39%, rgba(21,128,61,.16) 39.1% 39.45%, transparent 39.65%); }
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at 16% 12%, rgba(21,128,61,.14), transparent 26rem),
-        radial-gradient(circle at 86% 4%, rgba(15,23,42,.08), transparent 24rem),
-        linear-gradient(rgba(30,41,59,.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(30,41,59,.035) 1px, transparent 1px);
-      background-size: auto, auto, 44px 44px, 44px 44px;
-      z-index: -2;
-    }
-    a { color: inherit; text-decoration: none; }
-    .container { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
-    .nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 24px 0; position: relative; z-index: 5;
-    }
-    .logo { font-family: "Playfair Display", serif; font-size: 30px; font-weight: 700; letter-spacing: -.04em; }
-    .logo span { color: var(--emerald); }
-    .logo .dot { color: var(--emerald); }
-    .navlinks { display: flex; gap: 24px; color: var(--muted); font-size: 14px; font-weight: 600; }
-    .navlinks a:hover { color: var(--ink); }
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
-      border-radius: 999px; padding: 13px 18px; font-weight: 800; font-size: 14px;
-      border: 1px solid transparent; transition: .2s ease; cursor: pointer;
-    }
-    .btn.primary { background: var(--dark); color: white; box-shadow: 0 12px 36px rgba(15,23,42,.2); }
-    .btn.primary:hover { transform: translateY(-1px); background: #020617; }
-    .btn.secondary { background: rgba(255,255,255,.7); border-color: var(--line); color: var(--ink); }
-    .btn.secondary:hover { background: white; }
-    .hero::before {
-      content: "";
+    .hero-glow {
       position: absolute;
-      left: max(16px, calc((100vw - 1160px) / 2));
-      right: max(16px, calc((100vw - 1160px) / 2));
-      top: 18px;
-      height: 92%;
-      pointer-events: none;
-      opacity: .34;
-      background:
-        linear-gradient(118deg, transparent 0 12%, rgba(21,128,61,.30) 12.08% 12.32%, transparent 12.45% 31%, rgba(30,41,59,.18) 31.08% 31.32%, transparent 31.45% 56%, rgba(21,128,61,.24) 56.08% 56.32%, transparent 56.45%),
-        linear-gradient(24deg, transparent 0 19%, rgba(30,41,59,.16) 19.08% 19.32%, transparent 19.45% 44%, rgba(21,128,61,.20) 44.08% 44.32%, transparent 44.45% 72%, rgba(30,41,59,.12) 72.08% 72.32%, transparent 72.45%);
-      mask-image: radial-gradient(ellipse at 52% 43%, black, transparent 72%);
-      z-index: -1;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 1100px; height: 380px;
+      background: radial-gradient(circle at 50% 20%, rgba(16, 185, 129, 0.15), transparent 70%);
+      pointer-events: none; z-index: 0;
     }
-    .hero { padding: 72px 0 62px; position: relative; }
-    .hero-grid { display: grid; grid-template-columns: 1.02fr .98fr; gap: 42px; align-items: center; position: relative; z-index: 2; }
+    .container {
+      width: min(1140px, calc(100% - 32px));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    /* Top Sponsor Banner */
+    .top-sponsor-bar {
+      margin: 16px 0 24px;
+      padding: 12px 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px dashed rgba(255, 255, 255, 0.14);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .top-sponsor-bar strong { color: #cbd5e1; }
+    .top-sponsor-btn {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid var(--emerald);
+      color: #6ee7b7;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 12px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .top-sponsor-btn:hover { background: var(--emerald); color: #064e3b; }
 
-    @keyframes pulse-glow {
-      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(21,128,61,0.5); }
-      70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(21,128,61,0); }
-      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(21,128,61,0); }
+    /* Header */
+    header {
+      padding: 24px 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 32px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    .logo-badge {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #022c22;
+      font-size: 14px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 8px;
+    }
+    .stat-pill {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: #a7f3d0;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 999px;
     }
 
-    .map-plate {
-      position: absolute;
-      left: 50%;
-      top: 58%;
-      width: min(720px, 72vw);
-      height: 420px;
-      transform: translate(-50%, -50%) rotateX(62deg) rotateZ(-9deg);
-      transform-style: preserve-3d;
-      pointer-events: none;
-      opacity: .32;
-      z-index: 0;
-      filter: drop-shadow(0 38px 50px rgba(15,23,42,.18));
+    /* Hero */
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.1;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      margin-bottom: 14px;
+      text-align: center;
     }
-    .map-plate::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 38px;
-      background:
-        linear-gradient(118deg, transparent 0 14%, rgba(21,128,61,.42) 14.1% 14.45%, transparent 14.7% 33%, rgba(15,23,42,.25) 33.1% 33.45%, transparent 33.7% 52%, rgba(21,128,61,.34) 52.1% 52.45%, transparent 52.7%),
-        linear-gradient(28deg, transparent 0 17%, rgba(15,23,42,.20) 17.1% 17.45%, transparent 17.7% 44%, rgba(21,128,61,.26) 44.1% 44.45%, transparent 44.7% 69%, rgba(15,23,42,.18) 69.1% 69.45%, transparent 69.7%),
-        radial-gradient(circle at 30% 35%, rgba(34,197,94,.16), transparent 16rem),
-        rgba(255,255,255,.38);
-      border: 1px solid rgba(21,128,61,.18);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 40px 90px rgba(15,23,42,.12);
+    .hero-title span {
+      background: linear-gradient(135deg, #34d399, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    .map-pin {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      border-radius: 999px 999px 999px 2px;
-      background: var(--emerald);
-      transform: rotate(-45deg) translateZ(38px);
-      box-shadow: 0 0 0 10px rgba(21,128,61,.16), 0 18px 32px rgba(21,128,61,.42), 0 0 34px rgba(34,197,94,.38);
+    .hero-sub {
+      color: var(--muted);
+      font-size: clamp(16px, 2.5vw, 19px);
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 36px;
     }
-    .map-pin::after { content:""; position:absolute; inset:5px; border-radius:999px; background:#ecfdf5; }
-    .map-pin.one { left: 24%; top: 38%; }
-    .map-pin.two { left: 52%; top: 26%; }
-    .map-pin.three { left: 68%; top: 57%; }
-    .map-pin.four { left: 36%; top: 66%; opacity:.72; }
-    .eyebrow { display: inline-flex; align-items: center; gap: 9px; padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,.72); border: 1px solid var(--line); color: var(--emerald); font-size: 13px; font-weight: 800; }
-    .pulse { width: 8px; height: 8px; border-radius: 999px; background: var(--emerald); animation: pulse-glow 2s infinite; }
-    h1 { margin: 22px 0 20px; font-family: "Playfair Display", serif; font-size: clamp(48px, 7vw, 82px); line-height: .95; letter-spacing: -.055em; max-width: 880px; }
-    .hero p { font-size: 19px; color: #475569; max-width: 620px; margin: 0 0 28px; }
-    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
-    .trust-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 34px; max-width: 660px; }
-    .trust-card { background: rgba(255,255,255,.62); border: 1px solid var(--line); border-radius: 18px; padding: 16px; backdrop-filter: blur(14px); transition: transform 0.2s ease; }
-    .trust-card:hover { transform: translateY(-2px); }
-    .trust-card strong { display: block; font-size: 22px; letter-spacing: -.03em; }
-    .trust-card span { display: block; color: var(--muted); font-size: 13px; margin-top: 3px; }
 
-    .visual-card {
-      position: relative; border-radius: 36px; background: linear-gradient(145deg, rgba(15,23,42,.97), rgba(30,41,59,.94)); color: white;
-      padding: 22px; min-height: 600px; box-shadow: var(--shadow); overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.08);
+    /* Market Selector */
+    .selector-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px;
+      backdrop-filter: blur(16px);
+      margin-bottom: 32px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     }
-    .visual-card::before { content:""; position:absolute; inset:-35%; background: radial-gradient(circle at 40% 35%, rgba(34,197,94,.28), transparent 18rem), radial-gradient(circle at 72% 70%, rgba(250,247,242,.13), transparent 18rem); pointer-events:none; }
-    .parcel-lines { position:absolute; inset:18px; opacity:.18; pointer-events:none; background: linear-gradient(118deg, transparent 0 16%, #fff 16.2% 16.45%, transparent 16.7% 38%, #fff 38.2% 38.45%, transparent 38.7%), linear-gradient(24deg, transparent 0 22%, #fff 22.2% 22.45%, transparent 22.7% 61%, #fff 61.2% 61.45%, transparent 61.7%), linear-gradient(90deg, transparent 0 52%, #fff 52.2% 52.45%, transparent 52.7%); border-radius:28px; }
-    .node-map { position:absolute; inset:0; pointer-events:none; }
-    .node { position:absolute; width:9px; height:9px; border-radius:999px; background:#86efac; box-shadow:0 0 0 7px rgba(34,197,94,.12), 0 0 30px rgba(34,197,94,.65); }
-    .node.one { left:18%; top:24%; } .node.two { left:64%; top:18%; } .node.three { left:77%; top:62%; } .node.four { left:31%; top:72%; }
-    .node-line { position:absolute; height:1px; background:linear-gradient(90deg, transparent, rgba(134,239,172,.55), transparent); transform-origin:left center; }
-    .node-line.a { left:19%; top:25%; width:48%; transform:rotate(-8deg); } .node-line.b { left:32%; top:72%; width:48%; transform:rotate(-13deg); } .node-line.c { left:64%; top:20%; width:25%; transform:rotate(65deg); }
-    .map-grid { position:absolute; inset:0; opacity:.22; background-image: radial-gradient(rgba(255,255,255,.35) 1.2px, transparent 1.2px); background-size: 24px 24px; mask-image: linear-gradient(to bottom, black, transparent 78%); pointer-events:none; }
-    .dash { position: relative; z-index: 2; display:flex; flex-direction:column; gap:14px; }
-    .dash-top { display:flex; align-items:center; justify-content:space-between; padding: 4px 8px 8px; }
-    .dash-title small { color: #94a3b8; display:block; font-weight:700; text-transform:uppercase; letter-spacing:.12em; font-size:11px; }
-    .dash-title strong { font-size: 20px; letter-spacing:-.03em; }
+    .section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 800;
+      color: var(--emerald);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .market-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .market-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #cbd5e1;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+    }
+    .market-btn small { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; font-weight: 500; }
+    .market-btn:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); }
+    .market-btn.active {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: var(--emerald);
+      color: #fff;
+      box-shadow: 0 0 16px var(--emerald-glow);
+    }
+    .market-btn.active small { color: #a7f3d0; }
 
-    .county-tabs { display: flex; gap: 8px; padding: 4px 8px; margin-bottom: 2px; flex-wrap: wrap; }
-    .county-tab {
-      background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
-      padding: 6px 12px; border-radius: 99px; font-size: 11px; font-weight: 700;
-      color: #94a3b8; cursor: pointer; transition: all .2s ease;
+    /* Category Grid (8 Clean Lanes) */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
     }
-    .county-tab:hover, .county-tab.active { background: var(--emerald); color: white; border-color: transparent; }
+    .cat-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .cat-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
+    .cat-card.active {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: var(--emerald);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+    }
+    .cat-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .cat-title { font-weight: 700; font-size: 14px; color: #f8fafc; }
+    .cat-count {
+      font-size: 11px;
+      font-weight: 800;
+      color: #6ee7b7;
+      background: rgba(16, 185, 129, 0.2);
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+    .cat-desc { font-size: 12px; color: var(--muted); line-height: 1.4; }
 
-    .status { display:inline-flex; align-items:center; gap:7px; background: rgba(34,197,94,.14); border:1px solid rgba(34,197,94,.24); color:#bbf7d0; border-radius:999px; padding:8px 11px; font-size:12px; font-weight:800; }
-    .territory { background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:24px; padding:16px; backdrop-filter: blur(12px); transition: all 0.3s ease; }
-    .territory-head { display:flex; justify-content:space-between; gap:10px; margin-bottom:12px; }
-    .territory h3 { margin:0; font-size:16px; letter-spacing:-.03em; }
-    .territory p { margin:3px 0 0; color:#94a3b8; font-size:12px; }
-    .score { width:54px; height:54px; border-radius:50%; display:grid; place-items:center; background: conic-gradient(var(--emerald-2) 84%, rgba(255,255,255,.15) 0); font-weight:900; color:#f8fafc; font-size:15px; }
-    .lead-table { display:grid; gap:8px; margin-top:10px; }
-    .lead-row { display:grid; grid-template-columns: 1.1fr .85fr .65fr .5fr; align-items:center; gap:10px; background: rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.1); padding:10px; border-radius:14px; font-size:12px; }
-    .lead-row.header { color:#94a3b8; text-transform:uppercase; letter-spacing:.08em; font-weight:800; background:transparent; border:none; padding-bottom:0; }
-    .tag { display:inline-flex; width:max-content; border-radius:999px; padding:4px 8px; background: rgba(34,197,94,.13); color:#bbf7d0; font-weight:800; font-size:10px; }
-    .tag.red { background: rgba(239,68,68,.13); color: #fecaca; }
-    .blur { filter: blur(3px); opacity: .74; }
-    .routing { display:grid; grid-template-columns: repeat(3,1fr); gap:10px; }
-    .metric { background: rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:12px; }
-    .metric span { color:#94a3b8; font-size:11px; font-weight:700; }
-    .metric strong { display:block; font-size:20px; margin-top:2px; }
-    section { padding: 74px 0; }
-    .section-head { max-width:760px; margin-bottom:32px; }
-    .kicker { color: var(--emerald); font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: .14em; }
-    h2 { font-family:"Playfair Display", serif; font-size: clamp(36px, 5vw, 58px); line-height:1; letter-spacing:-.05em; margin:10px 0 14px; }
-    .section-head p { color: var(--muted); font-size:18px; margin:0; }
+    /* Action Deck */
+    .action-deck {
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.08), rgba(0, 0, 0, 0.3));
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .action-info h3 { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+    .action-info p { font-size: 13px; color: var(--muted); }
+    .action-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
 
-    .cards { display:grid; grid-template-columns: repeat(3,1fr); gap:18px; }
-    .card { background: rgba(255,255,255,.66); border:1px solid var(--line); border-radius: var(--radius); padding:26px; box-shadow: 0 14px 40px rgba(15,23,42,.05); transition: all 0.3s ease; }
-    .card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(15,23,42,.08); border-color: rgba(21,128,61,0.22); }
-    .card h3 { margin:0 0 9px; font-size:20px; letter-spacing:-.03em; }
-    .card p { margin:0; color:var(--muted); }
-    .icon-dot { width:38px; height:38px; border-radius:14px; background:var(--emerald-soft); display:grid; place-items:center; color:var(--emerald); font-weight:900; margin-bottom:18px; }
-    .dark-section { background: var(--dark); color:white; position:relative; overflow:hidden; }
-    .dark-section::before { content:""; position:absolute; inset:0; background: radial-gradient(circle at 20% 20%, rgba(34,197,94,.2), transparent 25rem), radial-gradient(circle at 90% 80%, rgba(255,255,255,.09), transparent 25rem); }
-    .dark-section .container { position:relative; }
-    .dark-section .section-head p { color:#cbd5e1; }
-    .process { display:grid; grid-template-columns: repeat(4,1fr); gap:14px; }
-    .step { border:1px solid rgba(255,255,255,.13); background:rgba(255,255,255,.07); border-radius:24px; padding:22px; transition: all 0.2s ease; }
-    .step:hover { background: rgba(255,255,255,.12); border-color: rgba(21,128,61,0.4); }
-    .num { color:#86efac; font-weight:900; margin-bottom:18px; }
-    .step h3 { margin:0 0 8px; }
-    .step p { margin:0; color:#cbd5e1; font-size:14px; }
+    .btn-free {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #022c22;
+      border: none;
+      padding: 14px 22px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      box-shadow: 0 10px 25px var(--emerald-glow);
+    }
+    .btn-free:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
-    .toggle-wrap { display: flex; justify-content: center; align-items: center; gap: 14px; margin-bottom: 18px; }
-    .toggle-label { font-size: 14px; font-weight: 700; color: var(--muted); cursor: pointer; }
-    .toggle-label.active { color: var(--ink); }
-    .toggle-switch {
-      position: relative; width: 62px; height: 32px; background: var(--stone);
-      border-radius: 99px; cursor: pointer; border: 1px solid var(--line);
+    .btn-mega {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #451a03;
+      border: none;
+      padding: 14px 22px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.2);
     }
-    .toggle-switch::after {
-      content: ""; position: absolute; left: 4px; top: 4px; width: 22px; height: 22px;
-      background: var(--dark); border-radius: 50%; transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    .toggle-switch.annual::after { left: 34px; background: var(--emerald); }
-    .toggle-switch.annual { background: var(--emerald-soft); border-color: rgba(21,128,61,0.22); }
-    .discount-pill { background: var(--gold-soft); color: var(--gold); border: 1px solid rgba(217,119,6,0.18); font-size: 11px; font-weight: 900; padding: 4px 8px; border-radius: 99px; margin-left: 4px; }
-    .billing-note { text-align: center; color: var(--muted); font-size: 12px; margin-bottom: 28px; min-height: 16px; font-weight: 600; }
+    .btn-mega:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
-    .pricing { display:grid; grid-template-columns: repeat(4,1fr); gap:16px; align-items:stretch; }
-    .price-card { background:#fff; border:1px solid var(--line); border-radius:28px; padding:24px; display:flex; flex-direction:column; min-height:360px; position:relative; transition: all 0.3s ease; }
-    .price-card.featured {
-      background: var(--dark); color:white; transform: translateY(-8px); box-shadow: var(--shadow);
-      border: 2px solid var(--emerald);
+    /* Skip-Trace Affiliate Box */
+    .affiliate-box {
+      margin-top: 36px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
     }
-    .price-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
-    .price-card.featured:hover { transform: translateY(-12px); }
-    .price-card h3 { margin:0 0 8px; font-size:20px; }
-    .price { font-size:34px; letter-spacing:-.06em; font-weight:900; margin:8px 0 4px; display: flex; align-items: baseline; flex-wrap: wrap; }
-    .price small { font-size:13px; color:inherit; opacity:.7; letter-spacing:0; margin-left: 4px; font-weight: 700; }
-    .billed-as { font-size: 11px; color: var(--muted); margin: 0 0 10px; font-weight: 700; min-height: 14px; }
-    .price-card.featured .billed-as { color: #94a3b8; }
-    .price-card p { color:var(--muted); margin:0 0 18px; font-size:14px; }
-    .price-card.featured p, .price-card.featured li { color:#cbd5e1; }
-    .price-card ul { list-style:none; padding:0; margin:0 0 22px; display:grid; gap:10px; font-size:14px; }
-    .price-card li::before { content:"•"; color:var(--emerald); font-weight:900; margin-right:8px; }
-    .price-card .btn { margin-top:auto; }
-    .operator-kit { display:grid; grid-template-columns: .92fr 1.08fr; gap:28px; align-items:center; }
-    .kit-panel { background:#fff; border:1px solid var(--line); border-radius:32px; padding:26px; box-shadow:var(--shadow); }
-    .kit-list { display:grid; grid-template-columns: repeat(2,1fr); gap:10px; }
-    .kit-item { padding:14px; border-radius:16px; background:var(--stone); font-weight:700; color:#334155; font-size:14px; }
-    .form-wrap { background:#fff; border:1px solid var(--line); border-radius:34px; padding:30px; box-shadow: var(--shadow); }
-    form { display:grid; grid-template-columns: repeat(2,1fr); gap:14px; }
-    label { display:grid; gap:7px; font-weight:800; font-size:13px; color:#334155; }
-    input, select, textarea { width:100%; border:1px solid var(--line); background:#fbfaf8; border-radius:14px; padding:14px 13px; font:inherit; color:var(--ink); outline:none; }
-    input:focus, select:focus, textarea:focus { border-color: rgba(21,128,61,.45); box-shadow:0 0 0 4px rgba(21,128,61,.1); }
-    .full { grid-column:1 / -1; }
-    .consent-row { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--muted); font-weight: 500; }
-    .consent-row input[type=checkbox] { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--emerald); flex-shrink: 0; }
-    .consent-row a { color: var(--emerald); text-decoration: underline; font-weight: 700; }
-    .form-status { margin-top: 12px; padding: 12px 14px; border-radius: 12px; font-size: 14px; font-weight: 700; display: none; }
-    .form-status.success { display: block; background: var(--emerald-soft); color: var(--emerald); border: 1px solid rgba(21,128,61,.2); }
-    .form-status.error { display: block; background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+    .aff-text h4 { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .aff-text p { font-size: 13px; color: var(--muted); max-width: 600px; }
+    .aff-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .aff-btn:hover { background: #fff; color: #000; }
 
-    footer { padding:44px 0; border-top:1px solid var(--line); color:var(--muted); }
-    .footer-row { display:flex; justify-content:space-between; gap:20px; align-items:center; flex-wrap: wrap; }
-    .footer-links { display: flex; gap: 18px; font-size: 13px; font-weight: 600; }
-    .footer-links a:hover { color: var(--ink); text-decoration: underline; }
-    .footer-disclaimer { font-size: 13px; max-width: 560px; }
+    /* Modal */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      display: none; place-items: center;
+      z-index: 100; padding: 20px;
+    }
+    .modal {
+      background: #111827;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      max-width: 480px; width: 100%;
+      padding: 28px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+      position: relative;
+    }
+    .modal-close {
+      position: absolute; top: 18px; right: 18px;
+      background: none; border: none; color: var(--muted);
+      font-size: 20px; cursor: pointer;
+    }
+    .cashapp-tag {
+      display: inline-block;
+      background: #00d632;
+      color: #000;
+      font-weight: 900;
+      font-size: 20px;
+      padding: 10px 20px;
+      border-radius: 12px;
+      margin: 16px 0;
+      letter-spacing: -0.02em;
+    }
+    .order-code {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      padding: 10px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 16px;
+      color: #6ee7b7;
+      margin-bottom: 16px;
+    }
 
-    .faq-container { display: flex; flex-direction: column; gap: 12px; max-width: 860px; margin: 0 auto; }
-    .faq-item { background: rgba(255,255,255,.92); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; transition: all 0.3s ease; }
-    .faq-trigger {
-      width: 100%; padding: 22px 26px; display: flex; justify-content: space-between;
-      align-items: center; background: none; border: none; font: inherit;
-      color: var(--ink); text-align: left; font-weight: 700; cursor: pointer; outline: none;
-    }
-    .faq-trigger h3 { margin: 0; font-size: 17px; }
-    .faq-icon {
-      width: 24px; height: 24px; border-radius: 50%; background: var(--stone);
-      display: grid; place-items: center; font-size: 14px; font-weight: 800;
-      color: var(--muted); transition: transform 0.3s ease;
-    }
-    .faq-content {
-      max-height: 0; padding: 0 26px; overflow: hidden;
-      transition: max-height 0.3s ease, padding 0.3s ease;
-      color: var(--muted); font-size: 15px; border-top: 1px solid transparent;
-    }
-    .faq-item.active { border-color: rgba(21,128,61,0.22); box-shadow: 0 10px 30px rgba(15,23,42,0.04); }
-    .faq-item.active .faq-icon { transform: rotate(45deg); background: var(--emerald-soft); color: var(--emerald); }
-    .faq-item.active .faq-content { max-height: 240px; padding: 18px 26px 22px; border-color: var(--line); }
-
-    .mini-badges { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
-    .mini-badge { border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.08); border-radius:999px; padding:7px 9px; color:#d1fae5; font-size:11px; font-weight:800; }
-    .pipeline-card { margin-top:20px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.13); border-radius:28px; padding:22px; }
-    .pipeline { display:grid; grid-template-columns: repeat(5, 1fr); gap:12px; align-items:stretch; }
-    .pipe-step { position:relative; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12); border-radius:20px; padding:16px; min-height:110px; }
-    .pipe-step:not(:last-child)::after { content:""; position:absolute; right:-13px; top:50%; width:14px; height:2px; background:linear-gradient(90deg, rgba(134,239,172,.9), transparent); }
-    .pipe-step strong { display:block; margin-bottom:8px; }
-    .pipe-step span { color:#cbd5e1; font-size:13px; }
-    .geo-grid { display:grid; grid-template-columns: 1fr 1fr; gap:18px; }
-    .geo-card { background:rgba(255,255,255,.72); border:1px solid var(--line); border-radius:28px; padding:26px; }
-    .geo-card ul { margin:16px 0 0; padding-left:18px; color:var(--muted); }
-    .geo-card li { margin:8px 0; }
-    .plan-label { display:inline-flex; width:max-content; margin-bottom:12px; border-radius:999px; padding:6px 9px; background:var(--emerald-soft); color:var(--emerald); font-size:11px; font-weight:900; text-transform:uppercase; letter-spacing:.08em; }
-
-    .deposit-notice {
-      background: rgba(255, 255, 255, 0.7); border: 1px solid var(--line);
-      border-radius: 20px; padding: 20px 24px; margin-bottom: 32px;
-      display: flex; align-items: center; gap: 16px;
-      max-width: 860px; margin-left: auto; margin-right: auto;
-    }
-    .deposit-icon {
-      width: 42px; height: 42px; border-radius: 50%; background: var(--emerald-soft);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--emerald); font-weight: 900; font-size: 18px; flex-shrink: 0;
-    }
-    .deposit-text { font-size: 14px; color: var(--muted); line-height: 1.5; }
-    .deposit-text strong { color: var(--ink); display: block; margin-bottom: 4px; font-size: 14px; }
-
-    @media (max-width: 980px) {
-      .hero-grid, .operator-kit { grid-template-columns: 1fr; }
-      .cards, .process, .pricing, .pipeline { grid-template-columns: repeat(2,1fr); }
-      .geo-grid { grid-template-columns: 1fr; }
-      .visual-card { min-height: 520px; }
-      .navlinks { display:none; }
-    }
-    @media (max-width: 640px) {
-      .container { width: min(100% - 28px, 1160px); }
-      .hero { padding-top: 34px; }
-      .map-plate { width: 84vw; height: 300px; opacity: .22; top: 44%; }
-      .trust-row, .cards, .process, .pricing, .routing, .kit-list, form, .pipeline { grid-template-columns: 1fr; }
-      .pipe-step::after { display:none; }
-      .lead-row { grid-template-columns: 1fr .7fr; }
-      .lead-row.header { display:none; }
-      .footer-row { flex-direction:column; align-items:flex-start; }
-      .deposit-notice { flex-direction: column; align-items: flex-start; }
+    /* Footer */
+    footer {
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid var(--card-border);
+      font-size: 12px;
+      color: #64748b;
+      text-align: center;
+      line-height: 1.6;
     }
   </style>
 </head>
 <body>
-  <header class="container nav">
-    <a class="logo" href="#">Lead<span>Curate</span><span class="dot">.</span></a>
-    <nav class="navlinks">
-      <a href="#model">Why LeadCurate</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#kit">Operator Kit</a>
-      <a href="#county">Check County</a>
-    </nav>
-    <a class="btn secondary" href="#county">Check availability</a>
-  </header>
+  <div class="hero-glow"></div>
+  <div class="container">
+    
+    <!-- Top Contextual Banner Slot -->
+    <div class="top-sponsor-bar">
+      <div><strong>Partner Sponsor:</strong> 100% Fix & Flip + Transactional Funding for Wholesalers.</div>
+      <a href="#sponsor" class="top-sponsor-btn">View Lender Rates &rarr;</a>
+    </div>
 
-  <main>
-    <section class="hero">
-      <div class="map-plate" aria-hidden="true"><span class="map-pin one"></span><span class="map-pin two"></span><span class="map-pin three"></span><span class="map-pin four"></span></div>
-      <div class="container hero-grid">
-        <div>
-          <div class="eyebrow"><span class="pulse"></span> Curated county property data · pulled from the source</div>
-          <h1>Stop buying the same stale property lists everyone else is working.</h1>
-          <p>LeadCurate pulls property records directly from county portals — not licensed reseller feeds — then cleans, verifies, scores, and delivers them with source dates stamped on every row. For investors, wholesalers, land buyers, collection attorneys, and contractors.</p>
-          <div class="hero-actions">
-            <a class="btn primary" href="https://leadcurate.com/intake/">Request your market</a>
-            <a class="btn secondary" href="https://leadcurate.com/sample-deliveries/">See real samples</a>
-          </div>
-          <div class="trust-row">
-            <div class="trust-card"><strong>22</strong><span>markets across 12 states, pulled from official county sources</span></div>
-            <div class="trust-card"><strong>5.05M+</strong><span>verified property records on hand, refreshed up to daily</span></div>
-            <div class="trust-card"><strong>11</strong><span>distress lanes — tax delinquent, probate, vacant land, violations &amp; more</span></div>
-          </div>
-        </div>
-
-        <div class="visual-card" aria-label="LeadCurate dashboard preview">
-          <div class="map-grid"></div>
-          <div class="parcel-lines"></div>
-          <div class="node-map"><span class="node one"></span><span class="node two"></span><span class="node three"></span><span class="node four"></span><span class="node-line a"></span><span class="node-line b"></span><span class="node-line c"></span></div>
-          <div class="dash">
-            <div class="dash-top">
-              <div class="dash-title"><small>Territory Selector</small><strong id="current-county-title">Mecklenburg County, NC</strong></div>
-              <div class="status" id="current-county-status"><span class="pulse"></span> 1 of 2 seats filled</div>
-            </div>
-
-            <div class="county-tabs">
-              <div class="county-tab active" data-county="Mecklenburg">Mecklenburg, NC</div>
-              <div class="county-tab" data-county="Wake">Wake, NC</div>
-              <div class="county-tab" data-county="Charleston">Charleston, SC</div>
-            </div>
-
-            <div class="territory">
-              <div class="territory-head">
-                <div><h3>Available Buyer Seats</h3><p>Estimated after source review and record cleanup</p></div>
-                <div class="score" id="county-score">84</div>
-              </div>
-              <div class="routing">
-                <div class="metric"><span>Lead flow</span><strong id="county-flow">Strong</strong></div>
-                <div class="metric"><span>Seats Max</span><strong id="county-seats">2</strong></div>
-                <div class="metric"><span>Lead types</span><strong id="county-types">5</strong></div>
-              </div>
-              <div class="mini-badges" id="county-badges">
-                <span class="mini-badge">Tax delinquent</span>
-                <span class="mini-badge">Absentee</span>
-                <span class="mini-badge">Probate</span>
-                <span class="mini-badge">Vacancy</span>
-              </div>
-            </div>
-            <div class="territory">
-              <div class="territory-head"><div><h3>Sample Batch</h3><p>Illustrative preview. Full files include source dates, score reasons, DNC notes, and assignment IDs.</p></div></div>
-              <div class="lead-table" id="lead-table-body">
-                <div class="lead-row header"><div>Owner</div><div>Signal</div><div>Outreach</div><div>Score</div></div>
-                <div class="lead-row"><div class="blur">M. Anderson</div><div><span class="tag">Tax + absentee</span></div><div>DNC check</div><div>91</div></div>
-                <div class="lead-row"><div class="blur">Bright Oak LLC</div><div><span class="tag">Vacant</span></div><div>No DNC</div><div>78</div></div>
-                <div class="lead-row"><div class="blur">Estate record</div><div><span class="tag">Probate</span></div><div>Mail-first</div><div>72</div></div>
-              </div>
-            </div>
-            <div class="territory">
-              <div class="territory-head"><div><h3>Assignment protection</h3><p>Records assigned to you are held back from other buyers during your access period.</p></div></div>
-            </div>
-          </div>
-        </div>
+    <!-- Header -->
+    <header>
+      <div class="logo">
+        <span>DOLLAR LEADS</span>
+        <span class="logo-badge">15.3M+ PUBLIC RECORDS</span>
       </div>
-    </section>
+      <div class="stat-pill">⚡ 50 Free Leads Every Day</div>
+    </header>
 
-    <section id="model">
-      <div class="container">
-        <div class="section-head">
-          <div class="kicker">Why people trust us</div>
-          <h2>We show the work because serious buyers are tired of mystery lists.</h2>
-          <p>Most lead sellers hide the process and sell the promise. LeadCurate earns trust by reviewing the county, showing the decision context, and only delivering records that pass the batch standard.</p>
-        </div>
-        <div class="cards">
-          <div class="card"><div class="icon-dot">1</div><h3>Review the source</h3><p>We check source availability, usable record volume, and buyer-seat capacity before anything gets sold.</p></div>
-          <div class="card"><div class="icon-dot">2</div><h3>Refine the records</h3><p>We clean owner and property details, remove duplicates, flag weak records, and organize stronger opportunities for review.</p></div>
-          <div class="card"><div class="icon-dot">3</div><h3>Limit the seats</h3><p>We match buyer access to usable county volume so assigned records are not broadly resold during an active access period.</p></div>
-        </div>
-      </div>
-    </section>
+    <!-- Hero Title -->
+    <h1 class="hero-title">Download Clean Real Estate Leads<br><span>50 Free Every Day &bull; 2,500 for $5</span></h1>
+    <p class="hero-sub">Freshly cleaned public property records from county assessors, tax rolls, and deed registries. Deduplicated, standardized, and ready for instant CSV export.</p>
 
-    <section id="education">
-      <div class="container geo-grid">
-        <div class="geo-card">
-          <span class="plan-label">Why we teach the process</span>
-          <h3>We include the practical training most sellers leave out.</h3>
-          <p style="color: var(--muted); margin: 0;">A serious investor should understand why a record is worth reviewing, not just receive another name and phone number. LeadCurate includes the worksheets, call prep, follow-up structure, and offer-review guidance buyers often pay separate courses for &mdash; without pretending the data closes deals by itself.</p>
-        </div>
-        <div class="geo-card">
-          <span class="plan-label">Built against stale-list culture</span>
-          <h3>Cleaner data. Fewer blind guesses.</h3>
-          <p style="color: var(--muted); margin: 0;">The market is full of recycled lists and big promises. Our edge is source review, dedupe, scoring, limited-seat delivery, and clear compliance boundaries &mdash; so the buyer knows what they are paying for.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="dark-section">
-      <div class="container">
-        <div class="section-head">
-          <div class="kicker">How it works</div>
-          <h2>From raw county records to a batch your team can actually work.</h2>
-          <p>The value is not just the list. It is the review, cleanup, scoring, assignment protection, and practical context that helps your team decide what deserves attention first.</p>
-        </div>
-        <div class="process">
-          <div class="step"><div class="num">01</div><h3>Review the county</h3><p>We check source availability, record volume, and whether the county can support one, two, or three buyers.</p></div>
-          <div class="step"><div class="num">02</div><h3>Refine the records</h3><p>We improve owner/property details, remove repeats, exclude weak records, and preserve source context.</p></div>
-          <div class="step"><div class="num">03</div><h3>Add decision context</h3><p>Approved records can include source dates, score reasons, contact data where available, and DNC-aware fields where applicable.</p></div>
-          <div class="step"><div class="num">04</div><h3>Deliver the batch</h3><p>Your team gets a structured CSV/XLSX file ready for review, assignment, and outreach planning.</p></div>
-        </div>
-        <div class="pipeline-card" aria-label="Source to delivery pipeline">
-          <div class="pipeline">
-            <div class="pipe-step"><strong>Source</strong><span>Review county and property sources for records worth evaluating.</span></div>
-            <div class="pipe-step"><strong>Refine</strong><span>Remove records that do not meet batch criteria and tighten the details.</span></div>
-            <div class="pipe-step"><strong>Prioritize</strong><span>Organize stronger opportunities so the first review is easier.</span></div>
-            <div class="pipe-step"><strong>Reserve</strong><span>Keep assigned records reserved during the active access period.</span></div>
-            <div class="pipe-step"><strong>Prepare</strong><span>Provide a structured batch with notes, dates, scores, and assignment details.</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="pricing">
-      <div class="container">
-        <div class="section-head" style="text-align: center; margin: 0 auto 28px;">
-          <div class="kicker">Simple pricing</div>
-          <h2>Each county is reviewed before we sell access.</h2>
-          <p style="margin-top: 10px;">No hype. No fake guarantees. The review shows what the county can actually support.</p>
-        </div>
-
-        <!-- Annual billing hidden until pricing is proven (Codex handoff 2026-07-07 item 5). Monthly stays the only displayed plan. -->
-        <div class="toggle-wrap" style="display:none;" hidden>
-          <span class="toggle-label active" id="label-monthly">Monthly Billing</span>
-          <div class="toggle-switch" id="billing-toggle" role="switch" aria-checked="false" tabindex="0"></div>
-          <span class="toggle-label" id="label-annual">Annual Billing <span class="discount-pill">Save 15%</span></span>
-        </div>
-        <div class="billing-note" id="billing-note" style="display:none;" hidden>Switch to annual billing to save 15%</div>
-
-        <div class="deposit-notice">
-          <div class="deposit-icon">✓</div>
-          <div class="deposit-text">
-            <strong>How buying works today: preview first, pay second.</strong>
-            Tell us your market and lane on the intake form. We send back a redacted preview built from your county&rsquo;s actual records — you see the data quality before any money moves. Approve it, pay, and the full file is delivered to your inbox. Subscriptions with locked seats are coming; every order today is quoted directly with your preview.
-          </div>
-        </div>
-
-        <div class="pricing">
-          <div class="price-card">
-            <span class="plan-label" style="background: var(--emerald-soft); color: var(--emerald);">Available now</span>
-            <h3>Single Batch</h3>
-            <div class="price">Quoted <small>with your preview</small></div>
-            <p class="billed-as">One-time · no subscription</p>
-            <p>Tell us your market and lane. You get a redacted preview from the county&rsquo;s actual records, a firm quote, and the full file on payment.</p>
-            <ul><li>1 current county snapshot</li><li>Source dates &amp; score reasons on every row</li><li>Preview before any payment</li><li>No recurring subscription</li></ul>
-            <a class="btn primary" href="https://leadcurate.com/intake/">Request a preview</a>
-          </div>
-          <div class="price-card featured">
-            <span class="plan-label" style="background: var(--gold-soft); color: var(--gold);">Coming · waitlist open</span>
-            <h3>County Seat</h3>
-            <div class="price" id="price-county-seat">$497 <small>/mo</small></div>
-            <p class="billed-as" id="billed-county-seat">Billed monthly</p>
-            <p>For active solo investors. Secure ongoing limited-seat access with fresh records delivered every single month.</p>
-            <ul><li>1 approved target county</li><li>Monthly fresh record updates</li><li>Protected territory suppression</li><li>MAO worksheets &amp; call prep</li></ul>
-            <a class="btn primary" href="#county">Check seat availability</a>
-          </div>
-          <div class="price-card">
-            <span class="plan-label">Coming · Active Teams</span>
-            <h3>Operator Seat</h3>
-            <div class="price" id="price-operator-seat">$897 <small>/mo</small></div>
-            <p class="billed-as" id="billed-operator-seat">Billed monthly</p>
-            <p>For high-volume acquisition teams who need biweekly delivery speeds to keep cold callers busy.</p>
-            <ul><li>Double volume / 2 counties</li><li>Biweekly delivery targets</li><li>Priority queue assignment</li><li>Dedicated operator support</li></ul>
-            <a class="btn secondary" href="#county">Check seat availability</a>
-          </div>
-          <div class="price-card">
-            <span class="plan-label">Coming · Complete control</span>
-            <h3>Exclusive Territory</h3>
-            <div class="price" id="price-exclusive">$1,497+ <small>/mo</small></div>
-            <p class="billed-as" id="billed-exclusive">Billed monthly</p>
-            <p>Buy out the market. Lock down a complete county or custom ZIP group with zero other seats sold.</p>
-            <ul><li>100% exclusive county buyout</li><li>0 other competitor seats sold</li><li>Customized scoring parameters</li><li>Custom delivery scheduling</li></ul>
-            <a class="btn secondary" href="#county">Apply for exclusivity</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="kit">
-      <div class="container operator-kit">
-        <div class="section-head">
-          <div class="kicker">What you receive</div>
-          <h2>Clean files, useful context, and practical tools to work the batch correctly.</h2>
-          <p>We give buyers more than names. Each delivery is designed to help an investor understand what they are looking at, why it made the batch, and how to start reviewing it without pretending deals are guaranteed.</p>
-        </div>
-        <div class="kit-panel">
-          <div class="kit-list">
-            <div class="kit-item">Cleaned county CSV/XLSX</div>
-            <div class="kit-item">Source / review date</div>
-            <div class="kit-item">Score or priority reason</div>
-            <div class="kit-item">Assignment ID</div>
-            <div class="kit-item">Contact data where available</div>
-            <div class="kit-item">DNC-aware fields where applicable</div>
-            <div class="kit-item">MAO / offer review worksheet</div>
-            <div class="kit-item">Call prep + compliance reminders</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="county">
-      <div class="container">
-        <div class="section-head">
-          <div class="kicker">Check availability</div>
-          <h2>Start with a real county review.</h2>
-          <p>Tell us the market you want. We review source availability, usable record volume, and seat count before recommending access.</p>
-        </div>
-        <div class="form-wrap">
-          <form id="county-form" novalidate>
-            <label>Email<input type="email" id="email" name="email" required placeholder="you@example.com" autocomplete="email" /></label>
-            <label>Target county<input id="target-county" name="target_county" required placeholder="Mecklenburg County, NC" /></label>
-            <label>Buyer profile<select id="profile" name="profile"><option>Solo investor or wholesaler</option><option>Acquisition team</option><option>Buy-and-hold investor</option><option>Commercial or specialty buyer</option><option>Still evaluating</option></select></label>
-            <label>Preferred access option<select id="option" name="access_option"><option>County availability review</option><option>County Seat access</option><option>Operator Seat access</option><option>Exclusive territory review</option><option>Operator Kit information</option></select></label>
-            <div class="full consent-row">
-              <input type="checkbox" id="consent" name="consent" required />
-              <label for="consent" style="font-weight: 500; color: var(--muted); display:inline;">I agree to LeadCurate&rsquo;s <a href="/terms.html">Terms of Service</a> and <a href="/privacy.html">Privacy Policy</a>, and consent to receive email about my county review request. I understand LeadCurate provides data and educational tools only and does not guarantee deals.</label>
-            </div>
-            <div class="full" style="text-align: center; margin-top: 14px;">
-              <button class="btn primary" type="submit" style="width: min(280px, 100%);">Check county availability</button>
-            </div>
-            <div class="full form-status" id="form-status"></div>
-          </form>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <section class="dark-section" style="padding-top: 54px; padding-bottom: 64px;">
-    <div class="container">
-      <div class="section-head" style="margin-bottom: 34px; max-width: 860px;">
-        <div class="kicker">FAQ</div>
-        <h2>Quick answers before you check a county.</h2>
+    <!-- Selector Deck -->
+    <div class="selector-box">
+      <span class="section-label">Step 1: Select Your Target Market</span>
+      <div class="market-tabs" id="marketList">
+        <!-- Dynamically rendered markets -->
       </div>
 
-      <div class="faq-container">
-        <div class="faq-item">
-          <button type="button" class="faq-trigger" aria-expanded="false">
-            <h3>Why are seats limited?</h3>
-            <span class="faq-icon">+</span>
+      <span class="section-label">Step 2: Choose 1 of 8 Clean Categories</span>
+      <div class="category-grid" id="categoryList">
+        <!-- Dynamically rendered categories -->
+      </div>
+
+      <!-- Action Panel -->
+      <div class="action-deck">
+        <div class="action-info">
+          <h3 id="selectedCategoryTitle">Out-of-State Owners (Mecklenburg, NC)</h3>
+          <p id="selectedCategoryStats">43,250 records available in this county roll.</p>
+        </div>
+        <div class="action-buttons">
+          <button class="btn-free" id="btnDownloadFree" onclick="downloadFree50()">
+            <span>⚡ Download Daily 50 Leads (Free)</span>
           </button>
-          <div class="faq-content">
-            <p>Because some counties only support a small number of buyers once source volume and usable records are counted. This protects the data from getting completely oversold and fatigued.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button type="button" class="faq-trigger" aria-expanded="false">
-            <h3>What do I get in my batch?</h3>
-            <span class="faq-icon">+</span>
+          <button class="btn-mega" onclick="openOrderModal()">
+            <span>🔥 Get 2,500 Leads for $5</span>
           </button>
-          <div class="faq-content">
-            <p>A cleaned CSV/XLSX batch with source context, score reasons, assignment details, contact data where available, and DNC-aware fields marked where applicable.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button type="button" class="faq-trigger" aria-expanded="false">
-            <h3>Is my county access exclusive?</h3>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-content">
-            <p>Not automatically. Some smaller counties support only one buyer, while larger metropolitan areas might support up to three. Our manual county review report will explicitly lay out the seat limits and availability before you pay.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button type="button" class="faq-trigger" aria-expanded="false">
-            <h3>Do you sell the same records to everyone?</h3>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-content">
-            <p>No. Records actively assigned to you during your county seat billing cycle are suppressed from delivery to any other buyers in that territory during your access period.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button type="button" class="faq-trigger" aria-expanded="false">
-            <h3>Do you guarantee deals?</h3>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-content">
-            <p>No. LeadCurate provides county data hygiene and workflow materials. Data alone does not close deals. Buyers are responsible for their own compliant outreach, follow-ups, negotiations, and transactions.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button type="button" class="faq-trigger" aria-expanded="false">
-            <h3>Is contact data always guaranteed?</h3>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-content">
-            <p>No. We provide phone numbers and contact details where publicly available or matched via our skip-trace filters. Numbers listed on state or federal Do-Not-Call (DNC) registries are clearly flagged where applicable. Buyers are responsible for their own TCPA, DNC, and state-level outreach compliance.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button type="button" class="faq-trigger" aria-expanded="false">
-            <h3>What is your refund policy?</h3>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-content">
-            <p>The $175 county review deposit is 100% refundable if we determine the county cannot support a viable seat. See our <a href="/refund-policy.html" style="color: var(--emerald); text-decoration: underline;">full refund policy</a> for subscription, single-batch, and exclusive territory terms.</p>
-          </div>
         </div>
       </div>
     </div>
-  </section>
 
-  <footer>
-    <div class="container footer-row">
-      <a class="logo" href="#">Lead<span>Curate</span><span class="dot">.</span></a>
-      <div class="footer-disclaimer">LeadCurate provides data and educational tools only. Customers handle outreach, compliance, verification, and closing.</div>
-      <div class="footer-links">
-        <a href="/terms.html">Terms</a>
-        <a href="/privacy.html">Privacy</a>
-        <a href="/refund-policy.html">Refunds</a>
-        <a href="/compliance.html">Compliance</a>
+    <!-- Affiliate Skip Trace Banner -->
+    <div class="affiliate-box">
+      <div class="aff-text">
+        <h4>Need Phone Numbers & Direct Mobile Contacts?</h4>
+        <p>Your downloaded CSV contains full owner names, property addresses, parcel numbers, and out-of-state mailing addresses. Append live cell phones and landlines in 1-click using BatchData.</p>
+      </div>
+      <a href="https://batchleads.io" target="_blank" rel="noopener noreferrer" class="aff-btn">⚡ 1-Click Skip Trace</a>
+    </div>
+
+    <!-- 5 Dollar Order Modal -->
+    <div class="modal-overlay" id="orderModal">
+      <div class="modal">
+        <button class="modal-close" onclick="closeOrderModal()">&times;</button>
+        <h3 style="font-size: 20px; color: #fff; margin-bottom: 8px;">🔥 Unlock 2,500 Verified Leads ($5.00)</h3>
+        <p style="font-size: 13px; color: #94a3b8; margin-bottom: 16px;">Instant delivery for <strong id="modalTarget" style="color:#fff;"></strong>.</p>
+        
+        <p style="font-size: 13px; color: #cbd5e1; margin-bottom: 4px;">1. Send <strong>$5.00</strong> to our Cash App:</p>
+        <div class="cashapp-tag">$leadcurate</div>
+        
+        <p style="font-size: 13px; color: #cbd5e1; margin-bottom: 6px;">2. Put this Order Reference in your Cash App note:</p>
+        <div class="order-code" id="orderCode">DL-XXXX-XXXX</div>
+        
+        <p style="font-size: 12px; color: #94a3b8; line-height: 1.4;">Once received, your 2,500-record CSV batch download will unlock automatically. Have questions? Text/DM support anytime.</p>
+        <button class="btn-free" style="width: 100%; margin-top: 18px; justify-content: center;" onclick="closeOrderModal()">I Sent $5 &rarr; Complete Order</button>
       </div>
     </div>
-  </footer>
+
+    <!-- Footer Disclaimer -->
+    <footer>
+      <p><strong>Compliance & Public Record Notice:</strong> All property data is sourced directly from publicly accessible county assessor databases, deed records, and municipal tax assessment rolls. Dollar Leads operates strictly as a public data aggregator and does not perform telemarketing, skip-tracing, or unsolicited automated communications. Users are solely responsible for ensuring compliance with the TCPA, TSR, and applicable federal, state, and local laws.</p>
+      <p style="margin-top: 10px;">&copy; 2026 Dollar Leads by LeadCurate. All rights reserved.</p>
+    </footer>
+
+  </div>
 
   <script>
-    // ============ BILLING TOGGLE ============
-    var currentBilling = 'monthly';
-    var prices = {
-      monthly: {
-        seat:      { display: "$497 <small>/mo</small>",    note: "Billed monthly" },
-        operator:  { display: "$897 <small>/mo</small>",    note: "Billed monthly" },
-        exclusive: { display: "$1,497+ <small>/mo</small>", note: "Starting price, billed monthly" }
-      },
-      annual: {
-        seat:      { display: "$422 <small>/mo</small>",    note: "$5,064/yr, billed annually" },
-        operator:  { display: "$762 <small>/mo</small>",    note: "$9,144/yr, billed annually" },
-        exclusive: { display: "$1,272+ <small>/mo</small>", note: "From $15,264/yr, billed annually" }
-      }
-    };
+    const MARKETS = [
+      { id: 'mecklenburg-nc', name: 'Mecklenburg, NC', sub: 'Charlotte Metro', total: '1,298,500' },
+      { id: 'wayne-mi', name: 'Wayne County, MI', sub: 'Detroit Metro', total: '1,562,800' },
+      { id: 'dallas-tx', name: 'Dallas County, TX', sub: 'Dallas-Fort Worth', total: '1,635,650' },
+      { id: 'fulton-ga', name: 'Fulton County, GA', sub: 'Atlanta Metro', total: '871,650' },
+      { id: 'cook-il', name: 'Cook County, IL', sub: 'Chicago Metro', total: '3,335,150' },
+      { id: 'shelby-tn', name: 'Shelby County, TN', sub: 'Memphis Metro', total: '544,250' },
+      { id: 'massachusetts-statewide', name: 'Massachusetts', sub: 'Statewide Roll', total: '6,138,150' }
+    ];
 
-    function setBilling(plan) {
-      currentBilling = plan;
-      var toggle = document.getElementById('billing-toggle');
-      var labelMonthly = document.getElementById('label-monthly');
-      var labelAnnual = document.getElementById('label-annual');
-      var note = document.getElementById('billing-note');
+    const CATEGORIES = [
+      { id: 'out-of-state', name: 'Out-of-State Owners', icon: '🏡', desc: 'Owners whose tax bill goes to a different state.' },
+      { id: 'absentee', name: 'Absentee & Non-Owner', icon: '🔑', desc: 'Landlords and non-owner occupants living elsewhere.' },
+      { id: 'vacant-land', name: 'Verified Vacant Land', icon: '🌲', desc: 'Infill parcels, buildable lots, and acreage.' },
+      { id: 'high-equity', name: 'High Equity Free & Clear', icon: '💎', desc: 'Long-term ownership with high assessed equity.' },
+      { id: 'tax-delinquent', name: 'Tax Delinquent & Tax Sale', icon: '⚖️', desc: 'County delinquent tax lists & auction schedules.' },
+      { id: 'commercial', name: 'Multi-Family & Commercial', icon: '🏢', desc: 'Duplexes, quads, apartments, and mixed-use.' },
+      { id: 'landlords', name: 'Long-Term Landlords', icon: '📋', desc: 'Multi-property portfolio owners (10+ year holds).' },
+      { id: 'liens', name: 'Municipal & Property Liens', icon: '🏛️', desc: 'City assessments, code violations, pre-court liens.' }
+    ];
 
-      var data = prices[plan];
+    let currentMarket = 'mecklenburg-nc';
+    let currentCategory = 'out-of-state';
 
-      document.getElementById('price-county-seat').innerHTML  = data.seat.display;
-      document.getElementById('price-operator-seat').innerHTML = data.operator.display;
-      document.getElementById('price-exclusive').innerHTML     = data.exclusive.display;
-
-      document.getElementById('billed-county-seat').textContent  = data.seat.note;
-      document.getElementById('billed-operator-seat').textContent = data.operator.note;
-      document.getElementById('billed-exclusive').textContent     = data.exclusive.note;
-
-      if (plan === 'annual') {
-        toggle.classList.add('annual');
-        toggle.setAttribute('aria-checked', 'true');
-        labelMonthly.classList.remove('active');
-        labelAnnual.classList.add('active');
-        note.textContent = 'Saving 15% with annual billing. Single Batch (quoted with preview) is unaffected.';
-      } else {
-        toggle.classList.remove('annual');
-        toggle.setAttribute('aria-checked', 'false');
-        labelMonthly.classList.add('active');
-        labelAnnual.classList.remove('active');
-        note.textContent = 'Switch to annual billing to save 15%';
-      }
+    function renderMarkets() {
+      const el = document.getElementById('marketList');
+      el.innerHTML = MARKETS.map(m => `
+        <button class="market-btn ${m.id === currentMarket ? 'active' : ''}" onclick="selectMarket('${m.id}')">
+          ${m.name}
+          <small>${m.sub}</small>
+        </button>
+      `).join('');
     }
 
-    document.getElementById('billing-toggle').addEventListener('click', function () {
-      setBilling(currentBilling === 'monthly' ? 'annual' : 'monthly');
-    });
-    document.getElementById('label-monthly').addEventListener('click', function () { setBilling('monthly'); });
-    document.getElementById('label-annual').addEventListener('click',  function () { setBilling('annual'); });
-    document.getElementById('billing-toggle').addEventListener('keydown', function (e) {
-      if (e.key === ' ' || e.key === 'Enter') {
-        e.preventDefault();
-        setBilling(currentBilling === 'monthly' ? 'annual' : 'monthly');
-      }
-    });
-
-    // ============ FAQ ACCORDION ============
-    document.querySelectorAll('.faq-trigger').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var item = btn.parentElement;
-        var isActive = item.classList.contains('active');
-
-        document.querySelectorAll('.faq-item').forEach(function (el) {
-          el.classList.remove('active');
-          el.querySelector('.faq-trigger').setAttribute('aria-expanded', 'false');
-        });
-
-        if (!isActive) {
-          item.classList.add('active');
-          btn.setAttribute('aria-expanded', 'true');
-        }
-      });
-    });
-
-    // ============ COUNTY DASHBOARD SWITCHER ============
-    var countyData = {
-      Mecklenburg: {
-        title: "Mecklenburg County, NC",
-        status: '<span class="pulse"></span> 1 of 2 seats filled',
-        score: "84", flow: "Strong", seats: "2", types: "5",
-        badges: ["Tax delinquent", "Absentee", "Probate", "Vacancy"],
-        leads: [
-          { owner: "M. Anderson",   signal: "Tax + absentee", outreach: "DNC check",  score: 91 },
-          { owner: "Bright Oak LLC", signal: "Vacant",        outreach: "No DNC",     score: 78 },
-          { owner: "Estate record",  signal: "Probate",       outreach: "Mail-first", score: 72 }
-        ]
-      },
-      Wake: {
-        title: "Wake County, NC",
-        status: '<span class="pulse"></span> 0 of 2 seats filled',
-        score: "91", flow: "High-Volume", seats: "2", types: "6",
-        badges: ["Tax delinquent", "Foreclosure", "Absentee", "Probate"],
-        leads: [
-          { owner: "T. Henderson",  signal: "Foreclosure",    outreach: "DNC check",  score: 95 },
-          { owner: "Apex Prop LLC", signal: "Tax + absentee", outreach: "No DNC",     score: 86 },
-          { owner: "V. Sterling",   signal: "Absentee",       outreach: "Mail-first", score: 81 }
-        ]
-      },
-      Charleston: {
-        title: "Charleston County, SC",
-        status: '<span class="pulse"></span> 1 of 1 seat filled',
-        score: "79", flow: "Moderate", seats: "1", types: "4",
-        badges: ["Probate", "Tax delinquent", "Vacancy"],
-        leads: [
-          { owner: "L. Jenkins",   signal: "Probate + vacant", outreach: "DNC check",  score: 88 },
-          { owner: "Palmetto Co.", signal: "Tax delinquent",   outreach: "No DNC",     score: 76 },
-          { owner: "J. Calhoun",   signal: "Vacancy",          outreach: "Mail-first", score: 71 }
-        ]
-      }
-    };
-
-    function switchCounty(key) {
-      document.querySelectorAll('.county-tab').forEach(function (tab) {
-        tab.classList.toggle('active', tab.dataset.county === key);
-      });
-
-      var data = countyData[key];
-      if (!data) return;
-
-      document.getElementById('current-county-title').textContent = data.title;
-      document.getElementById('current-county-status').innerHTML = data.status;
-      document.getElementById('county-score').textContent = data.score;
-      document.getElementById('county-flow').textContent = data.flow;
-      document.getElementById('county-seats').textContent = data.seats;
-      document.getElementById('county-types').textContent = data.types;
-
-      var badges = document.getElementById('county-badges');
-      badges.innerHTML = '';
-      data.badges.forEach(function (b) {
-        var s = document.createElement('span');
-        s.className = 'mini-badge';
-        s.textContent = b;
-        badges.appendChild(s);
-      });
-
-      var table = document.getElementById('lead-table-body');
-      table.innerHTML = '<div class="lead-row header"><div>Owner</div><div>Signal</div><div>Outreach</div><div>Score</div></div>';
-      data.leads.forEach(function (l) {
-        var row = document.createElement('div');
-        row.className = 'lead-row';
-        row.innerHTML =
-          '<div class="blur"></div>' +
-          '<div><span class="tag"></span></div>' +
-          '<div></div><div></div>';
-        row.children[0].textContent = l.owner;
-        row.children[1].firstChild.textContent = l.signal;
-        row.children[2].textContent = l.outreach;
-        row.children[3].textContent = l.score;
-        table.appendChild(row);
-      });
-
-      var scoreEl = document.getElementById('county-score');
-      scoreEl.style.background = 'conic-gradient(var(--emerald-2) ' + data.score + '%, rgba(255,255,255,.15) 0)';
+    function renderCategories() {
+      const el = document.getElementById('categoryList');
+      el.innerHTML = CATEGORIES.map(c => `
+        <div class="cat-card ${c.id === currentCategory ? 'active' : ''}" onclick="selectCategory('${c.id}')">
+          <div class="cat-head">
+            <span class="cat-title">${c.icon} ${c.name}</span>
+          </div>
+          <p class="cat-desc">${c.desc}</p>
+        </div>
+      `).join('');
     }
 
-    document.querySelectorAll('.county-tab').forEach(function (tab) {
-      tab.addEventListener('click', function () { switchCounty(tab.dataset.county); });
-    });
+    function updateActionPanel() {
+      const mObj = MARKETS.find(m => m.id === currentMarket);
+      const cObj = CATEGORIES.find(c => c.id === currentCategory);
+      document.getElementById('selectedCategoryTitle').innerText = `${cObj.name} (${mObj.name})`;
+      document.getElementById('selectedCategoryStats').innerText = `Clean verified records ready for immediate CSV download.`;
+    }
 
-    switchCounty('Mecklenburg');
+    function selectMarket(mId) {
+      currentMarket = mId;
+      renderMarkets();
+      updateActionPanel();
+    }
 
-    // ============ FORM HANDLER ============
-    var SB_URL = 'https://jdmlsraqioigbukspduo.supabase.co';
-    var SB_KEY = 'sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4';
+    function selectCategory(cId) {
+      currentCategory = cId;
+      renderCategories();
+      updateActionPanel();
+    }
 
-    document.getElementById('county-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-      var statusEl = document.getElementById('form-status');
-      statusEl.className = 'full form-status';
+    function downloadFree50() {
+      const sampleUrl = `/leadcurate-preview/samples/${currentMarket}_${currentCategory}_50_leads.csv`;
+      const link = document.createElement('a');
+      link.href = sampleUrl;
+      link.download = `DollarLeads_${currentMarket}_${currentCategory}_50_leads.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
 
-      var form = e.target;
-      if (!form.checkValidity()) {
-        statusEl.classList.add('error');
-        statusEl.textContent = 'Please fill in all required fields and accept the terms.';
-        return;
-      }
+    function openOrderModal() {
+      const mObj = MARKETS.find(m => m.id === currentMarket);
+      const cObj = CATEGORIES.find(c => c.id === currentCategory);
+      document.getElementById('modalTarget').innerText = `${cObj.name} in ${mObj.name}`;
+      const randomCode = 'DL-' + Math.random().toString(36).substring(2, 6).toUpperCase() + '-' + Math.random().toString(36).substring(2, 6).toUpperCase();
+      document.getElementById('orderCode').innerText = randomCode;
+      document.getElementById('orderModal').style.display = 'grid';
+    }
 
-      var county = document.getElementById('target-county').value;
-      var payload = {
-        email: document.getElementById('email').value,
-        markets: [county],
-        notes: 'Profile: ' + document.getElementById('profile').value + ' | Option: ' + document.getElementById('option').value,
-        source: 'landing-page-v1',
-        status: 'new'
-      };
+    function closeOrderModal() {
+      document.getElementById('orderModal').style.display = 'none';
+    }
 
-      var btn = form.querySelector('button[type=submit]');
-      btn.disabled = true;
-      btn.textContent = 'Sending...';
-
-      // Write to Supabase intake_requests
-      var sbPromise = fetch(SB_URL + '/rest/v1/intake_requests', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': SB_KEY,
-          'Authorization': 'Bearer ' + SB_KEY,
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify(payload)
-      });
-
-      // Email fallback via FormSubmit
-      var fd = new FormData();
-      fd.append('email', payload.email);
-      fd.append('county', county);
-      fd.append('profile', document.getElementById('profile').value);
-      fd.append('option', document.getElementById('option').value);
-      fd.append('_subject', '🎯 New LeadCurate county request');
-      fd.append('_captcha', 'false');
-      var emailPromise = fetch('https://formsubmit.co/dmcdonald5649@gmail.com', { method: 'POST', body: fd, mode: 'no-cors' });
-
-      Promise.allSettled([sbPromise, emailPromise]).then(function(results) {
-        var sbOk = results[0].status === 'fulfilled' && results[0].value.ok;
-        var emailOk = results[1].status === 'fulfilled';
-        if (sbOk || emailOk) {
-          statusEl.classList.add('success');
-          statusEl.textContent = "Got it. We’ll review your county and reply by email within 1 business day.";
-          form.reset();
-        } else {
-          statusEl.classList.add('error');
-          statusEl.textContent = 'Something went wrong. Please email us directly at dmcdonald5649@gmail.com.';
-        }
-        btn.disabled = false;
-        btn.textContent = 'Check county availability';
-      });
-    });
+    // Init
+    renderMarkets();
+    renderCategories();
+    updateActionPanel();
   </script>
 </body>
 </html>

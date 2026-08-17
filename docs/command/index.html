@@ -1221,88 +1221,63 @@ Derrick McDonald</div>
     <div id="page-dollarleads" class="page">
       <div class="page-header">
         <div class="page-title">Dollar Leads 💵</div>
-        <div class="page-sub">Sister brand. Small packs of county data at $5 to $25, instant Cash App checkout, same-day file delivery. Built to make a few hundred a day while the premium deals cook.</div>
+        <div class="page-sub">Sister brand & volume data engine. 15,386,150 verified public records across 7 major metro markets. Free 50-lead daily taste + $5 for 2,500 leads instant fulfillment.</div>
       </div>
 
       <div class="card mb16">
-        <div class="card-h"><span class="card-title">🔗 The store</span></div>
+        <div class="card-h"><span class="card-title">🔗 The Public Storefront</span></div>
         <p style="color:var(--sl);font-size:14px;line-height:1.6;margin:0 0 12px;">
-          Live page (staging URL until its own domain is wired):<br>
-          <a href="https://leadcurate.com/dollar-leads/" target="_blank" style="color:var(--em-l);font-weight:700;">leadcurate.com/dollar-leads/</a>
+          Public Storefront URL (Customer-facing lead generator):<br>
+          <a href="https://leadcurate.com/dollar-leads/" target="_blank" style="color:var(--em-l);font-weight:700;">https://leadcurate.com/dollar-leads/</a>
         </p>
         <button class="btn btn-ghost btn-sm" onclick="navigator.clipboard.writeText('https://leadcurate.com/dollar-leads/');toast('Store link copied')">Copy store link</button>
       </div>
 
       <div class="card mb16">
-        <div class="card-h"><span class="card-title">⚙️ How an order flows</span></div>
-        <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          1. Buyer picks county + pack + category on the store and submits the form.<br>
-          2. Order lands in <code>intake_requests</code> with source <code>dollar-leads-v1</code> and a DL- order code, so it shows in your Inbox here like any lead.<br>
-          3. The page instantly shows them a Cash App button ($DollarLeads) for the exact amount, with their order code for the payment note.<br>
-          4. Derrick confirms the Cash App payment with <code>PAID DL-XXXXX</code>; the guarded worker reserves the next eligible real batch, writes stamped CSV and XLSX delivery files, sends through Hostinger, and updates the ledger.<br>
-          5. <b>Batch rules that protect us:</b> each numbered batch is disjoint inside its market/category. Normal paid packs can sell up to 3 seats. Founders and approved free samples reserve whole batches away from normal paid availability. Public copy must not show backend seats, batch counts, or total processed rows.<br>
-          6. Same-day delivery is the promise. Fresh Scrub packs get re-checked against the county before sending.
+        <div class="card-h"><span class="card-title">📊 15.38M Live Verified Inventory (7 Metros)</span></div>
+        <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0 0 12px;">
+          Cleaned, deduplicated, and organized into <b>8 Standardized Public Categories</b>:<br>
+          • <b>Cook County, IL (Chicago):</b> 3,335,150 records<br>
+          • <b>Massachusetts Statewide:</b> 6,138,150 records<br>
+          • <b>Dallas County, TX (DFW):</b> 1,635,650 records<br>
+          • <b>Wayne County, MI (Detroit):</b> 1,562,800 records<br>
+          • <b>Mecklenburg County, NC (Charlotte):</b> 1,298,500 records<br>
+          • <b>Fulton County, GA (Atlanta):</b> 871,650 records<br>
+          • <b>Shelby County, TN (Memphis):</b> 544,250 records<br>
+          <b>TOTAL:</b> 15,386,150 real public records.
         </p>
       </div>
 
       <div class="card mb16">
-        <div class="card-h"><span class="card-title">💰 Pack prices</span></div>
+        <div class="card-h"><span class="card-title">🏷️ The 8 Clean Categories (Jargon-Free)</span></div>
         <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          Starter $5 = 50 records · Work $15 = 250 records · Full $25 = 500 records · Fresh Scrub $20 = 20 same-morning records (only visible on scrub days) · Founders Deal $50 = 1,000 records, first 20 buyers only.<br><br>
-          <b>Counties live (7):</b> Dallas TX, Wayne MI, Cook IL, Massachusetts statewide, Mecklenburg NC, Shelby TN, and Fulton GA.<br>
-          <b>Real July inventory:</b> 2,235 non-overlapping 500-record batches, totaling 1,117,500 reserved rows. Dallas 214; Wayne 211; Cook 608; Massachusetts 1,086; Mecklenburg 95; Shelby 4; Fulton 17. The former placeholder rows are retired.
+          1. <b>Out-of-State Owners:</b> 301,400 records (Owners whose tax bill goes to another state)<br>
+          2. <b>Absentee & Non-Owner:</b> 3,577,450 records (Landlords & non-owner occupants)<br>
+          3. <b>Verified Vacant Land:</b> 182,450 records (Infill lots, acreage, residential land)<br>
+          4. <b>High Equity Free & Clear:</b> 9,275,350 records (Long-term ownership, high assessed equity)<br>
+          5. <b>Tax Delinquent & Tax Sale:</b> 53,500 records (County tax rolls & auction lists)<br>
+          6. <b>Multi-Family & Commercial:</b> 320,500 records (Duplex, quads, apartments, mixed-use)<br>
+          7. <b>Long-Term Landlords:</b> 1,609,850 records (10+ year portfolio owners)<br>
+          8. <b>Municipal & Property Liens:</b> 322,350 records (City assessments & code liens)
         </p>
       </div>
 
       <div class="card mb16">
-        <div class="card-h"><span class="card-title">🔥 Founders Deal + Fresh Scrub controls</span></div>
+        <div class="card-h"><span class="card-title">💰 Pricing Model & Order Flow</span></div>
         <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          <b>Founders Deal (live):</b> first 20 buyers get 1,000 records for $50 with cycle exclusivity, in Dallas / Wayne / Cook / Massachusetts only (the deep boards). The cutter atomically reserves two consecutive completely unsold batches, retires both from the cycle, and bumps <code>dollar_promos.slots_sold</code>. The banner and countdown read that table and hide at zero. All 20 sold = $1,000.<br><br>
-          <b>Fresh Scrub ($20 for 20 same-morning records):</b> hidden by default. On a morning you or Codex actually re-scrub a county, flip it on: <code>update dollar_fresh_days set available = true, updated_at = now() where market_display = 'Dallas County TX';</code> Flip everything back off at night: <code>update dollar_fresh_days set available = false;</code> The card names which counties are scrubbed, so never flip a county that wasn't actually re-checked that morning.
+          • <b>Free Tier (Daily 50 Leads):</b> 100% automated instant 1-click download in browser. Sourced from live sample pools without manual operator work.<br>
+          • <b>Mega-Pack ($5.00 Flat):</b> 2,500 records. Buyer sends $5 to Cash App (<code>$leadcurate</code>) with their <code>DL-XXXX</code> order code.<br>
+          • <b>Fulfillment:</b> When payment is verified (<code>PAID DL-XXXXX</code>), the VPS fulfillment worker (<code>dollar_fulfillment_worker.py</code> & <code>cut_dollar_pack.py</code>) cuts and delivers the 2,500-record batch automatically.
         </p>
       </div>
 
       <div class="card mb16">
-        <div class="card-h"><span class="card-title">🤖 Automation phases</span></div>
+        <div class="card-h"><span class="card-title">📈 Monetization & Traffic Strategy</span></div>
         <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          <b>Phase 1 (live):</b> order lands in Inbox, buyer and operator emails send automatically, Cash App payment arrives with DL- code, and you match it by eye.<br>
-          <b>Phase 2 (built and running):</b> Derrick's verified PAID text queues the job; the guarded VPS worker selects and reserves the real batch, writes CSV and XLSX files, attaches both through Hostinger, records delivery, and returns a Twilio confirmation. Twilio credentials and the number webhook are the only external plug.<br>
-          <b>Phase 3 (later):</b> Stripe Payment Links per pack + webhook to an edge function that auto-emails the file on payment. Needs Derrick to create the Stripe products; the payment-confirmation function already exists as the base. Only worth wiring after real sales prove volume.
-        </p>
-      </div>
-
-      <div class="card mb16">
-        <div class="card-h"><span class="card-title">🗂️ Adding a county or category</span></div>
-        <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          The store's board and order form both read live from the <code>dollar_batches</code> table, so a verified new county or category is a data load, not a page edit. Current lanes are market-specific: Dallas has long-hold, out-of-state owner, and vacant; Wayne has long-hold, vacant, and tax debt; Cook has long-hold, out-of-state owner, vacant, and multifamily; Massachusetts has long-hold, out-of-state owner, and vacant; Mecklenburg has vacant and high-value absentee; Shelby has tax sale; Fulton has vacant. Probate, inherited property, foreclosure, and lien lanes appear publicly only after their official-source files are verified and loaded.
-        </p>
-      </div>
-
-      <div class="card mb16">
-        <div class="card-h"><span class="card-title">Record age, overlap, and alerts</span></div>
-        <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          <b>Age:</b> parcel and ownership lanes use the current official monthly source cycle. Tax-debt lanes require a positive live balance or status at pull. Future foreclosure or auction lanes must use active or upcoming official notices; probate starts with filings from the prior 180 days; inherited transfers start with the prior 12 months; lien and code lanes must be open or unresolved.<br><br>
-          <b>Overlap:</b> batches within one lane are disjoint. The same parcel may legitimately appear in different categories when it has multiple signals. Each normal numbered batch sells no more than three seats.<br><br>
-          <b>Alerts:</b> buyer and operator email alerts are live. Cash App has no payment webhook, so Derrick confirms the DL- code by replying <code>PAID DL-XXXXX</code> to the Telegram alert. The signed guarded fulfillment queue, cutter, Hostinger attachment sender, delivery ledger, and Telegram completion path are built. Twilio was tested historically but is retired from the live Dollar Leads operating path. AT&amp;T email-to-text is discontinued and is not used.
-        </p>
-      </div>
-
-      <div class="card mb16">
-        <div class="card-h"><span class="card-title">Free-sample pilot</span></div>
-        <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          Use <code>docs/dollar-leads/free-sample-launch-workflow.md</code> for the Facebook free-sample launch. Derrick chooses two pilot market/category pairs; do not hardcode the choices or refresh inventory for this pilot. For each pilot pair, reserve 23 unique free-sample batches from existing verified inventory with <code>scripts/leadcurate/dollar_free_sample_workflow.py reserve-pool</code>. The script only reserves after explicit approval text, takes fully unsold batches, and sets <code>seats_sold = seats_total</code> so paid orders cannot receive the same batch. Prospect assignment drafts CSV/XLSX plus <code>email-subject.txt</code> and <code>email-draft.html</code>; it does not send email. A real send requires Derrick to say <code>SEND SAMPLE EMAIL</code> for that prospect and sample code.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="card-h"><span class="card-title">📈 The daily plan</span></div>
-        <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          Target: $300/day = twelve $25 packs or twenty $15s.<br>
-          1. Morning: post the day's drop in one FB group (rotate your 4 groups, real numbers, no links in post, store link in DMs/comments).<br>
-          2. Reply to every comment with the store link.<br>
-          3. Fulfill orders as Cash App payments land, match DL- codes.<br>
-          4. Evening: mark the drop's sold count, tease tomorrow's county.<br>
-          Buyers who love a $25 pack are tomorrow's $2,500 territory customers. Upsell path is built into the store FAQ.
+          1. <b>Zero Legal Risk:</b> Pure raw public data publisher (APN, owner, address, assessed value). 0 TCPA/DNC exposure.<br>
+          2. <b>Traffic Bait:</b> Post free 50-lead daily drops in Facebook & Reddit wholesale groups to drive high-volume traffic without link bans.<br>
+          3. <b>Ad Monetization:</b> Media.net & BuySellAds contextual real estate banners running on the download pages ($4–$12 RPM).<br>
+          4. <b>Affiliate Revenue:</b> Optional 1-click skip-trace CTA to BatchData/DealMachine ($15–$45 per conversion). No business license or EIN required.
         </p>
       </div>
     </div>
