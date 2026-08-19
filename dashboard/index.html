@@ -257,6 +257,9 @@
             <a data-page="automation">Automation</a>
             <a data-page="analytics">Analytics</a>
             <a data-page="settings">Settings</a>
+            <div style="height:1px;background:rgba(255,255,255,0.1);margin:16px 0;"></div>
+            <a href="../docs/portfolio/" target="_blank" style="color:#86efac;display:flex;align-items:center;gap:8px;">📄 Portfolio (Classic)</a>
+            <a href="../docs/portfolio/interactive/" target="_blank" style="color:#38bdf8;display:flex;align-items:center;gap:8px;font-weight:700;">✨ 3D Spatial Portfolio</a>
         </nav>
     </aside>
     <main class="main-content">
@@ -266,7 +269,21 @@
                     <h1>Dashboard</h1>
                 </header>
                 <h2>Welcome to your Dashboard</h2>
-                <p>This is where you can manage your properties, customers, and more.</p>
+                <p style="margin-bottom:20px;">This is where you can manage your properties, customers, and view your portfolios.</p>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
+                  <div style="border:1px solid var(--line);border-radius:16px;padding:20px;background:#fbfaf8;">
+                    <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:4px;">Original Version</div>
+                    <h3 style="margin:0 0 8px;font-size:18px;">Public Portfolio</h3>
+                    <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">Classic executive document portfolio for applications.</p>
+                    <a href="../docs/portfolio/" target="_blank" class="btn secondary" style="padding:8px 16px;font-size:13px;">Open Portfolio &rarr;</a>
+                  </div>
+                  <div style="border:1px solid var(--emerald);border-radius:16px;padding:20px;background:var(--emerald-soft);">
+                    <div style="font-size:12px;font-weight:700;color:var(--emerald);text-transform:uppercase;margin-bottom:4px;">Interactive Version 2</div>
+                    <h3 style="margin:0 0 8px;font-size:18px;color:#064e3b;">3D Spatial Systems Portfolio</h3>
+                    <p style="font-size:13px;color:#064e3b;margin-bottom:14px;">Interactive 3D diagram with Last-Mile Logistics, AI pipelines, and live apps.</p>
+                    <a href="../docs/portfolio/interactive/" target="_blank" class="btn" style="background:var(--emerald);color:#fff;padding:8px 16px;font-size:13px;">Open 3D Portfolio ✨</a>
+                  </div>
+                </div>
             </div>
         </div>
         <div id="properties-page" class="page">

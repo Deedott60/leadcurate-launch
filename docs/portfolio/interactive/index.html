@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Derrick McDonald · Interactive Spatial Portfolio & Systems Diagram</title>
+<meta name="description" content="Interactive 3D spatial systems diagram and portfolio for Derrick McDonald. Explore customer strategy, live software, multi-agent AI pipelines, and last-mile delivery operations."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0b0f19;
+  --bg-card: rgba(17, 24, 39, 0.85);
+  --border: rgba(255, 255, 255, 0.1);
+  --border-focus: #22c55e;
+  --em: #15803d;
+  --em-l: #22c55e;
+  --em-glow: rgba(34, 197, 94, 0.25);
+  --blue: #38bdf8;
+  --purple: #a855f7;
+  --gold: #f59e0b;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-display: 'Playfair Display', serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Background Grid & Ambient Glows */
+.ambient-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(34, 197, 94, 0.12), transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(56, 189, 248, 0.1), transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.08), transparent 60%);
+  z-index: 0;
+}
+
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── TOP NAV BAR ────────────────────────────────────────── */
+#topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: rgba(11, 15, 25, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(16px, 3vw, 32px);
+  z-index: 50;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--em-l);
+  box-shadow: 0 0 12px var(--em-l);
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.brand-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  border-left: 1px solid var(--border);
+  padding-left: 12px;
+  margin-left: 4px;
+}
+
+.top-filters {
+  display: flex;
+  gap: 6px;
+}
+
+.filter-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.filter-btn:hover, .filter-btn.active {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: var(--em-l);
+  color: #86efac;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.action-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.action-btn.primary {
+  background: var(--em);
+  border-color: var(--em-l);
+  color: #fff;
+  box-shadow: 0 0 16px var(--em-glow);
+}
+.action-btn.primary:hover {
+  background: #16a34a;
+}
+
+/* ── SPATIAL DIAGRAM CANVAS VIEWPORT ────────────────────── */
+#diagram-viewport {
+  position: absolute;
+  inset: 0;
+  top: 64px;
+  overflow: hidden;
+  cursor: grab;
+  z-index: 5;
+}
+#diagram-viewport:active {
+  cursor: grabbing;
+}
+
+#diagram-world {
+  position: absolute;
+  width: 2600px;
+  height: 2000px;
+  left: 50%;
+  top: 50%;
+  transform-origin: center center;
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* SVG Connection Lines */
+#svg-conduits {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.conduit-line {
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 2;
+  fill: none;
+}
+
+.conduit-pulse {
+  stroke: var(--em-l);
+  stroke-width: 2.5;
+  stroke-dasharray: 8 20;
+  fill: none;
+  animation: pulseFlow 25s linear infinite;
+}
+
+@keyframes pulseFlow {
+  from { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* ── DIAGRAM NODES ──────────────────────────────────────── */
+.node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 20px;
+  width: 320px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+.node:hover {
+  transform: translate(-50%, -54%) scale(1.03);
+  border-color: var(--em-l);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px var(--em-glow);
+  z-index: 20;
+}
+
+.node.active-node {
+  border-color: var(--em-l);
+  box-shadow: 0 0 40px var(--em-glow);
+}
+
+/* Central Hub Node */
+.node.hub {
+  width: 440px;
+  background: linear-gradient(145deg, rgba(21, 128, 61, 0.25), rgba(17, 24, 39, 0.95));
+  border: 2px solid var(--em-l);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8), 0 0 40px var(--em-glow);
+  text-align: center;
+  padding: 28px;
+}
+
+.node-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.node-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+}
+
+.node-idx {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+.node-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(34, 197, 94, 0.15);
+  color: #86efac;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.node-badge.live { background: rgba(34, 197, 94, 0.2); color: #86efac; }
+.node-badge.logistics { background: rgba(20, 184, 166, 0.2); color: #5eead4; border-color: rgba(20, 184, 166, 0.4); }
+.node-badge.ai { background: rgba(168, 85, 247, 0.2); color: #d8b4fe; border-color: rgba(168, 85, 247, 0.4); }
+.node-badge.client { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; border-color: rgba(56, 189, 248, 0.4); }
+
+.node-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  line-height: 1.25;
+}
+
+.node-desc {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.node-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.node-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 2px 7px;
+  border-radius: 4px;
+  color: #cbd5e1;
+}
+
+.node-click-hint {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--em-l);
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+/* ── HUD CONTROLS OVERLAY ───────────────────────────────── */
+.hud-panel {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  z-index: 40;
+}
+
+.hud-hint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.hud-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hud-icon-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  color: var(--text);
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.hud-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* ── CASE STUDY DRAWER ─────────────────────────────────── */
+#drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(560px, 94vw);
+  height: 100%;
+  background: rgba(11, 15, 25, 0.97);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border-left: 1px solid var(--border);
+  box-shadow: -25px 0 80px rgba(0, 0, 0, 0.8);
+  z-index: 100;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+#drawer.open {
+  transform: translateX(0);
+}
+
+.drawer-head {
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.drawer-kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--em-l);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 4px;
+}
+
+.drawer-title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.drawer-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 20px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.drawer-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.drawer-body {
+  padding: 28px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.drawer-body p {
+  font-size: 15px;
+  line-height: 1.65;
+  color: #cbd5e1;
+}
+
+.drawer-card {
+  background: rgba(17, 24, 39, 0.8);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+}
+
+.drawer-card-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--em-l);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.drawer-card p {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #cbd5e1;
+}
+
+.drawer-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.drawer-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 6px;
+  color: #94a3b8;
+}
+
+.drawer-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.btn-open {
+  background: var(--em);
+  color: #fff;
+  border: 1px solid var(--em-l);
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px var(--em-glow);
+  transition: all 0.15s ease;
+}
+.btn-open:hover {
+  background: #16a34a;
+  transform: translateY(-1px);
+}
+</style>
+</head>
+<body>
+
+<div class="ambient-bg"></div>
+<div class="grid-overlay"></div>
+
+<!-- ── TOP NAVIGATION ────────────────────────────────────── -->
+<header id="topbar">
+  <div class="brand">
+    <div class="brand-dot"></div>
+    <div class="brand-name">Derrick McDonald</div>
+    <div class="brand-sub">Interactive Systems Architecture & Work</div>
+  </div>
+
+  <div class="top-filters">
+    <button class="filter-btn active" onclick="filterCategory('all', this)">All Nodes (8)</button>
+    <button class="filter-btn" onclick="filterCategory('live', this)">Live Software</button>
+    <button class="filter-btn" onclick="filterCategory('logistics', this)">Last-Mile Logistics</button>
+    <button class="filter-btn" onclick="filterCategory('ai', this)">Multi-Agent AI</button>
+  </div>
+
+  <div class="top-actions">
+    <button class="action-btn primary" id="btn-tour" onclick="toggleGuidedTour()">
+      <span>✨</span> <span id="tour-label">Guided System Tour</span>
+    </button>
+    <a href="../" class="action-btn">
+      <span>📄</span> <span>Classic View</span>
+    </a>
+  </div>
+</header>
+
+<!-- ── SPATIAL DIAGRAM VIEWPORT ───────────────────────────── -->
+<main id="diagram-viewport">
+  <div id="diagram-world">
+    <!-- SVG Connection Conduits -->
+    <svg id="svg-conduits">
+      <!-- Hub to F&B -->
+      <line x1="1300" y1="1000" x2="800" y2="700" class="conduit-line"/>
+      <line x1="1300" y1="1000" x2="800" y2="700" class="conduit-pulse"/>
+
+      <!-- Hub to Rooted -->
+      <line x1="1300" y1="1000" x2="1800" y2="700" class="conduit-line"/>
+      <line x1="1300" y1="1000" x2="1800" y2="700" class="conduit-pulse"/>
+
+      <!-- Hub to Multi-Agent Engine -->
+      <line x1="1300" y1="1000" x2="700" y2="1300" class="conduit-line"/>
+      <line x1="1300" y1="1000" x2="700" y2="1300" class="conduit-pulse"/>
+
+      <!-- Hub to Last-Mile Logistics Depot -->
+      <line x1="1300" y1="1000" x2="1300" y2="1550" class="conduit-line" style="stroke-width:3.5;stroke:rgba(20,184,166,0.3);"/>
+      <line x1="1300" y1="1000" x2="1300" y2="1550" class="conduit-pulse" style="stroke:var(--blue);stroke-width:3.5;"/>
+
+      <!-- Hub to Auto-Plug -->
+      <line x1="1300" y1="1000" x2="1900" y2="1300" class="conduit-line"/>
+      <line x1="1300" y1="1000" x2="1900" y2="1300" class="conduit-pulse"/>
+
+      <!-- Hub to Keepsakes -->
+      <line x1="1300" y1="1000" x2="1300" y2="450" class="conduit-line"/>
+      <line x1="1300" y1="1000" x2="1300" y2="450" class="conduit-pulse"/>
+
+      <!-- Cross conduits -->
+      <line x1="700" y1="1300" x2="1300" y2="1550" class="conduit-line"/>
+      <line x1="1300" y1="1550" x2="1900" y2="1300" class="conduit-line"/>
+      <line x1="800" y1="700" x2="1300" y2="450" class="conduit-line"/>
+      <line x1="1300" y1="450" x2="1800" y2="700" class="conduit-line"/>
+    </svg>
+
+    <!-- 00. CENTRAL HUB NODE -->
+    <div class="node hub" style="left: 1300px; top: 1000px;" onclick="centerOnNode(1300, 1000)">
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--em-l);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">
+        Core Architecture & Thesis
+      </div>
+      <h2 style="font-family:var(--font-display);font-size:24px;line-height:1.2;margin-bottom:10px;">
+        &ldquo;I turn customer problems into products that <span style="color:var(--em-l);">ship.</span>&rdquo;
+      </h2>
+      <p style="font-size:13px;color:var(--text-muted);line-height:1.55;margin-bottom:16px;">
+        Combining client relationship leadership with hands-on product judgment, multi-agent AI systems, and last-mile operations.
+      </p>
+      <div style="display:flex;justify-content:center;gap:12px;font-family:var(--font-mono);font-size:11px;">
+        <span style="background:rgba(255,255,255,0.06);padding:4px 10px;border-radius:6px;">6 Deployed Systems</span>
+        <span style="background:rgba(255,255,255,0.06);padding:4px 10px;border-radius:6px;">3 Live Web Apps</span>
+        <span style="background:rgba(255,255,255,0.06);padding:4px 10px;border-radius:6px;">Charlotte Metro</span>
+      </div>
+    </div>
+
+    <!-- 01. F&B MANAGER -->
+    <div class="node" data-category="client" style="left: 800px; top: 700px;" onclick="openCaseStudy('fnb')">
+      <div class="node-header">
+        <div class="node-icon">🎰</div>
+        <span class="node-badge client">In Field Use</span>
+      </div>
+      <div class="node-idx">ZONE 01 · HOSPITALITY CASINO</div>
+      <div class="node-title">F&B Manager Platform</div>
+      <div class="node-desc">Tablet-first inventory, par-level tracking, SOP surface cards, and camera scan feature that reads shelf stock from photos.</div>
+      <div class="node-tags">
+        <span class="node-tag">Next.js</span>
+        <span class="node-tag">Supabase</span>
+        <span class="node-tag">Camera Capture</span>
+        <span class="node-tag">Postgres</span>
+      </div>
+      <div class="node-click-hint">Inspect Case Study &rarr;</div>
+    </div>
+
+    <!-- 02. ROOTED -->
+    <div class="node" data-category="live" style="left: 1800px; top: 700px;" onclick="openCaseStudy('rooted')">
+      <div class="node-header">
+        <div class="node-icon">🌿</div>
+        <span class="node-badge live">Live in Production</span>
+      </div>
+      <div class="node-idx">ZONE 02 · CONSUMER APP</div>
+      <div class="node-title">Rooted Devotional App</div>
+      <div class="node-desc">Daily devotional & spiritual connection app for Black women and couples. Scripture matching, prayers, and shared streaks.</div>
+      <div class="node-tags">
+        <span class="node-tag">Next.js</span>
+        <span class="node-tag">Claude AI</span>
+        <span class="node-tag">Stripe</span>
+        <span class="node-tag">Web Push</span>
+      </div>
+      <div class="node-click-hint">Inspect Case Study &rarr;</div>
+    </div>
+
+    <!-- 03. MULTI-AGENT ENGINE -->
+    <div class="node" data-category="ai" style="left: 700px; top: 1300px;" onclick="openCaseStudy('agentic')">
+      <div class="node-header">
+        <div class="node-icon">🤖</div>
+        <span class="node-badge ai">Multi-Agent AI</span>
+      </div>
+      <div class="node-idx">ZONE 03 · 21-MODULE SYSTEM</div>
+      <div class="node-title">LeadCurate Multi-Agent OS</div>
+      <div class="node-desc">Coordinated pipeline of Claude, Codex, and Hermes automating research, GIS data auditing, direct-mail letters, and video rendering.</div>
+      <div class="node-tags">
+        <span class="node-tag">Claude 3.5</span>
+        <span class="node-tag">Codex</span>
+        <span class="node-tag">Hermes</span>
+        <span class="node-tag">GIS Scrapers</span>
+      </div>
+      <div class="node-click-hint">Inspect Case Study &rarr;</div>
+    </div>
+
+    <!-- 06. LAST-MILE DELIVERY OPERATIONS HUB (FEATURED) -->
+    <div class="node" data-category="logistics" style="left: 1300px; top: 1550px; border-color: rgba(20, 184, 166, 0.6); box-shadow: 0 0 35px rgba(20, 184, 166, 0.25);" onclick="openCaseStudy('delivery')">
+      <div class="node-header">
+        <div class="node-icon" style="background:rgba(20, 184, 166, 0.15);border-color:rgba(20, 184, 166, 0.4);">🚚</div>
+        <span class="node-badge logistics">Live Logistics Hub</span>
+      </div>
+      <div class="node-idx">ZONE 06 · WHITE-GLOVE LOGISTICS</div>
+      <div class="node-title" style="color:#5eead4;">Last-Mile Delivery Operations</div>
+      <div class="node-desc">White-glove courier network across Charlotte metro for estate auctions & high-value items. Real-time driver dispatch, Twilio SMS milestones, and photo proof of delivery (POD).</div>
+      <div class="node-tags">
+        <span class="node-tag">Driver Dispatch</span>
+        <span class="node-tag">Twilio SMS</span>
+        <span class="node-tag">Photo POD</span>
+        <span class="node-tag">Charlotte Metro</span>
+      </div>
+      <div class="node-click-hint" style="color:#5eead4;">Inspect Logistics Dossier &rarr;</div>
+    </div>
+
+    <!-- 04. AUTO-PLUG INVESTOR PLATFORM -->
+    <div class="node" data-category="live" style="left: 1900px; top: 1300px;" onclick="openCaseStudy('autoplug')">
+      <div class="node-header">
+        <div class="node-icon">⚡</div>
+        <span class="node-badge live">Live SaaS</span>
+      </div>
+      <div class="node-idx">ZONE 04 · REAL ESTATE TECH</div>
+      <div class="node-title">Auto-Plug & White-Label</div>
+      <div class="node-desc">Configurable direct-response platform for real estate investors. Dynamic multi-tenant branding, parcel maps, and SMS/call routing.</div>
+      <div class="node-tags">
+        <span class="node-tag">Next.js</span>
+        <span class="node-tag">MapLibre</span>
+        <span class="node-tag">Twilio</span>
+        <span class="node-tag">Multitenancy</span>
+      </div>
+      <div class="node-click-hint">Inspect Case Study &rarr;</div>
+    </div>
+
+    <!-- 05. INTERACTIVE KEEPSAKES (DERRICK & MIESHA) -->
+    <div class="node" data-category="live" style="left: 1300px; top: 450px;" onclick="openCaseStudy('keepsakes')">
+      <div class="node-header">
+        <div class="node-icon">💌</div>
+        <span class="node-badge live">Live · Self-Hosted</span>
+      </div>
+      <div class="node-idx">ZONE 05 · DIGITAL KEEPSAKE</div>
+      <div class="node-title">Derrick &amp; Miesha Announcement</div>
+      <div class="node-desc">Interactive wax seal animation triggering a 10s announcement film, letter, and persistent guest blessing board with custom REST API on a Linux VPS.</div>
+      <div class="node-tags">
+        <span class="node-tag">REST API</span>
+        <span class="node-tag">SQLite</span>
+        <span class="node-tag">Linux VPS</span>
+        <span class="node-tag">Nginx TLS</span>
+      </div>
+      <div class="node-click-hint">Inspect Case Study &rarr;</div>
+    </div>
+
+    <!-- 07. SKILLS & SYSTEMS ARENA -->
+    <div class="node" data-category="all" style="left: 450px; top: 1000px;" onclick="openCaseStudy('skills')">
+      <div class="node-header">
+        <div class="node-icon">🛠️</div>
+        <span class="node-badge">Core Disciplines</span>
+      </div>
+      <div class="node-idx">ZONE 07 · CAPABILITIES</div>
+      <div class="node-title">Customer &amp; Product Strengths</div>
+      <div class="node-desc">Bridging customer enablement, product operations, creative technology, and full-stack technical execution.</div>
+      <div class="node-tags">
+        <span class="node-tag">Customer Strategy</span>
+        <span class="node-tag">Product Ops</span>
+        <span class="node-tag">Full-Stack</span>
+      </div>
+      <div class="node-click-hint">Review Strengths &rarr;</div>
+    </div>
+
+    <!-- 08. CONTACT & DISPATCH TERMINAL -->
+    <div class="node" data-category="all" style="left: 2150px; top: 1000px;" onclick="openCaseStudy('contact')">
+      <div class="node-header">
+        <div class="node-icon">📬</div>
+        <span class="node-badge live">Get In Touch</span>
+      </div>
+      <div class="node-idx">ZONE 08 · DISPATCH</div>
+      <div class="node-title">Contact &amp; Connect</div>
+      <div class="node-desc">Available for Customer Enablement, Product Operations, Technical Product Management, and Solutions roles.</div>
+      <div class="node-tags">
+        <span class="node-tag">derrick@leadcurate.com</span>
+        <span class="node-tag">LinkedIn</span>
+        <span class="node-tag">GitHub</span>
+      </div>
+      <div class="node-click-hint">Open Contact Dossier &rarr;</div>
+    </div>
+  </div>
+</main>
+
+<!-- ── BOTTOM CONTROLS HUD ────────────────────────────────── -->
+<div class="hud-panel">
+  <span class="hud-hint">Drag to Pan · Scroll to Zoom · Click Node to Inspect</span>
+  <div class="hud-btn-group">
+    <button class="hud-icon-btn" onclick="zoomDiagram(1.2)" title="Zoom In">+</button>
+    <button class="hud-icon-btn" onclick="zoomDiagram(0.8)" title="Zoom Out">&minus;</button>
+    <button class="hud-icon-btn" onclick="resetDiagramView()" title="Reset View">⟲</button>
+  </div>
+</div>
+
+<!-- ── CASE STUDY SLIDEOUT DRAWER ────────────────────────── -->
+<aside id="drawer">
+  <div class="drawer-head">
+    <div>
+      <div class="drawer-kicker" id="drawer-kicker">ZONE 01 · CASE STUDY</div>
+      <h2 class="drawer-title" id="drawer-title">F&B Manager</h2>
+    </div>
+    <button class="drawer-close" onclick="closeCaseStudy()">&times;</button>
+  </div>
+  <div class="drawer-body" id="drawer-content">
+    <!-- Populated dynamically -->
+  </div>
+</aside>
+
+<!-- ── SCRIPTS ───────────────────────────────────────────── -->
+<script>
+const DOSSIERS = {
+  fnb: {
+    kicker: "01 · HOSPITALITY & RESORT CASINO",
+    title: "F&B Manager Platform",
+    badge: "In Field Use · Confidential Client",
+    summary: "A food and beverage management platform built for casino and resort operations, in daily use on property. It tracks inventory and par levels, automates scheduled staff check-ins, surfaces standard operating procedures at point of work, and includes a camera feature that reads stock from a photo instead of manual clipboard counts. Built tablet-first for active floor staff.",
+    stack: ["Next.js", "React", "Supabase", "PostgreSQL", "Tablet-First UX", "Camera Stock Capture", "Operational SOPs"],
+    why: "This is actively deployed inside another company's daily operations. I worked directly from client requirements to build for floor staff I will never meet—meaning the interface has to make immediate sense without anyone standing beside them to explain it.",
+    links: [
+      { label: "View Architecture Overview", url: "../#the-work" }
+    ]
+  },
+  rooted: {
+    kicker: "02 · LIVE CONSUMER APPLICATION",
+    title: "Rooted Devotional App",
+    badge: "Live in Production · Verified HTTP 200",
+    summary: "A daily devotional and spiritual connection web application for Black women and couples. Users express what emotional or spiritual weight they are carrying; the system pairs it with contextual Scripture, personal reflection, and prayer. Partners can share daily streaks.",
+    stack: ["Next.js", "React", "Supabase Auth", "PostgreSQL", "Anthropic Claude API", "Stripe Subscriptions", "Web Push", "Vercel"],
+    why: "Rooted includes real user accounts, subscription billing, AI-curated content generation, and scheduled push notifications. Building it end-to-end taught me how much user trust depends on invisible infrastructure working together.",
+    links: [
+      { label: "Open Live App →", url: "https://rooted-app-pink.vercel.app", primary: true }
+    ]
+  },
+  agentic: {
+    kicker: "03 · AI MULTI-AGENT ARCHITECTURE",
+    title: "LeadCurate Multi-Agent Engine",
+    badge: "Production Engine · 21 Modules",
+    summary: "An autonomous multi-agent operating system coordinating Claude, Codex, and Hermes across 5 pipeline stages: customer signal intake, county property research, parcel data auditing, direct-mail generation, and video creative rendering.",
+    stack: ["Multi-Agent AI", "Claude 3.5 Sonnet", "Codex", "Hermes", "Python", "Node.js", "Supabase", "County GIS Scrapers"],
+    why: "Proves hands-on architectural leadership orchestrating autonomous AI agents with structured handoffs, state validation, and real-world database persistence rather than simple prompt-response toys.",
+    links: [
+      { label: "View Multi-Agent Diagram", url: "../#agent-diagram" }
+    ]
+  },
+  delivery: {
+    kicker: "06 · LAST-MILE LOGISTICS & DISPATCH",
+    title: "LeadCurate Delivery & Courier Operations",
+    badge: "Live Logistics · Charlotte Metro Dispatch",
+    summary: "Derrick's white-glove small-item courier and last-mile dispatch network serving estate auctions, high-value art, vintage decor, and property logistics across Charlotte, Mecklenburg, and surrounding counties (Gaston, Cabarrus, York, Lake Norman). Features real-time driver dispatch tracking, SMS customer milestone alerts, chain-of-custody photo proof-of-delivery (POD), and route clustering.",
+    stack: ["Last-Mile Routing", "Real-Time Driver Dispatch", "Twilio SMS Milestones", "Photo Proof-of-Delivery (POD)", "Next.js", "Supabase", "PostgreSQL", "Logistics Ops"],
+    why: "Direct operational proof combining physical logistics coordination with real-time software. Manages driver assignments, customer communication, delicate chain-of-custody tracking, and verified on-time completion.",
+    links: [
+      { label: "View Dispatch Brief", url: "../#the-work" }
+    ]
+  },
+  autoplug: {
+    kicker: "04 · CONFIGURABLE SAAS PLATFORM",
+    title: "Auto-Plug & White-Label Platform",
+    badge: "Configurable SaaS Architecture",
+    summary: "A high-conversion real estate investor acquisition engine designed with dynamic multi-tenant branding, interactive county valuation calculators, MapLibre parcel boundary overlays, and automated SMS/call routing.",
+    stack: ["Next.js", "Tailwind CSS", "MapLibre GL", "Supabase", "Twilio SMS", "Dynamic Multitenancy"],
+    why: "Demonstrates designing one robust core software architecture that can be skinned, localized, and configured for separate clients without touching core codebase logic.",
+    links: [
+      { label: "Open Investor Demo →", url: "https://autoplug-demo.leadcurate.com", primary: true }
+    ]
+  },
+  keepsakes: {
+    kicker: "05 · DIGITAL EXPERIENCE & HOSTING",
+    title: "Derrick & Miesha Digital Keepsake",
+    badge: "Live Experience · Self-Hosted API",
+    summary: "A bespoke digital announcement and blessing board. Tapping an interactive 3D wax seal triggers a custom 10-second announcement film and reveals a persistent guest blessing board backed by a custom REST API running on a self-administered Linux VPS.",
+    stack: ["Interactive Front End", "Custom REST API", "SQLite", "Linux VPS (Debian)", "Nginx Reverse Proxy", "Let's Encrypt TLS"],
+    why: "I built and self-host both the front end and API on bare cloud Linux servers, handling SSL certificates, reverse proxy routing, and persistent storage management.",
+    links: [
+      { label: "Open Live Site →", url: "https://derrickandmiesha.leadcurate.com", primary: true }
+    ]
+  },
+  skills: {
+    kicker: "07 · CORE DISCIPLINES & STACK",
+    title: "Customer, Product & Systems Strengths",
+    badge: "Customer Strategy + Product + Engineering",
+    summary: "A synthesis of Derrick's hybrid strengths: Customer Enablement & Account Management (translating messy user pain into clear roadmaps), Product Judgment (scoping what matters and cutting what doesn't), and Full-Stack Execution (Next.js, React, Supabase, Postgres, Linux VPS, Multi-Agent AI Orchestration).",
+    stack: ["Customer Enablement", "Product Management", "Full-Stack Development", "System Architecture", "Logistics Dispatch", "AI Workflow Engineering"],
+    why: "Uniquely bridging the gap between non-technical stakeholders and engineering execution to turn ambiguous problems into production software that ships.",
+    links: [
+      { label: "View LinkedIn Profile", url: "https://www.linkedin.com/in/derrick-mcdonald-940999348/", primary: true }
+    ]
+  },
+  contact: {
+    kicker: "08 · GET IN TOUCH",
+    title: "Dispatch & Contact Terminal",
+    badge: "Available for Roles & Consulting",
+    summary: "Ready to connect for Customer Enablement, Product Operations, Technical Product Management, Creative Technology, or Solutions roles. Located in Mount Holly, NC (Charlotte Metro) with remote and on-site flexibility.",
+    stack: ["Email: derrick@leadcurate.com", "LinkedIn", "GitHub: Deedott60", "Phone: (704) 555-0188"],
+    why: "Let's build something remarkable together. Reach out directly via email, LinkedIn, or check out my code repositories on GitHub.",
+    links: [
+      { label: "Email Derrick Directly", url: "mailto:derrick@leadcurate.com", primary: true },
+      { label: "Connect on LinkedIn", url: "https://www.linkedin.com/in/derrick-mcdonald-940999348/" },
+      { label: "View GitHub Repositories", url: "https://github.com/Deedott60" }
+    ]
+  }
+};
+
+/* ── PAN & ZOOM ENGINE ──────────────────────────────────── */
+const viewport = document.getElementById('diagram-viewport');
+const world = document.getElementById('diagram-world');
+
+let scale = 0.85;
+let panX = 0;
+let panY = 0;
+let isPanning = false;
+let startX = 0;
+let startY = 0;
+
+function updateTransform() {
+  world.style.transform = `translate(calc(-50% + ${panX}px), calc(-50% + ${panY}px)) scale(${scale})`;
+}
+
+viewport.addEventListener('mousedown', (e) => {
+  if (e.target.closest('.node') || e.target.closest('.hud-panel')) return;
+  isPanning = true;
+  startX = e.clientX - panX;
+  startY = e.clientY - panY;
+});
+
+window.addEventListener('mousemove', (e) => {
+  if (!isPanning) return;
+  panX = e.clientX - startX;
+  panY = e.clientY - startY;
+  updateTransform();
+});
+
+window.addEventListener('mouseup', () => {
+  isPanning = false;
+});
+
+viewport.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const zoomFactor = e.deltaY < 0 ? 1.1 : 0.9;
+  scale = Math.max(0.4, Math.min(1.6, scale * zoomFactor));
+  updateTransform();
+}, { passive: false });
+
+function zoomDiagram(factor) {
+  scale = Math.max(0.4, Math.min(1.6, scale * factor));
+  updateTransform();
+}
+
+function resetDiagramView() {
+  scale = 0.85;
+  panX = 0;
+  panY = 0;
+  updateTransform();
+}
+
+function centerOnNode(nx, ny) {
+  // Center world so nx, ny is in the middle of viewport
+  const worldCenterX = 1300;
+  const worldCenterY = 1000;
+  panX = (worldCenterX - nx) * scale;
+  panY = (worldCenterY - ny) * scale;
+  updateTransform();
+}
+
+/* ── CASE STUDY DRAWER ─────────────────────────────────── */
+function openCaseStudy(id) {
+  const d = DOSSIERS[id];
+  if (!d) return;
+
+  document.getElementById('drawer-kicker').textContent = d.kicker;
+  document.getElementById('drawer-title').textContent = d.title;
+
+  let stackHtml = '';
+  d.stack.forEach(s => {
+    stackHtml += `<span class="drawer-tag">${s}</span>`;
+  });
+
+  let linksHtml = '';
+  d.links.forEach(l => {
+    linksHtml += `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="btn-open">${l.label}</a>`;
+  });
+
+  document.getElementById('drawer-content').innerHTML = `
+    <div style="font-size:12px;font-weight:700;color:var(--em-l);text-transform:uppercase;letter-spacing:.08em;">
+      ${d.badge}
+    </div>
+    <p>${d.summary}</p>
+    <div class="drawer-tags">${stackHtml}</div>
+    <div class="drawer-card">
+      <span class="drawer-card-label">Why It Matters</span>
+      <p>${d.why}</p>
+    </div>
+    <div class="drawer-actions">
+      ${linksHtml}
+    </div>
+  `;
+
+  document.getElementById('drawer').classList.add('open');
+
+  // Highlight active node
+  document.querySelectorAll('.node').forEach(n => n.classList.remove('active-node'));
+  const clicked = event?.target?.closest('.node');
+  if (clicked) clicked.classList.add('active-node');
+}
+
+function closeCaseStudy() {
+  document.getElementById('drawer').classList.remove('open');
+  document.querySelectorAll('.node').forEach(n => n.classList.remove('active-node'));
+}
+
+/* ── CATEGORY FILTERING ─────────────────────────────────── */
+function filterCategory(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+
+  document.querySelectorAll('.node').forEach(node => {
+    if (node.classList.contains('hub')) return;
+    const nCat = node.getAttribute('data-category');
+    if (cat === 'all' || nCat === cat || nCat === 'all') {
+      node.style.opacity = '1';
+      node.style.pointerEvents = 'auto';
+    } else {
+      node.style.opacity = '0.2';
+      node.style.pointerEvents = 'none';
+    }
+  });
+}
+
+/* ── GUIDED TOUR ────────────────────────────────────────── */
+let isTouring = false;
+let tourStep = 0;
+const tourNodes = [
+  { id: 'fnb', x: 800, y: 700 },
+  { id: 'rooted', x: 1800, y: 700 },
+  { id: 'agentic', x: 700, y: 1300 },
+  { id: 'delivery', x: 1300, y: 1550 },
+  { id: 'autoplug', x: 1900, y: 1300 },
+  { id: 'keepsakes', x: 1300, y: 450 }
+];
+let tourInterval = null;
+
+function toggleGuidedTour() {
+  isTouring = !isTouring;
+  const btn = document.getElementById('btn-tour');
+  const label = document.getElementById('tour-label');
+
+  if (isTouring) {
+    btn.classList.add('active');
+    label.textContent = 'Stop Tour';
+    tourStep = 0;
+    runTourStep();
+    tourInterval = setInterval(runTourStep, 4500);
+  } else {
+    btn.classList.remove('active');
+    label.textContent = 'Guided System Tour';
+    clearInterval(tourInterval);
+    closeCaseStudy();
+    resetDiagramView();
+  }
+}
+
+function runTourStep() {
+  if (tourStep >= tourNodes.length) {
+    toggleGuidedTour();
+    return;
+  }
+  const curr = tourNodes[tourStep];
+  centerOnNode(curr.x, curr.y);
+  openCaseStudy(curr.id);
+  tourStep++;
+}
+
+// Initial view centering
+window.addEventListener('DOMContentLoaded', () => {
+  resetDiagramView();
+});
+</script>
+</body>
+</html>
