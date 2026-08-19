@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 <title>Derrick McDonald · Interactive Systems Architecture & Portfolio</title>
 <meta name="description" content="Vibrant 3D spatial systems diagram and portfolio for Derrick McDonald. Explore customer strategy, live software, multi-agent AI pipelines, and last-mile delivery operations."/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,7 +12,7 @@
 <style>
 :root {
   --bg: #070a14;
-  --bg-card: rgba(15, 23, 42, 0.88);
+  --bg-card: rgba(15, 23, 42, 0.9);
   --border: rgba(255, 255, 255, 0.12);
   --border-focus: #22c55e;
   --em: #15803d;
@@ -46,6 +46,7 @@ html, body {
   color: var(--text);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  touch-action: none;
 }
 
 /* Radiant Ambient Background & Grid */
@@ -73,43 +74,47 @@ html, body {
   z-index: 1;
 }
 
-/* ── TOP NAV BAR ────────────────────────────────────────── */
+/* ── TOP NAV BAR (DESKTOP + RESPONSIVE MOBILE) ──────────── */
 #topbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 68px;
-  background: rgba(7, 10, 20, 0.88);
+  height: 64px;
+  background: rgba(7, 10, 20, 0.92);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 clamp(16px, 3vw, 32px);
+  padding: 0 clamp(12px, 3vw, 28px);
   z-index: 50;
+  gap: 10px;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  min-width: 0;
 }
 
 .brand-dot {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: var(--em-l);
-  box-shadow: 0 0 16px var(--em-l), 0 0 30px var(--em-l);
+  box-shadow: 0 0 14px var(--em-l), 0 0 25px var(--em-l);
+  flex-shrink: 0;
 }
 
 .brand-name {
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 800;
   letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 
 .brand-sub {
@@ -117,90 +122,113 @@ html, body {
   font-size: 11px;
   color: var(--text-muted);
   border-left: 1px solid var(--border);
-  padding-left: 12px;
+  padding-left: 10px;
   margin-left: 4px;
+  white-space: nowrap;
 }
 
 .top-filters {
   display: flex;
   gap: 6px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
+.top-filters::-webkit-scrollbar { display: none; }
 
 .filter-btn {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border);
   color: var(--text-muted);
-  padding: 7px 16px;
+  padding: 6px 14px;
   border-radius: 999px;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
   cursor: pointer;
+  white-space: nowrap;
   transition: all 0.15s ease;
+  flex-shrink: 0;
 }
 
 .filter-btn:hover, .filter-btn.active {
   background: rgba(34, 197, 94, 0.2);
   border-color: var(--em-l);
   color: #86efac;
-  box-shadow: 0 0 16px rgba(34, 197, 94, 0.3);
+  box-shadow: 0 0 14px rgba(34, 197, 94, 0.3);
 }
 
 .top-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 .action-btn {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
   background: var(--bg-card);
   border: 1px solid var(--border);
   color: var(--text);
-  padding: 8px 16px;
+  padding: 7px 14px;
   border-radius: 999px;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
   text-decoration: none;
   cursor: pointer;
+  white-space: nowrap;
   transition: all 0.18s ease;
 }
 
 .action-btn:hover {
   background: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-1px);
 }
 
 .action-btn.primary {
   background: linear-gradient(135deg, #15803d, #22c55e);
   border-color: #4ade80;
   color: #fff;
-  box-shadow: 0 0 20px var(--em-glow);
-}
-.action-btn.primary:hover {
-  box-shadow: 0 0 30px var(--em-glow);
+  box-shadow: 0 0 16px var(--em-glow);
 }
 
 .action-btn.gold {
   border-color: rgba(251, 191, 36, 0.5);
   color: #fef3c7;
 }
-.action-btn.gold:hover {
-  background: rgba(251, 191, 36, 0.15);
-  border-color: var(--gold);
-  box-shadow: 0 0 20px var(--gold-glow);
+
+/* ── MOBILE SUB-NAV STRIP ────────────────────────────────── */
+#mobile-subnav {
+  display: none;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  height: 44px;
+  background: rgba(11, 15, 25, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 12px;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  z-index: 45;
 }
+#mobile-subnav::-webkit-scrollbar { display: none; }
 
 /* ── SPATIAL DIAGRAM CANVAS VIEWPORT ────────────────────── */
 #diagram-viewport {
   position: absolute;
   inset: 0;
-  top: 68px;
+  top: 64px;
   overflow: hidden;
   cursor: grab;
   z-index: 5;
+  touch-action: none;
 }
 #diagram-viewport:active {
   cursor: grabbing;
@@ -214,7 +242,7 @@ html, body {
   top: 50%;
   transform-origin: center center;
   transform: translate(-50%, -50%) scale(1);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* SVG Connection Lines */
@@ -253,17 +281,17 @@ html, body {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1.5px solid var(--border);
-  border-radius: 24px;
-  padding: 22px;
-  width: 330px;
+  border-radius: 22px;
+  padding: 20px;
+  width: 320px;
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
   z-index: 10;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
 }
 
 .node:hover {
-  transform: translate(-50%, -54%) scale(1.04);
+  transform: translate(-50%, -54%) scale(1.03);
   z-index: 25;
 }
 
@@ -274,65 +302,51 @@ html, body {
 
 /* Dynamic Glowing Themes per Node */
 .node.theme-hub {
-  width: 460px;
-  background: linear-gradient(145deg, rgba(21, 128, 61, 0.3), rgba(15, 23, 42, 0.96));
+  width: 440px;
+  background: linear-gradient(145deg, rgba(21, 128, 61, 0.35), rgba(15, 23, 42, 0.98));
   border: 2px solid var(--em-l);
-  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8), 0 0 50px var(--em-glow);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.85), 0 0 50px var(--em-glow);
   text-align: center;
-  padding: 30px;
+  padding: 28px;
 }
 
-.node.theme-cyan {
-  border-color: rgba(0, 210, 255, 0.4);
-}
+.node.theme-cyan { border-color: rgba(0, 210, 255, 0.4); }
 .node.theme-cyan:hover, .node.theme-cyan.active-node {
   border-color: var(--blue);
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 40px var(--blue-glow);
 }
 
-.node.theme-green {
-  border-color: rgba(34, 197, 94, 0.4);
-}
+.node.theme-green { border-color: rgba(34, 197, 94, 0.4); }
 .node.theme-green:hover, .node.theme-green.active-node {
   border-color: var(--em-l);
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 40px var(--em-glow);
 }
 
-.node.theme-purple {
-  border-color: rgba(192, 132, 252, 0.4);
-}
+.node.theme-purple { border-color: rgba(192, 132, 252, 0.4); }
 .node.theme-purple:hover, .node.theme-purple.active-node {
   border-color: var(--purple);
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 40px var(--purple-glow);
 }
 
-.node.theme-teal {
-  border-color: rgba(45, 212, 191, 0.45);
-}
+.node.theme-teal { border-color: rgba(45, 212, 191, 0.45); }
 .node.theme-teal:hover, .node.theme-teal.active-node {
   border-color: var(--teal);
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 45px var(--teal-glow);
 }
 
-.node.theme-gold {
-  border-color: rgba(251, 191, 36, 0.4);
-}
+.node.theme-gold { border-color: rgba(251, 191, 36, 0.4); }
 .node.theme-gold:hover, .node.theme-gold.active-node {
   border-color: var(--gold);
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 40px var(--gold-glow);
 }
 
-.node.theme-rose {
-  border-color: rgba(251, 113, 133, 0.4);
-}
+.node.theme-rose { border-color: rgba(251, 113, 133, 0.4); }
 .node.theme-rose:hover, .node.theme-rose.active-node {
   border-color: var(--rose);
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 40px var(--rose-glow);
 }
 
-.node.theme-indigo {
-  border-color: rgba(129, 140, 248, 0.4);
-}
+.node.theme-indigo { border-color: rgba(129, 140, 248, 0.4); }
 .node.theme-indigo:hover, .node.theme-indigo.active-node {
   border-color: var(--indigo);
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 40px var(--indigo-glow);
@@ -343,34 +357,34 @@ html, body {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .node-icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 14px;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--border);
   display: grid;
   place-items: center;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .node-idx {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10.5px;
   color: var(--text-muted);
   letter-spacing: 0.08em;
 }
 
 .node-badge {
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 9px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  padding: 4px 9px;
+  padding: 3px 8px;
   border-radius: 999px;
   background: rgba(34, 197, 94, 0.2);
   color: #86efac;
@@ -379,42 +393,42 @@ html, body {
 
 .node-title {
   font-family: var(--font-display);
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 800;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   line-height: 1.25;
 }
 
 .node-desc {
-  font-size: 13px;
+  font-size: 12.5px;
   color: #cbd5e1;
-  line-height: 1.55;
-  margin-bottom: 14px;
+  line-height: 1.5;
+  margin-bottom: 12px;
 }
 
 .node-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 4px;
 }
 
 .node-tag {
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 10px;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 3px 8px;
-  border-radius: 6px;
+  padding: 2px 7px;
+  border-radius: 5px;
   color: #e2e8f0;
 }
 
 .node-click-hint {
   font-family: var(--font-mono);
-  font-size: 11px;
-  margin-top: 14px;
+  font-size: 10.5px;
+  margin-top: 12px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 800;
@@ -423,19 +437,19 @@ html, body {
 /* ── HUD CONTROLS OVERLAY ───────────────────────────────── */
 .hud-panel {
   position: fixed;
-  bottom: 24px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(15, 23, 42, 0.92);
+  background: rgba(15, 23, 42, 0.94);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border);
   border-radius: 999px;
-  padding: 10px 20px;
+  padding: 8px 18px;
   display: flex;
   align-items: center;
-  gap: 20px;
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7);
+  gap: 16px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.75);
   z-index: 40;
 }
 
@@ -444,6 +458,7 @@ html, body {
   font-size: 11px;
   color: #cbd5e1;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .hud-btn-group {
@@ -453,8 +468,8 @@ html, body {
 }
 
 .hud-icon-btn {
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--border);
@@ -466,12 +481,96 @@ html, body {
   transition: all 0.15s ease;
 }
 .hud-icon-btn:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.2);
   border-color: #fff;
-  transform: scale(1.08);
 }
 
-/* ── CASE STUDY DRAWER ─────────────────────────────────── */
+/* ── MOBILE FLOATING NAV DOCK ───────────────────────────── */
+#mobile-dock {
+  display: none;
+  position: fixed;
+  bottom: 16px;
+  left: 14px;
+  right: 14px;
+  background: rgba(15, 23, 42, 0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 10px 14px;
+  box-shadow: 0 15px 50px rgba(0,0,0,0.85);
+  z-index: 40;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobile-dock-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.mobile-dock-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.mobile-dock-kicker {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 800;
+  color: var(--em-l);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.mobile-dock-title {
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mobile-dock-btns {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dock-arrow-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
+  color: #fff;
+  font-size: 16px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.dock-arrow-btn:active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.dock-open-btn {
+  background: linear-gradient(135deg, #15803d, #22c55e);
+  color: #fff;
+  border: 1px solid #4ade80;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+/* ── CASE STUDY DRAWER (SLIDE-OVER ON DESKTOP / BOTTOM SHEET ON MOBILE) ── */
 #drawer {
   position: fixed;
   top: 0;
@@ -495,7 +594,7 @@ html, body {
 }
 
 .drawer-head {
-  padding: 24px 28px;
+  padding: 20px 24px;
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: flex-start;
@@ -516,24 +615,25 @@ html, body {
 
 .drawer-title {
   font-family: var(--font-display);
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 800;
   line-height: 1.15;
   letter-spacing: -0.02em;
 }
 
 .drawer-close {
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--border);
   color: var(--text-muted);
-  font-size: 22px;
+  font-size: 20px;
   display: grid;
   place-items: center;
   cursor: pointer;
   transition: all 0.15s ease;
+  flex-shrink: 0;
 }
 .drawer-close:hover {
   background: rgba(255, 255, 255, 0.2);
@@ -541,30 +641,31 @@ html, body {
 }
 
 .drawer-body {
-  padding: 28px;
+  padding: 24px;
   overflow-y: auto;
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .drawer-body p {
-  font-size: 15px;
-  line-height: 1.65;
+  font-size: 14.5px;
+  line-height: 1.6;
   color: #cbd5e1;
 }
 
 .drawer-card {
   background: rgba(17, 24, 39, 0.8);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px 22px;
+  border-radius: 14px;
+  padding: 16px 18px;
 }
 
 .drawer-card-label {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -574,40 +675,40 @@ html, body {
 }
 
 .drawer-card p {
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: 13.5px;
+  line-height: 1.55;
   color: #cbd5e1;
 }
 
 .drawer-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
+  gap: 6px;
 }
 
 .drawer-tag {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10.5px;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--border);
-  padding: 5px 12px;
-  border-radius: 8px;
+  padding: 4px 10px;
+  border-radius: 6px;
   color: #cbd5e1;
 }
 
 .drawer-actions {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 .btn-open {
   background: linear-gradient(135deg, #15803d, #22c55e);
   color: #fff;
   border: 1px solid #4ade80;
-  padding: 12px 24px;
-  border-radius: 12px;
+  padding: 11px 22px;
+  border-radius: 10px;
   font-size: 13px;
   font-weight: 800;
   text-decoration: none;
@@ -617,9 +718,50 @@ html, body {
   box-shadow: 0 4px 20px var(--em-glow);
   transition: all 0.18s ease;
 }
-.btn-open:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 25px var(--em-glow);
+
+/* ── RESPONSIVE MOBILE OVERRIDES ────────────────────────── */
+@media (max-width: 860px) {
+  .brand-sub { display: none; }
+  .top-filters { display: none; }
+  #mobile-subnav { display: flex; }
+  #diagram-viewport { top: 108px; }
+  
+  .hud-panel { display: none; }
+  #mobile-dock { display: flex; }
+
+  /* Mobile Bottom Sheet Drawer */
+  #drawer {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 85vh;
+    border-left: 0;
+    border-top: 1px solid var(--border);
+    border-radius: 24px 24px 0 0;
+    transform: translateY(100%);
+  }
+  #drawer.open {
+    transform: translateY(0);
+  }
+
+  .drawer-head::before {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 4px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 999px;
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .drawer-head {
+    padding-top: 24px;
+    position: relative;
+  }
 }
 </style>
 </head>
@@ -633,7 +775,7 @@ html, body {
   <div class="brand">
     <div class="brand-dot"></div>
     <div class="brand-name">Derrick McDonald</div>
-    <div class="brand-sub">Interactive Systems Architecture & Work</div>
+    <div class="brand-sub">Interactive Systems &amp; Work</div>
   </div>
 
   <div class="top-filters">
@@ -645,16 +787,24 @@ html, body {
 
   <div class="top-actions">
     <button class="action-btn primary" id="btn-tour" onclick="toggleGuidedTour()">
-      <span>✨</span> <span id="tour-label">Guided System Tour</span>
+      <span>✨</span> <span id="tour-label">Guided Tour</span>
     </button>
-    <a href="../drive/" class="action-btn gold">
-      <span>🚚</span> <span>3D Driving Run</span>
+    <a href="../drive/" class="action-btn gold" title="3D Driving Edition">
+      <span>🚚</span> <span>Drive Run</span>
     </a>
-    <a href="../" class="action-btn">
-      <span>📄</span> <span>Classic View</span>
+    <a href="../" class="action-btn" title="Classic View">
+      <span>📄</span> <span>Classic</span>
     </a>
   </div>
 </header>
+
+<!-- ── MOBILE SUBNAV HORIZONTAL FILTER STRIP ──────────────── -->
+<div id="mobile-subnav">
+  <button class="filter-btn active" onclick="filterCategory('all', this)">All (8)</button>
+  <button class="filter-btn" onclick="filterCategory('live', this)">Live Software</button>
+  <button class="filter-btn" onclick="filterCategory('logistics', this)">Last-Mile Logistics</button>
+  <button class="filter-btn" onclick="filterCategory('ai', this)">Multi-Agent AI</button>
+</div>
 
 <!-- ── SPATIAL DIAGRAM VIEWPORT ───────────────────────────── -->
 <main id="diagram-viewport">
@@ -695,25 +845,25 @@ html, body {
     </svg>
 
     <!-- 00. CENTRAL HUB NODE -->
-    <div class="node theme-hub" style="left: 1300px; top: 1000px;" onclick="centerOnNode(1300, 1000)">
+    <div class="node theme-hub" id="node-hub" style="left: 1300px; top: 1000px;" onclick="selectNodeById('hub')">
       <div style="font-family:var(--font-mono);font-size:11px;color:var(--em-l);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">
         Core Architecture & Thesis
       </div>
-      <h2 style="font-family:var(--font-display);font-size:25px;line-height:1.2;margin-bottom:12px;">
+      <h2 style="font-family:var(--font-display);font-size:24px;line-height:1.2;margin-bottom:10px;">
         &ldquo;I turn customer problems into products that <span style="color:var(--em-l);">ship.</span>&rdquo;
       </h2>
-      <p style="font-size:13.5px;color:#cbd5e1;line-height:1.6;margin-bottom:18px;">
+      <p style="font-size:13px;color:#cbd5e1;line-height:1.55;margin-bottom:16px;">
         Combining client relationship leadership with hands-on product judgment, multi-agent AI systems, and last-mile operations.
       </p>
-      <div style="display:flex;justify-content:center;gap:12px;font-family:var(--font-mono);font-size:11px;">
-        <span style="background:rgba(255,255,255,0.08);padding:5px 12px;border-radius:8px;color:#86efac;font-weight:700;">6 Deployed Systems</span>
-        <span style="background:rgba(255,255,255,0.08);padding:5px 12px;border-radius:8px;color:#00d2ff;font-weight:700;">3 Live Web Apps</span>
-        <span style="background:rgba(255,255,255,0.08);padding:5px 12px;border-radius:8px;color:#2dd4bf;font-weight:700;">Charlotte Metro</span>
+      <div style="display:flex;justify-content:center;gap:10px;font-family:var(--font-mono);font-size:10.5px;flex-wrap:wrap;">
+        <span style="background:rgba(255,255,255,0.08);padding:4px 10px;border-radius:6px;color:#86efac;font-weight:700;">6 Deployed Systems</span>
+        <span style="background:rgba(255,255,255,0.08);padding:4px 10px;border-radius:6px;color:#00d2ff;font-weight:700;">3 Live Web Apps</span>
+        <span style="background:rgba(255,255,255,0.08);padding:4px 10px;border-radius:6px;color:#2dd4bf;font-weight:700;">Charlotte Metro</span>
       </div>
     </div>
 
     <!-- 01. F&B MANAGER -->
-    <div class="node theme-cyan" data-category="client" style="left: 800px; top: 700px;" onclick="openCaseStudy('fnb')">
+    <div class="node theme-cyan" id="node-fnb" data-category="client" style="left: 800px; top: 700px;" onclick="selectNodeById('fnb')">
       <div class="node-header">
         <div class="node-icon" style="background:rgba(0,210,255,0.15);border-color:rgba(0,210,255,0.4);">🎰</div>
         <span class="node-badge" style="background:rgba(0,210,255,0.2);color:#7dd3fc;border-color:rgba(0,210,255,0.4);">In Field Use</span>
@@ -731,7 +881,7 @@ html, body {
     </div>
 
     <!-- 02. ROOTED -->
-    <div class="node theme-green" data-category="live" style="left: 1800px; top: 700px;" onclick="openCaseStudy('rooted')">
+    <div class="node theme-green" id="node-rooted" data-category="live" style="left: 1800px; top: 700px;" onclick="selectNodeById('rooted')">
       <div class="node-header">
         <div class="node-icon" style="background:rgba(34,197,94,0.15);border-color:rgba(34,197,94,0.4);">🌿</div>
         <span class="node-badge live">Live in Production</span>
@@ -749,7 +899,7 @@ html, body {
     </div>
 
     <!-- 03. MULTI-AGENT ENGINE -->
-    <div class="node theme-purple" data-category="ai" style="left: 700px; top: 1300px;" onclick="openCaseStudy('agentic')">
+    <div class="node theme-purple" id="node-agentic" data-category="ai" style="left: 700px; top: 1300px;" onclick="selectNodeById('agentic')">
       <div class="node-header">
         <div class="node-icon" style="background:rgba(192,132,252,0.15);border-color:rgba(192,132,252,0.4);">🤖</div>
         <span class="node-badge" style="background:rgba(192,132,252,0.2);color:#d8b4fe;border-color:rgba(192,132,252,0.4);">Multi-Agent AI</span>
@@ -767,7 +917,7 @@ html, body {
     </div>
 
     <!-- 06. LAST-MILE DELIVERY OPERATIONS HUB (FEATURED) -->
-    <div class="node theme-teal" data-category="logistics" style="left: 1300px; top: 1550px;" onclick="openCaseStudy('delivery')">
+    <div class="node theme-teal" id="node-delivery" data-category="logistics" style="left: 1300px; top: 1550px;" onclick="selectNodeById('delivery')">
       <div class="node-header">
         <div class="node-icon" style="background:rgba(45,212,191,0.2);border-color:rgba(45,212,191,0.5);">🚚</div>
         <span class="node-badge" style="background:rgba(45,212,191,0.2);color:#5eead4;border-color:rgba(45,212,191,0.5);">Live Logistics Hub</span>
@@ -785,7 +935,7 @@ html, body {
     </div>
 
     <!-- 04. AUTO-PLUG INVESTOR PLATFORM -->
-    <div class="node theme-gold" data-category="live" style="left: 1900px; top: 1300px;" onclick="openCaseStudy('autoplug')">
+    <div class="node theme-gold" id="node-autoplug" data-category="live" style="left: 1900px; top: 1300px;" onclick="selectNodeById('autoplug')">
       <div class="node-header">
         <div class="node-icon" style="background:rgba(251,191,36,0.15);border-color:rgba(251,191,36,0.4);">⚡</div>
         <span class="node-badge" style="background:rgba(251,191,36,0.2);color:#fde047;border-color:rgba(251,191,36,0.4);">Live SaaS</span>
@@ -803,7 +953,7 @@ html, body {
     </div>
 
     <!-- 05. INTERACTIVE KEEPSAKES (DERRICK & MIESHA) -->
-    <div class="node theme-rose" data-category="live" style="left: 1300px; top: 450px;" onclick="openCaseStudy('keepsakes')">
+    <div class="node theme-rose" id="node-keepsakes" data-category="live" style="left: 1300px; top: 450px;" onclick="selectNodeById('keepsakes')">
       <div class="node-header">
         <div class="node-icon" style="background:rgba(251,113,133,0.15);border-color:rgba(251,113,133,0.4);">💌</div>
         <span class="node-badge" style="background:rgba(251,113,133,0.2);color:#fda4af;border-color:rgba(251,113,133,0.4);">Live · Self-Hosted</span>
@@ -821,7 +971,7 @@ html, body {
     </div>
 
     <!-- 07. SKILLS & SYSTEMS ARENA -->
-    <div class="node theme-indigo" data-category="all" style="left: 450px; top: 1000px;" onclick="openCaseStudy('skills')">
+    <div class="node theme-indigo" id="node-skills" data-category="all" style="left: 450px; top: 1000px;" onclick="selectNodeById('skills')">
       <div class="node-header">
         <div class="node-icon" style="background:rgba(129,140,248,0.15);border-color:rgba(129,140,248,0.4);">🛠️</div>
         <span class="node-badge" style="background:rgba(129,140,248,0.2);color:#c7d2fe;border-color:rgba(129,140,248,0.4);">Core Disciplines</span>
@@ -838,7 +988,7 @@ html, body {
     </div>
 
     <!-- 08. CONTACT & DISPATCH TERMINAL -->
-    <div class="node theme-green" data-category="all" style="left: 2150px; top: 1000px;" onclick="openCaseStudy('contact')">
+    <div class="node theme-green" id="node-contact" data-category="all" style="left: 2150px; top: 1000px;" onclick="selectNodeById('contact')">
       <div class="node-header">
         <div class="node-icon" style="background:rgba(34,197,94,0.15);border-color:rgba(34,197,94,0.4);">📬</div>
         <span class="node-badge live">Get In Touch</span>
@@ -856,7 +1006,7 @@ html, body {
   </div>
 </main>
 
-<!-- ── BOTTOM CONTROLS HUD ────────────────────────────────── -->
+<!-- ── DESKTOP BOTTOM CONTROLS HUD ────────────────────────── -->
 <div class="hud-panel">
   <span class="hud-hint">Drag to Pan · Scroll to Zoom · Click Node to Inspect</span>
   <div class="hud-btn-group">
@@ -866,7 +1016,24 @@ html, body {
   </div>
 </div>
 
-<!-- ── CASE STUDY SLIDEOUT DRAWER ────────────────────────── -->
+<!-- ── MOBILE FLOATING NAV DOCK ───────────────────────────── -->
+<div id="mobile-dock">
+  <div class="mobile-dock-top">
+    <div class="mobile-dock-info">
+      <div class="mobile-dock-kicker" id="m-dock-kicker">ZONE 06 · LAST-MILE LOGISTICS</div>
+      <div class="mobile-dock-title" id="m-dock-title">Last-Mile Delivery Operations</div>
+    </div>
+    <div class="mobile-dock-btns">
+      <button class="dock-arrow-btn" onclick="navStepNode(-1)" title="Previous Node">◀</button>
+      <button class="dock-arrow-btn" onclick="navStepNode(1)" title="Next Node">▶</button>
+      <button class="dock-open-btn" onclick="openCurrentMobileNode()">
+        <span>Inspect</span> <span>&rarr;</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ── CASE STUDY SLIDEOUT DRAWER / BOTTOM SHEET ─────────── -->
 <aside id="drawer">
   <div class="drawer-head">
     <div>
@@ -883,6 +1050,17 @@ html, body {
 <!-- ── SCRIPTS ───────────────────────────────────────────── -->
 <script>
 const DOSSIERS = {
+  hub: {
+    kicker: "00 · CORE ARCHITECTURE",
+    title: "Derrick McDonald · Portfolio",
+    badge: "Customer Strategy + Product + Delivery",
+    summary: "I turn customer problems into products that ship. With a background leading client relationships and operational delivery, I bridge the gap between user needs and full-stack software execution.",
+    stack: ["Customer Enablement", "Product Operations", "Full-Stack Development", "Multi-Agent AI", "Last-Mile Logistics"],
+    why: "Building software that operates in the real world—from casino floor operations and direct-response real estate tools to consumer apps and white-glove logistics dispatch.",
+    links: [
+      { label: "View Classic Executive View", url: "../" }
+    ]
+  },
   fnb: {
     kicker: "01 · HOSPITALITY & RESORT CASINO",
     title: "F&B Manager Platform",
@@ -918,7 +1096,7 @@ const DOSSIERS = {
   },
   delivery: {
     kicker: "06 · LAST-MILE LOGISTICS & DISPATCH",
-    title: "LeadCurate Delivery & Courier Operations",
+    title: "LeadCurate Delivery Operations",
     badge: "Live Logistics · Charlotte Metro Dispatch",
     summary: "Derrick's white-glove small-item courier and last-mile dispatch network serving estate auctions, high-value art, vintage decor, and property logistics across Charlotte, Mecklenburg, and surrounding counties (Gaston, Cabarrus, York, Lake Norman). Features real-time driver dispatch tracking, SMS customer milestone alerts, chain-of-custody photo proof-of-delivery (POD), and route clustering.",
     stack: ["Last-Mile Routing", "Real-Time Driver Dispatch", "Twilio SMS Milestones", "Photo Proof-of-Delivery (POD)", "Next.js", "Supabase", "PostgreSQL", "Logistics Ops"],
@@ -975,23 +1153,40 @@ const DOSSIERS = {
   }
 };
 
-/* ── PAN & ZOOM ENGINE ──────────────────────────────────── */
+const NODES_ORDER = ['hub', 'fnb', 'rooted', 'agentic', 'delivery', 'autoplug', 'keepsakes', 'skills', 'contact'];
+const NODES_COORDS = {
+  hub: { x: 1300, y: 1000 },
+  fnb: { x: 800, y: 700 },
+  rooted: { x: 1800, y: 700 },
+  agentic: { x: 700, y: 1300 },
+  delivery: { x: 1300, y: 1550 },
+  autoplug: { x: 1900, y: 1300 },
+  keepsakes: { x: 1300, y: 450 },
+  skills: { x: 450, y: 1000 },
+  contact: { x: 2150, y: 1000 }
+};
+
+/* ── PAN & ZOOM ENGINE (TOUCH + MOUSE) ──────────────────── */
 const viewport = document.getElementById('diagram-viewport');
 const world = document.getElementById('diagram-world');
 
-let scale = 0.85;
+let scale = window.innerWidth < 860 ? 0.58 : 0.85;
 let panX = 0;
 let panY = 0;
 let isPanning = false;
 let startX = 0;
 let startY = 0;
+let initialPinchDist = 0;
+let initialPinchScale = 1;
+let currentNodeIndex = 4; // Default to delivery
 
 function updateTransform() {
   world.style.transform = `translate(calc(-50% + ${panX}px), calc(-50% + ${panY}px)) scale(${scale})`;
 }
 
+// Mouse Events
 viewport.addEventListener('mousedown', (e) => {
-  if (e.target.closest('.node') || e.target.closest('.hud-panel')) return;
+  if (e.target.closest('.node') || e.target.closest('.hud-panel') || e.target.closest('#mobile-dock')) return;
   isPanning = true;
   startX = e.clientX - panX;
   startY = e.clientY - panY;
@@ -1004,24 +1199,63 @@ window.addEventListener('mousemove', (e) => {
   updateTransform();
 });
 
-window.addEventListener('mouseup', () => {
-  isPanning = false;
+window.addEventListener('mouseup', () => { isPanning = false; });
+
+// Touch Events (Smooth Mobile Pan & Pinch Zoom)
+viewport.addEventListener('touchstart', (e) => {
+  if (e.target.closest('.node') || e.target.closest('.hud-panel') || e.target.closest('#mobile-dock')) return;
+  if (e.touches.length === 1) {
+    isPanning = true;
+    startX = e.touches[0].clientX - panX;
+    startY = e.touches[0].clientY - panY;
+  } else if (e.touches.length === 2) {
+    isPanning = false;
+    initialPinchDist = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY
+    );
+    initialPinchScale = scale;
+  }
+}, { passive: true });
+
+window.addEventListener('touchmove', (e) => {
+  if (isPanning && e.touches.length === 1) {
+    panX = e.touches[0].clientX - startX;
+    panY = e.touches[0].clientY - startY;
+    updateTransform();
+  } else if (e.touches.length === 2 && initialPinchDist > 0) {
+    const currentDist = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY
+    );
+    const factor = currentDist / initialPinchDist;
+    scale = Math.max(0.35, Math.min(1.6, initialPinchScale * factor));
+    updateTransform();
+  }
+}, { passive: true });
+
+window.addEventListener('touchend', (e) => {
+  if (e.touches.length === 0) {
+    isPanning = false;
+    initialPinchDist = 0;
+  }
 });
 
+// Wheel zoom
 viewport.addEventListener('wheel', (e) => {
   e.preventDefault();
   const zoomFactor = e.deltaY < 0 ? 1.1 : 0.9;
-  scale = Math.max(0.4, Math.min(1.6, scale * zoomFactor));
+  scale = Math.max(0.35, Math.min(1.6, scale * zoomFactor));
   updateTransform();
 }, { passive: false });
 
 function zoomDiagram(factor) {
-  scale = Math.max(0.4, Math.min(1.6, scale * factor));
+  scale = Math.max(0.35, Math.min(1.6, scale * factor));
   updateTransform();
 }
 
 function resetDiagramView() {
-  scale = 0.85;
+  scale = window.innerWidth < 860 ? 0.58 : 0.85;
   panX = 0;
   panY = 0;
   updateTransform();
@@ -1033,6 +1267,44 @@ function centerOnNode(nx, ny) {
   panX = (worldCenterX - nx) * scale;
   panY = (worldCenterY - ny) * scale;
   updateTransform();
+}
+
+function selectNodeById(id) {
+  const coords = NODES_COORDS[id];
+  if (coords) {
+    centerOnNode(coords.x, coords.y);
+  }
+  const idx = NODES_ORDER.indexOf(id);
+  if (idx !== -1) {
+    currentNodeIndex = idx;
+    updateMobileDock();
+  }
+  openCaseStudy(id);
+}
+
+function updateMobileDock() {
+  const id = NODES_ORDER[currentNodeIndex];
+  const d = DOSSIERS[id];
+  if (!d) return;
+  document.getElementById('m-dock-kicker').textContent = d.kicker;
+  document.getElementById('m-dock-title').textContent = d.title;
+}
+
+function navStepNode(delta) {
+  currentNodeIndex = (currentNodeIndex + delta + NODES_ORDER.length) % NODES_ORDER.length;
+  const id = NODES_ORDER[currentNodeIndex];
+  const coords = NODES_COORDS[id];
+  centerOnNode(coords.x, coords.y);
+  updateMobileDock();
+
+  document.querySelectorAll('.node').forEach(n => n.classList.remove('active-node'));
+  const targetNode = document.getElementById(`node-${id}`);
+  if (targetNode) targetNode.classList.add('active-node');
+}
+
+function openCurrentMobileNode() {
+  const id = NODES_ORDER[currentNodeIndex];
+  openCaseStudy(id);
 }
 
 /* ── CASE STUDY DRAWER ─────────────────────────────────── */
@@ -1054,7 +1326,7 @@ function openCaseStudy(id) {
   });
 
   document.getElementById('drawer-content').innerHTML = `
-    <div style="font-size:12px;font-weight:700;color:var(--em-l);text-transform:uppercase;letter-spacing:.08em;">
+    <div style="font-size:12px;font-weight:800;color:var(--em-l);text-transform:uppercase;letter-spacing:.08em;">
       ${d.badge}
     </div>
     <p>${d.summary}</p>
@@ -1072,8 +1344,8 @@ function openCaseStudy(id) {
 
   // Highlight active node
   document.querySelectorAll('.node').forEach(n => n.classList.remove('active-node'));
-  const clicked = event?.target?.closest('.node');
-  if (clicked) clicked.classList.add('active-node');
+  const nodeElem = document.getElementById(`node-${id}`);
+  if (nodeElem) nodeElem.classList.add('active-node');
 }
 
 function closeCaseStudy() {
@@ -1083,8 +1355,9 @@ function closeCaseStudy() {
 
 /* ── CATEGORY FILTERING ─────────────────────────────────── */
 function filterCategory(cat, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.toLowerCase().includes(cat) || (cat === 'all' && b.textContent.includes('All')));
+  });
 
   document.querySelectorAll('.node').forEach(node => {
     if (node.classList.contains('theme-hub')) return;
@@ -1125,7 +1398,7 @@ function toggleGuidedTour() {
     tourInterval = setInterval(runTourStep, 4500);
   } else {
     btn.classList.remove('active');
-    label.textContent = 'Guided System Tour';
+    label.textContent = 'Guided Tour';
     clearInterval(tourInterval);
     closeCaseStudy();
     resetDiagramView();
@@ -1143,9 +1416,15 @@ function runTourStep() {
   tourStep++;
 }
 
-// Initial view centering
 window.addEventListener('DOMContentLoaded', () => {
   resetDiagramView();
+  updateMobileDock();
+});
+window.addEventListener('resize', () => {
+  if (window.innerWidth < 860 && scale > 0.7) {
+    scale = 0.58;
+    updateTransform();
+  }
 });
 </script>
 </body>
