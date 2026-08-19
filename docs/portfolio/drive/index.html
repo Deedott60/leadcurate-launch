@@ -1,0 +1,2149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>Derrick McDonald · 3D Last-Mile Delivery Run & Driving Portfolio</title>
+<meta name="description" content="Drive Derrick McDonald's Last-Mile Delivery courier van through an interactive 3D world to explore software projects, multi-agent AI systems, and logistics operations."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<!-- Three.js from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<style>
+:root {
+  --em: #15803d;
+  --em-light: #22c55e;
+  --em-glow: rgba(34, 197, 94, 0.45);
+  --dark: #070a12;
+  --dark-2: #0f172a;
+  --panel: rgba(15, 23, 42, 0.9);
+  --panel-border: rgba(255, 255, 255, 0.14);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent-gold: #f59e0b;
+  --accent-blue: #38bdf8;
+  --accent-purple: #a855f7;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #070a12;
+  font-family: var(--font-sans);
+  color: var(--text-main);
+  touch-action: none;
+}
+
+#canvas3d {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: block;
+}
+
+/* ── HUD OVERLAY ────────────────────────────────────────── */
+#hud {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(12px, 2vw, 20px);
+}
+
+.hud-interactive { pointer-events: auto; }
+
+/* Top Header Bar */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.brand-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--panel);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--panel-border);
+  padding: 8px 16px;
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.brand-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--em-light), #3b82f6);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 14px;
+  color: #fff;
+  box-shadow: 0 0 12px var(--em-glow);
+}
+
+.brand-info h1 {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.brand-info p {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hud-btn {
+  background: var(--panel);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--panel-border);
+  color: var(--text-main);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.18s ease;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+
+.hud-btn:hover {
+  background: rgba(30, 41, 59, 0.95);
+  border-color: var(--em-light);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px var(--em-glow);
+}
+
+.hud-btn.active {
+  background: var(--em);
+  border-color: var(--em-light);
+  color: #fff;
+}
+
+.hud-btn.gold {
+  border-color: rgba(245, 158, 11, 0.5);
+  color: #fef3c7;
+}
+.hud-btn.gold:hover {
+  border-color: var(--accent-gold);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35);
+}
+
+/* Quest & Delivery Status Pill */
+.delivery-quest-pill {
+  position: absolute;
+  top: 76px;
+  left: clamp(12px, 2vw, 20px);
+  background: var(--panel);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--panel-border);
+  border-left: 3px solid var(--accent-gold);
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.45);
+  max-width: 330px;
+}
+
+.quest-icon {
+  font-size: 22px;
+}
+
+.quest-details .q-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-gold);
+  margin-bottom: 2px;
+}
+
+.quest-details .q-desc {
+  font-size: 12px;
+  color: var(--text-main);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.quest-progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 999px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.quest-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent-gold), var(--em-light));
+  transition: width 0.4s ease;
+}
+
+/* Speedometer & Gear Box */
+.dash-cluster {
+  position: absolute;
+  bottom: clamp(16px, 3vw, 28px);
+  left: clamp(12px, 2vw, 20px);
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.speedo-card {
+  background: var(--panel);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  padding: 12px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 110px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.speedo-val {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--em-light);
+  line-height: 1;
+}
+
+.speedo-unit {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.vehicle-switch-box {
+  display: flex;
+  gap: 6px;
+}
+
+.veh-btn {
+  background: var(--panel);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--panel-border);
+  color: var(--text-muted);
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.veh-btn:hover, .veh-btn.active {
+  background: var(--dark-2);
+  border-color: var(--em-light);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* Minimap / Radar */
+.minimap-card {
+  position: absolute;
+  top: 76px;
+  right: clamp(12px, 2vw, 20px);
+  background: var(--panel);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  padding: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+#minimap-canvas {
+  width: 130px;
+  height: 130px;
+  background: #0c121e;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.minimap-legend {
+  font-size: 9px;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Bottom Center Prompt / Interaction Toast */
+.interaction-toast {
+  position: absolute;
+  bottom: clamp(20px, 4vw, 36px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, rgba(21, 128, 61, 0.95), rgba(15, 23, 42, 0.95));
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(34, 197, 94, 0.5);
+  box-shadow: 0 12px 40px rgba(21, 128, 61, 0.4);
+  border-radius: 999px;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.interaction-toast.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(-6px);
+}
+
+.toast-pulse {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 12px #fff;
+  animation: pulseGlow 1.5s infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.6; }
+}
+
+.toast-text {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.toast-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  background: rgba(255,255,255,0.2);
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+/* Mobile Virtual Controls */
+.mobile-controls {
+  display: none;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  gap: 14px;
+  align-items: center;
+}
+
+.mobile-dpad {
+  display: none;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 120px;
+  height: 120px;
+  background: rgba(15, 23, 42, 0.65);
+  border: 2px solid rgba(255,255,255,0.15);
+  border-radius: 50%;
+  touch-action: none;
+}
+
+.touch-stick {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  margin-left: -22px;
+  margin-top: -22px;
+  background: linear-gradient(135deg, var(--em-light), #3b82f6);
+  border-radius: 50%;
+  box-shadow: 0 0 16px var(--em-glow);
+}
+
+.m-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  color: #fff;
+  font-size: 20px;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  cursor: pointer;
+}
+.m-btn:active {
+  background: var(--em);
+  transform: scale(0.92);
+}
+
+@media (max-width: 768px) {
+  .mobile-controls, .mobile-dpad { display: flex; }
+  .dash-cluster { bottom: 160px; left: 16px; }
+  .delivery-quest-pill { max-width: 240px; }
+  .minimap-card { display: none; }
+}
+
+/* ── MODAL / CASE STUDY DRAWER ─────────────────────────── */
+#modal-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(540px, 92vw);
+  height: 100%;
+  background: rgba(10, 14, 23, 0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-left: 1px solid var(--panel-border);
+  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.7);
+  z-index: 100;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#modal-drawer.open {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--panel-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.drawer-kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--em-light);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.drawer-close {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: var(--text-muted);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.drawer-close:hover {
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+}
+
+.drawer-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.drawer-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.drawer-summary {
+  font-size: 15px;
+  color: #cbd5e1;
+  line-height: 1.6;
+}
+
+.drawer-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.drawer-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 4px 10px;
+  border-radius: 6px;
+  color: #94a3b8;
+}
+
+.drawer-card {
+  background: rgba(17, 24, 39, 0.75);
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+
+.drawer-card-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--em-light);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.drawer-card p {
+  font-size: 13.5px;
+  color: #cbd5e1;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.drawer-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.btn-primary {
+  background: var(--em);
+  color: #fff;
+  border: 1px solid var(--em-light);
+  padding: 11px 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 6px 20px var(--em-glow);
+  transition: all 0.18s ease;
+}
+.btn-primary:hover {
+  background: #16a34a;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: rgba(255,255,255,0.06);
+  color: #f8fafc;
+  border: 1px solid var(--panel-border);
+  padding: 11px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.18s ease;
+}
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+/* ── ONBOARDING / CONTROLS HELP POPUP ───────────────────── */
+#intro-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(12px);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+#intro-modal.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intro-box {
+  background: #0f172a;
+  border: 1px solid var(--panel-border);
+  box-shadow: 0 25px 70px rgba(0,0,0,0.8), 0 0 40px var(--em-glow);
+  border-radius: 24px;
+  max-width: 560px;
+  width: 100%;
+  padding: clamp(24px, 4vw, 36px);
+  text-align: center;
+}
+
+.intro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--em-glow);
+  color: var(--em-light);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+}
+
+.intro-title {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 4vw, 34px);
+  line-height: 1.15;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+.intro-title span { color: var(--em-light); }
+
+.intro-sub {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.controls-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+  margin-bottom: 28px;
+  text-align: left;
+}
+
+.ctrl-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px;
+}
+.ctrl-key {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent-gold);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.ctrl-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.intro-btn-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Notification banner */
+#notify-banner {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background: var(--panel);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--em-light);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px var(--em-glow);
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 150;
+  pointer-events: none;
+}
+#notify-banner.show {
+  transform: translateX(-50%) translateY(0);
+}
+</style>
+</head>
+<body>
+
+<canvas id="canvas3d"></canvas>
+
+<!-- ── HUD OVERLAY ────────────────────────────────────────── -->
+<div id="hud">
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="brand-badge hud-interactive">
+      <div class="brand-avatar">DM</div>
+      <div class="brand-info">
+        <h1>Derrick McDonald</h1>
+        <p>Customer · Product · Operations & Logistics</p>
+      </div>
+    </div>
+
+    <div class="top-actions hud-interactive">
+      <button class="hud-btn gold" id="btn-tour" onclick="toggleAutopilotTour()">
+        <span>🤖</span> <span id="tour-label">Guided Recruiter Tour</span>
+      </button>
+      <button class="hud-btn" id="btn-sound" onclick="toggleAudioEngine()">
+        <span id="sound-icon">🔇</span> <span id="sound-label">Sound</span>
+      </button>
+      <button class="hud-btn" id="btn-night" onclick="toggleLightingMode()">
+        <span id="night-icon">🌙</span> <span id="night-label">Night</span>
+      </button>
+      <a href="../interactive/" class="hud-btn" style="text-decoration:none;">
+        <span>✨</span> <span>3D Spatial Diagram</span>
+      </a>
+      <a href="../" class="hud-btn" style="text-decoration:none;">
+        <span>📄</span> <span>Classic View</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Quest Status Pill -->
+  <div class="delivery-quest-pill hud-interactive">
+    <div class="quest-icon">📦</div>
+    <div class="quest-details" style="flex:1;">
+      <div class="q-title">Last-Mile Delivery Quest</div>
+      <div class="q-desc" id="quest-status-text">Collect parcels on roads & deliver to project hubs</div>
+      <div class="quest-progress-bar">
+        <div class="quest-progress-fill" id="quest-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Minimap -->
+  <div class="minimap-card hud-interactive">
+    <canvas id="minimap-canvas" width="130" height="130"></canvas>
+    <div class="minimap-legend">Dispatch Radar</div>
+  </div>
+
+  <!-- Speedometer & Controls Cluster -->
+  <div class="dash-cluster hud-interactive">
+    <div class="speedo-card">
+      <div class="speedo-val" id="speed-display">0</div>
+      <div class="speedo-unit">MPH · COURIER 01</div>
+    </div>
+
+    <div class="vehicle-switch-box">
+      <button class="veh-btn active" title="Delivery Courier Van" onclick="switchVehicle('van', this)">🚚</button>
+      <button class="veh-btn" title="Cybercoupe" onclick="switchVehicle('coupe', this)">🏎️</button>
+      <button class="veh-btn" title="EV Micro-Truck" onclick="switchVehicle('truck', this)">⚡</button>
+      <button class="veh-btn" title="Honk Horn (H)" onclick="playHonkSound()">📢</button>
+    </div>
+  </div>
+
+  <!-- Bottom Interaction Toast -->
+  <div class="interaction-toast hud-interactive" id="station-toast" onclick="openCurrentStationModal()">
+    <div class="toast-pulse"></div>
+    <div class="toast-text" id="toast-station-title">Approaching Project Depot</div>
+    <div class="toast-badge">SPACE / CLICK TO INSPECT</div>
+  </div>
+
+  <!-- Mobile Controls -->
+  <div class="mobile-dpad hud-interactive" id="touch-dpad">
+    <div class="touch-stick" id="touch-stick"></div>
+  </div>
+
+  <div class="mobile-controls hud-interactive">
+    <button class="m-btn" id="m-horn" onclick="playHonkSound()">📢</button>
+    <button class="m-btn" id="m-brake">🛑</button>
+    <button class="m-btn" id="m-gas" style="background:var(--em);border-color:var(--em-light);">⚡</button>
+  </div>
+</div>
+
+<!-- ── CASE STUDY DRAWER ─────────────────────────────────── -->
+<div id="modal-drawer">
+  <div class="drawer-header">
+    <div>
+      <span class="drawer-kicker" id="drawer-kicker">ZONE 01 · CASE STUDY</span>
+      <h2 class="drawer-title" id="drawer-title" style="font-size:22px;margin-top:2px;">F&B Manager</h2>
+    </div>
+    <button class="drawer-close" onclick="closeStationModal()">&times;</button>
+  </div>
+
+  <div class="drawer-body" id="drawer-content">
+    <!-- Populated dynamically via JS -->
+  </div>
+</div>
+
+<!-- ── ONBOARDING MODAL ──────────────────────────────────── -->
+<div id="intro-modal">
+  <div class="intro-box">
+    <div class="intro-badge">✨ Derrick McDonald Interactive 3D Portfolio</div>
+    <h1 class="intro-title">Welcome to the <span>Delivery Run</span></h1>
+    <p class="intro-sub">
+      Navigate Derrick's work, multi-agent systems, and last-mile logistics operations in an interactive 3D driving world.
+    </p>
+
+    <div class="controls-grid">
+      <div class="ctrl-card">
+        <div class="ctrl-key">W / ⬆️</div>
+        <div class="ctrl-desc">Accelerate forward</div>
+      </div>
+      <div class="ctrl-card">
+        <div class="ctrl-key">S / ⬇️</div>
+        <div class="ctrl-desc">Brake & reverse</div>
+      </div>
+      <div class="ctrl-card">
+        <div class="ctrl-key">A / D / ⬅️ ➡️</div>
+        <div class="ctrl-desc">Steer & drift</div>
+      </div>
+      <div class="ctrl-card">
+        <div class="ctrl-key">SPACE / Click</div>
+        <div class="ctrl-desc">Inspect station</div>
+      </div>
+      <div class="ctrl-card">
+        <div class="ctrl-key">H key</div>
+        <div class="ctrl-desc">Honk horn</div>
+      </div>
+      <div class="ctrl-card">
+        <div class="ctrl-key">Touch / Joystick</div>
+        <div class="ctrl-desc">Full mobile support</div>
+      </div>
+    </div>
+
+    <div class="intro-btn-row">
+      <button class="btn-primary" onclick="startDrivingSession(false)" style="padding:13px 26px;font-size:14px;">
+        <span>🚚</span> <span>Start Driving</span>
+      </button>
+      <button class="btn-secondary" onclick="startDrivingSession(true)" style="padding:13px 22px;font-size:14px;">
+        <span>🤖</span> <span>Guided Recruiter Tour</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Notification Banner -->
+<div id="notify-banner">
+  <span id="notify-icon">🎉</span>
+  <span id="notify-text">Package Delivered to Hub!</span>
+</div>
+
+<!-- ── THREE.JS GAME ENGINE ──────────────────────────────── -->
+<script>
+/* ── PORTFOLIO STATIONS DATA ────────────────────────────── */
+const STATIONS = [
+  {
+    id: "fnb",
+    name: "F&B Manager",
+    kicker: "01 · HOSPITALITY CASINO PLATFORM",
+    pos: { x: -45, z: -35 },
+    color: 0x3b82f6,
+    icon: "🎰",
+    badge: "In Field Use · Confidential Client",
+    summary: "A tablet-first food and beverage operations platform built for casino and resort environments, in daily use on property. Features inventory par-level tracking, scheduled check-ins, SOP surface cards, and a camera scan feature that reads shelf stock from a photograph instead of manual clipboard entry.",
+    stack: ["Next.js", "React", "Supabase", "PostgreSQL", "Tablet-First", "Camera Capture", "Inventory Ops"],
+    whyItMatters: "This platform is actively deployed inside another company's daily operations. I engineered it from client requirements for floor staff I will never meet—meaning the interface must be intuitive and bulletproof without anyone standing beside them.",
+    links: [
+      { label: "Architecture Brief", url: "../../#the-work" }
+    ],
+    delivered: false
+  },
+  {
+    id: "rooted",
+    name: "Rooted",
+    kicker: "02 · LIVE CONSUMER APP",
+    pos: { x: 45, z: -35 },
+    color: 0x10b981,
+    icon: "🌿",
+    badge: "Live in Production · Verified HTTP 200",
+    summary: "A daily devotional and relationship connection application for Black women and couples. Users express their emotional and spiritual load, and the system matches Scripture with personalized reflections, prayers, and shared partner streaks.",
+    stack: ["Next.js", "React", "Supabase Auth", "PostgreSQL", "Anthropic Claude API", "Stripe Billing", "Web Push Notifications", "Vercel"],
+    whyItMatters: "Rooted brings together full user authentication, subscription billing, AI-curated content generation, and automated scheduled web push notifications. Building it end-to-end taught me how user trust depends on invisible infrastructure working flawlessly.",
+    links: [
+      { label: "Open Live Application →", url: "https://rooted-app-pink.vercel.app", primary: true }
+    ],
+    delivered: false
+  },
+  {
+    id: "agentic",
+    name: "LeadCurate Multi-Agent Engine",
+    kicker: "03 · AI MULTI-AGENT ARCHITECTURE",
+    pos: { x: -55, z: 35 },
+    color: 0x8b5cf6,
+    icon: "🤖",
+    badge: "Production Engine · 21 Modules",
+    summary: "An autonomous multi-agent operating system coordinating Claude, Codex, and Hermes across 5 pipeline stages: customer signal intake, county property research, parcel data auditing, direct-mail generation, and video creative rendering.",
+    stack: ["Multi-Agent AI", "Claude 3.5 Sonnet", "Codex", "Hermes", "Python", "Node.js", "Supabase", "County GIS Scrapers"],
+    whyItMatters: "Proves hands-on architectural leadership orchestrating autonomous AI agents with structured handoffs, state validation, and real-world database persistence rather than simple prompt-response toys.",
+    links: [
+      { label: "View Multi-Agent Diagram", url: "../../#agent-diagram" }
+    ],
+    delivered: false
+  },
+  {
+    id: "autoplug",
+    name: "Auto-Plug & White-Label Platform",
+    kicker: "04 · CONFIGURABLE DIRECT-RESPONSE PLATFORM",
+    pos: { x: 55, z: 35 },
+    color: 0xf59e0b,
+    icon: "⚡",
+    badge: "Configurable SaaS Architecture",
+    summary: "A high-conversion real estate investor acquisition engine designed with dynamic multi-tenant branding, interactive county valuation calculators, MapLibre parcel boundary overlays, and automated SMS/call routing.",
+    stack: ["Next.js", "Tailwind CSS", "MapLibre GL", "Supabase", "Twilio SMS", "Dynamic Multitenancy"],
+    whyItMatters: "Demonstrates designing one robust core software architecture that can be skinned, localized, and configured for separate clients without touching core codebase logic.",
+    links: [
+      { label: "View Investor Demo", url: "https://autoplug-demo.leadcurate.com", primary: true }
+    ],
+    delivered: false
+  },
+  {
+    id: "keepsakes",
+    name: "Interactive Keepsakes (Derrick & Miesha)",
+    kicker: "05 · INTERACTIVE DIGITAL EXPERIENCE",
+    pos: { x: 0, z: -65 },
+    color: 0xec4899,
+    icon: "💌",
+    badge: "Live Experience · Self-Hosted API",
+    summary: "A bespoke digital announcement and blessing board. Tapping an interactive 3D wax seal triggers a custom 10-second announcement film and reveals a persistent guest blessing board backed by a custom REST API running on a self-administered Linux VPS.",
+    stack: ["Interactive Front End", "Custom REST API", "SQLite", "Linux VPS (Debian)", "Nginx Reverse Proxy", "Let's Encrypt TLS"],
+    whyItMatters: "I built and self-host both the front end and API on bare cloud Linux servers, handling SSL certificates, reverse proxy routing, and persistent storage management.",
+    links: [
+      { label: "Open Live Site →", url: "https://derrickandmiesha.leadcurate.com", primary: true }
+    ],
+    delivered: false
+  },
+  {
+    id: "delivery",
+    name: "Last-Mile Delivery Operations Hub",
+    kicker: "06 · LOGISTICS & WHITE-GLOVE DISPATCH",
+    pos: { x: 0, z: 65 },
+    color: 0x14b8a6,
+    icon: "🚚",
+    badge: "Live Logistics · Charlotte Metro Dispatch",
+    summary: "Derrick's white-glove courier and last-mile dispatch network serving estate auctions, high-value art, vintage decor, and property logistics across Charlotte, Mecklenburg, and surrounding counties. Features real-time driver dispatch tracking, SMS customer milestone alerts, chain-of-custody photo proof-of-delivery (POD), and route clustering.",
+    stack: ["Last-Mile Routing", "Real-Time Driver Dispatch", "Twilio SMS Milestones", "Photo Proof-of-Delivery", "Next.js", "Supabase", "PostgreSQL", "Logistics Ops"],
+    whyItMatters: "Direct operational proof combining physical logistics coordination with real-time software. Manages driver assignments, customer communication, delicate chain-of-custody tracking, and verified on-time completion.",
+    links: [
+      { label: "Dispatch Dashboard", url: "../../#the-work" }
+    ],
+    delivered: false
+  },
+  {
+    id: "skills",
+    name: "Skills & Technical Arena",
+    kicker: "07 · CORE COMPETENCIES & STACK",
+    pos: { x: -80, z: 0 },
+    color: 0x6366f1,
+    icon: "🛠️",
+    badge: "Customer + Product + Engineering",
+    summary: "A synthesis of Derrick's hybrid strengths: Customer Enablement & Account Management (translating messy user pain into clear roadmaps), Product Judgment (scoping what matters and cutting what doesn't), and Full-Stack Execution (Next.js, React, Supabase, Postgres, Linux VPS, Multi-Agent AI Orchestration).",
+    stack: ["Customer Enablement", "Product Management", "Full-Stack Development", "System Architecture", "Logistics Dispatch", "AI Workflow Engineering"],
+    whyItMatters: "Uniquely bridging the gap between non-technical stakeholders and engineering execution to turn ambiguous problems into production software that ships.",
+    links: [
+      { label: "Review Career Profile", url: "https://www.linkedin.com/in/derrick-mcdonald-940999348/", primary: true }
+    ],
+    delivered: false
+  },
+  {
+    id: "contact",
+    name: "Dispatch & Contact Terminal",
+    kicker: "08 · GET IN TOUCH",
+    pos: { x: 80, z: 0 },
+    color: 0x22c55e,
+    icon: "📬",
+    badge: "Available for Roles & Consulting",
+    summary: "Ready to connect for Customer Enablement, Product Operations, Technical Product Management, Creative Technology, or Solutions roles. Located in Mount Holly, NC (Charlotte Metro) with remote and on-site flexibility.",
+    stack: ["Email: derrick@leadcurate.com", "LinkedIn", "GitHub", "Phone: (704) 555-0188"],
+    whyItMatters: "Let's build something remarkable together. Reach out directly via email, LinkedIn, or check out my code repositories on GitHub.",
+    links: [
+      { label: "Email Derrick Directly", url: "mailto:derrick@leadcurate.com", primary: true },
+      { label: "Connect on LinkedIn", url: "https://www.linkedin.com/in/derrick-mcdonald-940999348/" },
+      { label: "Explore GitHub Profile", url: "https://github.com/Deedott60" }
+    ],
+    delivered: false
+  }
+];
+
+/* ── GAME ENGINE GLOBALS ────────────────────────────────── */
+let scene, camera, renderer;
+let carGroup, carBodyMesh, carWheels = [], headlightLeft, headlightRight, spotLightLeft, spotLightRight;
+let roadMesh, grassMesh, buildings = [], stationMarkers = [], parcels = [];
+let particles = [];
+let currentVehicleType = 'van';
+let isNightMode = true;
+let isAutopilot = false;
+let autopilotIndex = 0;
+let autopilotTimer = 0;
+let currentNearbyStation = null;
+let packagesDeliveredCount = 0;
+
+// Car Physics State
+const car = {
+  x: 0,
+  z: 0,
+  angle: Math.PI / 2,
+  speed: 0,
+  accel: 0,
+  maxSpeed: 1.15,
+  reverseMaxSpeed: -0.5,
+  friction: 0.94,
+  turnSpeed: 0.045,
+  driftFactor: 0.96,
+  vx: 0,
+  vz: 0
+};
+
+// Input State
+const keys = {
+  up: false,
+  down: false,
+  left: false,
+  right: false,
+  space: false,
+  honk: false
+};
+
+// Audio Engine State
+let audioCtx = null;
+let engineOsc = null;
+let engineGain = null;
+let isAudioActive = false;
+
+/* ── INITIALIZE THREE.JS SCENE ──────────────────────────── */
+function initGame() {
+  const canvas = document.getElementById('canvas3d');
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+
+  // 1. Scene
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0c1322);
+  scene.fog = new THREE.FogExp2(0x0c1322, 0.0075);
+
+  // 2. Isometric Camera
+  const aspect = width / height;
+  const d = 42;
+  camera = new THREE.OrthographicCamera(-d * aspect, d * aspect, d, -d, 1, 1000);
+  camera.position.set(60, 75, 60);
+  camera.lookAt(0, 0, 0);
+
+  // 3. Renderer
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+  // 4. Lighting
+  setupLighting();
+
+  // 5. Environment & Roads
+  buildEnvironment();
+
+  // 6. Build Stations
+  buildStations();
+
+  // 7. Scatter Delivery Parcels
+  spawnParcels();
+
+  // 8. Build Car
+  buildVehicle(currentVehicleType);
+
+  // 9. Event Listeners
+  setupEventListeners();
+
+  // 10. Start Animation Loop
+  animate();
+
+  // 11. Initial Minimap render
+  drawMinimap();
+}
+
+/* ── LIGHTING SETUP ─────────────────────────────────────── */
+let ambientLight, dirLight, hemisphereLight;
+function setupLighting() {
+  ambientLight = new THREE.AmbientLight(0x2d3a54, 0.9);
+  scene.add(ambientLight);
+
+  hemisphereLight = new THREE.HemisphereLight(0x405580, 0x111827, 0.7);
+  scene.add(hemisphereLight);
+
+  dirLight = new THREE.DirectionalLight(0x93c5fd, 1.2);
+  dirLight.position.set(70, 110, 50);
+  dirLight.castShadow = true;
+  dirLight.shadow.mapSize.width = 2048;
+  dirLight.shadow.mapSize.height = 2048;
+  dirLight.shadow.camera.near = 10;
+  dirLight.shadow.camera.far = 300;
+  const d = 110;
+  dirLight.shadow.camera.left = -d;
+  dirLight.shadow.camera.right = d;
+  dirLight.shadow.camera.top = d;
+  dirLight.shadow.camera.bottom = -d;
+  dirLight.shadow.bias = -0.0008;
+  scene.add(dirLight);
+}
+
+function toggleLightingMode() {
+  isNightMode = !isNightMode;
+  const btn = document.getElementById('btn-night');
+  const icon = document.getElementById('night-icon');
+  const label = document.getElementById('night-label');
+
+  if (isNightMode) {
+    scene.background.setHex(0x0c1322);
+    scene.fog.color.setHex(0x0c1322);
+    ambientLight.color.setHex(0x2d3a54);
+    ambientLight.intensity = 0.9;
+    dirLight.color.setHex(0x60a5fa);
+    dirLight.intensity = 1.0;
+    if (spotLightLeft) spotLightLeft.intensity = 2.5;
+    if (spotLightRight) spotLightRight.intensity = 2.5;
+    icon.textContent = '🌙';
+    label.textContent = 'Night';
+    btn.classList.remove('active');
+  } else {
+    scene.background.setHex(0xdbeafe);
+    scene.fog.color.setHex(0xdbeafe);
+    ambientLight.color.setHex(0xffffff);
+    ambientLight.intensity = 1.4;
+    dirLight.color.setHex(0xfef08a);
+    dirLight.intensity = 1.8;
+    if (spotLightLeft) spotLightLeft.intensity = 0.5;
+    if (spotLightRight) spotLightRight.intensity = 0.5;
+    icon.textContent = '☀️';
+    label.textContent = 'Day';
+    btn.classList.add('active');
+  }
+}
+
+/* ── BUILD ENVIRONMENT & ROADS ──────────────────────────── */
+function buildEnvironment() {
+  // Ground
+  const groundGeo = new THREE.PlaneGeometry(350, 350);
+  const groundMat = new THREE.MeshStandardMaterial({
+    color: 0x0f172a,
+    roughness: 0.9,
+    metalness: 0.1
+  });
+  const ground = new THREE.Mesh(groundGeo, groundMat);
+  ground.rotation.x = -Math.PI / 2;
+  ground.receiveShadow = true;
+  scene.add(ground);
+
+  // Grass / Lawn Patches
+  const lawnMat = new THREE.MeshStandardMaterial({ color: 0x13261f, roughness: 0.95 });
+  const patches = [
+    { x: -40, z: -40, w: 60, h: 60 },
+    { x: 40, z: -40, w: 60, h: 60 },
+    { x: -40, z: 40, w: 60, h: 60 },
+    { x: 40, z: 40, w: 60, h: 60 }
+  ];
+  patches.forEach(p => {
+    const lGeo = new THREE.PlaneGeometry(p.w, p.h);
+    const lawn = new THREE.Mesh(lGeo, lawnMat);
+    lawn.rotation.x = -Math.PI / 2;
+    lawn.position.set(p.x, 0.05, p.z);
+    lawn.receiveShadow = true;
+    scene.add(lawn);
+  });
+
+  // Road Network
+  const roadMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.8 });
+  const yellowLineMat = new THREE.MeshBasicMaterial({ color: 0xf59e0b });
+
+  // North-South Highway
+  const nsRoad = new THREE.Mesh(new THREE.PlaneGeometry(14, 240), roadMat);
+  nsRoad.rotation.x = -Math.PI / 2;
+  nsRoad.position.set(0, 0.08, 0);
+  nsRoad.receiveShadow = true;
+  scene.add(nsRoad);
+
+  // East-West Highway
+  const ewRoad = new THREE.Mesh(new THREE.PlaneGeometry(240, 14), roadMat);
+  ewRoad.rotation.x = -Math.PI / 2;
+  ewRoad.position.set(0, 0.08, 0);
+  ewRoad.receiveShadow = true;
+  scene.add(ewRoad);
+
+  // Outer Loop Road
+  const loopRadius = 80;
+  const loopThick = 12;
+  const nLoop = new THREE.Mesh(new THREE.PlaneGeometry(180, loopThick), roadMat);
+  nLoop.rotation.x = -Math.PI / 2;
+  nLoop.position.set(0, 0.08, -loopRadius);
+  nLoop.receiveShadow = true;
+  scene.add(nLoop);
+
+  const sLoop = new THREE.Mesh(new THREE.PlaneGeometry(180, loopThick), roadMat);
+  sLoop.rotation.x = -Math.PI / 2;
+  sLoop.position.set(0, 0.08, loopRadius);
+  sLoop.receiveShadow = true;
+  scene.add(sLoop);
+
+  const wLoop = new THREE.Mesh(new THREE.PlaneGeometry(loopThick, 180), roadMat);
+  wLoop.rotation.x = -Math.PI / 2;
+  wLoop.position.set(-loopRadius, 0.08, 0);
+  wLoop.receiveShadow = true;
+  scene.add(wLoop);
+
+  const eLoop = new THREE.Mesh(new THREE.PlaneGeometry(loopThick, 180), roadMat);
+  eLoop.rotation.x = -Math.PI / 2;
+  eLoop.position.set(loopRadius, 0.08, 0);
+  eLoop.receiveShadow = true;
+  scene.add(eLoop);
+
+  // Road Markings (Dashed Yellow Lines)
+  for (let z = -110; z <= 110; z += 12) {
+    if (Math.abs(z) > 10) {
+      const line = new THREE.Mesh(new THREE.PlaneGeometry(0.8, 6), yellowLineMat);
+      line.rotation.x = -Math.PI / 2;
+      line.position.set(0, 0.1, z);
+      scene.add(line);
+    }
+  }
+  for (let x = -110; x <= 110; x += 12) {
+    if (Math.abs(x) > 10) {
+      const line = new THREE.Mesh(new THREE.PlaneGeometry(6, 0.8), yellowLineMat);
+      line.rotation.x = -Math.PI / 2;
+      line.position.set(x, 0.1, 0);
+      scene.add(line);
+    }
+  }
+
+  // Central Plaza Roundabout
+  const roundGeo = new THREE.RingGeometry(10, 24, 32);
+  const roundMesh = new THREE.Mesh(roundGeo, roadMat);
+  roundMesh.rotation.x = -Math.PI / 2;
+  roundMesh.position.set(0, 0.09, 0);
+  roundMesh.receiveShadow = true;
+  scene.add(roundMesh);
+
+  // Central Island
+  const islandGeo = new THREE.CylinderGeometry(9.8, 9.8, 0.8, 32);
+  const islandMat = new THREE.MeshStandardMaterial({ color: 0x15803d, roughness: 0.8 });
+  const island = new THREE.Mesh(islandGeo, islandMat);
+  island.position.set(0, 0.4, 0);
+  island.receiveShadow = true;
+  island.castShadow = true;
+  scene.add(island);
+
+  // Central Spire / HQ Beacon
+  const spireGeo = new THREE.ConeGeometry(3, 14, 8);
+  const spireMat = new THREE.MeshStandardMaterial({ color: 0x22c55e, emissive: 0x15803d, roughness: 0.3 });
+  const spire = new THREE.Mesh(spireGeo, spireMat);
+  spire.position.set(0, 7.5, 0);
+  spire.castShadow = true;
+  scene.add(spire);
+
+  // Trees & Street Lamps
+  spawnFoliageAndLamps();
+}
+
+function spawnFoliageAndLamps() {
+  const trunkMat = new THREE.MeshStandardMaterial({ color: 0x5c3a21 });
+  const foliageMat1 = new THREE.MeshStandardMaterial({ color: 0x166534, roughness: 0.8 });
+  const foliageMat2 = new THREE.MeshStandardMaterial({ color: 0x15803d, roughness: 0.8 });
+
+  const treeCoords = [
+    [-25, -25], [-20, -35], [-35, -20],
+    [25, -25], [20, -35], [35, -20],
+    [-25, 25], [-20, 35], [-35, 20],
+    [25, 25], [20, 35], [35, 20],
+    [-65, -65], [65, -65], [-65, 65], [65, 65],
+    [-15, -70], [15, -70], [-15, 70], [15, 70]
+  ];
+
+  treeCoords.forEach(([tx, tz]) => {
+    const treeGroup = new THREE.Group();
+    const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.7, 3, 6), trunkMat);
+    trunk.position.y = 1.5;
+    trunk.castShadow = true;
+    treeGroup.add(trunk);
+
+    const leaves = new THREE.Mesh(new THREE.DodecahedronGeometry(2.4, 1), (Math.random() > 0.5) ? foliageMat1 : foliageMat2);
+    leaves.position.y = 4.2;
+    leaves.castShadow = true;
+    treeGroup.add(leaves);
+
+    treeGroup.position.set(tx, 0, tz);
+    scene.add(treeGroup);
+  });
+}
+
+/* ── BUILD STATIONS & DEPOTS ────────────────────────────── */
+function buildStations() {
+  STATIONS.forEach((st, idx) => {
+    const group = new THREE.Group();
+    group.position.set(st.pos.x, 0, st.pos.z);
+
+    const padGeo = new THREE.BoxGeometry(22, 0.6, 22);
+    const padMat = new THREE.MeshStandardMaterial({
+      color: 0x1e293b,
+      roughness: 0.6,
+      metalness: 0.2
+    });
+    const pad = new THREE.Mesh(padGeo, padMat);
+    pad.position.y = 0.3;
+    pad.receiveShadow = true;
+    pad.castShadow = true;
+    group.add(pad);
+
+    const bColor = new THREE.Color(st.color);
+    const bMat = new THREE.MeshStandardMaterial({
+      color: 0x0f172a,
+      roughness: 0.4,
+      metalness: 0.5
+    });
+    const glowMat = new THREE.MeshStandardMaterial({
+      color: bColor,
+      emissive: bColor,
+      emissiveIntensity: 0.6,
+      roughness: 0.3
+    });
+
+    let bHeight = 12 + (idx % 3) * 4;
+    const bMesh = new THREE.Mesh(new THREE.BoxGeometry(14, bHeight, 14), bMat);
+    bMesh.position.y = bHeight / 2 + 0.6;
+    bMesh.castShadow = true;
+    bMesh.receiveShadow = true;
+    group.add(bMesh);
+
+    const bandMesh = new THREE.Mesh(new THREE.BoxGeometry(14.4, 1.2, 14.4), glowMat);
+    bandMesh.position.y = bHeight + 0.6;
+    bandMesh.castShadow = true;
+    group.add(bandMesh);
+
+    const bayRingGeo = new THREE.RingGeometry(3.5, 5, 24);
+    const bayRingMat = new THREE.MeshBasicMaterial({
+      color: bColor,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.8
+    });
+    const bayRing = new THREE.Mesh(bayRingGeo, bayRingMat);
+    bayRing.rotation.x = -Math.PI / 2;
+    bayRing.position.set(0, 0.7, 13);
+    group.add(bayRing);
+
+    const pillarGeo = new THREE.CylinderGeometry(0.8, 0.8, 3, 16);
+    const pillarMat = new THREE.MeshStandardMaterial({
+      color: bColor,
+      emissive: bColor,
+      emissiveIntensity: 0.8,
+      transparent: true,
+      opacity: 0.85
+    });
+    const pillar = new THREE.Mesh(pillarGeo, pillarMat);
+    pillar.position.set(0, 2.2, 13);
+    group.add(pillar);
+
+    st.meshGroup = group;
+    st.beaconMesh = bayRing;
+    st.pillarMesh = pillar;
+
+    scene.add(group);
+  });
+}
+
+/* ── SPAWN COLLECTIBLE PARCELS ──────────────────────────── */
+function spawnParcels() {
+  const parcelLocations = [
+    { x: 0, z: -25 },
+    { x: -25, z: 0 },
+    { x: 25, z: 0 },
+    { x: 0, z: 25 },
+    { x: -45, z: -60 },
+    { x: 45, z: -60 },
+    { x: -45, z: 60 },
+    { x: 45, z: 60 }
+  ];
+
+  const boxGeo = new THREE.BoxGeometry(2, 1.8, 2);
+  const boxMat = new THREE.MeshStandardMaterial({
+    color: 0xf59e0b,
+    emissive: 0xd97706,
+    emissiveIntensity: 0.5,
+    roughness: 0.4
+  });
+  const ribbonMat = new THREE.MeshStandardMaterial({ color: 0xef4444, roughness: 0.3 });
+
+  parcelLocations.forEach((pos, idx) => {
+    const pGroup = new THREE.Group();
+    pGroup.position.set(pos.x, 1.2, pos.z);
+
+    const box = new THREE.Mesh(boxGeo, boxMat);
+    box.castShadow = true;
+    pGroup.add(box);
+
+    const rib1 = new THREE.Mesh(new THREE.BoxGeometry(2.1, 0.3, 0.4), ribbonMat);
+    rib1.position.y = 0.9;
+    pGroup.add(rib1);
+
+    const rib2 = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.3, 2.1), ribbonMat);
+    rib2.position.y = 0.9;
+    pGroup.add(rib2);
+
+    scene.add(pGroup);
+    parcels.push({
+      mesh: pGroup,
+      collected: false,
+      pos: pos
+    });
+  });
+}
+
+/* ── BUILD VEHICLES ─────────────────────────────────────── */
+function buildVehicle(type) {
+  if (carGroup) {
+    scene.remove(carGroup);
+  }
+
+  carGroup = new THREE.Group();
+  carWheels = [];
+
+  const wheelMat = new THREE.MeshStandardMaterial({ color: 0x111827, roughness: 0.8 });
+  const wheelGeo = new THREE.CylinderGeometry(0.7, 0.7, 0.6, 16);
+
+  if (type === 'van') {
+    // 🚚 LeadCurate White-Glove Courier Van
+    const vanMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.3, metalness: 0.2 });
+    const greenMat = new THREE.MeshStandardMaterial({ color: 0x15803d, roughness: 0.4 });
+    const glassMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.1, metalness: 0.9 });
+
+    const cargoGeo = new THREE.BoxGeometry(3.6, 2.8, 6.2);
+    const cargo = new THREE.Mesh(cargoGeo, vanMat);
+    cargo.position.set(0, 2.1, -0.4);
+    cargo.castShadow = true;
+    carGroup.add(cargo);
+
+    const stripe = new THREE.Mesh(new THREE.BoxGeometry(3.64, 0.6, 6.24), greenMat);
+    stripe.position.set(0, 1.8, -0.4);
+    carGroup.add(stripe);
+
+    const cabGeo = new THREE.BoxGeometry(3.5, 2.2, 2.2);
+    const cab = new THREE.Mesh(cabGeo, vanMat);
+    cab.position.set(0, 1.8, 2.8);
+    cab.castShadow = true;
+    carGroup.add(cab);
+
+    const windGeo = new THREE.BoxGeometry(3.3, 1.2, 1.2);
+    const wind = new THREE.Mesh(windGeo, glassMat);
+    wind.position.set(0, 2.2, 3.1);
+    carGroup.add(wind);
+
+    const beacon = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 0.4, 12), new THREE.MeshStandardMaterial({ color: 0x22c55e, emissive: 0x22c55e, emissiveIntensity: 0.8 }));
+    beacon.position.set(0, 3.7, 1.2);
+    carGroup.add(beacon);
+
+    const wOffsets = [
+      [-1.8, 0.7, 2.2], [1.8, 0.7, 2.2],
+      [-1.8, 0.7, -2.2], [1.8, 0.7, -2.2]
+    ];
+    wOffsets.forEach(([wx, wy, wz]) => {
+      const w = new THREE.Mesh(wheelGeo, wheelMat);
+      w.rotation.z = Math.PI / 2;
+      w.position.set(wx, wy, wz);
+      w.castShadow = true;
+      carWheels.push(w);
+      carGroup.add(w);
+    });
+
+  } else if (type === 'coupe') {
+    // 🏎️ Cybercoupe
+    const bodyMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.2, metalness: 0.8 });
+    const cyanMat = new THREE.MeshStandardMaterial({ color: 0x06b6d4, emissive: 0x06b6d4, emissiveIntensity: 0.8 });
+
+    const body = new THREE.Mesh(new THREE.BoxGeometry(3.6, 1.4, 6.6), bodyMat);
+    body.position.set(0, 1.2, 0);
+    body.castShadow = true;
+    carGroup.add(body);
+
+    const neon = new THREE.Mesh(new THREE.BoxGeometry(3.65, 0.2, 6.7), cyanMat);
+    neon.position.set(0, 0.6, 0);
+    carGroup.add(neon);
+
+    const cabin = new THREE.Mesh(new THREE.BoxGeometry(2.8, 1.2, 3.2), new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.9 }));
+    cabin.position.set(0, 2.0, -0.4);
+    carGroup.add(cabin);
+
+    const wOffsets = [
+      [-1.8, 0.6, 2.0], [1.8, 0.6, 2.0],
+      [-1.8, 0.6, -2.0], [1.8, 0.6, -2.0]
+    ];
+    wOffsets.forEach(([wx, wy, wz]) => {
+      const w = new THREE.Mesh(wheelGeo, wheelMat);
+      w.rotation.z = Math.PI / 2;
+      w.position.set(wx, wy, wz);
+      w.castShadow = true;
+      carWheels.push(w);
+      carGroup.add(w);
+    });
+
+  } else {
+    // ⚡ EV Micro-Truck
+    const truckMat = new THREE.MeshStandardMaterial({ color: 0x22c55e, roughness: 0.3, metalness: 0.4 });
+    const cab = new THREE.Mesh(new THREE.BoxGeometry(3.4, 2.4, 3.2), truckMat);
+    cab.position.set(0, 1.9, 1.5);
+    cab.castShadow = true;
+    carGroup.add(cab);
+
+    const bed = new THREE.Mesh(new THREE.BoxGeometry(3.4, 1.4, 3.8), new THREE.MeshStandardMaterial({ color: 0x1e293b }));
+    bed.position.set(0, 1.4, -1.8);
+    bed.castShadow = true;
+    carGroup.add(bed);
+
+    const wOffsets = [
+      [-1.8, 0.7, 1.8], [1.8, 0.7, 1.8],
+      [-1.8, 0.7, -1.8], [1.8, 0.7, -1.8]
+    ];
+    wOffsets.forEach(([wx, wy, wz]) => {
+      const w = new THREE.Mesh(wheelGeo, wheelMat);
+      w.rotation.z = Math.PI / 2;
+      w.position.set(wx, wy, wz);
+      w.castShadow = true;
+      carWheels.push(w);
+      carGroup.add(w);
+    });
+  }
+
+  // Headlights & Spotlights
+  const hMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+  headlightLeft = new THREE.Mesh(new THREE.SphereGeometry(0.35, 12, 12), hMat);
+  headlightLeft.position.set(-1.2, 1.4, 3.8);
+  carGroup.add(headlightLeft);
+
+  headlightRight = new THREE.Mesh(new THREE.SphereGeometry(0.35, 12, 12), hMat);
+  headlightRight.position.set(1.2, 1.4, 3.8);
+  carGroup.add(headlightRight);
+
+  spotLightLeft = new THREE.SpotLight(0xfff7ed, 2.5, 45, Math.PI / 5, 0.5, 1);
+  spotLightLeft.position.set(-1.2, 1.4, 3.8);
+  spotLightLeft.target.position.set(-1.2, 0, 20);
+  carGroup.add(spotLightLeft);
+  carGroup.add(spotLightLeft.target);
+
+  spotLightRight = new THREE.SpotLight(0xfff7ed, 2.5, 45, Math.PI / 5, 0.5, 1);
+  spotLightRight.position.set(1.2, 1.4, 3.8);
+  spotLightRight.target.position.set(1.2, 0, 20);
+  carGroup.add(spotLightRight);
+  carGroup.add(spotLightRight.target);
+
+  carGroup.position.set(car.x, 0, car.z);
+  carGroup.rotation.y = car.angle;
+  scene.add(carGroup);
+}
+
+function switchVehicle(type, btnElem) {
+  currentVehicleType = type;
+  document.querySelectorAll('.veh-btn').forEach(b => b.classList.remove('active'));
+  if (btnElem) btnElem.classList.add('active');
+  buildVehicle(type);
+  showToastNotification("Vehicle Switched: " + type.toUpperCase(), "⚡");
+}
+
+/* ── CONTROLS & EVENT LISTENERS ─────────────────────────── */
+function setupEventListeners() {
+  window.addEventListener('keydown', (e) => {
+    if (e.repeat) return;
+    switch(e.code) {
+      case 'KeyW':
+      case 'ArrowUp':
+        keys.up = true;
+        isAutopilot = false;
+        break;
+      case 'KeyS':
+      case 'ArrowDown':
+        keys.down = true;
+        isAutopilot = false;
+        break;
+      case 'KeyA':
+      case 'ArrowLeft':
+        keys.left = true;
+        isAutopilot = false;
+        break;
+      case 'KeyD':
+      case 'ArrowRight':
+        keys.right = true;
+        isAutopilot = false;
+        break;
+      case 'Space':
+        if (currentNearbyStation) {
+          openStationModal(currentNearbyStation);
+        }
+        break;
+      case 'KeyH':
+        playHonkSound();
+        break;
+    }
+  });
+
+  window.addEventListener('keyup', (e) => {
+    switch(e.code) {
+      case 'KeyW':
+      case 'ArrowUp':
+        keys.up = false;
+        break;
+      case 'KeyS':
+      case 'ArrowDown':
+        keys.down = false;
+        break;
+      case 'KeyA':
+      case 'ArrowLeft':
+        keys.left = false;
+        break;
+      case 'KeyD':
+      case 'ArrowRight':
+        keys.right = false;
+        break;
+    }
+  });
+
+  window.addEventListener('resize', onWindowResize);
+
+  // Mobile Touch Controls
+  const dpad = document.getElementById('touch-dpad');
+  const stick = document.getElementById('touch-stick');
+  let dpadTouching = false;
+  let dpadCenter = { x: 0, y: 0 };
+
+  dpad.addEventListener('touchstart', (e) => {
+    dpadTouching = true;
+    isAutopilot = false;
+    const rect = dpad.getBoundingClientRect();
+    dpadCenter = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+    handleTouchMove(e.touches[0]);
+  });
+
+  window.addEventListener('touchmove', (e) => {
+    if (!dpadTouching) return;
+    handleTouchMove(e.touches[0]);
+  });
+
+  window.addEventListener('touchend', () => {
+    dpadTouching = false;
+    stick.style.transform = `translate(0px, 0px)`;
+    keys.up = false;
+    keys.down = false;
+    keys.left = false;
+    keys.right = false;
+  });
+
+  function handleTouchMove(t) {
+    const dx = t.clientX - dpadCenter.x;
+    const dy = t.clientY - dpadCenter.y;
+    const dist = Math.min(Math.sqrt(dx * dx + dy * dy), 40);
+    const rad = Math.atan2(dy, dx);
+    const sx = Math.cos(rad) * dist;
+    const sy = Math.sin(rad) * dist;
+
+    stick.style.transform = `translate(${sx}px, ${sy}px)`;
+
+    keys.up = sy < -10;
+    keys.down = sy > 10;
+    keys.left = sx < -10;
+    keys.right = sx > 10;
+  }
+
+  const btnGas = document.getElementById('m-gas');
+  const btnBrake = document.getElementById('m-brake');
+
+  btnGas.addEventListener('touchstart', (e) => { e.preventDefault(); keys.up = true; isAutopilot = false; });
+  btnGas.addEventListener('touchend', (e) => { e.preventDefault(); keys.up = false; });
+
+  btnBrake.addEventListener('touchstart', (e) => { e.preventDefault(); keys.down = true; isAutopilot = false; });
+  btnBrake.addEventListener('touchend', (e) => { e.preventDefault(); keys.down = false; });
+}
+
+function onWindowResize() {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  const aspect = width / height;
+  const d = 42;
+
+  camera.left = -d * aspect;
+  camera.right = d * aspect;
+  camera.top = d;
+  camera.bottom = -d;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(width, height);
+}
+
+/* ── CAR PHYSICS & GAME LOOP ────────────────────────────── */
+function updatePhysics() {
+  if (isAutopilot) {
+    updateAutopilotTour();
+  } else {
+    if (keys.up) {
+      car.speed += 0.045;
+      if (car.speed > car.maxSpeed) car.speed = car.maxSpeed;
+    } else if (keys.down) {
+      car.speed -= 0.045;
+      if (car.speed < car.reverseMaxSpeed) car.speed = car.reverseMaxSpeed;
+    } else {
+      car.speed *= car.friction;
+      if (Math.abs(car.speed) < 0.005) car.speed = 0;
+    }
+
+    if (Math.abs(car.speed) > 0.01) {
+      const dir = car.speed > 0 ? 1 : -1;
+      if (keys.left) car.angle += car.turnSpeed * dir;
+      if (keys.right) car.angle -= car.turnSpeed * dir;
+    }
+
+    car.vx = Math.sin(car.angle) * car.speed;
+    car.vz = Math.cos(car.angle) * car.speed;
+
+    car.x += car.vx;
+    car.z += car.vz;
+  }
+
+  const boundary = 135;
+  car.x = Math.max(-boundary, Math.min(boundary, car.x));
+  car.z = Math.max(-boundary, Math.min(boundary, car.z));
+
+  if (carGroup) {
+    carGroup.position.set(car.x, 0, car.z);
+    carGroup.rotation.y = car.angle;
+
+    const wRot = car.speed * 1.5;
+    carWheels.forEach(w => {
+      w.rotation.x += wRot;
+    });
+  }
+
+  const targetCamX = car.x + 55;
+  const targetCamZ = car.z + 55;
+  camera.position.x += (targetCamX - camera.position.x) * 0.08;
+  camera.position.z += (targetCamZ - camera.position.z) * 0.08;
+  camera.lookAt(car.x, 0, car.z);
+
+  const mph = Math.round(Math.abs(car.speed) * 38);
+  document.getElementById('speed-display').textContent = mph;
+
+  if (isAudioActive && engineOsc) {
+    engineOsc.frequency.setValueAtTime(55 + Math.abs(car.speed) * 90, audioCtx.currentTime);
+  }
+
+  checkParcelsAndStations();
+}
+
+/* ── PARCEL COLLECTION & STATION DETECTION ──────────────── */
+function checkParcelsAndStations() {
+  parcels.forEach((p, idx) => {
+    if (!p.collected) {
+      const dist = Math.hypot(car.x - p.pos.x, car.z - p.pos.z);
+      if (dist < 4.5) {
+        p.collected = true;
+        scene.remove(p.mesh);
+        playPickupSound();
+        showToastNotification("📦 Parcel Collected! Drive to any Depot", "🚚");
+      }
+    }
+  });
+
+  let nearby = null;
+  STATIONS.forEach(st => {
+    const dist = Math.hypot(car.x - st.pos.x, car.z - st.pos.z);
+    if (dist < 18) {
+      nearby = st;
+
+      if (dist < 8 && !st.delivered) {
+        st.delivered = true;
+        packagesDeliveredCount++;
+        playDeliverySound();
+        showToastNotification(`🎉 Delivered to ${st.name}!`, "📦");
+        updateQuestProgress();
+      }
+    }
+  });
+
+  const toast = document.getElementById('station-toast');
+  const toastTitle = document.getElementById('toast-station-title');
+
+  if (nearby) {
+    currentNearbyStation = nearby;
+    toastTitle.textContent = `${nearby.icon} ${nearby.name} — Click to Inspect`;
+    toast.classList.add('visible');
+  } else {
+    currentNearbyStation = null;
+    toast.classList.remove('visible');
+  }
+}
+
+function updateQuestProgress() {
+  const percent = Math.round((packagesDeliveredCount / STATIONS.length) * 100);
+  document.getElementById('quest-bar').style.width = `${percent}%`;
+  document.getElementById('quest-status-text').textContent = `Delivered ${packagesDeliveredCount} / ${STATIONS.length} Project Hubs (${percent}%)`;
+
+  if (packagesDeliveredCount === STATIONS.length) {
+    showToastNotification("🏆 ALL DELIVERIES COMPLETE! Master Logistics Operator!", "⭐");
+  }
+}
+
+/* ── AUTOPILOT GUIDED TOUR ──────────────────────────────── */
+function toggleAutopilotTour() {
+  isAutopilot = !isAutopilot;
+  const btn = document.getElementById('btn-tour');
+  const label = document.getElementById('tour-label');
+
+  if (isAutopilot) {
+    btn.classList.add('active');
+    label.textContent = 'Touring (Click to Stop)';
+    showToastNotification("🤖 Autopilot Engaged: Driving to Next Project", "🚗");
+  } else {
+    btn.classList.remove('active');
+    label.textContent = 'Guided Recruiter Tour';
+    showToastNotification("Manual Controls Restored", "🕹️");
+  }
+}
+
+function updateAutopilotTour() {
+  const target = STATIONS[autopilotIndex];
+  const dx = target.pos.x - car.x;
+  const dz = target.pos.z - car.z;
+  const dist = Math.hypot(dx, dz);
+
+  if (dist < 7) {
+    car.speed = 0;
+    autopilotTimer++;
+    if (autopilotTimer === 30) {
+      openStationModal(target);
+    }
+    if (autopilotTimer > 280) {
+      closeStationModal();
+      autopilotIndex = (autopilotIndex + 1) % STATIONS.length;
+      autopilotTimer = 0;
+    }
+  } else {
+    const targetAngle = Math.atan2(dx, dz);
+    let diff = targetAngle - car.angle;
+    while (diff < -Math.PI) diff += Math.PI * 2;
+    while (diff > Math.PI) diff -= Math.PI * 2;
+
+    car.angle += diff * 0.08;
+    car.speed = 0.85;
+
+    car.vx = Math.sin(car.angle) * car.speed;
+    car.vz = Math.cos(car.angle) * car.speed;
+    car.x += car.vx;
+    car.z += car.vz;
+  }
+}
+
+/* ── MODAL DRAWER FUNCTIONS ─────────────────────────────── */
+function openCurrentStationModal() {
+  if (currentNearbyStation) {
+    openStationModal(currentNearbyStation);
+  }
+}
+
+function openStationModal(st) {
+  const drawer = document.getElementById('modal-drawer');
+  document.getElementById('drawer-kicker').textContent = st.kicker;
+  document.getElementById('drawer-title').textContent = `${st.icon} ${st.name}`;
+
+  let linksHtml = '';
+  if (st.links && st.links.length) {
+    st.links.forEach(l => {
+      const cls = l.primary ? 'btn-primary' : 'btn-secondary';
+      linksHtml += `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="${cls}">${l.label}</a>`;
+    });
+  }
+
+  let stackHtml = '';
+  st.stack.forEach(tech => {
+    stackHtml += `<span class="drawer-tag">${tech}</span>`;
+  });
+
+  document.getElementById('drawer-content').innerHTML = `
+    <div style="font-size:12px;font-weight:700;color:var(--em-light);text-transform:uppercase;letter-spacing:.08em;">
+      ${st.badge}
+    </div>
+
+    <p class="drawer-summary">${st.summary}</p>
+
+    <div class="drawer-pill-row">
+      ${stackHtml}
+    </div>
+
+    <div class="drawer-card">
+      <span class="drawer-card-label">Why It Matters</span>
+      <p>${st.whyItMatters}</p>
+    </div>
+
+    <div class="drawer-actions">
+      ${linksHtml}
+      <button class="btn-secondary" onclick="closeStationModal()">Continue Driving 🚚</button>
+    </div>
+  `;
+
+  drawer.classList.add('open');
+}
+
+function closeStationModal() {
+  document.getElementById('modal-drawer').classList.remove('open');
+}
+
+/* ── WEB AUDIO SYNTHESIZER ──────────────────────────────── */
+function toggleAudioEngine() {
+  if (!audioCtx) {
+    initAudioEngine();
+  }
+  isAudioActive = !isAudioActive;
+
+  const icon = document.getElementById('sound-icon');
+  const label = document.getElementById('sound-label');
+  const btn = document.getElementById('btn-sound');
+
+  if (isAudioActive) {
+    audioCtx.resume();
+    engineGain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+    icon.textContent = '🔊';
+    label.textContent = 'Sound ON';
+    btn.classList.add('active');
+  } else {
+    engineGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    icon.textContent = '🔇';
+    label.textContent = 'Sound';
+    btn.classList.remove('active');
+  }
+}
+
+function initAudioEngine() {
+  try {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    
+    engineOsc = audioCtx.createOscillator();
+    engineGain = audioCtx.createGain();
+    engineOsc.type = 'sawtooth';
+    engineOsc.frequency.setValueAtTime(55, audioCtx.currentTime);
+    engineGain.gain.setValueAtTime(0, audioCtx.currentTime);
+
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(280, audioCtx.currentTime);
+
+    engineOsc.connect(filter);
+    filter.connect(engineGain);
+    engineGain.connect(audioCtx.destination);
+    engineOsc.start();
+  } catch (e) {}
+}
+
+function playHonkSound() {
+  if (!audioCtx) initAudioEngine();
+  if (audioCtx) audioCtx.resume();
+
+  try {
+    const osc1 = audioCtx.createOscillator();
+    const osc2 = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    osc1.frequency.setValueAtTime(440, audioCtx.currentTime);
+    osc2.frequency.setValueAtTime(554, audioCtx.currentTime);
+
+    gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+
+    osc1.connect(gain);
+    osc2.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc1.start();
+    osc2.start();
+    osc1.stop(audioCtx.currentTime + 0.35);
+    showToastNotification("📢 HONK HONK!", "🚚");
+  } catch (e) {}
+}
+
+function playPickupSound() {
+  if (!audioCtx) return;
+  try {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.frequency.setValueAtTime(587, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.2);
+    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.25);
+  } catch(e) {}
+}
+
+function playDeliverySound() {
+  if (!audioCtx) return;
+  try {
+    const notes = [523.25, 659.25, 783.99, 1046.50];
+    notes.forEach((freq, idx) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      const t = audioCtx.currentTime + idx * 0.08;
+      osc.frequency.setValueAtTime(freq, t);
+      gain.gain.setValueAtTime(0.08, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(t);
+      osc.stop(t + 0.25);
+    });
+  } catch(e) {}
+}
+
+let notifyTimeout = null;
+function showToastNotification(msg, icon = "📦") {
+  const banner = document.getElementById('notify-banner');
+  document.getElementById('notify-text').textContent = msg;
+  document.getElementById('notify-icon').textContent = icon;
+
+  banner.classList.add('show');
+  clearTimeout(notifyTimeout);
+  notifyTimeout = setTimeout(() => {
+    banner.classList.remove('show');
+  }, 3200);
+}
+
+function drawMinimap() {
+  const canvas = document.getElementById('minimap-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width;
+  const h = canvas.height;
+  const scale = w / 260;
+  const cx = w / 2;
+  const cy = h / 2;
+
+  ctx.clearRect(0, 0, w, h);
+
+  ctx.strokeStyle = '#27354a';
+  ctx.lineWidth = 4;
+  ctx.beginPath();
+  ctx.moveTo(cx, 0); ctx.lineTo(cx, h);
+  ctx.moveTo(0, cy); ctx.lineTo(w, cy);
+  ctx.stroke();
+
+  STATIONS.forEach(st => {
+    const sx = cx + st.pos.x * scale;
+    const sy = cy + st.pos.z * scale;
+    ctx.fillStyle = st.delivered ? '#22c55e' : '#38bdf8';
+    ctx.beginPath();
+    ctx.arc(sx, sy, 4, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  parcels.forEach(p => {
+    if (!p.collected) {
+      const px = cx + p.pos.x * scale;
+      const py = cy + p.pos.z * scale;
+      ctx.fillStyle = '#f59e0b';
+      ctx.fillRect(px - 2, py - 2, 4, 4);
+    }
+  });
+
+  const px = cx + car.x * scale;
+  const py = cy + car.z * scale;
+  ctx.fillStyle = '#ffffff';
+  ctx.shadowColor = '#22c55e';
+  ctx.shadowBlur = 8;
+  ctx.beginPath();
+  ctx.arc(px, py, 4.5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.shadowBlur = 0;
+}
+
+function startDrivingSession(tour = false) {
+  document.getElementById('intro-modal').classList.add('hidden');
+  toggleAudioEngine();
+  if (tour) {
+    toggleAutopilotTour();
+  }
+}
+
+let lastFrameTime = performance.now();
+function animate() {
+  requestAnimationFrame(animate);
+
+  const now = performance.now();
+  const delta = (now - lastFrameTime) / 1000;
+  lastFrameTime = now;
+
+  updatePhysics();
+
+  STATIONS.forEach((st, idx) => {
+    if (st.pillarMesh) {
+      st.pillarMesh.rotation.y += 0.02;
+    }
+    if (st.beaconMesh) {
+      st.beaconMesh.rotation.z += 0.01;
+    }
+  });
+
+  parcels.forEach(p => {
+    if (!p.collected && p.mesh) {
+      p.mesh.rotation.y += 0.03;
+      p.mesh.position.y = 1.2 + Math.sin(now * 0.004) * 0.4;
+    }
+  });
+
+  renderer.render(scene, camera);
+  drawMinimap();
+}
+
+window.addEventListener('DOMContentLoaded', initGame);
+</script>
+</body>
+</html>

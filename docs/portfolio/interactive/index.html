@@ -3,27 +3,36 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Derrick McDonald · Interactive Spatial Portfolio & Systems Diagram</title>
-<meta name="description" content="Interactive 3D spatial systems diagram and portfolio for Derrick McDonald. Explore customer strategy, live software, multi-agent AI pipelines, and last-mile delivery operations."/>
+<title>Derrick McDonald · Interactive Systems Architecture & Portfolio</title>
+<meta name="description" content="Vibrant 3D spatial systems diagram and portfolio for Derrick McDonald. Explore customer strategy, live software, multi-agent AI pipelines, and last-mile delivery operations."/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --bg: #0b0f19;
-  --bg-card: rgba(17, 24, 39, 0.85);
-  --border: rgba(255, 255, 255, 0.1);
+  --bg: #070a14;
+  --bg-card: rgba(15, 23, 42, 0.88);
+  --border: rgba(255, 255, 255, 0.12);
   --border-focus: #22c55e;
   --em: #15803d;
   --em-l: #22c55e;
-  --em-glow: rgba(34, 197, 94, 0.25);
-  --blue: #38bdf8;
-  --purple: #a855f7;
-  --gold: #f59e0b;
-  --text: #f8fafc;
+  --em-glow: rgba(34, 197, 94, 0.4);
+  --blue: #00d2ff;
+  --blue-glow: rgba(0, 210, 255, 0.35);
+  --purple: #c084fc;
+  --purple-glow: rgba(192, 132, 252, 0.35);
+  --gold: #fbbf24;
+  --gold-glow: rgba(251, 191, 36, 0.35);
+  --teal: #2dd4bf;
+  --teal-glow: rgba(45, 212, 191, 0.4);
+  --rose: #fb7185;
+  --rose-glow: rgba(251, 113, 133, 0.35);
+  --indigo: #818cf8;
+  --indigo-glow: rgba(129, 140, 248, 0.35);
+  --text: #ffffff;
   --text-muted: #94a3b8;
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --font-display: 'Playfair Display', serif;
 }
@@ -39,15 +48,17 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Background Grid & Ambient Glows */
+/* Radiant Ambient Background & Grid */
 .ambient-bg {
   position: absolute;
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 20% 20%, rgba(34, 197, 94, 0.12), transparent 45%),
-    radial-gradient(circle at 80% 80%, rgba(56, 189, 248, 0.1), transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.08), transparent 60%);
+    radial-gradient(circle at 15% 20%, rgba(34, 197, 94, 0.18), transparent 45%),
+    radial-gradient(circle at 85% 25%, rgba(0, 210, 255, 0.16), transparent 45%),
+    radial-gradient(circle at 20% 80%, rgba(192, 132, 252, 0.16), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(251, 191, 36, 0.15), transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(45, 212, 191, 0.12), transparent 60%);
   z-index: 0;
 }
 
@@ -56,8 +67,8 @@ html, body {
   inset: 0;
   background-size: 40px 40px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   pointer-events: none;
   z-index: 1;
 }
@@ -68,8 +79,8 @@ html, body {
   top: 0;
   left: 0;
   right: 0;
-  height: 64px;
-  background: rgba(11, 15, 25, 0.85);
+  height: 68px;
+  background: rgba(7, 10, 20, 0.88);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
@@ -87,17 +98,17 @@ html, body {
 }
 
 .brand-dot {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: var(--em-l);
-  box-shadow: 0 0 12px var(--em-l);
+  box-shadow: 0 0 16px var(--em-l), 0 0 30px var(--em-l);
 }
 
 .brand-name {
   font-family: var(--font-display);
-  font-size: 17px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 800;
   letter-spacing: -0.01em;
 }
 
@@ -116,21 +127,22 @@ html, body {
 }
 
 .filter-btn {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border);
   color: var(--text-muted);
-  padding: 6px 14px;
+  padding: 7px 16px;
   border-radius: 999px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .filter-btn:hover, .filter-btn.active {
-  background: rgba(34, 197, 94, 0.15);
+  background: rgba(34, 197, 94, 0.2);
   border-color: var(--em-l);
   color: #86efac;
+  box-shadow: 0 0 16px rgba(34, 197, 94, 0.3);
 }
 
 .top-actions {
@@ -149,32 +161,43 @@ html, body {
   padding: 8px 16px;
   border-radius: 999px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.18s ease;
 }
 
 .action-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
 }
 
 .action-btn.primary {
-  background: var(--em);
-  border-color: var(--em-l);
+  background: linear-gradient(135deg, #15803d, #22c55e);
+  border-color: #4ade80;
   color: #fff;
-  box-shadow: 0 0 16px var(--em-glow);
+  box-shadow: 0 0 20px var(--em-glow);
 }
 .action-btn.primary:hover {
-  background: #16a34a;
+  box-shadow: 0 0 30px var(--em-glow);
+}
+
+.action-btn.gold {
+  border-color: rgba(251, 191, 36, 0.5);
+  color: #fef3c7;
+}
+.action-btn.gold:hover {
+  background: rgba(251, 191, 36, 0.15);
+  border-color: var(--gold);
+  box-shadow: 0 0 20px var(--gold-glow);
 }
 
 /* ── SPATIAL DIAGRAM CANVAS VIEWPORT ────────────────────── */
 #diagram-viewport {
   position: absolute;
   inset: 0;
-  top: 64px;
+  top: 68px;
   overflow: hidden;
   cursor: grab;
   z-index: 5;
@@ -205,17 +228,16 @@ html, body {
 }
 
 .conduit-line {
-  stroke: rgba(255, 255, 255, 0.12);
+  stroke: rgba(255, 255, 255, 0.1);
   stroke-width: 2;
   fill: none;
 }
 
 .conduit-pulse {
-  stroke: var(--em-l);
-  stroke-width: 2.5;
-  stroke-dasharray: 8 20;
+  stroke-width: 3;
+  stroke-dasharray: 10 24;
   fill: none;
-  animation: pulseFlow 25s linear infinite;
+  animation: pulseFlow 20s linear infinite;
 }
 
 @keyframes pulseFlow {
@@ -223,43 +245,97 @@ html, body {
   to { stroke-dashoffset: 0; }
 }
 
-/* ── DIAGRAM NODES ──────────────────────────────────────── */
+/* ── VIBRANT DIAGRAM NODES ──────────────────────────────── */
 .node {
   position: absolute;
   transform: translate(-50%, -50%);
   background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 20px;
-  width: 320px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid var(--border);
+  border-radius: 24px;
+  padding: 22px;
+  width: 330px;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 10;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
 }
 
 .node:hover {
-  transform: translate(-50%, -54%) scale(1.03);
-  border-color: var(--em-l);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px var(--em-glow);
-  z-index: 20;
+  transform: translate(-50%, -54%) scale(1.04);
+  z-index: 25;
 }
 
 .node.active-node {
-  border-color: var(--em-l);
-  box-shadow: 0 0 40px var(--em-glow);
+  transform: translate(-50%, -54%) scale(1.04);
+  z-index: 30;
 }
 
-/* Central Hub Node */
-.node.hub {
-  width: 440px;
-  background: linear-gradient(145deg, rgba(21, 128, 61, 0.25), rgba(17, 24, 39, 0.95));
+/* Dynamic Glowing Themes per Node */
+.node.theme-hub {
+  width: 460px;
+  background: linear-gradient(145deg, rgba(21, 128, 61, 0.3), rgba(15, 23, 42, 0.96));
   border: 2px solid var(--em-l);
-  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8), 0 0 40px var(--em-glow);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8), 0 0 50px var(--em-glow);
   text-align: center;
-  padding: 28px;
+  padding: 30px;
+}
+
+.node.theme-cyan {
+  border-color: rgba(0, 210, 255, 0.4);
+}
+.node.theme-cyan:hover, .node.theme-cyan.active-node {
+  border-color: var(--blue);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 40px var(--blue-glow);
+}
+
+.node.theme-green {
+  border-color: rgba(34, 197, 94, 0.4);
+}
+.node.theme-green:hover, .node.theme-green.active-node {
+  border-color: var(--em-l);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 40px var(--em-glow);
+}
+
+.node.theme-purple {
+  border-color: rgba(192, 132, 252, 0.4);
+}
+.node.theme-purple:hover, .node.theme-purple.active-node {
+  border-color: var(--purple);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 40px var(--purple-glow);
+}
+
+.node.theme-teal {
+  border-color: rgba(45, 212, 191, 0.45);
+}
+.node.theme-teal:hover, .node.theme-teal.active-node {
+  border-color: var(--teal);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 45px var(--teal-glow);
+}
+
+.node.theme-gold {
+  border-color: rgba(251, 191, 36, 0.4);
+}
+.node.theme-gold:hover, .node.theme-gold.active-node {
+  border-color: var(--gold);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 40px var(--gold-glow);
+}
+
+.node.theme-rose {
+  border-color: rgba(251, 113, 133, 0.4);
+}
+.node.theme-rose:hover, .node.theme-rose.active-node {
+  border-color: var(--rose);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 40px var(--rose-glow);
+}
+
+.node.theme-indigo {
+  border-color: rgba(129, 140, 248, 0.4);
+}
+.node.theme-indigo:hover, .node.theme-indigo.active-node {
+  border-color: var(--indigo);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 40px var(--indigo-glow);
 }
 
 .node-header {
@@ -271,14 +347,14 @@ html, body {
 }
 
 .node-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.06);
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--border);
   display: grid;
   place-items: center;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .node-idx {
@@ -290,34 +366,29 @@ html, body {
 
 .node-badge {
   font-family: var(--font-mono);
-  font-size: 9px;
-  font-weight: 700;
+  font-size: 9.5px;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  padding: 3px 8px;
+  padding: 4px 9px;
   border-radius: 999px;
-  background: rgba(34, 197, 94, 0.15);
+  background: rgba(34, 197, 94, 0.2);
   color: #86efac;
-  border: 1px solid rgba(34, 197, 94, 0.3);
+  border: 1px solid rgba(34, 197, 94, 0.4);
 }
-
-.node-badge.live { background: rgba(34, 197, 94, 0.2); color: #86efac; }
-.node-badge.logistics { background: rgba(20, 184, 166, 0.2); color: #5eead4; border-color: rgba(20, 184, 166, 0.4); }
-.node-badge.ai { background: rgba(168, 85, 247, 0.2); color: #d8b4fe; border-color: rgba(168, 85, 247, 0.4); }
-.node-badge.client { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; border-color: rgba(56, 189, 248, 0.4); }
 
 .node-title {
   font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 19px;
+  font-weight: 800;
   margin-bottom: 6px;
   line-height: 1.25;
 }
 
 .node-desc {
-  font-size: 12.5px;
-  color: var(--text-muted);
-  line-height: 1.5;
+  font-size: 13px;
+  color: #cbd5e1;
+  line-height: 1.55;
   margin-bottom: 14px;
 }
 
@@ -329,25 +400,24 @@ html, body {
 
 .node-tag {
   font-family: var(--font-mono);
-  font-size: 10px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 2px 7px;
-  border-radius: 4px;
-  color: #cbd5e1;
+  font-size: 10.5px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 3px 8px;
+  border-radius: 6px;
+  color: #e2e8f0;
 }
 
 .node-click-hint {
   font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--em-l);
-  margin-top: 12px;
+  font-size: 11px;
+  margin-top: 14px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 /* ── HUD CONTROLS OVERLAY ───────────────────────────────── */
@@ -356,46 +426,49 @@ html, body {
   bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(15, 23, 42, 0.9);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border);
   border-radius: 999px;
-  padding: 8px 16px;
+  padding: 10px 20px;
   display: flex;
   align-items: center;
-  gap: 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  gap: 20px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7);
   z-index: 40;
 }
 
 .hud-hint {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--text-muted);
+  color: #cbd5e1;
+  font-weight: 600;
 }
 
 .hud-btn-group {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .hud-icon-btn {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--border);
   color: var(--text);
   display: grid;
   place-items: center;
-  font-size: 14px;
+  font-size: 15px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 .hud-icon-btn:hover {
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.18);
+  border-color: #fff;
+  transform: scale(1.08);
 }
 
 /* ── CASE STUDY DRAWER ─────────────────────────────────── */
@@ -403,13 +476,13 @@ html, body {
   position: fixed;
   top: 0;
   right: 0;
-  width: min(560px, 94vw);
+  width: min(580px, 94vw);
   height: 100%;
-  background: rgba(11, 15, 25, 0.97);
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
+  background: rgba(10, 14, 26, 0.98);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
   border-left: 1px solid var(--border);
-  box-shadow: -25px 0 80px rgba(0, 0, 0, 0.8);
+  box-shadow: -25px 0 90px rgba(0, 0, 0, 0.85);
   z-index: 100;
   transform: translateX(100%);
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -428,12 +501,13 @@ html, body {
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
+  background: rgba(15, 23, 42, 0.6);
 }
 
 .drawer-kicker {
   font-family: var(--font-mono);
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--em-l);
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -442,26 +516,27 @@ html, body {
 
 .drawer-title {
   font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 700;
+  font-size: 28px;
+  font-weight: 800;
   line-height: 1.15;
+  letter-spacing: -0.02em;
 }
 
 .drawer-close {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--border);
   color: var(--text-muted);
-  font-size: 20px;
+  font-size: 22px;
   display: grid;
   place-items: center;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 .drawer-close:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.2);
   color: #fff;
 }
 
@@ -483,14 +558,14 @@ html, body {
 .drawer-card {
   background: rgba(17, 24, 39, 0.8);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 18px 20px;
+  border-radius: 16px;
+  padding: 20px 22px;
 }
 
 .drawer-card-label {
   font-family: var(--font-mono);
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--em-l);
@@ -499,7 +574,7 @@ html, body {
 }
 
 .drawer-card p {
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.6;
   color: #cbd5e1;
 }
@@ -507,17 +582,17 @@ html, body {
 .drawer-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 7px;
 }
 
 .drawer-tag {
   font-family: var(--font-mono);
   font-size: 11px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--border);
-  padding: 4px 10px;
-  border-radius: 6px;
-  color: #94a3b8;
+  padding: 5px 12px;
+  border-radius: 8px;
+  color: #cbd5e1;
 }
 
 .drawer-actions {
@@ -528,23 +603,23 @@ html, body {
 }
 
 .btn-open {
-  background: var(--em);
+  background: linear-gradient(135deg, #15803d, #22c55e);
   color: #fff;
-  border: 1px solid var(--em-l);
-  padding: 12px 22px;
-  border-radius: 10px;
+  border: 1px solid #4ade80;
+  padding: 12px 24px;
+  border-radius: 12px;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 800;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 4px 18px var(--em-glow);
-  transition: all 0.15s ease;
+  box-shadow: 0 4px 20px var(--em-glow);
+  transition: all 0.18s ease;
 }
 .btn-open:hover {
-  background: #16a34a;
   transform: translateY(-1px);
+  box-shadow: 0 6px 25px var(--em-glow);
 }
 </style>
 </head>
@@ -572,6 +647,9 @@ html, body {
     <button class="action-btn primary" id="btn-tour" onclick="toggleGuidedTour()">
       <span>✨</span> <span id="tour-label">Guided System Tour</span>
     </button>
+    <a href="../drive/" class="action-btn gold">
+      <span>🚚</span> <span>3D Driving Run</span>
+    </a>
     <a href="../" class="action-btn">
       <span>📄</span> <span>Classic View</span>
     </a>
@@ -581,65 +659,67 @@ html, body {
 <!-- ── SPATIAL DIAGRAM VIEWPORT ───────────────────────────── -->
 <main id="diagram-viewport">
   <div id="diagram-world">
-    <!-- SVG Connection Conduits -->
+    <!-- SVG Glowing Conduits -->
     <svg id="svg-conduits">
       <!-- Hub to F&B -->
       <line x1="1300" y1="1000" x2="800" y2="700" class="conduit-line"/>
-      <line x1="1300" y1="1000" x2="800" y2="700" class="conduit-pulse"/>
+      <line x1="1300" y1="1000" x2="800" y2="700" class="conduit-pulse" style="stroke:var(--blue);"/>
 
       <!-- Hub to Rooted -->
       <line x1="1300" y1="1000" x2="1800" y2="700" class="conduit-line"/>
-      <line x1="1300" y1="1000" x2="1800" y2="700" class="conduit-pulse"/>
+      <line x1="1300" y1="1000" x2="1800" y2="700" class="conduit-pulse" style="stroke:var(--em-l);"/>
 
       <!-- Hub to Multi-Agent Engine -->
       <line x1="1300" y1="1000" x2="700" y2="1300" class="conduit-line"/>
-      <line x1="1300" y1="1000" x2="700" y2="1300" class="conduit-pulse"/>
+      <line x1="1300" y1="1000" x2="700" y2="1300" class="conduit-pulse" style="stroke:var(--purple);"/>
 
       <!-- Hub to Last-Mile Logistics Depot -->
-      <line x1="1300" y1="1000" x2="1300" y2="1550" class="conduit-line" style="stroke-width:3.5;stroke:rgba(20,184,166,0.3);"/>
-      <line x1="1300" y1="1000" x2="1300" y2="1550" class="conduit-pulse" style="stroke:var(--blue);stroke-width:3.5;"/>
+      <line x1="1300" y1="1000" x2="1300" y2="1550" class="conduit-line" style="stroke-width:3.5;stroke:rgba(45,212,191,0.3);"/>
+      <line x1="1300" y1="1000" x2="1300" y2="1550" class="conduit-pulse" style="stroke:var(--teal);stroke-width:4;"/>
 
       <!-- Hub to Auto-Plug -->
       <line x1="1300" y1="1000" x2="1900" y2="1300" class="conduit-line"/>
-      <line x1="1300" y1="1000" x2="1900" y2="1300" class="conduit-pulse"/>
+      <line x1="1300" y1="1000" x2="1900" y2="1300" class="conduit-pulse" style="stroke:var(--gold);"/>
 
       <!-- Hub to Keepsakes -->
       <line x1="1300" y1="1000" x2="1300" y2="450" class="conduit-line"/>
-      <line x1="1300" y1="1000" x2="1300" y2="450" class="conduit-pulse"/>
+      <line x1="1300" y1="1000" x2="1300" y2="450" class="conduit-pulse" style="stroke:var(--rose);"/>
 
       <!-- Cross conduits -->
       <line x1="700" y1="1300" x2="1300" y2="1550" class="conduit-line"/>
       <line x1="1300" y1="1550" x2="1900" y2="1300" class="conduit-line"/>
       <line x1="800" y1="700" x2="1300" y2="450" class="conduit-line"/>
       <line x1="1300" y1="450" x2="1800" y2="700" class="conduit-line"/>
+      <line x1="450" y1="1000" x2="1300" y2="1000" class="conduit-line"/>
+      <line x1="1300" y1="1000" x2="2150" y2="1000" class="conduit-line"/>
     </svg>
 
     <!-- 00. CENTRAL HUB NODE -->
-    <div class="node hub" style="left: 1300px; top: 1000px;" onclick="centerOnNode(1300, 1000)">
+    <div class="node theme-hub" style="left: 1300px; top: 1000px;" onclick="centerOnNode(1300, 1000)">
       <div style="font-family:var(--font-mono);font-size:11px;color:var(--em-l);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">
         Core Architecture & Thesis
       </div>
-      <h2 style="font-family:var(--font-display);font-size:24px;line-height:1.2;margin-bottom:10px;">
+      <h2 style="font-family:var(--font-display);font-size:25px;line-height:1.2;margin-bottom:12px;">
         &ldquo;I turn customer problems into products that <span style="color:var(--em-l);">ship.</span>&rdquo;
       </h2>
-      <p style="font-size:13px;color:var(--text-muted);line-height:1.55;margin-bottom:16px;">
+      <p style="font-size:13.5px;color:#cbd5e1;line-height:1.6;margin-bottom:18px;">
         Combining client relationship leadership with hands-on product judgment, multi-agent AI systems, and last-mile operations.
       </p>
       <div style="display:flex;justify-content:center;gap:12px;font-family:var(--font-mono);font-size:11px;">
-        <span style="background:rgba(255,255,255,0.06);padding:4px 10px;border-radius:6px;">6 Deployed Systems</span>
-        <span style="background:rgba(255,255,255,0.06);padding:4px 10px;border-radius:6px;">3 Live Web Apps</span>
-        <span style="background:rgba(255,255,255,0.06);padding:4px 10px;border-radius:6px;">Charlotte Metro</span>
+        <span style="background:rgba(255,255,255,0.08);padding:5px 12px;border-radius:8px;color:#86efac;font-weight:700;">6 Deployed Systems</span>
+        <span style="background:rgba(255,255,255,0.08);padding:5px 12px;border-radius:8px;color:#00d2ff;font-weight:700;">3 Live Web Apps</span>
+        <span style="background:rgba(255,255,255,0.08);padding:5px 12px;border-radius:8px;color:#2dd4bf;font-weight:700;">Charlotte Metro</span>
       </div>
     </div>
 
     <!-- 01. F&B MANAGER -->
-    <div class="node" data-category="client" style="left: 800px; top: 700px;" onclick="openCaseStudy('fnb')">
+    <div class="node theme-cyan" data-category="client" style="left: 800px; top: 700px;" onclick="openCaseStudy('fnb')">
       <div class="node-header">
-        <div class="node-icon">🎰</div>
-        <span class="node-badge client">In Field Use</span>
+        <div class="node-icon" style="background:rgba(0,210,255,0.15);border-color:rgba(0,210,255,0.4);">🎰</div>
+        <span class="node-badge" style="background:rgba(0,210,255,0.2);color:#7dd3fc;border-color:rgba(0,210,255,0.4);">In Field Use</span>
       </div>
-      <div class="node-idx">ZONE 01 · HOSPITALITY CASINO</div>
-      <div class="node-title">F&B Manager Platform</div>
+      <div class="node-idx" style="color:#7dd3fc;">ZONE 01 · HOSPITALITY CASINO</div>
+      <div class="node-title" style="color:#38bdf8;">F&B Manager Platform</div>
       <div class="node-desc">Tablet-first inventory, par-level tracking, SOP surface cards, and camera scan feature that reads shelf stock from photos.</div>
       <div class="node-tags">
         <span class="node-tag">Next.js</span>
@@ -647,17 +727,17 @@ html, body {
         <span class="node-tag">Camera Capture</span>
         <span class="node-tag">Postgres</span>
       </div>
-      <div class="node-click-hint">Inspect Case Study &rarr;</div>
+      <div class="node-click-hint" style="color:#38bdf8;">Inspect Case Study &rarr;</div>
     </div>
 
     <!-- 02. ROOTED -->
-    <div class="node" data-category="live" style="left: 1800px; top: 700px;" onclick="openCaseStudy('rooted')">
+    <div class="node theme-green" data-category="live" style="left: 1800px; top: 700px;" onclick="openCaseStudy('rooted')">
       <div class="node-header">
-        <div class="node-icon">🌿</div>
+        <div class="node-icon" style="background:rgba(34,197,94,0.15);border-color:rgba(34,197,94,0.4);">🌿</div>
         <span class="node-badge live">Live in Production</span>
       </div>
-      <div class="node-idx">ZONE 02 · CONSUMER APP</div>
-      <div class="node-title">Rooted Devotional App</div>
+      <div class="node-idx" style="color:#86efac;">ZONE 02 · CONSUMER APP</div>
+      <div class="node-title" style="color:#4ade80;">Rooted Devotional App</div>
       <div class="node-desc">Daily devotional & spiritual connection app for Black women and couples. Scripture matching, prayers, and shared streaks.</div>
       <div class="node-tags">
         <span class="node-tag">Next.js</span>
@@ -665,17 +745,17 @@ html, body {
         <span class="node-tag">Stripe</span>
         <span class="node-tag">Web Push</span>
       </div>
-      <div class="node-click-hint">Inspect Case Study &rarr;</div>
+      <div class="node-click-hint" style="color:#4ade80;">Inspect Case Study &rarr;</div>
     </div>
 
     <!-- 03. MULTI-AGENT ENGINE -->
-    <div class="node" data-category="ai" style="left: 700px; top: 1300px;" onclick="openCaseStudy('agentic')">
+    <div class="node theme-purple" data-category="ai" style="left: 700px; top: 1300px;" onclick="openCaseStudy('agentic')">
       <div class="node-header">
-        <div class="node-icon">🤖</div>
-        <span class="node-badge ai">Multi-Agent AI</span>
+        <div class="node-icon" style="background:rgba(192,132,252,0.15);border-color:rgba(192,132,252,0.4);">🤖</div>
+        <span class="node-badge" style="background:rgba(192,132,252,0.2);color:#d8b4fe;border-color:rgba(192,132,252,0.4);">Multi-Agent AI</span>
       </div>
-      <div class="node-idx">ZONE 03 · 21-MODULE SYSTEM</div>
-      <div class="node-title">LeadCurate Multi-Agent OS</div>
+      <div class="node-idx" style="color:#d8b4fe;">ZONE 03 · 21-MODULE SYSTEM</div>
+      <div class="node-title" style="color:#c084fc;">LeadCurate Multi-Agent OS</div>
       <div class="node-desc">Coordinated pipeline of Claude, Codex, and Hermes automating research, GIS data auditing, direct-mail letters, and video rendering.</div>
       <div class="node-tags">
         <span class="node-tag">Claude 3.5</span>
@@ -683,17 +763,17 @@ html, body {
         <span class="node-tag">Hermes</span>
         <span class="node-tag">GIS Scrapers</span>
       </div>
-      <div class="node-click-hint">Inspect Case Study &rarr;</div>
+      <div class="node-click-hint" style="color:#c084fc;">Inspect Case Study &rarr;</div>
     </div>
 
     <!-- 06. LAST-MILE DELIVERY OPERATIONS HUB (FEATURED) -->
-    <div class="node" data-category="logistics" style="left: 1300px; top: 1550px; border-color: rgba(20, 184, 166, 0.6); box-shadow: 0 0 35px rgba(20, 184, 166, 0.25);" onclick="openCaseStudy('delivery')">
+    <div class="node theme-teal" data-category="logistics" style="left: 1300px; top: 1550px;" onclick="openCaseStudy('delivery')">
       <div class="node-header">
-        <div class="node-icon" style="background:rgba(20, 184, 166, 0.15);border-color:rgba(20, 184, 166, 0.4);">🚚</div>
-        <span class="node-badge logistics">Live Logistics Hub</span>
+        <div class="node-icon" style="background:rgba(45,212,191,0.2);border-color:rgba(45,212,191,0.5);">🚚</div>
+        <span class="node-badge" style="background:rgba(45,212,191,0.2);color:#5eead4;border-color:rgba(45,212,191,0.5);">Live Logistics Hub</span>
       </div>
-      <div class="node-idx">ZONE 06 · WHITE-GLOVE LOGISTICS</div>
-      <div class="node-title" style="color:#5eead4;">Last-Mile Delivery Operations</div>
+      <div class="node-idx" style="color:#5eead4;">ZONE 06 · WHITE-GLOVE LOGISTICS</div>
+      <div class="node-title" style="color:#2dd4bf;">Last-Mile Delivery Operations</div>
       <div class="node-desc">White-glove courier network across Charlotte metro for estate auctions & high-value items. Real-time driver dispatch, Twilio SMS milestones, and photo proof of delivery (POD).</div>
       <div class="node-tags">
         <span class="node-tag">Driver Dispatch</span>
@@ -701,17 +781,17 @@ html, body {
         <span class="node-tag">Photo POD</span>
         <span class="node-tag">Charlotte Metro</span>
       </div>
-      <div class="node-click-hint" style="color:#5eead4;">Inspect Logistics Dossier &rarr;</div>
+      <div class="node-click-hint" style="color:#2dd4bf;">Inspect Logistics Dossier &rarr;</div>
     </div>
 
     <!-- 04. AUTO-PLUG INVESTOR PLATFORM -->
-    <div class="node" data-category="live" style="left: 1900px; top: 1300px;" onclick="openCaseStudy('autoplug')">
+    <div class="node theme-gold" data-category="live" style="left: 1900px; top: 1300px;" onclick="openCaseStudy('autoplug')">
       <div class="node-header">
-        <div class="node-icon">⚡</div>
-        <span class="node-badge live">Live SaaS</span>
+        <div class="node-icon" style="background:rgba(251,191,36,0.15);border-color:rgba(251,191,36,0.4);">⚡</div>
+        <span class="node-badge" style="background:rgba(251,191,36,0.2);color:#fde047;border-color:rgba(251,191,36,0.4);">Live SaaS</span>
       </div>
-      <div class="node-idx">ZONE 04 · REAL ESTATE TECH</div>
-      <div class="node-title">Auto-Plug & White-Label</div>
+      <div class="node-idx" style="color:#fde047;">ZONE 04 · REAL ESTATE TECH</div>
+      <div class="node-title" style="color:#fbbf24;">Auto-Plug &amp; White-Label</div>
       <div class="node-desc">Configurable direct-response platform for real estate investors. Dynamic multi-tenant branding, parcel maps, and SMS/call routing.</div>
       <div class="node-tags">
         <span class="node-tag">Next.js</span>
@@ -719,17 +799,17 @@ html, body {
         <span class="node-tag">Twilio</span>
         <span class="node-tag">Multitenancy</span>
       </div>
-      <div class="node-click-hint">Inspect Case Study &rarr;</div>
+      <div class="node-click-hint" style="color:#fbbf24;">Inspect Case Study &rarr;</div>
     </div>
 
     <!-- 05. INTERACTIVE KEEPSAKES (DERRICK & MIESHA) -->
-    <div class="node" data-category="live" style="left: 1300px; top: 450px;" onclick="openCaseStudy('keepsakes')">
+    <div class="node theme-rose" data-category="live" style="left: 1300px; top: 450px;" onclick="openCaseStudy('keepsakes')">
       <div class="node-header">
-        <div class="node-icon">💌</div>
-        <span class="node-badge live">Live · Self-Hosted</span>
+        <div class="node-icon" style="background:rgba(251,113,133,0.15);border-color:rgba(251,113,133,0.4);">💌</div>
+        <span class="node-badge" style="background:rgba(251,113,133,0.2);color:#fda4af;border-color:rgba(251,113,133,0.4);">Live · Self-Hosted</span>
       </div>
-      <div class="node-idx">ZONE 05 · DIGITAL KEEPSAKE</div>
-      <div class="node-title">Derrick &amp; Miesha Announcement</div>
+      <div class="node-idx" style="color:#fda4af;">ZONE 05 · DIGITAL KEEPSAKE</div>
+      <div class="node-title" style="color:#fb7185;">Derrick &amp; Miesha Announcement</div>
       <div class="node-desc">Interactive wax seal animation triggering a 10s announcement film, letter, and persistent guest blessing board with custom REST API on a Linux VPS.</div>
       <div class="node-tags">
         <span class="node-tag">REST API</span>
@@ -737,41 +817,41 @@ html, body {
         <span class="node-tag">Linux VPS</span>
         <span class="node-tag">Nginx TLS</span>
       </div>
-      <div class="node-click-hint">Inspect Case Study &rarr;</div>
+      <div class="node-click-hint" style="color:#fb7185;">Inspect Case Study &rarr;</div>
     </div>
 
     <!-- 07. SKILLS & SYSTEMS ARENA -->
-    <div class="node" data-category="all" style="left: 450px; top: 1000px;" onclick="openCaseStudy('skills')">
+    <div class="node theme-indigo" data-category="all" style="left: 450px; top: 1000px;" onclick="openCaseStudy('skills')">
       <div class="node-header">
-        <div class="node-icon">🛠️</div>
-        <span class="node-badge">Core Disciplines</span>
+        <div class="node-icon" style="background:rgba(129,140,248,0.15);border-color:rgba(129,140,248,0.4);">🛠️</div>
+        <span class="node-badge" style="background:rgba(129,140,248,0.2);color:#c7d2fe;border-color:rgba(129,140,248,0.4);">Core Disciplines</span>
       </div>
-      <div class="node-idx">ZONE 07 · CAPABILITIES</div>
-      <div class="node-title">Customer &amp; Product Strengths</div>
+      <div class="node-idx" style="color:#c7d2fe;">ZONE 07 · CAPABILITIES</div>
+      <div class="node-title" style="color:#818cf8;">Customer &amp; Product Strengths</div>
       <div class="node-desc">Bridging customer enablement, product operations, creative technology, and full-stack technical execution.</div>
       <div class="node-tags">
         <span class="node-tag">Customer Strategy</span>
         <span class="node-tag">Product Ops</span>
         <span class="node-tag">Full-Stack</span>
       </div>
-      <div class="node-click-hint">Review Strengths &rarr;</div>
+      <div class="node-click-hint" style="color:#818cf8;">Review Strengths &rarr;</div>
     </div>
 
     <!-- 08. CONTACT & DISPATCH TERMINAL -->
-    <div class="node" data-category="all" style="left: 2150px; top: 1000px;" onclick="openCaseStudy('contact')">
+    <div class="node theme-green" data-category="all" style="left: 2150px; top: 1000px;" onclick="openCaseStudy('contact')">
       <div class="node-header">
-        <div class="node-icon">📬</div>
+        <div class="node-icon" style="background:rgba(34,197,94,0.15);border-color:rgba(34,197,94,0.4);">📬</div>
         <span class="node-badge live">Get In Touch</span>
       </div>
-      <div class="node-idx">ZONE 08 · DISPATCH</div>
-      <div class="node-title">Contact &amp; Connect</div>
+      <div class="node-idx" style="color:#86efac;">ZONE 08 · DISPATCH</div>
+      <div class="node-title" style="color:#4ade80;">Contact &amp; Connect</div>
       <div class="node-desc">Available for Customer Enablement, Product Operations, Technical Product Management, and Solutions roles.</div>
       <div class="node-tags">
         <span class="node-tag">derrick@leadcurate.com</span>
         <span class="node-tag">LinkedIn</span>
         <span class="node-tag">GitHub</span>
       </div>
-      <div class="node-click-hint">Open Contact Dossier &rarr;</div>
+      <div class="node-click-hint" style="color:#4ade80;">Open Contact Dossier &rarr;</div>
     </div>
   </div>
 </main>
@@ -948,7 +1028,6 @@ function resetDiagramView() {
 }
 
 function centerOnNode(nx, ny) {
-  // Center world so nx, ny is in the middle of viewport
   const worldCenterX = 1300;
   const worldCenterY = 1000;
   panX = (worldCenterX - nx) * scale;
@@ -1008,13 +1087,13 @@ function filterCategory(cat, btn) {
   if (btn) btn.classList.add('active');
 
   document.querySelectorAll('.node').forEach(node => {
-    if (node.classList.contains('hub')) return;
+    if (node.classList.contains('theme-hub')) return;
     const nCat = node.getAttribute('data-category');
     if (cat === 'all' || nCat === cat || nCat === 'all') {
       node.style.opacity = '1';
       node.style.pointerEvents = 'auto';
     } else {
-      node.style.opacity = '0.2';
+      node.style.opacity = '0.15';
       node.style.pointerEvents = 'none';
     }
   });
