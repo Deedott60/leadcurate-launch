@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 <title>Derrick McDonald · Interactive Systems Architecture & Portfolio</title>
-<meta name="description" content="Vibrant 3D spatial systems diagram and portfolio for Derrick McDonald. Explore customer strategy, live software, multi-agent AI pipelines, and last-mile delivery operations."/>
+<meta name="description" content="Clear, interactive 3D systems diagram showcasing Derrick McDonald's software products, automated URL tools, multi-agent AI pipelines, and estate drop logistics."/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
 <style>
 :root {
   --bg: #070a14;
-  --bg-card: rgba(15, 23, 42, 0.9);
+  --bg-card: rgba(15, 23, 42, 0.92);
   --border: rgba(255, 255, 255, 0.12);
   --border-focus: #22c55e;
   --em: #15803d;
@@ -74,14 +74,14 @@ html, body {
   z-index: 1;
 }
 
-/* ── TOP NAV BAR (DESKTOP + RESPONSIVE MOBILE) ──────────── */
+/* ── TOP NAV BAR ────────────────────────────────────────── */
 #topbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   height: 64px;
-  background: rgba(7, 10, 20, 0.92);
+  background: rgba(7, 10, 20, 0.94);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
@@ -198,7 +198,7 @@ html, body {
   color: #fef3c7;
 }
 
-/* ── MOBILE SUB-NAV STRIP ────────────────────────────────── */
+/* ── MOBILE SUBNAV HORIZONTAL STRIP ─────────────────────── */
 #mobile-subnav {
   display: none;
   position: fixed;
@@ -283,7 +283,7 @@ html, body {
   border: 1.5px solid var(--border);
   border-radius: 22px;
   padding: 20px;
-  width: 320px;
+  width: 330px;
   cursor: pointer;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
   z-index: 10;
@@ -302,7 +302,7 @@ html, body {
 
 /* Dynamic Glowing Themes per Node */
 .node.theme-hub {
-  width: 440px;
+  width: 450px;
   background: linear-gradient(145deg, rgba(21, 128, 61, 0.35), rgba(15, 23, 42, 0.98));
   border: 2px solid var(--em-l);
   box-shadow: 0 25px 80px rgba(0, 0, 0, 0.85), 0 0 50px var(--em-glow);
@@ -434,7 +434,7 @@ html, body {
   font-weight: 800;
 }
 
-/* ── HUD CONTROLS OVERLAY ───────────────────────────────── */
+/* ── HUD CONTROLS OVERLAY (DESKTOP) ─────────────────────── */
 .hud-panel {
   position: fixed;
   bottom: 20px;
@@ -570,12 +570,12 @@ html, body {
   white-space: nowrap;
 }
 
-/* ── CASE STUDY DRAWER (SLIDE-OVER ON DESKTOP / BOTTOM SHEET ON MOBILE) ── */
+/* ── CASE STUDY DRAWER (SLIDE-OVER / BOTTOM SHEET) ──────── */
 #drawer {
   position: fixed;
   top: 0;
   right: 0;
-  width: min(580px, 94vw);
+  width: min(600px, 94vw);
   height: 100%;
   background: rgba(10, 14, 26, 0.98);
   backdrop-filter: blur(30px);
@@ -615,7 +615,7 @@ html, body {
 
 .drawer-title {
   font-family: var(--font-display);
-  font-size: 26px;
+  font-size: 25px;
   font-weight: 800;
   line-height: 1.15;
   letter-spacing: -0.02em;
@@ -646,44 +646,43 @@ html, body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
   -webkit-overflow-scrolling: touch;
 }
 
-.drawer-body p {
-  font-size: 14.5px;
-  line-height: 1.6;
-  color: #cbd5e1;
-}
-
-.drawer-card {
-  background: rgba(17, 24, 39, 0.8);
+/* Structured Dossier Sections */
+.dossier-sec {
+  background: rgba(17, 24, 39, 0.85);
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px 18px;
 }
 
-.drawer-card-label {
+.dossier-label {
   font-family: var(--font-mono);
   font-size: 10.5px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--em-l);
-  margin-bottom: 8px;
-  display: block;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.drawer-card p {
-  font-size: 13.5px;
-  line-height: 1.55;
+.dossier-sec p {
+  font-size: 14px;
+  line-height: 1.6;
   color: #cbd5e1;
+  margin: 0;
 }
 
 .drawer-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  margin-top: 4px;
 }
 
 .drawer-tag {
@@ -775,12 +774,13 @@ html, body {
   <div class="brand">
     <div class="brand-dot"></div>
     <div class="brand-name">Derrick McDonald</div>
-    <div class="brand-sub">Interactive Systems &amp; Work</div>
+    <div class="brand-sub">Production Software &amp; Systems</div>
   </div>
 
   <div class="top-filters">
-    <button class="filter-btn active" onclick="filterCategory('all', this)">All Nodes (8)</button>
-    <button class="filter-btn" onclick="filterCategory('live', this)">Live Software</button>
+    <button class="filter-btn active" onclick="filterCategory('all', this)">All Systems (8)</button>
+    <button class="filter-btn" onclick="filterCategory('urltools', this)">Automated Tools &amp; Drops</button>
+    <button class="filter-btn" onclick="filterCategory('live', this)">Live Apps</button>
     <button class="filter-btn" onclick="filterCategory('logistics', this)">Last-Mile Logistics</button>
     <button class="filter-btn" onclick="filterCategory('ai', this)">Multi-Agent AI</button>
   </div>
@@ -801,7 +801,8 @@ html, body {
 <!-- ── MOBILE SUBNAV HORIZONTAL FILTER STRIP ──────────────── -->
 <div id="mobile-subnav">
   <button class="filter-btn active" onclick="filterCategory('all', this)">All (8)</button>
-  <button class="filter-btn" onclick="filterCategory('live', this)">Live Software</button>
+  <button class="filter-btn" onclick="filterCategory('urltools', this)">Tools &amp; Drops</button>
+  <button class="filter-btn" onclick="filterCategory('live', this)">Live Apps</button>
   <button class="filter-btn" onclick="filterCategory('logistics', this)">Last-Mile Logistics</button>
   <button class="filter-btn" onclick="filterCategory('ai', this)">Multi-Agent AI</button>
 </div>
@@ -827,11 +828,11 @@ html, body {
       <line x1="1300" y1="1000" x2="1300" y2="1550" class="conduit-line" style="stroke-width:3.5;stroke:rgba(45,212,191,0.3);"/>
       <line x1="1300" y1="1000" x2="1300" y2="1550" class="conduit-pulse" style="stroke:var(--teal);stroke-width:4;"/>
 
-      <!-- Hub to Auto-Plug -->
+      <!-- Hub to Property Tool & Estate Drop -->
       <line x1="1300" y1="1000" x2="1900" y2="1300" class="conduit-line"/>
       <line x1="1300" y1="1000" x2="1900" y2="1300" class="conduit-pulse" style="stroke:var(--gold);"/>
 
-      <!-- Hub to Keepsakes -->
+      <!-- Hub to Keepsakes / Dynamic URL Generator -->
       <line x1="1300" y1="1000" x2="1300" y2="450" class="conduit-line"/>
       <line x1="1300" y1="1000" x2="1300" y2="450" class="conduit-pulse" style="stroke:var(--rose);"/>
 
@@ -847,13 +848,13 @@ html, body {
     <!-- 00. CENTRAL HUB NODE -->
     <div class="node theme-hub" id="node-hub" style="left: 1300px; top: 1000px;" onclick="selectNodeById('hub')">
       <div style="font-family:var(--font-mono);font-size:11px;color:var(--em-l);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">
-        Core Architecture & Thesis
+        Core Executive Thesis
       </div>
       <h2 style="font-family:var(--font-display);font-size:24px;line-height:1.2;margin-bottom:10px;">
         &ldquo;I turn customer problems into products that <span style="color:var(--em-l);">ship.</span>&rdquo;
       </h2>
       <p style="font-size:13px;color:#cbd5e1;line-height:1.55;margin-bottom:16px;">
-        Combining client relationship leadership with hands-on product judgment, multi-agent AI systems, and last-mile operations.
+        A systems portfolio demonstrating client relationship leadership, custom automated URL tools, multi-agent AI pipelines, and last-mile operations.
       </p>
       <div style="display:flex;justify-content:center;gap:10px;font-family:var(--font-mono);font-size:10.5px;flex-wrap:wrap;">
         <span style="background:rgba(255,255,255,0.08);padding:4px 10px;border-radius:6px;color:#86efac;font-weight:700;">6 Deployed Systems</span>
@@ -868,16 +869,16 @@ html, body {
         <div class="node-icon" style="background:rgba(0,210,255,0.15);border-color:rgba(0,210,255,0.4);">🎰</div>
         <span class="node-badge" style="background:rgba(0,210,255,0.2);color:#7dd3fc;border-color:rgba(0,210,255,0.4);">In Field Use</span>
       </div>
-      <div class="node-idx" style="color:#7dd3fc;">ZONE 01 · HOSPITALITY CASINO</div>
-      <div class="node-title" style="color:#38bdf8;">F&B Manager Platform</div>
-      <div class="node-desc">Tablet-first inventory, par-level tracking, SOP surface cards, and camera scan feature that reads shelf stock from photos.</div>
+      <div class="node-idx" style="color:#7dd3fc;">ZONE 01 · CASINO OPERATIONS</div>
+      <div class="node-title" style="color:#38bdf8;">F&B Inventory Platform</div>
+      <div class="node-desc">Tablet-first inventory system for resort casinos. Replaces clipboards with a camera scan feature that reads shelf stock from photos.</div>
       <div class="node-tags">
         <span class="node-tag">Next.js</span>
+        <span class="node-tag">Camera Scanner</span>
         <span class="node-tag">Supabase</span>
-        <span class="node-tag">Camera Capture</span>
         <span class="node-tag">Postgres</span>
       </div>
-      <div class="node-click-hint" style="color:#38bdf8;">Inspect Case Study &rarr;</div>
+      <div class="node-click-hint" style="color:#38bdf8;">Inspect Breakdown &rarr;</div>
     </div>
 
     <!-- 02. ROOTED -->
@@ -886,16 +887,16 @@ html, body {
         <div class="node-icon" style="background:rgba(34,197,94,0.15);border-color:rgba(34,197,94,0.4);">🌿</div>
         <span class="node-badge live">Live in Production</span>
       </div>
-      <div class="node-idx" style="color:#86efac;">ZONE 02 · CONSUMER APP</div>
+      <div class="node-idx" style="color:#86efac;">ZONE 02 · CONSUMER SAAS</div>
       <div class="node-title" style="color:#4ade80;">Rooted Devotional App</div>
-      <div class="node-desc">Daily devotional & spiritual connection app for Black women and couples. Scripture matching, prayers, and shared streaks.</div>
+      <div class="node-desc">Daily devotional app with Claude AI Scripture reflection, Stripe subscriptions, user auth, and scheduled web push notifications.</div>
       <div class="node-tags">
         <span class="node-tag">Next.js</span>
         <span class="node-tag">Claude AI</span>
         <span class="node-tag">Stripe</span>
         <span class="node-tag">Web Push</span>
       </div>
-      <div class="node-click-hint" style="color:#4ade80;">Inspect Case Study &rarr;</div>
+      <div class="node-click-hint" style="color:#4ade80;">Inspect Breakdown &rarr;</div>
     </div>
 
     <!-- 03. MULTI-AGENT ENGINE -->
@@ -906,68 +907,68 @@ html, body {
       </div>
       <div class="node-idx" style="color:#d8b4fe;">ZONE 03 · 21-MODULE SYSTEM</div>
       <div class="node-title" style="color:#c084fc;">LeadCurate Multi-Agent OS</div>
-      <div class="node-desc">Coordinated pipeline of Claude, Codex, and Hermes automating research, GIS data auditing, direct-mail letters, and video rendering.</div>
+      <div class="node-desc">Coordinated pipeline of Claude, Codex, and Hermes scraping county GIS data, auditing parcel boundaries, and rendering direct-mail.</div>
       <div class="node-tags">
         <span class="node-tag">Claude 3.5</span>
         <span class="node-tag">Codex</span>
         <span class="node-tag">Hermes</span>
         <span class="node-tag">GIS Scrapers</span>
       </div>
-      <div class="node-click-hint" style="color:#c084fc;">Inspect Case Study &rarr;</div>
+      <div class="node-click-hint" style="color:#c084fc;">Inspect Breakdown &rarr;</div>
     </div>
 
-    <!-- 06. LAST-MILE DELIVERY OPERATIONS HUB (FEATURED) -->
-    <div class="node theme-teal" id="node-delivery" data-category="logistics" style="left: 1300px; top: 1550px;" onclick="selectNodeById('delivery')">
+    <!-- 06. LAST-MILE DELIVERY & ESTATE DROPS (FEATURED) -->
+    <div class="node theme-teal" id="node-delivery" data-category="logistics urltools" style="left: 1300px; top: 1550px;" onclick="selectNodeById('delivery')">
       <div class="node-header">
         <div class="node-icon" style="background:rgba(45,212,191,0.2);border-color:rgba(45,212,191,0.5);">🚚</div>
         <span class="node-badge" style="background:rgba(45,212,191,0.2);color:#5eead4;border-color:rgba(45,212,191,0.5);">Live Logistics Hub</span>
       </div>
-      <div class="node-idx" style="color:#5eead4;">ZONE 06 · WHITE-GLOVE LOGISTICS</div>
-      <div class="node-title" style="color:#2dd4bf;">Last-Mile Delivery Operations</div>
-      <div class="node-desc">White-glove courier network across Charlotte metro for estate auctions & high-value items. Real-time driver dispatch, Twilio SMS milestones, and photo proof of delivery (POD).</div>
+      <div class="node-idx" style="color:#5eead4;">ZONE 06 · ESTATE DROPS &amp; COURIER</div>
+      <div class="node-title" style="color:#2dd4bf;">Estate Drop &amp; Logistics Hub</div>
+      <div class="node-desc">White-glove small-item courier and parcel drop dispatch for estate sales, high-value art & auctions across Charlotte. Real-time driver dispatch & photo POD.</div>
       <div class="node-tags">
+        <span class="node-tag">Estate Drops</span>
         <span class="node-tag">Driver Dispatch</span>
         <span class="node-tag">Twilio SMS</span>
         <span class="node-tag">Photo POD</span>
-        <span class="node-tag">Charlotte Metro</span>
       </div>
       <div class="node-click-hint" style="color:#2dd4bf;">Inspect Logistics Dossier &rarr;</div>
     </div>
 
-    <!-- 04. AUTO-PLUG INVESTOR PLATFORM -->
-    <div class="node theme-gold" id="node-autoplug" data-category="live" style="left: 1900px; top: 1300px;" onclick="selectNodeById('autoplug')">
+    <!-- 04. AUTO-PLUG & DYNAMIC URL PROPERTY DECISION TOOL -->
+    <div class="node theme-gold" id="node-autoplug" data-category="live urltools" style="left: 1900px; top: 1300px;" onclick="selectNodeById('autoplug')">
       <div class="node-header">
         <div class="node-icon" style="background:rgba(251,191,36,0.15);border-color:rgba(251,191,36,0.4);">⚡</div>
-        <span class="node-badge" style="background:rgba(251,191,36,0.2);color:#fde047;border-color:rgba(251,191,36,0.4);">Live SaaS</span>
+        <span class="node-badge" style="background:rgba(251,191,36,0.2);color:#fde047;border-color:rgba(251,191,36,0.4);">Dynamic Tools</span>
       </div>
-      <div class="node-idx" style="color:#fde047;">ZONE 04 · REAL ESTATE TECH</div>
-      <div class="node-title" style="color:#fbbf24;">Auto-Plug &amp; White-Label</div>
-      <div class="node-desc">Configurable direct-response platform for real estate investors. Dynamic multi-tenant branding, parcel maps, and SMS/call routing.</div>
+      <div class="node-idx" style="color:#fde047;">ZONE 04 · DYNAMIC URL GENERATOR</div>
+      <div class="node-title" style="color:#fbbf24;">Property Decision &amp; Lock-Drop</div>
+      <div class="node-desc">Automated tool generating unique branded valuation URLs for property owners, dynamic parcel boundary map overlays, and deal analyzers.</div>
       <div class="node-tags">
-        <span class="node-tag">Next.js</span>
+        <span class="node-tag">Dynamic URLs</span>
+        <span class="node-tag">Deal Analyzer</span>
         <span class="node-tag">MapLibre</span>
         <span class="node-tag">Twilio</span>
-        <span class="node-tag">Multitenancy</span>
       </div>
-      <div class="node-click-hint" style="color:#fbbf24;">Inspect Case Study &rarr;</div>
+      <div class="node-click-hint" style="color:#fbbf24;">Inspect Breakdown &rarr;</div>
     </div>
 
-    <!-- 05. INTERACTIVE KEEPSAKES (DERRICK & MIESHA) -->
-    <div class="node theme-rose" id="node-keepsakes" data-category="live" style="left: 1300px; top: 450px;" onclick="selectNodeById('keepsakes')">
+    <!-- 05. INTERACTIVE KEEPSAKES (DYNAMIC E-COMMERCE EXPERIENCES) -->
+    <div class="node theme-rose" id="node-keepsakes" data-category="live urltools" style="left: 1300px; top: 450px;" onclick="selectNodeById('keepsakes')">
       <div class="node-header">
         <div class="node-icon" style="background:rgba(251,113,133,0.15);border-color:rgba(251,113,133,0.4);">💌</div>
-        <span class="node-badge" style="background:rgba(251,113,133,0.2);color:#fda4af;border-color:rgba(251,113,133,0.4);">Live · Self-Hosted</span>
+        <span class="node-badge" style="background:rgba(251,113,133,0.2);color:#fda4af;border-color:rgba(251,113,133,0.4);">Live Client URLs</span>
       </div>
-      <div class="node-idx" style="color:#fda4af;">ZONE 05 · DIGITAL KEEPSAKE</div>
-      <div class="node-title" style="color:#fb7185;">Derrick &amp; Miesha Announcement</div>
-      <div class="node-desc">Interactive wax seal animation triggering a 10s announcement film, letter, and persistent guest blessing board with custom REST API on a Linux VPS.</div>
+      <div class="node-idx" style="color:#fda4af;">ZONE 05 · DIGITAL REVEALS</div>
+      <div class="node-title" style="color:#fb7185;">Interactive Keepsakes &amp; URLs</div>
+      <div class="node-desc">Custom e-commerce and announcement tool generating bespoke customer URLs (e.g. Derrick &amp; Miesha, Karter) with interactive 3D wax seal reveals.</div>
       <div class="node-tags">
+        <span class="node-tag">Unique URLs</span>
         <span class="node-tag">REST API</span>
-        <span class="node-tag">SQLite</span>
         <span class="node-tag">Linux VPS</span>
-        <span class="node-tag">Nginx TLS</span>
+        <span class="node-tag">SQLite</span>
       </div>
-      <div class="node-click-hint" style="color:#fb7185;">Inspect Case Study &rarr;</div>
+      <div class="node-click-hint" style="color:#fb7185;">Inspect Breakdown &rarr;</div>
     </div>
 
     <!-- 07. SKILLS & SYSTEMS ARENA -->
@@ -978,9 +979,9 @@ html, body {
       </div>
       <div class="node-idx" style="color:#c7d2fe;">ZONE 07 · CAPABILITIES</div>
       <div class="node-title" style="color:#818cf8;">Customer &amp; Product Strengths</div>
-      <div class="node-desc">Bridging customer enablement, product operations, creative technology, and full-stack technical execution.</div>
+      <div class="node-desc">Synthesizing customer enablement, operational product strategy, and full-stack technical delivery.</div>
       <div class="node-tags">
-        <span class="node-tag">Customer Strategy</span>
+        <span class="node-tag">Customer Enablement</span>
         <span class="node-tag">Product Ops</span>
         <span class="node-tag">Full-Stack</span>
       </div>
@@ -1020,8 +1021,8 @@ html, body {
 <div id="mobile-dock">
   <div class="mobile-dock-top">
     <div class="mobile-dock-info">
-      <div class="mobile-dock-kicker" id="m-dock-kicker">ZONE 06 · LAST-MILE LOGISTICS</div>
-      <div class="mobile-dock-title" id="m-dock-title">Last-Mile Delivery Operations</div>
+      <div class="mobile-dock-kicker" id="m-dock-kicker">ZONE 06 · ESTATE DROPS &amp; LOGISTICS</div>
+      <div class="mobile-dock-title" id="m-dock-title">Estate Drop &amp; Logistics Hub</div>
     </div>
     <div class="mobile-dock-btns">
       <button class="dock-arrow-btn" onclick="navStepNode(-1)" title="Previous Node">◀</button>
@@ -1051,23 +1052,25 @@ html, body {
 <script>
 const DOSSIERS = {
   hub: {
-    kicker: "00 · CORE ARCHITECTURE",
+    kicker: "00 · EXECUTIVE OVERVIEW",
     title: "Derrick McDonald · Portfolio",
     badge: "Customer Strategy + Product + Delivery",
-    summary: "I turn customer problems into products that ship. With a background leading client relationships and operational delivery, I bridge the gap between user needs and full-stack software execution.",
+    problem: "Most software is built in isolation by developers who never talk to end users or clients, resulting in awkward tools that floor staff, customers, or operators struggle to adopt.",
+    built: "I combine 10+ years of client relationship and operational leadership with hands-on technical execution (Next.js, React, Supabase, Postgres, Multi-Agent AI, and Logistics). I scope what matters, cut the fluff, and build tools that integrate directly into everyday operations.",
+    why: "Hiring managers get someone who can lead client enablement, understand messy human requirements, and build reliable software that ships on time.",
     stack: ["Customer Enablement", "Product Operations", "Full-Stack Development", "Multi-Agent AI", "Last-Mile Logistics"],
-    why: "Building software that operates in the real world—from casino floor operations and direct-response real estate tools to consumer apps and white-glove logistics dispatch.",
     links: [
-      { label: "View Classic Executive View", url: "../" }
+      { label: "View Classic Document Portfolio", url: "../" }
     ]
   },
   fnb: {
     kicker: "01 · HOSPITALITY & RESORT CASINO",
-    title: "F&B Manager Platform",
-    badge: "In Field Use · Confidential Client",
-    summary: "A food and beverage management platform built for casino and resort operations, in daily use on property. It tracks inventory and par levels, automates scheduled staff check-ins, surfaces standard operating procedures at point of work, and includes a camera feature that reads stock from a photo instead of manual clipboard counts. Built tablet-first for active floor staff.",
+    title: "F&B Inventory Platform",
+    badge: "In Field Use · Confidential Casino Client",
+    problem: "Casino beverage staff were spending hours each night walking warehouse shelves with paper clipboards, leading to manual transcription errors, misplaced par counts, and delayed ordering.",
+    built: "A tablet-first inventory management tool built specifically for active floor staff. Includes automated scheduled check-ins, SOP surface cards, and a camera scan feature that reads bottle and shelf stock directly from photos instead of manual typing.",
+    why: "Proves I can work directly from client requirements to build for non-technical floor staff I will never meet—meaning the interface must be intuitive, fast, and foolproof.",
     stack: ["Next.js", "React", "Supabase", "PostgreSQL", "Tablet-First UX", "Camera Stock Capture", "Operational SOPs"],
-    why: "This is actively deployed inside another company's daily operations. I worked directly from client requirements to build for floor staff I will never meet—meaning the interface has to make immediate sense without anyone standing beside them to explain it.",
     links: [
       { label: "View Architecture Overview", url: "../#the-work" }
     ]
@@ -1076,9 +1079,10 @@ const DOSSIERS = {
     kicker: "02 · LIVE CONSUMER APPLICATION",
     title: "Rooted Devotional App",
     badge: "Live in Production · Verified HTTP 200",
-    summary: "A daily devotional and spiritual connection web application for Black women and couples. Users express what emotional or spiritual weight they are carrying; the system pairs it with contextual Scripture, personal reflection, and prayer. Partners can share daily streaks.",
+    problem: "Modern devotional apps are rigid, repetitive, and don't adapt to what users or couples are actually carrying emotionally day-to-day.",
+    built: "A live daily devotional web app where users express their emotional burden; the system matches contextual Scripture with custom Claude AI reflections, prayers, and shared partner streaks. Backed by real authentication, Stripe subscription billing, and automated web push notifications.",
+    why: "Demonstrates shipping a complete consumer SaaS product with billing, third-party AI integration, database persistence, and scheduled engagement triggers.",
     stack: ["Next.js", "React", "Supabase Auth", "PostgreSQL", "Anthropic Claude API", "Stripe Subscriptions", "Web Push", "Vercel"],
-    why: "Rooted includes real user accounts, subscription billing, AI-curated content generation, and scheduled push notifications. Building it end-to-end taught me how much user trust depends on invisible infrastructure working together.",
     links: [
       { label: "Open Live App →", url: "https://rooted-app-pink.vercel.app", primary: true }
     ]
@@ -1087,53 +1091,58 @@ const DOSSIERS = {
     kicker: "03 · AI MULTI-AGENT ARCHITECTURE",
     title: "LeadCurate Multi-Agent Engine",
     badge: "Production Engine · 21 Modules",
-    summary: "An autonomous multi-agent operating system coordinating Claude, Codex, and Hermes across 5 pipeline stages: customer signal intake, county property research, parcel data auditing, direct-mail generation, and video creative rendering.",
+    problem: "Manual property research, county GIS deed verification, and customized direct-mail letter drafting take hours per deal and scale poorly.",
+    built: "An autonomous multi-agent operating system coordinating Claude, Codex, and Hermes across a 5-stage pipeline: intake client signals, scrape county GIS data, audit deed boundaries, generate custom offer letters, and render automated marketing assets.",
+    why: "Proves hands-on architectural leadership coordinating autonomous AI agents with structured state validation and database persistence rather than simple prompt toys.",
     stack: ["Multi-Agent AI", "Claude 3.5 Sonnet", "Codex", "Hermes", "Python", "Node.js", "Supabase", "County GIS Scrapers"],
-    why: "Proves hands-on architectural leadership orchestrating autonomous AI agents with structured handoffs, state validation, and real-world database persistence rather than simple prompt-response toys.",
     links: [
       { label: "View Multi-Agent Diagram", url: "../#agent-diagram" }
     ]
   },
   delivery: {
-    kicker: "06 · LAST-MILE LOGISTICS & DISPATCH",
-    title: "LeadCurate Delivery Operations",
+    kicker: "06 · ESTATE DROPS & COURIER DISPATCH",
+    title: "Estate Drop & Logistics Hub",
     badge: "Live Logistics · Charlotte Metro Dispatch",
-    summary: "Derrick's white-glove small-item courier and last-mile dispatch network serving estate auctions, high-value art, vintage decor, and property logistics across Charlotte, Mecklenburg, and surrounding counties (Gaston, Cabarrus, York, Lake Norman). Features real-time driver dispatch tracking, SMS customer milestone alerts, chain-of-custody photo proof-of-delivery (POD), and route clustering.",
-    stack: ["Last-Mile Routing", "Real-Time Driver Dispatch", "Twilio SMS Milestones", "Photo Proof-of-Delivery (POD)", "Next.js", "Supabase", "PostgreSQL", "Logistics Ops"],
-    why: "Direct operational proof combining physical logistics coordination with real-time software. Manages driver assignments, customer communication, delicate chain-of-custody tracking, and verified on-time completion.",
+    problem: "Estate auctions, antique galleries, and high-value sellers needed a reliable, white-glove small-item courier service that handles delicate chain-of-custody without the friction or rough handling of traditional freight carriers.",
+    built: "A live courier dispatch and parcel drop network across the Charlotte Metro (Mecklenburg, Gaston, Cabarrus, York). Features real-time driver dispatch tracking, route clustering, automated Twilio SMS milestone updates for buyers and sellers, and mandatory photo proof-of-delivery (POD).",
+    why: "Direct proof of combining physical operations leadership with real-time software. Manages driver assignments, delicate inventory custody, and customer communication.",
+    stack: ["Estate Auction Logistics", "Driver Dispatch", "Twilio SMS Milestones", "Photo Proof-of-Delivery (POD)", "Next.js", "Supabase", "PostgreSQL"],
     links: [
       { label: "View Dispatch Brief", url: "../#the-work" }
     ]
   },
   autoplug: {
-    kicker: "04 · CONFIGURABLE SAAS PLATFORM",
-    title: "Auto-Plug & White-Label Platform",
+    kicker: "04 · DYNAMIC URLS & PROPERTY DECISION TOOL",
+    title: "Property Decision & Lock-Drop Tools",
     badge: "Configurable SaaS Architecture",
-    summary: "A high-conversion real estate investor acquisition engine designed with dynamic multi-tenant branding, interactive county valuation calculators, MapLibre parcel boundary overlays, and automated SMS/call routing.",
-    stack: ["Next.js", "Tailwind CSS", "MapLibre GL", "Supabase", "Twilio SMS", "Dynamic Multitenancy"],
-    why: "Demonstrates designing one robust core software architecture that can be skinned, localized, and configured for separate clients without touching core codebase logic.",
+    problem: "Real estate investment firms struggle to capture seller leads because static landing pages feel generic and fail to give homeowners transparent valuation context.",
+    built: "A configurable direct-response platform and decision tool that generates unique property URLs on the fly (like Lock Drop / Deal Analyzer). Features dynamic county valuation calculators, MapLibre parcel boundary overlays, and automated SMS/call routing.",
+    why: "Demonstrates designing one flexible software engine that automatically generates personalized URLs and re-brands dynamically for different clients from a single config file.",
+    stack: ["Dynamic URL Generation", "Deal Analyzer", "MapLibre GL", "Next.js", "Tailwind CSS", "Twilio SMS"],
     links: [
       { label: "Open Investor Demo →", url: "https://autoplug-demo.leadcurate.com", primary: true }
     ]
   },
   keepsakes: {
-    kicker: "05 · DIGITAL EXPERIENCE & HOSTING",
-    title: "Derrick & Miesha Digital Keepsake",
+    kicker: "05 · DYNAMIC E-COMMERCE & CLIENT EXPERIENCES",
+    title: "Interactive Keepsakes & Private URLs",
     badge: "Live Experience · Self-Hosted API",
-    summary: "A bespoke digital announcement and blessing board. Tapping an interactive 3D wax seal triggers a custom 10-second announcement film and reveals a persistent guest blessing board backed by a custom REST API running on a self-administered Linux VPS.",
-    stack: ["Interactive Front End", "Custom REST API", "SQLite", "Linux VPS (Debian)", "Nginx Reverse Proxy", "Let's Encrypt TLS"],
-    why: "I built and self-host both the front end and API on bare cloud Linux servers, handling SSL certificates, reverse proxy routing, and persistent storage management.",
+    problem: "Event announcements, customer milestones, and special e-commerce reveals are usually flat PDFs or emails that lack emotion and interactive delight.",
+    built: "A bespoke digital reveal engine that generates custom URLs for individual clients (e.g. Derrick & Miesha, Karter). Visitors tap an interactive 3D wax seal to trigger a 10s announcement film, letter, and persistent guest blessing board backed by a custom REST API on a self-hosted Linux VPS.",
+    why: "Proves full-stack cloud hosting mastery: I built both the frontend and the custom API, configured the Linux cloud server, SSL reverse proxies, and SQLite database.",
+    stack: ["Unique Client URLs", "Custom REST API", "SQLite", "Linux VPS (Debian)", "Nginx Reverse Proxy", "Let's Encrypt TLS"],
     links: [
-      { label: "Open Live Site →", url: "https://derrickandmiesha.leadcurate.com", primary: true }
+      { label: "Open Live Experience →", url: "https://derrickandmiesha.leadcurate.com", primary: true }
     ]
   },
   skills: {
     kicker: "07 · CORE DISCIPLINES & STACK",
     title: "Customer, Product & Systems Strengths",
-    badge: "Customer Strategy + Product + Engineering",
-    summary: "A synthesis of Derrick's hybrid strengths: Customer Enablement & Account Management (translating messy user pain into clear roadmaps), Product Judgment (scoping what matters and cutting what doesn't), and Full-Stack Execution (Next.js, React, Supabase, Postgres, Linux VPS, Multi-Agent AI Orchestration).",
+    badge: "Customer Enablement + Product + Engineering",
+    problem: "Engineering teams often build features nobody uses, while sales teams make promises engineering can't deliver.",
+    built: "Derrick McDonald operates as the bridge: translating ambiguous customer friction into clear product roadmaps, designing intuitive UX, and delivering production code across web, AI, and physical logistics.",
+    why: "Brings senior empathy, communication clarity, and full-stack technical delivery to high-impact teams.",
     stack: ["Customer Enablement", "Product Management", "Full-Stack Development", "System Architecture", "Logistics Dispatch", "AI Workflow Engineering"],
-    why: "Uniquely bridging the gap between non-technical stakeholders and engineering execution to turn ambiguous problems into production software that ships.",
     links: [
       { label: "View LinkedIn Profile", url: "https://www.linkedin.com/in/derrick-mcdonald-940999348/", primary: true }
     ]
@@ -1142,9 +1151,10 @@ const DOSSIERS = {
     kicker: "08 · GET IN TOUCH",
     title: "Dispatch & Contact Terminal",
     badge: "Available for Roles & Consulting",
-    summary: "Ready to connect for Customer Enablement, Product Operations, Technical Product Management, Creative Technology, or Solutions roles. Located in Mount Holly, NC (Charlotte Metro) with remote and on-site flexibility.",
+    problem: "Looking for an operator who can lead client relationships, shape product strategy, and build production systems that actually ship?",
+    built: "Ready to connect for Customer Enablement, Product Operations, Technical Product Management, Solutions Engineering, or Logistics roles. Located in Mount Holly, NC (Charlotte Metro) with remote and on-site flexibility.",
+    why: "Let's build something remarkable together. Reach out directly via email, phone, or LinkedIn.",
     stack: ["Email: derrick@leadcurate.com", "LinkedIn", "GitHub: Deedott60", "Phone: (704) 555-0188"],
-    why: "Let's build something remarkable together. Reach out directly via email, LinkedIn, or check out my code repositories on GitHub.",
     links: [
       { label: "Email Derrick Directly", url: "mailto:derrick@leadcurate.com", primary: true },
       { label: "Connect on LinkedIn", url: "https://www.linkedin.com/in/derrick-mcdonald-940999348/" },
@@ -1178,7 +1188,7 @@ let startX = 0;
 let startY = 0;
 let initialPinchDist = 0;
 let initialPinchScale = 1;
-let currentNodeIndex = 4; // Default to delivery
+let currentNodeIndex = 4; // Default to delivery & drops
 
 function updateTransform() {
   world.style.transform = `translate(calc(-50% + ${panX}px), calc(-50% + ${panY}px)) scale(${scale})`;
@@ -1307,7 +1317,7 @@ function openCurrentMobileNode() {
   openCaseStudy(id);
 }
 
-/* ── CASE STUDY DRAWER ─────────────────────────────────── */
+/* ── CASE STUDY DRAWER WITH STRUCTURED PROBLEM & SOLUTION ─ */
 function openCaseStudy(id) {
   const d = DOSSIERS[id];
   if (!d) return;
@@ -1329,12 +1339,31 @@ function openCaseStudy(id) {
     <div style="font-size:12px;font-weight:800;color:var(--em-l);text-transform:uppercase;letter-spacing:.08em;">
       ${d.badge}
     </div>
-    <p>${d.summary}</p>
-    <div class="drawer-tags">${stackHtml}</div>
-    <div class="drawer-card">
-      <span class="drawer-card-label">Why It Matters</span>
+
+    <!-- The Problem Section -->
+    <div class="dossier-sec" style="border-left: 3px solid #ef4444;">
+      <span class="dossier-label" style="color:#f87171;">🛑 The Problem</span>
+      <p>${d.problem}</p>
+    </div>
+
+    <!-- What I Built Section -->
+    <div class="dossier-sec" style="border-left: 3px solid var(--em-l);">
+      <span class="dossier-label">⚡ What I Built &amp; How It Works</span>
+      <p>${d.built}</p>
+    </div>
+
+    <!-- Why It Matters Section -->
+    <div class="dossier-sec" style="border-left: 3px solid var(--blue);">
+      <span class="dossier-label" style="color:#38bdf8;">💡 Why It Matters For Employers</span>
       <p>${d.why}</p>
     </div>
+
+    <!-- Stack Badges -->
+    <div>
+      <span style="font-family:var(--font-mono);font-size:10px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;display:block;">Tech Stack &amp; Capabilities</span>
+      <div class="drawer-tags">${stackHtml}</div>
+    </div>
+
     <div class="drawer-actions">
       ${linksHtml}
     </div>
@@ -1361,8 +1390,8 @@ function filterCategory(cat, btn) {
 
   document.querySelectorAll('.node').forEach(node => {
     if (node.classList.contains('theme-hub')) return;
-    const nCat = node.getAttribute('data-category');
-    if (cat === 'all' || nCat === cat || nCat === 'all') {
+    const nCat = node.getAttribute('data-category') || '';
+    if (cat === 'all' || nCat.includes(cat)) {
       node.style.opacity = '1';
       node.style.pointerEvents = 'auto';
     } else {
@@ -1395,7 +1424,7 @@ function toggleGuidedTour() {
     label.textContent = 'Stop Tour';
     tourStep = 0;
     runTourStep();
-    tourInterval = setInterval(runTourStep, 4500);
+    tourInterval = setInterval(runTourStep, 5000);
   } else {
     btn.classList.remove('active');
     label.textContent = 'Guided Tour';
