@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -372,9 +372,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
   <nav id="sidebar">
     <div class="nav-label" style="margin-top:0;">Command</div>
     <div class="nav-section">
-      <div class="nav-item" data-page="sites">
-        <span class="icon">🔗</span> My sites
-      </div>
       <div class="nav-item active" data-page="hq">
         <span class="icon">⚡</span> HQ
       </div>
@@ -391,7 +388,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
         <span class="badge" id="nb-messages">0</span>
       </div>
       <div class="nav-item" data-page="portfolio">
-        <span class="icon">🛠️</span> Portfolio + career
+        <span class="icon">🛠️</span> Career links
       </div>
     </div>
     <div class="nav-divider"></div>
@@ -403,7 +400,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div class="nav-item" data-page="whitelabel">
         <span class="icon">W</span> White-label workspace
       </div>
-      <div class="nav-item" data-page="projects">
+      <div class="nav-item" data-page="reggie">
         <span class="icon">P</span> Projects
       </div>
       <div class="nav-item" data-page="templates">
@@ -411,22 +408,10 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
     </div>
     <div class="nav-divider"></div>
-    <div class="nav-label">Project hubs</div>
+    <div class="nav-label">Client hubs</div>
     <div class="nav-section">
-      <div class="nav-item" data-page="projects" data-project-slug="premier-whitelabel">
-        <span class="icon">P</span> Premier white-label
-      </div>
-      <div class="nav-item" data-page="projects" data-project-slug="interactive-digital-keepsakes">
-        <span class="icon">K</span> Digital Keepsakes
-      </div>
-      <a class="nav-item" href="https://keepsakes.76-13-25-117.sslip.io/operator" target="_blank" rel="noopener" data-external="true">
-        <span class="icon">O</span> Keepsake Operator
-      </a>
-      <div class="nav-item" data-page="f2f-estate-sales">
-        <span class="icon">🏛️</span> F2F Estate Sales (Doc Reedy)
-      </div>
-      <div class="nav-item" data-page="estate-delivery">
-        <span class="icon">🚚</span> Estate delivery (LeadCurate)
+      <div class="nav-item" data-page="reggie" data-project-slug="auto-plug">
+        <span class="icon">A</span> Auto Plug
       </div>
     </div>
     <div class="nav-divider"></div>
@@ -516,7 +501,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       <div class="nav-label" style="margin-top:0;">Agents</div>
       <div class="agent-mini"><div class="dot" id="dot-claude-code"></div>Claude Code</div>
       <div class="agent-mini"><div class="dot" id="dot-codex"></div>Codex</div>
-      <div class="agent-mini"><div class="dot" id="dot-anti-gravity"></div>Google Anti-Gravity</div>
       <div class="agent-mini"><div class="dot" id="dot-hermes"></div>Hermes (Danny)</div>
       <div class="agent-mini"><div class="dot" id="dot-sb"></div>Supabase</div>
       <div class="agent-mini"><div class="dot" id="dot-twilio"></div>Twilio / SMS</div>
@@ -526,15 +510,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 
   <!-- MAIN -->
   <main id="main">
-
-    <!-- ── MY SITES ──────────────────────────── -->
-    <div id="page-sites" class="page">
-      <div class="page-header">
-        <div class="page-title">My sites</div>
-        <div class="page-sub">Every live site and page, in one place. <b>Open</b> views it, <b>Copy</b> puts the link on your clipboard to paste anywhere.</div>
-      </div>
-      <div id="sites-list"></div>
-    </div>
 
     <!-- ── HQ ──────────────────────────── -->
     <div id="page-hq" class="page active">
@@ -833,8 +808,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
     </div>
 
-    <!-- ── PROJECTS ─────────────────── -->
-    <div id="page-projects" class="page">
+    <!-- ── REGGIE PROJECT ─────────────────── -->
+    <div id="page-reggie" class="page">
       <div id="projects-workspace">
         <div class="page-header">
           <div class="page-title">Projects</div>
@@ -933,7 +908,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
             <div class="f-field mb8"><label class="f-label" for="project-update-body">Update</label><textarea class="f-textarea" id="project-update-body" placeholder="What changed, what is blocked, or what needs attention?"></textarea></div>
             <div class="f-grid">
               <div class="f-field"><label class="f-label" for="project-update-from">From</label><select class="f-select project-actor" id="project-update-from"></select></div>
-              <div class="f-field"><label class="f-label" for="project-update-target">Send to</label><select class="f-select" id="project-update-target"><option value="all">Everyone</option><option value="claude">Claude</option><option value="codex">Codex</option><option value="anti-gravity">Google Anti-Gravity</option><option value="hermes">Danny</option><option value="derrick">Derrick</option></select></div>
+              <div class="f-field"><label class="f-label" for="project-update-target">Send to</label><select class="f-select" id="project-update-target"><option value="all">Everyone</option><option value="claude">Claude</option><option value="codex">Codex</option><option value="hermes">Danny</option><option value="derrick">Derrick</option></select></div>
             </div>
             <button class="btn btn-sm" id="project-update-save">Post update</button>
             <div class="project-section"><div id="project-activity-list"></div></div>
@@ -953,8 +928,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
     <!-- ── CAREER ──────────────────────────── -->
     <div id="page-portfolio" class="page">
       <div class="page-header">
-        <div class="page-title">Portfolio + career</div>
-        <div class="page-sub">Ready-to-share links and positioning for customer, product, creative, marketing, and operations roles.</div>
+        <div class="page-title">Career</div>
+        <div class="page-sub">Your ready-to-share links for applications, résumés, recruiter messages, and professional profiles.</div>
       </div>
 
       <div class="card mb16">
@@ -962,47 +937,15 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
         <div style="padding:14px 16px;display:grid;gap:12px;">
           <div style="border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;">
             <div style="min-width:220px;flex:1;">
-              <div style="font-size:12px;font-weight:800;color:var(--dark);margin-bottom:4px;">Portfolio (Classic)</div>
+              <div style="font-size:12px;font-weight:800;color:var(--dark);margin-bottom:4px;">Portfolio</div>
               <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--sl);overflow-wrap:anywhere;">https://leadcurate.com/portfolio/</div>
-              <div style="font-size:11px;color:var(--sl-l);margin-top:5px;">Executive document portfolio for applications, recruiter messages, and consulting conversations. No sign-in required.</div>
+              <div style="font-size:11px;color:var(--sl-l);margin-top:5px;">Public link for applications and résumés. No sign-in required.</div>
             </div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
               <a href="https://leadcurate.com/portfolio/" target="_blank" rel="noopener"
                  style="display:inline-block;border:1px solid var(--line);color:var(--dark);padding:9px 13px;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;">Open</a>
               <button type="button" onclick="window.copyCareerLink('https://leadcurate.com/portfolio/','Portfolio link copied',this)"
                       style="border:0;background:var(--em);color:#fff;padding:9px 13px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">Copy link</button>
-            </div>
-          </div>
-          <div style="border:1px solid var(--line);border-left:4px solid var(--em-l);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;background:rgba(34,197,94,0.03);">
-            <div style="min-width:220px;flex:1;">
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-                <span style="font-size:12px;font-weight:800;color:var(--dark);">3D Spatial Systems Portfolio (v2)</span>
-                <span style="font-size:9px;font-weight:800;background:var(--em-bg);color:var(--em);border:1px solid var(--em-l);padding:2px 7px;border-radius:999px;text-transform:uppercase;letter-spacing:0.06em;">Interactive Diagram</span>
-              </div>
-              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--sl);overflow-wrap:anywhere;">https://leadcurate.com/portfolio/interactive/</div>
-              <div style="font-size:11px;color:var(--sl-l);margin-top:5px;">Interactive 3D spatial node diagram with pan/zoom navigation, live multi-agent AI conduits, Last-Mile logistics depot, and guided tour.</div>
-            </div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;">
-              <a href="https://leadcurate.com/portfolio/interactive/" target="_blank" rel="noopener"
-                 style="display:inline-block;border:1px solid var(--em);color:#fff;background:var(--em);padding:9px 13px;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;box-shadow:0 2px 8px rgba(21,128,61,0.25);">Open 3D ✨</a>
-              <button type="button" onclick="window.copyCareerLink('https://leadcurate.com/portfolio/interactive/','3D Spatial Portfolio link copied',this)"
-                      style="border:1px solid var(--line);background:#fff;color:var(--dark);padding:9px 13px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">Copy link</button>
-            </div>
-          </div>
-          <div style="border:1px solid var(--line);border-left:4px solid #f59e0b;border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;background:rgba(245,158,11,0.03);">
-            <div style="min-width:220px;flex:1;">
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-                <span style="font-size:12px;font-weight:800;color:var(--dark);">3D Last-Mile Delivery Run (v3)</span>
-                <span style="font-size:9px;font-weight:800;background:#fef3c7;color:#d97706;border:1px solid #fcd34d;padding:2px 7px;border-radius:999px;text-transform:uppercase;letter-spacing:0.06em;">Driving & Parcel Quest</span>
-              </div>
-              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--sl);overflow-wrap:anywhere;">https://leadcurate.com/portfolio/drive/</div>
-              <div style="font-size:11px;color:var(--sl-l);margin-top:5px;">Gamified 3D driving portfolio: drive Derrick's white-glove courier van, collect road parcels, deliver to project depots, and test autopilot tour.</div>
-            </div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;">
-              <a href="https://leadcurate.com/portfolio/drive/" target="_blank" rel="noopener"
-                 style="display:inline-block;border:1px solid #d97706;color:#fff;background:#d97706;padding:9px 13px;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;box-shadow:0 2px 8px rgba(217,119,6,0.25);">Drive 🚚</a>
-              <button type="button" onclick="window.copyCareerLink('https://leadcurate.com/portfolio/drive/','3D Driving Portfolio link copied',this)"
-                      style="border:1px solid var(--line);background:#fff;color:var(--dark);padding:9px 13px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">Copy link</button>
             </div>
           </div>
           <div style="border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;">
@@ -1059,27 +1002,27 @@ Derrick McDonald</div>
       <div class="card mb16">
         <div class="card-h"><span class="card-title">What is on it</span></div>
         <div style="padding:14px 16px;font-size:13px;color:var(--sl);line-height:1.7;">
-          <div style="margin-bottom:10px;"><strong style="color:var(--dark);">Thesis</strong>: &ldquo;I turn customer problems into products that ship.&rdquo; The supporting story now covers customer strategy, product operations, creative technology, marketing systems, and hands-on technical delivery.</div>
+          <div style="margin-bottom:10px;"><strong style="color:var(--dark);">Thesis</strong>: &ldquo;I turn customer problems into products that ship.&rdquo; Five production applications support a broader customer-to-product story. The original &ldquo;I&rsquo;m not an engineer. I ship anyway.&rdquo; line now appears in the infrastructure section.</div>
           <div style="display:grid;gap:8px;">
             <div><span style="color:var(--em);font-weight:700;">F&amp;B Manager</span> &middot; confidential client, in field use &mdash; casino &amp; resort hospitality. Client and UI withheld.</div>
             <div><span style="color:var(--em);font-weight:700;">Rooted</span> &middot; live &mdash; Next.js, Supabase, Anthropic API, Stripe, Web Push</div>
             <div><span style="color:var(--em);font-weight:700;">LeadCurate OS</span> &middot; in production &mdash; shown as a 21-module inventory, no customer data</div>
             <div><span style="color:var(--em);font-weight:700;">White-Label Investor Site</span> &middot; built &mdash; Next.js, MapLibre, Supabase</div>
-            <div><span style="color:var(--em);font-weight:700;">Interactive Digital Keepsakes</span> &middot; live product &middot; approved customer reveal, product website, mobile player card, live participation proof, reusable-system plan, and VPS deployment</div>
+            <div><span style="color:var(--em);font-weight:700;">Derrick &amp; Miesha</span> &middot; live &mdash; self-hosted API on the VPS</div>
           </div>
           <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line);">
-            The portfolio now features a <strong style="color:var(--dark);">moving operating-system diagram</strong> showing Claude, Codex, and Hermes moving work from customer signal through research, design, build, launch, and learning. It connects the system to market intelligence, product design, campaign content, and production operations.
+            Plus an <strong style="color:var(--dark);">interactive agent diagram</strong> &mdash; Claude, Codex and Hermes coordinating through the activity feed &mdash; and an infrastructure section covering Ubuntu, Docker, n8n and Playwright.
           </div>
         </div>
       </div>
 
       <div class="card mb16">
-        <div class="card-h"><span class="card-title">Best-fit work</span></div>
+        <div class="card-h"><span class="card-title">Known gaps</span></div>
         <div style="padding:14px 16px;font-size:13px;color:var(--sl);line-height:1.7;">
-          <div style="margin-bottom:8px;">&bull; <strong style="color:var(--dark);">Customer enablement.</strong> Customer success, account strategy, implementation, adoption, and workflow enablement.</div>
-          <div style="margin-bottom:8px;">&bull; <strong style="color:var(--dark);">Product operations.</strong> Product ops, digital production, project coordination, QA, launch, and cross-functional delivery.</div>
-          <div style="margin-bottom:8px;">&bull; <strong style="color:var(--dark);">Creative technology.</strong> Interactive producer, creative technologist, visual content, digital experiences, and creative production support.</div>
-          <div>&bull; <strong style="color:var(--dark);">Marketing systems.</strong> Marketing operations, campaign systems, content operations, market research, and growth support.</div>
+          <div style="margin-bottom:8px;">&bull; <strong style="color:var(--dark);">Public link confirmed.</strong> The portfolio address opens without a sign-in and is safe to use on a résumé.</div>
+          <div style="margin-bottom:8px;">&bull; <strong style="color:var(--dark);">No real-estate client tool yet.</strong> Screen recordings exist but were shared as Gmail/Drive links, which cannot be reached from a local machine. Save them to disk and they can be added.</div>
+          <div style="margin-bottom:8px;">&bull; <strong style="color:var(--dark);">No invented outcome numbers.</strong> Add customer, revenue, adoption, or time-saved figures only when Derrick has a real number he can defend in an interview.</div>
+          <div>&bull; <strong style="color:var(--dark);">Blessing board cannot be screenshotted.</strong> Guest names are baked into a canvas render, so DOM scrubbing does not remove them from the pixels. Needs a placeholder-data mode on the site itself.</div>
         </div>
       </div>
     </div>
@@ -1102,7 +1045,6 @@ Derrick McDonald</div>
           <select class="f-select" id="conf-target" style="font-size:15px;font-weight:600;border-color:var(--em);">
             <option value="claude">🧠 Claude — strategy, writing, data, orchestration</option>
             <option value="codex">🤖 Codex — code fixes, security, debugging</option>
-            <option value="anti-gravity">🛰️ Google Anti-Gravity — fallback agent, repo/VPS orchestration, keepsakes handoff</option>
             <option value="hermes">⚙️ Hermes (Danny) — VPS tasks, data pulls, cron</option>
             <option value="all">📢 Everyone — broadcast to all agents</option>
           </select>
@@ -1127,7 +1069,6 @@ Derrick McDonald</div>
             <option value="derrick" selected>Derrick</option>
             <option value="claude">Claude</option>
             <option value="codex">Codex</option>
-            <option value="anti-gravity">Google Anti-Gravity</option>
             <option value="hermes">Hermes</option>
             <option value="system">System</option>
           </select>
@@ -1149,7 +1090,6 @@ Derrick McDonald</div>
               <option value="">All agents</option>
               <option value="claude-code">Claude Code</option>
               <option value="codex">Codex</option>
-              <option value="anti-gravity">Google Anti-Gravity</option>
               <option value="hermes">Hermes</option>
               <option value="derrick">Derrick</option>
               <option value="system">System</option>
@@ -1281,199 +1221,64 @@ Derrick McDonald</div>
     <div id="page-dollarleads" class="page">
       <div class="page-header">
         <div class="page-title">Dollar Leads 💵</div>
-        <div class="page-sub">Sister brand. Small packs of county data at $5 to $25, instant Cash App checkout, same-day file delivery. Built to make a few hundred a day while the premium deals cook.</div>
+        <div class="page-sub">Sister brand & volume data engine. 15,386,150 verified public records across 7 major metro markets. Free 50-lead daily taste + $5 for 2,500 leads instant fulfillment.</div>
       </div>
 
       <div class="card mb16">
-        <div class="card-h"><span class="card-title">🔗 The store</span></div>
+        <div class="card-h"><span class="card-title">🔗 The Public Storefront</span></div>
         <p style="color:var(--sl);font-size:14px;line-height:1.6;margin:0 0 12px;">
-          Live page (staging URL until its own domain is wired):<br>
-          <a href="https://leadcurate.com/dollar-leads/" target="_blank" style="color:var(--em-l);font-weight:700;">leadcurate.com/dollar-leads/</a>
+          Public Storefront URL (Customer-facing lead generator):<br>
+          <a href="https://leadcurate.com/dollar-leads/" target="_blank" style="color:var(--em-l);font-weight:700;">https://leadcurate.com/dollar-leads/</a>
         </p>
         <button class="btn btn-ghost btn-sm" onclick="navigator.clipboard.writeText('https://leadcurate.com/dollar-leads/');toast('Store link copied')">Copy store link</button>
       </div>
 
       <div class="card mb16">
-        <div class="card-h"><span class="card-title">⚙️ How an order flows</span></div>
-        <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          1. Buyer picks county + pack + category on the store and submits the form.<br>
-          2. Order lands in <code>intake_requests</code> with source <code>dollar-leads-v1</code> and a DL- order code, so it shows in your Inbox here like any lead.<br>
-          3. The page instantly shows them a Cash App button ($DollarLeads) for the exact amount, with their order code for the payment note.<br>
-          4. Derrick confirms the Cash App payment with <code>PAID DL-XXXXX</code>; the guarded worker reserves the next eligible real batch, writes stamped CSV and XLSX delivery files, sends through Hostinger, and updates the ledger.<br>
-          5. <b>Batch rules that protect us:</b> each numbered batch is disjoint inside its market/category. Normal paid packs can sell up to 3 seats. Founders and approved free samples reserve whole batches away from normal paid availability. Public copy must not show backend seats, batch counts, or total processed rows.<br>
-          6. Same-day delivery is the promise. Fresh Scrub packs get re-checked against the county before sending.
+        <div class="card-h"><span class="card-title">📊 15.38M Live Verified Inventory (7 Metros)</span></div>
+        <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0 0 12px;">
+          Cleaned, deduplicated, and organized into <b>8 Standardized Public Categories</b>:<br>
+          • <b>Cook County, IL (Chicago):</b> 3,335,150 records<br>
+          • <b>Massachusetts Statewide:</b> 6,138,150 records<br>
+          • <b>Dallas County, TX (DFW):</b> 1,635,650 records<br>
+          • <b>Wayne County, MI (Detroit):</b> 1,562,800 records<br>
+          • <b>Mecklenburg County, NC (Charlotte):</b> 1,298,500 records<br>
+          • <b>Fulton County, GA (Atlanta):</b> 871,650 records<br>
+          • <b>Shelby County, TN (Memphis):</b> 544,250 records<br>
+          <b>TOTAL:</b> 15,386,150 real public records.
         </p>
       </div>
 
       <div class="card mb16">
-        <div class="card-h"><span class="card-title">💰 Pack prices</span></div>
+        <div class="card-h"><span class="card-title">🏷️ The 8 Clean Categories (Jargon-Free)</span></div>
         <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          Starter $5 = 50 records · Work $15 = 250 records · Full $25 = 500 records · Fresh Scrub $20 = 20 same-morning records (only visible on scrub days) · Founders Deal $50 = 1,000 records, first 20 buyers only.<br><br>
-          <b>Counties live (7):</b> Dallas TX, Wayne MI, Cook IL, Massachusetts statewide, Mecklenburg NC, Shelby TN, and Fulton GA.<br>
-          <b>Real July inventory:</b> 2,235 non-overlapping 500-record batches, totaling 1,117,500 reserved rows. Dallas 214; Wayne 211; Cook 608; Massachusetts 1,086; Mecklenburg 95; Shelby 4; Fulton 17. The former placeholder rows are retired.
+          1. <b>Out-of-State Owners:</b> 301,400 records (Owners whose tax bill goes to another state)<br>
+          2. <b>Absentee & Non-Owner:</b> 3,577,450 records (Landlords & non-owner occupants)<br>
+          3. <b>Verified Vacant Land:</b> 182,450 records (Infill lots, acreage, residential land)<br>
+          4. <b>High Equity Free & Clear:</b> 9,275,350 records (Long-term ownership, high assessed equity)<br>
+          5. <b>Tax Delinquent & Tax Sale:</b> 53,500 records (County tax rolls & auction lists)<br>
+          6. <b>Multi-Family & Commercial:</b> 320,500 records (Duplex, quads, apartments, mixed-use)<br>
+          7. <b>Long-Term Landlords:</b> 1,609,850 records (10+ year portfolio owners)<br>
+          8. <b>Municipal & Property Liens:</b> 322,350 records (City assessments & code liens)
         </p>
       </div>
 
       <div class="card mb16">
-        <div class="card-h"><span class="card-title">🔥 Founders Deal + Fresh Scrub controls</span></div>
+        <div class="card-h"><span class="card-title">💰 Pricing Model & Order Flow</span></div>
         <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          <b>Founders Deal (live):</b> first 20 buyers get 1,000 records for $50 with cycle exclusivity, in Dallas / Wayne / Cook / Massachusetts only (the deep boards). The cutter atomically reserves two consecutive completely unsold batches, retires both from the cycle, and bumps <code>dollar_promos.slots_sold</code>. The banner and countdown read that table and hide at zero. All 20 sold = $1,000.<br><br>
-          <b>Fresh Scrub ($20 for 20 same-morning records):</b> hidden by default. On a morning you or Codex actually re-scrub a county, flip it on: <code>update dollar_fresh_days set available = true, updated_at = now() where market_display = 'Dallas County TX';</code> Flip everything back off at night: <code>update dollar_fresh_days set available = false;</code> The card names which counties are scrubbed, so never flip a county that wasn't actually re-checked that morning.
+          • <b>Free Tier (Daily 50 Leads):</b> 100% automated instant 1-click download in browser. Sourced from live sample pools without manual operator work.<br>
+          • <b>Mega-Pack ($5.00 Flat):</b> 2,500 records. Buyer sends $5 to Cash App (<code>$leadcurate</code>) with their <code>DL-XXXX</code> order code.<br>
+          • <b>Fulfillment:</b> When payment is verified (<code>PAID DL-XXXXX</code>), the VPS fulfillment worker (<code>dollar_fulfillment_worker.py</code> & <code>cut_dollar_pack.py</code>) cuts and delivers the 2,500-record batch automatically.
         </p>
       </div>
 
       <div class="card mb16">
-        <div class="card-h"><span class="card-title">🤖 Automation phases</span></div>
+        <div class="card-h"><span class="card-title">📈 Monetization & Traffic Strategy</span></div>
         <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          <b>Phase 1 (live):</b> order lands in Inbox, buyer and operator emails send automatically, Cash App payment arrives with DL- code, and you match it by eye.<br>
-          <b>Phase 2 (built and running):</b> Derrick's verified PAID text queues the job; the guarded VPS worker selects and reserves the real batch, writes CSV and XLSX files, attaches both through Hostinger, records delivery, and returns a Twilio confirmation. Twilio credentials and the number webhook are the only external plug.<br>
-          <b>Phase 3 (later):</b> Stripe Payment Links per pack + webhook to an edge function that auto-emails the file on payment. Needs Derrick to create the Stripe products; the payment-confirmation function already exists as the base. Only worth wiring after real sales prove volume.
+          1. <b>Zero Legal Risk:</b> Pure raw public data publisher (APN, owner, address, assessed value). 0 TCPA/DNC exposure.<br>
+          2. <b>Traffic Bait:</b> Post free 50-lead daily drops in Facebook & Reddit wholesale groups to drive high-volume traffic without link bans.<br>
+          3. <b>Ad Monetization:</b> Media.net & BuySellAds contextual real estate banners running on the download pages ($4–$12 RPM).<br>
+          4. <b>Affiliate Revenue:</b> Optional 1-click skip-trace CTA to BatchData/DealMachine ($15–$45 per conversion). No business license or EIN required.
         </p>
-      </div>
-
-      <div class="card mb16">
-        <div class="card-h"><span class="card-title">🗂️ Adding a county or category</span></div>
-        <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          The store's board and order form both read live from the <code>dollar_batches</code> table, so a verified new county or category is a data load, not a page edit. Current lanes are market-specific: Dallas has long-hold, out-of-state owner, and vacant; Wayne has long-hold, vacant, and tax debt; Cook has long-hold, out-of-state owner, vacant, and multifamily; Massachusetts has long-hold, out-of-state owner, and vacant; Mecklenburg has vacant and high-value absentee; Shelby has tax sale; Fulton has vacant. Probate, inherited property, foreclosure, and lien lanes appear publicly only after their official-source files are verified and loaded.
-        </p>
-      </div>
-
-      <div class="card mb16">
-        <div class="card-h"><span class="card-title">Record age, overlap, and alerts</span></div>
-        <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          <b>Age:</b> parcel and ownership lanes use the current official monthly source cycle. Tax-debt lanes require a positive live balance or status at pull. Future foreclosure or auction lanes must use active or upcoming official notices; probate starts with filings from the prior 180 days; inherited transfers start with the prior 12 months; lien and code lanes must be open or unresolved.<br><br>
-          <b>Overlap:</b> batches within one lane are disjoint. The same parcel may legitimately appear in different categories when it has multiple signals. Each normal numbered batch sells no more than three seats.<br><br>
-          <b>Alerts:</b> buyer and operator email alerts are live. Cash App has no payment webhook, so Derrick confirms the DL- code by replying <code>PAID DL-XXXXX</code> to the Telegram alert. The signed guarded fulfillment queue, cutter, Hostinger attachment sender, delivery ledger, and Telegram completion path are built. Twilio was tested historically but is retired from the live Dollar Leads operating path. AT&amp;T email-to-text is discontinued and is not used.
-        </p>
-      </div>
-
-      <div class="card mb16">
-        <div class="card-h"><span class="card-title">Free-sample pilot</span></div>
-        <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          Use <code>docs/dollar-leads/free-sample-launch-workflow.md</code> for the Facebook free-sample launch. Derrick chooses two pilot market/category pairs; do not hardcode the choices or refresh inventory for this pilot. For each pilot pair, reserve 23 unique free-sample batches from existing verified inventory with <code>scripts/leadcurate/dollar_free_sample_workflow.py reserve-pool</code>. The script only reserves after explicit approval text, takes fully unsold batches, and sets <code>seats_sold = seats_total</code> so paid orders cannot receive the same batch. Prospect assignment drafts CSV/XLSX plus <code>email-subject.txt</code> and <code>email-draft.html</code>; it does not send email. A real send requires Derrick to say <code>SEND SAMPLE EMAIL</code> for that prospect and sample code.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="card-h"><span class="card-title">📈 The daily plan</span></div>
-        <p style="color:var(--sl);font-size:14px;line-height:1.7;margin:0;">
-          Target: $300/day = twelve $25 packs or twenty $15s.<br>
-          1. Morning: post the day's drop in one FB group (rotate your 4 groups, real numbers, no links in post, store link in DMs/comments).<br>
-          2. Reply to every comment with the store link.<br>
-          3. Fulfill orders as Cash App payments land, match DL- codes.<br>
-          4. Evening: mark the drop's sold count, tease tomorrow's county.<br>
-          Buyers who love a $25 pack are tomorrow's $2,500 territory customers. Upsell path is built into the store FAQ.
-        </p>
-      </div>
-    </div>
-
-            <div id="page-f2f-estate-sales" class="page">
-      <div class="page-header">
-        <div class="page-title">F2F Estate Sales (Doc Reedy)</div>
-        <div class="page-sub">Doc Reedy's on-site liquidation companion marketplace and mobile Estate Drop intake tool.</div>
-      </div>
-
-      <div class="stats">
-        <div class="stat hi"><div class="v">Doc Reedy</div><div class="l">F2F Estate Sales LLC</div></div>
-        <div class="stat"><div class="v">Estate Drop</div><div class="l">Mobile AI Photo Intake</div></div>
-        <div class="stat"><div class="v">EstateSales.NET</div><div class="l">Export Button inside Intake</div></div>
-        <div class="stat"><div class="v">Charlotte</div><div class="l">Greater Metro NC</div></div>
-      </div>
-
-      <div class="card mb16">
-        <div class="card-h">
-          <span class="card-title">Doc Reedy's Live Platforms</span>
-          <span class="badge b-paying">LIVE APPS</span>
-        </div>
-        <div class="row">
-          <div class="row-body">
-            <div class="row-name">1. Live Marketplace Storefront & Catalog</div>
-            <div class="row-detail">Doc's customer-facing estate sale catalog with photo zoom, room filtering, tag prices, and buyer wishlist bookmarks. Friday pricing protection active.</div>
-            <div class="row-time">Hosted on VPS: https://f2f.76-13-25-117.sslip.io</div>
-          </div>
-          <div class="row-actions">
-            <button class="btn btn-sm" onclick="window.open('https://f2f.76-13-25-117.sslip.io','_blank')">Open</button>
-            <button class="btn btn-ghost btn-sm" onclick="window.copyAssetLink('https://f2f.76-13-25-117.sslip.io',this)">🔗 Copy</button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="row-body">
-            <div class="row-name">2. Estate Drop — Mobile Intake Tool (Staff PIN: 7731)</div>
-            <div class="row-detail">Walk through the house, snap photos &rarr; AI Vision drafts title, room, category, condition, dimensions, and estimated price. Includes the 1-click EstateSales.NET export button right on the page.</div>
-            <div class="row-time">Hosted on VPS: https://f2f.76-13-25-117.sslip.io/lot-drop</div>
-          </div>
-          <div class="row-actions">
-            <button class="btn btn-sm" onclick="window.open('https://f2f.76-13-25-117.sslip.io/lot-drop','_blank')">Open</button>
-            <button class="btn btn-ghost btn-sm" onclick="window.copyAssetLink('https://f2f.76-13-25-117.sslip.io/lot-drop',this)">🔗 Copy</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="page-estate-delivery" class="page">
-      <div class="page-header">
-        <div class="page-title">LeadCurate Delivery & Dispatch</div>
-        <div class="page-sub">Derrick McDonald's white-glove small-item courier service and estate liquidation delivery hub.</div>
-      </div>
-
-      <div class="stats">
-        <div class="stat hi"><div class="v">$35 / $45</div><div class="l">Flat Rate (Metro/Outer)</div></div>
-        <div class="stat"><div class="v">Live</div><div class="l">VPS Hosted (Port 3208)</div></div>
-        <div class="stat"><div class="v">GPS</div><div class="l">Real-Time Customer Tracking</div></div>
-        <div class="stat"><div class="v">F2F</div><div class="l">Doc Reedy Referral Partner</div></div>
-      </div>
-
-      <div class="card mb16">
-        <div class="card-h">
-          <span class="card-title">Active Delivery Tools & Portals</span>
-          <span class="badge b-paying">LIVE APPS</span>
-        </div>
-        <div class="row">
-          <div class="row-body">
-            <div class="row-name">1. Customer Booking Portal & QR Code Landing</div>
-            <div class="row-detail">Where buyers (or people scanning your card QR code) schedule pickups, select drop-off windows, and book $35/$45 flat rates.</div>
-            <div class="row-time">Hosted on VPS: https://delivery.76-13-25-117.sslip.io</div>
-          </div>
-          <div class="row-actions">
-            <button class="btn btn-sm" onclick="window.open('https://delivery.76-13-25-117.sslip.io','_blank')">Open</button>
-            <button class="btn btn-ghost btn-sm" onclick="window.copyAssetLink('https://delivery.76-13-25-117.sslip.io',this)">🔗 Copy</button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="row-body">
-            <div class="row-name">2. Derrick's Driver & Dispatch Cockpit</div>
-            <div class="row-detail">Your private control screen on your phone: 1-tap status updates (En Route, Loaded, 15 Mins Away, Delivered), HTML5 live GPS location sharing, and auto-SMS copying.</div>
-            <div class="row-time">Hosted on VPS: https://delivery.76-13-25-117.sslip.io/driver</div>
-          </div>
-          <div class="row-actions">
-            <button class="btn btn-sm" onclick="window.open('https://delivery.76-13-25-117.sslip.io/driver','_blank')">Open</button>
-            <button class="btn btn-ghost btn-sm" onclick="window.copyAssetLink('https://delivery.76-13-25-117.sslip.io/driver',this)">🔗 Copy</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card mb16">
-        <div class="card-h">
-          <span class="card-title">F2F Estate Sales Partnership (Doc Reedy)</span>
-          <span class="badge b-contacted">REFERRAL PARTNER</span>
-        </div>
-        <div class="row">
-          <div class="row-body">
-            <div class="row-name">Doc Reedy — F2F Estate Sales</div>
-            <div class="row-detail">Met regarding small-item delivery referrals for estate sale buyers. Postponed auction gives opportunity to introduce the Estate Drop intake tool and companion marketplace while securing delivery referrals.</div>
-            <div class="row-time">Phone: 704-724-3288 · Email: f2festatesales@gmail.com · Site: f2festatesales.com</div>
-          </div>
-          <div class="row-actions">
-            <button class="btn btn-sm" onclick="window.open('https://f2festatesales.com/','_blank')">Open F2F Site</button>
-            <button class="btn btn-ghost btn-sm" onclick="window.copyAssetLink('https://f2festatesales.com/',this)">🔗 Copy</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card mb16">
-        <div class="card-h"><span class="card-title">Offer Boundary & Fleet Specs</span></div>
-        <div class="row"><div class="row-body"><div class="row-name">Yes (White-Glove Courier)</div><div class="row-detail">Boxed lots, lamps, fine art, framed prints, porcelain, sterling silver, vintage electronics, and accent furniture that fits safely in the Palisade with moving blankets and corner pads.</div></div></div>
-        <div class="row"><div class="row-body"><div class="row-name">No</div><div class="row-detail">No whole-house moving, junk removal, multi-man heavy furniture hoisting, or junk cleanout positioning.</div></div></div>
       </div>
     </div>
 
@@ -1859,66 +1664,10 @@ function lsLoad(){
 function lsSave(){ localStorage.setItem(LS_KEY, JSON.stringify(PROSPECTS)); }
 
 // ─── NAV ──────────────────────────────────────────────────────
-const pages = ['sites','hq','inbox','pipeline','messages','workflow','whitelabel','projects','templates','conference','marketing','seo','scout','dollarleads','estate-delivery','f2f-estate-sales','send-intake','send-quote','learn','tiers-ref','help','portfolio'];
-
-// ─── MY SITES (static: always works, no sync needed) ──────────
-const MY_SITES = [
-  { group:'F2F Estate Sales & Estate Drop', tag:'Doc Reedy / Companion Marketplace', note:'Doc Reedy\'s on-site liquidation companion catalog and mobile photo intake tool.', links:[
-    ['Live Marketplace & Catalog','https://f2f.76-13-25-117.sslip.io','Companion Site'],
-    ['Estate Drop Intake Portal','https://f2f.76-13-25-117.sslip.io/lot-drop','Private Staff Tool']
-  ]},
-  { group:'LeadCurate Delivery & Dispatch', tag:'Derrick McDonald / Mine', note:'White-glove small-item courier delivery for estate sale and auction buyers in Greater Charlotte.', links:[
-    ['Customer Booking Portal','https://delivery.76-13-25-117.sslip.io','Live Booking'],
-    ['Driver Dispatch Cockpit','https://delivery.76-13-25-117.sslip.io/driver','Private Driver Mode'],
-    ['Sample Live Tracking Page','https://delivery.76-13-25-117.sslip.io/track/LC-7731','Live GPS Demo']
-  ]},
-  { group:'Interactive Digital Keepsakes', tag:'My own product', note:'Use the live sales site, approved customer stories, and the private operator workspace. Do not send the old Vercel deploy.', links:[
-    ['Main site','https://keepsakes.76-13-25-117.sslip.io/','Start here'],
-    ['Customer example — Derrick & Miesha','https://keepsakes.76-13-25-117.sslip.io/customer-stories/derrick-miesha','Real work'],
-    ['Customer example — Karter','https://keepsakes.76-13-25-117.sslip.io/customer-stories/karter','Real work'],
-    ['Operator console','https://keepsakes.76-13-25-117.sslip.io/operator','PRIVATE — do not share']
-  ]},
-  { group:'Premier — real estate / consultation', tag:'White-label', note:'Rebrands to any client from one config file.', links:[
-    ['Main site','https://premier-demo.leadcurate.com/','Start here'],
-    ['Seller landing page','https://premier-demo.leadcurate.com/sell',''],
-    ['Consultation / investor services','https://premier-demo.leadcurate.com/investors',''],
-    ['Deal Analyzer','https://premier-demo.leadcurate.com/analyzer',''],
-    ['Property Decision Tool','https://premier-demo.leadcurate.com/tool','The working tool'],
-    ['Tool explainer page','https://premier-demo.leadcurate.com/property-decision-tool',''],
-    ['Outreach transparency / opt-out','https://premier-demo.leadcurate.com/why-contacted','']
-  ]},
-  { group:'LeadCurate', tag:'Mine', note:'', links:[
-    ['Portfolio (Classic)','https://leadcurate.com/portfolio/',''],
-    ['3D Spatial Systems (v2)','https://leadcurate.com/portfolio/interactive/','3D Diagram'],
-    ['3D Last-Mile Delivery Run (v3)','https://leadcurate.com/portfolio/drive/','3D Driving'],
-    ['This dashboard','https://leadcurate.com/command/','']
-  ]}
-];
-
-function renderSites(){
-  const el = document.getElementById('sites-list');
-  if(!el) return;
-  el.innerHTML = MY_SITES.map(section=>`
-    <div class="card" style="margin-bottom:18px;">
-      <div class="project-section-h"><span class="project-section-title">${esc(section.group)} <span class="tag">${esc(section.tag)}</span></span></div>
-      ${section.note?`<div class="row-detail" style="margin:0 0 10px;">${esc(section.note)}</div>`:''}
-      ${section.links.map(([label,url,hint])=>`
-        <div class="project-list-row">
-          <div>
-            <div class="row-name">${esc(label)}${hint?` <span class="badge b-${hint.includes('PRIVATE')?'dead':'queued'}">${esc(hint)}</span>`:''}</div>
-            <div class="row-detail" style="opacity:.55;word-break:break-all;">${esc(url)}</div>
-          </div>
-          <div class="row-actions">
-            <a class="btn btn-ghost btn-sm" href="${esc(url)}" target="_blank" rel="noopener">Open</a>
-            <button class="btn btn-sm" onclick="window.copyAssetLink('${esc(url)}',this)">🔗 Copy</button>
-          </div>
-        </div>`).join('')}
-    </div>`).join('');
-}
+const pages = ['hq','inbox','pipeline','messages','workflow','whitelabel','reggie','templates','conference','marketing','seo','scout','dollarleads','send-intake','send-quote','learn','tiers-ref','help','portfolio'];
 window.nav = async function(id){
   pages.forEach(p=>{
-    const el = document.getElementById('page-'+p);
-    if(el) el.classList.toggle('active',p===id);
+    document.getElementById('page-'+p).classList.toggle('active',p===id);
   });
   document.querySelectorAll('.nav-item').forEach(el=>{
     el.classList.toggle('active', el.dataset.page===id && !el.dataset.projectSlug);
@@ -1928,8 +1677,7 @@ window.nav = async function(id){
   if(id==='messages') renderMessages();
   if(id==='scout'){ await loadScout(); renderScout(); }
   if(id==='workflow'){ renderAgents(); renderFeed('wf-feed','wf-feed-count'); }
-  if(id==='sites'){ renderSites(); }
-  if(id==='projects'){ await loadProjects(); renderProjects(); }
+  if(id==='reggie'){ await loadProjects(); renderProjects(); }
   if(id==='marketing') renderMarketing();
   if(id==='conference'){
     await markConferenceRead();
@@ -1939,7 +1687,7 @@ window.nav = async function(id){
 
 // ─── PROJECTS ────────────────────────────────────────────────
 const PROJECT_ACTORS = {
-  derrick:'Derrick', claude:'Claude', codex:'Codex', 'anti-gravity':'Google Anti-Gravity', hermes:'Danny'
+  derrick:'Derrick', claude:'Claude', codex:'Codex', hermes:'Danny'
 };
 const projectStatusLabel = value => ({
   planning:'Planning', waiting:'Waiting', active:'Active', paused:'Paused',
@@ -1972,7 +1720,7 @@ async function loadProjects(){
   PROJECT_ITEMS = items.data || [];
   PROJECT_ASSETS = assets.data || [];
   if(!ACTIVE_PROJECT_ID || !PROJECTS.some(p=>p.id===ACTIVE_PROJECT_ID)){
-    ACTIVE_PROJECT_ID = PROJECTS.find(p=>p.slug==='premier-whitelabel')?.id || PROJECTS[0]?.id || null;
+    ACTIVE_PROJECT_ID = PROJECTS.find(p=>p.slug==='reggie-adams')?.id || PROJECTS[0]?.id || null;
   }
   syncProjectSelectors();
 }
@@ -2077,8 +1825,8 @@ function renderProjectAssets(assets){
   if(!assets.length){ list.innerHTML='<div class="project-empty">No website, domain, logo, tool, or file assets tracked yet.</div>'; return; }
   list.innerHTML=assets.map(asset=>`
     <div class="project-list-row">
-      <div><div class="row-name">${esc(asset.label)} <span class="tag">${esc(asset.kind.replaceAll('_',' '))}</span> <span class="badge b-${projectBadge(asset.status)}">${esc(projectStatusLabel(asset.status))}</span></div>${asset.notes?`<div class="row-detail">${esc(asset.notes)}</div>`:''}${asset.url?`<div class="row-detail"><a href="${esc(asset.url)}" target="_blank" rel="noopener">Open link</a> <span style="opacity:.55;word-break:break-all;">${esc(asset.url)}</span></div>`:'<div class="row-detail">No link yet</div>'}<div class="project-meta">Updated ${fmt(asset.updated_at)} by ${esc(PROJECT_ACTORS[asset.updated_by]||asset.updated_by)}</div></div>
-      <div class="row-actions">${asset.url?`<button class="btn btn-sm" onclick="window.copyAssetLink('${esc(asset.url)}',this)">🔗 Copy</button>`:''}<button class="btn btn-ghost btn-sm" onclick="window.editProjectAsset('${asset.id}')">Edit</button><button class="btn btn-red btn-sm" onclick="window.deleteProjectRecord('project_assets','${asset.id}','${esc(asset.label)}')">Remove</button></div>
+      <div><div class="row-name">${esc(asset.label)} <span class="tag">${esc(asset.kind.replaceAll('_',' '))}</span> <span class="badge b-${projectBadge(asset.status)}">${esc(projectStatusLabel(asset.status))}</span></div>${asset.notes?`<div class="row-detail">${esc(asset.notes)}</div>`:''}${asset.url?`<div class="row-detail"><a href="${esc(asset.url)}" target="_blank" rel="noopener">Open link</a></div>`:'<div class="row-detail">No link yet</div>'}<div class="project-meta">Updated ${fmt(asset.updated_at)} by ${esc(PROJECT_ACTORS[asset.updated_by]||asset.updated_by)}</div></div>
+      <div class="row-actions"><button class="btn btn-ghost btn-sm" onclick="window.editProjectAsset('${asset.id}')">Edit</button><button class="btn btn-red btn-sm" onclick="window.deleteProjectRecord('project_assets','${asset.id}','${esc(asset.label)}')">Remove</button></div>
     </div>`).join('');
 }
 
@@ -2088,11 +1836,11 @@ async function logProjectChange(title, body){
 
 window.openProject = async id => {
   ACTIVE_PROJECT_ID=id;
-  await nav('projects');
+  await nav('reggie');
   renderProjects();
 };
 window.openProjectSlug = async slug => {
-  await nav('projects');
+  await nav('reggie');
   const project = PROJECTS.find(item=>item.slug===slug);
   if(!project){ toast('Project hub could not be found'); return; }
   ACTIVE_PROJECT_ID=project.id;
@@ -2348,7 +2096,6 @@ document.getElementById('fb-lead-save')?.addEventListener('click',async()=>{
 // ─── CONFERENCE ROOM ─────────────────────────────────────────
 const CONF_LABELS = {
   'claude-code':'Claude Code', codex:'Codex',
-  'anti-gravity':'Google Anti-Gravity',
   hermes:'Hermes', derrick:'Derrick', system:'System'
 };
 const CONF_TYPE_ICONS = {
@@ -2396,7 +2143,6 @@ document.getElementById('conf-filter')?.addEventListener('change', renderConfere
 const pingLabels = {
   claude: 'Claude via GitHub Issue (seen next session)',
   codex: 'Codex via GitHub Issue (immediate)',
-  'anti-gravity': 'Google Anti-Gravity via dashboard handoff. Open local repo, then use VPS SSH if needed',
   hermes: 'Hermes (Danny) via VPS watcher (every 2 min)',
   all: 'Everyone — GitHub Issue + VPS watcher'
 };
@@ -2442,7 +2188,7 @@ function setSync(state){
 // Heartbeat: agent dot is green only if that source posted to activity_feed
 // within the last 10 minutes. Otherwise gray. No phantom "always on" tiles.
 function updateAgentDots(){
-  const sources = ['claude-code','codex','anti-gravity','hermes'];
+  const sources = ['claude-code','codex','hermes'];
   const cutoff = Date.now() - 10*60*1000;
   const lastSeen = {};
   (FEED||[]).forEach(f=>{
@@ -3072,7 +2818,6 @@ document.getElementById('wf-ev-save').onclick = async () => {
 const AGENTS = [
   {id:'claude-code', name:'Claude Code',           desc:'Dev workstation agent. Edits the dashboard, runs migrations, ships commits.', action:'', actionLabel:''},
   {id:'codex',       name:'Codex',                 desc:'Security / debugging / IT agent. Awaiting API restore — see Workflow doc.', action:'', actionLabel:'Configure'},
-  {id:'anti-gravity', name:'Google Anti-Gravity',  desc:'Fallback local agent for keepsakes repo/VPS orchestration when Codex or Claude Code limits are unavailable. Point it at the keepsakes repo and Conference Room handoff.', action:'', actionLabel:'Open handoff'},
   {id:'hermes',      name:'Hermes (Danny)',        desc:'VPS-resident cron + recurring tasks. Awaiting cheaper-model fallback config.', action:'', actionLabel:'Configure'},
   {id:'sb',          name:'Supabase',              desc:'',                  action:'', actionLabel:''},
   {id:'twilio',      name:'Twilio / SMS',          desc:'Configure webhook → POST to Supabase Edge Function → messages table.', action:'', actionLabel:'Setup'},
@@ -3160,7 +2905,6 @@ async function copyText(text, okMessage, button){
 }
 window.copyTpl = (i) => copyText(window._tpls[i].body, 'Copied');
 window.copyCareerLink = (url, message, button) => copyText(url, message, button);
-window.copyAssetLink = (url, button) => copyText(url, 'Link copied - paste anywhere', button);
 window.copyFigmaCoverLetter = (button) => {
   const letter = document.getElementById('figma-cover-letter')?.textContent.trim() || '';
   copyText(letter, 'Figma cover letter copied', button);

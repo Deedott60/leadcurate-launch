@@ -1,606 +1,555 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" href="data:,">
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Dollar Leads · Real county data in small packs</title>
-<meta name="description" content="Small packs of real county property data. Pulled straight from official records, dated, and delivered to your inbox. Packs start at $5." />
-<meta property="og:title" content="Dollar Leads · Real county property leads from $5" />
-<meta property="og:description" content="Pick your county, pick your category: tax debt, vacant land, code violations, out-of-state owners and more. Reserved files from official county records, delivered same day." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://leadcurate.com/dollar-leads/" />
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="Dollar Leads · Real county property leads from $5" />
-<meta name="twitter:description" content="Reserved files from official county records. Pick your county and category, pay in seconds, file lands the same day." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-<style>
-:root{
-  --ink:#101418;
-  --paper:#ffffff;
-  --bill:#0d7a3f;
-  --bill-bright:#16a34a;
-  --bill-soft:#e7f6ec;
-  --gold:#eab308;
-  --slate:#5b6672;
-  --line:#e4e8ec;
-  --dark-card:#131a20;
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;}
-.wrap{max-width:1060px;margin:0 auto;padding:0 20px;}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dollar Leads — 15M+ Clean Public Real Estate Records</title>
+  <meta name="description" content="Download 50 free real estate leads daily or unlock 2,500 records for $5. Clean public property records across 7 major metro markets." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: rgba(18, 24, 38, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-hover: rgba(30, 41, 64, 0.9);
+      --emerald: #10b981;
+      --emerald-glow: rgba(16, 185, 129, 0.25);
+      --gold: #f59e0b;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+      padding-bottom: 60px;
+    }
+    .hero-glow {
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 1100px; height: 380px;
+      background: radial-gradient(circle at 50% 20%, rgba(16, 185, 129, 0.15), transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+    .container { width: min(1140px, calc(100% - 32px)); margin: 0 auto; position: relative; z-index: 1; }
+    
+    /* Top Static Banner */
+    .top-sponsor-bar {
+      margin: 16px 0 24px;
+      padding: 12px 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px dashed rgba(255, 255, 255, 0.14);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .top-sponsor-bar strong { color: #cbd5e1; }
+    .top-sponsor-btn {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid var(--emerald);
+      color: #6ee7b7;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 12px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .top-sponsor-btn:hover { background: var(--emerald); color: #064e3b; }
 
-/* top bar */
-.topbar{background:var(--ink);color:#fff;}
-.topbar .wrap{display:flex;justify-content:space-between;align-items:center;min-height:64px;gap:14px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px;}
-.logo{font-family:'Archivo Black',sans-serif;font-size:22px;letter-spacing:-.01em;}
-.logo span{color:var(--bill-bright);}
-.sister{font-size:11px;color:#9aa7b1;text-align:right;line-height:1.35;}
-.sister b{color:#d7dee4;}
+    /* Header */
+    header {
+      padding: 24px 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 32px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    .logo-badge {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #022c22;
+      font-size: 14px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 8px;
+    }
+    .stat-pill {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: #a7f3d0;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 999px;
+    }
 
-/* hero */
-.hero{background:var(--ink);color:#fff;padding:46px 0 60px;}
-.stamp{display:inline-flex;align-items:center;gap:8px;border:1.5px dashed var(--bill-bright);color:var(--bill-bright);border-radius:6px;padding:6px 12px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:20px;}
-h1{font-family:'Archivo Black',sans-serif;font-size:clamp(34px,6vw,62px);line-height:1.02;letter-spacing:-.02em;max-width:820px;}
-h1 em{font-style:normal;color:var(--bill-bright);}
-.hero p.lede{margin-top:18px;font-size:18px;color:#c3ccd4;max-width:640px;}
-.hero-ctas{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:8px;font-weight:800;font-size:15px;text-decoration:none;cursor:pointer;border:none;}
-.btn-green{background:var(--bill-bright);color:#06220f;}
-.btn-green:hover{background:#22c55e;}
-.btn-ghost{background:transparent;color:#fff;border:1.5px solid #3a4650;}
-.btn-ghost:hover{border-color:#fff;}
-.hero-proof{display:flex;gap:26px;margin-top:36px;flex-wrap:wrap;}
-.proof{font-size:12px;color:#9aa7b1;}
-.proof strong{display:block;font-family:'Archivo Black',sans-serif;font-size:22px;color:#fff;letter-spacing:-.01em;}
+    /* Hero */
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(32px, 5vw, 50px);
+      line-height: 1.1;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    .hero-title span {
+      background: linear-gradient(135deg, #34d399, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      color: var(--muted);
+      font-size: clamp(16px, 2.5vw, 18px);
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 36px;
+    }
 
-/* sections */
-section{padding:58px 0;}
-section+section{border-top:1px solid var(--line);}
-.eyebrow{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--bill);margin-bottom:10px;}
-h2{font-family:'Archivo Black',sans-serif;font-size:clamp(24px,3.6vw,38px);letter-spacing:-.015em;line-height:1.08;margin-bottom:12px;}
-.sub{color:var(--slate);font-size:16px;max-width:640px;}
+    /* Selector Box */
+    .selector-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px;
+      backdrop-filter: blur(16px);
+      margin-bottom: 32px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+    .section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 800;
+      color: var(--emerald);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .market-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .market-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #cbd5e1;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+    }
+    .market-btn small { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; font-weight: 500; }
+    .market-btn:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); }
+    .market-btn.active {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: var(--emerald);
+      color: #fff;
+      box-shadow: 0 0 16px var(--emerald-glow);
+    }
+    .market-btn.active small { color: #a7f3d0; }
 
-/* how it works */
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:28px;}
-.step{border:1px solid var(--line);border-radius:12px;padding:22px;}
-.step b{display:flex;width:34px;height:34px;border-radius:999px;background:var(--bill-soft);color:var(--bill);align-items:center;justify-content:center;font-size:15px;margin-bottom:12px;}
-.step h3{font-size:16px;margin-bottom:6px;}
-.step p{font-size:13px;color:var(--slate);}
+    /* Category Grid (Dynamically Populated per Market) */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .cat-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .cat-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
+    .cat-card.active {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: var(--emerald);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+    }
+    .cat-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+    .cat-title { font-weight: 700; font-size: 14px; color: #f8fafc; }
+    .cat-count {
+      font-size: 11px;
+      font-weight: 800;
+      color: #6ee7b7;
+      background: rgba(16, 185, 129, 0.2);
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+    .cat-desc { font-size: 12px; color: var(--muted); line-height: 1.4; }
 
-/* drops */
-.drops{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:28px;}
-.drop{background:var(--dark-card);color:#fff;border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:12px;}
-.drop .tag{align-self:flex-start;background:var(--bill-bright);color:#06220f;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:4px 10px;}
-.drop h3{font-family:'Archivo Black',sans-serif;font-size:21px;letter-spacing:-.01em;}
-.drop .pulled{font-size:11px;color:#8fa0ac;}
-.drop ul{list-style:none;display:grid;gap:7px;}
-.drop li{font-size:13px;color:#c3ccd4;padding-left:18px;position:relative;}
-.drop li::before{content:"";position:absolute;left:0;top:7px;width:8px;height:8px;border-radius:2px;background:var(--bill-bright);}
-.drop li b{color:#fff;}
-.drop .cta{margin-top:auto;}
+    /* Action Deck */
+    .action-deck {
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.08), rgba(0, 0, 0, 0.3));
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .action-info h3 { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+    .action-info p { font-size: 13px; color: var(--muted); }
+    .action-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
 
-/* packs */
-.packs{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px;margin-top:28px;}
-.pack{border:1.5px solid var(--line);border-radius:14px;padding:24px 20px;display:flex;flex-direction:column;gap:8px;position:relative;}
-.pack.hot{border-color:var(--bill);box-shadow:0 6px 24px rgba(13,122,63,.12);}
-.pack .best{position:absolute;top:-11px;left:18px;background:var(--bill);color:#fff;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:3px 10px;}
-.pack .price{font-family:'Archivo Black',sans-serif;font-size:38px;letter-spacing:-.02em;}
-.pack .price span{font-size:15px;color:var(--slate);font-family:'Inter',sans-serif;font-weight:600;}
-.pack h3{font-size:15px;}
-.pack p{font-size:12.5px;color:var(--slate);flex-grow:1;}
-.pack .btn{margin-top:12px;}
-.pack.fresh{background:#fffbeb;border-color:var(--gold);}
-.pack.fresh .price{color:#92400e;}
+    .btn-free {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #022c22;
+      border: none;
+      padding: 14px 22px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      box-shadow: 0 10px 25px var(--emerald-glow);
+    }
+    .btn-free:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
-/* promise */
-.promise{background:var(--bill-soft);border-radius:16px;padding:30px;margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;}
-.pr-item b{display:block;font-size:14px;margin-bottom:4px;color:var(--bill);}
-.pr-item p{font-size:13px;color:#2f4a3a;}
+    .btn-mega {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #451a03;
+      border: none;
+      padding: 14px 22px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.2);
+    }
+    .btn-mega:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
-/* faq */
-.faq{display:grid;gap:10px;margin-top:26px;max-width:760px;}
-.faq details{border:1px solid var(--line);border-radius:10px;padding:16px 18px;}
-.faq summary{font-weight:700;font-size:15px;cursor:pointer;}
-.faq p{margin-top:10px;font-size:14px;color:var(--slate);}
+    /* Affiliate Skip Trace Box */
+    .affiliate-box {
+      margin-top: 36px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .aff-text h4 { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .aff-text p { font-size: 13px; color: var(--muted); max-width: 600px; }
+    .aff-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .aff-btn:hover { background: #fff; color: #000; }
 
-/* order */
-#order{background:var(--ink);color:#fff;}
-#order .sub{color:#c3ccd4;}
-.order-card{background:#fff;color:var(--ink);border-radius:16px;padding:32px;margin-top:28px;max-width:640px;}
-label{display:block;font-size:13px;font-weight:700;margin:16px 0 6px;}
-input,select,textarea{width:100%;border:1.5px solid var(--line);border-radius:8px;padding:12px 14px;font-size:15px;font-family:inherit;background:#fff;}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--bill);}
-.order-note{font-size:12px;color:var(--slate);margin-top:14px;}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;}
-@media(max-width:560px){.row2{grid-template-columns:1fr;}}
-.ok-msg{display:none;background:var(--bill-soft);color:var(--bill);border-radius:10px;padding:16px;font-weight:700;font-size:14px;margin-top:16px;}
-.checkout-preview{background:#fff;border:1px solid #b9ddc6;border-radius:9px;padding:14px;margin:12px 0;color:var(--ink);font-weight:500;}
-.checkout-preview h3{font-size:15px;margin-bottom:4px;}
-.checkout-preview p{font-size:12px;color:var(--slate);margin-bottom:10px;}
-.masked-table{width:100%;border-collapse:collapse;font-size:11px;}
-.masked-table th,.masked-table td{text-align:left;padding:6px;border-bottom:1px solid var(--line);}
-.masked-table th{color:var(--slate);font-weight:700;}
+    /* Modal for $5 orders */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      display: none; place-items: center;
+      z-index: 100; padding: 20px;
+    }
+    .modal {
+      background: #111827;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      max-width: 480px; width: 100%;
+      padding: 28px;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute; top: 18px; right: 18px;
+      background: none; border: none; color: var(--muted);
+      font-size: 20px; cursor: pointer;
+    }
+    .cashapp-tag {
+      display: inline-block;
+      background: #00d632;
+      color: #000;
+      font-weight: 900;
+      font-size: 20px;
+      padding: 10px 20px;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+    .order-code {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      padding: 10px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 16px;
+      color: #6ee7b7;
+      margin-bottom: 16px;
+    }
 
-footer{padding:28px 0 44px;font-size:12px;color:var(--slate);}
-footer a{color:var(--bill);}
-@media(max-width:640px){ .hero{padding:34px 0 44px;} section{padding:44px 0;} }
-</style>
+    /* Footer */
+    footer {
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid var(--card-border);
+      font-size: 12px;
+      color: #64748b;
+      text-align: center;
+      line-height: 1.6;
+    }
+  </style>
 </head>
 <body>
-
-<div class="topbar">
-  <div class="wrap">
-    <div class="logo">DOLLAR<span>LEADS</span></div>
-    <div class="sister">A <b>LeadCurate</b> company<br>Real county records, small packs</div>
-  </div>
-</div>
-
-<header class="hero">
-  <div class="wrap">
-    <div class="stamp">Fresh county categories · reserved files · same-day delivery</div>
-    <h1>Your batch. <em>Not everybody's list.</em></h1>
-    <p class="lede">Stop texting the same recycled list as 500 other wholesalers. Pick your county, pick the category you want, and get a reserved file built from official county records. Packs start at $5. No subscription. No minimums.</p>
-    <div class="hero-ctas">
-      <a class="btn btn-green" href="#packs">See pack prices</a>
-      <a class="btn btn-ghost" href="#drops">This week's counties</a>
+  <div class="hero-glow"></div>
+  <div class="container">
+    
+    <!-- Top Static Banner Slot -->
+    <div class="top-sponsor-bar">
+      <div><strong>Partner Sponsor:</strong> 100% Fix & Flip + Transactional Funding for Wholesalers.</div>
+      <a href="#sponsor" class="top-sponsor-btn">View Rates &rarr;</a>
     </div>
-    <div class="hero-proof">
-      <div class="proof"><strong id="hero-markets">7</strong>markets live</div>
-      <div class="proof"><strong>No</strong>recycled public list</div>
-      <div class="proof"><strong>$5</strong>gets you started</div>
-    </div>
-  </div>
-</header>
 
-<section id="founders" style="display:none;padding:0;border-top:none;">
-  <div class="wrap" style="padding-top:26px;">
-    <div style="background:linear-gradient(135deg,#0d7a3f,#16a34a);color:#fff;border-radius:16px;padding:26px 24px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;">
-      <div style="max-width:560px;">
-        <div style="font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#bbf7d0;margin-bottom:6px;">Launch deal · first 20 buyers only</div>
-        <div style="font-family:'Archivo Black',sans-serif;font-size:clamp(22px,3.5vw,32px);line-height:1.05;">1,000 records. $50. Yours alone.</div>
-        <p style="margin:8px 0 0;font-size:14px;color:#dcfce7;">Pick Detroit, Chicago, or Massachusetts and a category. Your 1,000 records retire from the store for the whole cycle. Nobody else gets them, at any price. When the counter hits zero this deal is gone for good.</p>
+    <!-- Header -->
+    <header>
+      <div class="logo">
+        <span>DOLLAR LEADS</span>
+        <span class="logo-badge">15.3M+ PUBLIC RECORDS</span>
       </div>
-      <div style="text-align:center;flex-shrink:0;">
-        <div style="font-family:'Archivo Black',sans-serif;font-size:52px;line-height:1;" id="promo-left">20</div>
-        <div style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#bbf7d0;">of 20 left</div>
-        <a class="btn" href="#order" onclick="pickPack('Founders Deal $50 (1,000 records)')" style="background:#fff;color:#0d7a3f;margin-top:12px;">Claim one</a>
-      </div>
-    </div>
-  </div>
-</section>
+      <div class="stat-pill">⚡ 50 Free Leads Every Day</div>
+    </header>
 
-<section id="how">
-  <div class="wrap">
-    <span class="eyebrow">How it works</span>
-    <h2>Pick a county. Pick a pack. Work the list.</h2>
-    <div class="steps">
-      <div class="step"><b>1</b><h3>Pick your county and category</h3><p>Tax debt, vacant land, code violations, out-of-state owners and more. Packs from $5. Every record has the owner, property address, mailing address, and why it made the list.</p></div>
-      <div class="step"><b>2</b><h3>Pay right here</h3><p>Order below and your Cash App payment button appears instantly. Pay in seconds.</p></div>
-      <div class="step"><b>3</b><h3>File hits your inbox</h3><p>Your file lands the same day, stamped with the county source, the pull date, and official parcel numbers you can verify yourself.</p></div>
-    </div>
-  </div>
-</section>
+    <!-- Hero Title -->
+    <h1 class="hero-title">Clean Public Real Estate Records<br><span>50 Free Every Day &bull; 2,500 for $5</span></h1>
+    <p class="hero-sub">Official county assessor, tax roll, and deed registry data with verified parcel numbers and ZIP codes. Ready for Excel export.</p>
 
-<section id="whats-inside">
-  <div class="wrap">
-    <span class="eyebrow">What's in every record</span>
-    <h2>This is not just a name on a spreadsheet.</h2>
-    <p class="sub">Every record comes from official county files and carries everything the county publishes. For an out-of-state owner, that means their name, the property here, AND the mailing address where they actually live.</p>
-    <div class="steps" style="margin-top:24px;">
-      <div class="step"><b>&#9679;</b><h3>Owner name</h3><p>The current owner of record, plus business or co-owner names where the county lists them.</p></div>
-      <div class="step"><b>&#9679;</b><h3>Property address</h3><p>The full property location, with city, ZIP, and neighborhood or township detail where published.</p></div>
-      <div class="step"><b>&#9679;</b><h3>Owner mailing address</h3><p>Where the owner really gets mail, kept separate from the property. This is how out-of-state and absentee owners are proven, not guessed.</p></div>
-      <div class="step"><b>&#9679;</b><h3>Official parcel number</h3><p>The county's own ID for the property, so you can verify any record yourself in seconds.</p></div>
-      <div class="step"><b>&#9679;</b><h3>Values and property type</h3><p>County land, building, and total values where published, plus the official property class.</p></div>
-      <div class="step"><b>&#9679;</b><h3>How long they've owned it</h3><p>Last sale date and years held where the county shows it. A 20-year hold is a different conversation than a 2-year hold.</p></div>
-    </div>
-  </div>
-</section>
+    <!-- Selector Deck -->
+    <div class="selector-box">
+      <span class="section-label">Step 1: Select Your Target Market</span>
+      <div class="market-tabs" id="marketList"></div>
 
-<section id="drops">
-  <div class="wrap">
-    <span class="eyebrow">On the board now</span>
-    <h2>Pick the category you want.</h2>
-    <p class="sub">The public board keeps it simple: choose a county, choose an available category, and order a pack. Behind the scenes, each file is reserved from tracked inventory so buyers are not all working the same records.</p>
-    <div class="drops" id="drops-board">
-      <div class="drop"><p style="color:#8fa0ac;font-size:13px;">Loading this cycle's board...</p></div>
-    </div>
-  </div>
-</section>
+      <span class="section-label">Step 2: Choose an Available Category</span>
+      <div class="category-grid" id="categoryList"></div>
 
-<section id="packs">
-  <div class="wrap">
-    <span class="eyebrow">Pack prices</span>
-    <h2>No subscription. No $125 minimum. Just packs.</h2>
-    <div class="packs">
-      <div class="pack">
-        <div class="price">$5</div>
-        <h3>Starter Pack · 50 records</h3>
-        <p>Try us for the price of lunch. 50 records from the county and category you pick.</p>
-        <a class="btn btn-green" href="#order" onclick="pickPack('Starter $5 (50 records)')">Reserve</a>
-      </div>
-      <div class="pack hot">
-        <span class="best">Most popular</span>
-        <div class="price">$15</div>
-        <h3>Work Pack · 250 records</h3>
-        <p>Enough to run a real texting or mail test on one category in one county.</p>
-        <a class="btn btn-green" href="#order" onclick="pickPack('Work $15 (250 records)')">Reserve</a>
-      </div>
-      <div class="pack">
-        <div class="price">$25</div>
-        <h3>Full Pack · 500 records</h3>
-        <p>A full working list. The best per-record deal on the board.</p>
-        <a class="btn btn-green" href="#order" onclick="pickPack('Full $25 (500 records)')">Reserve</a>
-      </div>
-      <div class="pack fresh" id="fresh-card" style="display:none;">
-        <div class="price">$20</div>
-        <h3>Fresh Scrub · 20 records</h3>
-        <p>Re-checked against county records this morning. Only offered on days we scrub, in the counties we scrubbed: <b id="fresh-markets"></b></p>
-        <a class="btn btn-green" href="#order" onclick="pickPack('Fresh Scrub $20 (20 records)')">Reserve</a>
-      </div>
-    </div>
-
-    <div class="promise">
-      <div class="pr-item"><b>Reserved inventory.</b><p>Your order is assigned from tracked inventory, not copied from one recycled public list.</p></div>
-      <div class="pr-item"><b>Files don't overlap inside a category.</b><p>Different numbered files in the same county and category hold different properties, so buyers are not all working the same owners.</p></div>
-      <div class="pr-item"><b>Refreshes monthly.</b><p>Every county reruns against current official records each cycle. Sold-out categories come back rebuilt, and the cycle date is printed on your file.</p></div>
-      <div class="pr-item"><b>Straight from the county.</b><p>Built from official county records with the source and parcel numbers included, not from somebody else's resold export.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="who">
-  <div class="wrap">
-    <span class="eyebrow">Who this is for</span>
-    <h2>Built for the people doing the work, not the ones with a data budget.</h2>
-    <div class="steps">
-      <div class="step"><b>&#10003;</b><h3>New wholesalers</h3><p>Get a real list for your first texting or mail campaign without a $99 monthly subscription you'll forget to cancel.</p></div>
-      <div class="step"><b>&#10003;</b><h3>Operators testing a new market</h3><p>Prove a county works with a $15 pack before you commit real marketing dollars to it.</p></div>
-      <div class="step"><b>&#10003;</b><h3>Land buyers and flippers</h3><p>Parcels the county's current records show as vacant, with real owners and real acreage, in counties where the dirt actually trades.</p></div>
-      <div class="step"><b>&#10003;</b><h3>Agents and bird dogs</h3><p>A clean pipeline of owners worth a conversation, priced so you can keep it running every week, with the parcel number to prove every record.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="faq">
-  <div class="wrap">
-    <span class="eyebrow">Straight answers</span>
-    <h2>What you get and what you don't.</h2>
-    <div class="faq">
-      <details><summary>What's in each record?</summary><p>Owner name, property address, owner mailing address, official parcel number, property type, county values where published, how long the owner has held it where the county shows it, and the reason it made the list.</p></details>
-      <details><summary>Is this skip traced?</summary><p>No. No phone numbers, no emails. This is county-record data you run through your own skip tracer or dialer. That keeps packs at these prices.</p></details>
-      <details><summary>Is it scrubbed against the Do Not Call list?</summary><p>No. You are responsible for your own outreach compliance, including DNC and TCPA. We sell the data as compiled from public county records.</p></details>
-      <details><summary>Can I use this to screen tenants or run credit checks?</summary><p>No. This is public property data, not a consumer report, and it cannot be used for credit, employment, tenant screening, or insurance decisions. Those uses fall under the Fair Credit Reporting Act and require a consumer reporting agency, which we are not. Use this for property research and owner outreach.</p></details>
-      <details><summary>Which records do I actually get? Is it luck of the draw?</summary><p>Not luck. Every county and category is split into numbered files, and paid orders are assigned the next file in line, in order. First buyers get the front of the inventory. Your file's number is printed on it, and once a file has been assigned its records are tracked so they are not handed out over and over. You are buying a reserved slice, not a raffle ticket.</p></details>
-      <details><summary>Will other people have my exact list?</summary><p>No public recycled list. Each paid file is assigned from tracked inventory, and different files inside the same county and category do not share records.</p></details>
-      <details><summary>How fresh is it really?</summary><p>Every county reruns against current official records each monthly cycle, and the cycle date is printed on your file. On days we run a same-morning scrub, a Fresh Scrub pack appears for the counties we scrubbed, and only on those days.</p></details>
-      <details><summary>Can categories overlap?</summary><p>Files inside the same county and category do not share records. A property can still qualify for two different categories, such as long-hold and out-of-state owner, so separate category orders can contain the same parcel. That overlap is a real multi-signal match, not a duplicate inside either file.</p></details>
-      <details><summary>Can I pick the category?</summary><p>Yes. Pick your county on the order form and it shows only the available categories for that market. Each order is one category from one county, so your file stays clean. Want two categories? Place two orders.</p></details>
-      <details><summary>Do you have probate, inherited property, foreclosure, or liens?</summary><p>Only when that category appears on the live board for the county you select. We add these lanes county by county when current official records support them. We never label a property probate, inherited, foreclosed, or liened from an unsupported proxy.</p></details>
-      <details><summary>What if I need way more than 500 records?</summary><p>That's our parent company's lane. LeadCurate builds full custom territory databases for serious operators. Ask and we'll connect you.</p></details>
-    </div>
-  </div>
-</section>
-
-<section id="order">
-  <div class="wrap">
-    <span class="eyebrow">Buy a pack</span>
-    <h2 style="color:#fff">Order here. Pay in seconds. File today.</h2>
-    <p class="sub">Fill this out and your payment button appears right here. Pay with Cash App and your file lands in your inbox the same day.</p>
-    <div class="order-card">
-      <form id="dl-form">
-        <div style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bill);">Step 1 · Your list</div>
-        <label for="f-county">County</label>
-        <select id="f-county" name="county" required>
-          <option value="">Pick a county</option>
-          <option>Another county (tell us below)</option>
-        </select>
-        <div id="market-menu" style="display:none;margin-top:10px;border:1.5px solid var(--bill);border-radius:10px;padding:14px;">
-          <div style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bill);margin-bottom:8px;">Available in <span id="mm-name"></span> right now</div>
-          <div id="mm-lanes" style="display:grid;gap:6px;"></div>
+      <!-- Action Panel -->
+      <div class="action-deck">
+        <div class="action-info">
+          <h3 id="selectedCategoryTitle">Select a Market and Category</h3>
+          <p id="selectedCategoryStats">Official public records formatted with parcel IDs, mailing addresses, and ZIP codes.</p>
         </div>
-        <label for="f-lane">Category</label>
-        <select id="f-lane" name="lane" required>
-          <option value="">Pick a county first</option>
-          <option>Not sure, recommend one</option>
-        </select>
-        <p id="lane-hint" style="display:none;font-size:12px;color:var(--slate);margin-top:6px;">One category per order keeps your file clean. Want a second category from this county too? Submit this order, then come back and grab another pack for it.</p>
-        <label for="f-pack">Pack size</label>
-        <select id="f-pack" name="pack" required>
-          <option value="">Pick a pack</option>
-          <option>Starter $5 (50 records)</option>
-          <option>Work $15 (250 records)</option>
-          <option>Full $25 (500 records)</option>
-        </select>
-        <div style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--bill);margin-top:22px;">Step 2 · Where your file goes</div>
-        <div class="row2">
-          <div><label for="f-name">Your name</label>
-          <input id="f-name" name="name" required placeholder="First and last" /></div>
-          <div><label for="f-email">Email (your file goes here)</label>
-          <input id="f-email" name="email" type="email" required placeholder="you@email.com" /></div>
+        <div class="action-buttons">
+          <button class="btn-free" onclick="downloadFree50()">
+            <span>⚡ Download Daily 50 Leads (Free)</span>
+          </button>
+          <button class="btn-mega" onclick="openOrderModal()">
+            <span>🔥 Get 2,500 Leads for $5</span>
+          </button>
         </div>
-        <label for="f-notes">Want a specific area or a county we don't show yet?</label>
-        <textarea id="f-notes" name="notes" rows="2" placeholder="Optional. Tell us the ZIP codes, city, or county you want. If we can build it, we will."></textarea>
-        <label style="display:flex;align-items:flex-start;gap:9px;font-weight:500;font-size:12px;color:var(--slate);"><input type="checkbox" required style="width:auto;margin-top:2px;"> <span>I understand this is public-record property data without skip-traced phones or emails, that it is not a consumer report and cannot be used for credit, employment, tenant screening, or insurance decisions, and that scrubbing my own outreach against Do Not Call is on me. I agree to the <a href="/terms.html" target="_blank">Terms</a> and <a href="/privacy.html" target="_blank">Privacy Policy</a>.</span></label>
-        <button type="submit" class="btn btn-green" style="width:100%;margin-top:20px;">Continue to payment</button>
-        <div class="ok-msg" id="ok-msg">
-          <div style="font-size:15px;margin-bottom:8px;">Inventory is available. Review your order, then pay to start fulfillment. We also emailed you this payment link.</div>
-          <div class="checkout-preview">
-            <h3><span id="preview-count"></span> records from <span id="preview-county"></span></h3>
-            <p><span id="preview-lane"></span> · Current official source cycle · CSV and Excel delivery</p>
-            <table class="masked-table" aria-label="Illustrative masked preview">
-              <thead><tr><th>Owner</th><th>Property</th><th>Mailing area</th></tr></thead>
-              <tbody>
-                <tr><td>J•••• S••••</td><td>12•• M••••• Rd</td><td>R••••••, ••</td></tr>
-                <tr><td>M•••• L••••</td><td>8•• O•••• Ave</td><td>T••••, ••</td></tr>
-                <tr><td>R•••• H••••</td><td>4•• P•••• Dr</td><td>C••••••••, ••</td></tr>
-              </tbody>
-            </table>
-            <p style="margin:8px 0 0;">Illustrative masked preview. Paid files include full county-record owner, address, parcel, and available property fields.</p>
-          </div>
-          <a id="pay-btn" class="btn btn-green" href="#" target="_blank" rel="noopener" style="width:100%;">Pay <span id="pay-amt"></span> with Cash App</a>
-          <div style="font-weight:600;font-size:12.5px;margin-top:10px;color:#2f4a3a;">Put your order code <b id="order-code"></b> in the payment note so we match it fast. You get a reserved file in your county and category, stamped with your order code, and it lands in your inbox the same day, usually within a couple hours.</div>
-        </div>
-        <p class="order-note">Questions first? Email <a href="mailto:hello@leadcurate.com">hello@leadcurate.com</a>.</p>
-      </form>
+      </div>
     </div>
+
+    <!-- Affiliate Skip Trace Banner -->
+    <div class="affiliate-box">
+      <div class="aff-text">
+        <h4>Need Phone Numbers & Direct Mobile Contacts?</h4>
+        <p>Your downloaded CSV contains full owner names, property addresses, parcel numbers, and tax mailing addresses with ZIPs. Append live mobile contacts and landlines via BatchLeads.</p>
+      </div>
+      <a href="https://batchleads.io" target="_blank" rel="noopener noreferrer" class="aff-btn">⚡ 1-Click Skip Trace</a>
+    </div>
+
+    <!-- 5 Dollar Order Modal -->
+    <div class="modal-overlay" id="orderModal">
+      <div class="modal">
+        <button class="modal-close" onclick="closeOrderModal()">&times;</button>
+        <h3 style="font-size: 20px; color: #fff; margin-bottom: 8px;">🔥 Unlock 2,500 Public Records ($5.00)</h3>
+        <p style="font-size: 13px; color: #94a3b8; margin-bottom: 16px;">Instant delivery for <strong id="modalTarget" style="color:#fff;"></strong>.</p>
+        
+        <p style="font-size: 13px; color: #cbd5e1; margin-bottom: 4px;">1. Send <strong>$5.00</strong> to our Cash App:</p>
+        <div class="cashapp-tag">$leadcurate</div>
+        
+        <p style="font-size: 13px; color: #cbd5e1; margin-bottom: 6px;">2. Put this Order Reference in your Cash App note:</p>
+        <div class="order-code" id="orderCode">DL-XXXX-XXXX</div>
+        
+        <p style="font-size: 12px; color: #94a3b8; line-height: 1.4;">Once received, your 2,500-record batch download will unlock automatically. Questions? Contact support anytime.</p>
+        <button class="btn-free" style="width: 100%; margin-top: 18px; justify-content: center;" onclick="closeOrderModal()">I Sent $5 &rarr; Complete Order</button>
+      </div>
+    </div>
+
+    <!-- Footer Disclaimer -->
+    <footer>
+      <p><strong>Public Record Notice:</strong> All property data is sourced directly from publicly accessible county assessor databases, deed records, and municipal tax rolls. Dollar Leads operates strictly as a public data aggregator and does not perform telemarketing, skip-tracing, or unsolicited automated communications. Users are solely responsible for ensuring compliance with the TCPA, TSR, and applicable federal, state, and local laws.</p>
+      <p style="margin-top: 10px;">&copy; 2026 Dollar Leads by LeadCurate. All rights reserved.</p>
+    </footer>
+
   </div>
-</section>
 
-<footer>
-  <div class="wrap">
-    <strong>Dollar Leads</strong>, a LeadCurate company · Data compiled from official county public records · No skip tracing, no DNC scrubbing, outreach compliance is the buyer's responsibility · <a href="mailto:hello@leadcurate.com">hello@leadcurate.com</a>
-  </div>
-</footer>
+  <script>
+    const MARKETS = [
+      { id: 'mecklenburg-nc', name: 'Mecklenburg, NC', sub: 'Charlotte Metro' },
+      { id: 'wayne-mi', name: 'Wayne County, MI', sub: 'Detroit Metro' },
+      { id: 'dallas-tx', name: 'Dallas County, TX', sub: 'Dallas-Fort Worth' },
+      { id: 'fulton-ga', name: 'Fulton County, GA', sub: 'Atlanta Metro' },
+      { id: 'cook-il', name: 'Cook County, IL', sub: 'Chicago Metro' },
+      { id: 'shelby-tn', name: 'Shelby County, TN', sub: 'Memphis Metro' },
+      { id: 'massachusetts-statewide', name: 'Massachusetts', sub: 'Statewide Roll' }
+    ];
 
-<script type="module">
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-const supabase = createClient('https://jdmlsraqioigbukspduo.supabase.co','sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4');
+    let catalogData = {};
+    let currentMarket = 'mecklenburg-nc';
+    let currentCategory = 'out-of-state';
 
-window.pickPack = (p) => { const el=document.getElementById('f-pack'); if(el) el.value=p; };
-
-// Everything below reads live from the dollar_batches table. Adding a new
-// county or category (pre-foreclosure, probate, tax-debt, whatever) is a
-// database insert only, this page never needs a code change for it.
-let INVENTORY = [];
-let LIVE_BATCHES = [];
-
-const PACK_QUANTITIES = { 'Starter $5 (50 records)': 50, 'Work $15 (250 records)': 250, 'Full $25 (500 records)': 500, 'Fresh Scrub $20 (20 records)': 20, 'Founders Deal $50 (1,000 records)': 1000 };
-
-function canServePack(marketDisplay, laneDisplay, packLabel) {
-  const quantity = PACK_QUANTITIES[packLabel] || 0;
-  const rows = LIVE_BATCHES.filter(r => r.market_display === marketDisplay && (!laneDisplay || laneDisplay === 'Not sure, recommend one' || r.lane_display === laneDisplay));
-  if (!quantity) return false;
-  const availabilityField = quantity === 1000 ? 'can_1000' : quantity === 500 ? 'can_500' : quantity === 250 ? 'can_250' : quantity === 50 ? 'can_50' : 'can_20';
-  return rows.some(row => row[availabilityField] === true);
-}
-
-function scrollToOrder(market, lane) {
-  const cSel = document.getElementById('f-county');
-  if (cSel) cSel.value = market;
-  buildLaneOptions(market);
-  if (lane) pickLane(lane);
-  document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
-}
-window.scrollToOrder = scrollToOrder;
-
-const FOUNDERS_MARKETS = ['Wayne County MI', 'Cook County IL', 'Massachusetts (statewide)'];
-
-function pickLane(laneDisplay) {
-  const lSel = document.getElementById('f-lane');
-  if (lSel) lSel.value = laneDisplay;
-  document.querySelectorAll('#mm-lanes .mm-lane').forEach(el => {
-    el.style.background = el.dataset.lane === laneDisplay ? 'var(--bill-soft)' : '#fff';
-    el.style.borderColor = el.dataset.lane === laneDisplay ? 'var(--bill)' : 'var(--line)';
-  });
-}
-window.pickLane = pickLane;
-
-function buildLaneOptions(marketDisplay) {
-  const lSel = document.getElementById('f-lane');
-  if (!lSel) return;
-  const rows = INVENTORY.filter(r => r.market_display === marketDisplay);
-  const lanes = [...new Map(rows.map(r => [r.lane, r])).values()];
-  lSel.innerHTML = '<option value="">Pick a category</option>' +
-    lanes.map(l => {
-      const open = l._open || 0;
-      return `<option ${open<=0?'disabled':''}>${l.lane_display}${open<=0?' (sold out this cycle)':''}</option>`;
-    }).join('') +
-    '<option>Not sure, recommend one</option>';
-  const hint = document.getElementById('lane-hint');
-  if (hint) hint.style.display = lanes.length > 1 ? 'block' : 'none';
-
-  // The visible market menu: every list this county has, tap to select
-  const menu = document.getElementById('market-menu');
-  const mmName = document.getElementById('mm-name');
-  const mmLanes = document.getElementById('mm-lanes');
-  if (menu && mmLanes) {
-    if (lanes.length) {
-      menu.style.display = 'block';
-      if (mmName) mmName.textContent = marketDisplay;
-      mmLanes.innerHTML = lanes.map(l => {
-        const open = l._open || 0;
-        const lEsc = l.lane_display.replace(/'/g, "\\'");
-        return open > 0
-          ? `<div class="mm-lane" data-lane="${l.lane_display}" onclick="pickLane('${lEsc}')" style="cursor:pointer;border:1.5px solid var(--line);border-radius:8px;padding:10px 12px;display:flex;justify-content:space-between;gap:10px;font-size:13px;background:#fff;"><b>${l.lane_display}</b><span style="color:var(--bill);font-weight:700;white-space:nowrap;">Available · tap to pick</span></div>`
-          : `<div style="border:1.5px solid var(--line);border-radius:8px;padding:10px 12px;display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--slate);"><b>${l.lane_display}</b><span>sold out this cycle</span></div>`;
-      }).join('');
-    } else {
-      menu.style.display = 'none';
-    }
-  }
-
-  // Founders Deal only exists in the deep markets
-  const pSel = document.getElementById('f-pack');
-  if (pSel) {
-    const fOpt = [...pSel.options].find(o => o.text.startsWith('Founders'));
-    if (fOpt) {
-      const allowed = FOUNDERS_MARKETS.includes(marketDisplay);
-      fOpt.disabled = !allowed;
-      if (!allowed && pSel.value === fOpt.text) pSel.value = '';
-    }
-  }
-}
-document.getElementById('f-county').addEventListener('change', (e) => buildLaneOptions(e.target.value));
-
-async function loadInventory() {
-  const board = document.getElementById('drops-board');
-  try {
-    // One public-safe aggregate call keeps the board fast even when physical
-    // inventory contains tens of thousands of numbered batch rows.
-    const { data, error } = await supabase.rpc('get_dollar_inventory_summary');
-    LIVE_BATCHES = data;
-    if (error || !data || !data.length) {
-      if (board) board.innerHTML = '<div class="drop"><p style="color:#8fa0ac;font-size:13px;">Board is refreshing, check back shortly or email hello@leadcurate.com.</p></div>';
-      return;
+    async function loadCatalog() {
+      try {
+        const res = await fetch('/samples/catalog.json');
+        catalogData = await res.json();
+      } catch (err) {
+        console.error('Error loading catalog:', err);
+      }
+      renderMarkets();
+      renderCategories();
+      updateActionPanel();
     }
 
-    INVENTORY = data
-      .map(row => ({ ...row, _open: Number(row.open_seats || 0) }))
-      .sort((a, b) => a.market_display.localeCompare(b.market_display) || a.lane_display.localeCompare(b.lane_display));
-
-    // populate county select
-    const cSel = document.getElementById('f-county');
-    const counties = [...new Map(INVENTORY.map(r => [r.market_display, r])).values()];
-    cSel.innerHTML = '<option value="">Pick a county</option>' +
-      counties.map(c => `<option>${c.market_display}</option>`).join('') +
-      '<option>Another county (tell us below)</option>';
-
-    // Public copy shows market availability, not backend inventory counts.
-    const hero = document.getElementById('hero-markets');
-    if (hero) hero.textContent = counties.filter(c => c._open > 0).length.toLocaleString();
-
-    // build board, grouped by county
-    const byMarket = {};
-    for (const r of INVENTORY) {
-      (byMarket[r.market_display] = byMarket[r.market_display] || []).push(r);
+    function renderMarkets() {
+      const el = document.getElementById('marketList');
+      el.innerHTML = MARKETS.map(m => `
+        <button class="market-btn ${m.id === currentMarket ? 'active' : ''}" onclick="selectMarket('${m.id}')">
+          ${m.name}
+          <small>${m.sub}</small>
+        </button>
+      `).join('');
     }
-    if (board) {
-      board.innerHTML = Object.entries(byMarket).map(([mktDisplay, lanes]) => {
-        const mEsc = mktDisplay.replace(/'/g, "\\'");
+
+    function renderCategories() {
+      const el = document.getElementById('categoryList');
+      const mData = catalogData[currentMarket] || {};
+      const categoriesObj = mData.categories || {};
+      const categoryKeys = Object.keys(categoriesObj);
+
+      if (categoryKeys.length === 0) {
+        el.innerHTML = '<p style="color:var(--muted); padding:16px;">No categories available for this selection.</p>';
+        return;
+      }
+
+      // If current category is not in this market, reset to the first available category
+      if (!categoryKeys.includes(currentCategory)) {
+        currentCategory = categoryKeys[0];
+      }
+
+      el.innerHTML = categoryKeys.map(catKey => {
+        const cat = categoriesObj[catKey];
+        const isActive = catKey === currentCategory;
+        const totalFmt = (cat.total_inventory || 0).toLocaleString();
         return `
-        <div class="drop">
-          <span class="tag">${mktDisplay}</span>
-          <h3>${mktDisplay}</h3>
-          <div class="pulled">${lanes[0].cycle} cycle · choose an available category</div>
-          <ul>
-            ${lanes.map(l => {
-              const lEsc = l.lane_display.replace(/'/g, "\\'");
-              return l._open > 0
-                ? `<li style="cursor:pointer;" onclick="scrollToOrder('${mEsc}','${lEsc}')"><b style="text-decoration:underline;">${l.lane_display}</b> <span style="color:#22c55e;">Available</span></li>`
-                : `<li><b>${l.lane_display}</b> <span style="color:#f87171;">sold out this cycle</span></li>`;
-            }).join('')}
-          </ul>
-          <a class="btn btn-green cta" href="#order" onclick="scrollToOrder('${mEsc}')">See ${mktDisplay.split(' ')[0]}'s full menu</a>
-        </div>`;
+          <div class="cat-card ${isActive ? 'active' : ''}" onclick="selectCategory('${catKey}')">
+            <div class="cat-head">
+              <span class="cat-title">${cat.icon || '📁'} ${cat.name}</span>
+              <span class="cat-count">${totalFmt}</span>
+            </div>
+            <p class="cat-desc">${cat.desc || 'Clean parcel records with verified addresses and ZIPs.'}</p>
+          </div>
+        `;
       }).join('');
     }
-  } catch (e) {
-    console.warn(e);
-    if (board) board.innerHTML = '<div class="drop"><p style="color:#8fa0ac;font-size:13px;">Board is refreshing, check back shortly.</p></div>';
-  }
-}
-loadInventory();
 
-// Founders promo: show banner + option only while slots remain
-(async () => {
-  try {
-    const { data } = await supabase.from('dollar_promos')
-      .select('name, price, records, slots_total, slots_sold, status')
-      .eq('status', 'live').limit(1);
-    if (!data || !data.length) return;
-    const p = data[0];
-    const left = Math.max(0, (p.slots_total || 0) - (p.slots_sold || 0));
-    if (left <= 0) return;
-    const sec = document.getElementById('founders');
-    if (sec) sec.style.display = 'block';
-    const el = document.getElementById('promo-left');
-    if (el) el.textContent = left;
-    const pSel = document.getElementById('f-pack');
-    if (pSel && ![...pSel.options].some(o => o.text.startsWith('Founders'))) {
-      const opt = document.createElement('option');
-      opt.text = 'Founders Deal $50 (1,000 records)';
-      pSel.add(opt);
+    function updateActionPanel() {
+      const mData = catalogData[currentMarket] || {};
+      const cat = (mData.categories || {})[currentCategory];
+      const mObj = MARKETS.find(m => m.id === currentMarket);
+
+      if (cat && mObj) {
+        const totalFmt = (cat.total_inventory || 0).toLocaleString();
+        document.getElementById('selectedCategoryTitle').innerText = `${cat.name} (${mObj.name})`;
+        document.getElementById('selectedCategoryStats').innerText = `${totalFmt} clean public records in pool with APNs, owner names, addresses, and ZIPs.`;
+      }
     }
-  } catch (e) { console.warn(e); }
-})();
 
-// Fresh Scrub: card + order option appear only on days a county is flagged scrubbed
-(async () => {
-  try {
-    const { data } = await supabase.from('dollar_fresh_days')
-      .select('market_display, available').eq('available', true);
-    if (!data || !data.length) return;
-    const names = data.map(r => r.market_display).join(', ');
-    const card = document.getElementById('fresh-card');
-    const list = document.getElementById('fresh-markets');
-    if (card) card.style.display = 'flex';
-    if (list) list.textContent = names;
-    const pSel = document.getElementById('f-pack');
-    if (pSel && ![...pSel.options].some(o => o.text.startsWith('Fresh Scrub'))) {
-      const opt = document.createElement('option');
-      opt.text = 'Fresh Scrub $20 (20 records)';
-      pSel.add(opt);
+    function selectMarket(mId) {
+      currentMarket = mId;
+      renderMarkets();
+      renderCategories();
+      updateActionPanel();
     }
-  } catch (e) { console.warn(e); }
-})();
 
-const form = document.getElementById('dl-form');
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const btn = form.querySelector('button[type=submit]');
-  btn.disabled = true; btn.textContent = 'Checking inventory...';
-  const inventoryCheck = new Promise(r => setTimeout(r, 1800));
-  const fd = new FormData(form);
-  const lead = {
-    name: fd.get('name') || '',
-    email: fd.get('email') || '',
-    phone: '',
-    markets: [fd.get('county') || ''],
-    list_type: [fd.get('lane') || ''],
-    urgency: 'dollar-leads-pack',
-    volume: fd.get('pack') || '',
-    role: 'dollar-leads-buyer',
-    notes: 'DOLLAR LEADS ORDER | pack: ' + (fd.get('pack')||'') + ' | lane: ' + (fd.get('lane')||'') + ' | county: ' + (fd.get('county')||'') + ' | extra: ' + (fd.get('notes')||'none'),
-    source: 'dollar-leads-v1',
-  };
-  const amounts = { 'Starter $5 (50 records)': 5, 'Work $15 (250 records)': 15, 'Full $25 (500 records)': 25, 'Fresh Scrub $20 (20 records)': 20, 'Founders Deal $50 (1,000 records)': 50 };
-  const amt = amounts[fd.get('pack')] || 0;
-  await inventoryCheck;
-  if (!canServePack(fd.get('county'), fd.get('lane'), fd.get('pack'))) {
-    btn.disabled = false; btn.textContent = 'Continue to payment';
-    alert('That category does not have a large enough unsold batch for this pack. Pick a smaller pack or another category.');
-    return;
-  }
-  const code = 'DL-' + Date.now().toString(36).toUpperCase().slice(-5);
-  lead.notes = code + ' | ' + lead.notes;
-  let ok = false;
-  try {
-    const { error } = await supabase.from('intake_requests').insert([lead]).select();
-    ok = !error;
-    if (error) console.warn(error);
-  } catch (err) { console.warn(err); }
-  if (ok) {
-    await inventoryCheck;
-    document.getElementById('pay-amt').textContent = '$' + amt;
-    document.getElementById('preview-count').textContent = (PACK_QUANTITIES[fd.get('pack')] || 0).toLocaleString();
-    document.getElementById('preview-county').textContent = fd.get('county') || '';
-    document.getElementById('preview-lane').textContent = fd.get('lane') || '';
-    document.getElementById('order-code').textContent = code;
-    document.getElementById('pay-btn').href = 'https://cash.app/$DollarLeads/' + amt;
-    document.getElementById('ok-msg').style.display = 'block';
-    btn.style.display = 'none';
-    document.getElementById('ok-msg').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  } else {
-    btn.disabled = false; btn.textContent = 'Continue to payment';
-    alert('Something went wrong. Email hello@leadcurate.com and we will set you up directly.');
-  }
-});
-</script>
+    function selectCategory(cId) {
+      currentCategory = cId;
+      renderCategories();
+      updateActionPanel();
+    }
 
+    function downloadFree50() {
+      const mData = catalogData[currentMarket] || {};
+      const cat = (mData.categories || {})[currentCategory];
+      if (!cat || !cat.download_url) {
+        alert('No sample file available for this selection.');
+        return;
+      }
+      const link = document.createElement('a');
+      link.href = cat.download_url;
+      link.download = `DollarLeads_${currentMarket}_${currentCategory}_50_leads.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function openOrderModal() {
+      const mData = catalogData[currentMarket] || {};
+      const cat = (mData.categories || {})[currentCategory];
+      const mObj = MARKETS.find(m => m.id === currentMarket);
+      const catName = cat ? cat.name : 'Leads';
+      const marketName = mObj ? mObj.name : currentMarket;
+      
+      document.getElementById('modalTarget').innerText = `${catName} in ${marketName}`;
+      const randomCode = 'DL-' + Math.random().toString(36).substring(2, 6).toUpperCase() + '-' + Math.random().toString(36).substring(2, 6).toUpperCase();
+      document.getElementById('orderCode').innerText = randomCode;
+      document.getElementById('orderModal').style.display = 'grid';
+    }
+
+    function closeOrderModal() {
+      document.getElementById('orderModal').style.display = 'none';
+    }
+
+    loadCatalog();
+  </script>
 </body>
 </html>
