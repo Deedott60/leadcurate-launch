@@ -436,6 +436,13 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
     </div>
     <div class="nav-divider"></div>
+    <div class="nav-label">Keepsakes</div>
+    <div class="nav-section">
+      <div class="nav-item" data-page="keepsakes">
+        <span class="icon">K</span> Interactive Digital Keepsakes
+      </div>
+    </div>
+    <div class="nav-divider"></div>
     <div class="nav-label">Growth</div>
     <div class="nav-section">
       <div class="nav-item" data-page="marketing">
@@ -502,17 +509,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
     </div>
     <div class="nav-divider"></div>
 
-    <div class="nav-label">Interactive keepsakes</div>
-    <div class="nav-section">
-      <div class="nav-item" onclick="window.open('https://keepsakes.76-13-25-117.sslip.io/experience/demo-favorite-fan-40','_blank')">
-        <span class="icon">🏈</span> Favorite Fan 21+
-      </div>
-      <div class="nav-item" onclick="window.open('https://keepsakes.76-13-25-117.sslip.io/experience/demo-queen-city-football-fan-40','_blank')">
-        <span class="icon">🌆</span> Queen City Fan 40
-      </div>
-    </div>
-    <div class="nav-divider"></div>
-
     <div class="nav-label">Family</div>
     <div class="nav-section">
       <div class="nav-item" onclick="window.open('https://karters-ncaa-27.76-13-25-117.sslip.io','_blank')">
@@ -549,37 +545,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
         <div class="stat"><div class="v" id="s-paying">0</div><div class="l">Paying</div></div>
         <div class="stat"><div class="v" id="s-msgs">0</div><div class="l">Messages today</div></div>
       </div>
-
-      <section class="card keepsakes-hq" aria-labelledby="keepsakes-hq-title">
-        <div class="keepsakes-hq-head">
-          <div>
-            <div class="card-meta">PRODUCT + CUSTOMER OPERATIONS</div>
-            <div class="keepsakes-hq-title" id="keepsakes-hq-title">Interactive Digital Keepsakes</div>
-            <div class="keepsakes-hq-copy">Create and operate interactive celebration pages, signing keepsakes, guest messages, gift moments, countdown reveals, and RSVP experiences from one customer workflow.</div>
-          </div>
-          <span class="keepsakes-hq-status">Live on VPS</span>
-        </div>
-        <div class="keepsakes-hq-actions">
-          <button class="btn" onclick="window.open('https://keepsakes.76-13-25-117.sslip.io/operator','_blank')">Open operator console</button>
-          <button class="btn btn-ghost" onclick="window.open('https://keepsakes.76-13-25-117.sslip.io/','_blank')">Open product website</button>
-          <button class="btn btn-ghost" onclick="window.open('https://keepsakes.76-13-25-117.sslip.io/#order','_blank')">Open customer intake</button>
-        </div>
-        <div class="keepsakes-hq-grid">
-          <a class="keepsakes-hq-link" href="https://keepsakes.76-13-25-117.sslip.io/experience/demo-favorite-fan-40" target="_blank" rel="noopener">
-            <strong>Favorite Fan 21+ demo</strong>
-            <span>Adult sports-celebration workflow and signing experience.</span>
-          </a>
-          <a class="keepsakes-hq-link" href="https://keepsakes.76-13-25-117.sslip.io/experience/demo-queen-city-football-fan-40" target="_blank" rel="noopener">
-            <strong>Queen City Fan demo</strong>
-            <span>Second team-color variation of the reusable sports workflow.</span>
-          </a>
-          <a class="keepsakes-hq-link" href="https://github.com/Deedott60/interactive-digital-keepsakes" target="_blank" rel="noopener">
-            <strong>GitHub project</strong>
-            <span>Source, product documentation, handoff, and deployment history.</span>
-          </a>
-        </div>
-        <div class="keepsakes-hq-flow">ORDER → CONSULTATION → PRIVATE BUILD → OPERATOR QA → CUSTOMER APPROVAL → LIVE EXPERIENCE</div>
-      </section>
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
         <div>
@@ -624,6 +589,44 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
     </div>
 
     <!-- ── INBOX ────────────────────────── -->
+    <div id="page-keepsakes" class="page">
+      <div class="page-header">
+        <div class="page-title">Interactive Digital Keepsakes</div>
+        <div class="page-sub">Product, customer work, demos, quality review, and delivery links in one dedicated workspace.</div>
+      </div>
+
+      <section class="card keepsakes-hq" aria-labelledby="keepsakes-workspace-title">
+        <div class="keepsakes-hq-head">
+          <div>
+            <div class="card-meta">PRODUCT + CUSTOMER OPERATIONS</div>
+            <div class="keepsakes-hq-title" id="keepsakes-workspace-title">Keepsakes workspace</div>
+            <div class="keepsakes-hq-copy">Create and operate interactive celebration pages, signing keepsakes, guest messages, gift moments, countdown reveals, and RSVP experiences from one managed customer workflow.</div>
+          </div>
+          <span class="keepsakes-hq-status">Live on VPS</span>
+        </div>
+        <div class="keepsakes-hq-actions">
+          <button class="btn" onclick="window.open('https://keepsakes.76-13-25-117.sslip.io/operator','_blank')">Open operator console</button>
+          <button class="btn btn-ghost" onclick="window.open('https://keepsakes.76-13-25-117.sslip.io/','_blank')">Open product website</button>
+          <button class="btn btn-ghost" onclick="window.open('https://keepsakes.76-13-25-117.sslip.io/#start','_blank')">Open customer intake</button>
+        </div>
+        <div class="keepsakes-hq-grid">
+          <a class="keepsakes-hq-link" href="https://keepsakes.76-13-25-117.sslip.io/experience/demo-favorite-fan-40" target="_blank" rel="noopener">
+            <strong>Favorite Fan 21+ demo</strong>
+            <span>Adult sports celebration, countdown, live signing, messages, and optional toast gift.</span>
+          </a>
+          <a class="keepsakes-hq-link" href="https://keepsakes.76-13-25-117.sslip.io/experience/demo-queen-city-football-fan-40" target="_blank" rel="noopener">
+            <strong>Queen City Fan demo</strong>
+            <span>Black-and-blue version of the reusable sports celebration workflow.</span>
+          </a>
+          <a class="keepsakes-hq-link" href="https://github.com/Deedott60/interactive-digital-keepsakes" target="_blank" rel="noopener">
+            <strong>GitHub project</strong>
+            <span>Source, product documentation, handoff notes, and deployment history.</span>
+          </a>
+        </div>
+        <div class="keepsakes-hq-flow">ORDER → CONSULTATION → PRIVATE BUILD → OPERATOR QA → CUSTOMER APPROVAL → LIVE EXPERIENCE</div>
+      </section>
+    </div>
+
     <div id="page-inbox" class="page">
       <div class="page-header">
         <div class="page-title">Inbox</div>
@@ -1719,7 +1722,7 @@ function lsLoad(){
 function lsSave(){ localStorage.setItem(LS_KEY, JSON.stringify(PROSPECTS)); }
 
 // ─── NAV ──────────────────────────────────────────────────────
-const pages = ['hq','inbox','pipeline','messages','workflow','whitelabel','reggie','templates','conference','marketing','seo','scout','dollarleads','send-intake','send-quote','learn','tiers-ref','help','portfolio'];
+const pages = ['hq','keepsakes','inbox','pipeline','messages','workflow','whitelabel','reggie','templates','conference','marketing','seo','scout','dollarleads','send-intake','send-quote','learn','tiers-ref','help','portfolio'];
 window.nav = async function(id){
   pages.forEach(p=>{
     document.getElementById('page-'+p).classList.toggle('active',p===id);
