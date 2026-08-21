@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
 <meta name="robots" content="noindex,nofollow"/>
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -56,6 +59,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 }
 #cmd-btn:hover,#copy-link-btn:hover{background:rgba(255,255,255,0.13);color:rgba(255,255,255,0.9);}
 #cmd-btn kbd{background:rgba(255,255,255,0.1);padding:1px 4px;border-radius:3px;font-size:9px;}
+#keepsakes-quick-btn{display:none;border:1px solid rgba(134,239,172,.35);background:rgba(34,197,94,.16);color:#bbf7d0;padding:6px 9px;border-radius:7px;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;cursor:pointer;white-space:nowrap;}
 /* Mobile: hide date + search, show hamburger */
 #burger-btn{display:none;background:transparent;border:none;color:rgba(255,255,255,0.7);font-size:20px;cursor:pointer;padding:4px 6px;line-height:1;}
 
@@ -111,6 +115,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
   :root{--sidebar:260px;}
   #burger-btn{display:flex;}
   #cmd-btn,#copy-link-btn,#topbar .date{display:none;}
+  #keepsakes-quick-btn{display:flex;}
   #topbar{padding:0 12px;gap:8px;}
   #topbar .brand{font-size:14px;}
   #sidebar{
@@ -164,8 +169,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
 .keepsakes-hq-link:hover{border-color:var(--em);transform:translateY(-1px);}
 .keepsakes-hq-link strong{display:block;font-size:13px;margin-bottom:4px;}
 .keepsakes-hq-link span{display:block;color:var(--sl-l);font-size:11px;line-height:1.4;}
+.keepsakes-hq-url{margin-top:10px;padding:8px 9px;border-radius:7px;background:var(--cream2);color:var(--sl);font-family:'JetBrains Mono',monospace;font-size:9px;line-height:1.35;overflow-wrap:anywhere;}
+.keepsakes-hq-link-actions{display:flex;gap:7px;margin-top:10px;}
+.keepsakes-hq-link-actions .btn{flex:1;justify-content:center;padding:8px 10px;font-size:10px;text-decoration:none;}
 .keepsakes-hq-flow{margin-top:14px;padding-top:12px;border-top:1px solid rgba(4,120,87,.2);color:var(--sl);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.02em;}
-@media(max-width:760px){.keepsakes-hq-head{display:block}.keepsakes-hq-status{display:inline-block;margin-top:10px}.keepsakes-hq-grid{grid-template-columns:1fr}.keepsakes-hq-actions .btn{flex:1;justify-content:center}}
+@media(max-width:760px){.keepsakes-hq-head{display:block}.keepsakes-hq-status{display:inline-block;margin-top:10px}.keepsakes-hq-grid{grid-template-columns:1fr}.keepsakes-hq-actions .btn{flex:1;justify-content:center}.keepsakes-hq-link-actions .btn{min-height:38px}.keepsakes-hq-url{font-size:9px}}
 
 /* ── FORMS ───────────────────────────────── */
 .f-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
@@ -372,6 +380,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
   </div>
   <span id="sync-badge" class="sync-badge">connecting…</span>
   <div class="spacer"></div>
+  <button id="keepsakes-quick-btn" onclick="window.nav('keepsakes')" aria-label="Open Keepsakes workspace">Keepsakes</button>
   <button id="copy-link-btn" onclick="window.copyIntakeLink()">🔗 Intake link</button>
   <button id="cmd-btn" onclick="openCmd()">🔍 <kbd>⌘K</kbd></button>
   <span class="date" id="today-date"></span>
@@ -592,36 +601,59 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
     <div id="page-keepsakes" class="page">
       <div class="page-header">
         <div class="page-title">Interactive Digital Keepsakes</div>
-        <div class="page-sub">Product, customer work, demos, quality review, and delivery links in one dedicated workspace.</div>
+        <div class="page-sub">A standalone business workspace — separate from Projects — with the product, demos, customer work, quality review, and delivery links.</div>
       </div>
 
       <section class="card keepsakes-hq" aria-labelledby="keepsakes-workspace-title">
         <div class="keepsakes-hq-head">
           <div>
             <div class="card-meta">PRODUCT + CUSTOMER OPERATIONS</div>
-            <div class="keepsakes-hq-title" id="keepsakes-workspace-title">Keepsakes workspace</div>
-            <div class="keepsakes-hq-copy">Create and operate interactive celebration pages, signing keepsakes, guest messages, gift moments, countdown reveals, and RSVP experiences from one managed customer workflow.</div>
+            <div class="keepsakes-hq-title" id="keepsakes-workspace-title">Standalone Keepsakes workspace</div>
+            <div class="keepsakes-hq-copy">This is the dedicated home for Interactive Digital Keepsakes, not a card inside Projects. Create and operate celebration pages, signing keepsakes, guest messages, gift moments, countdown reveals, and RSVP experiences here.</div>
           </div>
           <span class="keepsakes-hq-status">Live on VPS</span>
         </div>
         <div class="keepsakes-hq-actions">
           <button class="btn" onclick="window.open('https://keepsakes.76-13-25-117.sslip.io/operator','_blank')">Open operator console</button>
-          <button class="btn btn-ghost" onclick="window.open('https://keepsakes.76-13-25-117.sslip.io/','_blank')">Open product website</button>
           <button class="btn btn-ghost" onclick="window.open('https://keepsakes.76-13-25-117.sslip.io/#start','_blank')">Open customer intake</button>
         </div>
         <div class="keepsakes-hq-grid">
-          <a class="keepsakes-hq-link" href="https://keepsakes.76-13-25-117.sslip.io/experience/demo-favorite-fan-40" target="_blank" rel="noopener">
+          <article class="keepsakes-hq-link">
+            <strong>Product website</strong>
+            <span>The customer-facing Keepsakes website and starting point for new orders.</span>
+            <div class="keepsakes-hq-url">https://keepsakes.76-13-25-117.sslip.io/</div>
+            <div class="keepsakes-hq-link-actions">
+              <a class="btn btn-ghost" href="https://keepsakes.76-13-25-117.sslip.io/" target="_blank" rel="noopener">Open</a>
+              <button class="btn" type="button" onclick="window.copyCareerLink('https://keepsakes.76-13-25-117.sslip.io/','Website link copied',this)">Copy link</button>
+            </div>
+          </article>
+          <article class="keepsakes-hq-link">
             <strong>Favorite Fan 21+ demo</strong>
             <span>Adult sports celebration, countdown, live signing, messages, and optional toast gift.</span>
-          </a>
-          <a class="keepsakes-hq-link" href="https://keepsakes.76-13-25-117.sslip.io/experience/demo-queen-city-football-fan-40" target="_blank" rel="noopener">
+            <div class="keepsakes-hq-url">https://keepsakes.76-13-25-117.sslip.io/experience/demo-favorite-fan-40</div>
+            <div class="keepsakes-hq-link-actions">
+              <a class="btn btn-ghost" href="https://keepsakes.76-13-25-117.sslip.io/experience/demo-favorite-fan-40" target="_blank" rel="noopener">Open</a>
+              <button class="btn" type="button" onclick="window.copyCareerLink('https://keepsakes.76-13-25-117.sslip.io/experience/demo-favorite-fan-40','Favorite Fan demo link copied',this)">Copy link</button>
+            </div>
+          </article>
+          <article class="keepsakes-hq-link">
             <strong>Queen City Fan demo</strong>
-            <span>Black-and-blue version of the reusable sports celebration workflow.</span>
-          </a>
-          <a class="keepsakes-hq-link" href="https://github.com/Deedott60/interactive-digital-keepsakes" target="_blank" rel="noopener">
+            <span>The finished black-and-blue football version of the reusable sports celebration workflow.</span>
+            <div class="keepsakes-hq-url">https://keepsakes.76-13-25-117.sslip.io/experience/demo-queen-city-football-fan-40</div>
+            <div class="keepsakes-hq-link-actions">
+              <a class="btn btn-ghost" href="https://keepsakes.76-13-25-117.sslip.io/experience/demo-queen-city-football-fan-40" target="_blank" rel="noopener">Open</a>
+              <button class="btn" type="button" onclick="window.copyCareerLink('https://keepsakes.76-13-25-117.sslip.io/experience/demo-queen-city-football-fan-40','Queen City demo link copied',this)">Copy link</button>
+            </div>
+          </article>
+          <article class="keepsakes-hq-link">
             <strong>GitHub project</strong>
             <span>Source, product documentation, handoff notes, and deployment history.</span>
-          </a>
+            <div class="keepsakes-hq-url">https://github.com/Deedott60/interactive-digital-keepsakes</div>
+            <div class="keepsakes-hq-link-actions">
+              <a class="btn btn-ghost" href="https://github.com/Deedott60/interactive-digital-keepsakes" target="_blank" rel="noopener">Open</a>
+              <button class="btn" type="button" onclick="window.copyCareerLink('https://github.com/Deedott60/interactive-digital-keepsakes','GitHub link copied',this)">Copy link</button>
+            </div>
+          </article>
         </div>
         <div class="keepsakes-hq-flow">ORDER → CONSULTATION → PRIVATE BUILD → OPERATOR QA → CUSTOMER APPROVAL → LIVE EXPERIENCE</div>
       </section>
