@@ -935,20 +935,20 @@ html, body {
       <div class="node-click-hint" style="color:#2dd4bf;">Inspect Logistics Dossier &rarr;</div>
     </div>
 
-    <!-- 04. AUTO-PLUG & DYNAMIC URL PROPERTY DECISION TOOL -->
-    <div class="node theme-gold" id="node-autoplug" data-category="live urltools" style="left: 1900px; top: 1300px;" onclick="selectNodeById('autoplug')">
+    <!-- 04. F2F ESTATE SALES & ESTATE DROP INTAKE -->
+    <div class="node theme-gold" id="node-f2f" data-category="live urltools" style="left: 1900px; top: 1300px;" onclick="selectNodeById('f2f')">
       <div class="node-header">
-        <div class="node-icon" style="background:rgba(251,191,36,0.15);border-color:rgba(251,191,36,0.4);">⚡</div>
-        <span class="node-badge" style="background:rgba(251,191,36,0.2);color:#fde047;border-color:rgba(251,191,36,0.4);">Dynamic Tools</span>
+        <div class="node-icon" style="background:rgba(251,191,36,0.15);border-color:rgba(251,191,36,0.4);">🏛️</div>
+        <span class="node-badge" style="background:rgba(251,191,36,0.2);color:#fde047;border-color:rgba(251,191,36,0.4);">Live Companion Marketplace</span>
       </div>
-      <div class="node-idx" style="color:#fde047;">ZONE 04 · DYNAMIC URL GENERATOR</div>
-      <div class="node-title" style="color:#fbbf24;">Property Decision &amp; Lock-Drop</div>
-      <div class="node-desc">Automated tool generating unique branded valuation URLs for property owners, dynamic parcel boundary map overlays, and deal analyzers.</div>
+      <div class="node-idx" style="color:#fde047;">ZONE 04 · F2F ESTATE SALES &amp; ESTATE DROP</div>
+      <div class="node-title" style="color:#fbbf24;">F2F Marketplace &amp; Estate Drop</div>
+      <div class="node-desc">Doc Reedy's on-site liquidation companion marketplace, mobile Estate Drop photo intake tool (PIN: 7731), and 1-click EstateSales.NET bulk CSV exporter.</div>
       <div class="node-tags">
-        <span class="node-tag">Dynamic URLs</span>
-        <span class="node-tag">Deal Analyzer</span>
-        <span class="node-tag">MapLibre</span>
-        <span class="node-tag">Twilio</span>
+        <span class="node-tag">Estate Drop (PIN 7731)</span>
+        <span class="node-tag">Marketplace</span>
+        <span class="node-tag">EstateSales.NET Export</span>
+        <span class="node-tag">Linux VPS</span>
       </div>
       <div class="node-click-hint" style="color:#fbbf24;">Inspect Breakdown &rarr;</div>
     </div>
@@ -1100,27 +1100,29 @@ const DOSSIERS = {
     ]
   },
   delivery: {
-    kicker: "06 · ESTATE DROPS & COURIER DISPATCH",
-    title: "Estate Drop & Logistics Hub",
+    kicker: "06 · LEADCURATE DELIVERY & DISPATCH",
+    title: "LeadCurate Delivery & Dispatch Hub",
     badge: "Live Logistics · Charlotte Metro Dispatch",
-    problem: "Estate auctions, antique galleries, and high-value sellers needed a reliable, white-glove small-item courier service that handles delicate chain-of-custody without the friction or rough handling of traditional freight carriers.",
-    built: "A live courier dispatch and parcel drop network across the Charlotte Metro (Mecklenburg, Gaston, Cabarrus, York). Features real-time driver dispatch tracking, route clustering, automated Twilio SMS milestone updates for buyers and sellers, and mandatory photo proof-of-delivery (POD).",
-    why: "Direct proof of combining physical operations leadership with real-time software. Manages driver assignments, delicate inventory custody, and customer communication.",
-    stack: ["Estate Auction Logistics", "Driver Dispatch", "Twilio SMS Milestones", "Photo Proof-of-Delivery (POD)", "Next.js", "Supabase", "PostgreSQL"],
+    problem: "Estate sale buyers and liquidators needed an affordable, insured, flat-rate courier service for delicate pieces without the friction or rough handling of freight carriers.",
+    built: "A white-glove courier network ($35 Metro / $45 Outer) featuring a customer booking portal, Derrick's private driver cockpit with hands-free auto-ETA radar, live customer GPS tracking map, and doorstep photo proof-of-delivery (POD).",
+    why: "Direct proof of combining physical operations leadership with real-time software. Zero manual typing while driving with hands-free proximity radar.",
+    stack: ["Hands-Free Auto-ETA Radar", "Driver Dispatch Cockpit", "Live GPS Customer Map", "Photo Proof-of-Delivery", "Next.js", "Linux VPS"],
     links: [
-      { label: "View Dispatch Brief", url: "../#the-work" }
+      { label: "Open Driver Cockpit →", url: "https://delivery.76-13-25-117.sslip.io/driver", primary: true },
+      { label: "Open Customer Booking Portal", url: "https://delivery.76-13-25-117.sslip.io" }
     ]
   },
-  autoplug: {
-    kicker: "04 · DYNAMIC URLS & PROPERTY DECISION TOOL",
-    title: "Property Decision & Lock-Drop Tools",
-    badge: "Configurable SaaS Architecture",
-    problem: "Real estate investment firms struggle to capture seller leads because static landing pages feel generic and fail to give homeowners transparent valuation context.",
-    built: "A configurable direct-response platform and decision tool that generates unique property URLs on the fly (like Lock Drop / Deal Analyzer). Features dynamic county valuation calculators, MapLibre parcel boundary overlays, and automated SMS/call routing.",
-    why: "Demonstrates designing one flexible software engine that automatically generates personalized URLs and re-brands dynamically for different clients from a single config file.",
-    stack: ["Dynamic URL Generation", "Deal Analyzer", "MapLibre GL", "Next.js", "Tailwind CSS", "Twilio SMS"],
+  f2f: {
+    kicker: "04 · COMPANION MARKETPLACE & MOBILE INTAKE",
+    title: "F2F Estate Sales & Estate Drop",
+    badge: "Live Companion Marketplace · VPS Hosted",
+    problem: "Estate liquidators spend 15+ hours manually inventorying, measuring, pricing, and re-typing lot listings for online platforms and EstateSales.NET.",
+    built: "A high-speed mobile intake tool (Estate Drop, PIN: 7731) that lets liquidators snap photos to auto-draft listings, publish directly to an on-site companion marketplace, and export bulk CSV files formatted for EstateSales.NET in 1 click.",
+    why: "Eliminates duplicate inventory entry while driving small-item courier delivery referrals directly to LeadCurate Delivery.",
+    stack: ["Mobile Estate Drop (PIN 7731)", "Companion Marketplace", "1-Click EstateSales.NET CSV", "Next.js", "Linux VPS"],
     links: [
-      { label: "Open Investor Demo →", url: "https://autoplug-demo.leadcurate.com", primary: true }
+      { label: "Open Live Marketplace →", url: "https://f2f.76-13-25-117.sslip.io", primary: true },
+      { label: "Open Estate Drop (Staff PIN: 7731)", url: "https://f2f.76-13-25-117.sslip.io/lot-drop" }
     ]
   },
   keepsakes: {
@@ -1163,14 +1165,14 @@ const DOSSIERS = {
   }
 };
 
-const NODES_ORDER = ['hub', 'fnb', 'rooted', 'agentic', 'delivery', 'autoplug', 'keepsakes', 'skills', 'contact'];
+const NODES_ORDER = ['hub', 'fnb', 'rooted', 'agentic', 'delivery', 'f2f', 'keepsakes', 'skills', 'contact'];
 const NODES_COORDS = {
   hub: { x: 1300, y: 1000 },
   fnb: { x: 800, y: 700 },
   rooted: { x: 1800, y: 700 },
   agentic: { x: 700, y: 1300 },
   delivery: { x: 1300, y: 1550 },
-  autoplug: { x: 1900, y: 1300 },
+  f2f: { x: 1900, y: 1300 },
   keepsakes: { x: 1300, y: 450 },
   skills: { x: 450, y: 1000 },
   contact: { x: 2150, y: 1000 }
@@ -1409,7 +1411,7 @@ const tourNodes = [
   { id: 'rooted', x: 1800, y: 700 },
   { id: 'agentic', x: 700, y: 1300 },
   { id: 'delivery', x: 1300, y: 1550 },
-  { id: 'autoplug', x: 1900, y: 1300 },
+  { id: 'f2f', x: 1900, y: 1300 },
   { id: 'keepsakes', x: 1300, y: 450 }
 ];
 let tourInterval = null;
