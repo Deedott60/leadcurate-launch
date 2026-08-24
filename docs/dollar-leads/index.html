@@ -1,555 +1,455 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Dollar Leads — 15M+ Clean Public Real Estate Records</title>
   <meta name="description" content="Download 50 free real estate leads daily or unlock 2,500 records for $5. Clean public property records across 7 major metro markets." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
+    /* ===== RESET & BASE ===== */
     :root {
-      --bg: #090d16;
-      --card-bg: rgba(18, 24, 38, 0.85);
-      --card-border: rgba(255, 255, 255, 0.08);
-      --card-hover: rgba(30, 41, 64, 0.9);
-      --emerald: #10b981;
-      --emerald-glow: rgba(16, 185, 129, 0.25);
+      --bg: #0a0f1a;
+      --surface: #111827;
+      --surface-2: #1e293b;
+      --border: rgba(255,255,255,0.08);
+      --border-hi: rgba(255,255,255,0.18);
+      --green: #10b981;
+      --green-soft: rgba(16,185,129,0.15);
+      --green-glow: rgba(16,185,129,0.3);
       --gold: #f59e0b;
+      --gold-soft: rgba(245,158,11,0.15);
       --text: #f1f5f9;
-      --muted: #94a3b8;
+      --text-2: #94a3b8;
+      --text-3: #64748b;
+      --radius: 12px;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      line-height: 1.5;
-      padding-bottom: 60px;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+    body{
+      font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+      background:var(--bg);color:var(--text);
+      line-height:1.5;min-height:100vh;
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
     }
-    .hero-glow {
-      position: absolute;
-      top: 0; left: 50%; transform: translateX(-50%);
-      width: 100%; max-width: 1100px; height: 380px;
-      background: radial-gradient(circle at 50% 20%, rgba(16, 185, 129, 0.15), transparent 70%);
-      pointer-events: none; z-index: 0;
-    }
-    .container { width: min(1140px, calc(100% - 32px)); margin: 0 auto; position: relative; z-index: 1; }
-    
-    /* Top Static Banner */
-    .top-sponsor-bar {
-      margin: 16px 0 24px;
-      padding: 12px 18px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px dashed rgba(255, 255, 255, 0.14);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 13px;
-      color: var(--muted);
-    }
-    .top-sponsor-bar strong { color: #cbd5e1; }
-    .top-sponsor-btn {
-      background: rgba(16, 185, 129, 0.15);
-      border: 1px solid var(--emerald);
-      color: #6ee7b7;
-      padding: 5px 12px;
-      border-radius: 999px;
-      font-weight: 700;
-      font-size: 12px;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-    .top-sponsor-btn:hover { background: var(--emerald); color: #064e3b; }
+    .wrap{width:100%;max-width:960px;margin:0 auto;padding:0 16px}
 
-    /* Header */
-    header {
-      padding: 24px 0 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--card-border);
-      margin-bottom: 32px;
+    /* ===== BANNER ===== */
+    .banner{
+      background:var(--surface);border-bottom:1px solid var(--border);
+      padding:10px 0;text-align:center;font-size:13px;color:var(--text-2);
     }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.03em;
+    .banner strong{color:var(--green)}
+
+    /* ===== HEADER ===== */
+    .hdr{padding:20px 0 16px;border-bottom:1px solid var(--border)}
+    .hdr-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+    .brand{font-weight:800;font-size:20px;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
+    .brand-badge{
+      background:var(--green);color:#022c22;font-size:11px;font-weight:800;
+      padding:3px 8px;border-radius:6px;white-space:nowrap;
     }
-    .logo-badge {
-      background: linear-gradient(135deg, #10b981, #059669);
-      color: #022c22;
-      font-size: 14px;
-      font-weight: 800;
-      padding: 4px 10px;
-      border-radius: 8px;
-    }
-    .stat-pill {
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.2);
-      color: #a7f3d0;
-      font-size: 13px;
-      font-weight: 700;
-      padding: 6px 14px;
-      border-radius: 999px;
+    .free-pill{
+      background:var(--green-soft);border:1px solid rgba(16,185,129,0.25);
+      color:#6ee7b7;font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px;
+      white-space:nowrap;
     }
 
-    /* Hero */
-    .hero-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(32px, 5vw, 50px);
-      line-height: 1.1;
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      margin-bottom: 14px;
-      text-align: center;
-    }
-    .hero-title span {
-      background: linear-gradient(135deg, #34d399, #10b981);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .hero-sub {
-      color: var(--muted);
-      font-size: clamp(16px, 2.5vw, 18px);
-      text-align: center;
-      max-width: 720px;
-      margin: 0 auto 36px;
+    /* ===== HERO ===== */
+    .hero{text-align:center;padding:32px 0 28px}
+    .hero h1{font-size:clamp(24px,5vw,42px);font-weight:800;line-height:1.15;letter-spacing:-.03em;margin-bottom:12px}
+    .hero h1 em{font-style:normal;color:var(--green)}
+    .hero p{color:var(--text-2);font-size:15px;max-width:600px;margin:0 auto}
+
+    /* ===== STEP LABELS ===== */
+    .step-label{
+      font-size:11px;text-transform:uppercase;letter-spacing:.12em;
+      font-weight:800;color:var(--green);margin-bottom:10px;display:block;
     }
 
-    /* Selector Box */
-    .selector-box {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 24px;
-      backdrop-filter: blur(16px);
-      margin-bottom: 32px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    /* ===== MARKET GRID (horizontal scroll on mobile) ===== */
+    .market-scroll{
+      display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;
+      padding-bottom:6px;margin-bottom:20px;
+      scrollbar-width:none;
     }
-    .section-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-weight: 800;
-      color: var(--emerald);
-      margin-bottom: 12px;
-      display: block;
+    .market-scroll::-webkit-scrollbar{display:none}
+    .market-btn{
+      flex:0 0 auto;
+      background:var(--surface);border:1px solid var(--border);
+      color:var(--text-2);padding:10px 16px;border-radius:10px;
+      font-size:13px;font-weight:700;cursor:pointer;
+      white-space:nowrap;transition:all .15s;
+      -webkit-tap-highlight-color:transparent;
     }
-    .market-tabs {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 10px;
-      margin-bottom: 24px;
+    .market-btn:active{transform:scale(.97)}
+    .market-btn.on{
+      background:var(--green-soft);border-color:var(--green);color:#fff;
+      box-shadow:0 0 12px var(--green-glow);
     }
-    .market-btn {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: #cbd5e1;
-      padding: 12px 14px;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.2s;
-    }
-    .market-btn small { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; font-weight: 500; }
-    .market-btn:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); }
-    .market-btn.active {
-      background: rgba(16, 185, 129, 0.15);
-      border-color: var(--emerald);
-      color: #fff;
-      box-shadow: 0 0 16px var(--emerald-glow);
-    }
-    .market-btn.active small { color: #a7f3d0; }
+    .market-btn small{display:block;font-size:10px;font-weight:500;color:var(--text-3);margin-top:2px}
+    .market-btn.on small{color:#a7f3d0}
 
-    /* Category Grid (Dynamically Populated per Market) */
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-    .cat-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 14px;
-      padding: 16px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .cat-card:hover {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(255, 255, 255, 0.15);
-      transform: translateY(-2px);
-    }
-    .cat-card.active {
-      background: rgba(16, 185, 129, 0.12);
-      border-color: var(--emerald);
-      box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
-    }
-    .cat-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
-    .cat-title { font-weight: 700; font-size: 14px; color: #f8fafc; }
-    .cat-count {
-      font-size: 11px;
-      font-weight: 800;
-      color: #6ee7b7;
-      background: rgba(16, 185, 129, 0.2);
-      padding: 2px 8px;
-      border-radius: 999px;
-    }
-    .cat-desc { font-size: 12px; color: var(--muted); line-height: 1.4; }
+    /* ===== CATEGORY LIST (stacked on mobile, 2-col on tablet+) ===== */
+    .cat-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+    @media(min-width:580px){.cat-list{display:grid;grid-template-columns:1fr 1fr;gap:10px}}
 
-    /* Action Deck */
-    .action-deck {
-      background: linear-gradient(180deg, rgba(16, 185, 129, 0.08), rgba(0, 0, 0, 0.3));
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      border-radius: 16px;
-      padding: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
+    .cat-item{
+      background:var(--surface);border:1.5px solid var(--border);
+      border-radius:var(--radius);padding:14px 16px;cursor:pointer;
+      transition:all .15s;display:flex;align-items:center;gap:12px;
+      -webkit-tap-highlight-color:transparent;
     }
-    .action-info h3 { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 4px; }
-    .action-info p { font-size: 13px; color: var(--muted); }
-    .action-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
-
-    .btn-free {
-      background: linear-gradient(135deg, #10b981, #059669);
-      color: #022c22;
-      border: none;
-      padding: 14px 22px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.2s;
-      box-shadow: 0 10px 25px var(--emerald-glow);
+    .cat-item:active{transform:scale(.98)}
+    .cat-item.on{
+      background:var(--green-soft);border-color:var(--green);
+      box-shadow:0 0 16px rgba(16,185,129,0.12);
     }
-    .btn-free:hover { transform: translateY(-2px); filter: brightness(1.1); }
-
-    .btn-mega {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: #451a03;
-      border: none;
-      padding: 14px 22px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.2s;
-      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.2);
-    }
-    .btn-mega:hover { transform: translateY(-2px); filter: brightness(1.1); }
-
-    /* Affiliate Skip Trace Box */
-    .affiliate-box {
-      margin-top: 36px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      padding: 22px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .aff-text h4 { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
-    .aff-text p { font-size: 13px; color: var(--muted); max-width: 600px; }
-    .aff-btn {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #fff;
-      padding: 10px 18px;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 700;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-    .aff-btn:hover { background: #fff; color: #000; }
-
-    /* Modal for $5 orders */
-    .modal-overlay {
-      position: fixed; inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(8px);
-      display: none; place-items: center;
-      z-index: 100; padding: 20px;
-    }
-    .modal {
-      background: #111827;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 20px;
-      max-width: 480px; width: 100%;
-      padding: 28px;
-      position: relative;
-    }
-    .modal-close {
-      position: absolute; top: 18px; right: 18px;
-      background: none; border: none; color: var(--muted);
-      font-size: 20px; cursor: pointer;
-    }
-    .cashapp-tag {
-      display: inline-block;
-      background: #00d632;
-      color: #000;
-      font-weight: 900;
-      font-size: 20px;
-      padding: 10px 20px;
-      border-radius: 12px;
-      margin: 16px 0;
-    }
-    .order-code {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px dashed rgba(255, 255, 255, 0.2);
-      padding: 10px;
-      border-radius: 8px;
-      font-family: monospace;
-      font-size: 16px;
-      color: #6ee7b7;
-      margin-bottom: 16px;
+    .cat-icon{font-size:22px;flex-shrink:0;width:32px;text-align:center}
+    .cat-body{flex:1;min-width:0}
+    .cat-name{font-weight:700;font-size:14px;color:#f8fafc}
+    .cat-sub{font-size:12px;color:var(--text-2);margin-top:1px}
+    .cat-badge{
+      flex-shrink:0;
+      font-size:11px;font-weight:800;color:#6ee7b7;
+      background:rgba(16,185,129,0.18);padding:3px 10px;border-radius:999px;
+      white-space:nowrap;
     }
 
-    /* Footer */
-    footer {
-      margin-top: 60px;
-      padding-top: 24px;
-      border-top: 1px solid var(--card-border);
-      font-size: 12px;
-      color: #64748b;
-      text-align: center;
-      line-height: 1.6;
+    /* ===== ACTION BOX ===== */
+    .action-box{
+      background:var(--surface);border:1.5px solid rgba(16,185,129,0.3);
+      border-radius:16px;padding:20px;margin-bottom:28px;
     }
+    .action-title{font-size:16px;font-weight:800;margin-bottom:4px}
+    .action-sub{font-size:13px;color:var(--text-2);margin-bottom:16px}
+    .action-btns{display:flex;flex-direction:column;gap:10px}
+    @media(min-width:480px){.action-btns{flex-direction:row}}
+
+    .btn{
+      display:flex;align-items:center;justify-content:center;gap:8px;
+      border:none;border-radius:var(--radius);padding:14px 20px;
+      font-size:14px;font-weight:800;cursor:pointer;
+      transition:all .15s;text-decoration:none;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .btn:active{transform:scale(.97)}
+    .btn-green{background:var(--green);color:#022c22;box-shadow:0 6px 20px var(--green-glow)}
+    .btn-gold{background:var(--gold);color:#451a03;box-shadow:0 6px 20px var(--gold-soft)}
+
+    /* ===== AFFILIATE BOX ===== */
+    .aff-box{
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--radius);padding:18px;margin-bottom:40px;
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      flex-wrap:wrap;
+    }
+    .aff-box h4{font-size:15px;font-weight:700;margin-bottom:2px}
+    .aff-box p{font-size:13px;color:var(--text-2);max-width:520px}
+    .aff-link{
+      background:var(--surface-2);border:1px solid var(--border-hi);
+      color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;
+      font-weight:700;text-decoration:none;white-space:nowrap;
+      transition:all .15s;
+    }
+    .aff-link:hover{background:#fff;color:#000}
+
+    /* ===== MODAL ===== */
+    .overlay{
+      position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(6px);
+      display:none;place-items:center;z-index:100;padding:16px;
+    }
+    .overlay.show{display:grid}
+    .modal{
+      background:var(--surface);border:1px solid var(--border-hi);
+      border-radius:20px;max-width:420px;width:100%;padding:24px;position:relative;
+    }
+    .modal-x{
+      position:absolute;top:14px;right:14px;background:none;border:none;
+      color:var(--text-3);font-size:22px;cursor:pointer;line-height:1;
+    }
+    .modal h3{font-size:18px;font-weight:800;margin-bottom:6px}
+    .modal .modal-sub{font-size:13px;color:var(--text-2);margin-bottom:14px}
+    .ca-tag{
+      display:inline-block;background:#00d632;color:#000;font-weight:900;
+      font-size:20px;padding:10px 20px;border-radius:12px;margin:12px 0;
+    }
+    .order-ref{
+      background:rgba(255,255,255,.05);border:1px dashed rgba(255,255,255,.2);
+      padding:10px;border-radius:8px;font-family:monospace;font-size:16px;
+      color:#6ee7b7;margin-bottom:14px;text-align:center;
+    }
+
+    /* ===== FOOTER ===== */
+    footer{
+      border-top:1px solid var(--border);padding:24px 0;
+      font-size:11px;color:var(--text-3);text-align:center;line-height:1.6;
+    }
+    footer strong{color:var(--text-2)}
   </style>
 </head>
 <body>
-  <div class="hero-glow"></div>
-  <div class="container">
-    
-    <!-- Top Static Banner Slot -->
-    <div class="top-sponsor-bar">
-      <div><strong>Partner Sponsor:</strong> 100% Fix & Flip + Transactional Funding for Wholesalers.</div>
-      <a href="#sponsor" class="top-sponsor-btn">View Rates &rarr;</a>
-    </div>
 
-    <!-- Header -->
-    <header>
-      <div class="logo">
-        <span>DOLLAR LEADS</span>
-        <span class="logo-badge">15.3M+ PUBLIC RECORDS</span>
-      </div>
-      <div class="stat-pill">⚡ 50 Free Leads Every Day</div>
-    </header>
-
-    <!-- Hero Title -->
-    <h1 class="hero-title">Clean Public Real Estate Records<br><span>50 Free Every Day &bull; 2,500 for $5</span></h1>
-    <p class="hero-sub">Official county assessor, tax roll, and deed registry data with verified parcel numbers and ZIP codes. Ready for Excel export.</p>
-
-    <!-- Selector Deck -->
-    <div class="selector-box">
-      <span class="section-label">Step 1: Select Your Target Market</span>
-      <div class="market-tabs" id="marketList"></div>
-
-      <span class="section-label">Step 2: Choose an Available Category</span>
-      <div class="category-grid" id="categoryList"></div>
-
-      <!-- Action Panel -->
-      <div class="action-deck">
-        <div class="action-info">
-          <h3 id="selectedCategoryTitle">Select a Market and Category</h3>
-          <p id="selectedCategoryStats">Official public records formatted with parcel IDs, mailing addresses, and ZIP codes.</p>
-        </div>
-        <div class="action-buttons">
-          <button class="btn-free" onclick="downloadFree50()">
-            <span>⚡ Download Daily 50 Leads (Free)</span>
-          </button>
-          <button class="btn-mega" onclick="openOrderModal()">
-            <span>🔥 Get 2,500 Leads for $5</span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Affiliate Skip Trace Banner -->
-    <div class="affiliate-box">
-      <div class="aff-text">
-        <h4>Need Phone Numbers & Direct Mobile Contacts?</h4>
-        <p>Your downloaded CSV contains full owner names, property addresses, parcel numbers, and tax mailing addresses with ZIPs. Append live mobile contacts and landlines via BatchLeads.</p>
-      </div>
-      <a href="https://batchleads.io" target="_blank" rel="noopener noreferrer" class="aff-btn">⚡ 1-Click Skip Trace</a>
-    </div>
-
-    <!-- 5 Dollar Order Modal -->
-    <div class="modal-overlay" id="orderModal">
-      <div class="modal">
-        <button class="modal-close" onclick="closeOrderModal()">&times;</button>
-        <h3 style="font-size: 20px; color: #fff; margin-bottom: 8px;">🔥 Unlock 2,500 Public Records ($5.00)</h3>
-        <p style="font-size: 13px; color: #94a3b8; margin-bottom: 16px;">Instant delivery for <strong id="modalTarget" style="color:#fff;"></strong>.</p>
-        
-        <p style="font-size: 13px; color: #cbd5e1; margin-bottom: 4px;">1. Send <strong>$5.00</strong> to our Cash App:</p>
-        <div class="cashapp-tag">$leadcurate</div>
-        
-        <p style="font-size: 13px; color: #cbd5e1; margin-bottom: 6px;">2. Put this Order Reference in your Cash App note:</p>
-        <div class="order-code" id="orderCode">DL-XXXX-XXXX</div>
-        
-        <p style="font-size: 12px; color: #94a3b8; line-height: 1.4;">Once received, your 2,500-record batch download will unlock automatically. Questions? Contact support anytime.</p>
-        <button class="btn-free" style="width: 100%; margin-top: 18px; justify-content: center;" onclick="closeOrderModal()">I Sent $5 &rarr; Complete Order</button>
-      </div>
-    </div>
-
-    <!-- Footer Disclaimer -->
-    <footer>
-      <p><strong>Public Record Notice:</strong> All property data is sourced directly from publicly accessible county assessor databases, deed records, and municipal tax rolls. Dollar Leads operates strictly as a public data aggregator and does not perform telemarketing, skip-tracing, or unsolicited automated communications. Users are solely responsible for ensuring compliance with the TCPA, TSR, and applicable federal, state, and local laws.</p>
-      <p style="margin-top: 10px;">&copy; 2026 Dollar Leads by LeadCurate. All rights reserved.</p>
-    </footer>
-
+  <!-- TOP BANNER -->
+  <div class="banner">
+    <div class="wrap"><strong>Partner Sponsor:</strong> Fix &amp; Flip + Transactional Funding for Wholesalers.</div>
   </div>
 
+  <!-- HEADER -->
+  <div class="hdr">
+    <div class="wrap hdr-inner">
+      <div class="brand">DOLLAR LEADS <span class="brand-badge">15.3M+</span></div>
+      <div class="free-pill">⚡ 50 Free Daily</div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- HERO -->
+    <div class="hero">
+      <h1>Clean Public Real Estate Records<br><em>50 Free Every Day &bull; 2,500 for $5</em></h1>
+      <p>County assessor &amp; tax roll data with parcel IDs, owner names, mailing addresses, and ZIP codes. Excel-ready CSV export.</p>
+    </div>
+
+    <!-- STEP 1: MARKET -->
+    <span class="step-label">Step 1 &mdash; Pick Your Market</span>
+    <div class="market-scroll" id="marketScroll"></div>
+
+    <!-- STEP 2: CATEGORY -->
+    <span class="step-label">Step 2 &mdash; Pick a Category</span>
+    <div class="cat-list" id="catList"></div>
+
+    <!-- ACTION BOX -->
+    <div class="action-box">
+      <div class="action-title" id="actionTitle">Select a market &amp; category above</div>
+      <div class="action-sub" id="actionSub">Clean public records with APNs, owner names, addresses, and ZIP codes.</div>
+      <div class="action-btns">
+        <button class="btn btn-green" onclick="downloadFree()">⚡ Download 50 Free Leads</button>
+        <button class="btn btn-gold" onclick="openModal()">🔥 2,500 Leads &mdash; $5</button>
+      </div>
+    </div>
+
+    <!-- AFFILIATE -->
+    <div class="aff-box">
+      <div>
+        <h4>Need Phone Numbers?</h4>
+        <p>Your CSV includes owner names, addresses, parcel IDs, and ZIPs. Append mobile contacts via BatchLeads.</p>
+      </div>
+      <a href="https://batchleads.io" target="_blank" rel="noopener noreferrer" class="aff-link">⚡ Skip Trace</a>
+    </div>
+
+  </div><!-- .wrap -->
+
+  <!-- ORDER MODAL -->
+  <div class="overlay" id="orderOverlay">
+    <div class="modal">
+      <button class="modal-x" onclick="closeModal()">&times;</button>
+      <h3>🔥 Unlock 2,500 Records ($5)</h3>
+      <p class="modal-sub">Delivery for <strong id="modalFor"></strong></p>
+      <p style="font-size:13px;color:#cbd5e1;margin-bottom:4px">1. Send <strong>$5.00</strong> to:</p>
+      <div class="ca-tag">$leadcurate</div>
+      <p style="font-size:13px;color:#cbd5e1;margin-bottom:6px">2. Put this code in your Cash App note:</p>
+      <div class="order-ref" id="orderRef">DL-XXXX</div>
+      <p style="font-size:12px;color:var(--text-3);margin-bottom:16px">Your 2,500-record CSV unlocks automatically after payment.</p>
+      <button class="btn btn-green" style="width:100%" onclick="closeModal()">I Sent $5 &rarr; Done</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <p><strong>Public Record Notice:</strong> All data is from publicly accessible county assessor databases, deed records, and municipal tax rolls. Dollar Leads does not perform telemarketing, skip-tracing, or automated communications. Users are responsible for TCPA, TSR, and local law compliance.</p>
+      <p style="margin-top:8px">&copy; 2026 Dollar Leads by LeadCurate</p>
+    </div>
+  </footer>
+
   <script>
-    const MARKETS = [
-      { id: 'mecklenburg-nc', name: 'Mecklenburg, NC', sub: 'Charlotte Metro' },
-      { id: 'wayne-mi', name: 'Wayne County, MI', sub: 'Detroit Metro' },
-      { id: 'dallas-tx', name: 'Dallas County, TX', sub: 'Dallas-Fort Worth' },
-      { id: 'fulton-ga', name: 'Fulton County, GA', sub: 'Atlanta Metro' },
-      { id: 'cook-il', name: 'Cook County, IL', sub: 'Chicago Metro' },
-      { id: 'shelby-tn', name: 'Shelby County, TN', sub: 'Memphis Metro' },
-      { id: 'massachusetts-statewide', name: 'Massachusetts', sub: 'Statewide Roll' }
-    ];
+  /* ================================================================
+     DOLLAR LEADS — EMBEDDED CATALOG
+     The CSV sample files live on the VPS at 76.13.25.117/samples/
+     This catalog is baked in so the page works on GitHub Pages too.
+     ================================================================ */
 
-    let catalogData = {};
-    let currentMarket = 'mecklenburg-nc';
-    let currentCategory = 'out-of-state';
+  const VPS = 'https://leadcurate.com';
+  // Fallback: if GitHub Pages can't reach /samples/, use direct IP
+  const VPS_FALLBACK = 'http://76.13.25.117';
 
-    async function loadCatalog() {
-      try {
-        const res = await fetch('/samples/catalog.json');
-        catalogData = await res.json();
-      } catch (err) {
-        console.error('Error loading catalog:', err);
-      }
-      renderMarkets();
-      renderCategories();
-      updateActionPanel();
+  const MARKETS = [
+    {id:'mecklenburg-nc',  name:'Charlotte, NC',   sub:'Mecklenburg County'},
+    {id:'wayne-mi',        name:'Detroit, MI',      sub:'Wayne County'},
+    {id:'dallas-tx',       name:'Dallas, TX',       sub:'Dallas County'},
+    {id:'fulton-ga',       name:'Atlanta, GA',      sub:'Fulton County'},
+    {id:'cook-il',         name:'Chicago, IL',      sub:'Cook County'},
+    {id:'shelby-tn',       name:'Memphis, TN',      sub:'Shelby County'},
+    {id:'massachusetts-statewide', name:'Massachusetts', sub:'Statewide'}
+  ];
+
+  // Embedded catalog — category availability per market
+  const CATALOG = {
+    'mecklenburg-nc': {
+      'out-of-state':    {name:'Out-of-State Mailing',          icon:'🏡', desc:'Tax bill mailed to a different state.',          total:43250},
+      'absentee':        {name:'Absentee / Non-Owner Occupied', icon:'🔑', desc:'Mailing address differs from property address.', total:423300},
+      'vacant-land':     {name:'Vacant Land & Lots',            icon:'🌲', desc:'Unimproved acreage, infill parcels, lots.',      total:4500},
+      'high-equity':     {name:'High Equity (Free & Clear)',    icon:'💎', desc:'Long-term ownership, high assessed value.',      total:609150},
+      'commercial':      {name:'Commercial & Multi-Unit',       icon:'🏢', desc:'Duplex, quads, apartments, commercial.',         total:9400},
+      'landlords':       {name:'Multi-Property Landlords',      icon:'📋', desc:'Multiple parcel titles in the county.',          total:204450},
+      'liens':           {name:'Municipal Assessments & Liens', icon:'🏛️', desc:'City assessments, civil liens, code records.',   total:4450}
+    },
+    'wayne-mi': {
+      'out-of-state':    {name:'Out-of-State Mailing',          icon:'🏡', desc:'Tax bill mailed to a different state.',          total:24500},
+      'absentee':        {name:'Absentee / Non-Owner Occupied', icon:'🔑', desc:'Mailing address differs from property address.', total:335900},
+      'vacant-land':     {name:'Vacant Land & Lots',            icon:'🌲', desc:'Unimproved acreage, infill parcels, lots.',      total:37500},
+      'high-equity':     {name:'High Equity (Free & Clear)',    icon:'💎', desc:'Long-term ownership, high assessed value.',      total:723900},
+      'tax-delinquent':  {name:'County Tax Delinquent',         icon:'⚖️', desc:'Municipal delinquent tax assessment rolls.',     total:49150},
+      'commercial':      {name:'Commercial & Multi-Unit',       icon:'🏢', desc:'Duplex, quads, apartments, commercial.',         total:58900},
+      'landlords':       {name:'Multi-Property Landlords',      icon:'📋', desc:'Multiple parcel titles in the county.',          total:167500},
+      'liens':           {name:'Municipal Assessments & Liens', icon:'🏛️', desc:'City assessments, civil liens, code records.',   total:165450}
+    },
+    'dallas-tx': {
+      'out-of-state':    {name:'Out-of-State Mailing',          icon:'🏡', desc:'Tax bill mailed to a different state.',          total:32000},
+      'absentee':        {name:'Absentee / Non-Owner Occupied', icon:'🔑', desc:'Mailing address differs from property address.', total:175600},
+      'vacant-land':     {name:'Vacant Land & Lots',            icon:'🌲', desc:'Unimproved acreage, infill parcels, lots.',      total:36000},
+      'high-equity':     {name:'High Equity (Free & Clear)',    icon:'💎', desc:'Long-term ownership, high assessed value.',      total:1206650},
+      'commercial':      {name:'Commercial & Multi-Unit',       icon:'🏢', desc:'Duplex, quads, apartments, commercial.',         total:23500},
+      'landlords':       {name:'Multi-Property Landlords',      icon:'📋', desc:'Multiple parcel titles in the county.',          total:161900}
+    },
+    'fulton-ga': {
+      'out-of-state':    {name:'Out-of-State Mailing',          icon:'🏡', desc:'Tax bill mailed to a different state.',          total:24500},
+      'absentee':        {name:'Absentee / Non-Owner Occupied', icon:'🔑', desc:'Mailing address differs from property address.', total:171250},
+      'vacant-land':     {name:'Vacant Land & Lots',            icon:'🌲', desc:'Unimproved acreage, infill parcels, lots.',      total:15100},
+      'high-equity':     {name:'High Equity (Free & Clear)',    icon:'💎', desc:'Long-term ownership, high assessed value.',      total:570650},
+      'tax-delinquent':  {name:'County Tax Delinquent',         icon:'⚖️', desc:'Municipal delinquent tax assessment rolls.',     total:450},
+      'commercial':      {name:'Commercial & Multi-Unit',       icon:'🏢', desc:'Duplex, quads, apartments, commercial.',         total:15900},
+      'landlords':       {name:'Multi-Property Landlords',      icon:'📋', desc:'Multiple parcel titles in the county.',          total:73800}
+    },
+    'cook-il': {
+      'out-of-state':    {name:'Out-of-State Mailing',          icon:'🏡', desc:'Tax bill mailed to a different state.',          total:61500},
+      'absentee':        {name:'Absentee / Non-Owner Occupied', icon:'🔑', desc:'Mailing address differs from property address.', total:1192300},
+      'vacant-land':     {name:'Vacant Land & Lots',            icon:'🌲', desc:'Unimproved acreage, infill parcels, lots.',      total:2500},
+      'high-equity':     {name:'High Equity (Free & Clear)',    icon:'💎', desc:'Long-term ownership, high assessed value.',      total:1532700},
+      'commercial':      {name:'Commercial & Multi-Unit',       icon:'🏢', desc:'Duplex, quads, apartments, commercial.',         total:180500},
+      'landlords':       {name:'Multi-Property Landlords',      icon:'📋', desc:'Multiple parcel titles in the county.',          total:224950}
+    },
+    'shelby-tn': {
+      'out-of-state':    {name:'Out-of-State Mailing',          icon:'🏡', desc:'Tax bill mailed to a different state.',          total:47650},
+      'absentee':        {name:'Absentee / Non-Owner Occupied', icon:'🔑', desc:'Mailing address differs from property address.', total:118450},
+      'vacant-land':     {name:'Vacant Land & Lots',            icon:'🌲', desc:'Unimproved acreage, infill parcels, lots.',      total:26350},
+      'high-equity':     {name:'High Equity (Free & Clear)',    icon:'💎', desc:'Long-term ownership, high assessed value.',      total:246550},
+      'tax-delinquent':  {name:'County Tax Delinquent',         icon:'⚖️', desc:'Municipal delinquent tax assessment rolls.',     total:3900},
+      'commercial':      {name:'Commercial & Multi-Unit',       icon:'🏢', desc:'Duplex, quads, apartments, commercial.',         total:13300},
+      'landlords':       {name:'Multi-Property Landlords',      icon:'📋', desc:'Multiple parcel titles in the county.',          total:76800},
+      'liens':           {name:'Municipal Assessments & Liens', icon:'🏛️', desc:'City assessments, civil liens, code records.',   total:11250}
+    },
+    'massachusetts-statewide': {
+      'out-of-state':    {name:'Out-of-State Mailing',          icon:'🏡', desc:'Tax bill mailed to a different state.',          total:115500},
+      'absentee':        {name:'Absentee / Non-Owner Occupied', icon:'🔑', desc:'Mailing address differs from property address.', total:1160650},
+      'vacant-land':     {name:'Vacant Land & Lots',            icon:'🌲', desc:'Unimproved acreage, infill parcels, lots.',      total:60500},
+      'high-equity':     {name:'High Equity (Free & Clear)',    icon:'💎', desc:'Long-term ownership, high assessed value.',      total:3985800},
+      'commercial':      {name:'Commercial & Multi-Unit',       icon:'🏢', desc:'Duplex, quads, apartments, commercial.',         total:58500},
+      'landlords':       {name:'Multi-Property Landlords',      icon:'📋', desc:'Multiple parcel titles in the county.',          total:756700},
+      'liens':           {name:'Municipal Assessments & Liens', icon:'🏛️', desc:'City assessments, civil liens, code records.',   total:500}
     }
+  };
 
-    function renderMarkets() {
-      const el = document.getElementById('marketList');
-      el.innerHTML = MARKETS.map(m => `
-        <button class="market-btn ${m.id === currentMarket ? 'active' : ''}" onclick="selectMarket('${m.id}')">
-          ${m.name}
-          <small>${m.sub}</small>
-        </button>
-      `).join('');
+  let curMarket = 'mecklenburg-nc';
+  let curCat = null;
+
+  function init() {
+    renderMarkets();
+    pickMarket('mecklenburg-nc');
+  }
+
+  function renderMarkets() {
+    const el = document.getElementById('marketScroll');
+    el.innerHTML = MARKETS.map(m =>
+      `<button class="market-btn ${m.id===curMarket?'on':''}" ontouchend="pickMarket('${m.id}')" onclick="pickMarket('${m.id}')">${m.name}<small>${m.sub}</small></button>`
+    ).join('');
+  }
+
+  function pickMarket(id) {
+    curMarket = id;
+    const cats = CATALOG[id] || {};
+    const keys = Object.keys(cats);
+    // Auto-select first category
+    curCat = keys.length ? keys[0] : null;
+    renderMarkets();
+    renderCats();
+    updateAction();
+  }
+
+  function renderCats() {
+    const el = document.getElementById('catList');
+    const cats = CATALOG[curMarket] || {};
+    const keys = Object.keys(cats);
+    if (!keys.length) {
+      el.innerHTML = '<p style="color:var(--text-3);padding:12px">No categories for this market.</p>';
+      return;
     }
+    el.innerHTML = keys.map(k => {
+      const c = cats[k];
+      const on = k === curCat;
+      return `<div class="cat-item ${on?'on':''}" ontouchend="pickCat('${k}')" onclick="pickCat('${k}')">
+        <span class="cat-icon">${c.icon}</span>
+        <div class="cat-body">
+          <div class="cat-name">${c.name}</div>
+          <div class="cat-sub">${c.desc}</div>
+        </div>
+        <span class="cat-badge">${c.total.toLocaleString()}</span>
+      </div>`;
+    }).join('');
+  }
 
-    function renderCategories() {
-      const el = document.getElementById('categoryList');
-      const mData = catalogData[currentMarket] || {};
-      const categoriesObj = mData.categories || {};
-      const categoryKeys = Object.keys(categoriesObj);
+  function pickCat(id) {
+    curCat = id;
+    renderCats();
+    updateAction();
+  }
 
-      if (categoryKeys.length === 0) {
-        el.innerHTML = '<p style="color:var(--muted); padding:16px;">No categories available for this selection.</p>';
-        return;
-      }
-
-      // If current category is not in this market, reset to the first available category
-      if (!categoryKeys.includes(currentCategory)) {
-        currentCategory = categoryKeys[0];
-      }
-
-      el.innerHTML = categoryKeys.map(catKey => {
-        const cat = categoriesObj[catKey];
-        const isActive = catKey === currentCategory;
-        const totalFmt = (cat.total_inventory || 0).toLocaleString();
-        return `
-          <div class="cat-card ${isActive ? 'active' : ''}" onclick="selectCategory('${catKey}')">
-            <div class="cat-head">
-              <span class="cat-title">${cat.icon || '📁'} ${cat.name}</span>
-              <span class="cat-count">${totalFmt}</span>
-            </div>
-            <p class="cat-desc">${cat.desc || 'Clean parcel records with verified addresses and ZIPs.'}</p>
-          </div>
-        `;
-      }).join('');
+  function updateAction() {
+    const cats = CATALOG[curMarket] || {};
+    const c = cats[curCat];
+    const m = MARKETS.find(x => x.id === curMarket);
+    if (c && m) {
+      document.getElementById('actionTitle').textContent = c.name + ' — ' + m.name;
+      document.getElementById('actionSub').textContent = c.total.toLocaleString() + ' clean public records with parcel IDs, owner names, addresses, and ZIPs.';
     }
+  }
 
-    function updateActionPanel() {
-      const mData = catalogData[currentMarket] || {};
-      const cat = (mData.categories || {})[currentCategory];
-      const mObj = MARKETS.find(m => m.id === currentMarket);
+  function downloadFree() {
+    if (!curCat) { alert('Pick a category first.'); return; }
+    const url = VPS_FALLBACK + '/samples/' + curMarket + '_' + curCat + '_50_leads.csv';
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'DollarLeads_' + curMarket + '_' + curCat + '_50.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
 
-      if (cat && mObj) {
-        const totalFmt = (cat.total_inventory || 0).toLocaleString();
-        document.getElementById('selectedCategoryTitle').innerText = `${cat.name} (${mObj.name})`;
-        document.getElementById('selectedCategoryStats').innerText = `${totalFmt} clean public records in pool with APNs, owner names, addresses, and ZIPs.`;
-      }
-    }
+  function openModal() {
+    if (!curCat) { alert('Pick a category first.'); return; }
+    const cats = CATALOG[curMarket] || {};
+    const c = cats[curCat];
+    const m = MARKETS.find(x => x.id === curMarket);
+    document.getElementById('modalFor').textContent = (c ? c.name : 'Leads') + ' in ' + (m ? m.name : curMarket);
+    const code = 'DL-' + Math.random().toString(36).substr(2,4).toUpperCase() + '-' + Math.random().toString(36).substr(2,4).toUpperCase();
+    document.getElementById('orderRef').textContent = code;
+    document.getElementById('orderOverlay').classList.add('show');
+  }
 
-    function selectMarket(mId) {
-      currentMarket = mId;
-      renderMarkets();
-      renderCategories();
-      updateActionPanel();
-    }
+  function closeModal() {
+    document.getElementById('orderOverlay').classList.remove('show');
+  }
 
-    function selectCategory(cId) {
-      currentCategory = cId;
-      renderCategories();
-      updateActionPanel();
-    }
+  // Close modal on overlay tap
+  document.getElementById('orderOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
 
-    function downloadFree50() {
-      const mData = catalogData[currentMarket] || {};
-      const cat = (mData.categories || {})[currentCategory];
-      if (!cat || !cat.download_url) {
-        alert('No sample file available for this selection.');
-        return;
-      }
-      const link = document.createElement('a');
-      link.href = cat.download_url;
-      link.download = `DollarLeads_${currentMarket}_${currentCategory}_50_leads.csv`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-
-    function openOrderModal() {
-      const mData = catalogData[currentMarket] || {};
-      const cat = (mData.categories || {})[currentCategory];
-      const mObj = MARKETS.find(m => m.id === currentMarket);
-      const catName = cat ? cat.name : 'Leads';
-      const marketName = mObj ? mObj.name : currentMarket;
-      
-      document.getElementById('modalTarget').innerText = `${catName} in ${marketName}`;
-      const randomCode = 'DL-' + Math.random().toString(36).substring(2, 6).toUpperCase() + '-' + Math.random().toString(36).substring(2, 6).toUpperCase();
-      document.getElementById('orderCode').innerText = randomCode;
-      document.getElementById('orderModal').style.display = 'grid';
-    }
-
-    function closeOrderModal() {
-      document.getElementById('orderModal').style.display = 'none';
-    }
-
-    loadCatalog();
+  init();
   </script>
 </body>
 </html>
