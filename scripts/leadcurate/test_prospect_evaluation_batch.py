@@ -8,6 +8,7 @@ from build_prospect_evaluation_batch import (
     DESHAWN_MASSACHUSETTS_800,
     clean_customer_property_zip,
     is_eligible,
+    owner_actionability,
 )
 
 
@@ -56,6 +57,14 @@ class ProspectEvaluationBatchTests(unittest.TestCase):
         self.assertFalse(eligible)
         self.assertEqual(reason, "non_acquisition_use")
 
+    def test_utility_owner_is_not_eligible(self) -> None:
+        row = base_row("industrial")
+        row["owner_name"] = "COMMONWEALTH GAS COMPANY"
+        row["USE_DESC"] = "Industrial Warehouse"
+        eligible, reason = is_eligible(row, "industrial", 2025)
+        self.assertFalse(eligible)
+        self.assertEqual(reason, "non_acquisition_owner")
+
     def test_pre_foreclosure_requires_current_court_evidence(self) -> None:
         row = base_row("pre-foreclosure")
         row["case_number"] = ""
@@ -68,6 +77,16 @@ class ProspectEvaluationBatchTests(unittest.TestCase):
         eligible, reason = is_eligible(row, "out-of-state-owners", 2025)
         self.assertFalse(eligible)
         self.assertEqual(reason, "missing_out_of_state_evidence")
+
+    def test_individual_and_property_entities_rank_ahead_of_generic_corporations(self) -> None:
+        individual = base_row("industrial")
+        individual["owner_name"] = "JANE SMITH"
+        property_llc = base_row("industrial")
+        property_llc["owner_name"] = "MAIN STREET PROPERTIES LLC"
+        corporation = base_row("industrial")
+        corporation["owner_name"] = "MANUFACTURING CORPORATION"
+        self.assertGreater(owner_actionability(individual), owner_actionability(property_llc))
+        self.assertGreater(owner_actionability(property_llc), owner_actionability(corporation))
 
 
 if __name__ == "__main__":

@@ -14,6 +14,7 @@ from build_prospect_evaluation_batch import (
     DESHAWN_MASSACHUSETTS_800,
     MASSACHUSETTS_PARCEL_URL,
     MINIMUM_VALUE,
+    NON_ACQUISITION_OWNER,
     NON_ACQUISITION_USE,
     clean,
     number,
@@ -77,6 +78,9 @@ def verify(args: argparse.Namespace) -> dict[str, object]:
     banned = sum(bool(NON_ACQUISITION_USE.search(clean(row.get("USE_DESC")))) for row in master)
     if banned:
         failures.append(f"{banned} rows contain excluded non-acquisition use descriptions")
+    banned_owners = sum(bool(NON_ACQUISITION_OWNER.search(clean(row.get("owner_name")))) for row in master)
+    if banned_owners:
+        failures.append(f"{banned_owners} rows contain excluded institutional or utility owners")
 
     phone_email_columns = [
         field for field in (master[0].keys() if master else [])
@@ -156,6 +160,7 @@ def verify(args: argparse.Namespace) -> dict[str, object]:
         "missing_required_fields": required_missing,
         "stale_or_missing_fiscal_year_records": stale,
         "excluded_use_records": banned,
+        "excluded_owner_records": banned_owners,
         "phone_or_email_columns": phone_email_columns,
         "current_event_source_counts": {
             "pre_foreclosure_exact_parcels": len(pre_keys),

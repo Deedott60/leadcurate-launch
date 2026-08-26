@@ -18,6 +18,8 @@ from pathlib import Path
 from statistics import median
 from typing import Any
 
+from process_investor_lanes import ENTITY_OWNER
+
 
 MASSACHUSETTS_PARCEL_URL = (
     "https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/"
@@ -72,8 +74,34 @@ PREFERRED_VALUE_CEILING = {
 # commercial class but are poor acquisition targets for this evaluation cut.
 NON_ACQUISITION_USE = re.compile(
     r"(?:RIGHT[ -]?OF[ -]?WAY|UTILITY|ELECTRIC(?:AL)? TRANSMISSION|"
-    r"GAS TRANSMISSION|CEMET|CONSERVATION|UNDEVELOPABLE|WETLAND|MARSH|"
-    r"WATER SUPPLY|RAILROAD|PUBLIC OPEN SPACE|MUNICIPAL PARK|TOWN OWNED)",
+    r"ELECTRIC GENERATION|ELECTRICITY REGULATING|GAS TRANSMISSION|"
+    r"MANUFACTURED GAS|TELEPHONE (?:EXCHANGE|RELAY)|CELL TOWER|"
+    r"TELECOMMUNICATION|RADIO.*TRANSMISSION|GAS (?:PRESSURE|PRODUCTION|DISTRIBUTION)|PIPELINE|"
+    r"CEMET|CONSERVATION|UNDEVELOPABLE|WETLAND|MARSH|WATER SUPPLY|"
+    r"RAILROAD|PUBLIC OPEN SPACE|MUNICIPAL PARK|TOWN OWNED)",
+    re.IGNORECASE,
+)
+
+NON_ACQUISITION_OWNER = re.compile(
+    r"(?:\bBANK\b|\bSAVINGS\b|CREDIT UNION|ELECTRIC|\bGAS (?:CO|COMPANY)\b|"
+    r"TELEPHONE|TELECOM|\bTEL(?:\s*&\s*TEL)?\b|\bT\s*&\s*T\b|"
+    r"VERIZON|UNITIL|TRANSMISSION|"
+    r"\bCABLE\b|\bPOWER\b|PIPE ?LINE|PIPELINE|"
+    r"WATER (?:CO|COMPANY|DEPARTMENT)|\bUTILITY\b|HOUSING AUTHORITY|"
+    r"\bAUTHORITY\b|\bUNIVERSITY\b|\bCOLLEGE\b|\bSCHOOL\b|\bCHURCH\b|"
+    r"\bDIOCESE\b|\bTEMPLE\b|\bHOSPITAL\b|MEDICAL CENTER|\bTOWN OF\b|"
+    r"\bCITY OF\b|COMMONWEALTH OF)",
+    re.IGNORECASE,
+)
+
+OWNER_TARGET_ENTITY = re.compile(
+    r"(?:\bLLC\b|\bL\.L\.C\b|\bTRUST\b|\bTRUSTEE\b|REALTY|PROPERT|"
+    r"HOLDING|INVEST|\bESTATE\b|\bLP\b|\bLTD\b)",
+    re.IGNORECASE,
+)
+
+GENERIC_BUSINESS_OWNER = re.compile(
+    r"(?:\bCO\b|PRODUCTS?|SYSTEMS?|MANUFACTURING|INDUSTRIES|INDUSTRIAL|SERVICES?)",
     re.IGNORECASE,
 )
 
@@ -132,6 +160,8 @@ def is_eligible(row: dict[str, str], category: str, min_fiscal_year: int) -> tup
     use_desc = clean(row.get("USE_DESC"))
     if NON_ACQUISITION_USE.search(use_desc):
         return False, "non_acquisition_use"
+    if NON_ACQUISITION_OWNER.search(clean(row.get("owner_name"))):
+        return False, "non_acquisition_owner"
 
     total_value = number(row.get("total_value"))
     if total_value < MINIMUM_VALUE[category]:
@@ -163,6 +193,15 @@ def completeness_score(row: dict[str, str]) -> int:
     return sum(bool(clean(row.get(field))) for field in useful)
 
 
+def owner_actionability(row: dict[str, str]) -> int:
+    owner = clean(row.get("owner_name"))
+    if OWNER_TARGET_ENTITY.search(owner):
+        return 2
+    if ENTITY_OWNER.search(owner) or GENERIC_BUSINESS_OWNER.search(owner):
+        return 1
+    return 3
+
+
 def selection_key(row: dict[str, str], category: str) -> tuple[Any, ...]:
     total_value = number(row.get("total_value"))
     preferred = total_value <= PREFERRED_VALUE_CEILING[category]
@@ -171,7 +210,16 @@ def selection_key(row: dict[str, str], category: str) -> tuple[Any, ...]:
     tenure = number(row.get("years_owned"))
     # Stable parcel tie-breaker keeps repeat runs byte-for-byte reproducible.
     parcel_hash = hashlib.sha1(clean(row.get("parcel_id")).upper().encode("utf-8")).hexdigest()
-    return (preferred, overlaps, score, completeness_score(row), tenure, -total_value, parcel_hash)
+    return (
+        preferred,
+        owner_actionability(row),
+        overlaps,
+        score,
+        completeness_score(row),
+        tenure,
+        -total_value,
+        parcel_hash,
+    )
 
 
 def lane_note(category: str) -> str:
@@ -330,6 +378,7 @@ def build(args: argparse.Namespace) -> dict[str, Any]:
             "complete_owner_property_parcel_and_mailing_fields": True,
             "minimum_fiscal_year": args.min_fiscal_year,
             "obvious_non_acquisition_use_descriptions_removed": True,
+            "obvious_institutional_utility_and_infrastructure_owners_removed": True,
             "commercial_minimum_total_value": 100_000,
             "commercial_minimum_building_value": 50_000,
             "vacant_land_minimum_value": 10_000,
