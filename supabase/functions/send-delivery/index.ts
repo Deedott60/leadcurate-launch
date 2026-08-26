@@ -209,6 +209,21 @@ function ctaSection(label: string, href: string) {
   return section(`<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:0 0 10px;"><a href="${esc(href)}" style="display:inline-block;background:#15803d;color:#ffffff;text-decoration:none;font-weight:800;padding:14px 28px;border-radius:8px;font-size:15px;">${esc(label)}</a></td></tr></table>`);
 }
 
+function messageBlocks(blocks: any[] = []) {
+  return blocks.map((block) => {
+    const heading = block.heading
+      ? `<h2 style="font-family:Georgia,serif;font-size:18px;color:#0f172a;margin:0 0 8px;">${esc(block.heading)}</h2>`
+      : "";
+    const paragraphs = Array.isArray(block.paragraphs)
+      ? block.paragraphs.map((paragraph: unknown) => `<p style="font-size:14px;line-height:1.65;color:#334155;margin:0 0 10px;">${esc(paragraph)}</p>`).join("")
+      : "";
+    const bullets = Array.isArray(block.bullets) && block.bullets.length
+      ? `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e2dccf;border-radius:10px;">${block.bullets.map((bullet: unknown, index: number) => `<tr><td style="width:18px;padding:11px 0 11px 14px;${index < block.bullets.length - 1 ? "border-bottom:1px solid #e2dccf;" : ""}color:#15803d;font-weight:800;vertical-align:top;">&#10003;</td><td style="padding:11px 14px 11px 8px;${index < block.bullets.length - 1 ? "border-bottom:1px solid #e2dccf;" : ""}font-size:14px;line-height:1.5;color:#334155;">${esc(bullet)}</td></tr>`).join("")}</table>`
+      : "";
+    return section(`${heading}${paragraphs}${bullets}`);
+  }).join("");
+}
+
 function renderSample(p: any) {
   const eyebrow = `Preview Audit · ${p.lane ? String(p.lane).replace(/_/g, " ").replace(/\b\w/g, (c: string) => c.toUpperCase()) : "Curated List"}`;
   const greeting = p.opportunity_headline ?? "Here's the real answer to what makes this different from a static purchased list.";
@@ -229,7 +244,7 @@ function renderDelivery(p: any) {
   const greeting = p.summary ?? `Your order is delivered. The full XLSX is attached to this email.`;
   const notes = p.working_notes ?? "Work the highest-scored records first. Prioritize owners with stronger motivation density, absentee signals, older hold periods, or larger value gaps before broad follow-up.";
   const strategy = p.outreach_strategy ?? "Direct mail first for long-held or absentee records, then follow with a concise owner-specific second touch.";
-  const body = [
+  const standardBody = [
     section(heroStatCards(heroCards(p))),
     p.list_url ? ctaSection("Download attached list", p.list_url) : "",
     section(differentiatorsBlock(p)),
@@ -240,6 +255,13 @@ function renderDelivery(p: any) {
     section(upsellBlock()),
     section(`<div style="padding:16px;background:#0f172a;color:#faf7f2;border-radius:10px;"><strong>Your full XLSX is attached.</strong> Use this briefing as the work order; use the attachment as the source file.</div>`),
   ].join("");
+  const packageBody = [
+    section(heroStatCards(heroCards(p))),
+    messageBlocks(p.message_blocks),
+    p.list_url && p.show_download_link !== false ? ctaSection(p.cta_label ?? "Download attached workbook", p.list_url) : "",
+    section(`<div style="padding:16px;background:#0f172a;color:#faf7f2;border-radius:10px;"><strong>Your full XLSX workbook is attached.</strong> Open the Start Here tab first.</div>`),
+  ].join("");
+  const body = Array.isArray(p.message_blocks) && p.message_blocks.length ? packageBody : standardBody;
   return shell(eyebrow, `${p.market}`, p.name, greeting, body);
 }
 
@@ -313,8 +335,14 @@ async function sendMail(to: string, subject: string, html: string, attachment?: 
 }
 
 async function verifyBeforeSend(payload: any) {
-  const expected = { total: payload.total, hot: payload.hot, warm: payload.warm, absentee: payload.absentee, top_equity: payload.top_equity, heirs_count: payload.analytics?.heirs_count ?? payload.heirs_count ?? 0, lane: payload.lane, market: payload.market, allow_entities: payload.allow_entities ?? false };
-  const res = await fetch(`${SB_URL}/functions/v1/verify-delivery`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ list_url: payload.list_url, expected, llm_review: payload.llm_review ?? false }) });
+  const expected: any = { total: payload.total, lane: payload.lane, market: payload.market, allow_entities: payload.allow_entities ?? false };
+  if (payload.hot !== undefined) expected.hot = payload.hot;
+  if (payload.warm !== undefined) expected.warm = payload.warm;
+  if (payload.absentee !== undefined) expected.absentee = payload.absentee;
+  if (payload.top_equity !== undefined) expected.top_equity = payload.top_equity;
+  const heirsCount = payload.analytics?.heirs_count ?? payload.heirs_count;
+  if (heirsCount !== undefined) expected.heirs_count = heirsCount;
+  const res = await fetch(`${SB_URL}/functions/v1/verify-delivery`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ list_url: payload.verification_url ?? payload.list_url, expected, llm_review: payload.llm_review ?? false }) });
   return await res.json();
 }
 
@@ -373,7 +401,7 @@ Deno.serve(async (req) => {
       let binary = "";
       for (const b of bytes) binary += String.fromCharCode(b);
       attachment = { filename: p.filename ?? p.list_url.split("/").pop() ?? "LeadCurate-delivery.xlsx", content: btoa(binary) };
-      subject = `LeadCurate delivery audit: ${p.market}`;
+      subject = p.subject ?? `LeadCurate delivery audit: ${p.market}`;
       html = renderDelivery(p);
     } else {
       return json({ ok: false, error: `Unknown mode ${mode}` }, 400);

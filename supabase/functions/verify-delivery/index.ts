@@ -12,10 +12,10 @@ const headers = {
 
 type Expected = {
   total: number;
-  hot: number;
+  hot?: number;
   warm?: number;
-  absentee: number;
-  top_equity: number;
+  absentee?: number;
+  top_equity?: number;
   heirs_count?: number;
   lane?: string;
   market?: string;
@@ -45,6 +45,50 @@ function isAbsentee(row: Record<string, unknown>) {
 
 function isEntity(owner: string) {
   return /\b(LLC|INC|CORP|TRUST|TTC|COMPANY|PROPERTIES|INVESTMENTS|HOLDINGS|PARTNERS|CHURCH|CITY|COUNTY)\b/i.test(owner);
+}
+
+function firstColumn(columns: Set<string>, candidates: string[]) {
+  return candidates.find((candidate) => columns.has(candidate)) ?? "";
+}
+
+function parseCsv(csv: string) {
+  const parsed: string[][] = [];
+  let row: string[] = [];
+  let field = "";
+  let quoted = false;
+  for (let index = 0; index < csv.length; index += 1) {
+    const char = csv[index];
+    if (quoted) {
+      if (char === '"' && csv[index + 1] === '"') {
+        field += '"';
+        index += 1;
+      } else if (char === '"') {
+        quoted = false;
+      } else {
+        field += char;
+      }
+    } else if (char === '"') {
+      quoted = true;
+    } else if (char === ",") {
+      row.push(field);
+      field = "";
+    } else if (char === "\n") {
+      row.push(field.replace(/\r$/, ""));
+      parsed.push(row);
+      row = [];
+      field = "";
+    } else {
+      field += char;
+    }
+  }
+  if (field || row.length) {
+    row.push(field.replace(/\r$/, ""));
+    parsed.push(row);
+  }
+  const headers = parsed.shift() ?? [];
+  return parsed.filter((values) => values.some(Boolean)).map((values) =>
+    Object.fromEntries(headers.map((header, index) => [header, values[index] ?? ""]))
+  );
 }
 
 async function openRouterReview(rows: Record<string, unknown>[], expected: Expected, checks: Record<string, unknown>) {
@@ -98,48 +142,75 @@ Deno.serve(async (req) => {
     if (!payload.list_url || !expected) return json({ ok: false, error: "list_url and expected are required" }, 400);
     const { file, resolved_url } = await fetchDeliveryFile(String(payload.list_url));
     const data = new Uint8Array(await file.arrayBuffer());
-    const required = ["Owner Name", "Property Address", "Total Owed", "Estimated Equity", "Motivation"];
-    const workbook = XLSX.read(data, { type: "array" });
+    const legacyRequired = ["Owner Name", "Property Address", "Total Owed", "Estimated Equity", "Motivation"];
     let rows: Record<string, unknown>[] = [];
-    let sheetName = workbook.SheetNames[0];
-    for (const candidate of workbook.SheetNames) {
-      const candidateRows = XLSX.utils.sheet_to_json<Record<string, unknown>>(workbook.Sheets[candidate], { defval: "" });
-      const candidateColumns = new Set(candidateRows.length ? Object.keys(candidateRows[0]) : []);
-      if (required.every((column) => candidateColumns.has(column))) {
-        sheetName = candidate;
-        rows = candidateRows;
-        break;
+    let sheetName = "CSV";
+    const isCsv = file.headers.get("content-type")?.includes("text/csv") || String(resolved_url).toLowerCase().split("?")[0].endsWith(".csv");
+    if (isCsv) {
+      rows = parseCsv(new TextDecoder().decode(data));
+    } else {
+      const workbook = XLSX.read(data, { type: "array" });
+      sheetName = workbook.SheetNames[0];
+      for (const candidate of workbook.SheetNames) {
+        const candidateRows = XLSX.utils.sheet_to_json<Record<string, unknown>>(workbook.Sheets[candidate], { defval: "" });
+        const candidateColumns = new Set(candidateRows.length ? Object.keys(candidateRows[0]) : []);
+        const hasLegacyShape = legacyRequired.every((column) => candidateColumns.has(column));
+        const hasPropertyShape = Boolean(
+          firstColumn(candidateColumns, ["Owner Name", "owner_name"]) &&
+          firstColumn(candidateColumns, ["Property Address", "property_address"]) &&
+          firstColumn(candidateColumns, ["Parcel ID", "Parcel REID", "parcel_id"])
+        );
+        if (hasLegacyShape || hasPropertyShape) {
+          sheetName = candidate;
+          rows = candidateRows;
+          break;
+        }
+      }
+      if (!rows.length) {
+        rows = XLSX.utils.sheet_to_json<Record<string, unknown>>(workbook.Sheets[sheetName], { defval: "" });
       }
     }
-    if (!rows.length) {
-      rows = XLSX.utils.sheet_to_json<Record<string, unknown>>(workbook.Sheets[sheetName], { defval: "" });
-    }
     const columns = new Set(rows.length ? Object.keys(rows[0]) : []);
+    const ownerColumn = firstColumn(columns, ["Owner Name", "owner_name"]);
+    const addressColumn = firstColumn(columns, ["Property Address", "property_address"]);
+    const parcelColumn = firstColumn(columns, ["Parcel ID", "Parcel REID", "parcel_id"]);
+    const accountColumn = firstColumn(columns, ["Account ID", "account_id"]);
+    const hotAvailable = ["Total Owed", "Years Behind", "Motivation"].some((column) => columns.has(column));
+    const absenteeColumn = firstColumn(columns, ["Absentee Owner", "is_absentee_owner"]);
+    const equityColumn = firstColumn(columns, ["Estimated Equity", "equity"]);
     const duplicateKeys = new Set<string>();
     const seen = new Set<string>();
     for (const row of rows) {
-      const key = `${text(row["Parcel REID"])}|${text(row["Account ID"])}`;
+      const key = `${text(row[parcelColumn])}|${accountColumn ? text(row[accountColumn]) : ""}`;
       if (seen.has(key)) duplicateKeys.add(key);
       seen.add(key);
     }
     const checks = {
       total: rows.length,
-      hot: rows.filter(isHot).length,
-      absentee: rows.filter(isAbsentee).length,
-      top_equity: Math.max(0, ...rows.map((r) => num(r["Estimated Equity"]))),
-      heirs_count: rows.filter((r) => /\b(heirs|hrs)\b/i.test(text(r["Owner Name"]))).length,
+      hot: hotAvailable ? rows.filter(isHot).length : null,
+      absentee: absenteeColumn ? rows.filter((row) => isAbsentee({ "Absentee Owner": row[absenteeColumn] })).length : null,
+      top_equity: equityColumn ? Math.max(0, ...rows.map((row) => num(row[equityColumn]))) : null,
+      heirs_count: ownerColumn ? rows.filter((row) => /\b(heirs|hrs)\b/i.test(text(row[ownerColumn]))).length : null,
       duplicate_count: duplicateKeys.size,
-      entity_owner_count: rows.filter((r) => isEntity(text(r["Owner Name"]))).length,
-      missing_columns: required.filter((c) => !columns.has(c)),
+      entity_owner_count: ownerColumn ? rows.filter((row) => isEntity(text(row[ownerColumn]))).length : 0,
+      missing_columns: [
+        ownerColumn ? "" : "Owner Name",
+        addressColumn ? "" : "Property Address",
+        parcelColumn ? "" : "Parcel ID",
+      ].filter(Boolean),
       sheet_name: sheetName,
       resolved_url,
     };
     const failures: string[] = [];
     if (checks.total !== expected.total) failures.push(`row count ${checks.total} != expected ${expected.total}`);
-    if (checks.hot !== expected.hot) failures.push(`HOT count ${checks.hot} != expected ${expected.hot}`);
-    if (checks.absentee !== expected.absentee) failures.push(`absentee count ${checks.absentee} != expected ${expected.absentee}`);
-    if (Math.abs(checks.top_equity - expected.top_equity) > 100) failures.push(`top equity ${checks.top_equity} != expected ${expected.top_equity}`);
-    if (expected.heirs_count !== undefined && checks.heirs_count !== expected.heirs_count) failures.push(`heirs count ${checks.heirs_count} != expected ${expected.heirs_count}`);
+    if (expected.hot !== undefined && checks.hot === null) failures.push("HOT metric requested but no HOT source columns were found");
+    else if (expected.hot !== undefined && checks.hot !== expected.hot) failures.push(`HOT count ${checks.hot} != expected ${expected.hot}`);
+    if (expected.absentee !== undefined && checks.absentee === null) failures.push("absentee metric requested but no absentee source column was found");
+    else if (expected.absentee !== undefined && checks.absentee !== expected.absentee) failures.push(`absentee count ${checks.absentee} != expected ${expected.absentee}`);
+    if (expected.top_equity !== undefined && checks.top_equity === null) failures.push("top equity requested but no equity source column was found");
+    else if (expected.top_equity !== undefined && checks.top_equity !== null && Math.abs(checks.top_equity - expected.top_equity) > 100) failures.push(`top equity ${checks.top_equity} != expected ${expected.top_equity}`);
+    if (expected.heirs_count !== undefined && checks.heirs_count === null) failures.push("heirs count requested but no owner source column was found");
+    else if (expected.heirs_count !== undefined && checks.heirs_count !== expected.heirs_count) failures.push(`heirs count ${checks.heirs_count} != expected ${expected.heirs_count}`);
     if (checks.duplicate_count) failures.push(`${checks.duplicate_count} duplicate parcel/account keys`);
     if (!expected.allow_entities && checks.entity_owner_count) failures.push(`${checks.entity_owner_count} entity owners found`);
     if (checks.missing_columns.length) failures.push(`missing columns: ${checks.missing_columns.join(", ")}`);
