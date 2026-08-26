@@ -6,9 +6,21 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-08-15 by Codex (Anti-Gravity keepsakes orchestration handoff posted)
+Last updated: 2026-08-26 by Codex (DeShawn conversion release isolated for final Claude review)
 
 ---
+
+## Open now -- DeShawn Massachusetts conversion release (current phase; supersedes earlier DeShawn presentation work)
+
+This is a new customer-conversion phase, not a continuation of the older three-market audit, capped-campaign discussion, 15,000-parcel build, or prior pricing language. Those older entries remain historical background only. For the next Claude session, this section and the exact 800-property workbook are controlling. Do not mix older DeShawn pages, offers, numbers, or deliverables into the final release unless Derrick explicitly requests a specific item.
+
+**Business purpose:** Derrick is intentionally giving DeShawn one unusually detailed Massachusetts proof-of-value package for free to demonstrate LeadCurate's data depth and convert him into a paying territory-data client. The free package is not the whole Massachusetts database and does not promise future free records. The customer-facing material must show what is inside, why the properties were selected, how the official parcel details can be verified, and how LeadCurate can maintain and refresh a paid territory database after the preview. Pricing is not locked in this handoff; prepare the conversion bridge and paid next step for Derrick to approve rather than inventing a price or revenue-share agreement.
+
+**Only approved review artifact:** `C:\Users\lenovo\Documents\Leadcurate\customer-deliveries\DeShawn-Bunch\massachusetts-evaluation-800-2026-08-26\deshawn-massachusetts-evaluation-800-2026-08-26.xlsx`. The matching held VPS folder is `/opt/leadcurate/deliveries/deshawn-bunch/massachusetts-evaluation-800-2026-08-26/`. Do not substitute or attach the 15,000-property package. Nothing is authorized to send until Derrick approves the exact workbook, customer summary, email, and text.
+
+**What Claude must produce next:** visually inspect the exact workbook and prepare one final customer-facing presentation/cover summary, one send-ready email, and one short text message. The summary must communicate the 800-property category mix, the detailed public-record fields, official parcel verification, owner mix, and the reason each category matters without internal technical language. It must clearly separate current filing signals from ownership targets. It should end with a natural paid next step for LeadCurate to maintain and refresh DeShawn's Massachusetts territory database. Do not rebuild the data unless a concrete verified defect is found; report any defect to Derrick before changing the approved 800-property composition.
+
+**Locked facts for the final customer explanation:** 800 unique properties; 200 current pre-foreclosure filing signals that are not completed-foreclosure claims; 4 current tax-title filings; 150 multifamily targets; 50 office targets; 75 industrial targets; 120 verified vacant-land parcels; 101 long-hold absentee owners; and 100 out-of-state owners. The workbook has a readable working view, one tab per category, frozen owner/parcel/address columns, and an All 97 Fields tab containing the same 800 properties with deeper official-record detail. Available information includes official parcel ID, owner and owner-mailing information, property address/use, assessed land/building/total values, acreage, ownership tenure, last-sale data, court details where applicable, prioritization evidence, and direct official-source links where available. Owner-name classification is 772 individual/personally named owners and 28 legitimate property LLC/trust/estate/realty/investment entities; all 28 property entities are in industrial. There are zero generic-company selections and zero excluded utility/government/infrastructure owners under the final classifier. Phone numbers and emails are unavailable from the official bulk sources and were not guessed. Do not call the package skip traced and do not describe all 800 properties as foreclosures.
 
 ## Open now -- Estate delivery pilot
 
