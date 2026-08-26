@@ -7,7 +7,7 @@ import json
 import sqlite3
 import time
 from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
-from datetime import date
+from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlencode
@@ -65,6 +65,13 @@ def pull(output: Path, workers: int, batch_size: int) -> dict[str, Any]:
     if len(municipalities) != 351:
         raise RuntimeError(f"Expected 351 Massachusetts municipalities, received {len(municipalities)}")
     layer = request_json(PARCEL_URL, {"f": "json"})
+    retrieved_at_utc = datetime.now(timezone.utc).isoformat()
+    edit_epoch_ms = layer.get("editingInfo", {}).get("dataLastEditDate")
+    data_last_edited_utc = (
+        datetime.fromtimestamp(float(edit_epoch_ms) / 1000, timezone.utc).isoformat()
+        if edit_epoch_ms
+        else None
+    )
     source_fields = [field["name"] for field in layer["fields"]]
     out_fields = ",".join(source_fields)
     sqlite_path = output.with_suffix(".sqlite")
@@ -138,6 +145,13 @@ def pull(output: Path, workers: int, batch_size: int) -> dict[str, Any]:
     conn.commit()
 
     unique_rows = int(conn.execute("SELECT COUNT(*) FROM parcels").fetchone()[0])
+    fiscal_years = {
+        str(year or "missing"): int(count)
+        for year, count in conn.execute(
+            "SELECT COALESCE(NULLIF(TRIM(FY), ''), 'missing'), COUNT(*) "
+            "FROM parcels GROUP BY COALESCE(NULLIF(TRIM(FY), ''), 'missing') ORDER BY 1"
+        )
+    }
     with output.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.writer(handle)
         writer.writerow(columns)
@@ -147,6 +161,9 @@ def pull(output: Path, workers: int, batch_size: int) -> dict[str, Any]:
     payload = {
         "ok": unique_rows > 0 and unique_rows <= fetched_rows,
         "source_url": PARCEL_URL,
+        "source_data_last_edited_utc": data_last_edited_utc,
+        "retrieved_at_utc": retrieved_at_utc,
+        "source_status": "Current live MassGIS service; municipal assessor fiscal years vary and must be checked separately.",
         "municipality_source_url": MUNICIPAL_URL,
         "municipalities": len(municipalities),
         "source_reported_rows": source_count,
@@ -154,6 +171,7 @@ def pull(output: Path, workers: int, batch_size: int) -> dict[str, Any]:
         "unique_parcels": unique_rows,
         "duplicate_rows_removed": fetched_rows - unique_rows,
         "field_count": len(columns),
+        "municipal_fiscal_years": fiscal_years,
         "output_csv": str(output),
     }
     output.with_suffix(".meta.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")

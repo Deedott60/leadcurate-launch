@@ -325,12 +325,12 @@ MARKETS: dict[str, dict[str, Any]] = {
         "state": "MA",
         "source": RAW_ROOT / "massachusetts-statewide" / TODAY / "massgis-parcels-canonical.csv",
         "source_url": "https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/Massachusetts_Property_Tax_Parcels/FeatureServer/0",
-        "source_data_as_of": "2026-06-25T20:02:07Z",
-        "source_retrieved_at": "2026-07-15",
+        "source_data_as_of": "2026-08-17T17:50:55.804000+00:00",
+        "source_retrieved_at": "2026-08-25",
         "source_status": "Current MassGIS statewide standardized parcel service; municipal assessor fiscal years vary by community.",
         "source_components": {
             "statewide_parcels": {
-                "last_edit_at": "2026-06-25T20:02:07Z",
+                "last_edit_at": "2026-08-17T17:50:55.804000+00:00",
                 "status": "current_arcgis_service",
                 "url": "https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/Massachusetts_Property_Tax_Parcels/FeatureServer/0",
             },
