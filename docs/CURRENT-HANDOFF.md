@@ -6,9 +6,17 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-08-15 by Codex (Anti-Gravity keepsakes orchestration handoff posted)
+Last updated: 2026-08-31 by Danny (Golden Crest family-venture hub and live preview added)
 
 ---
+
+## Open now -- Golden Crest Facilities
+
+Golden Crest is a separate prelaunch family venture for Miesha and Kimberly, not a LeadCurate property-data product. The working model is an account-based government and institutional contractor engine for founder-led commercial janitorial and facility care. The business is not yet formed, insured, SAM active, assigned UEI/CAGE, or SBA certified. Miesha and Kimberly report that they meet the EDWOSB financial thresholds, but SBA approval must still be completed through the official free process after formation and SAM activation.
+
+Verified staging website: `https://golden-crest.76-13-25-117.sslip.io/`. The site includes a designed facility review intake for an on-site walkthrough, photo and short-video review, or ordinary solicitation and scope documents. The secure upload backend and monitored Golden Crest contact channel are explicitly pending; the current preview does not transmit files. Source and shared handoff: `https://github.com/Deedott60/golden-crest-facilities`. Command OS has a dedicated Family ventures sidebar page with website, intake, GitHub, and capability-profile links. Golden Crest has its own repository, VPS web root, and nginx host; keep it legally, operationally, financially, and in data storage separate from LeadCurate.
+
+Current strategy: founders approve formation and the 50/50 operating agreement; request no-cost APEX and NC SBTDC Government Contracting Assistance Program guidance; complete eVP/NCSBE, Charlotte supplier/SBE, SAM/UEI/CAGE, and MySBA WOSB/EDWOSB work; then build a named-account pipeline of agencies, institutions, prime contractors, and facility buyers. No paid consumer advertising is required for the initial account-based engine.
 
 ## Open now -- Estate delivery pilot
 

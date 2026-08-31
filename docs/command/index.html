@@ -452,6 +452,13 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
     </div>
     <div class="nav-divider"></div>
+    <div class="nav-label">Family ventures</div>
+    <div class="nav-section">
+      <div class="nav-item" data-page="golden-crest">
+        <span class="icon">GC</span> Golden Crest Facilities
+      </div>
+    </div>
+    <div class="nav-divider"></div>
     <div class="nav-label">Growth</div>
     <div class="nav-section">
       <div class="nav-item" data-page="marketing">
@@ -698,6 +705,67 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
           </article>
         </div>
         <div class="keepsakes-hq-flow">ORDER → CONSULTATION → PRIVATE BUILD → OPERATOR QA → CUSTOMER APPROVAL → LIVE EXPERIENCE</div>
+      </section>
+    </div>
+
+    <div id="page-golden-crest" class="page">
+      <div class="page-header">
+        <div class="page-title">Golden Crest Facilities</div>
+        <div class="page-sub">Miesha and Kimberly&apos;s separate prelaunch commercial janitorial and government contracting venture.</div>
+      </div>
+
+      <section class="card keepsakes-hq" aria-labelledby="golden-crest-workspace-title">
+        <div class="keepsakes-hq-head">
+          <div>
+            <div class="card-meta">FAMILY VENTURE + GOVERNMENT READINESS</div>
+            <div class="keepsakes-hq-title" id="golden-crest-workspace-title">Golden Crest working hub</div>
+            <div class="keepsakes-hq-copy">Account-based government and institutional contractor engine for founder-led janitorial and facility care. Keep Golden Crest legally, operationally, and financially separate from LeadCurate.</div>
+          </div>
+          <span class="keepsakes-hq-status">Prelaunch on VPS</span>
+        </div>
+        <div class="keepsakes-hq-actions">
+          <button class="btn" onclick="window.open('https://golden-crest.76-13-25-117.sslip.io/','_blank')">Open live website</button>
+          <button class="btn btn-ghost" onclick="window.open('https://golden-crest.76-13-25-117.sslip.io/#scope-review','_blank')">Open facility review</button>
+        </div>
+        <div class="keepsakes-hq-grid">
+          <article class="keepsakes-hq-link">
+            <strong>Live website preview</strong>
+            <span>Responsive staging website with the blended hero, founder positioning, procurement readiness, and designed facility intake.</span>
+            <div class="keepsakes-hq-url">https://golden-crest.76-13-25-117.sslip.io/</div>
+            <div class="keepsakes-hq-link-actions">
+              <a class="btn btn-ghost" href="https://golden-crest.76-13-25-117.sslip.io/" target="_blank" rel="noopener">Open</a>
+              <button class="btn" type="button" onclick="window.copyCareerLink('https://golden-crest.76-13-25-117.sslip.io/','Golden Crest website link copied',this)">Copy link</button>
+            </div>
+          </article>
+          <article class="keepsakes-hq-link">
+            <strong>Facility review intake</strong>
+            <span>Designed path for an on-site walkthrough, photo and short-video review, or ordinary solicitation and scope documents. Secure backend connection is still pending.</span>
+            <div class="keepsakes-hq-url">https://golden-crest.76-13-25-117.sslip.io/#scope-review</div>
+            <div class="keepsakes-hq-link-actions">
+              <a class="btn btn-ghost" href="https://golden-crest.76-13-25-117.sslip.io/#scope-review" target="_blank" rel="noopener">Open</a>
+              <button class="btn" type="button" onclick="window.copyCareerLink('https://golden-crest.76-13-25-117.sslip.io/#scope-review','Facility review link copied',this)">Copy link</button>
+            </div>
+          </article>
+          <article class="keepsakes-hq-link">
+            <strong>GitHub project</strong>
+            <span>Source, account-based contracting plan, certification roadmap, website, capability profile, and agent instructions.</span>
+            <div class="keepsakes-hq-url">https://github.com/Deedott60/golden-crest-facilities</div>
+            <div class="keepsakes-hq-link-actions">
+              <a class="btn btn-ghost" href="https://github.com/Deedott60/golden-crest-facilities" target="_blank" rel="noopener">Open</a>
+              <button class="btn" type="button" onclick="window.copyCareerLink('https://github.com/Deedott60/golden-crest-facilities','Golden Crest GitHub link copied',this)">Copy link</button>
+            </div>
+          </article>
+          <article class="keepsakes-hq-link">
+            <strong>Capability profile</strong>
+            <span>One-page pre-registration draft. Replace pending legal name, contact, insurance, UEI, CAGE, and certification fields before external use.</span>
+            <div class="keepsakes-hq-url">https://golden-crest.76-13-25-117.sslip.io/Golden-Crest-Capability-Profile-DRAFT.pdf</div>
+            <div class="keepsakes-hq-link-actions">
+              <a class="btn btn-ghost" href="https://golden-crest.76-13-25-117.sslip.io/Golden-Crest-Capability-Profile-DRAFT.pdf" target="_blank" rel="noopener">Open</a>
+              <button class="btn" type="button" onclick="window.copyCareerLink('https://golden-crest.76-13-25-117.sslip.io/Golden-Crest-Capability-Profile-DRAFT.pdf','Capability profile link copied',this)">Copy link</button>
+            </div>
+          </article>
+        </div>
+        <div class="keepsakes-hq-flow">FORMATION → APEX / GCAP → SAM + EDWOSB → ACCOUNT TARGETING → PROPOSAL → PERFORMANCE</div>
       </section>
     </div>
 
@@ -1908,7 +1976,7 @@ function lsLoad(){
 function lsSave(){ localStorage.setItem(LS_KEY, JSON.stringify(PROSPECTS)); }
 
 // ─── NAV ──────────────────────────────────────────────────────
-const pages = ['hq','keepsakes','inbox','pipeline','messages','workflow','whitelabel','reggie','templates','f2f-estate-sales','estate-delivery','conference','marketing','seo','scout','dollarleads','send-intake','send-quote','learn','tiers-ref','help','portfolio'];
+const pages = ['hq','keepsakes','golden-crest','inbox','pipeline','messages','workflow','whitelabel','reggie','templates','f2f-estate-sales','estate-delivery','conference','marketing','seo','scout','dollarleads','send-intake','send-quote','learn','tiers-ref','help','portfolio'];
 window.nav = async function(id){
   pages.forEach(p=>{
     const el = document.getElementById('page-'+p);
