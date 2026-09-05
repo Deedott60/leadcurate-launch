@@ -1,0 +1,906 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import csv
+import json
+import re
+from datetime import date, datetime
+from pathlib import Path
+from statistics import median
+from typing import Any
+
+from lane_quality import (
+    INSTITUTIONAL_OWNER,
+    derive_occupancy_signals,
+    validate_role_mapping,
+)
+
+
+TODAY = date.today().isoformat()
+RAW_ROOT = Path("/opt/leadcurate/raw_imports")
+PROCESSED_ROOT = Path("/opt/leadcurate/processed")
+
+LANES = (
+    "pre-foreclosure",
+    "tax-delinquent",
+    "absentee-owners",
+    "tired-landlords",
+    "industrial-multifamily-distress",
+    "out-of-state-owners",
+    "high-equity",
+    "individual-homeowner",
+    "entity-owned",
+    "office",
+    "industrial",
+    "multifamily",
+    "verified-vacant-land",
+)
+
+MARKETS: dict[str, dict[str, Any]] = {
+    "fulton-ga": {
+        "display": "Fulton County GA (Atlanta)",
+        "state": "GA",
+        "source_pattern": "fulton-ga/*/fulton-county-tax-parcels-2025.csv",
+        "source_url": "https://services1.arcgis.com/AQDHTHDrZzfsFsB5/arcgis/rest/services/Tax_Parcels_2025/FeatureServer/0",
+        "source_data_as_of": "Fulton County 2025 certified tax parcel roll; authoritative service checked 2026-07-19",
+        "source_retrieved_at": TODAY,
+        "source_status": "Full Fulton County authoritative parcel, ownership, class, and assessed-value service (not the former Atlanta-only layer).",
+        "fields": {
+            "parcel": ["ParcelID"],
+            "owner": ["Owner"],
+            "mail_street": ["OwnerAddr1"],
+            "mail_compare_street": ["OwnerAddr1"],
+            "mail_city": ["OwnerAddr2"],
+            "mail_state": ["OwnerAddr2"],
+            "mail_zip": ["OwnerAddr2"],
+            "property_street": ["Address"],
+            "property_city": [],
+            "property_zip": [],
+            "sale_date": [],
+            "sale_price": [],
+            "land_value": ["LandAppr", "LandAssess"],
+            "building_value": ["ImprAppr", "ImprAssess"],
+            "other_value": [],
+            "total_value": ["TotAppr", "TotAssess"],
+            "acreage": ["LandAcres"],
+            "acreage_units": [],
+            "use_code": ["ClassCode", "LUCode"],
+            "use_desc": [],
+            "office_desc": [],
+            "division": [],
+            "year_built": [],
+            "living_area": [],
+            "units": ["LivUnits"],
+            "homestead": ["ExCode"],
+            "county": [],
+            "municipality": [],
+            "tax_delinquent": [],
+            "pre_foreclosure": [],
+        },
+        "vacant_codes": {"R3", "C3", "I3", "A3"},
+        "multifamily_codes": {"R4", "R5", "R9"},
+        "multifamily_prefixes": ("2A", "2B", "2C", "2D", "2H", "2X"),
+        # Fulton LUCode is more precise than the broad ClassCode=C bucket.
+        # C also contains retail and other commercial uses, so never treat the
+        # entire class as office.
+        "office_codes": {"349", "350", "353", "354", "355"},
+        "industrial_codes": {"390", "391", "392", "393", "394", "395", "396", "397", "398"},
+        "industrial_prefixes": ("I",),
+        "residential_prefixes": ("R",),
+        "unsupported": {
+            "tax-delinquent": "The assessor roll does not prove an unpaid balance; the separate current Sheriff levy-sale notice is the event source.",
+            "pre-foreclosure": "The assessor roll does not prove a foreclosure filing; the separate current Sheriff judicial-foreclosure notice is the event source.",
+            "tired-landlords": "The certified assessor service does not contain a last-sale date, so ownership tenure cannot be derived without a separate deed-history source.",
+        },
+    },
+    "shelby-tn": {
+        "display": "Shelby County TN (Memphis)",
+        "state": "TN",
+        "source_pattern": "shelby-tn/*/shelby-county-parcels-current.csv",
+        "source_url": "https://scgis.shelbycountytn.gov/serverhigh/rest/services/Parcel/CERTParcel/MapServer/0",
+        "source_data_as_of": "Current Shelby County Assessor certified parcel service checked 2026-07-19",
+        "source_retrieved_at": TODAY,
+        "source_status": "Full official Shelby County parcel, ownership, mailing, class, land-use, and zoning service.",
+        "fields": {
+            "parcel": ["PARCELID", "PARID"],
+            "owner": ["OWNER"],
+            "mail_street": ["OWN_ADDR1", "OWN_ADDR2", "OWN_ADDR3"],
+            "mail_compare_street": ["OWN_ADDR1"],
+            "mail_city": ["OWN_CITY"],
+            "mail_state": ["OWN_STATE"],
+            "mail_zip": ["OWN_ZIP"],
+            "property_street": ["PAR_ADDR1"],
+            "property_city": ["MUNI"],
+            "property_zip": ["PAR_ZIP"],
+            "sale_date": [],
+            "sale_price": [],
+            "land_value": [],
+            "building_value": [],
+            "other_value": [],
+            "total_value": [],
+            "acreage": [],
+            "acreage_units": [],
+            "use_code": ["CLASS", "LUC"],
+            "use_desc": ["LANDUSE"],
+            "office_desc": [],
+            "division": [],
+            "year_built": [],
+            "living_area": [],
+            "units": ["LIVUNIT"],
+            "homestead": [],
+            "county": [],
+            "municipality": ["MUNI"],
+            "tax_delinquent": [],
+            "pre_foreclosure": [],
+        },
+        "office_prefixes": ("OFFICE", "COMMERCIAL"),
+        "industrial_prefixes": ("INDUSTRIAL",),
+        "residential_prefixes": ("R",),
+        "homestead_available": False,
+        "vacant_classification_only": True,
+        "unsupported": {
+            "tax-delinquent": "The parcel service does not prove delinquency; the Trustee tax-sale extract is the separate current event source.",
+            "pre-foreclosure": "The official Shelby foreclosure map service ends in April 2018 and is too stale for sale as current pre-foreclosure data.",
+            "tired-landlords": "The certified parcel service does not contain a last-sale date, so ownership tenure cannot be derived without a separate deed-history source.",
+            "high-equity": "The certified parcel service does not expose assessed/appraised value or mortgage balances, so even an assessed-value equity proxy cannot be derived from this source.",
+        },
+    },
+    "mecklenburg-nc": {
+        "display": "Mecklenburg County NC (Charlotte)",
+        "state": "NC",
+        "source_pattern": "mecklenburg-nc/*/parcel-lookup.csv",
+        "source_url": "https://data.charlottenc.gov/api/download/v1/items/3cf4a8c868f0476f897fed7e1e8e81c2/csv?layers=4",
+        "source_data_as_of": "Current Charlotte/Mecklenburg parcel lookup retrieved 2026-07-19",
+        "source_retrieved_at": TODAY,
+        "source_status": "Current official parcel, owner, mailing, sale, value, use, and improvement data.",
+        "fields": {
+            "parcel": ["PID", "Common_PID", "Tax_ID"],
+            "owner": ["Owner_FirstName", "Owner_LastName"],
+            "mail_street": ["Mailing_Address"],
+            "mail_compare_street": ["Mailing_Address"],
+            "mail_city": ["City"],
+            "mail_state": ["State"],
+            "mail_zip": ["Zip_Code"],
+            "property_street": ["Location"],
+            "property_city": ["Municipality"],
+            "property_zip": [],
+            "sale_date": ["Sales_Date"],
+            "sale_price": ["Price"],
+            "land_value": ["Land_Value"],
+            "building_value": ["Building_Value"],
+            "other_value": ["Extra_Features_Value"],
+            "total_value": ["Total_Value"],
+            "acreage": ["Total_Acreage"],
+            "acreage_units": [],
+            "use_code": ["Building_Code", "Zoning"],
+            "use_desc": ["Property_Use", "Building_Type"],
+            "office_desc": [],
+            "division": [],
+            "year_built": ["Year_Built"],
+            "living_area": ["Heated_Sqft"],
+            "units": ["Units"],
+            "homestead": [],
+            "county": [],
+            "municipality": ["Municipality"],
+            "tax_delinquent": [],
+            "pre_foreclosure": [],
+        },
+        "office_prefixes": ("OFFICE",),
+        "industrial_prefixes": ("INDUSTRIAL", "WAREHOUSE", "MANUFACTUR"),
+        "residential_prefixes": ("RES", "SINGLE", "TOWN", "CONDO", "MULTI", "APART"),
+        "homestead_available": False,
+        "owner_joined": True,
+        "unsupported": {
+            "tax-delinquent": "The parcel lookup does not prove an unpaid tax balance.",
+            "pre-foreclosure": "The parcel lookup does not prove a foreclosure filing or scheduled sale.",
+        },
+    },
+    "wayne-mi": {
+        "display": "Wayne County MI with Detroit breakout",
+        "state": "MI",
+        "source_pattern": "wayne-mi/*/wayne-mi-current-hybrid.csv",
+        "source_url": "https://www.waynecountymi.gov/Government/Departments/Management-Budget/Assessment-Equalization/Annual-Assessment-Data",
+        "source_data_as_of": "Wayne County 2026 post-March-Board-of-Review roll created 2026-06-04; Detroit current parcels edited 2026-07-15",
+        "source_retrieved_at": "2026-07-16",
+        "source_status": "Current hybrid parcel universe: City of Detroit daily parcel feed plus the official Wayne County 2026 annual roll for all other municipalities.",
+        "source_components": {
+            "outer_wayne_assessment": {
+                "data_year": 2026,
+                "created_at": "2026-06-04",
+                "status": "post_march_board_of_review",
+                "url": "https://www.waynecountymi.gov/Government/Departments/Management-Budget/Assessment-Equalization/Annual-Assessment-Data",
+            },
+            "detroit_current_parcels": {
+                "last_edit_at": "2026-07-15T20:35:17.567Z",
+                "status": "daily_current_parcel_service",
+                "url": "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/parcel_file_current/FeatureServer/0",
+            },
+            "detroit_2026_assessment": {
+                "last_edit_at": "2026-03-17T14:51:04.733Z",
+                "status": "2026_tentative_assessment_roll",
+                "url": "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/tentative_assessment_roll_2026/FeatureServer/0",
+            },
+        },
+        "fields": {
+            "parcel": ["parcel_id"],
+            "owner": ["owner_name"],
+            "mail_street": ["owner_street"],
+            "mail_compare_street": ["owner_street"],
+            "mail_city": ["owner_city"],
+            "mail_state": ["owner_state"],
+            "mail_zip": ["owner_zip"],
+            "property_street": ["property_street"],
+            "property_city": ["municipality"],
+            "property_zip": ["property_zip"],
+            "sale_date": ["sale_date", "latest_transfer_date"],
+            "sale_price": ["sale_price"],
+            "land_value": ["land_assessment"],
+            "building_value": ["building_assessment"],
+            "other_value": [],
+            "total_value": ["assessed_value"],
+            "acreage": ["acreage"],
+            "acreage_units": [],
+            "use_code": ["property_class", "use_code"],
+            "use_desc": ["property_class_description", "use_code_description", "building_style"],
+            "office_desc": ["use_code_description", "building_style"],
+            "division": [],
+            "year_built": ["year_built"],
+            # Detroit's total_square_footage is parcel area, not building floor area.
+            "living_area": ["total_floor_area"],
+            "units": [],
+            "homestead": ["pre_pct"],
+            "county": [],
+            "municipality": ["municipality"],
+            "tax_delinquent": [],
+            "pre_foreclosure": [],
+        },
+        "vacant_codes": {"102", "202", "302", "402", "00003", "00004", "00005"},
+        "multifamily_codes": {"41210", "41220", "41230", "41240", "41250"},
+        "office_codes": {"22310", "22320", "22330", "22350", "22420", "33410"},
+        "industrial_prefixes": ("3",),
+        "residential_prefixes": ("4",),
+        "unsupported": {
+            "tax-delinquent": "The parcel roll itself does not prove delinquency. Wayne's separate official 2026 foreclosure publication is processed and joined by process_wayne_mi_tax_foreclosure.py.",
+            "pre-foreclosure": "Wayne County Sheriff conducts mortgage sales but states it has no property information before sale. A current notice-publication source must be checked at delivery.",
+        },
+    },
+    "dallas-tx": {
+        "display": "Dallas County TX",
+        "state": "TX",
+        "source_pattern": "dallas-tx/*/dallas-parcels-canonical.csv",
+        "source_url": "https://www.dallascad.org/ViewPDFs.aspx?id=%5C%5CDCAD.ORG%5CWEB%5CWEBDATA%5CWEBFORMS%5CDATA+PRODUCTS%5CDCAD2026_CURRENT.ZIP&type=3",
+        "source_data_as_of": "2026-07-14",
+        "source_retrieved_at": "2026-07-16",
+        "source_status": "2026 proposed values with current ownership from the official DCAD current-year package.",
+        "source_components": {
+            "appraisal_and_ownership": {
+                "data_year": 2026,
+                "status": "proposed_values_current_ownership",
+                "url": "https://www.dallascad.org/DataProducts.aspx",
+            },
+        },
+        "fields": {
+            "parcel": ["ACCOUNT_NUM"],
+            "owner": ["OWNER_NAME1"],
+            "mail_street": ["OWNER_ADDRESS_LINE1", "OWNER_ADDRESS_LINE2", "OWNER_ADDRESS_LINE3", "OWNER_ADDRESS_LINE4"],
+            "mail_compare_street": ["OWNER_ADDRESS_LINE3", "OWNER_ADDRESS_LINE4"],
+            "mail_city": ["OWNER_CITY"],
+            "mail_state": ["OWNER_STATE"],
+            "mail_zip": ["OWNER_ZIPCODE"],
+            "property_street": ["STREET_NUM", "STREET_HALF_NUM", "FULL_STREET_NAME", "UNIT_ID"],
+            "property_city": ["PROPERTY_CITY"],
+            "property_zip": ["PROPERTY_ZIPCODE"],
+            "sale_date": ["DEED_TXFR_DATE"],
+            "sale_price": [],
+            "land_value": ["LAND_VAL"],
+            "building_value": ["IMPR_VAL"],
+            "other_value": [],
+            "total_value": ["TOT_VAL"],
+            "acreage": ["LAND_ACRES_CALC"],
+            "acreage_units": [],
+            "use_code": ["SPTD_CODE", "LAND_SPTD_CODES"],
+            "use_desc": ["LAND_SPTD_DESCS", "P_BUS_TYP_CD", "BLDG_CLASS_CD"],
+            "office_desc": ["COM_PROPERTY_NAMES"],
+            "division": ["DIVISION_CD"],
+            "year_built": ["RES_MIN_YEAR_BUILT", "COM_MIN_YEAR_BUILT"],
+            "living_area": ["RES_TOTAL_LIVING_SF", "COM_GROSS_BLDG_AREA"],
+            "units": ["RES_NUM_UNITS", "COM_NUM_UNITS"],
+            "homestead": ["HOMESTEAD_ACTIVE"],
+            "county": ["COUNTY_JURIS_DESC"],
+            "municipality": ["PROPERTY_CITY"],
+            "tax_delinquent": [],
+            "pre_foreclosure": [],
+        },
+        "multifamily_prefixes": ("B1",),
+        "industrial_prefixes": ("F2",),
+        "residential_prefixes": ("A", "B", "C"),
+        "unsupported": {
+            "tax-delinquent": "DCAD appraisal data exposes taxable and assessed values, but not unpaid tax balances or delinquency status.",
+            "pre-foreclosure": "DCAD appraisal data does not expose foreclosure notices or court docket filings.",
+        },
+    },
+    "massachusetts-statewide": {
+        "display": "Massachusetts Statewide",
+        "state": "MA",
+        "source": RAW_ROOT / "massachusetts-statewide" / TODAY / "massgis-parcels-canonical.csv",
+        "source_url": "https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/Massachusetts_Property_Tax_Parcels/FeatureServer/0",
+        "source_data_as_of": "2026-08-17T17:50:55.804000+00:00",
+        "source_retrieved_at": "2026-08-25",
+        "source_status": "Current MassGIS statewide standardized parcel service; municipal assessor fiscal years vary by community.",
+        "source_components": {
+            "statewide_parcels": {
+                "last_edit_at": "2026-08-17T17:50:55.804000+00:00",
+                "status": "current_arcgis_service",
+                "url": "https://services1.arcgis.com/hGdibHYSPO59RG1h/arcgis/rest/services/Massachusetts_Property_Tax_Parcels/FeatureServer/0",
+            },
+        },
+        "fields": {
+            "parcel": ["LC_PARCEL_KEY"],
+            "owner": ["OWNER1"],
+            "mail_street": ["OWN_ADDR"],
+            "mail_compare_street": ["OWN_ADDR"],
+            "mail_city": ["OWN_CITY"],
+            "mail_state": ["OWN_STATE"],
+            "mail_zip": ["OWN_ZIP"],
+            "property_street": ["SITE_ADDR"],
+            "property_city": ["CITY"],
+            "property_zip": ["ZIP"],
+            "sale_date": ["LS_DATE"],
+            "sale_price": ["LS_PRICE"],
+            "land_value": ["LAND_VAL"],
+            "building_value": ["BLDG_VAL"],
+            "other_value": ["OTHER_VAL"],
+            "total_value": ["TOTAL_VAL"],
+            "acreage": ["LOT_SIZE"],
+            "acreage_units": ["LOT_UNITS"],
+            "use_code": ["USE_CODE"],
+            "use_desc": [],
+            "division": [],
+            "year_built": ["YEAR_BUILT"],
+            "living_area": ["BLD_AREA", "RES_AREA"],
+            "units": ["UNITS"],
+            "homestead": [],
+            "county": ["COUNTY"],
+            "municipality": ["CITY"],
+            "tax_delinquent": [],
+            "pre_foreclosure": [],
+        },
+        "vacant_codes": {"130", "131", "132", "390", "391", "392", "440", "441", "442"},
+        "multifamily_prefixes": ("11", "12"),
+        "office_codes": {"340", "341", "342"},
+        "industrial_prefixes": ("4",),
+        "residential_prefixes": ("1",),
+        "homestead_available": False,
+        "unsupported": {
+            "tax-delinquent": "The MassGIS statewide assessor layer does not expose municipal tax-title balances or delinquency status; that lane must be sourced after the rollup selects a county.",
+            "pre-foreclosure": "Massachusetts foreclosure and Land Court records are not included in the statewide MassGIS assessor layer; that lane must be sourced after the rollup selects a county.",
+        },
+    },
+    "cook-il": {
+        "display": "Cook County IL",
+        "state": "IL",
+        "source": RAW_ROOT / "cook-il" / TODAY / "cook-parcels-canonical.csv",
+        "source_url": "https://datacatalog.cookcountyil.gov/resource/pabr-t5kh.csv",
+        "source_data_as_of": "2026 parcel universe, owner/address, assessed values, improvements, and sales; 2025 commercial details; 2021 parcel geometry.",
+        "source_retrieved_at": "2026-07-15",
+        "source_status": "Current 2026 parcel and ownership targeting joined to the latest available official commercial and parcel-geometry components.",
+        "source_components": {
+            "parcel_universe": {"data_year": 2026, "url": "https://datacatalog.cookcountyil.gov/resource/pabr-t5kh.csv"},
+            "owner_and_address": {"data_year": 2026, "url": "https://datacatalog.cookcountyil.gov/resource/3723-97qp.csv"},
+            "assessed_values": {"data_year": 2026, "url": "https://datacatalog.cookcountyil.gov/resource/uzyt-m557.csv"},
+            "improvements": {"data_year": 2026, "url": "https://datacatalog.cookcountyil.gov/resource/x54s-btds.csv"},
+            "sales": {"latest_recorded_sale_through": "2026-05-28", "url": "https://datacatalog.cookcountyil.gov/resource/wvhk-k5uv.csv"},
+            "commercial_details": {"data_year": 2025, "url": "https://datacatalog.cookcountyil.gov/resource/csik-bsws.csv"},
+            "parcel_geometry": {"data_year": 2021, "url": "https://datacatalog.cookcountyil.gov/resource/77tz-riq7.csv"},
+        },
+        "fields": {
+            "parcel": ["parcel_key"],
+            "owner": ["ADDR_OWNER_ADDRESS_NAME", "ADDR_MAIL_ADDRESS_NAME"],
+            "mail_street": ["ADDR_OWNER_ADDRESS_FULL", "ADDR_MAIL_ADDRESS_FULL"],
+            "mail_compare_street": ["ADDR_OWNER_ADDRESS_FULL", "ADDR_MAIL_ADDRESS_FULL"],
+            "mail_city": ["ADDR_OWNER_ADDRESS_CITY_NAME", "ADDR_MAIL_ADDRESS_CITY_NAME"],
+            "mail_state": ["ADDR_OWNER_ADDRESS_STATE", "ADDR_MAIL_ADDRESS_STATE"],
+            "mail_zip": ["ADDR_OWNER_ADDRESS_ZIPCODE_1", "ADDR_MAIL_ADDRESS_ZIPCODE_1"],
+            "property_street": ["ADDR_PROP_ADDRESS_FULL"],
+            "property_city": ["ADDR_PROP_ADDRESS_CITY_NAME", "U_COOK_MUNICIPALITY_NAME"],
+            "property_zip": ["ADDR_PROP_ADDRESS_ZIPCODE_1", "U_ZIP_CODE"],
+            "sale_date": ["SALE_SALE_DATE"],
+            "sale_price": ["SALE_SALE_PRICE"],
+            "land_value": ["VAL_BOARD_LAND", "VAL_CERTIFIED_LAND", "VAL_MAILED_LAND"],
+            "building_value": ["VAL_BOARD_BLDG", "VAL_CERTIFIED_BLDG", "VAL_MAILED_BLDG"],
+            "other_value": [],
+            "total_value": ["VAL_BOARD_TOT", "VAL_CERTIFIED_TOT", "VAL_MAILED_TOT"],
+            "acreage": ["GEO_PARCEL_AREA_SQ_METERS"],
+            "acreage_units": [],
+            "use_code": ["U_CLASS", "VAL_CLASS"],
+            "use_desc": ["IMPR_CHAR_USE", "COMM_PROPERTY_TYPE_USE", "COMM_PROPERTY_NAME_DESCRIPTION"],
+            "office_desc": ["COMM_SUBCLASS2"],
+            "division": [],
+            "year_built": ["IMPR_LC_EARLIEST_YEAR_BUILT", "COMM_YEARBUILT"],
+            "living_area": ["IMPR_LC_TOTAL_BUILDING_SQFT", "COMM_GROSS_BUILDING_AREA", "COMM_BLDGSF"],
+            "units": ["IMPR_LC_TOTAL_APARTMENTS", "COMM_TOT_UNITS"],
+            "homestead": [],
+            "county": [],
+            "municipality": ["U_COOK_MUNICIPALITY_NAME", "ADDR_PROP_ADDRESS_CITY_NAME"],
+            "tax_delinquent": [],
+            "pre_foreclosure": [],
+        },
+        "acreage_divisor": 4046.8564224,
+        "vacant_codes": {"100"},
+        "multifamily_codes": {"211", "212"},
+        "multifamily_prefixes": ("3",),
+        "industrial_codes": {"550", "580", "581", "583", "587", "589", "593"},
+        "industrial_prefixes": ("6",),
+        "residential_prefixes": ("2", "3"),
+        "homestead_available": False,
+        "mail_street_first_available": True,
+        "mail_compare_street_first_available": True,
+        "unsupported": {
+            "tax-delinquent": "Cook County's public Annual Tax Sale catalog dataset is inactive and contains only a stale 2016 list; the current Treasurer list is not available as unrestricted reusable open data.",
+            "pre-foreclosure": "Cook County's public Recorder foreclosure dataset ends in March 2015 and is not current enough for a customer delivery.",
+        },
+    },
+}
+
+STATE_ALIASES = {
+    "TEXAS": "TX", "MASSACHUSETTS": "MA", "ILLINOIS": "IL", "NEW YORK": "NY",
+    "CALIFORNIA": "CA", "FLORIDA": "FL", "GEORGIA": "GA", "TENNESSEE": "TN",
+    "NORTH CAROLINA": "NC", "SOUTH CAROLINA": "SC", "OKLAHOMA": "OK",
+    "LOUISIANA": "LA", "ARKANSAS": "AR", "NEW MEXICO": "NM", "ARIZONA": "AZ",
+    "COLORADO": "CO", "MISSOURI": "MO", "VIRGINIA": "VA", "WASHINGTON": "WA",
+    "MICHIGAN": "MI",
+}
+
+PUBLIC_OWNER = re.compile(
+    r"\b(CITY|COUNTY|STATE OF|UNITED STATES|U\s*S\s*A\b|U\s*S\s+ARMY|ISD\b|DISD\b|"
+    r"SCHOOL|AUTHORITY|DISTRICT|UTILITY|CHURCH|METHODIST|BAPTIST|MINISTR(?:Y|IES)|"
+    r"TEMPLE|MOSQUE|ISLAMIC ASSOCIATION|HOMEOWNER|ASSOCIATION|ASSN\b|HOA\b|"
+    r"RAILROAD|RAILWAY|RAPID TRANSIT)\b",
+    re.I,
+)
+
+ENTITY_OWNER = re.compile(
+    r"\b(LLC|L\.L\.C|INC|INCORPORATED|CORP|CORPORATION|LTD|LIMITED|LP|LLP|PLLC|"
+    r"COMPANY|PROPERTIES|PROPERTY|INVESTMENTS?|HOLDINGS?|PARTNERS?|VENTURES?|"
+    r"DEVELOPMENT|DEVELOPERS|REALTY|REIT|FUND|BANK|TRUST|TRUSTEE|ESTATE)\b",
+    re.I,
+)
+
+
+def clean(value: object) -> str:
+    return str(value or "").strip()
+
+
+def source_snapshot_date(source: Path) -> str | None:
+    return next((part for part in reversed(source.parts) if re.fullmatch(r"\d{4}-\d{2}-\d{2}", part)), None)
+
+
+def first(row: dict[str, str], fields: list[str]) -> str:
+    for field in fields:
+        value = clean(row.get(field))
+        if value:
+            return value
+    return ""
+
+
+def joined(row: dict[str, str], fields: list[str]) -> str:
+    return " ".join(clean(row.get(field)) for field in fields if clean(row.get(field)))
+
+
+def number(value: object) -> float:
+    text = clean(value).replace("$", "").replace(",", "")
+    try:
+        return float(text)
+    except ValueError:
+        return 0.0
+
+
+def state_code(value: str) -> str:
+    upper = clean(value).upper()
+    if upper in STATE_ALIASES:
+        return STATE_ALIASES[upper]
+    if len(upper) == 2:
+        return upper
+    state_match = re.search(r"\b(AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY|DC)\b", upper)
+    return state_match.group(1) if state_match else ""
+
+
+def parsed_date(value: str) -> date | None:
+    text = clean(value)
+    # ArcGIS CSV exports commonly use `YYYY/MM/DD HH:MM:SS+00`. Normalize the
+    # timezone suffix, then accept both slash and ISO datetime variants.
+    text = re.sub(r"[+-]\d{2}:?\d{0,2}$", "", text).strip()
+    if len(text) >= 10 and re.fullmatch(r"\d{4}-\d{2}-\d{2}", text[:10]):
+        try:
+            parsed = date.fromisoformat(text[:10])
+            return parsed if parsed <= date.today() else None
+        except ValueError:
+            pass
+    for fmt in (
+        "%Y/%m/%d %H:%M:%S", "%Y-%m-%d %H:%M:%S", "%Y/%m/%d",
+        "%m/%d/%Y", "%Y-%m-%d", "%Y%m%d", "%m%d%Y", "%m-%d-%Y",
+    ):
+        try:
+            parsed = datetime.strptime(text, fmt).date()
+            return parsed if parsed <= date.today() else None
+        except ValueError:
+            continue
+    return None
+
+
+def years_owned(value: str) -> float | None:
+    parsed = parsed_date(value)
+    return round((date.today() - parsed).days / 365.25, 1) if parsed else None
+
+
+def derive(row: dict[str, str], cfg: dict[str, Any]) -> dict[str, Any]:
+    f = cfg["fields"]
+    owner = joined(row, f["owner"]) if cfg.get("owner_joined") else first(row, f["owner"])
+    mail_street = first(row, f["mail_street"]) if cfg.get("mail_street_first_available") else joined(row, f["mail_street"])
+    compare_fields = f.get("mail_compare_street", f["mail_street"])
+    mail_compare_street = first(row, compare_fields) if cfg.get("mail_compare_street_first_available") else joined(row, compare_fields)
+    mail_city = first(row, f["mail_city"])
+    mail_state = state_code(first(row, f["mail_state"]))
+    mail_zip = re.sub(r"\D", "", first(row, f["mail_zip"]))[:5]
+    prop_street = joined(row, f["property_street"])
+    prop_city = first(row, f["property_city"])
+    prop_zip = re.sub(r"\D", "", first(row, f["property_zip"]))[:5]
+    land = number(first(row, f["land_value"]))
+    building = number(first(row, f["building_value"]))
+    other = number(first(row, f.get("other_value", [])))
+    total = number(first(row, f["total_value"]))
+    acres = number(first(row, f["acreage"]))
+    acreage_units = first(row, f.get("acreage_units", [])).upper()
+    if cfg.get("acreage_divisor") and acres:
+        acres /= float(cfg["acreage_divisor"])
+    elif acres and ("SQ" in acreage_units or "SQUARE" in acreage_units):
+        acres /= 43560.0
+    year = number(first(row, f["year_built"]))
+    area = number(first(row, f["living_area"]))
+    units = number(first(row, f["units"]))
+    sale_price = number(first(row, f.get("sale_price", [])))
+    use_code = joined(row, f["use_code"]).upper()
+    use_desc = joined(row, f["use_desc"]).upper()
+    office_desc = joined(row, f.get("office_desc", [])).upper()
+    tenure = years_owned(first(row, f["sale_date"]))
+    homestead_value = first(row, f["homestead"])
+    homestead = number(homestead_value) > 0
+    homestead_known = bool(homestead_value) if not cfg.get("homestead_available", True) else True
+    occupancy = derive_occupancy_signals(
+        prop_street,
+        mail_compare_street,
+        property_state=cfg["state"],
+        mailing_state=mail_state,
+    )
+    out_of_state = occupancy.out_of_state
+    address_mismatch = occupancy.address_mismatch
+    absentee = occupancy.absentee
+    code_tokens = {token.strip() for token in re.split(r"[,;\s]+", use_code) if token.strip()}
+    multifamily = bool(code_tokens & cfg.get("multifamily_codes", set())) or any(token.startswith(tuple(cfg.get("multifamily_prefixes", ()))) for token in code_tokens) or "MULTIFAMILY" in use_desc or "MULTI-FAMILY" in use_desc or "APARTMENT" in use_desc or units >= 2
+    office = bool(code_tokens & cfg.get("office_codes", set())) or any(token.startswith(tuple(cfg.get("office_prefixes", ()))) for token in code_tokens) or "OFFICE" in use_desc or "OFFICE" in office_desc
+    industrial = bool(code_tokens & cfg.get("industrial_codes", set())) or any(token.startswith(tuple(cfg.get("industrial_prefixes", ()))) for token in code_tokens) or "INDUSTRIAL" in use_desc or "MANUFACTUR" in use_desc
+    segment = "multifamily" if multifamily else "industrial" if industrial else "office" if office else "other"
+    residential = any(token.startswith(tuple(cfg.get("residential_prefixes", ()))) for token in code_tokens) or any(word in use_desc for word in ("RESIDENTIAL", "SINGLE FAMILY", "SINGLEFAMILY", "TOWNHOUSE", "CONDO", "APARTMENT"))
+    vacant_codes = cfg.get("vacant_codes", set())
+    vacant_signal = bool(code_tokens & vacant_codes) if vacant_codes else "VACANT" in use_desc
+    is_vacant = (
+        owner
+        and not PUBLIC_OWNER.search(owner)
+        and (
+            cfg.get("vacant_classification_only")
+            or (
+                land > 0
+                and building <= 0
+                and other <= 0
+                and total > 0
+                and abs(total - land) <= max(1.0, total * 0.01)
+            )
+        )
+        and year <= 0
+        and area <= 0
+        and (cfg.get("vacant_classification_only") or acres >= 0.1)
+        and vacant_signal
+    )
+    unavailable: list[str] = []
+    if not mail_street:
+        unavailable.append("Owner mailing address")
+    if total <= 0:
+        unavailable.append("Assessed value")
+    if tenure is None:
+        unavailable.append("Last sale date and ownership duration")
+    if sale_price <= 0:
+        unavailable.append("Sale price")
+    if acres <= 0:
+        unavailable.append("Acreage")
+    if not use_code and not use_desc and not office_desc:
+        unavailable.append("Property type")
+    if not is_vacant and year <= 0:
+        unavailable.append("Year built")
+    if not is_vacant and area <= 0:
+        unavailable.append("Building area")
+    if segment == "multifamily" and units <= 0:
+        unavailable.append("Unit count")
+    return {
+        "lc_parcel_id": first(row, f["parcel"]),
+        "lc_owner_name": owner,
+        "lc_property_address": " ".join(v for v in (prop_street, prop_city, cfg["state"], prop_zip) if v),
+        "lc_mailing_address": " ".join(v for v in (mail_street, mail_city, mail_state, mail_zip) if v),
+        "lc_county": first(row, f.get("county", [])),
+        "lc_municipality": first(row, f.get("municipality", [])),
+        "lc_mail_state": mail_state,
+        "lc_is_absentee": "yes" if absentee else "no",
+        "lc_is_out_of_state": "yes" if out_of_state else "no",
+        "lc_years_owned": "" if tenure is None else tenure,
+        "lc_tenure_band": "20+ years" if tenure is not None and tenure >= 20 else "10-19 years" if tenure is not None and tenure >= 10 else "under 10 years" if tenure is not None else "unknown",
+        "lc_property_segment": segment,
+        "lc_is_residential": "yes" if residential else "no",
+        "lc_land_value": land,
+        "lc_building_value": building,
+        "lc_other_value": other,
+        "lc_total_value": total,
+        "lc_acreage": round(acres, 4),
+        "lc_homestead": "yes" if homestead else "no" if homestead_known else "unknown",
+        "lc_verified_vacant": "yes" if is_vacant else "no",
+        "lc_equity_basis": "assessed-value proxy; mortgage balance not provided by parcel roll" if residential and total >= 150000 and building > 0 else "",
+        "Information Not Available": "; ".join(unavailable) if unavailable else "None among the core facts checked",
+    }
+
+
+def matches(lane: str, row: dict[str, str], d: dict[str, Any], cfg: dict[str, Any]) -> bool:
+    if lane in cfg.get("unsupported", {}):
+        return False
+    if (
+        not d["lc_parcel_id"]
+        or not d["lc_owner_name"]
+        or PUBLIC_OWNER.search(d["lc_owner_name"])
+        or INSTITUTIONAL_OWNER.search(d["lc_owner_name"])
+    ):
+        return False
+    if lane == "absentee-owners":
+        return d["lc_is_absentee"] == "yes"
+    if lane == "out-of-state-owners":
+        return d["lc_is_out_of_state"] == "yes"
+    if lane == "high-equity":
+        # County rolls do not expose a live mortgage balance. This is the
+        # documented high-value/equity proxy used by the catalog, not a claim
+        # that the parcel is proven free and clear.
+        return d["lc_is_residential"] == "yes" and d["lc_total_value"] >= 150000 and d["lc_building_value"] > 0
+    if lane == "individual-homeowner":
+        return d["lc_is_residential"] == "yes" and not ENTITY_OWNER.search(d["lc_owner_name"])
+    if lane == "entity-owned":
+        return bool(ENTITY_OWNER.search(d["lc_owner_name"]))
+    if lane == "tired-landlords":
+        return (
+            isinstance(d["lc_years_owned"], (int, float))
+            and d["lc_years_owned"] >= 10
+            and d["lc_is_absentee"] == "yes"
+            and d["lc_homestead"] != "yes"
+            and d["lc_building_value"] > 0
+            and (
+                first(row, cfg["fields"].get("division", [])).upper() == "RES"
+                or d["lc_is_residential"] == "yes"
+            )
+        )
+    if lane == "industrial-multifamily-distress":
+        return d["lc_property_segment"] in {"office", "industrial", "multifamily"} and (
+            d["lc_is_absentee"] == "yes"
+            or (isinstance(d["lc_years_owned"], (int, float)) and d["lc_years_owned"] >= 10)
+        )
+    if lane in {"office", "industrial", "multifamily"}:
+        return d["lc_property_segment"] == lane and (
+            d["lc_is_absentee"] == "yes"
+            or (isinstance(d["lc_years_owned"], (int, float)) and d["lc_years_owned"] >= 10)
+        )
+    if lane == "verified-vacant-land":
+        return d["lc_verified_vacant"] == "yes"
+    if lane == "tax-delinquent":
+        return bool(first(row, cfg["fields"]["tax_delinquent"]))
+    if lane == "pre-foreclosure":
+        return bool(first(row, cfg["fields"]["pre_foreclosure"]))
+    return False
+
+
+def redact(row: dict[str, Any]) -> dict[str, Any]:
+    result = dict(row)
+    owner = clean(result.get("lc_owner_name"))
+    result["lc_owner_name"] = " ".join(part[:1] + "*" * max(2, len(part) - 1) for part in owner.split())
+    result["lc_parcel_id"] = "REDACTED"
+    result["lc_mailing_address"] = "REDACTED"
+    address = clean(result.get("lc_property_address"))
+    result["lc_property_address"] = re.sub(r"^\d+", "###", address)
+    for key in list(result):
+        upper = key.upper()
+        exact_identifiers = {
+            "ACCOUNT_NUM", "GIS_PARCEL_ID", "INFO_GIS_PARCEL_ID", "LC_PARCEL_KEY",
+            "MAP_PAR_ID", "LOC_ID", "PROP_ID", "PARCEL_KEY", "U_PIN", "U_PIN10",
+            "OBJECTID", "GLOBALID", "ROW_ID", "ADDR_ROW_ID", "SALE_ROW_ID",
+        }
+        sensitive_fragments = (
+            "OWNER", "MAIL_ADDRESS", "OWN_ADDR", "OWN_CITY", "OWN_STATE", "OWN_ZIP",
+            "PROPERTY_ADDRESS", "PROP_ADDRESS", "SITE_ADDR", "FULL_STREET", "FULL_STR",
+            "STREET_NUM", "ADDR_NUM", "UNIT_ID", "LEGAL", "PHONE", "SALE_DOCUMENT",
+        )
+        coordinate_fields = {"U_LON", "U_LAT", "U_X_3435", "U_Y_3435", "LON", "LAT", "X_3435", "Y_3435"}
+        source_identifier = bool(re.search(r"(?:^|_)(?:PIN(?:10)?|PARCEL_ID|ACCOUNT_NUM|LOC_ID|PROP_ID)$", upper))
+        if (
+            upper not in {"LC_OWNER_NAME", "LC_PROPERTY_ADDRESS", "LC_MAILING_ADDRESS"}
+            and (
+                upper in exact_identifiers
+                or upper in coordinate_fields
+                or source_identifier
+                or any(fragment in upper for fragment in sensitive_fragments)
+            )
+        ):
+            result[key] = "REDACTED"
+    return result
+
+
+def process(market: str, source: Path, output_dir: Path, preview_count: int) -> dict[str, Any]:
+    cfg = MARKETS[market]
+    output_dir.mkdir(parents=True, exist_ok=True)
+    csv.field_size_limit(100_000_000)
+    with source.open(newline="", encoding="utf-8-sig", errors="replace") as handle:
+        reader = csv.DictReader(handle)
+        source_fields = reader.fieldnames or []
+        validate_role_mapping(
+            source_fields,
+            cfg["fields"],
+            ("parcel", "owner", "property_street"),
+        )
+        derived_fields = [
+            "lc_parcel_id", "lc_owner_name", "lc_property_address", "lc_mailing_address",
+            "lc_county", "lc_municipality", "lc_mail_state", "lc_is_absentee", "lc_is_out_of_state", "lc_years_owned",
+            "lc_tenure_band", "lc_property_segment", "lc_is_residential", "lc_land_value",
+            "lc_building_value", "lc_other_value", "lc_total_value", "lc_acreage", "lc_homestead",
+            "lc_verified_vacant", "lc_equity_basis", "Information Not Available", "lc_lane",
+        ]
+        fields = source_fields + derived_fields
+        handles: dict[str, Any] = {}
+        writers: dict[str, csv.DictWriter] = {}
+        previews: dict[str, list[dict[str, Any]]] = {lane: [] for lane in LANES}
+        stats: dict[str, dict[str, Any]] = {
+            lane: {"count": 0, "values": [], "tenures": [], "absentee": 0, "out_of_state": 0, "segments": {"office": 0, "industrial": 0, "multifamily": 0}, "availability": {}}
+            for lane in LANES
+        }
+        paths: dict[str, dict[str, str]] = {}
+        for lane in LANES:
+            lane_dir = output_dir / lane
+            lane_dir.mkdir(parents=True, exist_ok=True)
+            stem = f"{market}-{lane}-{TODAY}"
+            full = lane_dir / f"{stem}.csv"
+            preview = lane_dir / f"{stem}-preview.csv"
+            meta = lane_dir / f"{stem}-meta.json"
+            fh = full.open("w", newline="", encoding="utf-8")
+            writer = csv.DictWriter(fh, fieldnames=fields, extrasaction="ignore")
+            writer.writeheader()
+            handles[lane] = fh
+            writers[lane] = writer
+            paths[lane] = {"full": str(full), "preview": str(preview), "meta": str(meta)}
+
+        seen: set[str] = set()
+        source_rows = 0
+        duplicate_source_rows = 0
+        for row in reader:
+            source_rows += 1
+            d = derive(row, cfg)
+            parcel = clean(d["lc_parcel_id"])
+            if not parcel:
+                continue
+            if parcel in seen:
+                duplicate_source_rows += 1
+                continue
+            seen.add(parcel)
+            for lane in LANES:
+                if not matches(lane, row, d, cfg):
+                    continue
+                out = dict(row)
+                out.update(d)
+                out["lc_lane"] = lane
+                writers[lane].writerow(out)
+                s = stats[lane]
+                s["count"] += 1
+                if d["lc_total_value"] > 0 and len(s["values"]) < 100000:
+                    s["values"].append(d["lc_total_value"])
+                if isinstance(d["lc_years_owned"], (int, float)) and len(s["tenures"]) < 100000:
+                    s["tenures"].append(d["lc_years_owned"])
+                s["absentee"] += d["lc_is_absentee"] == "yes"
+                s["out_of_state"] += d["lc_is_out_of_state"] == "yes"
+                if d["lc_property_segment"] in s["segments"]:
+                    s["segments"][d["lc_property_segment"]] += 1
+                for label in d["Information Not Available"].split("; "):
+                    if label != "None among the core facts checked":
+                        s["availability"][label] = s["availability"].get(label, 0) + 1
+                if len(previews[lane]) < preview_count:
+                    previews[lane].append(redact(out))
+
+        for fh in handles.values():
+            fh.close()
+
+    result: dict[str, Any] = {"market": market, "source_rows": source_rows, "unique_parcels": len(seen), "duplicate_source_rows": duplicate_source_rows, "lanes": {}}
+    for lane in LANES:
+        s = stats[lane]
+        with Path(paths[lane]["preview"]).open("w", newline="", encoding="utf-8") as handle:
+            writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore")
+            writer.writeheader()
+            writer.writerows(previews[lane])
+        full_count = -1
+        unique_full: set[str] = set()
+        with Path(paths[lane]["full"]).open(newline="", encoding="utf-8") as handle:
+            full_count = 0
+            for shipped in csv.DictReader(handle):
+                full_count += 1
+                unique_full.add(clean(shipped.get("lc_parcel_id")))
+        unsupported_reason = cfg.get("unsupported", {}).get(lane)
+        payload = {
+            "market": market,
+            "market_display": cfg["display"],
+            "lane": lane,
+            "status": "unavailable_from_current_source" if unsupported_reason else "verified",
+            "source_file": str(source),
+            "source_url": cfg["source_url"],
+            "source_data_as_of": cfg.get("source_data_as_of"),
+            "source_retrieved_at": source_snapshot_date(source) or cfg.get("source_retrieved_at"),
+            "source_status": cfg.get("source_status"),
+            "source_components": cfg.get("source_components", {}),
+            "source_rows": source_rows,
+            "unique_source_parcels": len(seen),
+            "source_duplicate_rows_removed": duplicate_source_rows,
+            "records": s["count"],
+            "preview_records": len(previews[lane]),
+            "field_count": len(fields),
+            "absentee_records": int(s["absentee"]),
+            "out_of_state_records": int(s["out_of_state"]),
+            "industrial_records": s["segments"]["industrial"],
+            "multifamily_records": s["segments"]["multifamily"],
+            "office_records": s["segments"]["office"],
+            "information_not_available_counts": s["availability"],
+            "median_total_value": median(s["values"]) if s["values"] else None,
+            "median_years_owned": median(s["tenures"]) if s["tenures"] else None,
+            "median_sample_cap": 100000,
+            "unavailable_reason": unsupported_reason,
+            "outputs": paths[lane],
+            "verification": {
+                "full_csv_rows": full_count,
+                "unique_parcels_in_full_csv": len(unique_full - {""}),
+                "duplicate_parcels_in_full_csv": full_count - len(unique_full - {""}),
+                "meta_count_matches_file": full_count == s["count"],
+            },
+        }
+        Path(paths[lane]["meta"]).write_text(json.dumps(payload, indent=2), encoding="utf-8")
+        result["lanes"][lane] = payload
+    return result
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Build reusable investor lane cuts from a deduplicated maximum-field parcel CSV.")
+    parser.add_argument("--market", required=True, choices=sorted(MARKETS))
+    parser.add_argument("--source", type=Path)
+    parser.add_argument("--output-dir", type=Path)
+    parser.add_argument("--preview", type=int, default=25)
+    args = parser.parse_args()
+    cfg = MARKETS[args.market]
+    if args.source:
+        source = args.source
+    elif cfg.get("source_pattern"):
+        candidates = sorted(RAW_ROOT.glob(cfg["source_pattern"]), reverse=True)
+        if not candidates:
+            parser.error(f"No source matched {RAW_ROOT / cfg['source_pattern']}")
+        source = candidates[0]
+    else:
+        source = cfg["source"]
+    output = args.output_dir or PROCESSED_ROOT / args.market / TODAY
+    result = process(args.market, source, output, args.preview)
+    print(json.dumps(result, indent=2))
+    failed = any(
+        lane["status"] == "verified" and (
+            not lane["verification"]["meta_count_matches_file"]
+            or lane["verification"]["duplicate_parcels_in_full_csv"] != 0
+        )
+        for lane in result["lanes"].values()
+    )
+    return 1 if failed else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
