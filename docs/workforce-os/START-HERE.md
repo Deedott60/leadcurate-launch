@@ -9,7 +9,10 @@
 - **Live Dashboard Route:** `https://leadcurate.com/command/?page=workforce`
 - **Dashboard UI / Client Code:** `docs/command/index.html` (first-class `#page-workforce` container and `window.renderWorkforce*` methods)
 - **Data Project ID:** `0fba0555-5ef0-455d-8bed-5a518db639c0` (project slug: `reentry-workforce-transition`, name: `Workforce OS`)
-- **Program Source Files:** `/root/workforce-training/current` on Danny VPS (`76.13.25.117`, SSH alias `leadcurate-vps`)
+- **Program Source Files:** `/root/workforce-training` on Danny VPS (`76.13.25.117`, SSH alias `leadcurate-vps`)
+- **Version control (added 2026-09-10):** `/root/workforce-training` is a git repository mirrored to **https://github.com/Deedott60/workforce-training** (private). Commit and push changes there. Do not create a parallel copy elsewhere.
+- **Folder layout:** `current/` master document and handoffs · `courses/sales/` and `courses/business/` syllabi, objectives, overviews and lesson modules · `facilitator/` interview notes, glossary and foundation · `outreach/michael/` Michael reentry track · `drafts/` `reviews/`
+- **Working mirror:** `Desktop/TRAINING_BUSINESS/` on Derrick's Windows machine is a convenience copy, not an authority.
 
 ---
 
