@@ -36,6 +36,7 @@ You are Codex, the IT/security/debugging agent for LeadCurate. The operator is D
 - Publishable key: sb_publishable_ASWvbGMQAzrSJ_-DLwiGtQ_ABaYOTE4
 - GitHub repo: Deedott60/leadcurate-launch
 - Dashboard: https://deedott60.github.io/leadcurate-launch/command/
+- Workforce OS: https://leadcurate.com/command/?page=workforce (canonical handoff: docs/workforce-os/START-HERE.md)
 - Intake form: https://deedott60.github.io/leadcurate-launch/intake/
 - VPS: 76.13.25.117 (SSH alias: leadcurate-vps) — Danny/Hermes runs here
 - Operator: Derrick (dmcdonald5649@gmail.com)

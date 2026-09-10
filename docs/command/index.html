@@ -9,6 +9,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="LeadCurate"/>
 <link rel="manifest" href="manifest.json"/>
+<link rel="icon" type="image/svg+xml" href="icon.svg"/>
 <link rel="apple-touch-icon" href="icon.svg"/>
 <title>LeadCurate OS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -370,6 +371,136 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       #page-golden-crest .keepsakes-hq-actions{flex-direction:column;align-items:stretch}
       #page-golden-crest .keepsakes-hq-actions .btn{width:100%;justify-content:center;white-space:nowrap}
     }
+
+    /* ── WORKFORCE OS ────────────────────────── */
+    #workforce-quick-btn{display:none;border:1px solid rgba(134,239,172,.35);background:rgba(34,197,94,.16);color:#bbf7d0;padding:6px 9px;border-radius:7px;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;cursor:pointer;white-space:nowrap;}
+    .wf-summary-card{border-color:rgba(21,128,61,0.28);background:linear-gradient(135deg,#fff 0%,#f0fdf4 100%);}
+    .wf-grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:16px;}
+    .wf-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;}
+    .wf-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+    .wf-partner-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--dark);}
+    .wf-partner-role{font-size:12px;color:var(--sl);font-family:'JetBrains Mono',monospace;margin-top:2px;}
+    .wf-field-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--sl-l);margin-bottom:3px;}
+    .wf-field-val{font-size:13px;color:var(--sl);line-height:1.45;}
+    .wf-field-val strong{color:var(--dark);}
+    .wf-course-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:var(--shadow);}
+    .wf-module-list{display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+    .wf-module-block{border:1px solid var(--line);border-radius:10px;background:var(--cream);padding:12px;}
+    .wf-module-title{font-weight:700;font-size:13px;color:var(--dark);margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+    .wf-session-item{font-size:12px;color:var(--sl);padding:5px 0;border-top:1px solid rgba(0,0,0,0.05);line-height:1.4;}
+    .wf-session-item strong{color:var(--dark);}
+    .wf-ai-callout{background:#f0fdf4;border-left:3px solid var(--em);padding:10px 12px;border-radius:0 8px 8px 0;margin-top:10px;font-size:12px;line-height:1.5;color:var(--dark);}
+    .wf-ai-callout strong{color:var(--em-d);}
+    .wf-status-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px;}
+    .wf-status-step{padding:8px 10px;border-radius:8px;background:var(--cream2);font-size:11px;}
+    .wf-status-step strong{display:block;font-size:12px;color:var(--dark);margin-bottom:2px;}
+    .wf-comm-box{background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:14px;}
+    @media(max-width:768px){
+      #workforce-quick-btn{display:flex;max-width:90px;overflow:hidden;text-overflow:ellipsis;flex-shrink:1;}
+      #page-workforce{width:100%;max-width:100%;min-width:0;box-sizing:border-box;}
+      #page-workforce, #page-workforce *{box-sizing:border-box;}
+
+      /* Mobile containment: ensure cards and grid children use min-width:0 */
+      #page-workforce .card,
+      #page-workforce .wf-card,
+      #page-workforce .wf-summary-card,
+      #page-workforce .wf-course-card{
+        width:100%;max-width:100%;min-width:0;padding:14px;box-sizing:border-box;
+      }
+      .wf-grid-2{grid-template-columns:1fr!important;width:100%;max-width:100%;min-width:0;}
+      .wf-grid-2 > *{min-width:0;max-width:100%;box-sizing:border-box;}
+      .wf-status-grid{grid-template-columns:1fr!important;width:100%;max-width:100%;min-width:0;}
+      .wf-status-grid > *{min-width:0;max-width:100%;box-sizing:border-box;}
+      .wf-status-step{min-width:0;max-width:100%;box-sizing:border-box;overflow-wrap:anywhere;word-break:break-word;}
+      #page-workforce .stats, #page-workforce #wf-stats{width:100%;max-width:100%;min-width:0;}
+      #page-workforce .stats .stat{min-width:0;max-width:100%;box-sizing:border-box;overflow-wrap:anywhere;word-break:break-word;}
+      #page-workforce .stat .v, #page-workforce .stat .l{min-width:0;max-width:100%;overflow-wrap:anywhere;word-break:break-word;}
+
+      /* Heading and subtitle max-width 100% and robust wrapping */
+      #page-workforce .page-header{width:100%;max-width:100%;min-width:0;}
+      #page-workforce .page-header > .flex-row{flex-direction:column;align-items:flex-start;gap:8px;width:100%;max-width:100%;min-width:0;}
+      #page-workforce .page-header > .flex-row > div{width:100%;max-width:100%;min-width:0;}
+      #page-workforce .page-title{width:100%;max-width:100%;min-width:0;overflow-wrap:anywhere;word-break:break-word;}
+      #page-workforce .page-sub{width:100%;max-width:100%;min-width:0;overflow-wrap:anywhere;word-break:break-word;}
+      #page-workforce .card-title,
+      #page-workforce #wf-summary-title{
+        width:100%;max-width:100%;min-width:0;overflow-wrap:anywhere;word-break:break-word;line-height:1.3;
+      }
+      #page-workforce .card-meta{width:100%;max-width:100%;min-width:0;overflow-wrap:anywhere;word-break:break-word;}
+      #page-workforce .card-h{flex-direction:column;align-items:flex-start;gap:8px;width:100%;max-width:100%;min-width:0;}
+      #page-workforce .card-h > div{width:100%;max-width:100%;min-width:0;}
+      #page-workforce .tag{max-width:100%;white-space:normal;overflow-wrap:anywhere;word-break:break-word;}
+      #page-workforce .badge{max-width:100%;overflow-wrap:anywhere;word-break:break-word;}
+
+      /* Program summary and text wrapping */
+      #page-workforce .wf-summary-body,
+      #page-workforce .wf-summary-body p{
+        width:100%;max-width:100%;min-width:0;overflow-wrap:anywhere;word-break:break-word;
+      }
+      #page-workforce .wf-summary-body .flex-row{flex-direction:column;align-items:flex-start;gap:8px;width:100%;max-width:100%;min-width:0;}
+      #page-workforce .wf-summary-body .flex-row > div{width:100%;max-width:100%;min-width:0;overflow-wrap:anywhere;word-break:break-word;}
+
+      /* Relationships and partner cards */
+      .wf-card-header{flex-direction:column;align-items:flex-start;gap:6px;width:100%;max-width:100%;min-width:0;}
+      .wf-card-header > div{width:100%;max-width:100%;min-width:0;}
+      #page-workforce .wf-partner-name,
+      #page-workforce .wf-partner-role{
+        width:100%;max-width:100%;min-width:0;overflow-wrap:anywhere;word-break:break-word;
+      }
+      #page-workforce .wf-field-label,
+      #page-workforce .wf-field-val{
+        width:100%;max-width:100%;min-width:0;overflow-wrap:anywhere;word-break:break-word;
+      }
+      .wf-card > div:last-child{width:100%;max-width:100%;min-width:0;}
+
+      /* Curriculum courses and modules */
+      #page-workforce .wf-module-list{width:100%;max-width:100%;min-width:0;}
+      #page-workforce .wf-module-block{width:100%;max-width:100%;min-width:0;box-sizing:border-box;}
+      #page-workforce .wf-module-title{flex-direction:column;align-items:flex-start;gap:4px;width:100%;max-width:100%;min-width:0;overflow-wrap:anywhere;word-break:break-word;}
+      #page-workforce .wf-session-item{width:100%;max-width:100%;min-width:0;box-sizing:border-box;overflow-wrap:anywhere;word-break:break-word;}
+      #page-workforce .wf-ai-callout{width:100%;max-width:100%;min-width:0;box-sizing:border-box;overflow-wrap:anywhere;word-break:break-word;}
+
+      /* Forms and controls fit cleanly */
+      #page-workforce .project-form,
+      #wf-partner-form,
+      #wf-asset-form,
+      #wf-item-form{
+        width:100%;max-width:100%;min-width:0;box-sizing:border-box;padding:12px;
+      }
+      #page-workforce .f-grid,
+      #page-workforce .f-grid-3{
+        grid-template-columns:1fr!important;width:100%;max-width:100%;min-width:0;
+      }
+      #page-workforce .f-field{width:100%;max-width:100%;min-width:0;}
+      #page-workforce .f-input,
+      #page-workforce .f-select,
+      #page-workforce .f-textarea{
+        width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box;
+      }
+      #page-workforce .project-form-actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;width:100%;max-width:100%;}
+      #page-workforce .btn{max-width:100%;box-sizing:border-box;overflow-wrap:anywhere;}
+
+      /* Lists, rows, and action items */
+      #page-workforce .project-list-row{grid-template-columns:1fr!important;gap:8px;width:100%;max-width:100%;min-width:0;box-sizing:border-box;}
+      #page-workforce .project-list-row > div{width:100%;max-width:100%;min-width:0;overflow-wrap:anywhere;word-break:break-word;}
+      #page-workforce .project-list-row .row-name,
+      #page-workforce .project-list-row .row-detail,
+      #page-workforce .project-list-row .project-meta{
+        width:100%;max-width:100%;min-width:0;overflow-wrap:anywhere;word-break:break-word;
+      }
+      #page-workforce .project-list-row .row-actions{width:100%;max-width:100%;min-width:0;justify-content:flex-start!important;margin-top:6px;}
+
+      /* Team comms box & activity feed */
+      #page-workforce .wf-comm-box{width:100%;max-width:100%;min-width:0;box-sizing:border-box;padding:12px;}
+      #page-workforce .wf-comm-box .flex-row{flex-direction:column;align-items:stretch;gap:10px;width:100%;max-width:100%;min-width:0;}
+      #page-workforce #wf-comm-save{width:100%;justify-content:center;}
+      #page-workforce .project-activity{width:100%;max-width:100%;min-width:0;box-sizing:border-box;overflow-wrap:anywhere;word-break:break-word;}
+      #page-workforce .project-activity .row-name,
+      #page-workforce .project-activity .row-detail,
+      #page-workforce .project-activity .project-meta{
+        width:100%;max-width:100%;min-width:0;overflow-wrap:anywhere;word-break:break-word;
+      }
+    }
 </style>
 </head>
 <body>
@@ -383,6 +514,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
   </div>
   <span id="sync-badge" class="sync-badge">connecting…</span>
   <div class="spacer"></div>
+  <button id="workforce-quick-btn" onclick="window.nav('workforce')" aria-label="Open Workforce OS">Workforce OS</button>
   <button id="keepsakes-quick-btn" onclick="window.nav('keepsakes')" aria-label="Open Keepsakes workspace">Keepsakes</button>
   <button id="copy-link-btn" onclick="window.copyIntakeLink()">🔗 Intake link</button>
   <button id="cmd-btn" onclick="openCmd()">🔍 <kbd>⌘K</kbd></button>
@@ -430,6 +562,13 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
       </div>
       <div class="nav-item" data-page="templates">
         <span class="icon">📋</span> Templates
+      </div>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-label">Workforce OS</div>
+    <div class="nav-section">
+      <div class="nav-item" data-page="workforce">
+        <span class="icon">🎓</span> Workforce OS
       </div>
     </div>
     <div class="nav-divider"></div>
@@ -648,6 +787,474 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
             </div>
             <div id="hq-feed"><div class="empty">No activity logged yet.</div></div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── WORKFORCE OS ──────────────────────── -->
+    <div id="page-workforce" class="page">
+      <div class="page-header">
+        <div class="flex-row" style="justify-content:space-between;align-items:flex-start;">
+          <div>
+            <div class="page-title">Workforce OS</div>
+            <div class="page-sub">Independent workforce training practice delivering structured sales and business courses through career centers and reentry programs.</div>
+          </div>
+          <div class="flex-row" style="margin-top:4px;">
+            <span class="badge b-paying" id="wf-status-pill">Planning / Active Build</span>
+            <button class="btn btn-ghost btn-sm" onclick="window.openProject('0fba0555-5ef0-455d-8bed-5a518db639c0', true)">Projects Workspace ↗</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stat Strip -->
+      <div class="stats" id="wf-stats">
+        <div class="stat hi">
+          <div class="v" id="wf-stat-status">Planning</div>
+          <div class="l">Program Status</div>
+        </div>
+        <div class="stat">
+          <div class="v" id="wf-stat-partners">2</div>
+          <div class="l">Active Tracks</div>
+        </div>
+        <div class="stat">
+          <div class="v">2</div>
+          <div class="l">Curricula</div>
+        </div>
+        <div class="stat">
+          <div class="v" id="wf-stat-items">4</div>
+          <div class="l">Open Actions</div>
+        </div>
+        <div class="stat">
+          <div class="v" id="wf-stat-assets">4</div>
+          <div class="l">Tracked Assets</div>
+        </div>
+      </div>
+
+      <!-- PROGRAM SUMMARY -->
+      <section class="card wf-summary-card" aria-labelledby="wf-summary-title">
+        <div class="card-h">
+          <div>
+            <div class="card-meta">PROGRAM DOCTRINE &amp; CORE POSITIONING</div>
+            <div class="card-title" id="wf-summary-title" style="font-size:20px;margin-top:2px;">Workforce Training &amp; Reentry Career Systems</div>
+          </div>
+          <span class="tag" style="font-size:11px;">Supabase Record: reentry-workforce-transition</span>
+        </div>
+        <div class="wf-summary-body" style="font-size:13px;line-height:1.6;color:var(--sl);">
+          <p style="margin-bottom:10px;">
+            <strong>The Angle:</strong> Derrick McDonald positions as a <strong>Sales Career Instructor</strong> and <strong>AI Operator &amp; Product Builder</strong>—never an &ldquo;AI engineer.&rdquo; Fifteen years in B2B corporate sales (Senior Account Executive at Angi, Account Executive at DoorDash and Yelp) commands immediate respect in the room. Applied AI is the force multiplier that allows one person to handle the full sales cycle without drowning. On the reentry track, Derrick&apos;s lived experience of coming home and building that career proves the ceiling is not where people think it is.
+          </p>
+          <p style="margin-bottom:10px;">
+            <strong>The Problem &amp; Core Argument:</strong> Traditional workforce and reentry programs excel at stabilization, housing, transportation, and landing a first job. But support stops there. Meanwhile, modern sales roles expect reps to carry the entire pipeline alone (SDR outbound, BDR qualifying, and AE closing). New hires wash out in their first 90 days because nobody prepared them for the actual daily rhythm or how to leverage AI. That gap is the product.
+          </p>
+          <div class="flex-row" style="gap:16px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:12px;">
+            <div><strong>Authority:</strong> Master Document (2026-09-09)</div>
+            <div><strong>Key Deadline:</strong> Dylan Lehr Meeting (Friday, Sep 11, 2026)</div>
+            <div><strong>Practice Model:</strong> Ongoing Paid Cohorts &amp; Workshops</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RELATIONSHIPS SECTION -->
+      <div class="card" style="margin-bottom:18px;">
+        <div class="card-h">
+          <div>
+            <div class="card-meta">STAKEHOLDER ENGAGEMENT &amp; DISCOVERY</div>
+            <div class="card-title">Key Relationships &amp; Active Tracks</div>
+          </div>
+          <button class="btn btn-ghost btn-sm" onclick="window.toggleWorkforcePartnerForm()">+ Add Relationship Partner</button>
+        </div>
+
+        <!-- Add Partner Inline Form -->
+        <div id="wf-partner-form" class="project-form" style="border-radius:10px;">
+          <div class="row-name" style="margin-bottom:10px;">Add New Relationship Partner</div>
+          <div class="f-grid">
+            <div class="f-field">
+              <label class="f-label">Contact Name *</label>
+              <input id="wf-p-name" class="f-input" placeholder="e.g. Jane Doe"/>
+            </div>
+            <div class="f-field">
+              <label class="f-label">Title / Role</label>
+              <input id="wf-p-title" class="f-input" placeholder="e.g. Center Director"/>
+            </div>
+          </div>
+          <div class="f-grid">
+            <div class="f-field">
+              <label class="f-label">Organization *</label>
+              <input id="wf-p-org" class="f-input" placeholder="e.g. Regional Workforce Council"/>
+            </div>
+            <div class="f-field">
+              <label class="f-label">Audience &amp; Angle</label>
+              <input id="wf-p-aud" class="f-input" placeholder="e.g. WIOA Adult &amp; Dislocated Workers"/>
+            </div>
+          </div>
+          <div class="f-grid">
+            <div class="f-field">
+              <label class="f-label">Lead Track</label>
+              <select id="wf-p-track" class="f-select">
+                <option value="Sales-Course-First (Sales Career Course)">Sales-Course-First (Sales Career Course)</option>
+                <option value="Dual Pathways (Sales + Business)">Dual Pathways (Sales + Business)</option>
+                <option value="Reentry Discovery &amp; Career Pathways">Reentry Discovery &amp; Career Pathways</option>
+                <option value="Digital Business Foundations">Digital Business Foundations</option>
+              </select>
+            </div>
+            <div class="f-field">
+              <label class="f-label">Status &amp; Next Milestone</label>
+              <input id="wf-p-status" class="f-input" placeholder="e.g. Meeting scheduled for next month"/>
+            </div>
+          </div>
+          <div class="f-field" style="margin-bottom:10px;">
+            <label class="f-label">Strategy, Background &amp; Next Action</label>
+            <textarea id="wf-p-notes" class="f-textarea" placeholder="Key context, positioning, and required actions..."></textarea>
+          </div>
+          <div class="project-form-actions">
+            <button class="btn btn-ghost btn-sm" type="button" onclick="window.toggleWorkforcePartnerForm()">Cancel</button>
+            <button class="btn btn-sm" type="button" onclick="window.saveWorkforcePartner()">Save Partner</button>
+          </div>
+        </div>
+
+        <div id="wf-relationships-list" class="wf-grid-2">
+          <!-- Populated by renderWorkforceRelationships() -->
+        </div>
+      </div>
+
+      <!-- COURSES AND BUILD STATUS -->
+      <div class="card" style="margin-bottom:18px;">
+        <div class="card-h">
+          <div>
+            <div class="card-meta">CURRICULUM PORTFOLIO &amp; DELIVERY READINESS</div>
+            <div class="card-title">Courses &amp; Build Status</div>
+          </div>
+          <div class="flex-row">
+            <span class="tag">Governing Doc: MASTER_DOCUMENT_2026-09-09</span>
+          </div>
+        </div>
+
+        <!-- Course 1: Sales Career Course -->
+        <div class="wf-course-card">
+          <div class="card-h" style="margin-bottom:8px;">
+            <div>
+              <div class="flex-row">
+                <span class="tag" style="background:#dbeafe;color:#1e40af;">Employment Track</span>
+                <span class="badge b-paying">Active Curriculum Build</span>
+              </div>
+              <div class="card-title" style="font-size:18px;margin-top:6px;">Course One: Sales Career Course (Naming Not Settled)</div>
+              <div class="row-detail" style="color:var(--sl);margin-top:2px;">
+                <strong>4 Modules · 8 Sessions.</strong> Rehearses the complete journey into a corporate sales role—interviews, offer negotiation, onboarding, CRM hygiene, prospecting, cold calls, discovery, objections, and 90-day advancement.
+              </div>
+            </div>
+          </div>
+
+          <!-- Applied AI Embedded Box -->
+          <div class="wf-ai-callout">
+            <strong>🤖 Applied AI Embedded Throughout:</strong>
+            Participants learn to use Claude, Cowork, and Codex the way a working sales professional actually uses them: researching real accounts, tailoring resumes to job postings, running simulated mock interviews, generating pre-call briefs, drafting personalized outreach sequences, practicing objection role-plays, and cleaning CRM records.
+            <div style="margin-top:4px;font-weight:600;font-size:11px;color:var(--em-d);">Operating Rule: The participant verifies every source and makes every decision. AI compresses research; it never sends unreviewed messages. Practice uses fictional datasets.</div>
+          </div>
+
+          <!-- Modules Breakdown -->
+          <div class="wf-module-list">
+            <div class="wf-module-block">
+              <div class="wf-module-title">
+                <span>Module 1: Getting In (Sessions 1–3)</span>
+                <span class="badge b-paying">Outline Complete</span>
+              </div>
+              <div class="wf-session-item">
+                <strong>Session 1 · The Field and the Fit:</strong> SDR/BDR vs. AE roles, base salary vs. commission, OTE, ramp periods, and the full-cycle reality. AI: researching job postings and separating reality from marketing. Output: Target role shortlist and compensation map.
+              </div>
+              <div class="wf-session-item">
+                <strong>Session 2 · Positioning Yourself:</strong> Sales-specific achievement resume vs. duties resume, 30-second elevator pitch, LinkedIn and ATS navigation. AI: tailoring resume to posting. Output: Tailored sales resume &amp; 30s pitch.
+              </div>
+              <div class="wf-session-item">
+                <strong>Session 3 · The Interview Chain:</strong> Recruiter screen, hiring manager, sales leader; mock cold calls and discovery role-plays. AI: mock interviews and pressure questions. Output: Interview prep sheet &amp; follow-up templates.
+              </div>
+            </div>
+
+            <div class="wf-module-block">
+              <div class="wf-module-title">
+                <span>Module 2: Offer to Day One (Session 4)</span>
+                <span class="badge b-paying">Outline Complete</span>
+              </div>
+              <div class="wf-session-item">
+                <strong>Session 4 · The Part Nobody Explains:</strong> Reading offer letters, commission structures, background checks, home office equipment, first-week orientation, and ramp expectations. AI: translating compensation terms. Output: Offer review checklist.
+              </div>
+            </div>
+
+            <div class="wf-module-block">
+              <div class="wf-module-title">
+                <span>Module 3: The Job Itself (Sessions 5–7)</span>
+                <span class="badge b-paying">Outline Complete</span>
+              </div>
+              <div class="wf-session-item">
+                <strong>Session 5 · The Tools and Daily Rhythm:</strong> Practice CRM (accounts, leads, opportunities, pipeline stages), logging activities, daily time blocks. AI: meeting notes to next actions. Output: Full pipeline opportunity worked.
+              </div>
+              <div class="wf-session-item">
+                <strong>Session 6 · Prospecting and the Opening Call:</strong> Ideal Customer Profile (ICP), account briefs, prospecting sheet, cold outreach cadence, discovery questioning. AI: account briefs &amp; call roleplay. Output: Prospecting sheet &amp; opening script.
+              </div>
+              <div class="wf-session-item">
+                <strong>Session 7 · Presenting, Objections, and Closing:</strong> Outcome-based presentations, clarifying objections (price/timing/authority), asking for commitments, clean customer handoffs. AI: objection drills. Output: Presentation &amp; objection map.
+              </div>
+            </div>
+
+            <div class="wf-module-block">
+              <div class="wf-module-title">
+                <span>Module 4: First 90 Days and Moving Up (Session 8)</span>
+                <span class="badge b-paying">Outline Complete</span>
+              </div>
+              <div class="wf-session-item">
+                <strong>Session 8 · Surviving and Advancing:</strong> Ramp milestones, 1-on-1 coaching prep, communicating blockers early, career progression, and sharing your edge with the team. AI: personal productivity tools. Output: 30/60/90 day plan.
+              </div>
+            </div>
+          </div>
+
+          <!-- Build Status Ladder -->
+          <div style="margin-top:14px;">
+            <div class="wf-field-label">Sales Course Build Status</div>
+            <div class="wf-status-grid">
+              <div class="wf-status-step"><strong>1. Overview &amp; Outcomes</strong><span style="color:var(--em);font-weight:700;">✓ Done (PDF)</span></div>
+              <div class="wf-status-step"><strong>2. 8-Session Syllabus</strong><span style="color:var(--em);font-weight:700;">✓ Done</span></div>
+              <div class="wf-status-step"><strong>3. Learning Objectives</strong><span style="color:var(--em);font-weight:700;">✓ Done</span></div>
+              <div class="wf-status-step"><strong>4. Lesson Plans &amp; Timing</strong><span style="color:var(--gold);font-weight:700;">⚡ In Progress (Sep 11 Prep)</span></div>
+              <div class="wf-status-step"><strong>5. Participant Worksheets</strong><span style="color:var(--sl-l);font-weight:600;">○ Queued (Fictional CRM)</span></div>
+              <div class="wf-status-step"><strong>6. Facilitator Guide &amp; Rubrics</strong><span style="color:var(--sl-l);font-weight:600;">○ Queued</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course 2: Digital Business Foundations -->
+        <div class="wf-course-card" style="margin-bottom:0;">
+          <div class="card-h" style="margin-bottom:8px;">
+            <div>
+              <div class="flex-row">
+                <span class="tag" style="background:#fef3c7;color:#b45309;">Self-Employment Track</span>
+                <span class="badge b-sent">Syllabus Complete</span>
+              </div>
+              <div class="card-title" style="font-size:18px;margin-top:6px;">Course Two: Digital Business Foundations</div>
+              <div class="row-detail" style="color:var(--sl);margin-top:2px;">
+                <strong>7 Sessions.</strong> For participants ready to work for themselves (cleaning, detailing, trades, catering, creative/digital services). Leaves participants with an active business presence rather than a hypothetical plan.
+              </div>
+            </div>
+          </div>
+
+          <!-- Applied AI Embedded Box -->
+          <div class="wf-ai-callout" style="background:#fffbeb;border-left-color:var(--gold);">
+            <strong style="color:var(--gold);">🤖 Applied AI Embedded Throughout:</strong>
+            Participants leverage Claude and Claude Code to build an actual live landing page, generate targeted local customer prospect lists, write clear service proposals, establish booking/payment pathways, and run lightweight automations at near-zero monthly cost.
+          </div>
+
+          <!-- 7 Sessions Breakdown -->
+          <div class="wf-module-list">
+            <div class="wf-module-block">
+              <div class="wf-module-title">
+                <span>7-Session Curriculum Outline</span>
+                <span class="badge b-paying">Complete</span>
+              </div>
+              <div class="wf-session-item"><strong>Session 1 · Idea &amp; Offer:</strong> Skill identification, customer problem, pricing logic, testing demand before spending. Output: Written priced offer.</div>
+              <div class="wf-session-item"><strong>Session 2 · Who You Sell To:</strong> Small business ICP, local research, narrowing to reachable buyers. Output: First 20 local prospects.</div>
+              <div class="wf-session-item"><strong>Session 3 · Digital Presence:</strong> Business name, one-job landing page, local searchability. AI build session with Claude. Output: Live landing page.</div>
+              <div class="wf-session-item"><strong>Session 4 · Getting Customers:</strong> Non-spam outreach cadences, objection handling, referral loops. Output: Outreach sequence &amp; objection sheet.</div>
+              <div class="wf-session-item"><strong>Session 5 · Customer Path &amp; Ops:</strong> Action path (call/form/quote/checkout), lightweight tracking. Output: Tested customer flow &amp; tracker.</div>
+              <div class="wf-session-item"><strong>Session 6 · Your Infrastructure:</strong> Domain, hosting, professional email, AI assistant on low-cost model. Output: Live domain &amp; email.</div>
+              <div class="wf-session-item"><strong>Session 7 · Present, Test &amp; Launch:</strong> 3-minute pitch, stranger testing, 2-week launch checklist. Output: Delivered pitch &amp; launch plan.</div>
+            </div>
+          </div>
+
+          <!-- Build Status Ladder -->
+          <div style="margin-top:14px;">
+            <div class="wf-field-label">Business Course Build Status</div>
+            <div class="wf-status-grid">
+              <div class="wf-status-step"><strong>1. Overview &amp; Outcomes</strong><span style="color:var(--em);font-weight:700;">✓ Done (PDF)</span></div>
+              <div class="wf-status-step"><strong>2. 7-Session Syllabus</strong><span style="color:var(--em);font-weight:700;">✓ Done</span></div>
+              <div class="wf-status-step"><strong>3. Learning Objectives</strong><span style="color:var(--em);font-weight:700;">✓ Done</span></div>
+              <div class="wf-status-step"><strong>4. Lesson Plans &amp; Timing</strong><span style="color:var(--sl-l);font-weight:600;">○ Queued</span></div>
+              <div class="wf-status-step"><strong>5. Participant Worksheets</strong><span style="color:var(--sl-l);font-weight:600;">○ Queued</span></div>
+              <div class="wf-status-step"><strong>6. Facilitator Guide &amp; Rubrics</strong><span style="color:var(--sl-l);font-weight:600;">○ Queued</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ASSETS SECTION -->
+      <div class="card" style="margin-bottom:18px;">
+        <div class="card-h">
+          <div>
+            <div class="card-meta">PROJECT ARTIFACTS &amp; SYSTEM LINKS</div>
+            <div class="card-title">Document, Visual, Portal &amp; Product Assets</div>
+          </div>
+          <button class="btn btn-ghost btn-sm" onclick="window.toggleWorkforceAssetForm()">+ Add Asset</button>
+        </div>
+
+        <!-- Add Asset Form -->
+        <div id="wf-asset-form" class="project-form" style="border-radius:10px;">
+          <div class="row-name" style="margin-bottom:10px;">Add Workforce Asset</div>
+          <div class="f-grid">
+            <div class="f-field">
+              <label class="f-label">Asset Label *</label>
+              <input id="wf-asset-label" class="f-input" placeholder="e.g. NCWorks Gaston Overview"/>
+            </div>
+            <div class="f-field">
+              <label class="f-label">Category</label>
+              <select id="wf-asset-kind" class="f-select">
+                <option value="document">Document</option>
+                <option value="portal">Portal</option>
+                <option value="product">Product</option>
+                <option value="visual">Visual</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="f-grid">
+            <div class="f-field">
+              <label class="f-label">Public URL (Leave blank if internal)</label>
+              <input id="wf-asset-url" class="f-input" placeholder="https://..."/>
+            </div>
+            <div class="f-field">
+              <label class="f-label">Status</label>
+              <select id="wf-asset-status" class="f-select">
+                <option value="available">Available (Public)</option>
+                <option value="prepared">Prepared (Internal)</option>
+                <option value="waiting">Waiting</option>
+              </select>
+            </div>
+          </div>
+          <div class="f-field" style="margin-bottom:10px;">
+            <label class="f-label">Notes (Public description only; no private server paths)</label>
+            <textarea id="wf-asset-notes" class="f-textarea" placeholder="Context or public summary..."></textarea>
+          </div>
+          <div class="project-form-actions">
+            <button class="btn btn-ghost btn-sm" type="button" onclick="window.toggleWorkforceAssetForm()">Cancel</button>
+            <button class="btn btn-sm" type="button" onclick="window.saveWorkforceAsset()">Save Asset</button>
+          </div>
+        </div>
+
+        <div id="wf-assets-list">
+          <!-- Rendered dynamically via renderWorkforceAssets() -->
+        </div>
+      </div>
+
+      <!-- NEXT ACTIONS SECTION -->
+      <div class="card" style="margin-bottom:18px;">
+        <div class="card-h">
+          <div>
+            <div class="card-meta">ACTION ITEMS &amp; DELIVERABLES</div>
+            <div class="card-title">Next Actions &amp; Milestones</div>
+          </div>
+          <button class="btn btn-ghost btn-sm" onclick="window.toggleWorkforceItemForm()">+ Add Action Item</button>
+        </div>
+
+        <!-- Add Item Form -->
+        <div id="wf-item-form" class="project-form" style="border-radius:10px;">
+          <div class="row-name" style="margin-bottom:10px;">Add Action Item</div>
+          <div class="f-grid">
+            <div class="f-field">
+              <label class="f-label">Title *</label>
+              <input id="wf-item-title" class="f-input" placeholder="Action item title"/>
+            </div>
+            <div class="f-field">
+              <label class="f-label">Kind</label>
+              <select id="wf-item-kind" class="f-select">
+                <option value="task">Task</option>
+                <option value="deliverable">Deliverable</option>
+                <option value="decision">Decision</option>
+                <option value="blocker">Blocker</option>
+              </select>
+            </div>
+          </div>
+          <div class="f-grid">
+            <div class="f-field">
+              <label class="f-label">Owner</label>
+              <select id="wf-item-owner" class="f-select project-actor">
+                <option value="derrick">Derrick</option>
+                <option value="claude">Claude</option>
+                <option value="codex">Codex</option>
+                <option value="hermes">Danny</option>
+              </select>
+            </div>
+            <div class="f-field">
+              <label class="f-label">Status</label>
+              <select id="wf-item-status" class="f-select">
+                <option value="open">Open</option>
+                <option value="in_progress">In Progress</option>
+                <option value="researching">Researching</option>
+                <option value="waiting">Waiting</option>
+                <option value="complete">Complete</option>
+              </select>
+            </div>
+          </div>
+          <div class="f-field" style="margin-bottom:10px;">
+            <label class="f-label">Detail</label>
+            <textarea id="wf-item-detail" class="f-textarea" placeholder="Detailed requirements or context..."></textarea>
+          </div>
+          <div class="project-form-actions">
+            <button class="btn btn-ghost btn-sm" type="button" onclick="window.toggleWorkforceItemForm()">Cancel</button>
+            <button class="btn btn-sm" type="button" onclick="window.saveWorkforceItem()">Save Action Item</button>
+          </div>
+        </div>
+
+        <div id="wf-items-list">
+          <!-- Rendered dynamically via renderWorkforceItems() -->
+        </div>
+      </div>
+
+      <!-- ACTIVITY FEED & COMMUNICATION -->
+      <div class="card">
+        <div class="card-h">
+          <div>
+            <div class="card-meta">COMMUNICATION &amp; AGENT LOG</div>
+            <div class="card-title">Workforce OS Activity &amp; Team Comms</div>
+          </div>
+          <span class="tag">Synced to Conference Room</span>
+        </div>
+
+        <!-- Communication Box -->
+        <div class="wf-comm-box">
+          <div class="row-name" style="margin-bottom:8px;">Post Workforce OS Update</div>
+          <div class="f-grid-3">
+            <div class="f-field">
+              <label class="f-label">From</label>
+              <select id="wf-comm-from" class="f-select">
+                <option value="derrick">Derrick</option>
+                <option value="claude">Claude</option>
+                <option value="codex">Codex</option>
+                <option value="hermes">Danny / Hermes</option>
+              </select>
+            </div>
+            <div class="f-field">
+              <label class="f-label">Target Agent</label>
+              <select id="wf-comm-target" class="f-select">
+                <option value="all">Everyone (All Agents)</option>
+                <option value="claude">Claude</option>
+                <option value="codex">Codex</option>
+                <option value="hermes">Danny / Hermes</option>
+                <option value="derrick">Derrick</option>
+              </select>
+            </div>
+            <div class="f-field">
+              <label class="f-label">Event Type</label>
+              <select id="wf-comm-type" class="f-select">
+                <option value="conf:status">conf:status (Status Update)</option>
+                <option value="conf:role">conf:role (Strategic Guidance)</option>
+                <option value="conf:question">conf:question (Question / Feedback)</option>
+                <option value="conf:done">conf:done (Task Completed)</option>
+                <option value="conf:blocker">conf:blocker (Blocker / Problem)</option>
+              </select>
+            </div>
+          </div>
+          <div class="f-field" style="margin-bottom:8px;">
+            <label class="f-label">Subject / Title (Optional)</label>
+            <input id="wf-comm-title" class="f-input" placeholder="Short headline (or first line will be used)"/>
+          </div>
+          <div class="f-field" style="margin-bottom:10px;">
+            <label class="f-label">Message Body *</label>
+            <textarea id="wf-comm-body" class="f-textarea" placeholder="Write workforce update, partner notes, or agent task here..."></textarea>
+          </div>
+          <div class="flex-row" style="justify-content:space-between;align-items:center;">
+            <div style="font-size:11px;color:var(--sl-l);">Saves with project_id: 0fba0555-5ef0-455d-8bed-5a518db639c0 so it also shows in Conference Room</div>
+            <button id="wf-comm-save" class="btn btn-sm" type="button" onclick="window.saveWorkforceCommunication()">Post Update →</button>
+          </div>
+        </div>
+
+        <div id="wf-activity-list" style="margin-top:16px;">
+          <!-- Rendered dynamically via renderWorkforceActivity() -->
         </div>
       </div>
     </div>
@@ -1992,8 +2599,21 @@ function lsLoad(){
 function lsSave(){ localStorage.setItem(LS_KEY, JSON.stringify(PROSPECTS)); }
 
 // ─── NAV ──────────────────────────────────────────────────────
-const pages = ['hq','keepsakes','golden-crest','inbox','pipeline','messages','workflow','whitelabel','reggie','templates','f2f-estate-sales','estate-delivery','conference','marketing','seo','scout','dollarleads','send-intake','send-quote','learn','tiers-ref','help','portfolio'];
-window.nav = async function(id){
+const pages = ['hq','workforce','keepsakes','golden-crest','inbox','pipeline','messages','workflow','whitelabel','reggie','templates','f2f-estate-sales','estate-delivery','conference','marketing','seo','scout','dollarleads','send-intake','send-quote','learn','tiers-ref','help','portfolio'];
+window.nav = async function(id, updateHistory = true){
+  if(updateHistory){
+    try {
+      const url = new URL(window.location.href);
+      if(id === 'hq'){
+        url.searchParams.delete('page');
+      } else {
+        url.searchParams.set('page', id);
+      }
+      const search = url.searchParams.toString();
+      const newUrl = url.pathname + (search ? '?' + search : '') + url.hash;
+      window.history.replaceState(window.history.state, '', newUrl);
+    } catch(e) {}
+  }
   pages.forEach(p=>{
     const el = document.getElementById('page-'+p);
     if(el) el.classList.toggle('active',p===id);
@@ -2001,6 +2621,7 @@ window.nav = async function(id){
   document.querySelectorAll('.nav-item').forEach(el=>{
     el.classList.toggle('active', el.dataset.page===id && !el.dataset.projectSlug);
   });
+  if(id==='workforce'){ await loadProjects(); await loadFeed(); renderWorkforce(); }
   if(id==='inbox')  renderInbox();
   if(id==='pipeline') renderKanban();
   if(id==='messages') renderMessages();
@@ -2013,6 +2634,19 @@ window.nav = async function(id){
     renderConference();
   }
 };
+
+window.addEventListener('popstate', () => {
+  const p = new URLSearchParams(window.location.search).get('page') || 'hq';
+  if(pages.includes(p)){
+    nav(p, false);
+  }
+});
+
+// Direct deep-link navigation on startup (e.g. /command/?page=workforce)
+const initPageParam = new URLSearchParams(window.location.search).get('page');
+if(initPageParam && pages.includes(initPageParam)){
+  nav(initPageParam, false);
+}
 
 // ─── PROJECTS ────────────────────────────────────────────────
 const PROJECT_ACTORS = {
@@ -2163,12 +2797,20 @@ async function logProjectChange(title, body){
   await saveEvent('conf:status', title, body, 'derrick', 'all', ACTIVE_PROJECT_ID);
 }
 
-window.openProject = async id => {
+window.openProject = async (id, forceReggie = false) => {
+  if(id === WORKFORCE_PROJECT_ID && !forceReggie){
+    await nav('workforce');
+    return;
+  }
   ACTIVE_PROJECT_ID=id;
   await nav('reggie');
   renderProjects();
 };
-window.openProjectSlug = async slug => {
+window.openProjectSlug = async (slug, forceReggie = false) => {
+  if(slug === WORKFORCE_PROJECT_SLUG && !forceReggie){
+    await nav('workforce');
+    return;
+  }
   await nav('reggie');
   const project = PROJECTS.find(item=>item.slug===slug);
   if(!project){ toast('Project hub could not be found'); return; }
@@ -2231,6 +2873,557 @@ document.getElementById('project-asset-save')?.addEventListener('click',async()=
 
 window.deleteProjectRecord=async(table,id,label)=>{if(!confirm(`Remove ${label}?`))return;const result=await sb.from(table).delete().eq('id',id);if(result.error)return toast(result.error.message);await loadProjects();await logProjectChange('Project record removed',label);renderProjects();toast('Removed');};
 document.getElementById('project-update-save')?.addEventListener('click',async()=>{const body=document.getElementById('project-update-body').value.trim();if(!body)return toast('Write an update first');const title=body.split('\n')[0].slice(0,80);const ok=await saveEvent('conf:status',title,body,document.getElementById('project-update-from').value||'derrick',document.getElementById('project-update-target').value||'all',ACTIVE_PROJECT_ID);if(ok){document.getElementById('project-update-body').value='';renderProjects();toast('Project and Conference Room updated');}});
+
+// ─── WORKFORCE OS ────────────────────────────────────────────
+const WORKFORCE_PROJECT_ID = '0fba0555-5ef0-455d-8bed-5a518db639c0';
+const WORKFORCE_PROJECT_SLUG = 'reentry-workforce-transition';
+
+const DEFAULT_WORKFORCE_RELATIONSHIPS = [
+  {
+    id: 'rel-dylan-lehr',
+    name: 'Dylan Lehr',
+    title: 'Career Center Manager',
+    organization: 'NCWorks Career Center (Gaston County) / Two Hawk Employment Services',
+    audience: 'General Career Center Audience (Job Seekers)',
+    track: 'Sales-Course-First (Sales Career Course)',
+    status: 'Meeting Scheduled: Friday, Sep 11, 2026',
+    status_type: 'active',
+    background: 'Two Hawk operates the NCWorks Career Center in Gaston County under contract with Michael Coone\'s board. Dylan manages the physical facility where job seekers walk in for employment services.',
+    approach: 'Lead with the structured 4-module / 8-session Sales Career Course (course naming is not settled). Emphasize sales as an accessible career path where someone can start without a degree and advance fast, with applied AI as a practical daily operator tool. Reentry experience is kept as background context.',
+    meeting_prep: 'Dylan requested no advance slide deck—he wants to understand Derrick and the product. Clyde/Cowork is building lesson-level timing and fictional practice datasets for Friday morning. Do not use the stale September 3 deck.',
+    next_step: 'Deliver discovery presentation focused on the 8-session course outline, participant outcomes, and pilot cohort logistics.',
+    contact: 'Two Hawk / NCWorks Gaston'
+  },
+  {
+    id: 'rel-michael-coone',
+    name: 'Michael S. Coone',
+    title: 'Workforce Development Board Director / Assistant Director of Social Services',
+    organization: 'Gaston County Workforce Development Board',
+    audience: 'Workforce Board & WIOA / Reentry Discovery',
+    track: 'Dual Pathways (Sales & Business) with Lived Reentry Experience',
+    status: 'Warm Advocate / Discovery Invited',
+    status_type: 'paying',
+    background: 'Responded to Derrick\'s initial outreach, recognized shared mission ("working for the same cause"), connected Derrick to Dylan Lehr, and invited Derrick to meet the WIOA team for workforce and reentry discovery.',
+    approach: 'Lead with Derrick\'s lived reentry experience as proof of what is achievable. Discovery discussion on current WIOA and reentry landscape to explore where Derrick\'s training could fit, presented honestly as Derrick McDonald independent program development (no artificial company name).',
+    meeting_prep: 'Michael work completed: one-page Reentry Pathways overview finalized and email sent confirming Derrick McDonald independent development. Awaiting scheduling of the WIOA team discovery meeting.',
+    next_step: 'Discovery discussion regarding current WIOA and reentry landscape to explore where Derrick\'s training could fit, without assigning a council, intake pathway, funding, or services.',
+    contact: 'Gaston County WDB'
+  }
+];
+
+const FALLBACK_WORKFORCE_ITEMS = [
+  {
+    id: 'wf-fallback-item-1',
+    project_id: WORKFORCE_PROJECT_ID,
+    kind: 'task',
+    title: 'Prepare for the NCWorks discovery meeting',
+    detail: 'Build a concise introduction, discovery questions, and a one-page concept outline. Do not pretend the program is finished before the organization explains its needs.',
+    owner: 'derrick',
+    status: 'in_progress',
+    updated_at: '2026-08-31T14:59:08.787617+00:00',
+    updated_by: 'hermes'
+  },
+  {
+    id: 'wf-fallback-item-2',
+    project_id: WORKFORCE_PROJECT_ID,
+    kind: 'task',
+    title: 'Research NCWorks, WIOA, and the Gaston reentry landscape',
+    detail: 'Use current official sources. Record services, roles, funding structures, existing reentry support, and unanswered questions without assuming an open contract.',
+    owner: 'hermes',
+    status: 'researching',
+    updated_at: '2026-08-31T14:59:08.787617+00:00',
+    updated_by: 'hermes'
+  },
+  {
+    id: 'wf-fallback-item-3',
+    project_id: WORKFORCE_PROJECT_ID,
+    kind: 'deliverable',
+    title: 'Define participant outcomes and program format',
+    detail: 'After discovery, turn the real need into a practical workshop or cohort outline with measurable participant outcomes.',
+    owner: 'claude',
+    status: 'open',
+    updated_at: '2026-08-31T14:59:08.787617+00:00',
+    updated_by: 'hermes'
+  },
+  {
+    id: 'wf-fallback-item-4',
+    project_id: WORKFORCE_PROJECT_ID,
+    kind: 'decision',
+    title: 'Choose the public program name and commercial structure',
+    detail: 'Keep Workforce OS as the working project name until the audience, buyer, outcomes, delivery format, and funding path are clearer.',
+    owner: 'derrick',
+    status: 'open',
+    updated_at: '2026-08-31T14:59:08.787617+00:00',
+    updated_by: 'hermes'
+  }
+];
+
+const FALLBACK_WORKFORCE_ASSETS = [
+  {
+    id: 'wf-fallback-asset-1',
+    project_id: WORKFORCE_PROJECT_ID,
+    kind: 'document',
+    label: 'U.S. Department of Labor: American Job Centers',
+    url: 'https://www.dol.gov/general/topic/training/onestop',
+    status: 'available',
+    notes: 'Official overview of Career Center services and delivery standards.',
+    updated_at: '2026-08-31T14:59:08.912057+00:00',
+    updated_by: 'hermes'
+  },
+  {
+    id: 'wf-fallback-asset-2',
+    project_id: WORKFORCE_PROJECT_ID,
+    kind: 'document',
+    label: 'WIOA One-Stop Operator guidance',
+    url: 'https://www.dol.gov/sites/dolgov/files/ETA/advisories/TEGL/2017/TEGL_15-16_Acc.pdf',
+    status: 'available',
+    notes: 'Official federal guidance on the One-Stop Operator role.',
+    updated_at: '2026-08-31T14:59:08.912057+00:00',
+    updated_by: 'hermes'
+  },
+  {
+    id: 'wf-fallback-asset-3',
+    project_id: WORKFORCE_PROJECT_ID,
+    kind: 'portal',
+    label: 'NCWorks Online Portal',
+    url: 'https://www.ncworks.gov/',
+    status: 'available',
+    notes: 'North Carolina workforce system entry point.',
+    updated_at: '2026-08-31T14:59:08.912057+00:00',
+    updated_by: 'hermes'
+  },
+  {
+    id: 'wf-fallback-asset-4',
+    project_id: WORKFORCE_PROJECT_ID,
+    kind: 'workspace',
+    label: 'Shared project workspace',
+    url: null,
+    status: 'prepared',
+    notes: 'Internal workspace repository. Publication pending repository authentication.',
+    updated_at: '2026-08-31T14:59:08.912057+00:00',
+    updated_by: 'hermes'
+  }
+];
+
+function getWorkforceRelationships(){
+  const dynamicItems = (PROJECT_ITEMS || []).filter(item =>
+    item.project_id === WORKFORCE_PROJECT_ID && item.kind === 'relationship'
+  );
+  const mapped = dynamicItems.map(item => {
+    let parsed = {};
+    if(item.detail){
+      try { parsed = JSON.parse(item.detail); }
+      catch(e) { parsed = { approach: item.detail }; }
+    }
+    return {
+      id: item.id,
+      name: parsed.name || item.title || 'Partner',
+      title: parsed.title || 'Partner',
+      organization: parsed.organization || '',
+      audience: parsed.audience || 'Workforce Stakeholder',
+      track: parsed.track || 'Sales-Course-First',
+      status: parsed.status || projectStatusLabel(item.status || 'open'),
+      status_type: parsed.status_type || item.status || 'active',
+      approach: parsed.approach || '',
+      meeting_prep: parsed.meeting_prep || '',
+      next_step: parsed.next_step || 'Awaiting update',
+      contact: parsed.contact || parsed.organization || '',
+      isCustom: true
+    };
+  });
+  return [...DEFAULT_WORKFORCE_RELATIONSHIPS, ...mapped];
+}
+window.getWorkforceRelationships = getWorkforceRelationships;
+
+function sanitizeAssetNotes(notes){
+  if(!notes) return '';
+  return String(notes).replace(/(?:\/(?:root|opt|home|var|etc)\/[^\s,;)]+)/g, 'internal workspace repository');
+}
+
+function workforceProjectRecord(){
+  return PROJECTS.find(p=>p.id===WORKFORCE_PROJECT_ID || p.slug===WORKFORCE_PROJECT_SLUG) || {
+    id: WORKFORCE_PROJECT_ID,
+    slug: WORKFORCE_PROJECT_SLUG,
+    name: 'Workforce OS',
+    status: 'planning',
+    client_name: 'Derrick McDonald',
+    client_entity: 'Independent program development',
+    updated_at: new Date().toISOString(),
+    updated_by: 'hermes'
+  };
+}
+
+function workforceItems(){
+  const items = PROJECT_ITEMS.filter(item=>item.project_id===WORKFORCE_PROJECT_ID && item.kind!=='relationship');
+  return items.length ? items : FALLBACK_WORKFORCE_ITEMS;
+}
+
+function workforceAssets(){
+  const assets = PROJECT_ASSETS.filter(asset=>asset.project_id===WORKFORCE_PROJECT_ID);
+  return assets.length ? assets : FALLBACK_WORKFORCE_ASSETS;
+}
+
+function workforceActivityEvents(){
+  return FEED.filter(event=>event.project_id===WORKFORCE_PROJECT_ID);
+}
+
+function renderWorkforce(){
+  const project = workforceProjectRecord();
+  const items = workforceItems();
+  const assets = workforceAssets();
+  const relationships = getWorkforceRelationships();
+  const openItems = items.filter(item=>!['complete','closed'].includes(item.status));
+
+  // Update stat strip
+  const statusEl = document.getElementById('wf-stat-status');
+  if(statusEl) statusEl.textContent = projectStatusLabel(project.status || 'planning');
+  const partnersEl = document.getElementById('wf-stat-partners');
+  if(partnersEl) partnersEl.textContent = relationships.length;
+  const itemsEl = document.getElementById('wf-stat-items');
+  if(itemsEl) itemsEl.textContent = openItems.length;
+  const assetsEl = document.getElementById('wf-stat-assets');
+  if(assetsEl) assetsEl.textContent = assets.length;
+  const pillEl = document.getElementById('wf-status-pill');
+  if(pillEl){
+    pillEl.className = `badge b-${projectBadge(project.status || 'planning')}`;
+    pillEl.textContent = projectStatusLabel(project.status || 'planning');
+  }
+
+  renderWorkforceRelationships();
+  renderWorkforceAssets();
+  renderWorkforceItems();
+  renderWorkforceActivity();
+}
+window.renderWorkforce = renderWorkforce;
+
+function renderWorkforceRelationships(){
+  const list = document.getElementById('wf-relationships-list');
+  if(!list) return;
+  const relationships = getWorkforceRelationships();
+  list.innerHTML = relationships.map(rel => {
+    const isCustom = !rel.id.startsWith('rel-dylan') && !rel.id.startsWith('rel-michael');
+    return `
+      <div class="wf-card">
+        <div class="wf-card-header">
+          <div>
+            <div class="wf-partner-name">${esc(rel.name)}</div>
+            <div class="wf-partner-role">${esc(rel.title)} · ${esc(rel.organization)}</div>
+          </div>
+          <span class="badge b-${projectBadge(rel.status_type || 'active')}">${esc(rel.status || 'Active')}</span>
+        </div>
+        <div>
+          <div class="wf-field-label">Audience &amp; Angle</div>
+          <div class="wf-field-val"><strong>${esc(rel.audience)}</strong></div>
+        </div>
+        <div>
+          <div class="wf-field-label">Lead Track</div>
+          <div class="wf-field-val"><span class="tag" style="background:#e0f2fe;color:#0369a1;font-weight:600;">${esc(rel.track)}</span></div>
+        </div>
+        <div>
+          <div class="wf-field-label">Context &amp; Approach</div>
+          <div class="wf-field-val">${esc(rel.approach || rel.background || '')}</div>
+        </div>
+        ${rel.meeting_prep ? `
+        <div>
+          <div class="wf-field-label">Meeting Readiness</div>
+          <div class="wf-field-val" style="font-size:12px;color:var(--sl);">${esc(rel.meeting_prep)}</div>
+        </div>` : ''}
+        <div style="margin-top:auto;padding-top:10px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+          <div class="wf-field-val" style="font-size:12px;"><strong>Next Step:</strong> ${esc(rel.next_step || 'Awaiting update')}</div>
+          ${isCustom ? `<button class="btn btn-red btn-sm" onclick="window.deleteWorkforcePartner('${esc(rel.id)}')">Remove</button>` : ''}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderWorkforceAssets(){
+  const list = document.getElementById('wf-assets-list');
+  if(!list) return;
+  const assets = workforceAssets();
+  if(!assets.length){
+    list.innerHTML = '<div class="project-empty">No workforce assets recorded yet. Tap + Add Asset to record documentation.</div>';
+    return;
+  }
+  list.innerHTML = assets.map(asset => {
+    const hasPublicUrl = asset.url && (asset.url.startsWith('http://') || asset.url.startsWith('https://')) && !asset.url.includes('/root/') && !asset.url.includes('/opt/');
+    const cleanNotes = sanitizeAssetNotes(asset.notes);
+    return `
+      <div class="project-list-row">
+        <div>
+          <div class="row-name">
+            ${esc(asset.label)}
+            <span class="tag">${esc((asset.kind||'document').replaceAll('_',' '))}</span>
+            <span class="badge b-${projectBadge(asset.status || 'prepared')}">${esc(projectStatusLabel(asset.status || 'prepared'))}</span>
+          </div>
+          ${cleanNotes ? `<div class="row-detail">${esc(cleanNotes)}</div>` : ''}
+          <div class="row-detail" style="margin-top:4px;">
+            ${hasPublicUrl ? `<a class="btn btn-ghost btn-sm" href="${esc(asset.url)}" target="_blank" rel="noopener">Open Link ↗</a>` : '<span class="tag" style="background:#f1f5f9;color:var(--sl);">Prepared / Internal Status</span>'}
+          </div>
+          <div class="project-meta">Updated ${fmt(asset.updated_at)} by ${esc(PROJECT_ACTORS[asset.updated_by]||asset.updated_by||'System')}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderWorkforceItems(){
+  const list = document.getElementById('wf-items-list');
+  if(!list) return;
+  const items = workforceItems();
+  if(!items.length){
+    list.innerHTML = '<div class="project-empty">No action items recorded yet.</div>';
+    return;
+  }
+  list.innerHTML = items.map(item => {
+    const isComplete = ['complete','closed'].includes(item.status);
+    return `
+      <div class="project-list-row">
+        <div>
+          <div class="row-name">
+            ${esc(item.title)}
+            <span class="tag">${esc(item.kind || 'task')}</span>
+            <span class="badge b-${projectBadge(item.status)}">${esc(projectStatusLabel(item.status))}</span>
+          </div>
+          ${item.detail ? `<div class="row-detail">${esc(item.detail)}</div>` : ''}
+          <div class="project-meta">Owner: ${esc(PROJECT_ACTORS[item.owner]||item.owner||'derrick')} · updated ${fmt(item.updated_at)} by ${esc(PROJECT_ACTORS[item.updated_by]||item.updated_by||'derrick')}</div>
+        </div>
+        <div class="row-actions">
+          <button class="btn btn-ghost btn-sm" onclick="window.toggleWorkforceItemStatus('${item.id}')">${isComplete ? 'Reopen' : 'Complete'}</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderWorkforceActivity(){
+  const list = document.getElementById('wf-activity-list');
+  if(!list) return;
+  const events = workforceActivityEvents();
+  if(!events.length){
+    list.innerHTML = '<div class="project-empty">No workforce activity logged yet. Use the form above to post the first update.</div>';
+    return;
+  }
+  list.innerHTML = events.map(event => {
+    const type = (event.event_type || 'conf:status').replace('conf:', '');
+    const badge = type==='done'?'paying':type==='blocker'?'dead':type==='question'?'quoted':'queued';
+    return `
+      <div class="project-activity">
+        <div class="row-name">
+          ${esc(event.title || 'Workforce update')}
+          <span class="badge b-${badge}">${esc(type)}</span>
+          ${event.target ? `<span style="color:var(--sl);font-size:11px;font-weight:normal;">→ ${esc(CONF_LABELS[event.target]||event.target)}</span>` : ''}
+        </div>
+        ${event.body ? `<div class="row-detail" style="white-space:pre-wrap;">${esc(event.body)}</div>` : ''}
+        <div class="project-meta">Posted by ${esc(PROJECT_ACTORS[event.source]||event.source||'Derrick')} · ${fmt(event.created_at)}</div>
+      </div>`;
+  }).join('');
+}
+
+window.toggleWorkforcePartnerForm = () => {
+  const f = document.getElementById('wf-partner-form');
+  if(f) f.classList.toggle('open');
+};
+
+window.saveWorkforcePartner = async () => {
+  const name = document.getElementById('wf-p-name')?.value.trim();
+  const org = document.getElementById('wf-p-org')?.value.trim();
+  if(!name || !org) return toast('Partner name and organization are required');
+  const titleVal = document.getElementById('wf-p-title')?.value.trim() || 'Partner';
+  const audience = document.getElementById('wf-p-aud')?.value.trim() || 'Workforce Stakeholder';
+  const track = document.getElementById('wf-p-track')?.value || 'Sales-Course-First';
+  const status = document.getElementById('wf-p-status')?.value.trim() || 'Discovery Active';
+  const notes = document.getElementById('wf-p-notes')?.value.trim() || 'Independent program development discovery.';
+
+  const detailObj = {
+    name,
+    title: titleVal,
+    organization: org,
+    audience,
+    track,
+    status_type: 'active',
+    status,
+    approach: notes,
+    next_step: 'Follow up on discovery requirements and alignment.',
+    contact: org
+  };
+
+  const payload = {
+    project_id: WORKFORCE_PROJECT_ID,
+    kind: 'relationship',
+    title: `${name} — ${org}`,
+    detail: JSON.stringify(detailObj),
+    owner: 'derrick',
+    status: 'open',
+    updated_by: 'derrick'
+  };
+
+  if(SYNC){
+    const result = await sb.from('project_items').insert([payload]).select().single();
+    if(result.error){
+      console.warn('Supabase sync warning:', result.error);
+      toast('Sync notice: ' + (result.error.message || 'Saved in memory'));
+      PROJECT_ITEMS.unshift({
+        ...payload,
+        id: 'wf-local-rel-' + Date.now(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      });
+    } else if(result.data){
+      PROJECT_ITEMS.unshift(result.data);
+    }
+  } else {
+    PROJECT_ITEMS.unshift({
+      ...payload,
+      id: 'wf-local-rel-' + Date.now(),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    });
+  }
+
+  document.getElementById('wf-partner-form')?.classList.remove('open');
+  ['wf-p-name','wf-p-title','wf-p-org','wf-p-aud','wf-p-status','wf-p-notes'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.value = '';
+  });
+  await saveEvent('conf:status', `Workforce partner added: ${name}`, `${name} (${org}) recorded for Workforce OS.`, 'derrick', 'all', WORKFORCE_PROJECT_ID);
+  renderWorkforce();
+  toast('Relationship partner saved');
+};
+
+window.deleteWorkforcePartner = async id => {
+  if(!confirm('Remove this relationship partner?')) return;
+  if(SYNC && !id.startsWith('wf-local-')){
+    const result = await sb.from('project_items').delete().eq('id', id);
+    if(result.error) return toast('Error removing partner: ' + result.error.message);
+  }
+  PROJECT_ITEMS = PROJECT_ITEMS.filter(i => i.id !== id);
+  await saveEvent('conf:status', 'Workforce partner removed', `Relationship partner record removed from Workforce OS.`, 'derrick', 'all', WORKFORCE_PROJECT_ID);
+  renderWorkforce();
+  toast('Partner removed');
+};
+
+window.toggleWorkforceAssetForm = () => {
+  const f = document.getElementById('wf-asset-form');
+  if(f) f.classList.toggle('open');
+};
+
+window.saveWorkforceAsset = async () => {
+  const label = document.getElementById('wf-asset-label')?.value.trim();
+  if(!label) return toast('Asset label is required');
+  const kind = document.getElementById('wf-asset-kind')?.value || 'document';
+  const url = document.getElementById('wf-asset-url')?.value.trim() || null;
+  const status = document.getElementById('wf-asset-status')?.value || 'prepared';
+  const notes = sanitizeAssetNotes(document.getElementById('wf-asset-notes')?.value.trim() || null);
+  const payload = {
+    project_id: WORKFORCE_PROJECT_ID,
+    label,
+    kind,
+    url,
+    status,
+    notes,
+    updated_by: 'derrick'
+  };
+  if(SYNC){
+    const result = await sb.from('project_assets').insert([payload]).select().single();
+    if(result.error) return toast('Error: ' + result.error.message);
+    if(result.data) PROJECT_ASSETS.unshift(result.data);
+  } else {
+    PROJECT_ASSETS.unshift({
+      ...payload,
+      id: 'wf-local-asset-' + Date.now(),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    });
+  }
+  document.getElementById('wf-asset-form')?.classList.remove('open');
+  ['wf-asset-label','wf-asset-url','wf-asset-notes'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.value = '';
+  });
+  await saveEvent('conf:status', `Workforce asset added: ${label}`, `${label} (${kind}) recorded for Workforce OS.`, 'derrick', 'all', WORKFORCE_PROJECT_ID);
+  renderWorkforce();
+  toast('Asset saved');
+};
+
+window.toggleWorkforceItemForm = () => {
+  const f = document.getElementById('wf-item-form');
+  if(f) f.classList.toggle('open');
+};
+
+window.saveWorkforceItem = async () => {
+  const title = document.getElementById('wf-item-title')?.value.trim();
+  if(!title) return toast('Title is required');
+  const kind = document.getElementById('wf-item-kind')?.value || 'task';
+  const owner = document.getElementById('wf-item-owner')?.value || 'derrick';
+  const status = document.getElementById('wf-item-status')?.value || 'open';
+  const detail = document.getElementById('wf-item-detail')?.value.trim() || null;
+  const payload = {
+    project_id: WORKFORCE_PROJECT_ID,
+    title,
+    kind,
+    owner,
+    status,
+    detail,
+    updated_by: 'derrick'
+  };
+  if(SYNC){
+    const result = await sb.from('project_items').insert([payload]).select().single();
+    if(result.error) return toast('Error: ' + result.error.message);
+    if(result.data) PROJECT_ITEMS.unshift(result.data);
+  } else {
+    PROJECT_ITEMS.unshift({
+      ...payload,
+      id: 'wf-local-item-' + Date.now(),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    });
+  }
+  document.getElementById('wf-item-form')?.classList.remove('open');
+  ['wf-item-title','wf-item-detail'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.value = '';
+  });
+  await saveEvent('conf:status', `Workforce item: ${title}`, `${title} assigned to ${PROJECT_ACTORS[owner]||owner} [${status}].`, 'derrick', 'all', WORKFORCE_PROJECT_ID);
+  renderWorkforce();
+  toast('Action item saved');
+};
+
+window.toggleWorkforceItemStatus = async id => {
+  const item = PROJECT_ITEMS.find(i => i.id === id);
+  if(!item) return;
+  const nextStatus = ['complete','closed'].includes(item.status) ? 'open' : 'complete';
+  if(SYNC && !id.startsWith('wf-local-')){
+    const result = await sb.from('project_items').update({ status: nextStatus, updated_by: 'derrick' }).eq('id', id);
+    if(result.error) return toast('Error: ' + result.error.message);
+  }
+  item.status = nextStatus;
+  item.updated_at = new Date().toISOString();
+  await saveEvent('conf:status', `Workforce action updated: ${item.title}`, `${item.title} status changed to ${nextStatus}.`, 'derrick', 'all', WORKFORCE_PROJECT_ID);
+  renderWorkforce();
+  toast(`Item marked ${nextStatus}`);
+};
+
+window.saveWorkforceCommunication = async () => {
+  const body = document.getElementById('wf-comm-body')?.value.trim();
+  if(!body) return toast('Write a message first');
+  const from = document.getElementById('wf-comm-from')?.value || 'derrick';
+  const target = document.getElementById('wf-comm-target')?.value || 'all';
+  const eventType = document.getElementById('wf-comm-type')?.value || 'conf:status';
+  const customTitle = document.getElementById('wf-comm-title')?.value.trim();
+  const title = customTitle || body.split('\n')[0].slice(0, 80);
+
+  const btn = document.getElementById('wf-comm-save');
+  if(btn){ btn.disabled = true; btn.textContent = 'Posting…'; }
+
+  const ok = await saveEvent(eventType, title, body, from, target, WORKFORCE_PROJECT_ID);
+
+  if(btn){ btn.disabled = false; btn.textContent = 'Post Update →'; }
+
+  if(ok){
+    document.getElementById('wf-comm-body').value = '';
+    if(document.getElementById('wf-comm-title')) document.getElementById('wf-comm-title').value = '';
+    toast('Workforce update posted to Conference Room');
+    renderWorkforceActivity();
+  }
+};
 
 // FACEBOOK SAMPLE CAMPAIGN
 const FB_CAMPAIGN_PREFIX = 'Facebook Sample Giveaway |';
@@ -2448,8 +3641,8 @@ async function renderConference(){
     const type = (m.event_type||'conf:status').replace('conf:','');
     const icon = CONF_TYPE_ICONS[type] || '📌';
     const from = CONF_LABELS[m.source] || m.source || 'Unknown';
-    const toLabel = m.target ? (CONF_LABELS[m.target]||m.target) : null;
-    const project = PROJECTS.find(p=>p.id===m.project_id);
+    const project = PROJECTS.find(p=>p.id===m.project_id) || (m.project_id===WORKFORCE_PROJECT_ID ? {id: WORKFORCE_PROJECT_ID, name: 'Workforce OS'} : null);
+    const isWf = m.project_id === WORKFORCE_PROJECT_ID || (project && (project.id === WORKFORCE_PROJECT_ID || project.slug === WORKFORCE_PROJECT_SLUG));
     const badge = type==='done'?'paying':type==='blocker'?'dead':type==='question'?'quoted':'queued';
     return `<div class="row">
       <div class="row-body">
@@ -2457,7 +3650,7 @@ async function renderConference(){
           ${icon} <strong>${esc(from)}</strong>
           ${toLabel ? `<span style="color:var(--sl);font-weight:400;font-size:12px;"> → ${esc(toLabel)}</span>` : ''}
           <span class="badge b-${badge}">${type}</span>
-          ${project ? `<button class="tag" style="border:0;cursor:pointer;" onclick="window.openProject('${project.id}')">${esc(project.name)}</button>` : ''}
+          ${project ? `<button class="tag" style="border:0;cursor:pointer;" onclick="${isWf ? 'window.nav(\'workforce\')' : 'window.openProject(\''+project.id+'\')'}">${esc(project.name)}</button>` : ''}
         </div>
         ${m.title?`<div class="row-detail" style="font-weight:600;color:var(--dark);margin-top:4px;">${esc(m.title)}</div>`:''}
         ${m.body?`<div class="row-detail" style="white-space:pre-wrap;margin-top:4px;">${esc(m.body)}</div>`:''}
@@ -3110,6 +4303,7 @@ async function saveEvent(type, title, body, source='command-dashboard', target=n
   updateConferenceBadge();
   renderConference();
   if(projectId) renderProjects();
+  if(projectId === WORKFORCE_PROJECT_ID) renderWorkforceActivity();
   return true;
 }
 
@@ -3409,10 +4603,10 @@ function subscribeRealtime(){
         toast('🛰️ New scout prospect: '+(payload.new.market||payload.new.source||'lead'));
       }
     })
-    .on('postgres_changes',{event:'*',schema:'public',table:'projects'}, async()=>{await loadProjects();renderProjects();})
+    .on('postgres_changes',{event:'*',schema:'public',table:'projects'}, async()=>{await loadProjects();renderProjects();if(document.getElementById('page-workforce')?.classList.contains('active')) renderWorkforce();})
     .on('postgres_changes',{event:'*',schema:'public',table:'project_markets'}, async()=>{await loadProjects();renderProjects();})
-    .on('postgres_changes',{event:'*',schema:'public',table:'project_items'}, async()=>{await loadProjects();renderProjects();})
-    .on('postgres_changes',{event:'*',schema:'public',table:'project_assets'}, async()=>{await loadProjects();renderProjects();});
+    .on('postgres_changes',{event:'*',schema:'public',table:'project_items'}, async()=>{await loadProjects();renderProjects();if(document.getElementById('page-workforce')?.classList.contains('active')) renderWorkforce();})
+    .on('postgres_changes',{event:'*',schema:'public',table:'project_assets'}, async()=>{await loadProjects();renderProjects();if(document.getElementById('page-workforce')?.classList.contains('active')) renderWorkforce();});
   channel.subscribe(status => {
     document.documentElement.dataset.realtimeStatus = status;
   });
@@ -3421,6 +4615,7 @@ function subscribeRealtime(){
 // ─── COMMAND PALETTE ─────────────────────────────────────────
 const CMD_ITEMS = [
   {icon:'⚡',label:'Go to HQ',            action:()=>nav('hq')},
+  {icon:'🎓',label:'Go to Workforce OS',   action:()=>nav('workforce')},
   {icon:'📥',label:'Go to Inbox',         action:()=>nav('inbox')},
   {icon:'📊',label:'Go to Pipeline',      action:()=>nav('pipeline')},
   {icon:'💬',label:'Go to Messages',      action:()=>nav('messages')},
@@ -3479,6 +4674,13 @@ async function init(){
   renderKanban(); updateStats(); renderTemplates();
   setSync('wait');
 
+  // Parse deep-link route on startup (e.g. /command/?page=workforce)
+  const urlParams = new URLSearchParams(window.location.search);
+  const startPage = urlParams.get('page');
+  if(startPage && pages.includes(startPage)){
+    nav(startPage, false);
+  }
+
   const { error } = await sb.from('intake_requests').select('id').limit(1);
   if(error){ setSync('err'); }
   else{
@@ -3494,6 +4696,7 @@ async function init(){
     renderProjects();
   }
   updateStats();
+  if(document.getElementById('page-workforce')?.classList.contains('active')) renderWorkforce();
 }
 
 init();
@@ -3504,6 +4707,7 @@ async function loadAll(){
   if(!SYNC) throw new Error('Dashboard is offline');
   await Promise.all([loadProspects(), loadInbound(), loadMessages(), loadFeed(), loadScout(), loadProjects()]);
   renderInbox(); renderHQInbound(); renderKanban(); renderMessages(); renderConference(); renderScout(); renderProjects(); updateStats();
+  if(document.getElementById('page-workforce')?.classList.contains('active')) renderWorkforce();
 }
 
 // ─── PULL TO REFRESH ─────────────────────────────────────────
