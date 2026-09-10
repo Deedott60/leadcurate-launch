@@ -6,7 +6,17 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-08-31 by Danny (Golden Crest family-venture hub and live preview added)
+Last updated: 2026-09-10 by Danny (dedicated Workforce OS deployed)
+
+---
+
+## Live now -- Dedicated Workforce OS
+
+Command OS now has a first-class **Workforce OS** area at `https://leadcurate.com/command/?page=workforce`, separate from the general Projects page. The left sidebar has its own Workforce OS section. The page tracks Dylan Lehr, Michael S. Coone, future workforce relationships, both course builds, assets, work items, and project-specific communication.
+
+All Workforce updates use Supabase project ID `0fba0555-5ef0-455d-8bed-5a518db639c0`. Future partner records use `project_items` with `kind='relationship'`; documents, visuals, portal links, and products use `project_assets`; communication uses `activity_feed` with that project ID so it appears in Workforce OS and the shared Conference Room. Canonical agent instructions: `docs/workforce-os/START-HERE.md`. Internal VPS files are tracked but are not public links until securely hosted.
+
+Verified live at commit `f1fe116` on September 10, 2026: the direct route opened Workforce OS rather than HQ; the dedicated sidebar item appeared; Dylan and Michael, seven assets, and eight work items loaded from Supabase; mobile 390x844 and desktop 1440x1000 had no horizontal overflow or browser errors.
 
 ---
 
