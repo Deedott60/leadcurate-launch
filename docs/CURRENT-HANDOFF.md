@@ -10,6 +10,10 @@ Last updated: 2026-09-11 by Codex (learner portal deployment)
 
 ---
 
+## Recently closed -- Standalone Reentry page removed from sharing
+
+The separate public Reentry page was removed after Derrick reviewed it. Reentry remains inside the learner portal. The public homepage and the Workforce OS Share links block now show only Portal and Overview. `REENTRY_SERVICES.html` remains in the private workforce-training source folder for possible later review and is not publicly deployed.
+
 ## Recently closed -- Current Desktop pages and Share links
 
 The current Desktop training files now publish to `https://leadcurate.com/portal/`, `https://leadcurate.com/reentry/` and `https://leadcurate.com/overview/`. The root page links to all three. Workforce OS opens with a Share links block above every workspace section, with one-click copy controls for all three exact URLs. The block remains visible across dashboard sections. The existing Command dashboard is unchanged.
