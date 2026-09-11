@@ -1,0 +1,304 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sales career: course overview</title>
+<style>
+:root{--red:#a52e37;--red-dark:#75232b;--cream:#f7f2e9;--ink:#282624;--muted:#726a64;--line:#e6dfd5;
+font-family:'Segoe UI',Arial,sans-serif;color:var(--ink);background:var(--cream)}
+*{box-sizing:border-box}body{margin:0;background:var(--cream)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 34px 70px}
+h1,h2,h3,p{margin-top:0}
+.eyebrow{font-size:11px;letter-spacing:1.9px;font-weight:800;color:var(--red);margin-bottom:14px}
+
+/* header */
+header{background:linear-gradient(180deg,#7d252d,#5d1b22);color:#fff6ee;padding:52px 0 58px;
+ box-shadow:inset 0 -1px 0 #ffffff18}
+header .wrap{padding-bottom:0}
+.mark{font-size:22px;font-weight:800;letter-spacing:-.6px;display:flex;align-items:center;gap:17px;margin-bottom:44px}
+.mark span{font-size:10px;letter-spacing:2px;font-weight:700;color:#f0bcbb;border-left:1px solid #ffffff30;padding-left:17px}
+header h1{font-size:clamp(40px,4.6vw,64px);font-weight:800;letter-spacing:-2.3px;line-height:1.06;margin-bottom:22px;max-width:15ch}
+header .lede{font-size:19px;line-height:1.65;color:#f4d9d4;max-width:60ch;margin-bottom:34px}
+.meta{display:flex;flex-wrap:wrap;gap:14px 40px;font-size:13px;color:#e9c4c2;
+ border-top:1px solid #ffffff26;padding-top:26px}
+.meta b{color:#fff;font-weight:700}
+
+/* purpose */
+.purpose{background:#fff;border:1px solid var(--line);border-top:4px solid var(--red);border-radius:12px;
+ padding:34px 38px;margin:-34px 0 52px;box-shadow:0 18px 44px #6f402914,inset 0 1px 0 #fff;position:relative}
+.purpose blockquote{font-family:Georgia,serif;font-size:clamp(24px,2.4vw,34px);line-height:1.45;
+ letter-spacing:-.6px;margin:16px 0 0}
+
+/* journey */
+.journey{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px}
+.jstep{background:#fff;border:1px solid var(--line);border-radius:11px;padding:22px 22px 24px;position:relative;
+ transition:transform .18s ease,box-shadow .2s ease,border-color .2s ease}
+.jstep:hover{transform:translateY(-3px);box-shadow:0 16px 38px #5b302218,inset 0 1px 0 #fff;border-color:#cdb6a6}
+.jstep i{display:block;font-family:Georgia,serif;font-style:normal;font-size:34px;line-height:1;color:var(--red);margin-bottom:14px}
+.jstep h3{font-size:17px;font-weight:800;letter-spacing:-.3px;margin-bottom:8px}
+.jstep p{font-size:13px;line-height:1.7;color:var(--muted);margin:0}
+.jstep small{display:block;margin-top:14px;font-size:10px;letter-spacing:1.4px;font-weight:800;color:#ab8c7c}
+
+/* modules */
+.mod{background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:14px;overflow:hidden;
+ box-shadow:0 5px 15px #5b302207;transition:box-shadow .2s ease,border-color .2s ease}
+.mod:hover{box-shadow:0 16px 38px #5b302214;border-color:#d6c2b4}
+.mod summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:20px;padding:24px 26px;
+ transition:background .18s ease}
+.mod summary::-webkit-details-marker{display:none}
+.mod summary:hover{background:linear-gradient(180deg,#fffdf9,#f7ede3)}
+.mod[open] summary{background:linear-gradient(180deg,#fdf7f0,#f6e9de);border-bottom:1px solid var(--line)}
+.mnum{font-family:Georgia,serif;font-size:38px;line-height:1;color:var(--red);min-width:44px}
+.mtitle{flex:1}
+.mtitle strong{display:block;font-size:21px;font-weight:800;letter-spacing:-.4px;margin-bottom:4px}
+.mtitle span{font-size:12px;color:var(--muted)}
+.chev{font-size:11px;letter-spacing:1.4px;font-weight:800;color:var(--red);white-space:nowrap}
+.mod[open] .chev:after{content:" ▲"}.mod:not([open]) .chev:after{content:" ▼"}
+.sessions{padding:6px 26px 26px}
+.sess{padding:22px 0;border-bottom:1px solid #efe7dd;display:grid;grid-template-columns:38px minmax(0,1.35fr) minmax(0,1fr);gap:22px}
+.sess:last-child{border-bottom:0;padding-bottom:4px}
+.snum{font-size:12px;font-weight:800;color:var(--red);padding-top:3px}
+.sess h4{font-size:16px;font-weight:800;margin:0 0 8px;letter-spacing:-.2px}
+.sess p{font-size:13.5px;line-height:1.75;color:#5d5650;margin:0}
+.out{background:#f6ece1;border-left:3px solid #c39a7e;border-radius:0 8px 8px 0;padding:14px 16px}
+.out small{display:block;font-size:9px;letter-spacing:1.5px;font-weight:800;color:#8b5d43;margin-bottom:7px}
+.out p{font-size:12.5px;line-height:1.7;color:#5d4a3d;margin:0}
+
+/* difference */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:#fff;border:1px solid var(--line);border-top:3px solid var(--red);border-radius:11px;padding:26px 28px;
+ transition:transform .18s ease,box-shadow .2s ease}
+.card:hover{transform:translateY(-2px);box-shadow:0 14px 34px #5b302214}
+.card h3{font-size:17px;font-weight:800;margin-bottom:10px;letter-spacing:-.2px}
+.card p{font-size:13.5px;line-height:1.75;color:var(--muted);margin:0}
+
+.band{background:linear-gradient(180deg,#7d252d,#5d1b22);color:#fff6ee;border-radius:13px;padding:40px 44px;margin:16px 0 52px;
+ box-shadow:0 18px 44px #75232b26,inset 0 1px 0 #ffffff22}
+.band .eyebrow{color:#f0bcbb}
+.band p{font-family:Georgia,serif;font-size:clamp(21px,2.1vw,30px);line-height:1.5;margin:0;color:#fff6ee}
+
+h2.sec{font-size:29px;font-weight:800;letter-spacing:-1px;margin:0 0 8px}
+.secsub{font-size:14.5px;color:var(--muted);margin:0 0 24px;max-width:70ch;line-height:1.7}
+section{margin-bottom:52px}
+
+.deliv{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.deliv div{background:#fff;border:1px solid var(--line);border-radius:11px;padding:24px 26px;transition:box-shadow .2s ease,transform .18s ease}
+.deliv div:hover{transform:translateY(-2px);box-shadow:0 14px 32px #5b302214}
+.deliv strong{display:block;font-size:16px;font-weight:800;margin-bottom:8px}
+.deliv p{font-size:13px;line-height:1.7;color:var(--muted);margin:0}
+
+footer{border-top:1px solid #d9cec1;padding-top:28px;display:flex;flex-wrap:wrap;gap:12px 36px;
+ align-items:baseline;font-size:13px;color:var(--muted)}
+footer b{color:var(--ink);font-size:16px;font-weight:800;letter-spacing:-.3px}
+
+@media(max-width:980px){.journey{grid-template-columns:1fr 1fr}.grid2,.deliv{grid-template-columns:1fr}
+ .sess{grid-template-columns:28px minmax(0,1fr)}.out{grid-column:2/-1}}
+@media(max-width:620px){.wrap{padding:0 20px 50px}.journey{grid-template-columns:1fr}header h1{font-size:38px}}
+@media print{
+ @page{size:letter;margin:0.42in}
+ body{background:#fff;font-size:10pt}
+ .wrap{max-width:none;padding:0}
+ header{padding:24px 0 26px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ header .mark{margin-bottom:20px;font-size:17px}
+ header h1{font-size:33px;letter-spacing:-1.4px;margin-bottom:12px}
+ header .lede{font-size:13px;margin-bottom:18px;line-height:1.55}
+ .meta{padding-top:14px;font-size:11px;gap:8px 26px}
+ .purpose{margin:-20px 0 26px;padding:20px 24px;box-shadow:none;break-inside:avoid}
+ .purpose blockquote{font-size:19px;line-height:1.35}
+ section{margin-bottom:26px}
+ h2.sec{font-size:20px;margin-bottom:5px}
+ .secsub{font-size:11.5px;margin-bottom:13px}
+ .journey{gap:9px}
+ .jstep{padding:13px 14px;break-inside:avoid;box-shadow:none!important;transform:none!important}
+ .jstep i{font-size:23px;margin-bottom:7px}
+ .jstep h3{font-size:13px;margin-bottom:5px}
+ .jstep p{font-size:10.5px;line-height:1.5}
+ .jstep small{margin-top:8px;font-size:8.5px}
+ .mod{margin-bottom:9px;break-inside:avoid;box-shadow:none!important}
+ .mod summary{padding:14px 18px;gap:14px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ .mnum{font-size:26px;min-width:32px}
+ .mtitle strong{font-size:15px;margin-bottom:2px}
+ .mtitle span{font-size:10.5px}
+ .chev{display:none}
+ .sessions{padding:2px 18px 16px}
+ .sess{padding:13px 0;gap:15px;grid-template-columns:26px minmax(0,1.4fr) minmax(0,1fr)}
+ .sess h4{font-size:12.5px;margin-bottom:4px}
+ .sess p{font-size:10.5px;line-height:1.55}
+ .snum{font-size:10px}
+ .out{padding:10px 12px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ .out small{font-size:8px;margin-bottom:4px}
+ .out p{font-size:10px;line-height:1.5}
+ .band{padding:22px 26px;margin:10px 0 26px;box-shadow:none;break-inside:avoid;
+   -webkit-print-color-adjust:exact;print-color-adjust:exact}
+ .band p{font-size:17px;line-height:1.4}
+ .grid2,.deliv{gap:10px}
+ .card{padding:15px 17px;break-inside:avoid;box-shadow:none!important;transform:none!important}
+ .card h3{font-size:13px;margin-bottom:6px}
+ .card p{font-size:10.5px;line-height:1.55}
+ .deliv div{padding:14px 16px;box-shadow:none!important;transform:none!important}
+ .deliv strong{font-size:12.5px;margin-bottom:5px}
+ .deliv p{font-size:10.5px;line-height:1.55}
+ footer{padding-top:16px;font-size:11px;gap:8px 26px}
+ footer b{font-size:13px}
+}
+</style></head><body>
+
+<header><div class="wrap">
+  <div class="mark">Sales career <span>COURSE OVERVIEW</span></div>
+  <h1>Getting hired is just the beginning.</h1>
+  <p class="lede">A rehearsal of the whole thing. The interview, the offer, the first day, the first
+  cold call, the first objection, the first time somebody asks your price.</p>
+  <div class="meta">
+    <span><b>4</b> modules</span><span><b>8</b> sessions</span>
+    <span><b>Derrick McDonald</b></span>
+    <span>(704) 302-3549</span><span>dmcdonald5649@gmail.com</span>
+  </div>
+</div></header>
+
+<div class="wrap">
+
+<div class="purpose">
+  <div class="eyebrow">THE PURPOSE</div>
+  <blockquote>When the real thing happens, they should feel like they have been here before.</blockquote>
+</div>
+
+<section>
+  <h2 class="sec">The shape of it</h2>
+  <p class="secsub">Four stages that follow what actually happens to a person, in order. Not topics.
+  A sequence.</p>
+  <div class="journey">
+    <div class="jstep"><i>01</i><h3>Getting In</h3><p>What the jobs are, what they pay, how to be
+      considered, and what happens in the interview room.</p><small>SESSIONS 1–3</small></div>
+    <div class="jstep"><i>02</i><h3>Offer to Day One</h3><p>Reading the offer. The paperwork. The
+      equipment. The logins. Walking into orientation.</p><small>SESSION 4</small></div>
+    <div class="jstep"><i>03</i><h3>The Job Itself</h3><p>The systems, the day, the call from opener
+      through discovery, objections, price and the close.</p><small>SESSIONS 5–7</small></div>
+    <div class="jstep"><i>04</i><h3>First 90 Days</h3><p>What ramp expects, how coaching works, what
+      actually keeps people employed, and where it leads.</p><small>SESSION 8</small></div>
+  </div>
+</section>
+
+<section>
+  <h2 class="sec">What happens in each session</h2>
+  <p class="secsub">Click any module to open it. Every session ends with something the participant keeps.</p>
+
+  <details class="mod" open>
+    <summary><span class="mnum">01</span><span class="mtitle"><strong>Getting In</strong>
+      <span>Three sessions · from not knowing these jobs exist to sitting in a real interview</span></span>
+      <span class="chev">SESSIONS 1–3</span></summary>
+    <div class="sessions">
+      <div class="sess"><div class="snum">01</div>
+        <div><h4>The field and the fit</h4><p>What these roles actually are and what each one does on a
+        Tuesday. How a sales paycheck is really built, including the retention check most people have
+        never heard of. Which doors are open. Then an honest conversation about whether this is for them.</p></div>
+        <div class="out"><small>WALKS OUT WITH</small><p>A map of the roles and a shortlist that fits them.</p></div></div>
+      <div class="sess"><div class="snum">02</div>
+        <div><h4>Positioning yourself</h4><p>Finding the evidence already in their history. Running a crew,
+        dealing with homeowners, handling people at the worst moment of their day. And the part nobody
+        tells them: many of these jobs sell to the service industry, so knowing what a roofer charges a
+        square is knowledge the person next to them does not have.</p></div>
+        <div class="out"><small>WALKS OUT WITH</small><p>A sales resume, a thirty second introduction they can say out loud, and a professional profile.</p></div></div>
+      <div class="sess"><div class="snum">03</div>
+        <div><h4>The interview chain</h4><p>Who they will actually meet and what each person is listening
+        for. Three questions to ask, and why asking nothing is disqualifying. Then the exercise unique to
+        sales hiring: the mock cold call, run live.</p></div>
+        <div class="out"><small>WALKS OUT WITH</small><p>Prep for each stage, a scored mock call, and a follow-up ready to send.</p></div></div>
+    </div>
+  </details>
+
+  <details class="mod">
+    <summary><span class="mnum">02</span><span class="mtitle"><strong>Offer to Day One</strong>
+      <span>One session · offer letter to first day</span></span><span class="chev">SESSION 4</span></summary>
+    <div class="sessions">
+      <div class="sess"><div class="snum">04</div>
+        <div><h4>The part nobody explains</h4><p>Reading an offer line by line. What a draw is. When
+        benefits start. How retention changes what you get paid. Then the onboarding sequence: equipment
+        arriving at the house, logins to systems they have never seen, meeting the team on video before
+        the start date, and what ramp will expect.</p>
+        <p style="margin-top:12px"><b>Why it exists:</b> people make it through interviews and still wash
+        out here, because nobody told them what any of it means or that feeling lost for two weeks is normal.</p></div>
+        <div class="out"><small>WALKS OUT WITH</small><p>An offer review checklist and the questions worth asking before accepting.</p></div></div>
+    </div>
+  </details>
+
+  <details class="mod">
+    <summary><span class="mnum">03</span><span class="mtitle"><strong>The Job Itself</strong>
+      <span>Three sessions · the actual work, from the morning routine to the close</span></span>
+      <span class="chev">SESSIONS 5–7</span></summary>
+    <div class="sessions">
+      <div class="sess"><div class="snum">05</div>
+        <div><h4>The tools and the day</h4><p>The vocabulary of the systems they will meet on day one. What
+        a rep actually looks up before dialing. How a pipeline works and what happens when it is not kept
+        clean. Then building a working day with real time blocks.</p></div>
+        <div class="out"><small>WALKS OUT WITH</small><p>Their own daily rhythm, written and defended out loud.</p></div></div>
+      <div class="sess"><div class="snum">06</div>
+        <div><h4>Prospecting and the opening call</h4><p>Choosing who to call instead of dialing a list.
+        Working with a gatekeeper instead of against one. The opener, and reading what kind of call it
+        actually is before saying anything else. Then discovery, and letting somebody talk long enough to
+        tell you the answer themselves.</p></div>
+        <div class="out"><small>WALKS OUT WITH</small><p>A researched prospecting sheet, an opener in their own words, and a set of discovery questions.</p></div></div>
+      <div class="sess"><div class="snum">07</div>
+        <div><h4>Presenting, objections, price and closing</h4><p>Handing back what you heard instead of
+        giving a product tour. The four objections that actually come up, in the customer's real words.
+        Delivering a price without apologizing for it. And what to do when somebody gets cold feet after
+        they have already said yes.</p></div>
+        <div class="out"><small>WALKS OUT WITH</small><p>A short presentation, an objection sheet in their own wording, and a customer handoff document.</p></div></div>
+    </div>
+  </details>
+
+  <details class="mod">
+    <summary><span class="mnum">04</span><span class="mtitle"><strong>First 90 Days and Moving Up</strong>
+      <span>One session · staying employed long enough to get good</span></span><span class="chev">SESSION 8</span></summary>
+    <div class="sessions">
+      <div class="sess"><div class="snum">08</div>
+        <div><h4>Surviving and advancing</h4><p>What ramp expects at thirty, sixty and ninety days. Reading
+        your own numbers and finding your own weak spot before a manager finds it for you. What a coaching
+        meeting is and how to show up to one. What actually gets people cut, which is almost never talent.
+        Then where the career goes from here.</p></div>
+        <div class="out"><small>WALKS OUT WITH</small><p>A ninety day plan and a record of their own work, started in the room.</p></div></div>
+    </div>
+  </details>
+</section>
+
+<div class="band">
+  <div class="eyebrow">THE IDEA UNDERNEATH</div>
+  <p>This is not a course about sales. It is a rehearsal of being onboarded into a job, run start to
+  finish, so the real version is recognizable instead of overwhelming.</p>
+</div>
+
+<section>
+  <h2 class="sec">What makes it different</h2>
+  <div class="grid2">
+    <div class="card"><h3>It keeps going after the interview</h3><p>The offer, the paperwork, the first day and the first ninety days are all part of the course,
+      because that is the stretch where people wash out.</p></div>
+    <div class="card"><h3>It came from real calls</h3><p>The objections are in the customer's actual
+      words. The pricing lessons come from real accounts, including the ones that went wrong. It is not
+      theory rewritten from a book.</p></div>
+    <div class="card"><h3>AI is taught inside the work</h3><p>No separate AI class. They use it to
+      research a business before calling, build a list, and practice against something that will not hang
+      up on them. Every time, they verify what it gave them. The selling is still theirs.</p></div>
+    <div class="card"><h3>They carry a playbook</h3><p>Not a reference manual. A book built to sit open
+      during a live call so somebody can find their place when they realize they skipped a step. That is
+      how working reps actually use one.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2 class="sec">How it can run</h2>
+  <p class="secsub">Pacing built around the center's calendar and its participants, not a fixed template.</p>
+  <div class="deliv">
+    <div><strong>Full course</strong><p>All eight sessions, in sequence, with the practice and the
+      materials that go with each one.</p></div>
+    <div><strong>Half day</strong><p>A condensed version with hands on keyboards. They build a
+      prospecting sheet and run one live practice call.</p></div>
+    <div><strong>Ninety minutes</strong><p>A first look for staff or a single group. Enough for a room
+      to see what the full thing is.</p></div>
+  </div>
+</section>
+
+<footer>
+  <b>Derrick McDonald</b>
+  <span>(704) 302-3549</span>
+  <span>dmcdonald5649@gmail.com</span>
+  <span>Mount Holly, NC</span>
+</footer>
+
+</div></body></html>
