@@ -6,8 +6,9 @@
 
 ## 1. Core System Locations & Access
 
-- **Live Dashboard Route:** `https://leadcurate.com/command/?page=workforce`
-- **Dashboard UI / Client Code:** `docs/command/index.html` (first-class `#page-workforce` container and `window.renderWorkforce*` methods)
+- **Live Standalone Workspace:** `https://leadcurate.com/workforce-os/`
+- **Workforce OS UI / Client Code:** `docs/workforce-os/index.html`
+- **LeadCurate Link:** `docs/command/index.html` links out to the standalone workspace; Workforce OS is not managed through the generic Projects screen.
 - **Data Project ID:** `0fba0555-5ef0-455d-8bed-5a518db639c0` (project slug: `reentry-workforce-transition`, name: `Workforce OS`)
 - **Program Source Files — THE SINGLE SOURCE OF TRUTH:** `/root/workforce-training` on Danny VPS (`76.13.25.117`, SSH alias `leadcurate-vps`).
 - **Entry point for every agent:** read `/root/workforce-training/README.md` FIRST, every time, before building anything. It is the pathway file. Then read the current master document.

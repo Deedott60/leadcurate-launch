@@ -96,9 +96,9 @@ def run_checks():
         with open(start_here_path, 'r', encoding='utf-8') as sf:
             start_content = sf.read()
         check(
-            "START-HERE.md states live route",
-            'https://leadcurate.com/command/?page=workforce' in start_content,
-            "START-HERE.md missing live route link"
+            "START-HERE.md states standalone live route",
+            'https://leadcurate.com/workforce-os/' in start_content,
+            "START-HERE.md missing standalone live route link"
         )
         check(
             "START-HERE.md states dashboard code path",

@@ -12,7 +12,7 @@ Last updated: 2026-09-10 by Danny (dedicated Workforce OS deployed)
 
 ## Live now -- Dedicated Workforce OS
 
-Command OS now has a first-class **Workforce OS** area at `https://leadcurate.com/command/?page=workforce`, separate from the general Projects page. The left sidebar has its own Workforce OS section. The page tracks Dylan Lehr, Michael S. Coone, future workforce relationships, both course builds, assets, work items, and project-specific communication.
+The standalone **Workforce OS** lives at `https://leadcurate.com/workforce-os/`, outside the LeadCurate Projects interface. LeadCurate's top button and left navigation link open that separate workspace; the former `/command/?page=workforce` route redirects there. Workforce OS tracks Dylan Lehr, Michael S. Coone, future workforce relationships, both course builds, assets, work items, and project-specific communication.
 
 All Workforce updates use Supabase project ID `0fba0555-5ef0-455d-8bed-5a518db639c0`. Future partner records use `project_items` with `kind='relationship'`; documents, visuals, portal links, and products use `project_assets`; communication uses `activity_feed` with that project ID so it appears in Workforce OS and the shared Conference Room. Canonical agent instructions: `docs/workforce-os/START-HERE.md`. Internal VPS files are tracked but are not public links until securely hosted.
 

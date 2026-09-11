@@ -514,7 +514,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
   </div>
   <span id="sync-badge" class="sync-badge">connecting…</span>
   <div class="spacer"></div>
-  <button id="workforce-quick-btn" onclick="window.nav('workforce')" aria-label="Open Workforce OS">Workforce OS</button>
+  <button id="workforce-quick-btn" onclick="window.location.href='/workforce-os/'" aria-label="Open standalone Workforce OS">Workforce OS</button>
   <button id="keepsakes-quick-btn" onclick="window.nav('keepsakes')" aria-label="Open Keepsakes workspace">Keepsakes</button>
   <button id="copy-link-btn" onclick="window.copyIntakeLink()">🔗 Intake link</button>
   <button id="cmd-btn" onclick="openCmd()">🔍 <kbd>⌘K</kbd></button>
@@ -567,9 +567,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
     <div class="nav-divider"></div>
     <div class="nav-label">Workforce OS</div>
     <div class="nav-section">
-      <div class="nav-item" data-page="workforce">
+      <a class="nav-item" data-page="workforce" href="/workforce-os/" style="text-decoration:none;">
         <span class="icon">🎓</span> Workforce OS
-      </div>
+      </a>
     </div>
     <div class="nav-divider"></div>
     <div class="nav-label">Client hubs</div>
@@ -2600,6 +2600,10 @@ function lsSave(){ localStorage.setItem(LS_KEY, JSON.stringify(PROSPECTS)); }
 // ─── NAV ──────────────────────────────────────────────────────
 const pages = ['hq','workforce','keepsakes','golden-crest','inbox','pipeline','messages','workflow','whitelabel','reggie','templates','f2f-estate-sales','estate-delivery','conference','marketing','seo','scout','dollarleads','send-intake','send-quote','learn','tiers-ref','help','portfolio'];
 window.nav = async function(id, updateHistory = true){
+  if(id==='workforce'){
+    window.location.href='/workforce-os/';
+    return;
+  }
   if(updateHistory){
     try {
       const url = new URL(window.location.href);
@@ -3700,6 +3704,7 @@ document.getElementById('conf-post-btn')?.addEventListener('click', async () => 
   }
 });
 document.querySelectorAll('.nav-item[data-page]').forEach(el=>{
+  if(el.tagName==='A' && el.getAttribute('href')) return;
   el.onclick = () => el.dataset.projectSlug ? window.openProjectSlug(el.dataset.projectSlug) : nav(el.dataset.page);
 });
 
