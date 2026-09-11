@@ -18,6 +18,8 @@ All Workforce updates use Supabase project ID `0fba0555-5ef0-455d-8bed-5a518db63
 
 Verified live at commit `f1fe116` on September 10, 2026: the direct route opened Workforce OS rather than HQ; the dedicated sidebar item appeared; Dylan and Michael, seven assets, and eight work items loaded from Supabase; mobile 390x844 and desktop 1440x1000 had no horizontal overflow or browser errors.
 
+Conference Room and Workforce isolation repair verified live at commit `d5ff78f`: the main Conference Room now runs its own Supabase query and rendered 100 messages; the undefined target-label error was fixed; Workforce OS rendered 16 project messages; and the Projects Workspace button/path was removed from Workforce OS. The live 390x844 check had no horizontal overflow or browser errors.
+
 ---
 
 ## Open now -- Golden Crest Facilities
