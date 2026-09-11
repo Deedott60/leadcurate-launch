@@ -21,6 +21,16 @@
 
 ---
 
+## Current share destinations
+
+Use the Share links block at the top of Workforce OS to open or copy these URLs:
+
+- `https://leadcurate.com/portal/`
+- `https://leadcurate.com/reentry/`
+- `https://leadcurate.com/overview/`
+
+The root homepage also links to these three. The playbook has six stages. Preserve Derrick's hand-edited Desktop sources and read `portal/RELEASE.md` in the private source folder before rebuilding.
+
 ## Learner portal deployment
 
 - Learner URL: `https://leadcurate.com/portal/`.

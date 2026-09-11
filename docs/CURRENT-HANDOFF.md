@@ -10,6 +10,12 @@ Last updated: 2026-09-11 by Codex (learner portal deployment)
 
 ---
 
+## Recently closed -- Current Desktop pages and Share links
+
+The current Desktop training files now publish to `https://leadcurate.com/portal/`, `https://leadcurate.com/reentry/` and `https://leadcurate.com/overview/`. The root page links to all three. Workforce OS opens with a Share links block above every workspace section, with one-click copy controls for all three exact URLs. The block remains visible across dashboard sections. The existing Command dashboard is unchanged.
+
+Derrick's current Desktop folder is the authoring authority. Preserve the edited wordmark, independent Reentry view, type and hover styling, and six-stage playbook. One old five-stage navigation limit was fixed and the HTML rebuilt only from those current local sources. Do not restore the earlier build. Read the private source folder's `portal/RELEASE.md` for details. All four requested URLs and the root page opened in the browser; the sixth stage and live copy feedback worked, and the share block fit a phone viewport.
+
 ## Recently closed -- Learner portal deployment
 
 The sales career learner portal is published from `docs/portal/index.html` at `https://leadcurate.com/portal/`, using the existing GitHub Pages main-branch docs deployment. Workforce OS links to it from its sidebar, overview and Courses page. The existing Command dashboard and its Workforce redirect are unchanged. The public file is the generated learner HTML only; curriculum sources and facilitator material stay in the private workforce-training repository. All eight local sessions opened, presentation launched, embedded JavaScript passed syntax checks, and both existing dashboard verification scripts passed before release. See `docs/workforce-os/START-HERE.md` and the source folder's `portal/DEPLOYMENT.md` for publishing and verification details.
