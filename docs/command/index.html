@@ -801,7 +801,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--cream);color:var(
           </div>
           <div class="flex-row" style="margin-top:4px;">
             <span class="badge b-paying" id="wf-status-pill">Planning / Active Build</span>
-            <button class="btn btn-ghost btn-sm" onclick="window.openProject('0fba0555-5ef0-455d-8bed-5a518db639c0', true)">Projects Workspace ↗</button>
           </div>
         </div>
       </div>
@@ -2631,7 +2630,7 @@ window.nav = async function(id, updateHistory = true){
   if(id==='marketing') renderMarketing();
   if(id==='conference'){
     await markConferenceRead();
-    renderConference();
+    await renderConference();
   }
 };
 
@@ -3625,8 +3624,17 @@ const CONF_TYPE_ICONS = {
 };
 async function renderConference(){
   const filter = document.getElementById('conf-filter')?.value || '';
-  // All conf: messages, show target in the log
-  const confMsgs = FEED.filter(f => (f.event_type||'').startsWith('conf:'));
+  // Conference Room owns its query so generic feed limits cannot empty it.
+  let confMsgs = FEED.filter(f => (f.event_type||'').startsWith('conf:'));
+  if(SYNC){
+    const {data,error} = await sb.from('activity_feed')
+      .select('*')
+      .like('event_type','conf:%')
+      .order('created_at',{ascending:false})
+      .limit(100);
+    if(!error && data) confMsgs = data;
+    if(error) console.warn('Conference Room load warning:', error);
+  }
   const filtered = filter ? confMsgs.filter(m => (m.target||m.source||'')===filter) : confMsgs;
   const list = document.getElementById('conf-list');
   const meta = document.getElementById('conf-meta');
@@ -3641,6 +3649,7 @@ async function renderConference(){
     const type = (m.event_type||'conf:status').replace('conf:','');
     const icon = CONF_TYPE_ICONS[type] || '📌';
     const from = CONF_LABELS[m.source] || m.source || 'Unknown';
+    const toLabel = m.target ? (CONF_LABELS[m.target] || m.target) : null;
     const project = PROJECTS.find(p=>p.id===m.project_id) || (m.project_id===WORKFORCE_PROJECT_ID ? {id: WORKFORCE_PROJECT_ID, name: 'Workforce OS'} : null);
     const isWf = m.project_id === WORKFORCE_PROJECT_ID || (project && (project.id === WORKFORCE_PROJECT_ID || project.slug === WORKFORCE_PROJECT_SLUG));
     const badge = type==='done'?'paying':type==='blocker'?'dead':type==='question'?'quoted':'queued';
@@ -3687,7 +3696,7 @@ document.getElementById('conf-post-btn')?.addEventListener('click', async () => 
   if(ok){
     document.getElementById('conf-body').value = '';
     toast('Sent → ' + (pingLabels[target] || target));
-    renderConference();
+    await renderConference();
   }
 });
 document.querySelectorAll('.nav-item[data-page]').forEach(el=>{
@@ -4018,7 +4027,15 @@ function renderMessages(){
 async function loadFeed(){
   if(!SYNC) return;
   const { data } = await sb.from('activity_feed').select('*').order('created_at',{ascending:false}).limit(100);
-  if(data){ FEED=data; renderFeed('hq-feed','feed-count'); renderFeed('wf-feed','wf-feed-count'); updateConferenceBadge(); updateAgentDots(); }
+  if(data){
+    FEED=data;
+    renderFeed('hq-feed','feed-count');
+    renderFeed('wf-feed','wf-feed-count');
+    updateConferenceBadge();
+    updateAgentDots();
+    if(document.getElementById('page-conference')?.classList.contains('active')) await renderConference();
+    if(document.getElementById('page-workforce')?.classList.contains('active')) renderWorkforceActivity();
+  }
 }
 
 async function loadProspects(){

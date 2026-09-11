@@ -447,6 +447,36 @@ def run_checks():
         "id='wf-comm-save' missing from page-workforce"
     )
 
+    # 10a. Workforce OS must stay independent from the generic Projects UI
+    check(
+        "Workforce OS has no Projects Workspace escape hatch",
+        'Projects Workspace' not in page_content and 'window.openProject(' not in page_content,
+        "Workforce OS still contains a Projects Workspace button or openProject path"
+    )
+
+    # 10b. Conference Room must query its own messages and render targets safely
+    render_conf_match = re.search(
+        r'async function\s+renderConference\s*\([^)]*\)\s*\{(.*?)\n\}',
+        content,
+        re.DOTALL
+    )
+    render_conf_body = render_conf_match.group(1) if render_conf_match else ""
+    check(
+        "Conference Room renderer has a dedicated Supabase conf query",
+        "activity_feed" in render_conf_body and "conf:%" in render_conf_body,
+        "renderConference relies only on the generic FEED cache"
+    )
+    check(
+        "Conference Room defines target label before rendering",
+        'const toLabel' in render_conf_body,
+        "renderConference references toLabel without defining it"
+    )
+    check(
+        "Conference Room navigation awaits rendering",
+        "await renderConference" in content,
+        "Conference Room navigation does not await its data-backed renderer"
+    )
+
     # 11. JS pages registry and navigation flow
     pages_match = re.search(r"const\s+pages\s*=\s*\[(.*?)\];", content)
     check("JS pages array exists", bool(pages_match), "const pages = [...] array not found")
