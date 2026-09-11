@@ -17,9 +17,18 @@
 - **One folder, no parallel copies.** Claude, Danny/Hermes, Astra and Codex all read and write this same folder. If a file in it is out of date, update it in place and move the superseded version to `archive/`. Do not leave two versions of a document side by side and do not start a competing copy elsewhere.
 - **Folder layout:** `README.md` pathway · `AGENTS.md` operating rules · `PROJECT_CONTEXT.md` state and change log · `current/` the one governing master document · `archive/` superseded versions · `courses/sales/` and `courses/business/` syllabi, objectives, overviews and `modules/` lesson plans · `facilitator/` interview notes, glossary and foundation (Derrick only) · `participants/` what participants receive · `outreach/dylan/` career center track and `outreach/michael/` WIOA reentry track · `handoffs/` agent handoff briefs · `reviews/` agent review passes · `assets/` images
 - **Same umbrella, two talking tracks:** Michael introduced Derrick to Dylan. Same workforce world, same folder, same course architecture. Only the framing differs — Dylan gets the general career center pitch with **no reentry or criminal record angle**, Michael gets WIOA and lived experience. Separate the framing, never the files.
-- **Working mirror:** `Desktop/TRAINING_BUSINESS/` on Derrick's Windows machine is a convenience copy, not an authority.
+- **Current editing authority, September 11:** Derrick's `Desktop/TRAINING_BUSINESS/` contains the latest learner portal and curriculum. Sync it to `/root/workforce-training` and the private workforce-training repository after editing. Do not overwrite local changes with an older server copy.
 
 ---
+
+## Learner portal deployment
+
+- Learner URL: `https://leadcurate.com/portal/`.
+- Generated public artifact: `docs/portal/index.html`, copied byte for byte from `OPEN_LEARNER_PORTAL.html` in the private workforce-training source folder. Rebuild there with `python portal/build.py` before copying. Do not edit the public artifact independently.
+- Confirmed GitHub Pages configuration: `main` branch, `/docs`, custom domain `leadcurate.com`. This is the same deployment pattern as `docs/command/index.html`. The nginx IP fallback is not the custom-domain production host.
+- The existing `/command/?page=workforce` route redirects to `/workforce-os/`. Launch links belong on that standalone Workforce OS page.
+- Register this URL in `project_assets` for the Workforce project. The existing database constraint accepts `tool_instance`, not `portal`; use `tool_instance` with status `available`. Do not expand the schema for this asset.
+- Only the generated learner HTML is public. Facilitator files, archives and working source remain in the private repository. Learner writing and progress stay in each browser and are not synced to Supabase.
 
 ## 2. Key Partners & Relationship Focus
 

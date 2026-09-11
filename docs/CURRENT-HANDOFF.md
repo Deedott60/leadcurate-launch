@@ -6,9 +6,13 @@
 > **Danny/Hermes:** this is the file `hermes-skill/leadcurate/SKILL.md` §8 points you to.
 > **Claude (any session):** when you finish work or Derrick makes a decision, update this file in place — move completed items to "Recently closed," add new items to "Open now." Don't create a new dated file.
 
-Last updated: 2026-09-10 by Danny (dedicated Workforce OS deployed)
+Last updated: 2026-09-11 by Codex (learner portal deployment)
 
 ---
+
+## Recently closed -- Learner portal deployment
+
+The sales career learner portal is published from `docs/portal/index.html` at `https://leadcurate.com/portal/`, using the existing GitHub Pages main-branch docs deployment. Workforce OS links to it from its sidebar, overview and Courses page. The existing Command dashboard and its Workforce redirect are unchanged. The public file is the generated learner HTML only; curriculum sources and facilitator material stay in the private workforce-training repository. All eight local sessions opened, presentation launched, embedded JavaScript passed syntax checks, and both existing dashboard verification scripts passed before release. See `docs/workforce-os/START-HERE.md` and the source folder's `portal/DEPLOYMENT.md` for publishing and verification details.
 
 ## Live now -- Dedicated Workforce OS
 
